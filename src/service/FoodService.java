@@ -7,13 +7,13 @@ public class FoodService extends Service{
 
     public FoodService (){
         this.type = "FoodService";
-        personnel = new ArrayList<>();
+        this.personnel = new ArrayList<>();
     }
 
     public FoodService (String foodType){
         this.foodType = foodType;
         this.type = "FoodService";
-        personnel = new ArrayList<>();
+        this.personnel = new ArrayList<>();
     }
 
     public void assignPerson(Staff person){
