@@ -24,4 +24,12 @@ public class FoodService extends Service{
         for(Staff person: people)
             this.personel.add(person);
     }
+
+    public String getFoodType(){
+        return this.foodType;
+    }
+
+    public String getType(){
+        return this.type;
+    }
 }
