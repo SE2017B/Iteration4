@@ -32,4 +32,8 @@ public class FoodService extends Service{
     public String getType(){
         return this.type;
     }
+
+    public List<Staff> getPersonel(){
+        return this.personel;
+    }
 }
