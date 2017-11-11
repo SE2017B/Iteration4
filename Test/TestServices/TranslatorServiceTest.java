@@ -37,7 +37,6 @@ public class TranslatorServiceTest {
         translators.add(spanishJoe);
         translators.add(frenchBen);
         service.assignPeople(translators);
-        assertTrue(service.getPersonnel().contains(spanishJoe));
-        assertTrue(service.getPersonnel().contains(frenchBen));
+        assertTrue(service.getPersonnel().contains(spanishJoe) && service.getPersonnel().contains(frenchBen));
     }
 }
