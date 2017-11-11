@@ -57,6 +57,6 @@ public class Staff{
     }
 
     public void changePassword(String newPass, String oldPass){
-
+        if(oldPass.equals(this.password)) this.password = newPass;
     }
 }
