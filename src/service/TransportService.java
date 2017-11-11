@@ -18,6 +18,7 @@ public class TransportService extends Service{
     }
 
     public void assignPerson(Staff person){
+
         this.personnel.add(person);
     }
 

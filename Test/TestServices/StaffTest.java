@@ -24,4 +24,10 @@ public class StaffTest{
         assertEquals(doctorBob.getFullName(), "Bobby Bob");
         assertEquals(doctorBob.getID(), 1);
     }
+
+    @Test
+    public void changePasswordTest(){
+        doctorBob.changePassword("abc", "bobby");
+        assertEquals(doctorBob.getPassword(), "abc");
+    }
 }
