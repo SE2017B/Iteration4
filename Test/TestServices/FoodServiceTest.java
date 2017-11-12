@@ -43,7 +43,7 @@ public class FoodServiceTest {
     }
 
     /*
-    will need to write this eventually, but need to talk to map people first - Erika
+     will need to write this eventually, but need to talk to map people first - Erika
 
     @Test
     public void testRequestService(){
