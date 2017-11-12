@@ -9,21 +9,41 @@ abstract class Service{
     protected ArrayList<Staff> availablePer;
     protected String description;
 
-    abstract void assignPerson(Staff person); //Are these actually void? Just fixing errors -Travis
-    abstract void assignPeople(ArrayList<Staff> people);
+    public Service(){
+        personnel = new ArrayList<>();
+        backlog = new ArrayList<>();
+        availablePer = new ArrayList<>();
+
+    }
+
 
 
     public void addRequest(ServiceRequest request){
+        System.out.println(request.getRequestID());
         if(availablePer.isEmpty()) {
+            System.out.println("false");
             backlog.add(request);
         }else{
+            System.out.println("true");
             Staff avaStaff = availablePer.get(0);
-            if(avaStaff.isBusy()) {
+            if(!avaStaff.isBusy()) {
+                System.out.println("yes");
                 avaStaff.setCurrentRequest(request);
             }
         }
 
     }
+
+    public void assignPerson(Staff person){
+        this.personnel.add(person);
+        this.availablePer.add(person);
+    }
+
+    public void assignPeople(ArrayList<Staff> people){
+        this.personnel.addAll(people);
+        this.availablePer.addAll(people);
+    }
+
     abstract String getType();
     abstract String getDescription();
     abstract ArrayList<Staff> getPersonnel();

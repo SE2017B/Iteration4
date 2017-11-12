@@ -5,26 +5,20 @@ import java.util.ArrayList;
 public class FoodService extends Service{
 
     public FoodService (){
-        this.type = "FoodService";
+        this.type = "Food Service";
         this.personnel = new ArrayList<>();
         this.backlog = new ArrayList<>();
         this.description = "";
     }
 
     public FoodService (String description){
-        this.type = "FoodService";
+        this.type = "Food Service";
         this.personnel = new ArrayList<>();
         this.backlog = new ArrayList<>();
         this.description = description;
     }
 
-    public void assignPerson(Staff person){
-        this.personnel.add(person);
-    }
 
-    public void assignPeople(ArrayList<Staff> people){
-        this.personnel.addAll(people);
-    }
 
     public String getType(){
         return this.type;

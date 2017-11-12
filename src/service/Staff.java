@@ -51,6 +51,7 @@ public class Staff{
     }
 
     public void setCurrentRequest(ServiceRequest request) {
+        System.out.println(fullName);
         this.currentRequest = request;
         isBusy = true;
     }

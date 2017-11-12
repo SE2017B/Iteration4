@@ -6,6 +6,7 @@ import service.FoodService;
 import service.ServiceRequest;
 import service.Staff;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class FoodServiceTest {
@@ -30,12 +31,20 @@ public class FoodServiceTest {
 
     @Test
     public void testFoodService() {
+        System.out.println((foodService.getType()));
         assertTrue(foodService.getType().equals("Food Service"));
     }
 
     @Test
     public void testAssignPerson(){
         assertTrue(foodService.getPersonnel().contains(John));
+    }
+
+    @Test
+    public void testAssignRequest(){
+        foodRequest = new ServiceRequest(foodService, 1, location, "apple");
+        foodService.addRequest(foodRequest);
+        assertEquals(John.getCurrentRequest().getRequestID(), foodRequest.getRequestID());
     }
 
     @Test

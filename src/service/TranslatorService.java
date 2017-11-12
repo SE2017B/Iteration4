@@ -21,13 +21,6 @@ public class TranslatorService extends Service{
         this.requests = new ArrayList<>();
     }
 
-    public void assignPerson(Staff person){
-        this.personnel.add(person);
-    }
-    public void assignPeople(ArrayList<Staff> people){
-        this.personnel.addAll(people);
-    }
-
     public ArrayList<ServiceRequest> getRequests() {
         return requests;
     }

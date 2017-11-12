@@ -20,13 +20,6 @@ public class TransportService extends Service{
         this.requests = new ArrayList<>();
     }
 
-    public void assignPerson(Staff person){
-        this.personnel.add(person);
-    }
-    public void assignPeople(ArrayList<Staff> people){
-        this.personnel.addAll(people);
-    }
-
     public String getType(){
         return this.type;
     }
