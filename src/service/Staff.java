@@ -40,6 +40,14 @@ public class Staff{
         this.jobType = jobType;
     }
 
+    public Service getJobType() {
+        return jobType;
+    }
+
+    public ServiceRequest getCurrentRequest() {
+        return currentRequest;
+    }
+
     public int getID(){
         return ID;
     }
@@ -64,6 +72,7 @@ public class Staff{
         this.username = username;
     }
 
+    //make a try catch eventually so that if password fails, a message pops up saying "invalid password"
     public void changePassword(String newPass, String oldPass){
         if(oldPass.equals(this.password)) this.password = newPass;
     }

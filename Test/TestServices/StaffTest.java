@@ -1,33 +1,31 @@
 package TestServices;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import service.FoodService;
 import service.Staff;
 import static org.junit.Assert.*;
 
 public class StaffTest{
 
-    private Staff doctorBob;
+    private Staff Bob;
+    private FoodService foodService;
 
     public StaffTest(){}
 
     @Before
     public void initialize() {
-        doctorBob = new Staff("bob", "bobby", "Doctor", "Bobby Bob", 1);
+        foodService = new FoodService();
+        Bob = new Staff("bob", "bobby", "cook", "Bobby Bob", 1, foodService);
     }
 
     @Test
-    public void testGetters(){
-        assertEquals(doctorBob.getUsername(), "bob");
-        assertEquals(doctorBob.getPassword(), "bobby");
-        assertEquals(doctorBob.getJobTitle(), "Doctor");
-        assertEquals(doctorBob.getFullName(), "Bobby Bob");
-        assertEquals(doctorBob.getID(), 1);
+    public void testBob(){
+        assertEquals(Bob.getUsername(), "bob");
     }
 
     @Test
     public void changePasswordTest(){
-        doctorBob.changePassword("abc", "bobby");
-        assertEquals(doctorBob.getPassword(), "abc");
+        Bob.changePassword("abc", "bobby");
+        assertEquals(Bob.getPassword(), "abc");
     }
 }
