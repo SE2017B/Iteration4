@@ -3,6 +3,9 @@ package TestServices;
 import org.junit.*;
 import service.FoodService;
 import service.Staff;
+
+import javax.xml.ws.Service;
+
 import static org.junit.Assert.*;
 
 public class StaffTest{
