@@ -7,13 +7,17 @@ public class Staff{
     private String jobTitle;
     private String fullName;
     private int ID;
+    private Service jobType;
+    private ServiceRequest currentRequest;
 
-    public Staff(String username, String password, String jobTitle, String fullName, int ID){
+    public Staff(String username, String password, String jobTitle, String fullName, int ID, Service jobType){
         this.username = username;
         this.password = password;
         this.jobTitle = jobTitle;
         this.fullName = fullName;
         this.ID = ID;
+        this.jobType = jobType;
+        currentRequest = null;
     }
 
     public String getFullName() {
@@ -30,6 +34,10 @@ public class Staff{
 
     public String getUsername() {
         return username;
+    }
+
+    public void setJobType(Service jobType) {
+        this.jobType = jobType;
     }
 
     public int getID(){

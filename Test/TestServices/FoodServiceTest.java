@@ -1,14 +1,13 @@
 package TestServices;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+import org.junit.*;
 import service.FoodService;
 import service.ServiceRequest;
 import service.Staff;
-import service.TransportService;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertTrue;
 
 public class FoodServiceTest {
     private FoodService apple;
@@ -34,6 +33,7 @@ public class FoodServiceTest {
 
         apple.assignPerson(John);
         meal.assignPeople(people);
+    }
 
 
     }
