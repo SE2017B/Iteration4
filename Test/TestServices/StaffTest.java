@@ -3,31 +3,36 @@ package TestServices;
 import org.junit.Before;
 import org.junit.Test;
 import service.Staff;
+
+import javax.xml.ws.Service;
+
 import static org.junit.Assert.*;
 
 public class StaffTest{
 
-    private Staff doctorBob;
+    private Staff cookBob;
+    private Service docter;
 
     public StaffTest(){}
 
     @Before
     public void initialize() {
-        doctorBob = new Staff("bob", "bobby", "Doctor", "Bobby Bob", 1);
+        docter = new
+        cookBob = new Staff("bob", "bobby", "head cook", "Bobby Bob", 1);
     }
 
     @Test
     public void testGetters(){
-        assertEquals(doctorBob.getUsername(), "bob");
-        assertEquals(doctorBob.getPassword(), "bobby");
-        assertEquals(doctorBob.getJobTitle(), "Doctor");
-        assertEquals(doctorBob.getFullName(), "Bobby Bob");
-        assertEquals(doctorBob.getID(), 1);
+        assertEquals(cookBob.getUsername(), "bob");
+        assertEquals(cookBob.getPassword(), "bobby");
+        assertEquals(cookBob.getJobTitle(), "Doctor");
+        assertEquals(cookBob.getFullName(), "Bobby Bob");
+        assertEquals(cookBob.getID(), 1);
     }
 
     @Test
     public void changePasswordTest(){
-        doctorBob.changePassword("abc", "bobby");
-        assertEquals(doctorBob.getPassword(), "abc");
+        cookBob.changePassword("abc", "bobby");
+        assertEquals(cookBob.getPassword(), "abc");
     }
 }

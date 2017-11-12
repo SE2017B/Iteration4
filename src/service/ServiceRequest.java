@@ -5,7 +5,7 @@ import a_star.Node;
 public class ServiceRequest{
     private Service requestType;
     private int requestID;
-
+    private Node where;
 
 
     public ServiceRequest(Service requestType, int requestID){
@@ -13,7 +13,7 @@ public class ServiceRequest{
         this.requestID = requestID;
     }
 
-    public void requestService(Service service, Node where){
+    public void requestService(Service requestType, Node where){
 
     }
 
