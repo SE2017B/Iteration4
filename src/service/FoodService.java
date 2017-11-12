@@ -12,12 +12,6 @@ public class FoodService extends Service{
         this.personnel = new ArrayList<>();
     }
 
-    public FoodService (String foodType){
-        this.foodType = foodType;
-        this.type = "FoodService";
-        this.personnel = new ArrayList<>();
-    }
-
     public void assignPerson(Staff person){
         this.personnel.add(person);
     }
