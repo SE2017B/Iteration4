@@ -9,6 +9,7 @@ public class Staff{
     private int ID;
     private Service jobType;
     private ServiceRequest currentRequest;
+    private boolean isBusy;
 
     public Staff(String username, String password, String jobTitle, String fullName, int ID, Service jobType){
         this.username = username;
@@ -18,6 +19,7 @@ public class Staff{
         this.ID = ID;
         this.jobType = jobType;
         currentRequest = null;
+        isBusy = false;
     }
 
     public String getFullName() {
@@ -46,6 +48,15 @@ public class Staff{
 
     public ServiceRequest getCurrentRequest() {
         return currentRequest;
+    }
+
+    public void setCurrentRequest(ServiceRequest request) {
+        this.currentRequest = request;
+        isBusy = true;
+    }
+
+    public boolean isBusy() {
+        return isBusy;
     }
 
     public int getID(){

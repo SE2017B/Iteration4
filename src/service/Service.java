@@ -6,11 +6,24 @@ abstract class Service{
     protected String type;
     protected ArrayList<Staff> personnel;
     protected ArrayList<ServiceRequest> backlog;
-    protected ArrayList<Staff> avaliblePer;
+    protected ArrayList<Staff> availablePer;
+    protected String description;
 
     abstract void assignPerson(Staff person); //Are these actually void? Just fixing errors -Travis
     abstract void assignPeople(ArrayList<Staff> people);
-    abstract void addRequest(ServiceRequest request);
+
+
+    public void addRequest(ServiceRequest request){
+        if(availablePer.isEmpty()) {
+            backlog.add(request);
+        }else{
+            Staff avaStaff = availablePer.get(0);
+            if(avaStaff.isBusy()) {
+                avaStaff.setCurrentRequest(request);
+            }
+        }
+
+    }
     abstract String getType();
     abstract String getDescription();
     abstract ArrayList<Staff> getPersonnel();
@@ -25,6 +38,6 @@ abstract class Service{
     }
 
     public void addAvailable(Staff staff) {
-        avaliblePer.add(staff);
+        availablePer.add(staff);
     }
 }
