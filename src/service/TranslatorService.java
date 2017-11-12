@@ -3,7 +3,7 @@ package service;
 import java.util.ArrayList;
 
 public class TranslatorService extends Service{
-    private String language;
+    private String description;
     private int endTime;
 
     public TranslatorService (){
@@ -11,8 +11,8 @@ public class TranslatorService extends Service{
         this.personnel = new ArrayList<>();
     }
 
-    public TranslatorService(String language, int endTime){
-        this.language = language;
+    public TranslatorService(String description, int endTime){
+        this.description = description;
         this.endTime = endTime;
         this.type = "TranslatorService";
         this.personnel = new ArrayList<>();
@@ -21,18 +21,21 @@ public class TranslatorService extends Service{
     public void assignPerson(Staff person){
         this.personnel.add(person);
     }
-
     public void assignPeople(ArrayList<Staff> people){
         this.personnel.addAll(people);
     }
+    public void addRequest(ServiceRequest request){
+        this.requests.add(request);
+    }
+
     public String getType(){
         return this.type;
     }
     public ArrayList<Staff> getPersonnel(){
         return this.personnel;
     }
-    public String getLanguage(){
-        return this.language;
+    public String getDescription(){
+        return this.description;
     }
     public int getEndTime(){
         return this.endTime;
@@ -41,8 +44,8 @@ public class TranslatorService extends Service{
     public void setType(String type){
         this.type = type;
     }
-    public void setLanguage(String language){
-        this.language = language;
+    public void setDescription(String description){
+        this.description = description;
     }
     public void setEndTime(int endTime){
         this.endTime = endTime;
