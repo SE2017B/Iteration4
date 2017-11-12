@@ -7,15 +7,14 @@ import service.Staff;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class KioskEngine{
     private HospitalMap map;
-    private HashMap<String, Staff> staff;
+    private HashMap<String, Staff> loginInfo;
 
 
     public KioskEngine(){
-
+        loginInfo = new HashMap<>();
     }
 
     public void addNode(){
@@ -32,5 +31,22 @@ public class KioskEngine{
 
     }
 
+    public boolean login(String username, String password){
+        if(this.loginInfo.containsKey(username)){
+            return this.loginInfo.get(username).getPassword().equals(password);
+        } else {
+            return false;
+        }
+    }
 
+    public HospitalMap getMap() {
+        return map;
+    }
+    public HashMap<String, Staff> getLoginInfo() {
+        return loginInfo;
+    }
+
+    public void addStaffLogin(Staff staff){
+        loginInfo.put(staff.getUsername(), staff);
+    }
 }
