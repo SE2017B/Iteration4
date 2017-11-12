@@ -3,31 +3,40 @@ package service;
 import a_star.Node;
 
 public class ServiceRequest{
-    private Service requestType;
+    private Service service;
     private int requestID;
     private Node where;
+    private String description;
 
 
-    public ServiceRequest(Service requestType, int requestID){
-        this.requestType = requestType;
+    public ServiceRequest(Service service, int requestID, Node where, String description){
+        this.service = service;
         this.requestID = requestID;
+        this.where = where;
+        this.description = description;
     }
 
-    public void requestService(Service requestType, Node where){
-
+    public void giveRequest(){
+        service.addRequest(this);
     }
 
     public Service getRequestType(){
-        return this.requestType;
+        return this.service;
     }
     public int getRequestID(){
         return this.requestID;
     }
+    public Node getWhere(){
+        return this.where;
+    }
 
     public void setRequestType(Service requestType){
-        this.requestType = requestType;
+        this.service = requestType;
     }
     public void setRequestID(int requestID){
         this.requestID = requestID;
+    }
+    public void setWhere(Node where){
+        this.where = where;
     }
 }
