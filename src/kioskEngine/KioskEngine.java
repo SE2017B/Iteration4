@@ -7,7 +7,6 @@ import service.Staff;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class KioskEngine{
     private HospitalMap map;
@@ -32,5 +31,7 @@ public class KioskEngine{
 
     }
 
-
+    public void compleatRequest(Staff staffMem){
+        staffMem.completeCurRec();
+    }
 }
