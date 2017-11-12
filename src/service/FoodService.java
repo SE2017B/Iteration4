@@ -14,10 +14,10 @@ public class FoodService extends Service{
     }
 
     public FoodService (String description){
-        this.description = description;
         this.type = "FoodService";
         this.personnel = new ArrayList<>();
         this.requests = new ArrayList<>();
+        this.description = description;
     }
 
     public void assignPerson(Staff person){

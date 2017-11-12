@@ -5,10 +5,12 @@ import java.util.ArrayList;
 public class TranslatorService extends Service{
     private String description;
     private int endTime;
+    private ArrayList<ServiceRequest> requests;
 
     public TranslatorService (){
         this.type = "TranslatorService";
         this.personnel = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
     public TranslatorService(String description, int endTime){
@@ -16,6 +18,7 @@ public class TranslatorService extends Service{
         this.endTime = endTime;
         this.type = "TranslatorService";
         this.personnel = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
     public void assignPerson(Staff person){
@@ -26,6 +29,10 @@ public class TranslatorService extends Service{
     }
     public void addRequest(ServiceRequest request){
         this.requests.add(request);
+    }
+
+    public ArrayList<ServiceRequest> getRequests() {
+        return requests;
     }
 
     public String getType(){

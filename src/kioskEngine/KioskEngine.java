@@ -31,6 +31,9 @@ public class KioskEngine{
 
     }
 
+    public void compleatRequest(Staff staffMem){
+        staffMem.completeCurRec();
+    }
     public boolean login(String username, String password){
         if(this.loginInfo.containsKey(username)){
             return this.loginInfo.get(username).getPassword().equals(password);

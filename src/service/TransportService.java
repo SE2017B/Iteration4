@@ -40,6 +40,10 @@ public class TransportService extends Service{
         return this.description;
     }
 
+    public ArrayList<ServiceRequest> getRequests() {
+        return requests;
+    }
+
     public void setType(String type){
         this.type = type;
     }

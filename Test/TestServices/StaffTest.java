@@ -3,8 +3,8 @@ package TestServices;
 import org.junit.*;
 import service.FoodService;
 import service.Staff;
+import service.*;
 
-import javax.xml.ws.Service;
 
 import static org.junit.Assert.*;
 

@@ -16,4 +16,15 @@ abstract class Service{
     abstract ArrayList<Staff> getPersonnel();
 
     abstract void setDescription(String description);
+
+    public ServiceRequest getNextRequest() {
+        if(backlog.isEmpty()) {
+            return null;
+        }
+        return backlog.get(0);
+    }
+
+    public void addAvailable(Staff staff) {
+        avaliblePer.add(staff);
+    }
 }
