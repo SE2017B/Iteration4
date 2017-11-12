@@ -10,31 +10,37 @@ public class FoodService extends Service{
 
     public FoodService (){
         this.type = "FoodService";
+        this.personnel = new ArrayList<>();
     }
 
     public FoodService (String foodType){
         this.foodType = foodType;
         this.type = "FoodService";
+        this.personnel = new ArrayList<>();
     }
 
     public void assignPerson(Staff person){
-        this.personel.add(person);
+        this.personnel.add(person);
     }
 
-    public void assignPeople(List<Staff> people){
-        for(Staff person: people)
-            this.personel.add(person);
-    }
-
-    public String getFoodType(){
-        return this.foodType;
+    public void assignPeople(ArrayList<Staff> people){
+        this.personnel.addAll(people);
     }
 
     public String getType(){
         return this.type;
     }
+    public ArrayList<Staff> getPersonnel(){
+        return this.personnel;
+    }
+    public String getFoodType(){
+        return this.foodType;
+    }
 
-    public ArrayList<Staff> getPersonel(){
-        return this.personel;
+    public void setType(String type){
+        this.type = type;
+    }
+    public void setFoodType(String foodType){
+        this.foodType = foodType;
     }
 }

@@ -7,14 +7,13 @@ import service.FoodService;
 import service.Staff;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FoodServiceTest {
     private FoodService apple;
     private FoodService meal;
     private Staff John;
     private Staff Jane;
-    private List<Staff> people;
+    private ArrayList<Staff> people;
 
     @Before
     public void setup () {
@@ -34,16 +33,16 @@ public class FoodServiceTest {
 
     @Test
     public void testApple() {
-        assertTrue(apple.getFoodType() == "apple");
+        assertTrue(apple.getFoodType().equals("apple"));
     }
 
     @Test
     public void testAssignPerson(){
-        assertTrue(apple.getPersonel().contains(John));
+        assertTrue(apple.getPersonnel().contains(John));
     }
 
     @Test
     public void testAssignPeople(){
-        assertTrue(meal.getPersonel().contains(John) && meal.getPersonel().contains(Jane));
+        assertTrue(meal.getPersonnel().contains(John) && meal.getPersonnel().contains(Jane));
     }
 }

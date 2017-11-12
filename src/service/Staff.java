@@ -9,7 +9,11 @@ public class Staff{
     private int ID;
 
     public Staff(String username, String password, String jobTitle, String fullName, int ID){
-
+        this.username = username;
+        this.password = password;
+        this.jobTitle = jobTitle;
+        this.fullName = fullName;
+        this.ID = ID;
     }
 
     public String getFullName() {
@@ -53,6 +57,6 @@ public class Staff{
     }
 
     public void changePassword(String newPass, String oldPass){
-
+        if(oldPass.equals(this.password)) this.password = newPass;
     }
 }
