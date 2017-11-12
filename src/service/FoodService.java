@@ -3,7 +3,6 @@ package service;
 import java.util.ArrayList;
 
 public class FoodService extends Service{
-    private String foodType;
     private String type;
     private ArrayList<Staff> personnel;
 
@@ -25,15 +24,5 @@ public class FoodService extends Service{
     }
     public ArrayList<Staff> getPersonnel(){
         return this.personnel;
-    }
-    public String getFoodType(){
-        return this.foodType;
-    }
-
-    public void setType(String type){
-        this.type = type;
-    }
-    public void setFoodType(String foodType){
-        this.foodType = foodType;
     }
 }

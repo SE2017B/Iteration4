@@ -10,50 +10,44 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertTrue;
 
 public class FoodServiceTest {
-    private FoodService apple;
-    private FoodService meal;
+    private FoodService foodService;
     private Staff John;
     private Staff Jane;
-    private ArrayList<Staff> people;
     private ServiceRequest foodRequest;
 
     @Before
     public void setup () {
-        //will be fixed after Vojta pushes his code
-        //apple = new FoodService("apple");
-        //meal = new FoodService("meal");
-        John = new Staff("johndoe", "abc", "cook", "John Doe", 123);
-        Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456);
-        //foodRequest = new ServiceRequest()
+        foodService = new FoodService();
+        John = new Staff("johndoe", "abc", "Head cook", "John Doe", 123, foodService);
+        Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456, foodService);
+        foodRequest = new ServiceRequest(foodService, 1);
 
-        people = new ArrayList<>();
-
-        people.add(John);
-        people.add(Jane);
-
-        apple.assignPerson(John);
-        meal.assignPeople(people);
+        foodService.assignPerson(John);
+        foodService.assignPerson(Jane);
     }
 
 
-    }
-
-/*
     @Test
-    public void testApple() {
-        assertTrue(apple.getFoodType().equals("apple"));
+    public void testFoodService() {
+        assertTrue(foodService.getType().equals("Food Service"));
     }
 
     @Test
     public void testAssignPerson(){
-        assertTrue(apple.getPersonnel().contains(John));
+        assertTrue(foodService.getPersonnel().contains(John));
     }
 
     @Test
-    public void testAssignPeople(){
-        assertTrue(meal.getPersonnel().contains(John) && meal.getPersonnel().contains(Jane));
+    public void testFoodRequest(){
+        assertTrue(foodRequest.getRequestID() == 1);
     }
-*/
-    //@Test
-    //public void test
+
+    /*
+    will need to write this eventually, but need to talk to map people first - Erika
+
+    @Test
+    public void testRequestService(){
+
+    }
+    */
 }

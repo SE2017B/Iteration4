@@ -10,6 +10,4 @@ abstract class Service{
     abstract void assignPeople(ArrayList<Staff> people);
     abstract String getType();
     abstract ArrayList<Staff> getPersonnel();
-
-    abstract void setType(String type);
 }
