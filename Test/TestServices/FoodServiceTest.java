@@ -1,12 +1,12 @@
 package TestServices;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+import org.junit.*;
 import service.FoodService;
 import service.Staff;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertTrue;
 
 public class FoodServiceTest {
     private FoodService apple;
@@ -19,8 +19,8 @@ public class FoodServiceTest {
     public void setup () {
         apple = new FoodService("apple");
         meal = new FoodService("meal");
-        John = new Staff("johndoe", "abc", "cook", "John Doe", 123);
-        Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456);
+        John = new Staff("johndoe", "abc", "cook", "John Doe", 123,meal);
+        Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456,meal);
         people = new ArrayList<>();
 
         people.add(John);
