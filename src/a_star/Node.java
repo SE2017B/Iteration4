@@ -1,5 +1,7 @@
 package a_star;
 
+import java.util.List;
+
 public class Node{
     private String name;
     private String ID;
@@ -49,15 +51,15 @@ public class Node{
     }
 
     public int getX() {
-        return point.getX()
+        return point.getX();
     }
 
     public int getY() {
-        return point.getY()
+        return point.getY();
     }
 
     public int getFloor() {
-        return point.setFloor();
+        return point.getFloor();
     }
 
     //Encapsulated class in order to handle the simple cartesian graph point functionality
