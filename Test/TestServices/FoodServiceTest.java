@@ -21,7 +21,7 @@ public class FoodServiceTest {
         John = new Staff("johndoe", "abc", "Head cook", "John Doe", 123, foodService);
         Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456, foodService);
         location = new Node();
-        foodRequest = new ServiceRequest(foodService, 1,location, "apple");
+        foodRequest = new ServiceRequest(foodService, 1, location, "apple");
 
         foodService.assignPerson(John);
         foodService.assignPerson(Jane);
