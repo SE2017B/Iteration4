@@ -3,7 +3,7 @@ package a_star;
 import java.util.*;
 
 public class HospitalMap{
-    private Dictionary<String, Node> map;
+    private HashMap<String, Node> map;
     private PriorityQueue<Node> frontier;
     private ArrayList<Node> explored;
     private Node start;
@@ -11,10 +11,10 @@ public class HospitalMap{
 
     //Constructors
     public HospitalMap(){}
-    public HospitalMap(Dictionary<String, Node> map){
+    public HospitalMap(HashMap<String, Node> map){
         this.map = map;
     }
-    public HospitalMap(Dictionary<String, Node> map, Node start){
+    public HospitalMap(HashMap<String, Node> map, Node start){
         this.start = start;
         this.map = map;
     }
@@ -74,6 +74,8 @@ public class HospitalMap{
 
             this.explored.add(currentNode);
 
+            int bestScore = -1;
+            Node bestStepperNode = new Node();
             for(Node n: currentNode.getConnections()){
                 //checks if we already explored it
                 if(this.explored.contains(n)){
@@ -85,19 +87,25 @@ public class HospitalMap{
                     this.frontier.add(n);
                 }
 
+                if(bestScore < 0){
+                    bestStepperNode = n;
+                    bestScore = currentNode.getgCost() + manhattanDistance(currentNode, n);
+                }
                 int tempCost = currentNode.getgCost() + manhattanDistance(currentNode, n);
-                if (tempCost >=  manhattanDistance(start, n)){
+                if (tempCost >=  bestScore){
                     continue;
                 }
 
-                path.push(n);
+                bestStepperNode = n;
             }
+
+            path.push(bestStepperNode);
         }
 
         //Could not find the end node
         return path;
     }
-    
+
     public List<Node> findPath(Node start, Node end){
         return (new ArrayList<Node>());
     }
