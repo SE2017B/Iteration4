@@ -5,8 +5,6 @@ import service.FoodService;
 import service.ServiceRequest;
 import service.Staff;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertTrue;
 
 public class FoodServiceTest {
