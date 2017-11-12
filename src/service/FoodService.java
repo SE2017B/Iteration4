@@ -3,20 +3,18 @@ package service;
 import java.util.ArrayList;
 
 public class FoodService extends Service{
-    private String description;
-    private ArrayList<ServiceRequest> requests;
 
     public FoodService (){
         this.type = "FoodService";
         this.personnel = new ArrayList<>();
-        this.requests = new ArrayList<>();
+        this.backlog = new ArrayList<>();
         this.description = "";
     }
 
     public FoodService (String description){
         this.type = "FoodService";
         this.personnel = new ArrayList<>();
-        this.requests = new ArrayList<>();
+        this.backlog = new ArrayList<>();
         this.description = description;
     }
 
@@ -27,9 +25,6 @@ public class FoodService extends Service{
     public void assignPeople(ArrayList<Staff> people){
         this.personnel.addAll(people);
     }
-    public void addRequest(ServiceRequest request){
-        this.requests.add(request);
-    }
 
     public String getType(){
         return this.type;
@@ -38,7 +33,7 @@ public class FoodService extends Service{
         return this.personnel;
     }
     public ArrayList<ServiceRequest> getRequests() {
-        return this.requests;
+        return this.backlog;
     }
     public String getDescription(){
         return this.description;
