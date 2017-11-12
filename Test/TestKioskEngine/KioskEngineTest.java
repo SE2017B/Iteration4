@@ -44,7 +44,7 @@ public class KioskEngineTest {
 
 
     @Test(expected = InvalidLoginException.class)
-    public void testLoginFail throws In(){
+    public void testLoginFail() throws InvalidLoginException{
         engine.addStaffLogin(bob);
         engine.login("bobb", "bob");
     }
