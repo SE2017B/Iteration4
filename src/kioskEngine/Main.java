@@ -8,12 +8,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import service.FoodService;
+import service.Staff;
 
 public class Main extends Application {
-
+    private static KioskEngine engine = new KioskEngine();
     @Override
     public void start(Stage primaryStage) throws Exception{
-        ScreenController myScreenController = new ScreenController();
+        ScreenController myScreenController = new ScreenController(engine);
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
         myScreenController.loadScreen(ScreenController.AdminMenuID, ScreenController.AdminMenuFile);
         myScreenController.loadScreen(ScreenController.FilterID, ScreenController.FilterFile);
@@ -36,6 +38,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        engine.addStaffLogin(new Staff("test","","Admin","Admin Test",1234,
+                                new FoodService()));
         launch(args);
     }
 }

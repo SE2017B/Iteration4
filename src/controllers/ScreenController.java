@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
+import kioskEngine.KioskEngine;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,9 +32,11 @@ public class ScreenController extends StackPane {
 
     private HashMap<String, Node> screens = new HashMap<String, Node>();
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
+    private KioskEngine engine;
 
-    public ScreenController(){
+    public ScreenController(KioskEngine engine){
         super();
+        this.engine = engine;
     }
 
     //add a new screen to the screens HashMap
@@ -61,8 +64,8 @@ public class ScreenController extends StackPane {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(file));
             Parent fxmlToLoad = (Parent) fxmlLoader.load();
             ControllableScreen controllerToLoad = ((ControllableScreen) fxmlLoader.getController());
-            controllerToLoad.init();
             controllerToLoad.setParentController(this);
+            controllerToLoad.init();
             addScreen(name, fxmlToLoad, controllerToLoad);
             return true;
         }
@@ -91,5 +94,9 @@ public class ScreenController extends StackPane {
     public boolean unloadScreen(String name) {
         screens.remove(name);
         return true;
+    }
+
+    public KioskEngine getEngine() {
+        return engine;
     }
 }

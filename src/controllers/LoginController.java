@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.InvalidLoginException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -33,22 +34,26 @@ public class LoginController implements ControllableScreen{
     public void init(){}
 
     public void onShow(){
+
         failLabel.setVisible(false);
+        //txtfldLogin.setText("");
+        txtfldLogin.setText("test");   //Auto-fill for testing todo remove before demo
+        passwordFieldPassword.setText("");
     }
 
     //Verify the username and password, then set up the admin menu for that user
     public void enterPressed(ActionEvent e){
         //Look for the user in the master list of staff members
-        //todo
-
-        //if the password matches
-        if(true) {
-            parent.setScreen(ScreenController.AdminMenuID);
-
-            ((AdminMenuController) parent.getController(ScreenController.AdminMenuID))
-                    .setForStaff(new Staff("jsmith", "password", "Food", "John Smith", 1234, new FoodService()));
+        try{
+            if(parent.getEngine().login(txtfldLogin.getText(),passwordFieldPassword.getText())){
+                parent.setScreen(ScreenController.AdminMenuID);
+                ((AdminMenuController) parent.getController(ScreenController.AdminMenuID))
+                        .setForStaff(parent.getEngine().getStaff(txtfldLogin.getText()));
+            }
+            else
+                failLabel.setVisible(true);
         }
-        else{
+        catch (InvalidLoginException exc){
             failLabel.setVisible(true);
         }
     }

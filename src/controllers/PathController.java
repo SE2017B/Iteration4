@@ -67,13 +67,20 @@ public class PathController implements ControllableScreen{
     public void init()
     {
         lines = new ArrayList<Line>();
-        map = new HospitalMap();
-        ArrayList<Node> nodes = map.getNodesAsArrayList();
-        startChoice.setItems(FXCollections.observableList(nodes));
-        endChoice.setItems(FXCollections.observableList(nodes));
+        onShow();
+
     }
 
     public void onShow(){
+        //Update the nodes in the map
+        map = parent.getEngine().getMap();
+        ArrayList<Node> nodes = map.getNodesAsArrayList();
+
+        //update the items in the checklist
+        startChoice.setItems(FXCollections.observableList(nodes));
+        endChoice.setItems(FXCollections.observableList(nodes));
+
+        //remove any previous paths from the display
         for (Line line: lines) {
             line.setVisible(false);
             mapPane.getChildren().remove(line);
@@ -81,19 +88,6 @@ public class PathController implements ControllableScreen{
         lines = new ArrayList<>();
     }
 
-    public void startSelected(ActionEvent e){
-//        //Start = ServiceRequest.getStaffForServiceType(serviceType);
-//        ArrayList<String> destinations = new ArrayList<String>();
-//        for( : destinations){
-//            destinations.add(member.getFullName());
-//        }
-//        if(destinations.size() != 0) {
-//            System.out.println(FXCollections.observableList(destinations));
-//            startChoice.setItems(FXCollections.observableList(destinations));
-//            startChoice.setDisable(false);
-//        }
-
-    }
 
     public void enterPressed(ActionEvent e)
     {
@@ -133,6 +127,7 @@ public class PathController implements ControllableScreen{
 
     public void stairsPressed(ActionEvent e)
     {
+
         System.out.println("Checked off stairs");
     }
 
