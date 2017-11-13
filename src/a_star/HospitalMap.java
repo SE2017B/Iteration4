@@ -1,5 +1,11 @@
 package a_star;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -35,5 +41,31 @@ public class HospitalMap{
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
         return (int)Math.round(distance);
+    }
+    public List<Node> readCSV(String FileName ){
+        ArrayList<Node> Ans = new ArrayList<>();
+        Path pathToFile = Paths.get(FileName);
+        //loop through file
+        try(BufferedReader br = Files.newBufferedReader(pathToFile,
+                StandardCharsets.US_ASCII)){
+            // read the first line
+            String line= br.readLine();
+            //loop until all lines are read
+            while(line!=null){
+                //array of attributes
+                String[] attributes = line.split(",");
+                Ans.add(createCSVNode(attributes));
+            }
+
+        }catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        //now return value
+        return Ans;
+
+    }
+    public Node createCSVNode(String[] a){
+        //Todo: Add content
+        return new Node();
     }
 }
