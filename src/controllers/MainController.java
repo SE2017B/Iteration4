@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 public class MainController implements ControllableScreen{
     private ScreenController parent;
@@ -32,6 +34,9 @@ public class MainController implements ControllableScreen{
     @FXML
     private Button btnfilter;
 
+    @FXML
+    private Pane mapPane;
+
     public void init(){}
 
     public void onShow(){}
@@ -54,11 +59,27 @@ public class MainController implements ControllableScreen{
     }
     public void zinPressed(ActionEvent e){
         System.out.println("Zoom In Pressed");
+        slideBarZoom.adjustValue(slideBarZoom.getValue()+0.1);
+        setMapScale(slideBarZoom.getValue());
  
     }
     public void zoutPressed(ActionEvent e){
-        System.out.println("Zoom Out Pressed");
+
+        slideBarZoom.adjustValue(slideBarZoom.getValue()-0.1);
+        setMapScale(slideBarZoom.getValue());
 
     }
+
+    public void sliderChanged(MouseEvent e){
+        System.out.println("Slider Moved");
+        setMapScale(slideBarZoom.getValue());
+    }
+
+    public void setMapScale(double scale){
+        mapPane.setScaleX(scale);
+        mapPane.setScaleY(scale);
+    }
+
+
 
 }
