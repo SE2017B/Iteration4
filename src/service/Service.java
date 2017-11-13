@@ -51,9 +51,13 @@ abstract class Service{
     public ArrayList<Staff> getPersonnel(){
         return this.personnel;
     }
-    public ArrayList<ServiceRequest> getRequests() { //should this one be in here since there's a getNextRequest?
+    public ArrayList<ServiceRequest> getBacklog() { //should this one be in here since there's a getNextRequest?
         return backlog;
     }
+    public ArrayList<Staff> getAvailablePer() {
+        return availablePer;
+    }
+
     public String getDescription(){
         return this.description;
     }
@@ -65,7 +69,7 @@ abstract class Service{
     }
 
     //setters
-    void setDescription(String description){
+    public void setDescription(String description){
         this.description = description;
     }
     //should we have the setType function be an abstract since it's in all of the others?
