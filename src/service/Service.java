@@ -25,16 +25,13 @@ abstract class Service{
         this.availablePer.addAll(people);
     }
 
+    //something wrong in here - test is failing
     public void addRequest(ServiceRequest request){
-        System.out.println(request.getRequestID());
         if(availablePer.isEmpty()) {
-            System.out.println("false");
             backlog.add(request);
         }else{
-            System.out.println("true");
             Staff avaStaff = availablePer.get(0);
             if(!avaStaff.isBusy()) {
-                System.out.println("yes");
                 avaStaff.setCurrentRequest(request);
             }
         }
@@ -51,7 +48,7 @@ abstract class Service{
     public ArrayList<Staff> getPersonnel(){
         return this.personnel;
     }
-    public ArrayList<ServiceRequest> getRequests() { //should this one be in here since there's a getNextRequest?
+    public ArrayList<ServiceRequest> getRequests() {
         return backlog;
     }
     public String getDescription(){

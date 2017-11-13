@@ -28,8 +28,6 @@ public class TranslatorServiceTest {
     public void assignPersonTest(){
         service.assignPerson(spanishJoe);
         assertTrue(service.getPersonnel().contains(spanishJoe));
-        service.assignPerson(frenchBen);
-        assertTrue(service.getPersonnel().contains(frenchBen));
     }
 
     @Test

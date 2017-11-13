@@ -6,6 +6,8 @@ import service.FoodService;
 import service.ServiceRequest;
 import service.Staff;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -14,6 +16,8 @@ public class FoodServiceTest {
     private Staff John;
     private Staff Jane;
     private ServiceRequest foodRequest;
+    private ServiceRequest orangeRequest;
+    private ServiceRequest grapeRequest;
     Node location;
 
     @Before
@@ -23,15 +27,32 @@ public class FoodServiceTest {
         Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456, foodService);
         location = new Node();
         foodRequest = new ServiceRequest(foodService, 1, location, "apple");
+        orangeRequest = new ServiceRequest(foodService, 2, location, "orange");
+        grapeRequest = new ServiceRequest(foodService, 3, location, "grape");
 
         foodService.assignPerson(John);
         foodService.assignPerson(Jane);
     }
 
+    //Add in any other method tests that are longer than 1 line
+    //test backlog - 3 requests
+    //test that staff is put back in available people after request is completed
+
+    //fails - somehow requests are only being assigned to John Doe
+    @Test
+    public void testBacklog(){
+        foodService.addRequest(foodRequest);
+        foodService.addRequest(orangeRequest);
+        foodService.addRequest(grapeRequest);
+
+        ArrayList<ServiceRequest> backlog = new ArrayList<>();
+        backlog.add(grapeRequest);
+
+        assertEquals(foodService.getRequests(), backlog);
+    }
 
     @Test
     public void testFoodService() {
-        System.out.println((foodService.getType()));
         assertTrue(foodService.getType().equals("Food Service"));
     }
 
@@ -42,7 +63,6 @@ public class FoodServiceTest {
 
     @Test
     public void testAssignRequest(){
-        foodRequest = new ServiceRequest(foodService, 1, location, "apple");
         foodService.addRequest(foodRequest);
         assertEquals(John.getCurrentRequest().getRequestID(), foodRequest.getRequestID());
     }
@@ -52,12 +72,9 @@ public class FoodServiceTest {
         assertTrue(foodRequest.getRequestID() == 1);
     }
 
-    /*
-     will need to write this eventually, but need to talk to map people first - Erika
-
     @Test
-    public void testRequestService(){
-
+    public void testGiveService(){
+        foodRequest.giveRequest();
+        assertEquals(John.getCurrentRequest(), foodRequest);
     }
-    */
 }
