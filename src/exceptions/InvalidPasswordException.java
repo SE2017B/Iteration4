@@ -1,8 +1,8 @@
 package exceptions;
 
-public class InvalidLoginException extends Exception {
+public class InvalidPasswordException extends Exception {
     public String message;
-    public InvalidLoginException(){
+    public InvalidPasswordException(){
         this.message = "Invalid Password";
     }
 }

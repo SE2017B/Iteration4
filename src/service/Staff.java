@@ -1,6 +1,9 @@
 
 package service;
 
+import exceptions.InvalidLoginException;
+import exceptions.InvalidPasswordException;
+
 public class Staff{
     private String username;
     private String password;
@@ -85,8 +88,12 @@ public class Staff{
     }
 
     // make a try catch eventually so that if password fails, a message pops up saying "invalid password"
-    public void changePassword(String newPass, String oldPass){
-        if(oldPass.equals(this.password)) this.password = newPass;
+    public void changePassword(String newPass, String oldPass) throws InvalidPasswordException {
+        try
+        {
+            if(this.password.equals(oldPass)) this.password = newPass;
+            else throw new InvalidPasswordException();
+        } catch(InvalidPasswordException e) {}
     }
 
     public void completeCurRec() {

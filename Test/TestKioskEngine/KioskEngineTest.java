@@ -1,6 +1,7 @@
 package TestKioskEngine;
 
 import exceptions.InvalidLoginException;
+import exceptions.InvalidPasswordException;
 import kioskEngine.KioskEngine;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,20 +33,14 @@ public class KioskEngineTest {
     }
 
     @Test
-    public void testLogin(){
+    public void testLogin() throws InvalidLoginException{
         engine.addStaffLogin(bob);
-        try{
-            assertTrue(engine.login("bobby", "bob"));
-        }
-        catch (InvalidLoginException e) {
-            assertFalse(true);
-        }
+        assertTrue(engine.login("bobby", "bob"));
     }
 
-
-    @Test(expected = InvalidLoginException.class)
+    @Test
     public void testLoginFail() throws InvalidLoginException{
         engine.addStaffLogin(bob);
-        engine.login("bobb", "bob");
+        assertFalse(engine.login("bobb", "bob"));
     }
 }
