@@ -72,6 +72,11 @@ public class AdminMenuController implements ControllableScreen{
         //Enable map editing for Admins
         if(!staffMember.getJobTitle().contains("Admin")){
             btnEdit.setDisable(true);
+            btnEdit.setVisible(false);
+        }
+        else{
+            btnEdit.setDisable(false);
+            btnEdit.setVisible(true);
         }
 
         //Populate the list of service requests

@@ -71,7 +71,7 @@ public class MainController implements ControllableScreen{
     }
 
     public void sliderChanged(MouseEvent e){
-        System.out.println("Slider Moved");
+        //System.out.println("Slider Moved");
         setMapScale(slideBarZoom.getValue());
     }
 

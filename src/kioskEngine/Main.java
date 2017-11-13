@@ -42,11 +42,14 @@ public class Main extends Application {
     public static void main(String[] args) {
         Node testNode = new Node(600,400);
         FoodService food = new FoodService();
-        Staff testStaff =  new Staff("test","","Admin","Admin Test",1234, food);
+        Staff testAdmin =  new Staff("test","","Admin","Admin Test",1234, food);
+        Staff testStaff =  new Staff("testStaff","","food stuff","Staff Test",1234, food);
         food.addAvailable(testStaff);
+        food.addAvailable(testAdmin);
         ServiceRequest req = new ServiceRequest(food,1,testNode,"This is a test");
         testStaff.setCurrentRequest(req);
         engine.addStaffLogin(testStaff);
+        engine.addStaffLogin(testAdmin);
 
         launch(args);
     }
