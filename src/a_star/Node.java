@@ -42,6 +42,18 @@ public class Node implements Comparable<Node>{
         this.connections = connections;
     }
 
+    public Node(String name, String ID, String type, List<Node> connections, int hCost, int gCost, int floor, int x, int y) {
+        this.name = name;
+        this.ID = ID;
+        this.type = type;
+        this.connections = connections;
+        this.hCost = hCost;
+        this.gCost = gCost;
+        this.floor = floor;
+        this.x = x;
+        this.y = y;
+    }
+
     public Node(){ }
 
     public int gethCost() {
