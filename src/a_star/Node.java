@@ -8,9 +8,35 @@ public class Node implements Comparable<Node>{
     private String ID;
     private String type;
     private List<Node> connections;
-    private Coordinate point;
     private int hCost;
     private int gCost;
+    private int floor;
+    private int x;
+    private int y;
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     public Node(List<Node> connections){
         this.connections = connections;
@@ -67,52 +93,13 @@ public class Node implements Comparable<Node>{
         this.connections = connections;
     }
 
-    public int getX() {
-        return point.getX();
-    }
+    public void setX(int){}
 
-    public int getY() {
-        return point.getY();
-    }
-
-    public int getFloor() {
-        return point.getFloor();
-    }
+    public void setY(){}
 
     @Override
     public int compareTo(Node other){
         //TODO in order to optimize the priority queue stuff in A*
         return 0;
-    }
-
-    //Encapsulated class in order to handle the simple cartesian graph point functionality
-    private class Coordinate {
-        private int floor;
-        private int x;
-        private int y;
-
-        public int getFloor() {
-            return floor;
-        }
-
-        public void setFloor(int floor) {
-            this.floor = floor;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
     }
 }
