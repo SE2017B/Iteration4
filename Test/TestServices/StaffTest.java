@@ -1,5 +1,6 @@
 package TestServices;
 
+import exceptions.InvalidPasswordException;
 import org.junit.*;
 import service.*;
 
@@ -25,8 +26,14 @@ public class StaffTest{
     }
 
     @Test
-    public void changePasswordTest(){
+    public void changePasswordTest() throws InvalidPasswordException{
         Bob.changePassword("abc", "bobby");
-        assertEquals(Bob.getPassword(), "abc");
+        assertTrue(Bob.getPassword().equals("abc"));
+    }
+
+    @Test
+    public void changePasswordFail() throws InvalidPasswordException{
+        Bob.changePassword("abc", "bobb");
+        assertFalse(Bob.getPassword().equals("abc"));
     }
 }
