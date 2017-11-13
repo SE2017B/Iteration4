@@ -25,7 +25,7 @@ abstract class Service{
         this.availablePer.addAll(people);
     }
 
-    // something wrong in here - test is failing
+    //can we get rid of these print statements now?
     public void addRequest(ServiceRequest request){
         System.out.println(request.getRequestID());
         if(availablePer.isEmpty()) {
@@ -74,6 +74,5 @@ abstract class Service{
     public void setDescription(String description){
         this.description = description;
     }
-    //should we have the setType function be an abstract since it's in all of the others?
     public void setType(String type){ this.type = type; }
 }
