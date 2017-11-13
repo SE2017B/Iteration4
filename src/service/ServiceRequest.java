@@ -20,6 +20,7 @@ public class ServiceRequest{
         service.addRequest(this);
     }
 
+    //getters
     public Service getRequestType(){
         return this.service;
     }
@@ -29,7 +30,9 @@ public class ServiceRequest{
     public Node getWhere(){
         return this.where;
     }
+    public String getDescription() { return this.description; }
 
+    //setters
     public void setRequestType(Service requestType){
         this.service = requestType;
     }
@@ -38,5 +41,8 @@ public class ServiceRequest{
     }
     public void setWhere(Node where){
         this.where = where;
+    }
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
