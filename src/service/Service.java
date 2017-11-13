@@ -14,7 +14,7 @@ abstract class Service{
         backlog = new ArrayList<>();
         availablePer = new ArrayList<>();
     }
-//why are these in the subclasses as well?
+
     public void assignPerson(Staff person){
         this.personnel.add(person);
         this.availablePer.add(person);

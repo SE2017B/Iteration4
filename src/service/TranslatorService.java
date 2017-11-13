@@ -20,6 +20,7 @@ public class TranslatorService extends Service{
         this.endTime = endTime;
     }
 
+    /*
     public void assignPerson(Staff person){
         this.personnel.add(person);
     }
@@ -29,6 +30,7 @@ public class TranslatorService extends Service{
     public void addRequest(ServiceRequest request){
         this.backlog.add(request);
     }
+    */
 
     //getters
     /*
