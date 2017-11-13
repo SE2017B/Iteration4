@@ -1,5 +1,11 @@
 package a_star;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
@@ -15,12 +21,10 @@ public class HospitalMap{
         map.put(id, node);
     }
 
-    public List<Node> findPath(Node start, Node end){
+    public ArrayList<Node> findPath(Node start, Node end){
         //TODO
         //Also determine heuristic..should be manhattan but we can also use euclydian...up to the team
-        ArrayList<Node> stub = new ArrayList<Node>();
-        stub.add(new Node());
-        return stub;
+        return getNodesAsArrayList();
 
     }
 
@@ -35,5 +39,50 @@ public class HospitalMap{
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
         return (int)Math.round(distance);
+    }
+    public List<Node> readCSV(String FileName ){
+        ArrayList<Node> Ans = new ArrayList<>();
+        Path pathToFile = Paths.get(FileName);
+        //loop through file
+        try(BufferedReader br = Files.newBufferedReader(pathToFile,
+                StandardCharsets.US_ASCII)){
+            // read the first line
+            String line= br.readLine();
+            //loop until all lines are read
+            while(line!=null){
+                //array of attributes
+                String[] attributes = line.split(",");
+                Ans.add(createCSVNode(attributes));
+            }
+
+        }catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+        //now return value
+        return Ans;
+
+    }
+    public Node createCSVNode(String[] a){
+        //Todo: Add content
+        return new Node();
+    }
+
+    public ArrayList<Node> getNodesAsArrayList(){
+        //STUB
+        ArrayList<Node> stub = new ArrayList<Node>();
+        Node a = new Node(400,200);
+        a.setName("a");
+        stub.add(a);
+        Node b = new Node(600,200);
+        b.setName("b");
+        stub.add(b);
+        Node c = new Node(600,400);
+        c.setName("c");
+        stub.add(c);
+        Node d = new Node(400,400);
+        d.setName("d");
+        stub.add(d);
+        return stub;
+
     }
 }

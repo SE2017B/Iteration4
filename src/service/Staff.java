@@ -14,7 +14,9 @@ public class Staff{
     private ServiceRequest currentRequest;
     private boolean isBusy;
 
+
     public Staff(String username, String password, String jobTitle, String fullName, int ID, Service jobType){
+
         this.username = username;
         this.password = password;
         this.jobTitle = jobTitle;
@@ -23,6 +25,7 @@ public class Staff{
         this.jobType = jobType;
         currentRequest = null;
         isBusy = false;
+
     }
 
     public String getFullName() {
@@ -101,5 +104,9 @@ public class Staff{
         if (currentRequest == null){
             jobType.addAvailable(this);
         }
+    }
+
+    public String toString(){
+        return fullName;
     }
 }
