@@ -13,10 +13,17 @@ abstract class Service{
         personnel = new ArrayList<>();
         backlog = new ArrayList<>();
         availablePer = new ArrayList<>();
-
     }
 
+    public void assignPerson(Staff person){
+        this.personnel.add(person);
+        this.availablePer.add(person);
+    }
 
+    public void assignPeople(ArrayList<Staff> people){
+        this.personnel.addAll(people);
+        this.availablePer.addAll(people);
+    }
 
     public void addRequest(ServiceRequest request){
         System.out.println(request.getRequestID());
@@ -31,25 +38,25 @@ abstract class Service{
                 avaStaff.setCurrentRequest(request);
             }
         }
-
     }
 
-    public void assignPerson(Staff person){
-        this.personnel.add(person);
-        this.availablePer.add(person);
+    public void addAvailable(Staff staff) {
+        availablePer.add(staff);
     }
 
-    public void assignPeople(ArrayList<Staff> people){
-        this.personnel.addAll(people);
-        this.availablePer.addAll(people);
+    //getters
+    public String getType(){
+        return this.type;
     }
-
-    abstract String getType();
-    abstract String getDescription();
-    abstract ArrayList<Staff> getPersonnel();
-
-    abstract void setDescription(String description);
-
+    public ArrayList<Staff> getPersonnel(){
+        return this.personnel;
+    }
+    public ArrayList<ServiceRequest> getRequests() { //should this one be in here since there's a getNextRequest?
+        return backlog;
+    }
+    public String getDescription(){
+        return this.description;
+    }
     public ServiceRequest getNextRequest() {
         if(backlog.isEmpty()) {
             return null;
@@ -57,7 +64,10 @@ abstract class Service{
         return backlog.get(0);
     }
 
-    public void addAvailable(Staff staff) {
-        availablePer.add(staff);
+    //setters
+    void setDescription(String description){
+        this.description = description;
     }
+    //should we have the setType function be an abstract since it's in all of the others?
+    public void setType(String type){ this.type = type; }
 }
