@@ -4,19 +4,15 @@ import java.util.*;
 
 public class HospitalMap{
     private HashMap<String, Node> map;
-    private PriorityQueue<Node> frontier;
+    private LinkedList<Node> frontier;
     private ArrayList<Node> explored;
     private Node start;
     private Node end;
 
     //Constructors
-    public HospitalMap(){}
-    public HospitalMap(HashMap<String, Node> map){
-        this.map = map;
-    }
-    public HospitalMap(HashMap<String, Node> map, Node start){
-        this.start = start;
-        this.map = map;
+    public HospitalMap(){
+        frontier = new LinkedList<Node>();
+        explored = new ArrayList<>();
     }
 
     //Getters and Setters
@@ -45,6 +41,7 @@ public class HospitalMap{
     //Callable navigation methods
     public Stack<Node> findPath(Node end){
         Stack<Node> path = new Stack<>();
+        path.push(this.start);
 
         //Handles no start case
         if (this.start == null){
@@ -52,16 +49,16 @@ public class HospitalMap{
             return path;
         }
 
-        //Since we start at this node, we already explored it, adn we need to explore around it
-        this.start.setgCost(0);
-        this.explored.add(start);
-        for(Node n: this.start.getConnections()){
+        //Since we start at this node, we already explored it, and we need to explore around it
+        this.explored.add(this.start);
+        frontier.add(this.start);
+        for(Node n: this.start.getConnections().keySet()){
             frontier.add(n);
         }
 
         //A*
         int currentStep = 1;
-
+        int totalCost = 0;
         while(frontier.size() > 0){
             //Sets what node we are examining
             Node currentNode = frontier.poll();
@@ -74,31 +71,39 @@ public class HospitalMap{
 
             this.explored.add(currentNode);
 
-            int bestScore = -1;
+            int bestScore = 100;
             Node bestStepperNode = new Node();
-            for(Node n: currentNode.getConnections()){
+
+            int bestH = 10000;
+            for(Node n: currentNode.getConnections().keySet()){
                 //checks if we already explored it
                 if(this.explored.contains(n)){
                     continue;
                 }
                 //checks if we have not seen it yet
                 if(!this.frontier.contains(n)){
-                    n.setgCost(currentNode.getgCost() + manhattanDistance(currentNode, n));
                     this.frontier.add(n);
                 }
 
+                /*
                 if(bestScore < 0){
                     bestStepperNode = n;
-                    bestScore = currentNode.getgCost() + manhattanDistance(currentNode, n);
+                    bestScore = currentNode.getCostFromNode(currentNode) + manhattanDistance(currentNode, n);
                 }
-                int tempCost = currentNode.getgCost() + manhattanDistance(currentNode, n);
-                if (tempCost >=  bestScore){
+                */
+
+                int tempCost = totalCost + n.getCostFromNode(currentNode);
+                int heuristic = manhattanDistance(n, this.end);
+                if (tempCost >=  bestScore && bestH < heuristic){
                     continue;
                 }
 
+                bestH = heuristic;
                 bestStepperNode = n;
+                bestScore = tempCost;
             }
 
+            totalCost += bestStepperNode.getCostFromNode(currentNode);
             path.push(bestStepperNode);
         }
 

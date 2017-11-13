@@ -2,14 +2,14 @@ package a_star;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.HashMap;
 
-public class Node implements Comparable<Node>{
+public class Node{
     private String name;
     private String ID;
     private String type;
-    private List<Node> connections;
+    private HashMap<Node, Integer> connections;
     private int hCost;
-    private int gCost;
     private int floor;
     private int x;
     private int y;
@@ -38,17 +38,23 @@ public class Node implements Comparable<Node>{
         this.y = y;
     }
 
-    public Node(List<Node> connections){
-        this.connections = connections;
-    }
-
-    public Node(String name, String ID, String type, List<Node> connections, int hCost, int gCost, int floor, int x, int y) {
+    public Node(String name, String ID, String type, HashMap<Node, Integer> connections, int hCost, int floor, int x, int y) {
         this.name = name;
         this.ID = ID;
         this.type = type;
         this.connections = connections;
         this.hCost = hCost;
-        this.gCost = gCost;
+        this.floor = floor;
+        this.x = x;
+        this.y = y;
+    }
+
+    public Node(String name, String ID, String type, int hCost, int floor, int x, int y) {
+        this.name = name;
+        this.ID = ID;
+        this.type = type;
+        this.connections = new HashMap<Node, Integer>();
+        this.hCost = hCost;
         this.floor = floor;
         this.x = x;
         this.y = y;
@@ -62,14 +68,6 @@ public class Node implements Comparable<Node>{
 
     public void sethCost(int hCost) {
         this.hCost = hCost;
-    }
-
-    public int getgCost() {
-        return gCost;
-    }
-
-    public void setgCost(int gCost) {
-        this.gCost = gCost;
     }
 
     //Getters and Setters
@@ -97,21 +95,29 @@ public class Node implements Comparable<Node>{
         this.type = type;
     }
 
-    public List<Node> getConnections() {
+    public HashMap<Node, Integer> getConnections() {
         return connections;
     }
 
-    public void setConnections(List<Node> connections) {
+    public void setConnections(HashMap<Node, Integer> connections) {
         this.connections = connections;
     }
 
-    public void setX(int){}
+    public void addConnection(int edgeCost, Node node){
+        this.connections.put(node, edgeCost);
+    }
 
-    public void setY(){}
+    public int getCostFromNode(Node node){
+        for(Node n: connections.keySet()){
+            if(node.toString().equals(n.toString())){
+                return connections.get(n);
+            }
+        }
+        return 0;
+    }
 
     @Override
-    public int compareTo(Node other){
-        //TODO in order to optimize the priority queue stuff in A*
-        return 0;
+    public String toString(){
+        return name;
     }
 }
