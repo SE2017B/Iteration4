@@ -37,6 +37,7 @@ abstract class Service{
             if(!avaStaff.isBusy()) {
                 System.out.println("yes");
                 avaStaff.setCurrentRequest(request);
+                availablePer.remove(avaStaff);
             }
         }
     }
@@ -52,7 +53,7 @@ abstract class Service{
     public ArrayList<Staff> getPersonnel(){
         return this.personnel;
     }
-    public ArrayList<ServiceRequest> getRequests() {
+    public ArrayList<ServiceRequest> getBacklog() {
         return backlog;
     }
     public ArrayList<Staff> getAvailablePer() {

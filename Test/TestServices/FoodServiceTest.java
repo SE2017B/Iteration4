@@ -48,7 +48,7 @@ public class FoodServiceTest {
         ArrayList<ServiceRequest> backlog = new ArrayList<>();
         backlog.add(grapeRequest);
 
-        assertEquals(foodService.getRequests(), backlog);
+        assertEquals(foodService.getBacklog(), backlog);
     }
 
     @Test
