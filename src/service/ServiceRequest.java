@@ -57,4 +57,7 @@ public class ServiceRequest{
         return temp;
     }
 
+    public String toString(){
+        return description;
+    }
 }

@@ -50,6 +50,7 @@ public class AdminMenuController implements ControllableScreen{
         //remove the selected request from the request list and the staff member
         System.out.println("Complete Pressed");
         staffMember.completeCurRec();
+        setForStaff(staffMember);
     }
 
     public void editPressed(ActionEvent e){
@@ -74,7 +75,8 @@ public class AdminMenuController implements ControllableScreen{
         }
 
         //Populate the list of service requests
-        //todo
+        requestList.setItems(FXCollections.observableArrayList(staffMember.getCurrentRequest()));
+
 
 
     }

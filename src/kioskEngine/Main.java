@@ -1,5 +1,6 @@
 package kioskEngine;
 
+import a_star.Node;
 import controllers.ScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import service.FoodService;
+import service.ServiceRequest;
 import service.Staff;
 
 public class Main extends Application {
@@ -38,8 +40,14 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        engine.addStaffLogin(new Staff("test","","Admin","Admin Test",1234,
-                                new FoodService()));
+        Node testNode = new Node(600,400);
+        FoodService food = new FoodService();
+        Staff testStaff =  new Staff("test","","Admin","Admin Test",1234, food);
+        food.addAvailable(testStaff);
+        ServiceRequest req = new ServiceRequest(food,1,testNode,"This is a test");
+        testStaff.setCurrentRequest(req);
+        engine.addStaffLogin(testStaff);
+
         launch(args);
     }
 }
