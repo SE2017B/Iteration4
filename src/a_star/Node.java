@@ -1,7 +1,6 @@
 package a_star;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Node{
@@ -13,6 +12,9 @@ public class Node{
     private int floor;
     private int x;
     private int y;
+    public int fScore;
+    public int greedy;
+    public ArrayList<Node> cameFrom;
 
     public int getFloor() {
         return floor;
@@ -47,17 +49,21 @@ public class Node{
         this.floor = floor;
         this.x = x;
         this.y = y;
+        this.fScore = 10000;    //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 10000;
     }
 
     public Node(String name, String ID, String type, int hCost, int floor, int x, int y) {
         this.name = name;
         this.ID = ID;
         this.type = type;
-        this.connections = new HashMap<Node, Integer>();
+        this.connections = new HashMap<>();
         this.hCost = hCost;
         this.floor = floor;
         this.x = x;
         this.y = y;
+        this.fScore = 10000;
+        this.greedy = 10000;
     }
 
     public Node(){ }
@@ -118,6 +124,6 @@ public class Node{
 
     @Override
     public String toString(){
-        return name;
+        return this.name;
     }
 }

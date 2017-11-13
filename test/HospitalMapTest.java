@@ -1,22 +1,27 @@
 import a_star.*;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Stack;
 
-public class HospitalMapTest{
+public class HospitalMapTest {
+    public HospitalMapTest() {
+    }
 
-    @Test
-    public void testMap() throws InterruptedException {
+    private HospitalMap smallArea = new HospitalMap();
+    private Node N1 = new Node("Node 1", "111", "Bathroom", 8, 1, 0, 4);
+    private Node N2 = new Node("Node 2", "222", "Room", 5, 1, 0, 2);
+    private Node N3 = new Node("Node 3", "333", "Desk", 3, 1, 0, 0);
+    private Node N4 = new Node("Node 4", "444", "Office", 6, 1, 1, 3);
+    private Node N5 = new Node("Node 5", "555", "Stairs", 3, 1, 1, 1);
+    private Node N6 = new Node("Node 6", "666", "Bathrooom", 5, 1, 2, 4);
+    private Node N7 = new Node("Node 7", "555", "Stairs", 4, 1, 2, 3);
+    private Node N8 = new Node("Node 8", "666", "Bathrooom", 2, 1, 2, 1);
+    private Node N9 = new Node("Node 9", "555", "Elevator", 0, 1, 2, 0);
+
+    @Before
+    public void initialize() {
         //Creating nodes for the map
-        Node N1 = new Node("Node 1", "111", "Bathroom", 8, 1, 0, 4);
-        Node N2 = new Node("Node 2", "222", "Room", 5, 1, 0, 2);
-        Node N3 = new Node("Node 3", "333", "Desk", 3, 1, 0, 0);
-        Node N4 = new Node("Node 4", "444", "Office", 6, 1, 1, 3);
-        Node N5 = new Node("Node 5", "555", "Stairs", 3, 1, 1, 1);
-        Node N6 = new Node("Node 6", "666", "Bathrooom", 5, 1, 2, 4);
-        Node N7 = new Node("Node 7", "555", "Stairs", 4, 1, 2, 3);
-        Node N8 = new Node("Node 8", "666", "Bathrooom", 2, 1, 2, 1);
-        Node N9 = new Node("Node 9", "555", "Elevator", 0, 1, 2, 0);
 
         //Add connections for nodeOne
         N1.addConnection(2, N2);
@@ -56,13 +61,15 @@ public class HospitalMapTest{
         N9.addConnection(3, N3);
         N9.addConnection(1, N8);
 
-        HospitalMap smallArea = new HospitalMap();
+    }
+
+    @Test
+    public void testMap() throws InterruptedException {
         smallArea.setStart(N1);
         smallArea.setEnd(N9);
 
         String answer = smallArea.findPath(N9).toString();
-        java.lang.Thread.sleep(10000);
         System.out.println(answer);
-    }
 
+    }
 }

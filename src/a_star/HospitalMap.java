@@ -11,7 +11,7 @@ public class HospitalMap{
 
     //Constructors
     public HospitalMap(){
-        frontier = new LinkedList<Node>();
+        frontier = new LinkedList<>();
         explored = new ArrayList<>();
     }
 
@@ -41,6 +41,8 @@ public class HospitalMap{
     //Callable navigation methods
     public Stack<Node> findPath(Node end){
         Stack<Node> path = new Stack<>();
+        HashMap<Node, Node> cameFrom = new HashMap<>();     //Need to know where each Node's shortest path comes from
+                                                            //Key: currentNode, Value: Node that currentNode came from
         path.push(this.start);
 
         //Handles no start case
@@ -49,6 +51,9 @@ public class HospitalMap{
             return path;
         }
 
+        this.start.greedy = 0;      //Greedy score from start to start is 0
+        this.start.fScore = manhattanDistance(this.start, end);     //Total score is only heuristic(manhattanDistance)
+
         //Starting the frontier with node 1
         frontier.add(this.start);
         for(Node n: this.start.getConnections().keySet()){
@@ -56,19 +61,33 @@ public class HospitalMap{
         }
 
         //A*
-        int totalCost = 0;
+//        int totalCost = 0;
         while(frontier.size() > 0){
             //Sets what node we are examining
-            Node currentNode = frontier.poll();
+            Node currentNode = frontier.getFirst();
+            int lowestFScore = 10000;
+            for(int i=0;i<frontier.size();i++){     //We examine the Node in frontier with the lowest fScore for efficiency
+                if(frontier.get(i).fScore < lowestFScore) {
+                    currentNode = frontier.get(i);
+                    lowestFScore = frontier.get(i).fScore;
+                }
+            }
+
             this.explored.add(currentNode);
+            this.frontier.remove(currentNode);      //Have to remove currentNode from frontier and add to explored
 
             //Checks if we reached the end node yet
             if (currentNode == end) {
-                break;
+                for(Node n:this.explored){      //Reset fScores and gScores for the next time we run findPath
+                    n.fScore = 10000;
+                    n.greedy = 10000;
+                }
+                return returnPath(currentNode, cameFrom);       //Path is generated in returnPath
             }
 
-            int bestFScore = 10000;
-            Node bestStepperNode = new Node();
+//            int bestFScore = 10000;       //We have fScore for each Node we check for best further below
+//            Node bestStepperNode = new Node();        //Can't have one Node as bestStepper bc if that path is wrong later on we're screwed
+                                                        //We need to remember the whole path, contained within cameFrom HashMap
             for(Node n: currentNode.getConnections().keySet()){
                 //checks if we already explored it
                 if(this.explored.contains(n)){
@@ -80,29 +99,52 @@ public class HospitalMap{
                     this.frontier.add(n);
                 }
 
-                //Checks the fScore, and will pass the node if its good
-                int greedy = n.getCostFromNode(currentNode) + totalCost;
-                int heuristic = manhattanDistance(n, this.end);
-                int fCost = greedy + heuristic;
-                if (fCost >= bestFScore){
-                    this.frontier.remove(n);
-                    continue;
-                }
+                int newGScore = currentNode.greedy + n.getCostFromNode(currentNode);    //Takes current Node greedy plus neighbors greedy to determine whether this path
+                                                                                        //Is better than other paths through n (neighboring Node)
+                if(newGScore >= n.greedy) continue;     //If neighbors greedy is lower then there is a better path through that Node so current path is irrelevant
+                cameFrom.put(n, currentNode);       //Otherwise record currentNode(Node where neighbor came from) so we can retrace path later
+                n.greedy = newGScore;       //Update neighbors greedy as it is now the best path
+                n.fScore = n.greedy + manhattanDistance(n, end);        //New fScore for neighbor Node is its greedy plus its heuristic
 
-                bestFScore = fCost;
-                bestStepperNode = n;
+//                int greedy = n.getCostFromNode(currentNode) + totalCost;      //We have to keep track of greedys and fScore for all the Nodes we visit
+//                int heuristic = manhattanDistance(n, this.end);               //It can't be reset between loop iterations
+//                int fCost = greedy + heuristic;
+//                if (fCost >= bestFScore){
+//                    this.frontier.remove(n);
+//                    continue;
+//                }
+//
+//                bestFScore = fCost;
+//                bestStepperNode = n;
             }
 
-            totalCost += bestStepperNode.getCostFromNode(currentNode);
-            path.push(bestStepperNode);
+//            totalCost += bestStepperNode.getCostFromNode(currentNode);        //We have to keep track of the entire path as opposed to the best neighbor from the
+//            frontier.removeFirstOccurrence(bestStepperNode);                  //Current Node each time. If something messes up in the future we don't know exactly
+//            frontier.addFirst(bestStepperNode);                               //How we got there
+//            path.push(bestStepperNode);
         }
 
         //Could not find the end node
+        for(Node n:this.explored){
+            n.fScore = 10000;       //Reset each Nodes greedy and fScore for next run of findPath
+            n.greedy = 10000;
+        }
+        return path;
+    }
+
+    private Stack<Node> returnPath(Node current, HashMap<Node, Node> cameFrom){     //Takes the HashMap containing where each Node came from and generates
+        Stack<Node> path = new Stack<>();                                           //A stack containing a path from the start Node to the end Node
+        path.push(current);
+        while(cameFrom.containsKey(current)){       //Each key Node contains the Node from where it came and this path
+            current = cameFrom.get(current);        //Is the best path
+            path.add(0, current);
+        }
+
         return path;
     }
 
     public List<Node> findPath(Node start, Node end){
-        return (new ArrayList<Node>());
+        return (new ArrayList<>());
     }
 
     public void setDefault(Node defaultNode){
