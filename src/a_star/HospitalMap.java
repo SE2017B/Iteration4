@@ -49,58 +49,48 @@ public class HospitalMap{
             return path;
         }
 
-        //Since we start at this node, we already explored it, and we need to explore around it
-        this.explored.add(this.start);
+        //Starting the frontier with node 1
         frontier.add(this.start);
         for(Node n: this.start.getConnections().keySet()){
             frontier.add(n);
         }
 
         //A*
-        int currentStep = 1;
         int totalCost = 0;
         while(frontier.size() > 0){
             //Sets what node we are examining
             Node currentNode = frontier.poll();
+            this.explored.add(currentNode);
 
             //Checks if we reached the end node yet
-            if (currentNode == end){
-                path.push(currentNode);
+            if (currentNode == end) {
                 break;
             }
 
-            this.explored.add(currentNode);
-
-            int bestScore = 100;
+            int bestFScore = 10000;
             Node bestStepperNode = new Node();
-
-            int bestH = 10000;
             for(Node n: currentNode.getConnections().keySet()){
                 //checks if we already explored it
                 if(this.explored.contains(n)){
                     continue;
                 }
+
                 //checks if we have not seen it yet
                 if(!this.frontier.contains(n)){
                     this.frontier.add(n);
                 }
 
-                /*
-                if(bestScore < 0){
-                    bestStepperNode = n;
-                    bestScore = currentNode.getCostFromNode(currentNode) + manhattanDistance(currentNode, n);
-                }
-                */
-
-                int tempCost = totalCost + n.getCostFromNode(currentNode);
+                //Checks the fScore, and will pass the node if its good
+                int greedy = n.getCostFromNode(currentNode) + totalCost;
                 int heuristic = manhattanDistance(n, this.end);
-                if (tempCost >=  bestScore && bestH < heuristic){
+                int fCost = greedy + heuristic;
+                if (fCost >= bestFScore){
+                    this.frontier.remove(n);
                     continue;
                 }
 
-                bestH = heuristic;
+                bestFScore = fCost;
                 bestStepperNode = n;
-                bestScore = tempCost;
             }
 
             totalCost += bestStepperNode.getCostFromNode(currentNode);

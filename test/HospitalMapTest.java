@@ -6,7 +6,7 @@ import java.util.Stack;
 public class HospitalMapTest{
 
     @Test
-    public void testMap() {
+    public void testMap() throws InterruptedException {
         //Creating nodes for the map
         Node N1 = new Node("Node 1", "111", "Bathroom", 8, 1, 0, 4);
         Node N2 = new Node("Node 2", "222", "Room", 5, 1, 0, 2);
@@ -60,8 +60,9 @@ public class HospitalMapTest{
         smallArea.setStart(N1);
         smallArea.setEnd(N9);
 
-        Stack<Node> answer = smallArea.findPath(N9);
-        System.out.println(answer.toString());
+        String answer = smallArea.findPath(N9).toString();
+        java.lang.Thread.sleep(10000);
+        System.out.println(answer);
     }
 
 }
