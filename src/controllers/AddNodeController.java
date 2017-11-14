@@ -170,9 +170,7 @@ public class AddNodeController implements ControllableScreen {
 
         for (Node node : nodes) {
             NodeCheckBox box = new NodeCheckBox();
-            box.setNode(node);
-            box.setLayoutX(node.getX());
-            box.setLayoutY(node.getY());
+            box.setNode(node); //sets checkbox to node location
 
             box.setVisible(true);
             mapPane.getChildren().add(box);
@@ -210,7 +208,7 @@ public class AddNodeController implements ControllableScreen {
                     connections.add(box.getNode());
             }
 
-            kioskEngine.KioskEngine.addNode(nodeID, x, y, floor, building, nodeType, name, connections);
+            parent.getEngine().addNode(nodeID, x, y, floor, building, nodeType, name, connections);
             System.out.println("Enter Pressed");
             parent.setScreen(ScreenController.AdminMenuID);
         } else

@@ -13,9 +13,22 @@ public class Node{
         this.connections = connections;
     }
 
-    public Node(){
+
+    //STUB Added for KioskEngine::AddNode()
+    //Change as needed
+    public Node(String name, String ID, String type, int x, int y, int floor, List<Node> connections){
+        this.name = name;
+        this.ID = ID;
+        this.type = type;
+        this.connections = connections;
+        this.point = new Coordinate();
+        point.setX(x);
+        point.setY(y);
+        point.setFloor(floor);
 
     }
+
+    public Node(){ }
 
     public Node(int x, int y){
         point = new Coordinate();

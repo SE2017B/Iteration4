@@ -25,12 +25,16 @@ public class KioskEngine{
         map = new HospitalMap();
     }
 
-    public static void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName, ArrayList<Node> connections) {
+    public void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName, ArrayList<Node> connections) {
         try {
+            //Open DB connection
             conn = DriverManager.getConnection(JDBC_URL);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
+
+            //Add Node to DB
+            Node newNode = new Node(anyNodeID,anyName, anyNodeType, Integer.parseInt(anyXcoord),Integer.parseInt(anyYcoord),Integer.parseInt(anyFloor),connections);
             PreparedStatement addAnyNode = conn.prepareStatement("INSERT INTO mapHNodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             addAnyNode.setString(1, anyNodeID);
@@ -46,13 +50,45 @@ public class KioskEngine{
             addAnyNode.executeUpdate();
             System.out.println("Insert Node Successful for nodeID: " + anyNodeID);
 
+
+            for (Node connectTo: connections) {
+                //Add Edge to DB
+                String anyEdgeID = (anyNodeID + "_" + connectTo.getID());
+
+                PreparedStatement addAnyEdge = conn.prepareStatement("INSERT INTO mapHEdges VALUES (?, ?, ?)");
+
+                addAnyEdge.setString(1, anyEdgeID);
+                addAnyEdge.setString(2, anyNodeID);
+                addAnyEdge.setString(3, connectTo.getID());
+
+                addAnyEdge.executeUpdate();
+                System.out.println("Insert Edge Successful for edgeID: " + anyEdgeID);
+
+                //Add revers edge to DB
+                String anyReverseEdgeID = (connectTo.getID() + "_" + anyNodeID);
+
+                PreparedStatement addAnyReverseEdge = conn.prepareStatement("INSERT INTO mapHEdges VALUES (?, ?, ?)");
+
+                addAnyEdge.setString(1, anyEdgeID);
+                addAnyEdge.setString(2, connectTo.getID());
+                addAnyEdge.setString(3, anyNodeID);
+
+                addAnyEdge.executeUpdate();
+                System.out.println("Insert Reverse Successful for edgeID: " + anyEdgeID);
+
+            }
+
             conn.commit();
             addAnyNode.close();
             conn.close();
 
-            //todo add connections to new node
+            //add node to map in memory
+            map.addNode(anyNodeID,newNode);
+            //todo does this add to connections?
+
 
         } catch (Exception e) {
+            System.out.println("DB Add Failed");
             e.printStackTrace();// end try
         }
     }
