@@ -36,7 +36,6 @@ public class AdminMenuController implements ControllableScreen{
     private Button btnLogout;
 
     public void init(){
-
     }
 
     public void onShow(){}
@@ -81,8 +80,6 @@ public class AdminMenuController implements ControllableScreen{
 
         //Populate the list of service requests
         requestList.setItems(FXCollections.observableArrayList(staffMember.getCurrentRequest()));
-
-
 
     }
 
