@@ -1,4 +1,5 @@
 import a_star.*;
+import com.sun.tools.corba.se.idl.StringGen;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,7 +9,9 @@ import static org.junit.Assert.assertEquals;
 
 public class HospitalMapTest {
 
-    public HospitalMapTest() { }
+    //set up example map for testing
+    public HospitalMapTest() {
+    }
 
     private HospitalMap smallArea = new HospitalMap();
     private Node N1 = new Node("Node 1", "111", "Bathroom",  1, 0, 400);
@@ -293,5 +296,37 @@ public class HospitalMapTest {
         String answer = smallArea.findPath(N3).toString();
         System.out.println(answer);
         assertEquals("[Node 22, Node 19, Node 18, Node 14, Node 15, Node 9, Node 3]", answer);
+    }
+    @Test
+    public void testMap8() throws InterruptedException {
+        smallArea.setStart(N4);
+        smallArea.setEnd(N2);
+
+        String answer = smallArea.findPath(N2).toString();
+        System.out.println(answer);
+    }
+    @Test
+    public void testMap8Reverse() throws InterruptedException {
+        smallArea.setStart(N2);
+        smallArea.setEnd(N4);
+
+        String answer = smallArea.findPath(N4).toString();
+        System.out.println(answer);
+    }
+    @Test
+    public void testMap9() throws InterruptedException {
+        smallArea.setStart(N7);
+        smallArea.setStart(N3);
+
+        String answer = smallArea.findPath(N3).toString();
+        System.out.println(answer);
+    }
+    @Test
+    public void testMap9Reverse() throws InterruptedException {
+        smallArea.setStart(N3);
+        smallArea.setStart(N7);
+
+        String answer = smallArea.findPath(N7).toString();
+        System.out.println(answer);
     }
 }
