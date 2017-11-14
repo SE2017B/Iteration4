@@ -60,8 +60,6 @@ public class HospitalMap{
             frontier.add(n);
         }
 
-        //A*
-//        int totalCost = 0;
         while(frontier.size() > 0){
             //Sets what node we are examining
             Node currentNode = frontier.getFirst();
@@ -85,9 +83,6 @@ public class HospitalMap{
                 return returnPath(currentNode, cameFrom);       //Path is generated in returnPath
             }
 
-//            int bestFScore = 10000;       //We have fScore for each Node we check for best further below
-//            Node bestStepperNode = new Node();        //Can't have one Node as bestStepper bc if that path is wrong later on we're screwed
-                                                        //We need to remember the whole path, contained within cameFrom HashMap
             for(Node n: currentNode.getConnections().keySet()){
                 //checks if we already explored it
                 if(this.explored.contains(n)){
@@ -104,24 +99,8 @@ public class HospitalMap{
                 if(newGScore >= n.greedy) continue;     //If neighbors greedy is lower then there is a better path through that Node so current path is irrelevant
                 cameFrom.put(n, currentNode);       //Otherwise record currentNode(Node where neighbor came from) so we can retrace path later
                 n.greedy = newGScore;       //Update neighbors greedy as it is now the best path
-                n.fScore = n.greedy + manhattanDistance(n, end);        //New fScore for neighbor Node is its greedy plus its heuristic
-
-//                int greedy = n.getCostFromNode(currentNode) + totalCost;      //We have to keep track of greedys and fScore for all the Nodes we visit
-//                int heuristic = manhattanDistance(n, this.end);               //It can't be reset between loop iterations
-//                int fCost = greedy + heuristic;
-//                if (fCost >= bestFScore){
-//                    this.frontier.remove(n);
-//                    continue;
-//                }
-//
-//                bestFScore = fCost;
-//                bestStepperNode = n;
+                n.fScore = n.greedy + (int)getEuclidianDistance(n, end);        //New fScore for neighbor Node is its greedy plus its heuristic
             }
-
-//            totalCost += bestStepperNode.getCostFromNode(currentNode);        //We have to keep track of the entire path as opposed to the best neighbor from the
-//            frontier.removeFirstOccurrence(bestStepperNode);                  //Current Node each time. If something messes up in the future we don't know exactly
-//            frontier.addFirst(bestStepperNode);                               //How we got there
-//            path.push(bestStepperNode);
         }
 
         //Could not find the end node

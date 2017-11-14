@@ -40,12 +40,11 @@ public class Node{
         this.y = y;
     }
 
-    public Node(String name, String ID, String type, HashMap<Node, Integer> connections, int hCost, int floor, int x, int y) {
+    public Node(String name, String ID, String type, HashMap<Node, Integer> connections, int floor, int x, int y) {
         this.name = name;
         this.ID = ID;
         this.type = type;
         this.connections = connections;
-        this.hCost = hCost;
         this.floor = floor;
         this.x = x;
         this.y = y;

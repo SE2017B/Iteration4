@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Stack;
 
 public class HospitalMapTest {
+
     public HospitalMapTest() {
     }
 
@@ -60,7 +61,6 @@ public class HospitalMapTest {
         //Add connections for nodeNine
         N9.addConnection(3, N3);
         N9.addConnection(1, N8);
-
     }
 
     @Test
