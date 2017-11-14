@@ -1,95 +1,143 @@
 package a_star;
-
-import java.util.List;
-
+import java.util.HashMap;
 public class Node{
+    //get floor number
     private String name;
     private String ID;
     private String type;
-    private List<Node> connections;
-    private Coordinate point;
-
-    public Node(List<Node> connections){
-        this.connections = connections;
+    private HashMap<Node, Integer> connections;
+    private int floor;
+    private int x;
+    private int y;
+    public int fScore;
+    public int greedy;
+    public int getFloor() {
+        return floor;
     }
-
-    public Node(){
-
+    //set floor number
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
-
+    //get x-coordinate
+    public int getX() {
+        return x;
+    }
+    //set x-coordinate
+    public void setX(int x) {
+        this.x = x;
+    }
+    //get y-coordinate
+    public int getY() {
+        return y;
+    }
+    //set y-coordinate
+    public void setY(int y) {
+        this.y = y;
+    }
+    public Node(String name, String ID, String type, HashMap<Node, Integer> connections, int floor, int x, int y) {
+        this.name = name;
+        this.ID = ID;
+        this.type = type;
+        this.connections = new HashMap<>();
+        this.floor = floor;
+        this.x = x;
+        this.y = y;
+        this.fScore = 10000;    //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 10000;
+    }
+    public Node(String name, String ID, String type, int floor, int x, int y) {
+        this.name = name;
+        this.ID = ID;
+        this.type = type;
+        this.connections = new HashMap<>();
+        this.floor = floor;
+        this.x = x;
+        this.y = y;
+        this.fScore = 10000;
+        this.greedy = 10000;
+    }
+    public Node(){ }
     //Getters and Setters
     public String getName() {
         return name;
     }
-
+    //get name of node
     public void setName(String name) {
         this.name = name;
     }
-
+    //get Id number of node
     public String getID() {
         return ID;
     }
-
+    //set ID number of node
     public void setID(String ID) {
         this.ID = ID;
     }
-
+    //get type of node
     public String getType() {
         return type;
     }
-
+    //set type of node
     public void setType(String type) {
         this.type = type;
     }
-
-    public List<Node> getConnections() {
+    //hasmap for connections within nodes
+    public HashMap<Node, Integer> getConnections() {
         return connections;
     }
-
-    public void setConnections(List<Node> connections) {
+    //set the connections between nodes
+    public void setConnections(HashMap<Node, Integer> connections) {
         this.connections = connections;
     }
-
-    public int getX() {
-        return point.getX();
+    //add a connection between nodes
+    public void addConnection(int edgeCost, Node node){
+        this.connections.put(node, edgeCost);
     }
-
-    public int getY() {
-        return point.getY();
+    //get the cost from a node to a different node
+    public void addConnection(Node node){
+        int edgeCost = (int)getEuclidianDistance(this, node);
+        this.connections.put(node, edgeCost);
     }
-
-    public int getFloor() {
-        return point.getFloor();
+    public double getEuclidianDistance(Node start, Node end){
+        double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
+        double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
+        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
+        return distance;
     }
-
-    //Encapsulated class in order to handle the simple cartesian graph point functionality
-    private class Coordinate {
-        private int floor;
-        private int x;
-        private int y;
-
-        public int getFloor() {
-            return floor;
+    public int getCostFromNode(Node node){
+        for(Node n: connections.keySet()){
+            if(node.toString().equals(n.toString())){
+                return connections.get(n);
+            }
         }
-
-        public void setFloor(int floor) {
-            this.floor = floor;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
-        }
+        return 0;
+    }
+    //override to turn int into a string
+    @Override
+    public String toString(){
+        return this.name;
+    }
+    //Keep this in mind for when we are having hashtable issues
+    @Override
+    public int hashCode(){
+        final int prime = 7;
+        //Commented this out because we were getting some overflow errors
+        //int ascii = this.hashCode();
+        int ascii = this.name.hashCode();
+        int returnVal = 1;
+        returnVal = prime * returnVal + this.x;
+        returnVal = prime * returnVal + this.y;
+        returnVal = prime * returnVal + this.floor;
+        returnVal = prime * returnVal + ascii;
+        return returnVal;
+    }
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(!(obj instanceof Node)) return false;
+        Node other = (Node)obj;
+        if(!this.getID().equals(other.getID())) return false;
+        return true;
     }
 }
