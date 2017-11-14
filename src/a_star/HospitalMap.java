@@ -85,30 +85,4 @@ public class HospitalMap{
         return stub;
 
     }
-    public List<Node> readCSV(String FileName ){
-        ArrayList<Node> Ans = new ArrayList<>();
-        Path pathToFile = Paths.get(FileName);
-        //loop through file
-        try(BufferedReader br = Files.newBufferedReader(pathToFile,
-                StandardCharsets.US_ASCII)){
-            // read the first line
-            String line= br.readLine();
-            //loop until all lines are read
-            while(line!=null){
-                //array of attributes
-                String[] attributes = line.split(",");
-                Ans.add(createCSVNode(attributes));
-            }
-
-        }catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-        //now return value
-        return Ans;
-
-    }
-    public Node createCSVNode(String[] a){
-        //Todo: Add content
-        return new Node();
-    }
 }

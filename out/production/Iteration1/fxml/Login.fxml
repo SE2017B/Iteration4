@@ -53,6 +53,11 @@
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin>
             </PasswordField>
+            <Label fx:id="failLabel" text="Login Failed" textFill="RED" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Italic" size="21.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>
