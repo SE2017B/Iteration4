@@ -1,6 +1,9 @@
 package service;
 
 import a_star.Node;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ServiceRequest{
     private Service service;
@@ -15,7 +18,6 @@ public class ServiceRequest{
         this.where = where;
         this.description = description;
     }
-
     public void giveRequest(){
         service.addRequest(this);
     }
@@ -44,5 +46,18 @@ public class ServiceRequest{
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public static ArrayList<Staff> getStaffForServiceType(String ServiceType){
+        //STUB
+        ArrayList<Staff> temp = new ArrayList<Staff>();
+        Staff john = new Staff("username","password","Translator","Translator Smith",1234, new TranslatorService());
+        john.setFullName("John Smith");
+        temp.add(john);
+        return temp;
+    }
+
+    public String toString(){
+        return description;
     }
 }

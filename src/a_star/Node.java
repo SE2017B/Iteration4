@@ -17,6 +17,12 @@ public class Node{
 
     }
 
+    public Node(int x, int y){
+        point = new Coordinate();
+        point.setX(x);
+        point.setY(y);
+    }
+
     //Getters and Setters
     public String getName() {
         return name;
@@ -91,5 +97,9 @@ public class Node{
         public void setY(int y) {
             this.y = y;
         }
+    }
+
+    public String toString(){
+        return name;
     }
 }

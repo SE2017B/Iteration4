@@ -3,6 +3,7 @@ package kioskEngine;
 import a_star.HospitalMap;
 import a_star.Node;
 import exceptions.InvalidLoginException;
+import service.FoodService;
 import service.Staff;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class KioskEngine{
 
     public KioskEngine(){
         loginInfo = new HashMap<>();
+        map = new HospitalMap();
     }
 
     public void addNode(){
@@ -28,13 +30,12 @@ public class KioskEngine{
         return stub;
     }
 
-    public void requestService(){
-
-    }
 
     public void compleatRequest(Staff staffMem){
         staffMem.completeCurRec();
     }
+
+
     public boolean login(String username, String password) throws InvalidLoginException{
 //        if(this.loginInfo.containsKey(username)){
 //            if (this.loginInfo.get(username).getPassword().equals(password)) return true;
@@ -54,11 +55,16 @@ public class KioskEngine{
     public HospitalMap getMap() {
         return map;
     }
+
     public HashMap<String, Staff> getLoginInfo() {
         return loginInfo;
     }
 
     public void addStaffLogin(Staff staff){
         loginInfo.put(staff.getUsername(), staff);
+    }
+
+    public Staff getStaff(String username){
+        return loginInfo.get(username);
     }
 }

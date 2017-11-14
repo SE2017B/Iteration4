@@ -14,7 +14,9 @@ public class Staff{
     private ServiceRequest currentRequest;
     private boolean isBusy;
 
+
     public Staff(String username, String password, String jobTitle, String fullName, int ID, Service jobType){
+
         this.username = username;
         this.password = password;
         this.jobTitle = jobTitle;
@@ -23,6 +25,7 @@ public class Staff{
         this.jobType = jobType;
         currentRequest = null;
         isBusy = false;
+
     }
 
     // make a try catch eventually so that if password fails, a message pops up saying "invalid password"
@@ -92,5 +95,9 @@ public class Staff{
         System.out.println(fullName);
         this.currentRequest = request;
         isBusy = true;
+    }
+
+    public String toString(){
+        return fullName;
     }
 }
