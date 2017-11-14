@@ -6,6 +6,8 @@ import org.junit.*;
 import service.*;
 
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class StaffTest{
@@ -26,8 +28,6 @@ public class StaffTest{
         orangeRequest = new ServiceRequest(foodService, 2, location, "orange");
     }
 
-    //Add in any other method tests that are longer than 1 line
-    //test that staff is put back in available people after request is completed
     @Test
     public void testBob(){
         assertEquals(Bob.getUsername(), "bob");
@@ -45,8 +45,36 @@ public class StaffTest{
         assertFalse(Bob.getPassword().equals("abc"));
     }
 
-    /*
     @Test
-    testSetCurrentRequest(){
-    }*/
+    public void testSetCurrentRequest(){
+        foodService.assignPerson(Bob);
+        Bob.setCurrentRequest(appleRequest);
+        assertEquals(Bob.getCurrentRequest(), appleRequest);
+    }
+
+    @Test
+    public void testCompleteCurRec(){
+        foodService.assignPerson(Bob);
+        foodService.addRequest(appleRequest);
+        Bob.completeCurRec();
+        assertTrue(Bob.getCurrentRequest() == null);
+    }
+
+    @Test
+    public void testCompleteCurRec2(){
+        foodService.assignPerson(Bob);
+        foodService.addRequest(appleRequest);
+        Bob.completeCurRec();
+        ArrayList<Staff> available = new ArrayList<>();
+        available.add(Bob);
+        assertEquals(foodService.getAvailablePer(), available);
+    }
+
+    @Test
+    public void testCompleteCurRec3(){
+        foodService.assignPerson(Bob);
+        foodService.addRequest(appleRequest);
+        Bob.completeCurRec();
+        assertFalse(Bob.isBusy()); //Bob should not be busy now
+    }
 }

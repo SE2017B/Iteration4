@@ -37,6 +37,7 @@ public class Staff{
         currentRequest = jobType.getNextRequest();
         if (currentRequest == null){
             jobType.addAvailable(this);
+            this.isBusy = false;
         }
     }
 
