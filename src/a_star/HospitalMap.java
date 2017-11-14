@@ -7,32 +7,47 @@ public class HospitalMap{
     private ArrayList<Node> explored;
     private Node start;
     private Node end;
+
     //Constructors
     public HospitalMap(){
         frontier = new LinkedList<>();
         explored = new ArrayList<>();
     }
+
     //Getters and Setters
+
+    //Gets the start node
     public Node getStart() {
         return start;
     }
+
+    //Sets the start node
     public void setStart(Node start) {
         this.start = start;
     }
-    public Node getEnd() {
-        return end;
-    }
+
+    //Gets the end node
+    public Node getEnd() { return end; }
+
+    //Sets the end node
     public void setEnd(Node end) {
         this.end = end;
     }
-    //helper methods
+
+    //Helper Methods
+
+    //Method to retrieve the Manhattan Distance
     private int manhattanDistance(Node p1, Node p2){
         return Math.abs(p1.getX() - p2.getX()) + Math.abs(p1.getY() - p2.getY());
     }
+
+    //Method to add a new node to the map
     public void addNode(String id, Node node){
         map.put(id, node);
     }
     //Callable navigation methods
+
+    //Method to find the path from a starting node to an end note
     public Stack<Node> findPath(Node start, Node end){
         Node storedStart = this.start;
         this.start = start;
@@ -40,6 +55,9 @@ public class HospitalMap{
         this.start = storedStart;
         return answer;
     }
+
+    //Method to find the path from a pre-determined starting node to an end node
+    //specified in the parameters of  the function
     public Stack<Node> findPath(Node end){
         Stack<Node> path = new Stack<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();     //Need to know where each Node's shortest path comes from
@@ -51,7 +69,7 @@ public class HospitalMap{
             return path;
         }
         this.start.greedy = 0;      //Greedy score from start to start is 0
-        this.start.fScore = (int)getEuclidianDistance(this.start, end);     //Total score is only heuristic(manhattanDistance)
+        this.start.fScore = (int)getEuclidianDistance(this.start, end);     //Total score is only heuristic(getEuclidianDistance)
         //Starting the frontier with node 1
         frontier.add(this.start);
         for(Node n: this.start.getConnections().keySet()){
@@ -100,8 +118,11 @@ public class HospitalMap{
         }
         return path;
     }
-    private Stack<Node> returnPath(Node current, HashMap<Node, Node> cameFrom){     //Takes the HashMap containing where each Node came from and generates
-        Stack<Node> path = new Stack<>();                                           //A stack containing a path from the start Node to the end Node
+
+    //Method that takes the HashMap containing where each Node came from and generates
+    // A stack containing a path from the start Node to the end Node
+    private Stack<Node> returnPath(Node current, HashMap<Node, Node> cameFrom){
+        Stack<Node> path = new Stack<>();
         path.push(current);
         while(cameFrom.containsKey(current)){       //Each key Node contains the Node from where it came and this path
             current = cameFrom.get(current);        //Is the best path
@@ -109,15 +130,20 @@ public class HospitalMap{
         }
         return path;
     }
+
+    //Sets the default start location, which should be the kiosk location
     public void setDefault(Node defaultNode){
         //Default should be Kiosk locaiton
         this.start = defaultNode;
     }
+
+    //Retrieves the Euclidian Distance from one node to another
     public double getEuclidianDistance(Node start, Node end){
         double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
         return distance;
     }
+
     //Cache for stuff
 }
