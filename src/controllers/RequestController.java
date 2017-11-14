@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Labeled;
 import service.ServiceRequest;
 import service.Staff;
-
+import controllers.AdminMenuController;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ public class RequestController implements ControllableScreen{
     private String merid;
     private Staff staffMember;
     private LocalDate date;
+
 
 
     private ArrayList<Staff> staff;
@@ -97,6 +98,7 @@ public class RequestController implements ControllableScreen{
             infoLabel.setVisible(false);
             infoText.setVisible(false);
         }
+
 
     }
 
