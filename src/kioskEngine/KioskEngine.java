@@ -6,6 +6,9 @@ import exceptions.InvalidLoginException;
 import service.FoodService;
 import service.Staff;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.List;
 public class KioskEngine{
     private HospitalMap map;
     private HashMap<String, Staff> loginInfo;
+    private static final String JDBC_URL="jdbc:derby:teamHDB;create=true";
+    private static Connection conn;
 
 
     public KioskEngine(){
@@ -20,8 +25,34 @@ public class KioskEngine{
         map = new HospitalMap();
     }
 
-    public void addNode(){
+    public static void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName) {
+        try {
+            conn = DriverManager.getConnection(JDBC_URL);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
 
+            PreparedStatement addAnyNode = conn.prepareStatement("INSERT INTO mapHNodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            addAnyNode.setString(1, anyNodeID);
+            addAnyNode.setString(2, anyXcoord);
+            addAnyNode.setString(3, anyYcoord);
+            addAnyNode.setString(4, anyFloor);
+            addAnyNode.setString(5, anyBuilding);
+            addAnyNode.setString(6, anyNodeType);
+            addAnyNode.setString(7, anyName);
+            addAnyNode.setString(8, anyName);
+            addAnyNode.setString(9, "Team H");
+
+            addAnyNode.executeUpdate();
+            System.out.println("Insert Node Successful for nodeID: " + anyNodeID);
+
+            conn.commit();
+            addAnyNode.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();// end try
+        }
     }
 
     public List<Node> findPath(){

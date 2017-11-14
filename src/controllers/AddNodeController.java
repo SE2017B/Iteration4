@@ -8,8 +8,8 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import java.lang.*;
-import a_star.Node;
-import a_star.Node.*;
+import kioskEngine.KioskEngine.*;
+
 
 
 import java.util.List;
@@ -21,14 +21,14 @@ public class AddNodeController implements ControllableScreen{
     //node variables
     private String name;
     private String nodeID;
-    private int x;
-    private int y;
+    private String x;
+    private String y;
     private String floor;
     private String building;
     private String nodeType;
 
 
-
+    //setter for parent
     public void setParentController(ScreenController parent){
         this.parent = parent;
     }
@@ -140,11 +140,17 @@ public class AddNodeController implements ControllableScreen{
 
     public void onShow(){}
 
-
+    //Action upon pressing enter
+    //variables for all text fields is set up and populated
+    //add node command is executed
+    //user is returned to menu screen
     public void enterPressed(ActionEvent e){
         nodeID = txtfldID.getText();
-        x = Integer.valueOf(txtfldX.getText());
-        y = Integer.valueOf(txtfldY.getText());
+        //x and y and ints
+//        x = Integer.valueOf(txtfldX.getText());
+//        y = Integer.valueOf(txtfldY.getText());
+        x = txtfldX.getText();
+        y = txtfldY.getText();
 
         System.out.println(nodeID);
         System.out.println(x);
@@ -156,16 +162,17 @@ public class AddNodeController implements ControllableScreen{
         System.out.println(building);
         System.out.println(name);
 
-        //database.nodeDatabase.addNode(nodeID, x, y, floor, building, nodeType, name);
+        kioskEngine.KioskEngine.addNode(nodeID, x, y, floor, building, nodeType, name);
         System.out.println("Enter Pressed");
         parent.setScreen(ScreenController.AdminMenuID);
     }
-
+    //comands for button cancel press
     public void cancelPressed(ActionEvent e){
         System.out.println("Cancel Pressed");
         parent.setScreen(ScreenController.AdminMenuID);
     }
 
+    //set up variables when building drop down selected
     @FXML
     void buildingSelected(ActionEvent e)
     {
@@ -175,6 +182,7 @@ public class AddNodeController implements ControllableScreen{
         buildingDropDown.setText(building);
     }
 
+    //set up variable when floor drop down selected
     @FXML
     void floorSelected(ActionEvent e)
     {
@@ -184,6 +192,7 @@ public class AddNodeController implements ControllableScreen{
         floorDropDown.setText(floor);
     }
 
+    //set up variable when floor drop down selected
     @FXML
     void nodeTypeSelected(ActionEvent e)
     {
@@ -192,6 +201,8 @@ public class AddNodeController implements ControllableScreen{
         //Setting the variables equal to values read from UI
         nodeTypeDropDown.setText(nodeType);
     }
+
+    //set variable to text from text field name
     @FXML
     void filledNodeID(ActionEvent e)
     {
