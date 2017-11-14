@@ -353,4 +353,5 @@ public class HospitalMapTest {
     public void testGetEuclideanDistance1Reverse(){
         assertEquals(sqrt(170000), smallArea.getEuclidianDistance(N14, N3), .01);
     }
+    //Hi
 }
