@@ -1,5 +1,4 @@
 import a_star.*;
-import com.sun.tools.corba.se.idl.StringGen;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -316,7 +315,7 @@ public class HospitalMapTest {
     @Test
     public void testMap9() throws InterruptedException {
         smallArea.setStart(N7);
-        smallArea.setStart(N3);
+        smallArea.setEnd(N3);
 
         String answer = smallArea.findPath(N3).toString();
         System.out.println(answer);
@@ -324,7 +323,7 @@ public class HospitalMapTest {
     @Test
     public void testMap9Reverse() throws InterruptedException {
         smallArea.setStart(N3);
-        smallArea.setStart(N7);
+        smallArea.setEnd(N7);
 
         String answer = smallArea.findPath(N7).toString();
         System.out.println(answer);
