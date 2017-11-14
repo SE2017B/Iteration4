@@ -8,7 +8,6 @@ public class Node{
     private String ID;
     private String type;
     private HashMap<Node, Integer> connections;
-    private int hCost;
     private int floor;
     private int x;
     private int y;
@@ -52,12 +51,11 @@ public class Node{
         this.greedy = 10000;
     }
 
-    public Node(String name, String ID, String type, int hCost, int floor, int x, int y) {
+    public Node(String name, String ID, String type, int floor, int x, int y) {
         this.name = name;
         this.ID = ID;
         this.type = type;
         this.connections = new HashMap<>();
-        this.hCost = hCost;
         this.floor = floor;
         this.x = x;
         this.y = y;
@@ -66,14 +64,6 @@ public class Node{
     }
 
     public Node(){ }
-
-    public int gethCost() {
-        return hCost;
-    }
-
-    public void sethCost(int hCost) {
-        this.hCost = hCost;
-    }
 
     //Getters and Setters
     public String getName() {
