@@ -8,8 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class HospitalMapTest {
 
-    public HospitalMapTest() {
-    }
+    public HospitalMapTest() { }
 
     private HospitalMap smallArea = new HospitalMap();
     private Node N1 = new Node("Node 1", "111", "Bathroom",  1, 0, 400);

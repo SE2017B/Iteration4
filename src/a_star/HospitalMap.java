@@ -1,6 +1,7 @@
 package a_star;
 
 import java.util.*;
+import java.util.HashMap;
 
 public class HospitalMap{
     private HashMap<String, Node> map;
@@ -39,6 +40,15 @@ public class HospitalMap{
     }
 
     //Callable navigation methods
+    public Stack<Node> findPath(Node start, Node end){
+        Node storedStart = this.start;
+        this.start = start;
+
+        Stack<Node> answer = findPath(end);
+        this.start = storedStart;
+        return answer;
+    }
+
     public Stack<Node> findPath(Node end){
         Stack<Node> path = new Stack<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();     //Need to know where each Node's shortest path comes from
@@ -52,7 +62,7 @@ public class HospitalMap{
         }
 
         this.start.greedy = 0;      //Greedy score from start to start is 0
-        this.start.fScore = manhattanDistance(this.start, end);     //Total score is only heuristic(manhattanDistance)
+        this.start.fScore = (int)getEuclidianDistance(this.start, end);     //Total score is only heuristic(manhattanDistance)
 
         //Starting the frontier with node 1
         frontier.add(this.start);
@@ -64,6 +74,7 @@ public class HospitalMap{
             //Sets what node we are examining
             Node currentNode = frontier.getFirst();
             int lowestFScore = 10000;
+
             for(int i=0;i<frontier.size();i++){     //We examine the Node in frontier with the lowest fScore for efficiency
                 if(frontier.get(i).fScore < lowestFScore) {
                     currentNode = frontier.get(i);
@@ -94,8 +105,7 @@ public class HospitalMap{
                     this.frontier.add(n);
                 }
 
-                int newGScore = currentNode.greedy + n.getCostFromNode(currentNode);    //Takes current Node greedy plus neighbors greedy to determine whether this path
-                                                                                        //Is better than other paths through n (neighboring Node)
+                int newGScore = currentNode.greedy + n.getCostFromNode(currentNode);
                 if(newGScore >= n.greedy) continue;     //If neighbors greedy is lower then there is a better path through that Node so current path is irrelevant
                 cameFrom.put(n, currentNode);       //Otherwise record currentNode(Node where neighbor came from) so we can retrace path later
                 n.greedy = newGScore;       //Update neighbors greedy as it is now the best path
@@ -122,10 +132,6 @@ public class HospitalMap{
         return path;
     }
 
-    public List<Node> findPath(Node start, Node end){
-        return (new ArrayList<>());
-    }
-
     public void setDefault(Node defaultNode){
         //Default should be Kiosk locaiton
         this.start = defaultNode;
@@ -137,4 +143,6 @@ public class HospitalMap{
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
         return distance;
     }
+
+    //Cache for stuff
 }
