@@ -1,22 +1,19 @@
 package a_star;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Node{
-    private String name;    //name of string
-    private String ID;  //name of ID
-    private String type;    //type of node
-    private HashMap<Node, Integer> connections; //nodes that connect to each other
-    private int hCost;  //delete
-    private int floor;  //floor on which the node is on
-    private int x;  //x-coordinate
-    private int y;  //y-coordinate
-    public int fScore;  //greedy + heuristic
-    public int greedy;  //greedy cost
-    public ArrayList<Node> cameFrom;    //array list of previous nodes
-
     //get floor number
+    private String name;
+    private String ID;
+    private String type;
+    private HashMap<Node, Integer> connections;
+    private int floor;
+    private int x;
+    private int y;
+    public int fScore;
+    public int greedy;
+
     public int getFloor() {
         return floor;
     }
@@ -41,27 +38,16 @@ public class Node{
         this.y = y;
     }
 
-    //constructor for node
-    public Node(String name, String ID, String type, int hCost, int floor, int x, int y) {
-        this.name = name;   //set to this name
-        this.ID = ID;   //set to this name
-        this.type = type;   //set to this name
-        this.connections = new HashMap<>(); //set to this name
-        this.hCost = hCost; //set to this name
-        this.floor = floor; //set to this name
-        this.x = x; //set to this name
-        this.y = y; //set to this name india greedy + heuristic set to this name
-        this.greedy = 10000;    //set to this name
-    }
-
-    public Node(){ }
-    //get h cost
-    public int gethCost() {
-        return hCost;
-    }
-    //set h cost
-    public void sethCost(int hCost) {
-        this.hCost = hCost;
+    public Node(String name, String ID, String type, int floor, int x, int y) {
+        this.name = name;
+        this.ID = ID;
+        this.type = type;
+        this.connections = new HashMap<>();
+        this.floor = floor;
+        this.x = x;
+        this.y = y;
+        this.fScore = 10000;
+        this.greedy = 10000;
     }
 
     //Getters and Setters
@@ -110,6 +96,18 @@ public class Node{
     }
 
     //get the cost from a node to a different node
+    public void addConnection(Node node){
+        int edgeCost = (int)getEuclidianDistance(this, node);
+        this.connections.put(node, edgeCost);
+    }
+
+    public double getEuclidianDistance(Node start, Node end){
+        double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
+        double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
+        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
+        return distance;
+    }
+
     public int getCostFromNode(Node node){
         for(Node n: connections.keySet()){
             if(node.toString().equals(n.toString())){
@@ -123,5 +121,21 @@ public class Node{
     @Override
     public String toString(){
         return this.name;
+    }
+
+    //Keep this in mind for when we are having hashtable issues
+    @Override
+    public int hashCode(){
+        final int prime = 7;
+        //Commented this out because we were getting some overflow errors
+        //int ascii = this.hashCode();
+        int ascii = this.name.hashCode();
+        int returnVal = 1;
+        returnVal = prime * returnVal + this.x;
+        returnVal = prime * returnVal + this.y;
+        returnVal = prime * returnVal + this.floor;
+        returnVal = prime * returnVal + ascii;
+
+        return returnVal;
     }
 }

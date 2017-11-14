@@ -2,23 +2,20 @@ import a_star.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Stack;
-
 public class HospitalMapTest {
 
-    public HospitalMapTest() {
-    }
+    public HospitalMapTest() { }
 
     private HospitalMap smallArea = new HospitalMap();
-    private Node N1 = new Node("Node 1", "111", "Bathroom", 8, 1, 0, 4);
-    private Node N2 = new Node("Node 2", "222", "Room", 5, 1, 0, 2);
-    private Node N3 = new Node("Node 3", "333", "Desk", 3, 1, 0, 0);
-    private Node N4 = new Node("Node 4", "444", "Office", 6, 1, 1, 3);
-    private Node N5 = new Node("Node 5", "555", "Stairs", 3, 1, 1, 1);
-    private Node N6 = new Node("Node 6", "666", "Bathrooom", 5, 1, 2, 4);
-    private Node N7 = new Node("Node 7", "555", "Stairs", 4, 1, 2, 3);
-    private Node N8 = new Node("Node 8", "666", "Bathrooom", 2, 1, 2, 1);
-    private Node N9 = new Node("Node 9", "555", "Elevator", 0, 1, 2, 0);
+    private Node N1 = new Node("Node 1", "111", "Bathroom", 1, 0, 4);
+    private Node N2 = new Node("Node 2", "222", "Room", 1, 0, 2);
+    private Node N3 = new Node("Node 3", "333", "Desk", 1, 0, 0);
+    private Node N4 = new Node("Node 4", "444", "Office", 1, 1, 3);
+    private Node N5 = new Node("Node 5", "555", "Stairs", 1, 1, 1);
+    private Node N6 = new Node("Node 6", "666", "Bathrooom", 1, 2, 4);
+    private Node N7 = new Node("Node 7", "555", "Stairs", 1, 2, 3);
+    private Node N8 = new Node("Node 8", "666", "Bathrooom", 1, 2, 1);
+    private Node N9 = new Node("Node 9", "555", "Elevator", 1, 2, 0);
 
     @Before
     public void initialize() {
@@ -89,6 +86,4 @@ public class HospitalMapTest {
         String answer = smallArea.findPath(N2).toString();
         System.out.println(answer);
     }
-
-
 }
