@@ -60,6 +60,9 @@ public class RequestController implements ControllableScreen{
     @FXML
     private TextArea infoText;
 
+    @FXML
+    private ChoiceBox locationChoiceBox;
+
     public void init(){
     }
 
