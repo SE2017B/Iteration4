@@ -1,16 +1,14 @@
 package controllers;
 
-import a_star.HospitalMap;
+import a_star.Node;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Labeled;
 import service.ServiceRequest;
 import service.Staff;
+import service.Service;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -22,6 +20,8 @@ public class RequestController implements ControllableScreen{
     private String merid;
     private Staff staffMember;
     private LocalDate date;
+
+    private static int requestIDCount = 0;
 
 
     private ArrayList<Staff> staff;
@@ -68,6 +68,14 @@ public class RequestController implements ControllableScreen{
 
     public void createPressed(ActionEvent e){
         staffMember = (Staff)staffDropDown.getValue();
+        if(serviceType.equals("Food")){
+            ServiceRequest req = new ServiceRequest(staffMember.getJobType(),requestIDCount, new Node()/*locationChoiceBox.getValue()*/,infoText.getText());
+            requestIDCount++;
+            staffMember.getJobType().addRequest(req);
+        }
+        else{
+            System.out.println("Please make a Food Request");
+        }
 
         System.out.println("Create Pressed: " + staffMember);
         parent.setScreen(ScreenController.AdminMenuID);

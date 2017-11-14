@@ -2,7 +2,7 @@ package service;
 
 import java.util.ArrayList;
 
-abstract class Service{
+public class Service{
     protected String type;
     protected ArrayList<Staff> personnel;
     protected ArrayList<ServiceRequest> backlog;
@@ -29,13 +29,12 @@ abstract class Service{
     public void addRequest(ServiceRequest request){
         System.out.println(request.getRequestID());
         if(availablePer.isEmpty()) {
-            System.out.println("false");
+            System.out.println("Staff Are Busy, Added to Backlog");
             backlog.add(request);
         }else{
-            System.out.println("true");
             Staff avaStaff = availablePer.get(0);
             if(!avaStaff.isBusy()) {
-                System.out.println("yes");
+                System.out.println("Service Request Added");
                 avaStaff.setCurrentRequest(request);
                 availablePer.remove(avaStaff);
             }
