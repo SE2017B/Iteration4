@@ -1,10 +1,13 @@
 import a_star.*;
+import com.sun.tools.corba.se.idl.StringGen;
 import org.junit.Before;
 import org.junit.Test;
 
 public class HospitalMapTest {
 
-    public HospitalMapTest() { }
+    //set up example map for testing
+    public HospitalMapTest() {
+    }
 
     private HospitalMap smallArea = new HospitalMap();
     private Node N1 = new Node("Node 1", "111", "Bathroom", 1, 0, 4);
@@ -86,4 +89,14 @@ public class HospitalMapTest {
         String answer = smallArea.findPath(N2).toString();
         System.out.println(answer);
     }
+
+    @Test
+    public void testMap3() throws InterruptedException {
+        smallArea.setStart(N7);
+        smallArea.setStart(N3);
+
+        String answer = smallArea.findPath(N3).toString();
+        System.out.println(answer);
+    }
+    
 }
