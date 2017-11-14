@@ -14,29 +14,29 @@ public class HospitalMapTest {
     }
 
     private HospitalMap smallArea = new HospitalMap();
-    private Node N1 = new Node("Node 1", "111", "Bathroom",  1, 0, 400);
-    private Node N2 = new Node("Node 2", "222", "Room",  1, 0, 200);
-    private Node N3 = new Node("Node 3", "333", "Desk",  1, 0, 0);
-    private Node N4 = new Node("Node 4", "444", "Office", 1, 100, 300);
-    private Node N5 = new Node("Node 5", "555", "Stairs",  1, 100, 100);
-    private Node N6 = new Node("Node 6", "666", "Bathrooom",  1, 200, 400);
-    private Node N7 = new Node("Node 7", "555", "Stairs",  1, 200, 300);
-    private Node N8 = new Node("Node 8", "666", "Bathrooom",  1, 200, 100);
-    private Node N9 = new Node("Node 9", "555", "Elevator",  1, 200, 0);
-    private Node N10 = new Node("Node 10", "111", "Desk", 1, 300, 300);
-    private Node N11 = new Node("Node 11", "222", "Bathroom", 1, 300, 100);
-    private Node N12 = new Node("Node 12", "333", "Desk", 1, 400, 400);
-    private Node N13 = new Node("Node 13", "444", "Desk", 1, 400, 300);
-    private Node N14 = new Node("Node 14", "555", "Desk", 1, 400, 100);
-    private Node N15 = new Node("Node 15", "666", "Stairs", 1, 400, 0);
-    private Node N16 = new Node("Node 16", "777", "Office", 1, 600, 400);
-    private Node N17 = new Node("Node 17", "888", "Office", 1, 600, 300);
-    private Node N18 = new Node("Node 18", "999", "Bathroom", 1, 500, 100);
-    private Node N19 = new Node("Node 19", "111", "Stairs", 1, 500, 0);
-    private Node N20 = new Node("Node 20", "222", "Elevator", 1, 700, 300);
-    private Node N21 = new Node("Node 21", "333", "Stairs", 1, 700, 100);
-    private Node N22 = new Node("Node 22", "444", "Desk", 1, 700, 0);
-    private Node N23 = new Node("Node 23", "555", "Desk", 1, 800, 0);
+    private Node N1 = new Node("Node 1", "1", "Bathroom",  1, 0, 400);
+    private Node N2 = new Node("Node 2", "2", "Room",  1, 0, 200);
+    private Node N3 = new Node("Node 3", "3", "Desk",  1, 0, 0);
+    private Node N4 = new Node("Node 4", "4", "Office", 1, 100, 300);
+    private Node N5 = new Node("Node 5", "5", "Stairs",  1, 100, 100);
+    private Node N6 = new Node("Node 6", "6", "Bathrooom",  1, 200, 400);
+    private Node N7 = new Node("Node 7", "7", "Stairs",  1, 200, 300);
+    private Node N8 = new Node("Node 8", "8", "Bathrooom",  1, 200, 100);
+    private Node N9 = new Node("Node 9", "9", "Elevator",  1, 200, 0);
+    private Node N10 = new Node("Node 10", "10", "Desk", 1, 300, 300);
+    private Node N11 = new Node("Node 11", "11", "Bathroom", 1, 300, 100);
+    private Node N12 = new Node("Node 12", "12", "Desk", 1, 400, 400);
+    private Node N13 = new Node("Node 13", "13", "Desk", 1, 400, 300);
+    private Node N14 = new Node("Node 14", "14", "Desk", 1, 400, 100);
+    private Node N15 = new Node("Node 15", "15", "Stairs", 1, 400, 0);
+    private Node N16 = new Node("Node 16", "16", "Office", 1, 600, 400);
+    private Node N17 = new Node("Node 17", "17", "Office", 1, 600, 300);
+    private Node N18 = new Node("Node 18", "18", "Bathroom", 1, 500, 100);
+    private Node N19 = new Node("Node 19", "19", "Stairs", 1, 500, 0);
+    private Node N20 = new Node("Node 20", "20", "Elevator", 1, 700, 300);
+    private Node N21 = new Node("Node 21", "21", "Stairs", 1, 700, 100);
+    private Node N22 = new Node("Node 22", "22", "Desk", 1, 700, 0);
+    private Node N23 = new Node("Node 23", "23", "Desk", 1, 800, 0);
 
 
     @Before
