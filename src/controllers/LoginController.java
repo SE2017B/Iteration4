@@ -58,6 +58,7 @@ public class LoginController implements ControllableScreen{
         }
     }
 
+    //returns to the main screen when cancel is pressed
     public void cancelPressed(ActionEvent e){
         System.out.println("Cancel Pressed");
         parent.setScreen(ScreenController.MainID);

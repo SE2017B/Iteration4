@@ -47,12 +47,6 @@ public class PathController implements ControllableScreen{
     @FXML
     private Label lbldir;
 
-//    @FXML
-//    private MenuButton startMenuB;
-//
-//    @FXML
-//    private MenuButton endMenuB;
-
     @FXML
     private ChoiceBox<Node> startChoice;
 
@@ -130,20 +124,5 @@ public class PathController implements ControllableScreen{
 
         System.out.println("Checked off stairs");
     }
-
-//    public void startSelected(ActionEvent e)
-//    {
-//        System.out.println("Start Selected");
-//        String Start = ((MenuItem) e.getSource()).getText();
-//        startMenuB.setText(Start);
-//
-//    }
-//
-//    public void endSelected(ActionEvent e)
-//    {
-//        System.out.println("End Selected");
-//        String End = ((MenuItem) e.getSource()).getText();
-//        endMenuB.setText(End);
-//    }
 
 }

@@ -40,10 +40,12 @@ public class AdminMenuController implements ControllableScreen{
 
     public void onShow(){}
 
+    //when services button pressed move to the services window
     public void servicePressed(ActionEvent e){
         System.out.println("Service Pressed");
         parent.setScreen(ScreenController.RequestID);
     }
+
 
     public void completePressed(ActionEvent e){
         //remove the selected request from the request list and the staff member
@@ -52,11 +54,13 @@ public class AdminMenuController implements ControllableScreen{
         setForStaff(staffMember);
     }
 
+    //moves to edit node menu when button is pressed
     public void editPressed(ActionEvent e){
         System.out.println("Edit Pressed");
         parent.setScreen(ScreenController.AddNodeID);
     }
 
+    //logs out when button is pressed
     public void logoutPressed(ActionEvent e){
         System.out.println("Cancel Pressed");
         parent.setScreen(ScreenController.LogoutID);

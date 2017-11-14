@@ -48,6 +48,8 @@ public class FilterController implements ControllableScreen{
         System.out.println("Cancel Pressed");
         parent.setScreen(ScreenController.MainID);
     }
+
+    //creates filter effect by modifying opacity of icons
     @FXML
     public void bathRoomChecked(ActionEvent e)
     {
@@ -67,6 +69,8 @@ public class FilterController implements ControllableScreen{
             bathIconF2.setOpacity(0.0);
         }
     }
+
+    //creates filter effect by modifying exit icon's opacity when box is checked
     @FXML
     public void exitChecked(ActionEvent e)
     {

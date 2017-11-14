@@ -41,28 +41,35 @@ public class MainController implements ControllableScreen{
 
     public void onShow(){}
 
+    //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         System.out.println("Login Pressed");
         parent.setScreen(ScreenController.LoginID);
     }
+    //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
         System.out.println("Direction Pressed");
         parent.setScreen(ScreenController.PathID);
     }
+    //when search button is pressed go to search screen
     public void searchPressed(ActionEvent e){
         System.out.println("Search Pressed");
 
     }
+    //when filter button is pressed go to filter screen
     public void filterPressed(ActionEvent e){
         System.out.println("Filter Pressed");
         parent.setScreen(ScreenController.FilterID);
     }
+    //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
         System.out.println("Zoom In Pressed");
         slideBarZoom.adjustValue(slideBarZoom.getValue()+0.1);
         setMapScale(slideBarZoom.getValue());
  
     }
+
+    //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
 
         slideBarZoom.adjustValue(slideBarZoom.getValue()-0.1);
@@ -70,11 +77,13 @@ public class MainController implements ControllableScreen{
 
     }
 
+    //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){
         //System.out.println("Slider Moved");
         setMapScale(slideBarZoom.getValue());
     }
 
+    //map scale set up
     public void setMapScale(double scale){
         mapPane.setScaleX(scale);
         mapPane.setScaleY(scale);
