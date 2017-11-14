@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+//This class tests the FoodService class as well as the inherited methods from the Service class
+
 public class FoodServiceTest {
     private FoodService foodService;
     private Staff John;
@@ -18,6 +20,7 @@ public class FoodServiceTest {
     private ServiceRequest foodRequest;
     private ServiceRequest orangeRequest;
     private ServiceRequest grapeRequest;
+    private ServiceRequest kiwiRequest;
     Node location;
 
     @Before
@@ -29,33 +32,10 @@ public class FoodServiceTest {
         foodRequest = new ServiceRequest(foodService, 1, location, "apple");
         orangeRequest = new ServiceRequest(foodService, 2, location, "orange");
         grapeRequest = new ServiceRequest(foodService, 3, location, "grape");
+        kiwiRequest = new ServiceRequest(foodService, 4, location, "kiwi");
 
         foodService.assignPerson(John);
         foodService.assignPerson(Jane);
-    }
-
-    //Add in any other method tests that are longer than 1 line
-    //test that staff is put back in available people after request is completed
-
-    @Test
-    public void testBacklog(){
-        foodService.addRequest(foodRequest);
-        foodService.addRequest(orangeRequest);
-        foodService.addRequest(grapeRequest);
-
-        ArrayList<ServiceRequest> backlog = new ArrayList<>();
-        backlog.add(grapeRequest);
-
-        assertEquals(foodService.getBacklog(), backlog);
-    }
-
-    @Test
-    public void testGetNextRequest(){
-        foodService.addRequest(foodRequest);
-        foodService.addRequest(orangeRequest);
-        foodService.addRequest(grapeRequest);
-
-        assertEquals(foodService.getNextRequest(), grapeRequest);
     }
 
     @Test
@@ -83,5 +63,26 @@ public class FoodServiceTest {
     public void testGiveService(){
         foodRequest.giveRequest();
         assertEquals(John.getCurrentRequest(), foodRequest);
+    }
+
+    @Test
+    public void testBacklog(){
+        foodService.addRequest(foodRequest);
+        foodService.addRequest(orangeRequest);
+        foodService.addRequest(grapeRequest);
+
+        ArrayList<ServiceRequest> backlog = new ArrayList<>();
+        backlog.add(grapeRequest);
+
+        assertEquals(foodService.getBacklog(), backlog);
+    }
+
+    @Test
+    public void testGetNextRequest(){
+        foodService.addRequest(foodRequest);
+        foodService.addRequest(orangeRequest);
+        foodService.addRequest(grapeRequest);
+
+        assertEquals(foodService.getNextRequest(), grapeRequest);
     }
 }
