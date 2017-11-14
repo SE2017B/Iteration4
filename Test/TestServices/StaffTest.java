@@ -5,7 +5,6 @@ import exceptions.InvalidPasswordException;
 import org.junit.*;
 import service.*;
 
-
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
