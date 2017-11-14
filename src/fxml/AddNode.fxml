@@ -49,12 +49,12 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtfldX" text="X-Coordinate" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        <Label text="X-Coordinate" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="txtfldY" text="Y-Coordinate" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                        <Label text="Y-Coordinate" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -77,8 +77,8 @@
                           </items>
                         </MenuButton>
                         <TextField fx:id="txtfldID" onInputMethodTextChanged="#filledNodeID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtfldX" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtfldY" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label fx:id="menubtnBuilding" text="Building" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                            <font>
                               <Font size="20.0" />

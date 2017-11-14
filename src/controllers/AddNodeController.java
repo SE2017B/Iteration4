@@ -11,17 +11,22 @@ import java.lang.*;
 import a_star.Node;
 import a_star.Node.*;
 
+
 import java.util.List;
 
 public class AddNodeController implements ControllableScreen{
     private ScreenController parent;
+
+
+    //node variables
+    private String name;
     private String nodeID;
     private int x;
     private int y;
     private String floor;
     private String building;
     private String nodeType;
-    private String name;
+
 
 
     public void setParentController(ScreenController parent){
@@ -30,10 +35,10 @@ public class AddNodeController implements ControllableScreen{
 
 
     @FXML
-    private Label txtfldX;
+    private TextField txtfldX;
 
     @FXML
-    private Label txtfldY;
+    private TextField txtfldY;
 
     @FXML
     private Label menubtnFloor;
@@ -137,14 +142,21 @@ public class AddNodeController implements ControllableScreen{
 
 
     public void enterPressed(ActionEvent e){
-        //Setting the variables equal to values read from UI
-//        nodeID = txtfldID.getText();
-//        x = Integer.parseInt(txtfldX.getText());
-//        y = Integer.parseInt(txtfldY.getText());
-//        name = txtfldName.getText();
+        nodeID = txtfldID.getText();
+        x = Integer.valueOf(txtfldX.getText());
+        y = Integer.valueOf(txtfldY.getText());
 
+        System.out.println(nodeID);
+        System.out.println(x);
+        System.out.println(y);
 
+        name = txtfldName.getText();
+        System.out.println(floor);
+        System.out.println(nodeType);
+        System.out.println(building);
+        System.out.println(name);
 
+        //database.nodeDatabase.addNode(nodeID, x, y, floor, building, nodeType, name);
         System.out.println("Enter Pressed");
         parent.setScreen(ScreenController.AdminMenuID);
     }
