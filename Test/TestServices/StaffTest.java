@@ -28,17 +28,26 @@ public class StaffTest{
         orangeRequest = new ServiceRequest(foodService, 2, location, "orange");
     }
 
+    /*
+    tests that Staff constructor works properly
+     */
     @Test
     public void testBob(){
         assertEquals(Bob.getUsername(), "bob");
     }
 
+    /*
+    tests password changes with correct old password input
+     */
     @Test
     public void changePasswordTest() throws InvalidPasswordException{
         Bob.changePassword("abc", "bobby");
         assertTrue(Bob.getPassword().equals("abc"));
     }
 
+    /*
+    tests password does not change with incorrect old password input
+     */
     @Test
     public void changePasswordFail() throws InvalidPasswordException{
         Bob.changePassword("abc", "bobb");
@@ -60,6 +69,10 @@ public class StaffTest{
         assertTrue(Bob.getCurrentRequest() == null);
     }
 
+    /*
+    tests staff member is added to list of available people when they complete a request
+    and there are no requests in the backlog
+     */
     @Test
     public void testCompleteCurRec2(){
         foodService.assignPerson(Bob);
@@ -70,11 +83,27 @@ public class StaffTest{
         assertEquals(foodService.getAvailablePer(), available);
     }
 
+    /*
+    tests staff member is declared not busy when they complete a request and there are
+    no new requests in the backlog
+     */
     @Test
     public void testCompleteCurRec3(){
         foodService.assignPerson(Bob);
         foodService.addRequest(appleRequest);
         Bob.completeCurRec();
         assertFalse(Bob.isBusy()); //Bob should not be busy now
+    }
+
+    /*
+    tests staff member is given new request when the backlog is not empty
+     */
+    @Test
+    public void testCompleteCurRec4(){
+        foodService.assignPerson(Bob);
+        foodService.addRequest(appleRequest);
+        foodService.addRequest(orangeRequest);
+        Bob.completeCurRec();
+        assertEquals(Bob.getCurrentRequest(), orangeRequest);
     }
 }
