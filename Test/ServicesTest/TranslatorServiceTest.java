@@ -1,5 +1,5 @@
 package ServicesTest;
-
+/*
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -38,3 +38,4 @@ public class TranslatorServiceTest {
         assertTrue(service.getPersonnel().contains(spanishJoe) && service.getPersonnel().contains(frenchBen));
     }
 }
+*/

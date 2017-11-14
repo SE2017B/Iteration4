@@ -13,42 +13,72 @@ public class mainDatabase {
     private static final String DRIVER="org.apache.derby.jdbc.EmbeddedDriver";
     private static final String JDBC_URL="jdbc:derby:teamHDB;create=true";
 
-    Connection conn;
+    private static Connection conn;
 
     // Variables for storing nodes after reading csv file
     String[] nodeValues;
-    ArrayList<String>nodeID=new ArrayList<String>();
-    ArrayList<String>xCoord=new ArrayList<String>();
-    ArrayList<String>yCoord=new ArrayList<String>();
-    ArrayList<String>floor=new ArrayList<String>();
-    ArrayList<String>building=new ArrayList<String>();
-    ArrayList<String> nodeType=new ArrayList<String>();
-    ArrayList<String>longName=new ArrayList<String>();
-    ArrayList<String>shortName=new ArrayList<String>();
-    ArrayList<String>teamAssigned=new ArrayList<String>();
+    static ArrayList<String>nodeID=new ArrayList<String>();
+    static ArrayList<String>xCoord=new ArrayList<String>();
+    static ArrayList<String>yCoord=new ArrayList<String>();
+    static ArrayList<String>floor=new ArrayList<String>();
+    static ArrayList<String>building=new ArrayList<String>();
+    static ArrayList<String> nodeType=new ArrayList<String>();
+    static ArrayList<String>longName=new ArrayList<String>();
+    static ArrayList<String>shortName=new ArrayList<String>();
+    static ArrayList<String>teamAssigned=new ArrayList<String>();
 
     // Variables for storing edges after reading csv file
     String[] edgeValues;
-    ArrayList<String>edgeID=new ArrayList<String>();
-    ArrayList<String>startNode=new ArrayList<String>();
-    ArrayList<String>endNode=new ArrayList<String>();
+    static ArrayList<String>edgeID=new ArrayList<String>();
+    static ArrayList<String>startNode=new ArrayList<String>();
+    static ArrayList<String>endNode=new ArrayList<String>();
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Write to a output Nodes csv file
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void outputNodeCSV() {
+        String outNodesFileName = "outputNodesTeamH.csv";
+
+        try {
+            FileWriter fw1 = new FileWriter(outNodesFileName, false);
+            BufferedWriter bw1 = new BufferedWriter(fw1);
+            PrintWriter pw1 = new PrintWriter(bw1);
+
+            for (int j = 0; j < nodeID.toArray().length; j++) {
+
+                pw1.println(nodeID.toArray()[j].toString() + "," +
+                        xCoord.toArray()[j].toString() + "," +
+                        yCoord.toArray()[j].toString() + "," +
+                        floor.toArray()[j].toString() + "," +
+                        building.toArray()[j].toString() + "," +
+                        nodeType.toArray()[j].toString() + "," +
+                        longName.toArray()[j].toString() + "," +
+                        shortName.toArray()[j].toString() + "," +
+                        teamAssigned.toArray()[j].toString()
+                );
+                System.out.println(j + ": Node Record Saved!");
+            }
+            pw1.flush();
+            pw1.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public mainDatabase() throws SQLException {
 
         // Connect to embedded database
         try {
-
-            this.conn = DriverManager.getConnection(JDBC_URL);
+            conn = DriverManager.getConnection(JDBC_URL);
             conn.setAutoCommit(false);
 
-            if (this.conn != null) {
+            if (conn != null) {
                 System.out.println("Connected!");
             }
             conn.close();
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             Logger.getLogger(mainDatabase.class.getName()).log(Level.SEVERE, null, e);
         }
 
@@ -274,167 +304,11 @@ public class mainDatabase {
             e.printStackTrace();
         }
 
-        ///////////////////////////////////////////////////////////////////////////////
-        // Modify a node from the node table
-        ///////////////////////////////////////////////////////////////////////////////
 
-        // Modify item(s) from corresponding ArrayList
-
-        // Modify item(s) from node table
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // Modify an edge from the edge table
-        ///////////////////////////////////////////////////////////////////////////////
-
-        // Modify item(s) from corresponding ArrayList
-
-        // Modify item(s) from edge table
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // Delete a node from the node table
-        ///////////////////////////////////////////////////////////////////////////////
-
-        // Delete item(s) from corresponding ArrayList
-
-        // Delete item(s) from node table
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // Delete an edge from the edge table
-        ///////////////////////////////////////////////////////////////////////////////
-
-        // Delete item(s) from corresponding ArrayList
-
-        // Delete item(s) from edge table
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // Query all nodes from the node table
-        ///////////////////////////////////////////////////////////////////////////////
-
-        try {
-            this.conn = DriverManager.getConnection(JDBC_URL);
-            conn.setAutoCommit(false);
-            conn.getMetaData();
-
-            Statement selectAllNodes = conn.createStatement();
-            String allNodes = "SELECT * FROM MAPHNODES";
-            ResultSet rsetAllNodes = selectAllNodes.executeQuery(allNodes);
-
-            String strNodeID = "";
-            String strXCoord = "";
-            String strYCoord = "";
-            String strFloor = "";
-            String strBuilding = "";
-            String strNodeType = "";
-            String strLongName = "";
-            String strShortName = "";
-            String strTeamAssigned = "";
-
-            System.out.println("");
-            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-50s %-30s %-20s\n", "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName", "teamAssigned");
-
-            //Process the results
-            while (rsetAllNodes.next()) {
-                strNodeID = rsetAllNodes.getString("nodeID");
-                strXCoord = rsetAllNodes.getString("xcoord");
-                strYCoord = rsetAllNodes.getString("ycoord");
-                strFloor = rsetAllNodes.getString("floor");
-                strBuilding = rsetAllNodes.getString("building");
-                strNodeType = rsetAllNodes.getString("nodeType");
-                strLongName = rsetAllNodes.getString("longName");
-                strShortName = rsetAllNodes.getString("shortName");
-                strTeamAssigned = rsetAllNodes.getString("teamAssigned");
-
-                System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-50s %-30s %-20s\n", strNodeID, strXCoord, strYCoord, strFloor, strBuilding, strNodeType, strLongName, strShortName, strTeamAssigned);
-            } // End While
-
-            conn.commit();
-
-            rsetAllNodes.close();
-            selectAllNodes.close();
-            conn.close();
-
-        } // end try
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // Query all edges from the edge table
-        ///////////////////////////////////////////////////////////////////////////////
-
-        try {
-            this.conn = DriverManager.getConnection(JDBC_URL);
-            conn.setAutoCommit(false);
-            conn.getMetaData();
-
-            Statement selectAllEdges = conn.createStatement();
-            String allEdges = "SELECT * FROM MAPHEDGES";
-            ResultSet rsetAllEdges = selectAllEdges.executeQuery(allEdges);
-
-            String strEdgeID = "";
-            String strStartNode = "";
-            String strEndNode = "";
-
-            System.out.println("");
-            System.out.printf("%-30s %-20s %-20s\n", "edgeID", "startNode", "endNode");
-
-            //Process the results
-            while (rsetAllEdges.next()) {
-                strEdgeID = rsetAllEdges.getString("edgeID");
-                strStartNode = rsetAllEdges.getString("startNode");
-                strEndNode = rsetAllEdges.getString("endNode");
-
-                System.out.printf("%-30s %-20s %-20s\n", strEdgeID, strStartNode, strEndNode);
-            } // End While
-
-            conn.commit();
-
-            rsetAllEdges.close();
-            selectAllEdges.close();
-            conn.close();
-
-        } // end try
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // Write to a output Nodes csv file
-        ///////////////////////////////////////////////////////////////////////////////
-        String outNodesFileName = "outputNodesTeamH.csv";
-
-        try {
-            FileWriter fw1 = new FileWriter(outNodesFileName, false);
-            BufferedWriter bw1 = new BufferedWriter(fw1);
-            PrintWriter pw1 = new PrintWriter(bw1);
-
-            for (int j = 0; j < nodeID.toArray().length; j++) {
-
-                pw1.println(nodeID.toArray()[j].toString() + "," +
-                        xCoord.toArray()[j].toString() + "," +
-                        yCoord.toArray()[j].toString() + "," +
-                        floor.toArray()[j].toString() + "," +
-                        building.toArray()[j].toString() + "," +
-                        nodeType.toArray()[j].toString() + "," +
-                        longName.toArray()[j].toString() + "," +
-                        shortName.toArray()[j].toString() + "," +
-                        teamAssigned.toArray()[j].toString()
-                );
-                System.out.println(j + ": Node Record Saved!");
-            }
-            pw1.flush();
-            pw1.close();
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
 
         ///////////////////////////////////////////////////////////////////////////////
         // Write to a output Edges csv file
         ///////////////////////////////////////////////////////////////////////////////
-
         String outEdgesFileName = "outputEdgesTeamH.csv";
 
         try {
@@ -453,19 +327,39 @@ public class mainDatabase {
             }
             pw2.flush();
             pw2.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Main Database Function
+    ///////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) throws SQLException {
 
         try {
             DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        mainDatabase testConnection = new mainDatabase();
+        mainDatabase testConnection1 = new mainDatabase();
+
+        nodeDatabase.queryAllNodes();
+        nodeDatabase.addNode("HHALL05002", "2000", "2000", "2", "Tower", "HALL", "Hallway Connector 50 Floor 2");
+        nodeDatabase.queryAllNodes();
+        nodeDatabase.deleteNode("HHALL05002");
+        nodeDatabase.queryAllNodes();
+        //nodeDatabase.modifyNode();
+        //nodeDatabase.queryAllNodes();
+
+        edgeDatabase.queryAllEdges();
+        edgeDatabase.addEdge("HHALL05002", "HHALL05102");
+        edgeDatabase.queryAllEdges();
+        edgeDatabase.modifyEdge("startNode","HHALL07002", "HHALL00102_HHALL00202");
+        edgeDatabase.queryAllEdges();
+        edgeDatabase.deleteAnyEdge("HHALL05002_HHALL05102");
+        edgeDatabase.queryAllEdges();
+        outputNodeCSV();
     }
 }

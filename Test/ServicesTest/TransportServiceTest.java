@@ -1,5 +1,5 @@
 package ServicesTest;
-
+/*
 import org.junit.Before;
 import org.junit.Test;
 import service.Staff;
@@ -39,3 +39,4 @@ public class TransportServiceTest {
         assertTrue(service.getPersonnel().contains(wheelchairJim) && service.getPersonnel().contains(wheelchairMary));
     }
 }
+*/
