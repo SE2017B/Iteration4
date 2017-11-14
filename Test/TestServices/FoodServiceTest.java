@@ -35,10 +35,8 @@ public class FoodServiceTest {
     }
 
     //Add in any other method tests that are longer than 1 line
-    //test backlog - 3 requests
     //test that staff is put back in available people after request is completed
 
-    //fails - somehow requests are only being assigned to John Doe
     @Test
     public void testBacklog(){
         foodService.addRequest(foodRequest);
@@ -49,6 +47,15 @@ public class FoodServiceTest {
         backlog.add(grapeRequest);
 
         assertEquals(foodService.getBacklog(), backlog);
+    }
+
+    @Test
+    public void testGetNextRequest(){
+        foodService.addRequest(foodRequest);
+        foodService.addRequest(orangeRequest);
+        foodService.addRequest(grapeRequest);
+
+        assertEquals(foodService.getNextRequest(), grapeRequest);
     }
 
     @Test
