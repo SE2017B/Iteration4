@@ -1,27 +1,20 @@
 package service;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class FoodService implements Service{
-    private String foodType;
-    private String type;
-    List<Staff> personel;
+public class FoodService extends Service{
 
     public FoodService (){
-        this.type = "FoodService";
+        this.type = "Food Service";
+        this.personnel = new ArrayList<>();
+        this.backlog = new ArrayList<>();
+        this.description = "";
     }
 
-    public FoodService (String foodType){
-        this.foodType = foodType;
-        this.type = "FoodService";
-    }
-
-    public void assignPerson(Staff person){
-        this.personel.add(person);
-    }
-
-    public void assignPeople(List<Staff> people){
-        for(Staff person: people)
-            this.personel.add(person);
+    public FoodService (String description){
+        this.type = "Food Service";
+        this.personnel = new ArrayList<>();
+        this.backlog = new ArrayList<>();
+        this.description = description;
     }
 }

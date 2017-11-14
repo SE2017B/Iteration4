@@ -1,29 +1,20 @@
 package service;
 
+import java.util.ArrayList;
 
-import java.util.List;
-
-public class TransportService implements Service{
-    private String transportationType;
-
-    private String type;
-    List<Staff> personel;
+public class TransportService extends Service{
 
     public TransportService (){
         this.type = "TransportationService";
+        this.personnel = new ArrayList<>();
+        this.backlog = new ArrayList<>();
+        this.description = "";
     }
 
-    public TransportService(String type){
-        this.transportationType = type;
+    public TransportService(String description){
         this.type = "TransportationService";
-    }
-
-    public void assignPerson(Staff person){
-        this.personel.add(person);
-    }
-
-    public void assignPeople(List<Staff> people){
-        for(Staff person: people)
-            this.personel.add(person);
+        this.personnel = new ArrayList<>();
+        this.backlog = new ArrayList<>();
+        this.description = description;
     }
 }

@@ -1,29 +1,32 @@
 package service;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class TranslatorService implements Service{
-    private String language;
+public class TranslatorService extends Service{
     private int endTime;
-    private String type;
-    List<Staff> personel;
 
     public TranslatorService (){
         this.type = "TranslatorService";
+        this.personnel = new ArrayList<>();
+        this.backlog = new ArrayList<>();
+        this.description = "";
     }
 
-    public TranslatorService(String language, int endTime){
-        this.language = language;
-        this.endTime = endTime;
+    public TranslatorService(String description, int endTime){
         this.type = "TranslatorService";
+        this.personnel = new ArrayList<>();
+        this.backlog = new ArrayList<>();
+        this.description = description;
+        this.endTime = endTime;
     }
 
-    public void assignPerson(Staff person){
-        this.personel.add(person);
+    //getters
+    public int getEndTime(){
+        return this.endTime;
     }
 
-    public void assignPeople(List<Staff> people){
-        for(Staff person: people)
-            this.personel.add(person);
+    //setters
+    public void setEndTime(int endTime){
+        this.endTime = endTime;
     }
 }
