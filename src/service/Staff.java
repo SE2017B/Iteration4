@@ -26,6 +26,7 @@ public class Staff{
     /*
     takes in an old password and a new password, and changes the staff's current password to the new one
      */
+
     public void changePassword(String newPass, String oldPass) throws InvalidPasswordException {
         try
         {

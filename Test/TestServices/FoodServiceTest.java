@@ -20,6 +20,7 @@ public class FoodServiceTest {
     private ServiceRequest foodRequest;
     private ServiceRequest orangeRequest;
     private ServiceRequest grapeRequest;
+    private ServiceRequest kiwiRequest;
     Node location;
 
     @Before
@@ -31,6 +32,7 @@ public class FoodServiceTest {
         foodRequest = new ServiceRequest(foodService, 1, location, "apple");
         orangeRequest = new ServiceRequest(foodService, 2, location, "orange");
         grapeRequest = new ServiceRequest(foodService, 3, location, "grape");
+        kiwiRequest = new ServiceRequest(foodService, 4, location, "kiwi");
 
         foodService.assignPerson(John);
         foodService.assignPerson(Jane);
