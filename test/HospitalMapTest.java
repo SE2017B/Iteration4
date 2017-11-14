@@ -70,6 +70,25 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N9).toString();
         System.out.println(answer);
+    }
+
+    @Test
+    public void testMap1() throws InterruptedException {
+        smallArea.setStart(N3);
+        smallArea.setEnd(N6);
+
+        String answer = smallArea.findPath(N6).toString();
+        System.out.println(answer);
 
     }
+    @Test
+    public void testMap2() throws InterruptedException {
+        smallArea.setStart(N4);
+        smallArea.setEnd(N2);
+
+        String answer = smallArea.findPath(N2).toString();
+        System.out.println(answer);
+    }
+
+
 }
