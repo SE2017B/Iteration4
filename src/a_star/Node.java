@@ -1,7 +1,6 @@
 package a_star;
 import java.util.HashMap;
 public class Node{
-    //get floor number
     private String name;
     private String ID;
     private String type;
@@ -11,29 +10,7 @@ public class Node{
     private int y;
     public int fScore;
     public int greedy;
-    public int getFloor() {
-        return floor;
-    }
-    //set floor number
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
-    //get x-coordinate
-    public int getX() {
-        return x;
-    }
-    //set x-coordinate
-    public void setX(int x) {
-        this.x = x;
-    }
-    //get y-coordinate
-    public int getY() {
-        return y;
-    }
-    //set y-coordinate
-    public void setY(int y) {
-        this.y = y;
-    }
+
     public Node(String name, String ID, String type, HashMap<Node, Integer> connections, int floor, int x, int y) {
         this.name = name;
         this.ID = ID;
@@ -56,54 +33,106 @@ public class Node{
         this.fScore = 10000;
         this.greedy = 10000;
     }
+
     public Node(){ }
+
     //Getters and Setters
+
+    //Retrieves the name of the node
     public String getName() {
         return name;
     }
-    //get name of node
+
+    //Sets the name of the node
     public void setName(String name) {
         this.name = name;
     }
-    //get Id number of node
+
+    //Gets the ID number from the node
     public String getID() {
         return ID;
     }
-    //set ID number of node
+
+    //Sets the ID number of node
     public void setID(String ID) {
         this.ID = ID;
     }
-    //get type of node
+
+    //Gets the type of the node
     public String getType() {
         return type;
     }
-    //set type of node
+
+    //Sets the type of the node
     public void setType(String type) {
         this.type = type;
     }
-    //hasmap for connections within nodes
-    public HashMap<Node, Integer> getConnections() {
-        return connections;
-    }
-    //set the connections between nodes
+
+    //Gets the connections list for a node
+    public HashMap<Node, Integer> getConnections() { return connections; }
+
+    //Sets the connections HashMap for the node
     public void setConnections(HashMap<Node, Integer> connections) {
         this.connections = connections;
     }
-    //add a connection between nodes
+
+    //Gets the floor number
+    public int getFloor() {
+        return floor;
+    }
+
+    //Sets the floor number
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    //Gets the x-coordinate of the node
+    public int getX() {
+        return x;
+    }
+
+    //Sets the x-coordinate of the node
+    public void setX(int x) { this.x = x; }
+
+    //Gets the y-coordinate of the node
+    public int getY() {
+        return y;
+    }
+
+    //Sets the y-coordinate of the node
+    public void setY(int y) { this.y = y; }
+
+    //Gets the fScore of a node
+    public int getfScore() { return fScore; }
+
+    //Sets the fScore for a node
+    public void setfScore(int fScore) { this.fScore = fScore; }
+
+    //Gets the greedy cost for a node
+    public int getGreedy() { return greedy; }
+
+    //Sets the greedy cost for a node
+    public void setGreedy(int greedy) { this.greedy = greedy; }
+
+    //Adds a connection between nodes
     public void addConnection(int edgeCost, Node node){
         this.connections.put(node, edgeCost);
     }
-    //get the cost from a node to a different node
+
     public void addConnection(Node node){
         int edgeCost = (int)getEuclidianDistance(this, node);
         this.connections.put(node, edgeCost);
     }
+
+    //Gets the Euclidian Distance from a start node to an end node
     public double getEuclidianDistance(Node start, Node end){
         double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
         return distance;
     }
+
+    //Gets the cost from a node to a different node
     public int getCostFromNode(Node node){
         for(Node n: connections.keySet()){
             if(node.toString().equals(n.toString())){
@@ -112,12 +141,14 @@ public class Node{
         }
         return 0;
     }
-    //override to turn int into a string
+
+    //Override to turn int into a string
     @Override
     public String toString(){
         return this.name;
     }
-    //Keep this in mind for when we are having hashtable issues
+
+    //Keep this in mind for when we are having HashTable issues
     @Override
     public int hashCode(){
         final int prime = 7;
