@@ -25,7 +25,7 @@ public class KioskEngine{
         map = new HospitalMap();
     }
 
-    public static void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName) {
+    public static void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName, ArrayList<Node> connections) {
         try {
             conn = DriverManager.getConnection(JDBC_URL);
             conn.setAutoCommit(false);
@@ -50,15 +50,15 @@ public class KioskEngine{
             addAnyNode.close();
             conn.close();
 
+            //todo add connections to new node
+
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
     }
 
-    public List<Node> findPath(){
-        ArrayList<Node> stub = new ArrayList<>();
-        stub.add(new Node());
-        return stub;
+    public ArrayList<Node> findPath(Node start, Node end){
+        return map.findPath(start,end);
     }
 
 

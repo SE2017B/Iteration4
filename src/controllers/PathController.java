@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class PathController implements ControllableScreen{
     private ScreenController parent;
-    private HospitalMap map;
     private ArrayList<Node> path;
 
     private ArrayList<Line> lines;
@@ -60,6 +59,7 @@ public class PathController implements ControllableScreen{
     //Methods start here
     public void init()
     {
+        path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
         onShow();
 
@@ -67,8 +67,7 @@ public class PathController implements ControllableScreen{
 
     public void onShow(){
         //Update the nodes in the map
-        map = parent.getEngine().getMap();
-        ArrayList<Node> nodes = map.getNodesAsArrayList();
+        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesAsArrayList();
 
         //update the items in the checklist
         startChoice.setItems(FXCollections.observableList(nodes));
@@ -90,7 +89,7 @@ public class PathController implements ControllableScreen{
         for(Line line : lines){
             line.setVisible(false);
         }
-        path = map.findPath(startChoice.getValue(),endChoice.getValue());
+        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
         if(path.size() != 0) {
             for (int i = 0; i < path.size() - 1; i++) {
                 Line line = new Line();
@@ -98,6 +97,7 @@ public class PathController implements ControllableScreen{
                 Node end = path.get(i + 1);
                 line.setLayoutX(start.getX());
                 line.setLayoutY(start.getY());
+
 
                 line.setEndX(end.getX() - start.getX());
                 line.setEndY(end.getY() - start.getY());

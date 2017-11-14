@@ -1,20 +1,25 @@
 package controllers;
 
+import a_star.Node;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+
 import java.lang.*;
+
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import kioskEngine.KioskEngine.*;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 
-public class AddNodeController implements ControllableScreen{
+public class AddNodeController implements ControllableScreen {
     private ScreenController parent;
 
 
@@ -27,15 +32,21 @@ public class AddNodeController implements ControllableScreen{
     private String building;
     private String nodeType;
 
+    //Nodes in the map
+    private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
+
 
     //setter for parent
-    public void setParentController(ScreenController parent){
+    public void setParentController(ScreenController parent) {
         this.parent = parent;
     }
 
 
     @FXML
     private TextField txtfldX;
+
+    @FXML
+    private Label failText;
 
     @FXML
     private TextField txtfldY;
@@ -136,46 +147,86 @@ public class AddNodeController implements ControllableScreen{
     @FXML
     private TextField txtfldName;
 
-    public void init(){}
+    @FXML
+    private Pane mapPane;
 
-    public void onShow(){}
+    @FXML
+    private Circle nodeLocation;
+
+    public void init() {
+
+        txtfldX.textProperty().addListener((observable, oldValue, newValue) -> xCoordEntered());
+        txtfldY.textProperty().addListener((observable, oldValue, newValue) -> yCoordEntered());
+
+    }
+
+    public void onShow() {
+        x = "";
+        y = "";
+        failText.setVisible(false);
+        nodeLocation.setVisible(false);
+        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesAsArrayList();
+
+
+        for (Node node : nodes) {
+            NodeCheckBox box = new NodeCheckBox();
+            box.setNode(node);
+            box.setLayoutX(node.getX());
+            box.setLayoutY(node.getY());
+
+            box.setVisible(true);
+            mapPane.getChildren().add(box);
+            nodeCheckBoxes.add(box);
+
+        }
+    }
 
     //Action upon pressing enter
     //variables for all text fields is set up and populated
     //add node command is executed
     //user is returned to menu screen
-    public void enterPressed(ActionEvent e){
+    public void enterPressed(ActionEvent e) {
         nodeID = txtfldID.getText();
-        //x and y and ints
+        if (nodeID.length() == 10) {
+            //x and y and ints
 //        x = Integer.valueOf(txtfldX.getText());
 //        y = Integer.valueOf(txtfldY.getText());
-        x = txtfldX.getText();
-        y = txtfldY.getText();
+            x = txtfldX.getText();
+            y = txtfldY.getText();
 
-        System.out.println(nodeID);
-        System.out.println(x);
-        System.out.println(y);
+            System.out.println(nodeID);
+            System.out.println(x);
+            System.out.println(y);
 
-        name = txtfldName.getText();
-        System.out.println(floor);
-        System.out.println(nodeType);
-        System.out.println(building);
-        System.out.println(name);
+            name = txtfldName.getText();
+            System.out.println(floor);
+            System.out.println(nodeType);
+            System.out.println(building);
+            System.out.println(name);
 
-        kioskEngine.KioskEngine.addNode(nodeID, x, y, floor, building, nodeType, name);
-        System.out.println("Enter Pressed");
-        parent.setScreen(ScreenController.AdminMenuID);
+            ArrayList<Node> connections = new ArrayList<Node>();
+            for(NodeCheckBox box : nodeCheckBoxes){
+                if(box.isSelected())
+                    connections.add(box.getNode());
+            }
+
+            kioskEngine.KioskEngine.addNode(nodeID, x, y, floor, building, nodeType, name, connections);
+            System.out.println("Enter Pressed");
+            parent.setScreen(ScreenController.AdminMenuID);
+        } else
+            failText.setVisible(true);
+
     }
+
     //comands for button cancel press
-    public void cancelPressed(ActionEvent e){
+    public void cancelPressed(ActionEvent e) {
         System.out.println("Cancel Pressed");
         parent.setScreen(ScreenController.AdminMenuID);
     }
 
     //set up variables when building drop down selected
     @FXML
-    void buildingSelected(ActionEvent e)
-    {
+    void buildingSelected(ActionEvent e) {
         System.out.println("Building Selected");
         building = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
@@ -184,8 +235,7 @@ public class AddNodeController implements ControllableScreen{
 
     //set up variable when floor drop down selected
     @FXML
-    void floorSelected(ActionEvent e)
-    {
+    void floorSelected(ActionEvent e) {
         System.out.println("Floor Selected");
         floor = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
@@ -194,8 +244,7 @@ public class AddNodeController implements ControllableScreen{
 
     //set up variable when floor drop down selected
     @FXML
-    void nodeTypeSelected(ActionEvent e)
-    {
+    void nodeTypeSelected(ActionEvent e) {
         System.out.println("Node Type Selected");
         nodeType = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
@@ -204,13 +253,30 @@ public class AddNodeController implements ControllableScreen{
 
     //set variable to text from text field name
     @FXML
-    void filledNodeID(ActionEvent e)
-    {
+    void filledNodeID(ActionEvent e) {
         //Setting the variables equal to values read from UI
         nodeID = txtfldID.getText();
         System.out.println(nodeID);
     }
 
+    void xCoordEntered() {
+        x = txtfldX.getText();
+        if (!y.equals(""))
+            drawNodeLocation();
+    }
+
+    void yCoordEntered() {
+        y = txtfldY.getText();
+        if (!x.equals(""))
+            drawNodeLocation();
+    }
+
+    void drawNodeLocation() {
+        System.out.println("Drawing Node: " + x + " " + y);
+        nodeLocation.setLayoutX(Integer.parseInt(x));
+        nodeLocation.setLayoutY(Integer.parseInt(y));
+        nodeLocation.setVisible(true);
 
 
     }
+}
