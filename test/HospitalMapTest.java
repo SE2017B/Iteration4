@@ -299,6 +299,7 @@ public class HospitalMapTest {
     }
 
     @Test
+    //Node 4 to Node 2
     public void testMap8() throws InterruptedException {
         smallArea.setStart(N4);
         smallArea.setEnd(N2);
@@ -308,6 +309,7 @@ public class HospitalMapTest {
         assertEquals("[Node 4, Node 7, Node 6, Node 1, Node 2]", answer);
     }
     @Test
+    //Node 2 to Node 4
     public void testMap8Reverse() throws InterruptedException {
         smallArea.setStart(N2);
         smallArea.setEnd(N4);
@@ -318,6 +320,7 @@ public class HospitalMapTest {
     }
 
     @Test
+    //Node 7 to Node 3
     public void testMap9() throws InterruptedException {
         smallArea.setStart(N7);
         smallArea.setEnd(N3);
@@ -327,6 +330,7 @@ public class HospitalMapTest {
         assertEquals("[Node 7, Node 8, Node 9, Node 3]", answer);
     }
     @Test
+    //Node 3 to Node 7
     public void testMap9Reverse() throws InterruptedException {
         smallArea.setStart(N3);
         smallArea.setEnd(N7);
@@ -334,6 +338,140 @@ public class HospitalMapTest {
         String answer = smallArea.findPath(N7).toString();
         System.out.println(answer);
         assertEquals("[Node 3, Node 2, Node 1, Node 6, Node 7]", answer);
+    }
+
+    @Test
+    //Node 6 to Node 6
+    public void testMap1Same() throws InterruptedException{
+        smallArea.setStart(N6);
+        smallArea.setEnd(N6);
+
+        String answer = smallArea.findPath(N6).toString();
+        System.out.println(answer);
+        assertEquals("[Node 6]", answer);
+    }
+    @Test
+    //Node 18 to Node 18
+    public void testMap2Same() throws InterruptedException{
+        smallArea.setStart(N18);
+        smallArea.setEnd(N18);
+
+        String answer = smallArea.findPath(N18).toString();
+        System.out.println(answer);
+        assertEquals("[Node 18]", answer);
+    }
+    @Test
+    //Node 9 to Node 9
+    public void testMap3Same() throws InterruptedException{
+        smallArea.setStart(N9);
+        smallArea.setEnd(N9);
+
+        String answer = smallArea.findPath(N9).toString();
+        System.out.println(answer);
+        assertEquals("[Node 9]", answer);
+
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+
+    // findPath tests (2 Nodes given)
+
+    @Test
+    //Node 1 to Node 17
+    public void testMap10() throws InterruptedException{
+        smallArea.setStart(N1);
+        smallArea.setEnd(N17);
+
+        String answer = smallArea.findPath(N1, N17).toString();
+        System.out.println(answer);
+        assertEquals("[Node 1, Node 6, Node 7, Node 10, Node 11, Node 14, Node 13, Node 17]", answer);
+    }
+    @Test
+    //Node 17 to Node 1
+    public void testMap10Reverse() throws InterruptedException{
+        smallArea.setStart(N17);
+        smallArea.setEnd(N1);
+
+        String answer = smallArea.findPath(N17, N1).toString();
+        System.out.println(answer);
+        assertEquals("[Node 17, Node 13, Node 14, Node 11, Node 10, Node 7, Node 6, Node 1]", answer);
+    }
+
+    @Test
+    //Node 3 to Node 23
+    public void testMap11() throws InterruptedException{
+        smallArea.setStart(N3);
+        smallArea.setEnd(N23);
+
+        String answer = smallArea.findPath(N3, N23).toString();
+        System.out.println(answer);
+        assertEquals("[Node 3, Node 9, Node 15, Node 14, Node 18, Node 21, Node 23]", answer);
+    }
+    @Test
+    //Node 23 to Node 3
+    public void testMap11Reverse() throws InterruptedException{
+        smallArea.setStart(N23);
+        smallArea.setEnd(N3);
+
+        String answer = smallArea.findPath(N23, N3).toString();
+        System.out.println(answer);
+        assertEquals("[Node 23, Node 21, Node 18, Node 14, Node 15, Node 9, Node 3]", answer);
+    }
+
+    @Test
+    //Node 4 to Node 19
+    public void testMap12() throws InterruptedException{
+        smallArea.setStart(N4);
+        smallArea.setEnd(N19);
+
+        String answer = smallArea.findPath(N4, N19).toString();
+        System.out.println(answer);
+        assertEquals("[Node 4, Node 5, Node 8, Node 9, Node 15, Node 14, Node 18, Node 19]", answer);
+    }
+    @Test
+    //Node 19 to Node 4
+    public void testMap12Reverse() throws InterruptedException{
+        smallArea.setStart(N19);
+        smallArea.setEnd(N4);
+
+        String answer = smallArea.findPath(N19, N4).toString();
+        System.out.println(answer);
+        assertEquals("[Node 19, Node 18, Node 14, Node 11, Node 10, Node 7, Node 4]", answer);
+    }
+
+    @Test
+    //Node 15 to Node 15
+    public void testMap4Same() throws InterruptedException{
+        smallArea.setStart(N15);
+        smallArea.setEnd(N15);
+
+        String answer = smallArea.findPath(N15, N15).toString();
+        System.out.println(answer);
+        assertEquals("[Node 15]", answer);
+    }
+    @Test
+    //Node 20 to Node 20
+    public void testMap5Same() throws InterruptedException{
+        smallArea.setStart(N20);
+        smallArea.setEnd(N20);
+
+        String answer = smallArea.findPath(N20, N20).toString();
+        System.out.println(answer);
+        assertEquals("[Node 20]", answer);
+    }
+    @Test
+    //Node 3 to Node 3
+    public void testMap6Same() throws InterruptedException{
+        smallArea.setStart(N3);
+        smallArea.setEnd(N3);
+
+        String answer = smallArea.findPath(N3, N3).toString();
+        System.out.println(answer);
+        assertEquals("[Node 3]", answer);
     }
 
     //////////////////////////////////////////////////////////////////////////////
@@ -353,5 +491,32 @@ public class HospitalMapTest {
     public void testGetEuclideanDistance1Reverse(){
         assertEquals(sqrt(170000), smallArea.getEuclidianDistance(N14, N3), .01);
     }
-    //Hi
+
+    @Test
+    //Node 11 to Node 23
+    public void testGetEuclideanDistance2(){
+        assertEquals(sqrt(260000), smallArea.getEuclidianDistance(N11, N23), .01);
+    }
+    @Test
+    //Node 23 to Node 11
+    public void testGetEuclideanDistance2Reverse(){
+        assertEquals(sqrt(260000), smallArea.getEuclidianDistance(N23, N11), .01);
+    }
+
+    @Test
+    //Node 1 to Node 6
+    public void testGetEuclideanDistance3(){
+        assertEquals(sqrt(40000), smallArea.getEuclidianDistance(N1, N6), .01);
+    }
+    @Test
+    //Node 6 to Node 1
+    public void testGetEuclideanDistance3Reverse(){
+        assertEquals(sqrt(40000), smallArea.getEuclidianDistance(N6, N1), .01);
+    }
+
+    @Test
+    //Node 5 to Node 5
+    public void testGetEuclideanDistanceSame(){
+        assertEquals(0, smallArea.getEuclidianDistance(N5, N5), .01);
+    }
 }
