@@ -44,7 +44,7 @@ public class Main extends Application {
 
         Group root = new Group();
         root.getChildren().addAll(myScreenController);
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
     }
 

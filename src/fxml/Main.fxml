@@ -13,9 +13,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Circle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
       <SplitPane dividerPositions="0.8417085427135679" layoutX="140.0" layoutY="81.0" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -93,7 +92,6 @@
                                                 <Image url="@../images/02_thesecondfloor.png" />
                                              </image>
                                           </ImageView>
-                                          <Circle fx:id="kioskMarker" fill="DODGERBLUE" layoutX="-1.0" layoutY="-1.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
                                        </children>
                                     </Pane>
                                  </content>
@@ -117,7 +115,7 @@
                     </rowConstraints>
                      <children>
                         <Button fx:id="btnzout" mnemonicParsing="false" onAction="#zoutPressed" text="-" GridPane.halignment="RIGHT" />
-                        <Slider fx:id="slideBarZoom" max="2.0" min="1.0" onMouseClicked="#sliderChanged" onMouseDragged="#sliderChanged" value="1.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Slider fx:id="slideBarZoom" max="4.0" min="2.0" onMouseClicked="#sliderChanged" onMouseDragged="#sliderChanged" value="1.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                         <Button fx:id="btnzin" mnemonicParsing="false" onAction="#zinPressed" text="+" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
                      </children>
                   </GridPane>
