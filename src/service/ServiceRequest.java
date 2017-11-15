@@ -11,13 +11,16 @@ public class ServiceRequest{
     private Node where;
     private String description;
 
-
     public ServiceRequest(Service service, int requestID, Node where, String description){
         this.service = service;
         this.requestID = requestID;
         this.where = where;
         this.description = description;
     }
+
+    /*
+    gives a request to the appropriate service
+     */
     public void giveRequest(){
         service.addRequest(this);
     }

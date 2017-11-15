@@ -90,6 +90,7 @@ public class PathController implements ControllableScreen{
             line.setVisible(false);
         }
         path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
+        System.out.println(path);
         if(path.size() != 0) {
             for (int i = 0; i < path.size() - 1; i++) {
                 Line line = new Line();

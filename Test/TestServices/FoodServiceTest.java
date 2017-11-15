@@ -28,7 +28,7 @@ public class FoodServiceTest {
         foodService = new FoodService();
         John = new Staff("johndoe", "abc", "Head cook", "John Doe", 123, foodService);
         Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456, foodService);
-        location = new Node();
+        location = new Node(200,400);
         foodRequest = new ServiceRequest(foodService, 1, location, "apple");
         orangeRequest = new ServiceRequest(foodService, 2, location, "orange");
         grapeRequest = new ServiceRequest(foodService, 3, location, "grape");
@@ -38,6 +38,9 @@ public class FoodServiceTest {
         foodService.assignPerson(Jane);
     }
 
+    /*
+    tests that the FoodService constructor works properly
+     */
     @Test
     public void testFoodService() {
         assertTrue(foodService.getType().equals("Food Service"));
@@ -48,23 +51,31 @@ public class FoodServiceTest {
         assertTrue(foodService.getPersonnel().contains(John));
     }
 
-    @Test
-    public void testAssignRequest(){
-        foodService.addRequest(foodRequest);
-        assertEquals(John.getCurrentRequest().getRequestID(), foodRequest.getRequestID());
-    }
-
+    /*
+    tests that RequestService constructor works properly
+     */
     @Test
     public void testFoodRequest(){
         assertTrue(foodRequest.getRequestID() == 1);
     }
 
     @Test
+    public void testAssignRequest(){
+        foodService.addRequest(foodRequest);
+
+        assertEquals(John.getCurrentRequest().getRequestID(), foodRequest.getRequestID());
+    }
+
+    @Test
     public void testGiveService(){
         foodRequest.giveRequest();
+
         assertEquals(John.getCurrentRequest(), foodRequest);
     }
 
+    /*
+    tests that backlog receives all requests that can't be assigned to a staff member
+     */
     @Test
     public void testBacklog(){
         foodService.addRequest(foodRequest);

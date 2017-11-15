@@ -102,7 +102,7 @@ public class RequestController implements ControllableScreen{
         System.out.println("Service Selected");
         serviceType = ((MenuItem) e.getSource()).getText();
         serviceDropDown.setText(serviceType);
-        staff = ServiceRequest.getStaffForServiceType(serviceType);
+        staff = parent.ge
         if(staff.size() != 0) {
             staffDropDown.setItems(FXCollections.observableList(staff));
             staffDropDown.setDisable(false);

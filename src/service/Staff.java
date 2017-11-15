@@ -1,7 +1,5 @@
-
 package service;
 
-import exceptions.InvalidLoginException;
 import exceptions.InvalidPasswordException;
 
 public class Staff{
@@ -28,19 +26,29 @@ public class Staff{
 
     }
 
-    // make a try catch eventually so that if password fails, a message pops up saying "invalid password"
+    /*
+    takes in an old password and a new password, and changes the staff's current password to the new one
+     */
+
     public void changePassword(String newPass, String oldPass) throws InvalidPasswordException {
         try
         {
             if(this.password.equals(oldPass)) this.password = newPass;
             else throw new InvalidPasswordException();
-        } catch(InvalidPasswordException e) {}
+        } catch(InvalidPasswordException e) {
+            System.out.println("invalid password"); //mainly for testing purposes
+        }
     }
 
+    /*
+    gives the staff member a new request from the backlog, and if the backlog is empty, frees the
+    staff member
+     */
     public void completeCurRec() {
         currentRequest = jobType.getNextRequest();
         if (currentRequest == null){
             jobType.addAvailable(this);
+            this.isBusy = false;
         }
     }
 
@@ -74,7 +82,6 @@ public class Staff{
     public void setUsername(String username) {
         this.username = username;
     }
-    //is this needed since we have changePassword?
     public void setPassword(String password) {
         this.password = password;
     }
@@ -91,8 +98,6 @@ public class Staff{
         this.jobType = jobType;
     }
     public void setCurrentRequest(ServiceRequest request) {
-        //can we get rid of this print statement now?
-        System.out.println(fullName);
         this.currentRequest = request;
         isBusy = true;
     }

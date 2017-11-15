@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 public class KioskEngine{
     private HospitalMap map;
@@ -25,6 +26,14 @@ public class KioskEngine{
     public KioskEngine(){
         loginInfo = new HashMap<>();
         map = new HospitalMap();
+    }
+
+    public void addNode(Node node, ArrayList<Node> connections){
+        for (Node connNode: connections) {
+            node.addConnection(connNode);
+        }
+        map.addNode(node.getID(),node);
+
     }
 
     public void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName, ArrayList<Node> connections) {
@@ -96,7 +105,12 @@ public class KioskEngine{
     }
 
     public ArrayList<Node> findPath(Node start, Node end){
-        return map.findPath(start,end);
+        Stack<Node> stack = map.findPath(start,end);
+        ArrayList<Node> path = new ArrayList<Node>();
+        for (Node node : stack) {
+            path.add(node);
+        }
+        return path;
     }
 
 

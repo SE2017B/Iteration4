@@ -15,19 +15,27 @@ public class Service{
         availablePer = new ArrayList<>();
     }
 
+    /*
+    adds a staff member to the list of staff members in a service and a list of staff
+    available to fill a request
+     */
     public void assignPerson(Staff person){
         this.personnel.add(person);
         this.availablePer.add(person);
     }
-
+    /*
+    adds multiple staff members to the lists
+     */
     public void assignPeople(ArrayList<Staff> people){
         this.personnel.addAll(people);
         this.availablePer.addAll(people);
     }
 
-    //can we get rid of these print statements now?
+    /*
+    gives an available staff member a request assignment, or adds the request to a
+    backlog if there are no free staff members
+     */
     public void addRequest(ServiceRequest request){
-        System.out.println(request.getRequestID());
         if(availablePer.isEmpty()) {
             System.out.println("Staff Are Busy, Added to Backlog");
             backlog.add(request);
@@ -41,6 +49,9 @@ public class Service{
         }
     }
 
+    /*
+    adds a staff member to a list of people available for a request assignment
+     */
     public void addAvailable(Staff staff) {
         availablePer.add(staff);
     }
@@ -58,7 +69,6 @@ public class Service{
     public ArrayList<Staff> getAvailablePer() {
         return availablePer;
     }
-
     public String getDescription(){
         return this.description;
     }
@@ -70,8 +80,8 @@ public class Service{
     }
 
     //setters
+    public void setType(String type){ this.type = type; }
     public void setDescription(String description){
         this.description = description;
     }
-    public void setType(String type){ this.type = type; }
 }
