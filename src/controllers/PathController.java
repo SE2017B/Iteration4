@@ -95,10 +95,10 @@ public class PathController implements ControllableScreen{
     }
 
     public void diplayPath(ArrayList<Node> path){
-        if( path.size() == 1){
+        if( path.size() <= 1){
+            System.out.println("NO PATH FOUND");
             failLabel.setVisible(true);
-        }
-        if(path.size() != 0) {
+        } else if(path.size() > 1) {
             failLabel.setVisible(false);
             for (int i = 0; i < path.size() - 1; i++) {
                 Line line = new Line();

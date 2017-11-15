@@ -44,6 +44,7 @@ public class AddNodeController implements ControllableScreen {
     private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
 
 
+
     //setter for parent
     public void setParentController(ScreenController parent) {
         this.parent = parent;
@@ -162,7 +163,7 @@ public class AddNodeController implements ControllableScreen {
     private Circle nodeLocation;
 
     public void init() {
-
+        nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         txtfldX.textProperty().addListener((observable, oldValue, newValue) -> xCoordEntered());
         txtfldY.textProperty().addListener((observable, oldValue, newValue) -> yCoordEntered());
 
@@ -171,11 +172,27 @@ public class AddNodeController implements ControllableScreen {
     public void onShow() {
         x = "";
         y = "";
+        name = "";
+        nodeID = "";
+        floor = "";
+        txtfldX.setText("");
+        txtfldY.setText("");
+        txtfldID.setText("");
+        txtfldName.setText("");
+
+        floorDropDown.setText("");
+        buildingDropDown.setText("");
+        nodeTypeDropDown.setText("");
+
+        for(NodeCheckBox box : nodeCheckBoxes){
+            box.setVisible(false);
+            mapPane.getChildren().remove(box);
+        }
+        nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         failText.setVisible(false);
         nodeLocation.setVisible(false);
+
         ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForEdit();
-
-
         for (Node node : nodes) {
             NodeCheckBox box = new NodeCheckBox();
             box.setNode(node); //sets checkbox to node location
@@ -267,22 +284,21 @@ public class AddNodeController implements ControllableScreen {
 
     void xCoordEntered() {
         x = txtfldX.getText();
-        if (!y.equals(""))
-            drawNodeLocation();
+        drawNodeLocation();
     }
 
     void yCoordEntered() {
         y = txtfldY.getText();
-        if (!x.equals(""))
-            drawNodeLocation();
+        drawNodeLocation();
     }
 
     void drawNodeLocation() {
-        System.out.println("Drawing Node: " + x + " " + y);
-        nodeLocation.setLayoutX(Integer.parseInt(x));
-        nodeLocation.setLayoutY(Integer.parseInt(y));
-        nodeLocation.setVisible(true);
-
+        if (x.length()>0 & y.length()>0) {
+            System.out.println("Drawing Node: " + x + " " + y);
+            nodeLocation.setLayoutX(Integer.parseInt(x));
+            nodeLocation.setLayoutY(Integer.parseInt(y));
+            nodeLocation.setVisible(true);
+        }
 
     }
 }

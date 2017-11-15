@@ -62,7 +62,7 @@
                         </Label>
                         <Label fx:id="lbldir" text="Directions" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="38.0" />
                            </font>
                         </Label>
                         <ChoiceBox fx:id="startChoice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -75,7 +75,11 @@
                               <Insets left="10.0" right="10.0" />
                            </GridPane.margin>
                         </ChoiceBox>
-                        <Label fx:id="failLabel" text="No Path Found" textAlignment="CENTER" textFill="RED" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="failLabel" text="No Path Found" textAlignment="CENTER" textFill="RED" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
                      </children>
                   </GridPane>
                </children>
