@@ -8,6 +8,8 @@
 
 package kioskEngine;
 
+import database.edgeDatabase;
+import database.nodeDatabase;
 import map.HospitalMap;
 import map.Node;
 import exceptions.InvalidLoginException;
@@ -50,64 +52,19 @@ public class KioskEngine{
 
     public void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName, ArrayList<Node> connections) {
         try {
-            //Open DB connection
-            conn = DriverManager.getConnection(JDBC_URL);
-            conn.setAutoCommit(false);
-            conn.getMetaData();
-
-
-            //Add Node to DB
-            Node newNode = new Node(anyNodeID,anyName, anyNodeType, Integer.parseInt(anyXcoord),Integer.parseInt(anyYcoord),anyFloor,connections);
-            PreparedStatement addAnyNode = conn.prepareStatement("INSERT INTO mapHNodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-            addAnyNode.setString(1, anyNodeID);
-            addAnyNode.setString(2, anyXcoord);
-            addAnyNode.setString(3, anyYcoord);
-            addAnyNode.setString(4, anyFloor);
-            addAnyNode.setString(5, anyBuilding);
-            addAnyNode.setString(6, anyNodeType);
-            addAnyNode.setString(7, anyName);
-            addAnyNode.setString(8, anyName);
-            addAnyNode.setString(9, "Team H");
-
-            addAnyNode.executeUpdate();
-            System.out.println("Insert Node Successful for nodeID: " + anyNodeID);
-
-
+            //Create new Node and add to database
+            Node newNode = new Node(anyNodeID,anyXcoord,anyYcoord,anyFloor,anyBuilding,anyNodeType,anyName,anyName,"Team H");
+            nodeDatabase.addNode(anyNodeID,anyXcoord,anyYcoord,anyFloor,anyBuilding,anyNodeType,anyName);
+            //Add connections in both directions
             for (Node connectTo: connections) {
-                //Add Edge to DB
-                String anyEdgeID = (anyNodeID + "_" + connectTo.getID());
+                edgeDatabase.addEdge(anyNodeID,connectTo.getID());
+                newNode.addConnection(connectTo);
 
-                PreparedStatement addAnyEdge = conn.prepareStatement("INSERT INTO mapHEdges VALUES (?, ?, ?)");
-
-                addAnyEdge.setString(1, anyEdgeID);
-                addAnyEdge.setString(2, anyNodeID);
-                addAnyEdge.setString(3, connectTo.getID());
-
-                addAnyEdge.executeUpdate();
-                System.out.println("Insert Edge Successful for edgeID: " + anyEdgeID);
-
-                //Add revers edge to DB
-                String anyReverseEdgeID = (connectTo.getID() + "_" + anyNodeID);
-
-                PreparedStatement addAnyReverseEdge = conn.prepareStatement("INSERT INTO mapHEdges VALUES (?, ?, ?)");
-
-                addAnyEdge.setString(1, anyEdgeID);
-                addAnyEdge.setString(2, connectTo.getID());
-                addAnyEdge.setString(3, anyNodeID);
-
-                addAnyEdge.executeUpdate();
-                System.out.println("Insert Reverse Successful for edgeID: " + anyEdgeID);
-
+                edgeDatabase.addEdge(connectTo.getID(),anyNodeID);
+                connectTo.addConnection(newNode);
             }
-
-            conn.commit();
-            addAnyNode.close();
-            conn.close();
-
-            //add node to map in memory
+            //Add node to map Hashmap
             map.addNode(anyNodeID,newNode);
-
 
         } catch (Exception e) {
             System.out.println("DB Add Failed");

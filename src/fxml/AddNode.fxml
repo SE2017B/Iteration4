@@ -132,7 +132,7 @@
                             <content>
                                 <Pane fx:id="mapPane">
                                     <children>
-                                        <ImageView fitHeight="800.0" fitWidth="1280.0">
+                                        <ImageView>
                                             <image>
                                                 <Image url="@../images/02_thesecondfloor.png" />
                                             </image>

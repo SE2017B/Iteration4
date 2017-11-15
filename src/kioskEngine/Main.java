@@ -8,6 +8,7 @@
 
 package kioskEngine;
 
+import database.mainDatabase;
 import map.Node;
 import controllers.ScreenController;
 import javafx.application.Application;
@@ -48,54 +49,31 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        mainDatabase.readNodeCSV("MapHnodes.csv");
+        mainDatabase.readNodeCSV("MapWnodes.csv");
 
-        Node a = new Node(400,200);
-            a.setLongName("a");
-            a.setID("aaaa");
-
-        Node b = new Node(600,200);
-            b.setLongName("b");
-            b.setID("bbbb");
-
-
-        Node c = new Node(600,400);
-            c.setLongName("c");
-            c.setID("cccc");
-
-
-        Node d = new Node(400,400);
-            d.setLongName("d");
-            d.setID("dddd");
-
-
-        ArrayList<Node> aConn = new ArrayList<Node>();
-        aConn.add(b);
-
-        ArrayList<Node> bConn = new ArrayList<Node>();
-        aConn.add(c);
-        aConn.add(a);
-
-        ArrayList<Node> cConn = new ArrayList<Node>();
-        aConn.add(b);
-        aConn.add(d);
-
-        ArrayList<Node> dConn = new ArrayList<Node>();
-        aConn.add(c);
-
+        mainDatabase.readEdgesCSV("MapHedges.csv");
+        mainDatabase.readEdgesCSV("MapWedges.csv");
 
         Staff testAdmin =  new Staff("test","","Admin","Admin Test",1234, engine.getService("Food"));
         Staff testStaff =  new Staff("testStaff","","food stuff","Staff Test",1234, engine.getService("Food"));
-        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,a,"This is a test");
+
         engine.addStaffLogin(testStaff, "Food");
         engine.addStaffLogin(testAdmin, "Food");
+
+
+
+        for(Node node : mainDatabase.getNodes()){
+            engine.getMap().addNode(node.getID(),node);
+        }
+
+        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,engine.getMap().getNodesForSearch().get(0),"This is a test");
         req.giveRequest();
-        engine.addNode(a,aConn);
-        engine.addNode(b,bConn);
-        engine.addNode(c,cConn);
-        engine.addNode(d,dConn);
-
-
 
         launch(args);
+
+
+        mainDatabase.outputNodesCSV();
+        mainDatabase.outputEdgesCSV();
     }
 }

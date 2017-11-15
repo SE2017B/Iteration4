@@ -63,6 +63,9 @@ public class PathController implements ControllableScreen{
     @FXML
     private Pane mapPane;
 
+    @FXML
+    private Label failLabel;
+
 
     //Methods start here
     public void init()
@@ -75,12 +78,13 @@ public class PathController implements ControllableScreen{
 
     public void onShow(){
         //Update the nodes in the map
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesAsArrayList();
+        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForSearch();
 
         //update the items in the checklist
         startChoice.setItems(FXCollections.observableList(nodes));
         endChoice.setItems(FXCollections.observableList(nodes));
 
+        startChoice.setValue(nodes.get(0));
         //remove any previous paths from the display
         for (Line line: lines) {
             line.setVisible(false);
@@ -90,7 +94,11 @@ public class PathController implements ControllableScreen{
     }
 
     public void diplayPath(ArrayList<Node> path){
+        if( path.size() == 1){
+            failLabel.setVisible(true);
+        }
         if(path.size() != 0) {
+            failLabel.setVisible(false);
             for (int i = 0; i < path.size() - 1; i++) {
                 Line line = new Line();
                 Node start = path.get(i);
@@ -127,7 +135,9 @@ public class PathController implements ControllableScreen{
         System.out.println("Enter Pressed");
         //Remove last path from screen
         clearPaths();
+        System.out.println(startChoice.getValue() + "->" + endChoice.getValue());
         path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
+        System.out.println(path);
         diplayPath(path);
 
 

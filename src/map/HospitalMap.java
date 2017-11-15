@@ -159,9 +159,23 @@ public class HospitalMap{
     }
 
 
-    public ArrayList<Node> getNodesAsArrayList(){
+    public ArrayList<Node> getNodesForSearch(){
         ArrayList<Node> output = new ArrayList<Node>();
-        output.addAll(map.values());
+        for(Node node : map.values()){
+            if(!node.getType().equals("HALL") && node.getFloor().equals("2") && node.getTeam().equals("Team H")){
+                output.add(node);
+            }
+        }
+        return output;
+    }
+
+    public ArrayList<Node> getNodesForEdit(){
+        ArrayList<Node> output = new ArrayList<Node>();
+        for(Node node : map.values()){
+            if(node.getFloor().equals("2") && node.getTeam().equals("Team H")){
+                output.add(node);
+            }
+        }
         return output;
     }
 

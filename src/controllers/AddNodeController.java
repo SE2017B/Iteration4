@@ -173,7 +173,7 @@ public class AddNodeController implements ControllableScreen {
         y = "";
         failText.setVisible(false);
         nodeLocation.setVisible(false);
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesAsArrayList();
+        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForEdit();
 
 
         for (Node node : nodes) {

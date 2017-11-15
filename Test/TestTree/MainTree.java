@@ -56,7 +56,7 @@ public class MainTree {
     //Load objects from database
     @Test
     public void getNodes(){
-        Nodes=Map.getNodesAsArrayList();
+        Nodes=Map.getNodesForSearch();
         assertTrue(Nodes.size()>0);
     }
     //maybe Load Object from CSV

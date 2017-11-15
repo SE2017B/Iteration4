@@ -371,6 +371,10 @@ public class mainDatabase {
         }
     }
 
+    public static ArrayList<Node> getNodes(){
+        return allNodes;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     // Main Database Function
     ///////////////////////////////////////////////////////////////////////////////
@@ -391,23 +395,6 @@ public class mainDatabase {
 
         mainDatabase testConnection1 = new mainDatabase();
 
-
-
-        nodeDatabase.queryAllNodes();
-        nodeDatabase.addNode("HHALL05002", "2000", "2000", "2", "Tower", "HALL", "Hallway Connector 50 Floor 2");
-        nodeDatabase.queryAllNodes();
-        nodeDatabase.modifyNode("floor", "4", "HBATH00203");
-        nodeDatabase.queryAllNodes();
-        nodeDatabase.deleteNode(new Node("HHALL05002", "2000", "2000", "2", "Tower", "HALL", "Hallway Connector 50 Floor 2","Hallway Connector 50 Floor 2", "Team H"));
-        nodeDatabase.queryAllNodes();
-
-        edgeDatabase.queryAllEdges();
-        edgeDatabase.addEdge("HHALL05002", "HHALL05102");
-        edgeDatabase.queryAllEdges();
-        edgeDatabase.modifyEdge("startNode","HHALL07002", "HHALL00102_HHALL00202");
-        edgeDatabase.queryAllEdges();
-        edgeDatabase.deleteAnyEdge("HHALL05002_HHALL05102");
-        edgeDatabase.queryAllEdges();
 
         outputNodesCSV();
         outputEdgesCSV();
