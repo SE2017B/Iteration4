@@ -86,11 +86,12 @@ public class Service{
     public String getDescription(){
         return this.description;
     }
+
     public ServiceRequest getNextRequest() {
         if(backlog.isEmpty()) {
             return null;
         }
-        return backlog.get(0);
+        return backlog.remove(0);
     }
 
     //setters
