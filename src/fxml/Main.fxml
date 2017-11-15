@@ -87,7 +87,7 @@
                                  <content>
                                     <Pane fx:id="mapPane">
                                        <children>
-                                          <ImageView fitHeight="850.0" fitWidth="1250.0">
+                                          <ImageView fitHeight="1700.0" fitWidth="2500.0">
                                              <image>
                                                 <Image url="@../images/02_thesecondfloor.png" />
                                              </image>
@@ -114,9 +114,9 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="btnzout" mnemonicParsing="false" onAction="#zoutPressed" text="-" GridPane.halignment="RIGHT" />
-                        <Slider fx:id="slideBarZoom" max="4.0" min="2.0" onMouseClicked="#sliderChanged" onMouseDragged="#sliderChanged" value="1.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                        <Button fx:id="btnzin" mnemonicParsing="false" onAction="#zinPressed" text="+" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
+                        <Button fx:id="btnzout" mnemonicParsing="false" onAction="#zoutPressed" text="-" visible="false" GridPane.halignment="RIGHT" />
+                        <Slider fx:id="slideBarZoom" max="4.0" min="2.0" onMouseClicked="#sliderChanged" onMouseDragged="#sliderChanged" value="1.0" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Button fx:id="btnzin" mnemonicParsing="false" onAction="#zinPressed" text="+" visible="false" GridPane.columnIndex="2" GridPane.halignment="LEFT" />
                      </children>
                   </GridPane>
                   <GridPane alignment="CENTER_RIGHT" layoutX="328.0" layoutY="16.0" prefHeight="30.0" prefWidth="271.0">

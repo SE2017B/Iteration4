@@ -52,7 +52,7 @@
 				</Button>
 				<Label fx:id="nameLabel" text="Name" GridPane.columnIndex="1">
 					<font>
-						<Font size="27.0" />
+						<Font name="System Bold" size="27.0" />
 					</font>
 					<GridPane.margin>
 						<Insets top="40.0" />
@@ -60,24 +60,30 @@
 				</Label>
 				<Button fx:id="btnComplete" maxHeight="40.0" minHeight="40.0" mnemonicParsing="false" onAction="#completePressed" prefHeight="40.0" prefWidth="238.0" text="Complete Request" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
 					<font>
-						<Font size="15.0" />
+						<Font size="19.0" />
 					</font>
 					<GridPane.margin>
 						<Insets left="20.0" right="20.0" top="20.0" />
 					</GridPane.margin>
 				</Button>
-				<Label prefHeight="18.0" prefWidth="161.0" text="Job Description" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+				<Label prefHeight="18.0" prefWidth="200.0" text="Job Description" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
 					<font>
-						<Font size="20.0" />
+						<Font size="23.0" />
 					</font>
 				</Label>
-				<Label prefHeight="18.0" prefWidth="116.0" text="Location" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+				<Label prefHeight="18.0" prefWidth="200.0" text="Location" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
 					<font>
-						<Font size="20.0" />
+						<Font size="24.0" />
 					</font>
 				</Label>
-				<Label fx:id="jobDescrLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-				<Label fx:id="locationLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+				<Label fx:id="jobDescrLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+				<Label fx:id="locationLabel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
 			</children>
 		</GridPane>
 	</children>
