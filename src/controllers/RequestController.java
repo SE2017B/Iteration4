@@ -9,6 +9,9 @@ import service.ServiceRequest;
 import service.Staff;
 import service.Service;
 
+
+import controllers.AdminMenuController;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -22,6 +25,7 @@ public class RequestController implements ControllableScreen{
     private LocalDate date;
 
     private static int requestIDCount = 0;
+
 
 
     private ArrayList<Staff> staff;
@@ -59,6 +63,9 @@ public class RequestController implements ControllableScreen{
     @FXML
     private TextArea infoText;
 
+    @FXML
+    private ChoiceBox locationChoiceBox;
+
     public void init(){
     }
 
@@ -69,7 +76,7 @@ public class RequestController implements ControllableScreen{
     public void createPressed(ActionEvent e){
         staffMember = (Staff)staffDropDown.getValue();
         if(serviceType.equals("Food")){
-            ServiceRequest req = new ServiceRequest(staffMember.getJobType(),requestIDCount, new Node()/*locationChoiceBox.getValue()*/,infoText.getText());
+            ServiceRequest req = new ServiceRequest(staffMember.getJobType(),requestIDCount, (Node)locationChoiceBox.getValue(),infoText.getText());
             requestIDCount++;
             staffMember.getJobType().addRequest(req);
         }
@@ -105,6 +112,7 @@ public class RequestController implements ControllableScreen{
             infoLabel.setVisible(false);
             infoText.setVisible(false);
         }
+
 
     }
 

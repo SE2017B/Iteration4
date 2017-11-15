@@ -13,6 +13,7 @@ import service.TransportService;
 public class AdminMenuController implements ControllableScreen{
     private ScreenController parent;
     private Staff staffMember;
+    private ServiceRequest serviceRequest;
 
     public void setParentController(ScreenController parent){
         this.parent = parent;
@@ -21,19 +22,22 @@ public class AdminMenuController implements ControllableScreen{
     private Button btnService;
 
     @FXML
-    private Label nameLabel;
+    private Button btnEdit;
 
     @FXML
-    private ListView requestList;
+    private Button btnLogout;
+
+    @FXML
+    private Label nameLabel;
 
     @FXML
     private Button btnComplete;
 
     @FXML
-    private Button btnEdit;
+    private Label jobDescrLabel;
 
     @FXML
-    private Button btnLogout;
+    private Label locationLabel;
 
     public void init(){
     }
@@ -82,8 +86,19 @@ public class AdminMenuController implements ControllableScreen{
             btnEdit.setVisible(true);
         }
 
+        //requestList.setItems(FXCollections.observableArrayList(staffMember.getFullName(), staffMember.getJobTitle()));
         //Populate the list of service requests
-        requestList.setItems(FXCollections.observableArrayList(staffMember.getCurrentRequest()));
+        if(staffMember.getCurrentRequest() == null)
+        {
+            jobDescrLabel.setText("No Current Requests");
+            locationLabel.setText(" ");
+        }else{
+
+
+        jobDescrLabel.setText(staffMember.getCurrentRequest().getDescription());
+        locationLabel.setText(staffMember.getCurrentRequest().getWhere().getX() + " " + staffMember.getCurrentRequest().getWhere().getX());
+        //jobDescrLabel.setText("Do stuff");
+        }
 
     }
 
