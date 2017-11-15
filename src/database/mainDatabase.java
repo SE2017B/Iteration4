@@ -51,6 +51,7 @@ public class mainDatabase {
             BufferedWriter bw1 = new BufferedWriter(fw1);
             PrintWriter pw1 = new PrintWriter(bw1);
 
+            pw1.println("nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName,teamAssigned");
             for (int j = 0; j < allNodes.size(); j++) {
 
 
@@ -85,6 +86,8 @@ public class mainDatabase {
             FileWriter fw2 = new FileWriter(outEdgesFileName, false);
             BufferedWriter bw2 = new BufferedWriter(fw2);
             PrintWriter pw2 = new PrintWriter(bw2);
+
+            pw2.println("edgeID,startNode,endNode");
 
             for (int j = 0; j < edgeID.toArray().length; j++) {
 

@@ -10,6 +10,7 @@ package kioskEngine;
 
 import database.edgeDatabase;
 import database.nodeDatabase;
+import javafx.collections.ObservableList;
 import map.HospitalMap;
 import map.Node;
 import exceptions.InvalidLoginException;
@@ -48,6 +49,12 @@ public class KioskEngine{
         }
         map.addNode(node.getID(),node);
 
+    }
+
+    public void deleteNodes(ObservableList<Node> nodes){
+        for(Node node : nodes){
+
+        }
     }
 
     public void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName, ArrayList<Node> connections) {
