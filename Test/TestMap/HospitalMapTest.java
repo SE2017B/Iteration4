@@ -1,11 +1,20 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Nicholas Fajardo, Tyrone Patterson, Leo Grande, Meghana Bhatia
+* The following code
+*/
+
 package TestMap;
 
-import a_star.*;
+import map.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class HospitalMapTest {
 
@@ -14,29 +23,29 @@ public class HospitalMapTest {
     }
 
     private HospitalMap smallArea = new HospitalMap();
-    private Node N1 = new Node("Node 1", "1", "Bathroom",  1, 0, 400);
-    private Node N2 = new Node("Node 2", "2", "Room",  1, 0, 200);
-    private Node N3 = new Node("Node 3", "3", "Desk",  1, 0, 0);
-    private Node N4 = new Node("Node 4", "4", "Office", 1, 100, 300);
-    private Node N5 = new Node("Node 5", "5", "Stairs",  1, 100, 100);
-    private Node N6 = new Node("Node 6", "6", "Bathrooom",  1, 200, 400);
-    private Node N7 = new Node("Node 7", "7", "Stairs",  1, 200, 300);
-    private Node N8 = new Node("Node 8", "8", "Bathrooom",  1, 200, 100);
-    private Node N9 = new Node("Node 9", "9", "Elevator",  1, 200, 0);
-    private Node N10 = new Node("Node 10", "10", "Desk", 1, 300, 300);
-    private Node N11 = new Node("Node 11", "11", "Bathroom", 1, 300, 100);
-    private Node N12 = new Node("Node 12", "12", "Desk", 1, 400, 400);
-    private Node N13 = new Node("Node 13", "13", "Desk", 1, 400, 300);
-    private Node N14 = new Node("Node 14", "14", "Desk", 1, 400, 100);
-    private Node N15 = new Node("Node 15", "15", "Stairs", 1, 400, 0);
-    private Node N16 = new Node("Node 16", "16", "Office", 1, 600, 400);
-    private Node N17 = new Node("Node 17", "17", "Office", 1, 600, 300);
-    private Node N18 = new Node("Node 18", "18", "Bathroom", 1, 500, 100);
-    private Node N19 = new Node("Node 19", "19", "Stairs", 1, 500, 0);
-    private Node N20 = new Node("Node 20", "20", "Elevator", 1, 700, 300);
-    private Node N21 = new Node("Node 21", "21", "Stairs", 1, 700, 100);
-    private Node N22 = new Node("Node 22", "22", "Desk", 1, 700, 0);
-    private Node N23 = new Node("Node 23", "23", "Desk", 1, 800, 0);
+    private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
+    private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
+    private Node N3 = new Node("A3", "0", "0", "L1", "Tower", "Desk", "Long3", "Short3", "H");
+    private Node N4 = new Node("A4", "100", "300", "L1", "Tower", "Desk", "Long4", "Short4", "H");
+    private Node N5 = new Node("A5", "100", "100", "L1", "Tower", "Stairs", "Long5", "Short5", "H");
+    private Node N6 = new Node("A6", "200", "400", "L1", "Tower", "Desk", "Long6", "Short6", "H");
+    private Node N7 = new Node("A7", "200", "300", "L1", "Tower", "Desk", "Long7", "Short7", "H");
+    private Node N8 = new Node("A8", "200", "100", "L1", "Tower", "Bathroom", "Long8", "Short8", "H");
+    private Node N9 = new Node("A9", "200", "0", "L1", "Tower", "Elevator", "Long9", "Short9", "H");
+    private Node N10 = new Node("A10", "300", "300", "L1", "Tower", "Desk", "Long10", "Short10", "H");
+    private Node N11 = new Node("A11", "300", "100", "L1", "Tower", "Bathroom", "Long11", "Short11", "H");
+    private Node N12 = new Node("A12", "400", "400", "L1", "Tower", "Desk", "Long12", "Short12", "H");
+    private Node N13 = new Node("A13", "400", "100", "L1", "Tower", "Desk", "Long13", "Short13", "H");
+    private Node N14 = new Node("A14", "400", "100", "L1", "Tower", "Desk", "Long14", "Short14", "H");
+    private Node N15 = new Node("A15", "400", "0", "L1", "Tower", "Stairs", "Long15", "Short15", "H");
+    private Node N16 = new Node("A16", "600", "400", "L1", "Tower", "Office", "Long16", "Short16", "H");
+    private Node N17 = new Node("A17", "600", "300", "L1", "Tower", "Office", "Long17", "Short17", "H");
+    private Node N18 = new Node("A18", "500", "100", "L1", "Tower", "Bathroom", "Long18", "Short18", "H");
+    private Node N19 = new Node("A19", "500", "0", "L1", "Tower", "Stairs", "Long19", "Short19", "H");
+    private Node N20 = new Node("A20", "700", "300", "L1", "Tower", "Elevator", "Long20", "Short20", "H");
+    private Node N21 = new Node("A21", "700", "100", "L1", "Tower", "Stairs", "Long21", "Short21", "H");
+    private Node N22 = new Node("A22", "700", "0", "L1", "Tower", "Desk", "Long22", "Short22", "H");
+    private Node N23 = new Node("A23", "800", "0", "L1", "Tower", "Desk", "Long23", "Short23", "H");
 
 
     @Before
@@ -146,11 +155,6 @@ public class HospitalMapTest {
         N23.addConnection(N21);
     }
 
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-
     // findPath tests
 
     @Test
@@ -161,7 +165,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N9).toString();
         System.out.println(answer);
-        assertEquals("[Node 1, Node 2, Node 3, Node 9]", answer);
+        assertEquals("[Short1, Short2, Short3, Short9]", answer);
     }
     @Test
     //Node 9 to Node 1
@@ -171,7 +175,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N1).toString();
         System.out.println(answer);
-        assertEquals("[Node 9, Node 8, Node 7, Node 6, Node 1]", answer);
+        assertEquals("[Short9, Short8, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -182,7 +186,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N10).toString();
         System.out.println(answer);
-        assertEquals("[Node 1, Node 6, Node 7, Node 10]", answer);
+        assertEquals("[Short1, Short6, Short7, Short10]", answer);
     }
     @Test
     //Node 10 to Node 1
@@ -192,7 +196,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N1).toString();
         System.out.println(answer);
-        assertEquals("[Node 10, Node 7, Node 6, Node 1]", answer);
+        assertEquals("[Short10, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -203,7 +207,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N12).toString();
         System.out.println(answer);
-        assertEquals("[Node 1, Node 6, Node 7, Node 10, Node 11, Node 14, Node 13, Node 12]", answer);
+        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short12]", answer);
     }
     @Test
     //Node 12 to Node 1
@@ -213,7 +217,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N1).toString();
         System.out.println(answer);
-        assertEquals("[Node 12, Node 16, Node 14, Node 11, Node 10, Node 7, Node 6, Node 1]", answer);
+        assertEquals("[Short12, Short16, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -224,7 +228,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N20).toString();
         System.out.println(answer);
-        assertEquals("[Node 1, Node 6, Node 7, Node 10, Node 11, Node 14, Node 18, Node 21, Node 20]", answer);
+        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short17, Short20]", answer);
     }
     @Test
     //Node 20 to Node 1
@@ -232,7 +236,9 @@ public class HospitalMapTest {
         smallArea.setStart(N20);
         smallArea.setEnd(N1);
 
-        System.out.println(smallArea.findPath(N1).toString());
+        String answer = (smallArea.findPath(N1).toString());
+        System.out.println(answer);
+        assertEquals("[Short20, Short17, Short16, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -243,7 +249,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N23).toString();
         System.out.println(answer);
-        assertEquals("[Node 1, Node 6, Node 7, Node 10, Node 11, Node 14, Node 18, Node 21, Node 23]", answer);
+        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
     }
     @Test
     //Node 23 to Node 1
@@ -253,7 +259,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N1).toString();
         System.out.println(answer);
-        assertEquals("[Node 23, Node 21, Node 18, Node 14, Node 11, Node 10, Node 7, Node 6, Node 1]", answer);
+        assertEquals("[Short23, Short21, Short18, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -264,7 +270,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N15).toString();
         System.out.println(answer);
-        assertEquals("[Node 6, Node 7, Node 8, Node 9, Node 15]", answer);
+        assertEquals("[Short6, Short7, Short8, Short9, Short15]", answer);
     }
     @Test
     //Node 15 to Node 6
@@ -274,7 +280,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N6).toString();
         System.out.println(answer);
-        assertEquals("[Node 15, Node 14, Node 11, Node 10, Node 7, Node 6]", answer);
+        assertEquals("[Short15, Short14, Short11, Short10, Short7, Short6]", answer);
     }
 
     @Test
@@ -285,7 +291,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N22).toString();
         System.out.println(answer);
-        assertEquals("[Node 3, Node 9, Node 15, Node 14, Node 18, Node 19, Node 22]", answer);
+        assertEquals("[Short3, Short9, Short15, Short14, Short18, Short19, Short22]", answer);
     }
     @Test
     //Node 22 to Node 3
@@ -295,7 +301,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N3).toString();
         System.out.println(answer);
-        assertEquals("[Node 22, Node 19, Node 18, Node 14, Node 15, Node 9, Node 3]", answer);
+        assertEquals("[Short22, Short19, Short18, Short14, Short15, Short9, Short3]", answer);
     }
 
     @Test
@@ -306,7 +312,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N2).toString();
         System.out.println(answer);
-        assertEquals("[Node 4, Node 7, Node 6, Node 1, Node 2]", answer);
+        assertEquals("[Short4, Short7, Short6, Short1, Short2]", answer);
     }
     @Test
     //Node 2 to Node 4
@@ -316,7 +322,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N4).toString();
         System.out.println(answer);
-        assertEquals("[Node 2, Node 1, Node 6, Node 7, Node 4]", answer);
+        assertEquals("[Short2, Short1, Short6, Short7, Short4]", answer);
     }
 
     @Test
@@ -327,7 +333,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N3).toString();
         System.out.println(answer);
-        assertEquals("[Node 7, Node 8, Node 9, Node 3]", answer);
+        assertEquals("[Short7, Short8, Short9, Short3]", answer);
     }
     @Test
     //Node 3 to Node 7
@@ -337,7 +343,19 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N7).toString();
         System.out.println(answer);
-        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+        assertEquals("[Short3, Short9, Short8, Short7]", answer);
+    }
+    @Test
+    //Node 7 to Node 3
+    public void testMap9Repeat() throws InterruptedException{
+        smallArea.setStart(N7);
+        smallArea.setEnd(N3);
+
+        String answer1 = smallArea.findPath(N3).toString();
+        String answer2 = smallArea.findPath(N3).toString();
+        System.out.println(answer1);
+        assertEquals(answer1, answer2);
+        assertEquals("[Short7, Short8, Short9, Short3]", answer1);
     }
 
     @Test
@@ -348,7 +366,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N6).toString();
         System.out.println(answer);
-        assertEquals("[Node 6]", answer);
+        assertEquals("[Short6]", answer);
     }
     @Test
     //Node 18 to Node 18
@@ -358,7 +376,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N18).toString();
         System.out.println(answer);
-        assertEquals("[Node 18]", answer);
+        assertEquals("[Short18]", answer);
     }
     @Test
     //Node 9 to Node 9
@@ -368,15 +386,9 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N9).toString();
         System.out.println(answer);
-        assertEquals("[Node 9]", answer);
+        assertEquals("[Short9]", answer);
 
     }
-
-
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
 
     // findPath tests (2 Nodes given)
 
@@ -388,7 +400,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N1, N17).toString();
         System.out.println(answer);
-        assertEquals("[Node 1, Node 6, Node 7, Node 10, Node 11, Node 14, Node 13, Node 17]", answer);
+        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short17]", answer);
     }
     @Test
     //Node 17 to Node 1
@@ -398,7 +410,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N17, N1).toString();
         System.out.println(answer);
-        assertEquals("[Node 17, Node 16, Node 14, Node 11, Node 10, Node 7, Node 6, Node 1]", answer);
+        assertEquals("[Short17, Short16, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -409,7 +421,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N3, N23).toString();
         System.out.println(answer);
-        assertEquals("[Node 3, Node 9, Node 15, Node 14, Node 18, Node 21, Node 23]", answer);
+        assertEquals("[Short3, Short9, Short15, Short14, Short18, Short21, Short23]", answer);
     }
     @Test
     //Node 23 to Node 3
@@ -419,7 +431,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N23, N3).toString();
         System.out.println(answer);
-        assertEquals("[Node 23, Node 21, Node 18, Node 14, Node 15, Node 9, Node 3]", answer);
+        assertEquals("[Short23, Short21, Short18, Short14, Short15, Short9, Short3]", answer);
     }
 
     @Test
@@ -430,8 +442,9 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N4, N19).toString();
         System.out.println(answer);
-        assertEquals("[Node 4, Node 7, Node 10, Node 11, Node 14, Node 18, Node 19]", answer);
+        assertEquals("[Short4, Short7, Short10, Short11, Short14, Short18, Short19]", answer);
     }
+
     @Test
     //Node 19 to Node 4
     public void testMap12Reverse() throws InterruptedException{
@@ -440,7 +453,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N19, N4).toString();
         System.out.println(answer);
-        assertEquals("[Node 19, Node 18, Node 14, Node 11, Node 10, Node 7, Node 4]", answer);
+        assertEquals("[Short19, Short18, Short14, Short11, Short10, Short7, Short4]", answer);
     }
 
     @Test
@@ -451,8 +464,9 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N15, N15).toString();
         System.out.println(answer);
-        assertEquals("[Node 15]", answer);
+        assertEquals("[Short15]", answer);
     }
+
     @Test
     //Node 20 to Node 20
     public void testMap5Same() throws InterruptedException{
@@ -461,8 +475,9 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N20, N20).toString();
         System.out.println(answer);
-        assertEquals("[Node 20]", answer);
+        assertEquals("[Short20]", answer);
     }
+
     @Test
     //Node 3 to Node 3
     public void testMap6Same() throws InterruptedException{
@@ -471,16 +486,52 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N3, N3).toString();
         System.out.println(answer);
-        assertEquals("[Node 3]", answer);
+        assertEquals("[Short3]", answer);
     }
 
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
+    @Test
+    //Node 3 to Node 3
+    public void testMap3To7() throws InterruptedException{
+        smallArea.setStart(N3);
+        smallArea.setEnd(N7);
+
+        String answer = smallArea.findPath(N3, N7).toString();
+        System.out.println(answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+    }
+
+    @Test
+    //Node 3 to Node 3
+    public void testMap3To7Repeat() throws InterruptedException{
+        smallArea.setStart(N3);
+        smallArea.setEnd(N7);
+
+        String answer = smallArea.findPath(N3, N7).toString();
+        System.out.println(answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+    }
+
+    @Test
+    //Node 3 to Node 3
+    public void testMapMultiplePaths() throws InterruptedException{
+        smallArea.setStart(N3);
+        smallArea.setEnd(N7);
+
+        String answer = smallArea.findPath(N3, N7).toString();
+        System.out.println(answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+
+        smallArea.setStart(N4);
+        smallArea.setEnd(N20);
+
+        answer = smallArea.findPath(N4, N20).toString();
+        System.out.println(answer);
+        assertEquals("[Node 4, Node 7, Node 10, Node 11, Node 14, Node 18, Node 21, Node 20]", answer);
+    }
 
     // getEuclideanDistance tests
-
     @Test
     //Node 3 to Node 14
     public void testGetEuclideanDistance1(){

@@ -1,6 +1,14 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Erica Snow, Vojta Mosby, Tyrone Patterson
+* The following code
+*/
+
 package kioskEngine;
 
-import a_star.Node;
+import map.Node;
 import controllers.ScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -42,21 +50,21 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         Node a = new Node(400,200);
-            a.setName("a");
+            a.setLongName("a");
             a.setID("aaaa");
 
         Node b = new Node(600,200);
-            b.setName("b");
+            b.setLongName("b");
             b.setID("bbbb");
 
 
         Node c = new Node(600,400);
-            c.setName("c");
+            c.setLongName("c");
             c.setID("cccc");
 
 
         Node d = new Node(400,400);
-            d.setName("d");
+            d.setLongName("d");
             d.setID("dddd");
 
 

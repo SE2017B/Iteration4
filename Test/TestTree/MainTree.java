@@ -1,7 +1,7 @@
 package TestTree;
 
-import a_star.HospitalMap;
-import a_star.Node;
+import map.HospitalMap;
+import map.Node;
 import controllers.PathController;
 import org.junit.Before;
 import org.junit.Test;

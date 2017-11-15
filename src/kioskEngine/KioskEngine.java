@@ -1,7 +1,15 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Erica Snow, Vojta Mosby, Tyrone Patterson
+* The following code
+*/
+
 package kioskEngine;
 
-import a_star.HospitalMap;
-import a_star.Node;
+import map.HospitalMap;
+import map.Node;
 import exceptions.InvalidLoginException;
 import service.FoodService;
 import service.Service;
@@ -49,7 +57,7 @@ public class KioskEngine{
 
 
             //Add Node to DB
-            Node newNode = new Node(anyNodeID,anyName, anyNodeType, Integer.parseInt(anyXcoord),Integer.parseInt(anyYcoord),Integer.parseInt(anyFloor),connections);
+            Node newNode = new Node(anyNodeID,anyName, anyNodeType, Integer.parseInt(anyXcoord),Integer.parseInt(anyYcoord),anyFloor,connections);
             PreparedStatement addAnyNode = conn.prepareStatement("INSERT INTO mapHNodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             addAnyNode.setString(1, anyNodeID);

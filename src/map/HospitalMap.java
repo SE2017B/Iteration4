@@ -1,4 +1,12 @@
-package a_star;
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Nicholas Fajardo, Tyrone Patterson, Leo Grande, Meghana Bhatia
+* The following code
+*/
+
+package map;
 import java.util.*;
 import java.util.HashMap;
 public class HospitalMap{
@@ -60,6 +68,8 @@ public class HospitalMap{
     //Method to find the path from a pre-determined starting node to an end node
     //specified in the parameters of  the function
     public Stack<Node> findPath(Node end){
+        frontier = new LinkedList<>();
+        explored = new ArrayList<>();
         Stack<Node> path = new Stack<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();     //Need to know where each Node's shortest path comes from
         //Key: currentNode, Value: Node that currentNode came from

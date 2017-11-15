@@ -1,21 +1,35 @@
-package a_star;
-import java.util.ArrayList;
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Nicholas Fajardo, Tyrone Patterson, Leo Grande, Meghana Bhatia
+* The following code
+*/
+
+package map;
 import java.util.HashMap;
+import java.util.ArrayList;
+
+
 public class Node{
 
     //get floor number
-    private String name;    //name of node
+    private String longName;    //shortName of node
+    private String shortName;   //longName of node
     private String ID;      //id of node
     private String type;    //type of node
+    private String building; //building where node is located
+    private String team;    //
     private HashMap<Node, Integer> connections; //connection for node
-    private int floor;  //floor on which node is on
+    private String floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
     public int fScore;  //greedy + heuristic scores for node
     public int greedy;  //greedy scores
 
-    public Node(String name, String ID, String type, HashMap<Node, Integer> connections, int floor, int x, int y) {
-        this.name = name;   //name of node
+    public Node(String name, String ID, String type, HashMap<Node, Integer> connections, String floor, int x, int y) {
+        this.shortName = name;   //name of node
+        this.longName = name;
         this.ID = ID;   //id of node
         this.type = type;   //type of node
         this.connections = connections; //connection for node
@@ -28,8 +42,9 @@ public class Node{
 
 
     //Added for KioskEngine::AddNode()
-    public Node(String name, String ID, String type, int x, int y, int floor, ArrayList<Node> connections) {
-        this.name = name;
+    public Node(String name, String ID, String type, int x, int y, String floor, ArrayList<Node> connections) {
+        this.shortName = name;
+        this.longName = name;
         this.ID = ID;
         this.type = type;
         this.x = x;
@@ -43,8 +58,10 @@ public class Node{
         }
     }
 
-    public Node(String name, String ID, String type, int floor, int x, int y) {
-        this.name = name; //name of node
+
+    public Node(String name, String ID, String type, String floor, int x, int y) {
+        this.shortName = name; //name of node
+        this.longName = name;
         this.ID = ID; //id of node
         this.type = type;  //type of node
         this.connections = new HashMap<>(); //connection for node
@@ -60,11 +77,12 @@ public class Node{
         this.x = x;
         this.y = y;
 
-        this.name = "BLANK"; //name of node
+        this.shortName = "BLANK"; //name of node
+        this.longName = "BLANK";
         this.ID = "BLANK"; //id of node
         this.type = "BLANK";  //type of node
         this.connections = new HashMap<>(); //connection for node
-        this.floor = 1; //floor on which node is on
+        this.floor = "1"; //floor on which node is on
 
 
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
@@ -77,11 +95,11 @@ public class Node{
         this.x = 100;
         this.y = 100;
 
-        this.name = "BLANK"; //name of node
+        this.shortName = "BLANK"; //name of node
         this.ID = "BLANK"; //id of node
         this.type = "BLANK";  //type of node
         this.connections = new HashMap<>(); //connection for node
-        this.floor = 1; //floor on which node is on
+        this.floor = "1"; //floor on which node is on
 
 
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
@@ -89,17 +107,57 @@ public class Node{
 
 
     }
+    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+        this.ID = ID;
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
+        this.floor = floor;
+        this.building = building;
+        this.type = type;
+        this.longName = longName;
+        this.shortName = shortName;
+        this.team = team;
+        this.connections = new HashMap<>();
+        this.greedy = 10000;
+        this.fScore = 10000;
+    }
+
 
     //Getters and Setters
 
-    //Retrieves the name of the node
-    public String getName() {
-        return name;
+    //Retrieves the shortName of the node
+    public String getShortName() {
+        return this.shortName;
     }
 
     //Sets the name of the node
-    public void setName(String name) {
-        this.name = name;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    //Gets the longName of the node
+    public String getLongName(){
+        return this.longName;
+    }
+
+    public void setLongName(String longName){
+        this.longName = longName;
+    }
+
+    public String getBuilding(){
+        return this.building;
+    }
+
+    public void setBuilding(String building){
+        this.building = building;
+    }
+
+    public String getTeam(){
+        return this.team;
+    }
+
+    public void setTeam(String team){
+        this.team = team;
     }
 
     //Gets the ID number from the node
@@ -131,12 +189,12 @@ public class Node{
     }
 
     //Gets the floor number
-    public int getFloor() {
+    public String getFloor() {
         return floor;
     }
 
     //Sets the floor number
-    public void setFloor(int floor) {
+    public void setFloor(String floor) {
         this.floor = floor;
     }
 
@@ -145,6 +203,9 @@ public class Node{
     public int getX() {
         return x;
     }
+    public String getXString(){
+        return Integer.toString(this.x);
+    }
 
     //Sets the x-coordinate of the node
     public void setX(int x) { this.x = x; }
@@ -152,6 +213,9 @@ public class Node{
     //Gets the y-coordinate of the node
     public int getY() {
         return y;
+    }
+    public String getYString(){
+        return Integer.toString(this.y);
     }
 
     //Sets the y-coordinate of the node
@@ -168,11 +232,6 @@ public class Node{
 
     //Sets the greedy cost for a node
     public void setGreedy(int greedy) { this.greedy = greedy; }
-
-    //Adds a connection between nodes
-//    public void addConnection(Node node){
-//        this.connections.put(node, edgeCost);
-//    }
 
     public void addConnection(Node node){
         int edgeCost = (int)getEuclidianDistance(this, node);
@@ -203,23 +262,22 @@ public class Node{
     //Override to turn int into a string
     @Override
     public String toString(){
-        return this.name;
+        return this.shortName;
     }
 
-    //Keep this in mind for when we are having HashTable issues
+    //Keep this method in mind for when we are having HashTable issues
     @Override
     public int hashCode(){
         final int prime = 7;
         //Commented this out because we were getting some overflow errors
-        //int ascii = this.hashCode();
-        int ascii = this.name.hashCode();
+        int ascii = this.shortName.hashCode();
         int returnVal = 1;
         returnVal = prime * returnVal + this.x;
         returnVal = prime * returnVal + this.y;
-        returnVal = prime * returnVal + this.floor;
         returnVal = prime * returnVal + ascii;
         return returnVal;
     }
+
     @Override
     public boolean equals(Object obj){
         if(this == obj) return true;
