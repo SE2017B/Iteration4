@@ -130,7 +130,7 @@
                     </rowConstraints>
                      <children>
                         <Button fx:id="btndirection" mnemonicParsing="false" onAction="#directionPressed" text="Direction" GridPane.halignment="CENTER" />
-                        <Button fx:id="btnsearch" mnemonicParsing="false" onAction="#searchPressed" text="Search" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Button fx:id="btnsearch" mnemonicParsing="false" onAction="#searchPressed" text="Search" visible="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                         <Button fx:id="btnfilter" mnemonicParsing="false" onAction="#filterPressed" text="Filter" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>

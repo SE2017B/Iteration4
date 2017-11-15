@@ -519,4 +519,12 @@ public class HospitalMapTest {
     public void testGetEuclideanDistanceSame(){
         assertEquals(0, smallArea.getEuclidianDistance(N5, N5), .01);
     }
+
+
+    @Test
+    //Node 6 to Node 1
+    public void testTwoPaths(){
+        assertEquals(smallArea.findPath(N4, N1),smallArea.findPath(N4, N1));
+    }
+
 }

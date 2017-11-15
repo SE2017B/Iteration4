@@ -4,9 +4,9 @@ import a_star.HospitalMap;
 import a_star.Node;
 import exceptions.InvalidLoginException;
 import service.FoodService;
+import service.Service;
 import service.Staff;
 
-import javax.xml.ws.Service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +18,8 @@ import java.util.Stack;
 public class KioskEngine{
     private HospitalMap map;
     private HashMap<String, Staff> loginInfo;
-    private ArrayList<Service> availableServices;
+    private HashMap<String, Service> availableServices;
+
     private static final String JDBC_URL="jdbc:derby:teamHDB;create=true";
     private static Connection conn;
 
@@ -26,6 +27,9 @@ public class KioskEngine{
     public KioskEngine(){
         loginInfo = new HashMap<>();
         map = new HospitalMap();
+        availableServices = new HashMap<String, Service>();
+        FoodService food = new FoodService();
+        availableServices.put("Food",food);
     }
 
     public void addNode(Node node, ArrayList<Node> connections){
@@ -95,7 +99,6 @@ public class KioskEngine{
 
             //add node to map in memory
             map.addNode(anyNodeID,newNode);
-            //todo does this add to connections?
 
 
         } catch (Exception e) {
@@ -143,16 +146,20 @@ public class KioskEngine{
         return loginInfo;
     }
 
-    public void addStaffLogin(Staff staff){
+    public void addStaffLogin(Staff staff, String serviceType){
         loginInfo.put(staff.getUsername(), staff);
+        availableServices.get(serviceType).addPersonnel(staff);
     }
 
     public Staff getStaff(String username){
         return loginInfo.get(username);
     }
 
-    public void addService(Service serv)
-    {
-        availableServices.add(serv);
+
+    public Service getService(String type) {
+        if (type.equals("Food"))
+            return availableServices.get(type);
+        else
+            return null;
     }
 }

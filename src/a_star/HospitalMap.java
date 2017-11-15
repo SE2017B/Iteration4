@@ -63,6 +63,8 @@ public class HospitalMap{
         Stack<Node> path = new Stack<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();     //Need to know where each Node's shortest path comes from
         //Key: currentNode, Value: Node that currentNode came from
+        frontier = new LinkedList<>();
+        explored = new ArrayList<>();
         path.push(this.start);
         //Handles no start case
         if (this.start == null){

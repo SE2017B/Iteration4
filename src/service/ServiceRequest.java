@@ -51,14 +51,6 @@ public class ServiceRequest{
         this.description = description;
     }
 
-    public static ArrayList<Staff> getStaffForServiceType(String ServiceType){
-        //STUB
-        ArrayList<Staff> temp = new ArrayList<Staff>();
-        Staff john = new Staff("username","password","Translator","Translator Smith",1234, new TranslatorService());
-        john.setFullName("John Smith");
-        temp.add(john);
-        return temp;
-    }
 
     public String toString(){
         return description;

@@ -83,14 +83,16 @@ public class RequestController implements ControllableScreen{
         if(serviceType.equals("Food")){
             ServiceRequest req = new ServiceRequest(staffMember.getJobType(),requestIDCount, (Node)locationChoiceBox.getValue(),infoText.getText());
             requestIDCount++;
-            staffMember.getJobType().addRequest(req);
+            req.giveRequest();
         }
         else{
             System.out.println("Please make a Food Request");
         }
 
         System.out.println("Create Pressed: " + staffMember);
+        ((AdminMenuController)parent.getController(ScreenController.AdminMenuID)).setForStaff(staffMember);
         parent.setScreen(ScreenController.AdminMenuID);
+
     }
     public void cancelPressed(ActionEvent e){
         System.out.println("Cancel Pressed");
@@ -102,7 +104,7 @@ public class RequestController implements ControllableScreen{
         System.out.println("Service Selected");
         serviceType = ((MenuItem) e.getSource()).getText();
         serviceDropDown.setText(serviceType);
-        staff = parent.ge
+        staff = parent.getEngine().getService(serviceType).getPersonnel();
         if(staff.size() != 0) {
             staffDropDown.setItems(FXCollections.observableList(staff));
             staffDropDown.setDisable(false);

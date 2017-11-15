@@ -27,20 +27,20 @@ public class KioskEngineTest {
 
     @Test
     public void testAddLogin(){
-        engine.addStaffLogin(bob);
+        engine.addStaffLogin(bob, "Food");
         assertTrue(engine.getLoginInfo().containsKey("bobby"));
         assertTrue(engine.getLoginInfo().containsValue(bob));
     }
 
     @Test
     public void testLogin() throws InvalidLoginException{
-        engine.addStaffLogin(bob);
+        engine.addStaffLogin(bob,"Food");
         assertTrue(engine.login("bobby", "bob"));
     }
 
     @Test
     public void testLoginFail() throws InvalidLoginException{
-        engine.addStaffLogin(bob);
+        engine.addStaffLogin(bob,"Food");
         assertFalse(engine.login("bobb", "bob"));
     }
 }

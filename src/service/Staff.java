@@ -50,6 +50,7 @@ public class Staff{
             jobType.addAvailable(this);
             this.isBusy = false;
         }
+
     }
 
     //getters

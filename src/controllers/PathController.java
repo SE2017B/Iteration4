@@ -88,7 +88,9 @@ public class PathController implements ControllableScreen{
         //Remove last path from screen
         for(Line line : lines){
             line.setVisible(false);
+            mapPane.getChildren().remove(line);
         }
+        System.out.println(startChoice.getValue() + " -> " + endChoice.getValue());
         path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
         System.out.println(path);
         if(path.size() != 0) {

@@ -75,21 +75,18 @@ public class Main extends Application {
         aConn.add(c);
 
 
-
-
-        FoodService food = new FoodService();
-        Staff testAdmin =  new Staff("test","","Admin","Admin Test",1234, food);
-        Staff testStaff =  new Staff("testStaff","","food stuff","Staff Test",1234, food);
-        food.addAvailable(testStaff);
-        food.addAvailable(testAdmin);
-        ServiceRequest req = new ServiceRequest(food,1,a,"This is a test");
-        testStaff.setCurrentRequest(req);
-        engine.addStaffLogin(testStaff);
-        engine.addStaffLogin(testAdmin);
+        Staff testAdmin =  new Staff("test","","Admin","Admin Test",1234, engine.getService("Food"));
+        Staff testStaff =  new Staff("testStaff","","food stuff","Staff Test",1234, engine.getService("Food"));
+        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,a,"This is a test");
+        engine.addStaffLogin(testStaff, "Food");
+        engine.addStaffLogin(testAdmin, "Food");
+        req.giveRequest();
         engine.addNode(a,aConn);
         engine.addNode(b,bConn);
         engine.addNode(c,cConn);
         engine.addNode(d,dConn);
+
+
 
         launch(args);
     }

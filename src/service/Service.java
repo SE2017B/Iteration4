@@ -46,6 +46,7 @@ public class Service{
                 avaStaff.setCurrentRequest(request);
                 availablePer.remove(avaStaff);
             }
+
         }
     }
 
@@ -59,6 +60,11 @@ public class Service{
     //getters
     public String getType(){
         return this.type;
+    }
+
+    public void addPersonnel(Staff staff){
+        personnel.add(staff);
+        addAvailable(staff);
     }
     public ArrayList<Staff> getPersonnel(){
         return this.personnel;
