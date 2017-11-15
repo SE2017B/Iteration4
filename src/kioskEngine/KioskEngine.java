@@ -6,6 +6,7 @@ import exceptions.InvalidLoginException;
 import service.FoodService;
 import service.Staff;
 
+import javax.xml.ws.Service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,6 +17,7 @@ import java.util.List;
 public class KioskEngine{
     private HospitalMap map;
     private HashMap<String, Staff> loginInfo;
+    private ArrayList<Service> availableServices;
     private static final String JDBC_URL="jdbc:derby:teamHDB;create=true";
     private static Connection conn;
 
@@ -133,5 +135,10 @@ public class KioskEngine{
 
     public Staff getStaff(String username){
         return loginInfo.get(username);
+    }
+
+    public void addService(Service serv)
+    {
+        availableServices.add(serv);
     }
 }

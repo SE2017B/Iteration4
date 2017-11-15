@@ -97,7 +97,6 @@ public class AdminMenuController implements ControllableScreen{
 
         jobDescrLabel.setText(staffMember.getCurrentRequest().getDescription());
         locationLabel.setText(staffMember.getCurrentRequest().getWhere().getX() + " " + staffMember.getCurrentRequest().getWhere().getX());
-        //jobDescrLabel.setText("Do stuff");
         }
 
     }
