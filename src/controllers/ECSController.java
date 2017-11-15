@@ -23,4 +23,7 @@ public class ECSController implements ControllableScreen{
     @FXML
     private Button btnaccept;
 
+    public void init(){}
+
+    public void onShow(){}
 }

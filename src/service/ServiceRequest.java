@@ -9,6 +9,10 @@
 package service;
 
 import map.Node;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 
 public class ServiceRequest{
     private Service service;
@@ -54,5 +58,10 @@ public class ServiceRequest{
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public String toString(){
+        return description;
     }
 }

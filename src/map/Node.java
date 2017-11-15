@@ -8,6 +8,9 @@
 
 package map;
 import java.util.HashMap;
+import java.util.ArrayList;
+
+
 public class Node{
 
     //get floor number
@@ -36,6 +39,26 @@ public class Node{
         this.fScore = 10000;    //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000;    //greedy scores
     }
+
+
+    //Added for KioskEngine::AddNode()
+    public Node(String name, String ID, String type, int x, int y, String floor, ArrayList<Node> connections) {
+        this.shortName = name;
+        this.longName = name;
+        this.ID = ID;
+        this.type = type;
+        this.x = x;
+        this.y = y;
+        this.floor = floor;
+        this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 10000; //greedy scores
+
+        for(Node node : connections){
+            this.addConnection(node);
+        }
+    }
+
+
     public Node(String name, String ID, String type, String floor, int x, int y) {
         this.shortName = name; //name of node
         this.longName = name;
@@ -49,6 +72,41 @@ public class Node{
         this.greedy = 10000; //greedy scores
     }
 
+
+    public Node(int x, int y){
+        this.x = x;
+        this.y = y;
+
+        this.shortName = "BLANK"; //name of node
+        this.longName = "BLANK";
+        this.ID = "BLANK"; //id of node
+        this.type = "BLANK";  //type of node
+        this.connections = new HashMap<>(); //connection for node
+        this.floor = "1"; //floor on which node is on
+
+
+        this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 10000; //greedy scores
+
+
+    }
+
+    public Node(){
+        this.x = 100;
+        this.y = 100;
+
+        this.shortName = "BLANK"; //name of node
+        this.ID = "BLANK"; //id of node
+        this.type = "BLANK";  //type of node
+        this.connections = new HashMap<>(); //connection for node
+        this.floor = "1"; //floor on which node is on
+
+
+        this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 10000; //greedy scores
+
+
+    }
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
         this.ID = ID;
         this.x = Integer.parseInt(x);
@@ -64,7 +122,6 @@ public class Node{
         this.fScore = 10000;
     }
 
-    public Node(){ }
 
     //Getters and Setters
 
@@ -142,6 +199,7 @@ public class Node{
     }
 
     //Gets the x-coordinate of the node
+
     public int getX() {
         return x;
     }
@@ -229,4 +287,5 @@ public class Node{
         if(!this.getID().equals(other.getID())) return false;
         return true;
     }
+
 }

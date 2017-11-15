@@ -10,7 +10,7 @@ package service;
 
 import java.util.ArrayList;
 
-abstract class Service{
+public class Service{
     protected String type;
     protected ArrayList<Staff> personnel;
     protected ArrayList<ServiceRequest> backlog;
@@ -45,13 +45,16 @@ abstract class Service{
      */
     public void addRequest(ServiceRequest request){
         if(availablePer.isEmpty()) {
+            System.out.println("Staff Are Busy, Added to Backlog");
             backlog.add(request);
         }else{
             Staff avaStaff = availablePer.get(0);
             if(!avaStaff.isBusy()) {
+                System.out.println("Service Request Added");
                 avaStaff.setCurrentRequest(request);
                 availablePer.remove(avaStaff);
             }
+
         }
     }
 
@@ -65,6 +68,11 @@ abstract class Service{
     //getters
     public String getType(){
         return this.type;
+    }
+
+    public void addPersonnel(Staff staff){
+        personnel.add(staff);
+        addAvailable(staff);
     }
     public ArrayList<Staff> getPersonnel(){
         return this.personnel;

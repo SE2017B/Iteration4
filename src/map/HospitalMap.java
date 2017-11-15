@@ -17,7 +17,8 @@ public class HospitalMap{
     private Node end;
 
     //Constructors
-    public HospitalMap(){
+    public HospitalMap() {
+        map = new HashMap<String, Node>();
         frontier = new LinkedList<>();
         explored = new ArrayList<>();
     }
@@ -72,6 +73,8 @@ public class HospitalMap{
         Stack<Node> path = new Stack<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();     //Need to know where each Node's shortest path comes from
         //Key: currentNode, Value: Node that currentNode came from
+        frontier = new LinkedList<>();
+        explored = new ArrayList<>();
         path.push(this.start);
         //Handles no start case
         if (this.start == null){
@@ -123,6 +126,8 @@ public class HospitalMap{
         }
         //Could not find the end node
         for(Node n:this.explored){
+            frontier = new LinkedList<>();
+            explored = new ArrayList<>();
             n.fScore = 10000;       //Reset each Nodes greedy and fScore for next run of findPath
             n.greedy = 10000;
         }
@@ -153,6 +158,27 @@ public class HospitalMap{
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
         return distance;
+    }
+
+
+    public ArrayList<Node> getNodesForSearch(){
+        ArrayList<Node> output = new ArrayList<Node>();
+        for(Node node : map.values()){
+            if(!node.getType().equals("HALL") && node.getFloor().equals("2") && node.getTeam().equals("Team H")){
+                output.add(node);
+            }
+        }
+        return output;
+    }
+
+    public ArrayList<Node> getNodesForEdit(){
+        ArrayList<Node> output = new ArrayList<Node>();
+        for(Node node : map.values()){
+            if(node.getFloor().equals("2") && node.getTeam().equals("Team H")){
+                output.add(node);
+            }
+        }
+        return output;
     }
 
     //Cache for stuff

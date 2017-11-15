@@ -8,15 +8,26 @@
 
 package controllers;
 
+import map.HospitalMap;
+import map.Node;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
+import javafx.scene.Group;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
+import service.ServiceRequest;
+import service.Staff;
+
+import java.util.ArrayList;
 
 public class PathController implements ControllableScreen{
     private ScreenController parent;
+    private ArrayList<Node> path;
+
+    private ArrayList<Line> lines;
+
 
     public void setParentController(ScreenController parent){
         this.parent = parent;
@@ -44,34 +55,106 @@ public class PathController implements ControllableScreen{
     private Label lbldir;
 
     @FXML
-    private MenuButton mbstart;
+    private ChoiceBox<Node> startChoice;
 
     @FXML
-    private MenuButton mbend;
+    private ChoiceBox<Node> endChoice;
+
+    @FXML
+    private Pane mapPane;
+
+    @FXML
+    private Label failLabel;
+
+
+    //Methods start here
+    public void init()
+    {
+        path = new ArrayList<Node>();
+        lines = new ArrayList<Line>();
+        onShow();
+
+    }
+
+    public void onShow(){
+        //Update the nodes in the map
+        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForSearch();
+
+        //update the items in the checklist
+        startChoice.setItems(FXCollections.observableList(nodes));
+        endChoice.setItems(FXCollections.observableList(nodes));
+
+        startChoice.setValue(nodes.get(2));
+
+        //remove any previous paths from the display
+        for (Line line: lines) {
+            line.setVisible(false);
+            mapPane.getChildren().remove(line);
+        }
+        lines = new ArrayList<>();
+    }
+
+    public void diplayPath(ArrayList<Node> path){
+        if( path.size() == 1){
+            failLabel.setVisible(true);
+        }
+        if(path.size() != 0) {
+            failLabel.setVisible(false);
+            for (int i = 0; i < path.size() - 1; i++) {
+                Line line = new Line();
+                Node start = path.get(i);
+                Node end = path.get(i + 1);
+                line.setLayoutX((start.getX())/2);
+                line.setLayoutY((start.getY())/2);
+
+
+                line.setEndX((end.getX() - start.getX())/2);
+                line.setEndY((end.getY() - start.getY())/2);
+
+                line.setVisible(true);
+                line.setStrokeWidth(5);
+                mapPane.getChildren().add(line);
+                lines.add(line);
+
+            }
+        }
+        else{
+            System.out.println("ERROR: No Path Found");
+        }
+    }
+    public void clearPaths(){
+        for(Line line : lines){
+            line.setVisible(false);
+            mapPane.getChildren().remove(line);
+        }
+    }
+
+
 
     public void enterPressed(ActionEvent e)
     {
         System.out.println("Enter Pressed");
+        //Remove last path from screen
+        clearPaths();
+        System.out.println(startChoice.getValue() + "->" + endChoice.getValue());
+        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
+        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
+        System.out.println(path);
+        diplayPath(path);
+
+
     }
     public void cancelPressed(ActionEvent e)
     {
         System.out.println("Cancel Pressed");
+        clearPaths();
         parent.setScreen(ScreenController.MainID);
     }
 
     public void stairsPressed(ActionEvent e)
     {
+
         System.out.println("Checked off stairs");
-    }
-
-    public void startSelected(ActionEvent e)
-    {
-
-    }
-
-    public void endSelected(ActionEvent e)
-    {
-
     }
 
 }
