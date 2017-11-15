@@ -69,6 +69,9 @@ public class Node{
         this.connections = connections;
     }
 
+    public void addConnection(Node n){
+    }
+
     public int getX() {
         return point.getX();
     }
