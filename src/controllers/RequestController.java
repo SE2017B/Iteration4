@@ -70,6 +70,11 @@ public class RequestController implements ControllableScreen{
     }
 
     public void onShow(){
+        //Update the nodes in the map
+        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesAsArrayList();
+
+        //update the items in the checklist
+        locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
     }
 
