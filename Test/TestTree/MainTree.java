@@ -2,6 +2,7 @@ package TestTree;
 
 import a_star.HospitalMap;
 import a_star.Node;
+import controllers.PathController;
 import org.junit.Before;
 import org.junit.Test;
 import service.FoodService;
@@ -77,10 +78,15 @@ public class MainTree {
 
     //Path finding test
     public void findPath(){
-        assertTrue(Map.findPath(MainNode,node3)==null);//Todo: Adjust code
+        ArrayList<Node> ans = new ArrayList<>();
+        ans.add(MainNode);
+        ans.add(node3);
+        assertTrue(Map.findPath(MainNode,node3)==ans);//Todo: Adjust code
     }
     //display path
-    public void displayPath(){}
+    public void displayPath(){
+
+    }
 
 
 }
