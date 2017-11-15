@@ -42,6 +42,14 @@ public class MainTree {
         MainNode.addConnection(node2);
         MainNode.addConnection(node3);
         MainNode.addConnection(node4);
+
+        //add all nodes to map
+        Map.addNode("0",MainNode);
+        Map.addNode("1",node1);
+        Map.addNode("2",node2);
+        Map.addNode("3",node3);
+        Map.addNode("4",node4);
+
     }
     //Load objects from database
     @Test
@@ -68,6 +76,11 @@ public class MainTree {
     }
 
     //Path finding test
+    public void findPath(){
+        assertTrue(Map.findPath(MainNode,node3)==null);//Todo: Adjust code
+    }
+    //display path
+    public void displayPath(){}
 
 
 }
