@@ -94,17 +94,23 @@ public class AdminMenuController implements ControllableScreen{
             btnEdit.setVisible(true);
         }
 
-        //requestList.setItems(FXCollections.observableArrayList(staffMember.getFullName(), staffMember.getJobTitle()));
-        //Populate the list of service requests
+        setRequest();
+
+
+
+    }
+
+    //requestList.setItems(FXCollections.observableArrayList(staffMember.getFullName(), staffMember.getJobTitle()));
+    //Populate the list of service requests
+    public void setRequest(){
         if(staffMember.getCurrentRequest() == null)
         {
             jobDescrLabel.setText("No Current Requests");
             locationLabel.setText(" ");
         }else{
 
-
-        jobDescrLabel.setText(staffMember.getCurrentRequest().getDescription());
-        locationLabel.setText(staffMember.getCurrentRequest().getWhere().getX() + " " + staffMember.getCurrentRequest().getWhere().getX());
+            jobDescrLabel.setText(staffMember.getCurrentRequest().getDescription());
+            locationLabel.setText(staffMember.getCurrentRequest().getWhere().getX() + " " + staffMember.getCurrentRequest().getWhere().getX());
         }
 
     }

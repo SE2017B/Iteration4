@@ -98,7 +98,7 @@ public class RequestController implements ControllableScreen{
         }
 
         System.out.println("Create Pressed: " + staffMember);
-        ((AdminMenuController)parent.getController(ScreenController.AdminMenuID)).setForStaff(staffMember);
+        ((AdminMenuController)parent.getController(ScreenController.AdminMenuID)).setRequest();
         parent.setScreen(ScreenController.AdminMenuID);
 
     }
