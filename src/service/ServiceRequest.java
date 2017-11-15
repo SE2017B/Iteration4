@@ -1,6 +1,14 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Erica Snow, Vojta Mosby, Tyrone Patterson
+* The following code
+*/
+
 package service;
 
-import a_star.Node;
+import map.Node;
 
 public class ServiceRequest{
     private Service service;

@@ -1,3 +1,11 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Erica Snow, Vojta Mosby, Tyrone Patterson
+* The following code
+*/
+
 package kioskEngine;
 
 import controllers.ScreenController;
@@ -32,8 +40,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
-
-
 
     public static void main(String[] args) {
         launch(args);

@@ -1,7 +1,15 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Erica Snow, Vojta Mosby, Tyrone Patterson
+* The following code
+*/
+
 package kioskEngine;
 
-import a_star.HospitalMap;
-import a_star.Node;
+import map.HospitalMap;
+import map.Node;
 import exceptions.InvalidLoginException;
 import service.Staff;
 
