@@ -40,6 +40,11 @@ public class edgeDatabase {
             addAnyEdge.close();
             conn.close();
 
+            // Add nodes to their ArrayLists
+            mainDatabase.edgeID.add(anyEdgeID);
+            mainDatabase.startNode.add(anyStartNode);
+            mainDatabase.endNode.add(anyEndNode);
+
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
@@ -53,20 +58,21 @@ public class edgeDatabase {
 
     // Modify item(s) from edge table
 
-    public static void modifyEdge(String rowAttr, String setCond, String anyEdgeID) {
+    public static void modifyEdge(String colAttr, String setCond, String anyEdgeID) {
         try {
             conn = DriverManager.getConnection(JDBC_URL);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement modifyAnyEdge = conn.prepareStatement("UPDATE MapHEdges SET ? = ? WHERE edgeID = ?");
+            String code= "UPDATE MapHEdges SET "+ colAttr+ " = ? WHERE edgeID = ?";
 
-            modifyAnyEdge.setString(1, rowAttr);
-            modifyAnyEdge.setString(2, setCond);
-            modifyAnyEdge.setString(3, anyEdgeID);
+            PreparedStatement modifyAnyEdge = conn.prepareStatement(code);
+
+            modifyAnyEdge.setString(1, setCond);
+            modifyAnyEdge.setString(2, anyEdgeID);
 
             modifyAnyEdge.executeUpdate();
-            System.out.println("Modify Edge Successful!");
+            System.out.println("Update Edge Successful!");
 
             conn.commit();
             modifyAnyEdge.close();
@@ -74,6 +80,30 @@ public class edgeDatabase {
 
         } catch (Exception e) {
             e.printStackTrace();// end try
+        }
+
+        // Add nodes to their ArrayLists
+        int indexOf = mainDatabase.edgeID.indexOf(anyEdgeID);
+
+        switch (colAttr) {
+
+            case "edgeID":
+                mainDatabase.edgeID.remove(indexOf);
+                mainDatabase.edgeID.add(indexOf, setCond);
+                break;
+
+            case "startNode":
+                mainDatabase.startNode.remove(indexOf);
+                mainDatabase.startNode.add(indexOf, setCond);
+                break;
+
+            case "endNode":
+                mainDatabase.endNode.remove(indexOf);
+                mainDatabase.endNode.add(indexOf, setCond);
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -104,6 +134,13 @@ public class edgeDatabase {
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
+
+        int indexOf2 = mainDatabase.edgeID.indexOf(delCond);
+
+        mainDatabase.edgeID.remove(indexOf2);
+        mainDatabase.startNode.remove(indexOf2);
+        mainDatabase.endNode.remove(indexOf2);
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////

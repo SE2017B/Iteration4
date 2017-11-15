@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
+import map.Node;
 
 public class mainDatabase {
 
@@ -16,27 +17,33 @@ public class mainDatabase {
     private static Connection conn;
 
     // Variables for storing nodes after reading csv file
-    String[] nodeValues;
+    //String[] nodeValues;
+
+    /*
     static ArrayList<String>nodeID=new ArrayList<String>();
     static ArrayList<String>xCoord=new ArrayList<String>();
     static ArrayList<String>yCoord=new ArrayList<String>();
     static ArrayList<String>floor=new ArrayList<String>();
     static ArrayList<String>building=new ArrayList<String>();
-    static ArrayList<String> nodeType=new ArrayList<String>();
+    static ArrayList<String>nodeType=new ArrayList<String>();
     static ArrayList<String>longName=new ArrayList<String>();
     static ArrayList<String>shortName=new ArrayList<String>();
     static ArrayList<String>teamAssigned=new ArrayList<String>();
+    */
 
     // Variables for storing edges after reading csv file
-    String[] edgeValues;
+    //String[] edgeValues;
+
     static ArrayList<String>edgeID=new ArrayList<String>();
     static ArrayList<String>startNode=new ArrayList<String>();
     static ArrayList<String>endNode=new ArrayList<String>();
 
+    static ArrayList<Node>allNodes=new ArrayList<Node>();
+
     ///////////////////////////////////////////////////////////////////////////////
     // Write to a output Nodes csv file
     ///////////////////////////////////////////////////////////////////////////////
-    public static void outputNodeCSV() {
+    public static void outputNodesCSV() {
         String outNodesFileName = "outputNodesTeamH.csv";
 
         try {
@@ -44,17 +51,18 @@ public class mainDatabase {
             BufferedWriter bw1 = new BufferedWriter(fw1);
             PrintWriter pw1 = new PrintWriter(bw1);
 
-            for (int j = 0; j < nodeID.toArray().length; j++) {
+            for (int j = 0; j < allNodes.size(); j++) {
 
-                pw1.println(nodeID.toArray()[j].toString() + "," +
-                        xCoord.toArray()[j].toString() + "," +
-                        yCoord.toArray()[j].toString() + "," +
-                        floor.toArray()[j].toString() + "," +
-                        building.toArray()[j].toString() + "," +
-                        nodeType.toArray()[j].toString() + "," +
-                        longName.toArray()[j].toString() + "," +
-                        shortName.toArray()[j].toString() + "," +
-                        teamAssigned.toArray()[j].toString()
+
+                pw1.println(allNodes.get(j).getID() + "," +
+                        allNodes.get(j).getX()+ "," +
+                        allNodes.get(j).getY() + "," +
+                        allNodes.get(j).getFloor() + "," +
+                        allNodes.get(j).getBuilding() + "," +
+                        allNodes.get(j).getType() + "," +
+                        allNodes.get(j).getLongName() + "," +
+                        allNodes.get(j).getShortName()+ "," +
+                        allNodes.get(j).getTeam()
                 );
                 System.out.println(j + ": Node Record Saved!");
             }
@@ -66,80 +74,138 @@ public class mainDatabase {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////
+    // Write to a output Edges csv file
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void outputEdgesCSV() {
 
-    public mainDatabase() throws SQLException {
+        String outEdgesFileName = "outputEdgesTeamH.csv";
 
-        // Connect to embedded database
         try {
-            conn = DriverManager.getConnection(JDBC_URL);
-            conn.setAutoCommit(false);
+            FileWriter fw2 = new FileWriter(outEdgesFileName, false);
+            BufferedWriter bw2 = new BufferedWriter(fw2);
+            PrintWriter pw2 = new PrintWriter(bw2);
 
-            if (conn != null) {
-                System.out.println("Connected!");
+            for (int j = 0; j < edgeID.toArray().length; j++) {
+
+                pw2.println(edgeID.toArray()[j].toString() + "," +
+                        startNode.toArray()[j].toString() + "," +
+                        endNode.toArray()[j].toString()
+                );
+
+                System.out.println(j + ": Edge Record Saved!");
             }
-            conn.close();
-        } catch (SQLException e) {
-            Logger.getLogger(mainDatabase.class.getName()).log(Level.SEVERE, null, e);
+            pw2.flush();
+            pw2.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
 
         ///////////////////////////////////////////////////////////////////////////////
         // Read from Nodes CSV File and store columns in array lists
         ///////////////////////////////////////////////////////////////////////////////
-        String nodeFile = "MapHnodes.csv";
-        File nodefile = new File(nodeFile);
+        public static void readNodeCSV (String fname) {
 
-        try {
-            Scanner inputStreamNodes = new Scanner(nodefile);
-            while (inputStreamNodes.hasNext()) {
+            File nodefile = new File(fname);
 
-                String nodeData = inputStreamNodes.nextLine();
-                nodeValues = nodeData.split(",");
+            try {
+                Scanner inputStreamNodes = new Scanner(nodefile);
+                inputStreamNodes.nextLine();
+                while (inputStreamNodes.hasNext()) {
 
-                nodeID.add(nodeValues[0]);
-                xCoord.add(nodeValues[1]);
-                yCoord.add(nodeValues[2]);
-                floor.add(nodeValues[3]);
-                building.add(nodeValues[4]);
-                nodeType.add(nodeValues[5]);
-                longName.add(nodeValues[6]);
-                shortName.add(nodeValues[7]);
-                teamAssigned.add(nodeValues[8]);
+                    String nodeData = inputStreamNodes.nextLine();
+                    String[] nodeValues = nodeData.split(",");
 
+
+                    allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
+                    /*
+                    nodeID.add(nodeValues[0]);
+                    xCoord.add(nodeValues[1]);
+                    yCoord.add(nodeValues[2]);
+                    floor.add(nodeValues[3]);
+                    building.add(nodeValues[4]);
+                    nodeType.add(nodeValues[5]);
+                    longName.add(nodeValues[6]);
+                    shortName.add(nodeValues[7]);
+                    teamAssigned.add(nodeValues[8]);
+                    */
+
+                }
+                inputStreamNodes.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-            inputStreamNodes.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
-
         ///////////////////////////////////////////////////////////////////////////////
         // Read from Edges CSV File and store columns in array lists
         ///////////////////////////////////////////////////////////////////////////////
-        String edgesFile = "MapHedges.csv";
-        File edgesfile = new File(edgesFile);
+        public static void readEdgesCSV(String fname) {
 
-        try {
-            Scanner inputStreamEdges = new Scanner(edgesfile);
-            while (inputStreamEdges.hasNext()) {
+            File edgesfile = new File(fname);
 
-                String edgeData = inputStreamEdges.nextLine();
-                edgeValues = edgeData.split(",");
+            try {
+                Scanner inputStreamEdges = new Scanner(edgesfile);
+                inputStreamEdges.nextLine();
+                while (inputStreamEdges.hasNext()) {
 
-                edgeID.add(edgeValues[0]);
-                startNode.add(edgeValues[1]);
-                endNode.add(edgeValues[2]);
+                    String edgeData = inputStreamEdges.nextLine();
+                    int nodeOne = 0, nodeTwo = 0;
+                    Node tempOne = null, tempTwo = null;
+                    String[] edgeValues = edgeData.split(",");
+
+                    edgeID.add(edgeValues[0]);
+                    startNode.add(edgeValues[1]);
+                    endNode.add(edgeValues[2]);
+
+                    nodeOne = allNodes.indexOf(new Node(edgeValues[1], "-1", "-1", null, null, null, null, null, null));
+
+                    if (nodeOne < 0) {
+                        System.out.println("Error: invalid edge");
+                    } else {
+                        tempOne = allNodes.get(nodeOne);
+                    }
+                    nodeTwo = allNodes.indexOf(new Node(edgeValues[2], "-1", "-1", null, null, null, null, null, null));
+                    if (nodeTwo < 0) {
+                        System.out.println("Error: invalid edge");
+                    } else {
+                        tempTwo = allNodes.get(nodeTwo);
+                    }
+                    if (tempOne != null && tempTwo != null) {
+                        tempOne.addConnection(tempTwo);
+                        tempTwo.addConnection(tempOne);
+                    } else {
+                        System.out.println(" ");
+                    }
+                    allNodes.get(nodeOne);
+                }
+
+                inputStreamEdges.close();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-
-            inputStreamEdges.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
-
         ///////////////////////////////////////////////////////////////////////////////
         // Create a table for the nodes
         ///////////////////////////////////////////////////////////////////////////////
-        try {
+        public mainDatabase() throws SQLException {
+
+            // Connect to embedded database
+            try {
+                conn = DriverManager.getConnection(JDBC_URL);
+                conn.setAutoCommit(false);
+
+                if (conn != null) {
+                    System.out.println("Connected!");
+                }
+                conn.close();
+            } catch (SQLException e) {
+                Logger.getLogger(mainDatabase.class.getName()).log(Level.SEVERE, null, e);
+            }
+
+            try {
             this.conn = DriverManager.getConnection(JDBC_URL);
             conn.setAutoCommit(false);
 
@@ -149,7 +215,7 @@ public class mainDatabase {
             if (!res.next()) {
                 Statement stmtCreate1 = conn.createStatement();
                 String createNodesTable = ("CREATE TABLE mapHNodes" +
-                        "(nodeID VARCHAR(20)," +
+                        "(nodeID VARCHAR(20) PRIMARY KEY," +
                         "xCoord VARCHAR(20)," +
                         "yCoord VARCHAR(20)," +
                         "floor VARCHAR(20)," +
@@ -173,7 +239,7 @@ public class mainDatabase {
 
                 Statement stmtCreate1 = conn.createStatement();
                 String createNodesTable = ("CREATE TABLE mapHNodes" +
-                        "(nodeID VARCHAR(20)," +
+                        "(nodeID VARCHAR(20) PRIMARY KEY," +
                         "xCoord VARCHAR(20)," +
                         "yCoord VARCHAR(20)," +
                         "floor VARCHAR(20)," +
@@ -208,7 +274,7 @@ public class mainDatabase {
             if (!res2.next()) {
                 Statement stmtCreate2 = conn.createStatement();
                 String createEdgesTable = ("CREATE TABLE mapHEdges" +
-                        "(edgeID VARCHAR(30)," +
+                        "(edgeID VARCHAR(30) PRIMARY KEY," +
                         "startNode VARCHAR(20)," +
                         "endNode VARCHAR(20))");
 
@@ -251,17 +317,17 @@ public class mainDatabase {
 
             PreparedStatement insertNode = conn.prepareStatement("INSERT INTO mapHNodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            for (int j = 1; j < nodeID.toArray().length; j++) {
+            for (int j = 1; j < allNodes.get(j).getID().length(); j++) {
 
-                insertNode.setString(1, nodeID.toArray()[j].toString());
-                insertNode.setString(2, xCoord.toArray()[j].toString());
-                insertNode.setString(3, yCoord.toArray()[j].toString());
-                insertNode.setString(4, floor.toArray()[j].toString());
-                insertNode.setString(5, building.toArray()[j].toString());
-                insertNode.setString(6, nodeType.toArray()[j].toString());
-                insertNode.setString(7, longName.toArray()[j].toString());
-                insertNode.setString(8, shortName.toArray()[j].toString());
-                insertNode.setString(9, teamAssigned.toArray()[j].toString());
+                insertNode.setString(1, allNodes.get(j).getID());
+                insertNode.setString(2, Integer.toString(allNodes.get(j).getX()));
+                insertNode.setString(3, Integer.toString(allNodes.get(j).getY()));
+                insertNode.setString(4, allNodes.get(j).getFloor());
+                insertNode.setString(5, allNodes.get(j).getBuilding());
+                insertNode.setString(6, allNodes.get(j).getType());
+                insertNode.setString(7, allNodes.get(j).getLongName());
+                insertNode.setString(8, allNodes.get(j).getShortName());
+                insertNode.setString(9, allNodes.get(j).getTeam());
 
                 insertNode.executeUpdate();
                 System.out.println(j + ": Insert Node Successful!");
@@ -303,33 +369,6 @@ public class mainDatabase {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////
-        // Write to a output Edges csv file
-        ///////////////////////////////////////////////////////////////////////////////
-        String outEdgesFileName = "outputEdgesTeamH.csv";
-
-        try {
-            FileWriter fw2 = new FileWriter(outEdgesFileName, false);
-            BufferedWriter bw2 = new BufferedWriter(fw2);
-            PrintWriter pw2 = new PrintWriter(bw2);
-
-            for (int j = 0; j < edgeID.toArray().length; j++) {
-
-                pw2.println(edgeID.toArray()[j].toString() + "," +
-                        startNode.toArray()[j].toString() + "," +
-                        endNode.toArray()[j].toString()
-                );
-
-                System.out.println(j + ": Edge Record Saved!");
-            }
-            pw2.flush();
-            pw2.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -343,15 +382,24 @@ public class mainDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        readNodeCSV("MapHnodes.csv");
+        readNodeCSV("MapWnodes.csv");
+
+        readEdgesCSV("MapHedges.csv");
+        readEdgesCSV("MapWedges.csv");
+
         mainDatabase testConnection1 = new mainDatabase();
+
+
 
         nodeDatabase.queryAllNodes();
         nodeDatabase.addNode("HHALL05002", "2000", "2000", "2", "Tower", "HALL", "Hallway Connector 50 Floor 2");
         nodeDatabase.queryAllNodes();
-        nodeDatabase.deleteNode("HHALL05002");
+        nodeDatabase.modifyNode("floor", "4", "HBATH00203");
         nodeDatabase.queryAllNodes();
-        //nodeDatabase.modifyNode();
-        //nodeDatabase.queryAllNodes();
+        nodeDatabase.deleteNode(new Node("HHALL05002", "2000", "2000", "2", "Tower", "HALL", "Hallway Connector 50 Floor 2","Hallway Connector 50 Floor 2", "Team H"));
+        nodeDatabase.queryAllNodes();
 
         edgeDatabase.queryAllEdges();
         edgeDatabase.addEdge("HHALL05002", "HHALL05102");
@@ -360,6 +408,8 @@ public class mainDatabase {
         edgeDatabase.queryAllEdges();
         edgeDatabase.deleteAnyEdge("HHALL05002_HHALL05102");
         edgeDatabase.queryAllEdges();
-        outputNodeCSV();
+
+        outputNodesCSV();
+        outputEdgesCSV();
     }
 }
