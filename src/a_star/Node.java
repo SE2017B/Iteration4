@@ -73,6 +73,23 @@ public class Node{
 
     }
 
+    public Node(){
+        this.x = 100;
+        this.y = 100;
+
+        this.name = "BLANK"; //name of node
+        this.ID = "BLANK"; //id of node
+        this.type = "BLANK";  //type of node
+        this.connections = new HashMap<>(); //connection for node
+        this.floor = 1; //floor on which node is on
+
+
+        this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 10000; //greedy scores
+
+
+    }
+
     //Getters and Setters
 
     //Retrieves the name of the node
@@ -124,6 +141,7 @@ public class Node{
     }
 
     //Gets the x-coordinate of the node
+
     public int getX() {
         return x;
     }

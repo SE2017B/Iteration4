@@ -81,18 +81,7 @@ public class PathController implements ControllableScreen{
         lines = new ArrayList<>();
     }
 
-
-    public void enterPressed(ActionEvent e)
-    {
-        System.out.println("Enter Pressed");
-        //Remove last path from screen
-        for(Line line : lines){
-            line.setVisible(false);
-            mapPane.getChildren().remove(line);
-        }
-        System.out.println(startChoice.getValue() + " -> " + endChoice.getValue());
-        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
-        System.out.println(path);
+    public void diplayPath(ArrayList<Node> path){
         if(path.size() != 0) {
             for (int i = 0; i < path.size() - 1; i++) {
                 Line line = new Line();
@@ -116,9 +105,29 @@ public class PathController implements ControllableScreen{
             System.out.println("ERROR: No Path Found");
         }
     }
+    public void clearPaths(){
+        for(Line line : lines){
+            line.setVisible(false);
+            mapPane.getChildren().remove(line);
+        }
+    }
+
+
+
+    public void enterPressed(ActionEvent e)
+    {
+        System.out.println("Enter Pressed");
+        //Remove last path from screen
+        clearPaths();
+        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
+        diplayPath(path);
+
+
+    }
     public void cancelPressed(ActionEvent e)
     {
         System.out.println("Cancel Pressed");
+        clearPaths();
         parent.setScreen(ScreenController.MainID);
     }
 
