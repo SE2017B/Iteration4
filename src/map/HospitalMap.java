@@ -126,6 +126,8 @@ public class HospitalMap{
         }
         //Could not find the end node
         for(Node n:this.explored){
+            frontier = new LinkedList<>();
+            explored = new ArrayList<>();
             n.fScore = 10000;       //Reset each Nodes greedy and fScore for next run of findPath
             n.greedy = 10000;
         }
