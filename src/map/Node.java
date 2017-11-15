@@ -1,3 +1,11 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Nicholas Fajardo, Tyrone Patterson, Leo Grande, Meghana Bhatia
+* The following code
+*/
+
 package map;
 import java.util.HashMap;
 public class Node{
@@ -24,6 +32,7 @@ public class Node{
         this.fScore = 10000;    //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000;    //greedy scores
     }
+
     public Node(String name, String ID, String type, int floor, int x, int y) {
         this.name = name; //name of node
         this.ID = ID; //id of node
@@ -116,11 +125,6 @@ public class Node{
     //Sets the greedy cost for a node
     public void setGreedy(int greedy) { this.greedy = greedy; }
 
-    //Adds a connection between nodes
-//    public void addConnection(Node node){
-//        this.connections.put(node, edgeCost);
-//    }
-
     public void addConnection(Node node){
         int edgeCost = (int)getEuclidianDistance(this, node);
         this.connections.put(node, edgeCost);
@@ -153,12 +157,11 @@ public class Node{
         return this.name;
     }
 
-    //Keep this in mind for when we are having HashTable issues
+    //Keep this method in mind for when we are having HashTable issues
     @Override
     public int hashCode(){
         final int prime = 7;
         //Commented this out because we were getting some overflow errors
-        //int ascii = this.hashCode();
         int ascii = this.name.hashCode();
         int returnVal = 1;
         returnVal = prime * returnVal + this.x;
@@ -167,6 +170,7 @@ public class Node{
         returnVal = prime * returnVal + ascii;
         return returnVal;
     }
+
     @Override
     public boolean equals(Object obj){
         if(this == obj) return true;

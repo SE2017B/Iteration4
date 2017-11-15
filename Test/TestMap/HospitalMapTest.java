@@ -1,3 +1,11 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Nicholas Fajardo, Tyrone Patterson, Leo Grande, Meghana Bhatia
+* The following code
+*/
+
 package TestMap;
 
 import map.*;
@@ -145,11 +153,6 @@ public class HospitalMapTest {
         //Add connections for nodeTwentyThree
         N23.addConnection(N21);
     }
-
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
 
     // findPath tests
 
@@ -372,12 +375,6 @@ public class HospitalMapTest {
 
     }
 
-
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-
     // findPath tests (2 Nodes given)
 
     @Test
@@ -432,6 +429,7 @@ public class HospitalMapTest {
         System.out.println(answer);
         assertEquals("[Node 4, Node 7, Node 10, Node 11, Node 14, Node 18, Node 19]", answer);
     }
+
     @Test
     //Node 19 to Node 4
     public void testMap12Reverse() throws InterruptedException{
@@ -453,6 +451,7 @@ public class HospitalMapTest {
         System.out.println(answer);
         assertEquals("[Node 15]", answer);
     }
+
     @Test
     //Node 20 to Node 20
     public void testMap5Same() throws InterruptedException{
@@ -463,6 +462,7 @@ public class HospitalMapTest {
         System.out.println(answer);
         assertEquals("[Node 20]", answer);
     }
+
     @Test
     //Node 3 to Node 3
     public void testMap6Same() throws InterruptedException{
@@ -474,13 +474,49 @@ public class HospitalMapTest {
         assertEquals("[Node 3]", answer);
     }
 
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////
+    @Test
+    //Node 3 to Node 3
+    public void testMap3To7() throws InterruptedException{
+        smallArea.setStart(N3);
+        smallArea.setEnd(N7);
+
+        String answer = smallArea.findPath(N3, N7).toString();
+        System.out.println(answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+    }
+
+    @Test
+    //Node 3 to Node 3
+    public void testMap3To7Repeat() throws InterruptedException{
+        smallArea.setStart(N3);
+        smallArea.setEnd(N7);
+
+        String answer = smallArea.findPath(N3, N7).toString();
+        System.out.println(answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+    }
+
+    @Test
+    //Node 3 to Node 3
+    public void testMapMultiplePaths() throws InterruptedException{
+        smallArea.setStart(N3);
+        smallArea.setEnd(N7);
+
+        String answer = smallArea.findPath(N3, N7).toString();
+        System.out.println(answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
+
+        smallArea.setStart(N4);
+        smallArea.setEnd(N20);
+
+        answer = smallArea.findPath(N4, N20).toString();
+        System.out.println(answer);
+        assertEquals("[Node 4, Node 7, Node 10, Node 11, Node 14, Node 18, Node 21, Node 20]", answer);
+    }
 
     // getEuclideanDistance tests
-
     @Test
     //Node 3 to Node 14
     public void testGetEuclideanDistance1(){

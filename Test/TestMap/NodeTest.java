@@ -1,3 +1,11 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration1
+* Original author(s): Nicholas Fajardo, Tyrone Patterson, Leo Grande, Meghana Bhatia
+* The following code
+*/
+
 //testing file for Node testing each method
 package TestMap;
 
@@ -31,6 +39,5 @@ public class NodeTest {
 
     @Test
     public void testCost(){
-
     }
 }
