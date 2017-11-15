@@ -9,8 +9,8 @@ public class NodeCheckBox extends CheckBox {
 
     public void setNode(Node node) {
         this.node = node;
-        this.setLayoutX(node.getX()-10);
-        this.setLayoutY(node.getY()-10);
+        this.setLayoutX((node.getX()-10)/2);
+        this.setLayoutY((node.getY()-10)/2);
         this.setAccessibleHelp(node.getLongName());
     }
 

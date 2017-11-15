@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import map.Node;
 
 public class MainController implements ControllableScreen{
     private ScreenController parent;
@@ -45,9 +47,15 @@ public class MainController implements ControllableScreen{
     @FXML
     private Pane mapPane;
 
-    public void init(){}
+    @FXML
+    private Circle kioskMarker;
 
-    public void onShow(){}
+    public void init(){
+    }
+
+    public void onShow(){
+
+    }
 
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){

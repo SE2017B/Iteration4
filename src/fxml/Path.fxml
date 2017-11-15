@@ -85,7 +85,7 @@
                      <content>
                         <Pane fx:id="mapPane" minHeight="-Infinity" minWidth="-Infinity">
                            <children>
-                              <ImageView>
+                              <ImageView fitHeight="1700.0" fitWidth="2500.0">
                                  <image>
                                     <Image url="@../images/02_thesecondfloor.png" />
                                  </image>

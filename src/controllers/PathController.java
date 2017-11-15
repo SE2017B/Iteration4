@@ -84,7 +84,8 @@ public class PathController implements ControllableScreen{
         startChoice.setItems(FXCollections.observableList(nodes));
         endChoice.setItems(FXCollections.observableList(nodes));
 
-        startChoice.setValue(nodes.get(0));
+        startChoice.setValue(nodes.get(2));
+
         //remove any previous paths from the display
         for (Line line: lines) {
             line.setVisible(false);
@@ -103,12 +104,12 @@ public class PathController implements ControllableScreen{
                 Line line = new Line();
                 Node start = path.get(i);
                 Node end = path.get(i + 1);
-                line.setLayoutX(start.getX());
-                line.setLayoutY(start.getY());
+                line.setLayoutX((start.getX())/2);
+                line.setLayoutY((start.getY())/2);
 
 
-                line.setEndX(end.getX() - start.getX());
-                line.setEndY(end.getY() - start.getY());
+                line.setEndX((end.getX() - start.getX())/2);
+                line.setEndY((end.getY() - start.getY())/2);
 
                 line.setVisible(true);
                 line.setStrokeWidth(5);
@@ -136,6 +137,7 @@ public class PathController implements ControllableScreen{
         //Remove last path from screen
         clearPaths();
         System.out.println(startChoice.getValue() + "->" + endChoice.getValue());
+        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
         path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
         System.out.println(path);
         diplayPath(path);
