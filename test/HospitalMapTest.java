@@ -1,3 +1,5 @@
+//testing file for testing hostpial map path finding functionality
+
 import a_star.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -484,7 +486,7 @@ public class HospitalMapTest {
     @Test
     //Node 3 to Node 14
     public void testGetEuclideanDistance1(){
-        assertEquals(sqrt(170000),smallArea.getEuclidianDistance(N3, N14), .01);
+        assertEquals(sqrt(170000), smallArea.getEuclidianDistance(N3, N14), .01);
     }
     @Test
     //Node 14 to Node 3
@@ -516,7 +518,18 @@ public class HospitalMapTest {
 
     @Test
     //Node 5 to Node 5
-    public void testGetEuclideanDistanceSame(){
+    public void testGetEuclideanDistanceSame() {
         assertEquals(0, smallArea.getEuclidianDistance(N5, N5), .01);
+    }
+
+    @Test
+    //Node 3 to Node 20
+    public void testGetEuclideanDistance4(){
+        assertEquals(sqrt(580000), smallArea.getEuclidianDistance(N3, N20), .01);
+    }
+    @Test
+    //Node 20 to Node 3
+    public void testGetEuclideanDistance4Reverse(){
+        assertEquals(sqrt(580000), smallArea.getEuclidianDistance(N20, N3), .01);
     }
 }

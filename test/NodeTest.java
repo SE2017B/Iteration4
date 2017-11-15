@@ -1,3 +1,4 @@
+//testing file for Node testing each method
 import a_star.*;
 import org.junit.Assert;
 import org.junit.Before;
