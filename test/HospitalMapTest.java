@@ -1,3 +1,5 @@
+//testing file for testing hostpial map path finding functionality
+
 import a_star.*;
 import org.junit.Before;
 import org.junit.Test;
