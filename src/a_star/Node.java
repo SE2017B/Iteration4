@@ -117,9 +117,9 @@ public class Node{
     public void setGreedy(int greedy) { this.greedy = greedy; }
 
     //Adds a connection between nodes
-    public void addConnection(int edgeCost, Node node){
-        this.connections.put(node, edgeCost);
-    }
+//    public void addConnection(Node node){
+//        this.connections.put(node, edgeCost);
+//    }
 
     public void addConnection(Node node){
         int edgeCost = (int)getEuclidianDistance(this, node);
