@@ -4,8 +4,6 @@ import a_star.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Stack;
-
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
 
@@ -46,106 +44,106 @@ public class HospitalMapTest {
         //Creating nodes for the map
 
         //Add connections for nodeOne
-        N1.addConnection(2, N2);
-        N1.addConnection(2, N6);
+        N1.addConnection(N2);
+        N1.addConnection(N6);
 
         //Add connections for nodeTwo
-        N2.addConnection(2, N3);
-        N2.addConnection(2, N1);
+        N2.addConnection(N3);
+        N2.addConnection(N1);
 
         //Add connections for nodeThree
-        N3.addConnection(2, N2);
-        N3.addConnection(2, N9);
+        N3.addConnection(N2);
+        N3.addConnection(N9);
 
         //Add connections for nodeFour
-        N4.addConnection(1, N7);
-        N4.addConnection(2, N5);
+        N4.addConnection(N7);
+        N4.addConnection(N5);
 
         //Add connections for nodeFive
-        N5.addConnection(1, N8);
-        N5.addConnection(2, N4);
+        N5.addConnection(N8);
+        N5.addConnection(N4);
 
         //Add connections for nodeSix
-        N6.addConnection(2, N1);
-        N6.addConnection(1, N7);
+        N6.addConnection(N1);
+        N6.addConnection(N7);
 
         //Add connections for nodeSeven
-        N7.addConnection(1, N4);
-        N7.addConnection(1, N6);
-        N7.addConnection(2, N8);
-        N7.addConnection(1, N10);
+        N7.addConnection(N4);
+        N7.addConnection(N6);
+        N7.addConnection(N8);
+        N7.addConnection(N10);
 
         //Add connections for nodeEight
-        N8.addConnection(2, N7);
-        N8.addConnection(1, N9);
-        N8.addConnection(1, N5);
+        N8.addConnection(N7);
+        N8.addConnection(N9);
+        N8.addConnection(N5);
 
         //Add connections for nodeNine
-        N9.addConnection(2, N3);
-        N9.addConnection(1, N8);
-        N9.addConnection(2, N15);
+        N9.addConnection(N3);
+        N9.addConnection(N8);
+        N9.addConnection(N15);
 
         //Add connections for nodeTen
-        N10.addConnection(1, N7);
-        N10.addConnection(2, N11);
+        N10.addConnection(N7);
+        N10.addConnection(N11);
 
         //Add connections for nodeEleven
-        N11.addConnection(2, N10);
-        N11.addConnection(2, N14);
+        N11.addConnection(N10);
+        N11.addConnection(N14);
 
         //Add connections for nodeTwelve
-        N12.addConnection(1, N13);
-        N12.addConnection(2, N16);
+        N12.addConnection(N13);
+        N12.addConnection(N16);
 
         //Add connections for nodeThirteen
-        N13.addConnection(1, N12);
-        N13.addConnection(2, N14);
-        N13.addConnection(2, N17);
+        N13.addConnection(N12);
+        N13.addConnection(N14);
+        N13.addConnection(N17);
 
         //Add connections for nodeFourteen
-        N14.addConnection(2, N11);
-        N14.addConnection(2, N13);
-        N14.addConnection(1, N15);
-        N14.addConnection(1, N18);
+        N14.addConnection(N11);
+        N14.addConnection(N13);
+        N14.addConnection(N15);
+        N14.addConnection(N18);
 
         //Add connections for nodeFifteen
-        N15.addConnection(2, N9);
-        N15.addConnection(1, N14);
+        N15.addConnection(N9);
+        N15.addConnection(N14);
 
         //Add connections for nodeSixteen
-        N16.addConnection(2, N14);
-        N16.addConnection(1, N17);
+        N16.addConnection(N14);
+        N16.addConnection(N17);
 
         //Add connections for nodeSeventeen
-        N17.addConnection(2, N13);
-        N17.addConnection(1, N16);
-        N17.addConnection(1, N20);
+        N17.addConnection(N13);
+        N17.addConnection(N16);
+        N17.addConnection(N20);
 
         //Add connections for nodeEighteen
-        N18.addConnection(1, N14);
-        N18.addConnection(1, N19);
-        N18.addConnection(2, N21);
+        N18.addConnection(N14);
+        N18.addConnection(N19);
+        N18.addConnection(N21);
 
         //Add connections for nodeNineteen
-        N19.addConnection(1, N18);
-        N19.addConnection(2, N22);
+        N19.addConnection(N18);
+        N19.addConnection(N22);
 
         //Add connections for nodeTwenty
-        N20.addConnection(1, N17);
-        N20.addConnection(2, N21);
+        N20.addConnection(N17);
+        N20.addConnection(N21);
 
         //Add connections for nodeTwentyOne
-        N21.addConnection(2, N18);
-        N21.addConnection(2, N20);
-        N21.addConnection(1, N22);
-        N21.addConnection(2, N23);
+        N21.addConnection(N18);
+        N21.addConnection(N20);
+        N21.addConnection(N22);
+        N21.addConnection(N23);
 
         //Add connections for nodeTwentyTwo
-        N22.addConnection(2, N19);
-        N22.addConnection(1, N21);
+        N22.addConnection(N19);
+        N22.addConnection(N21);
 
         //Add connections for nodeTwentyThree
-        N23.addConnection(2, N21);
+        N23.addConnection(N21);
     }
 
     //////////////////////////////////////////////////////////////////////////////
@@ -215,7 +213,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N1).toString();
         System.out.println(answer);
-        assertEquals("[Node 12, Node 13, Node 14, Node 11, Node 10, Node 7, Node 6, Node 1]", answer);
+        assertEquals("[Node 12, Node 16, Node 14, Node 11, Node 10, Node 7, Node 6, Node 1]", answer);
     }
 
     @Test
@@ -287,7 +285,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N22).toString();
         System.out.println(answer);
-        assertEquals("[Node 3, Node 9, Node 15, Node 14, Node 18, Node 21, Node 22]", answer);
+        assertEquals("[Node 3, Node 9, Node 15, Node 14, Node 18, Node 19, Node 22]", answer);
     }
     @Test
     //Node 22 to Node 3
@@ -339,7 +337,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N7).toString();
         System.out.println(answer);
-        assertEquals("[Node 3, Node 2, Node 1, Node 6, Node 7]", answer);
+        assertEquals("[Node 3, Node 9, Node 8, Node 7]", answer);
     }
 
     @Test
@@ -400,7 +398,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N17, N1).toString();
         System.out.println(answer);
-        assertEquals("[Node 17, Node 13, Node 14, Node 11, Node 10, Node 7, Node 6, Node 1]", answer);
+        assertEquals("[Node 17, Node 16, Node 14, Node 11, Node 10, Node 7, Node 6, Node 1]", answer);
     }
 
     @Test
@@ -432,7 +430,7 @@ public class HospitalMapTest {
 
         String answer = smallArea.findPath(N4, N19).toString();
         System.out.println(answer);
-        assertEquals("[Node 4, Node 5, Node 8, Node 9, Node 15, Node 14, Node 18, Node 19]", answer);
+        assertEquals("[Node 4, Node 7, Node 10, Node 11, Node 14, Node 18, Node 19]", answer);
     }
     @Test
     //Node 19 to Node 4
