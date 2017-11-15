@@ -1,4 +1,4 @@
-package a_star;
+package map;
 import java.util.*;
 import java.util.HashMap;
 public class HospitalMap{

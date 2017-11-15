@@ -1,6 +1,6 @@
 package TestServices;
 
-import a_star.Node;
+import map.Node;
 import exceptions.InvalidPasswordException;
 import org.junit.*;
 import service.*;

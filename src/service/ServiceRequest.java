@@ -1,6 +1,6 @@
 package service;
 
-import a_star.Node;
+import map.Node;
 
 public class ServiceRequest{
     private Service service;

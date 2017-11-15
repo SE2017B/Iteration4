@@ -1,6 +1,6 @@
 package TestMap;
 
-import a_star.*;
+import map.*;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package kioskEngine;
 
-import a_star.HospitalMap;
-import a_star.Node;
+import map.HospitalMap;
+import map.Node;
 import exceptions.InvalidLoginException;
 import service.Staff;
 
