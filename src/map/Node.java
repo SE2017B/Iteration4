@@ -7,7 +7,6 @@
 */
 
 package map;
-import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Node{
@@ -42,15 +41,15 @@ public class Node{
     public double getEuclidianDistance(Node otherNode){
         double xDeltaSquared = Math.pow((this.x - otherNode.getX()), 2);
         double yDeltaSquared = Math.pow((this.y - otherNode.getY()), 2);
-        double zDeltaSquared =  Math.pow((this.floor - otherNode.getFloor()), 2);
-        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
+        double zDeltaSquared =  Math.pow((this.floor.getNodeMapping() - otherNode.getFloor().getNodeMapping()), 2);
+        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
         return distance;
     }
 
     //Gets the cost from a node to a different node
     public int getCostFromNode(Node node){
-        for(Node n: connections.keySet()){
-            if(node.toString().equals(n.toString())){
+        for(int i = 0; i < connections.size(); i++){
+            if(connections.get(i).getID.contains(node.getID())){
                 return connections.get(n);
             }
         }
