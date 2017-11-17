@@ -11,16 +11,12 @@ import java.util.*;
 import java.util.HashMap;
 public class HospitalMap{
     private HashMap<String, Node> map;
-    private LinkedList<Node> frontier;
-    private ArrayList<Node> explored;
     private Node start;
     private Node end;
 
     //Constructors
     public HospitalMap() {
         map = new HashMap<>();
-        frontier = new LinkedList<>();
-        explored = new ArrayList<>();
     }
 
     //Getters and Setters
@@ -45,11 +41,6 @@ public class HospitalMap{
 
     //Helper Methods
 
-    //Method to retrieve the Manhattan Distance
-    private int manhattanDistance(Node p1, Node p2){
-        return Math.abs(p1.getX() - p2.getX()) + Math.abs(p1.getY() - p2.getY());
-    }
-
     //Method to add a new node to the map
     public void addNode(String id, Node node){
         map.put(id, node);
@@ -73,6 +64,5 @@ public class HospitalMap{
         }
         return output;
     }
-
     //Cache for stuff
 }

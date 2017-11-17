@@ -11,9 +11,7 @@ package kioskEngine;
 import database.edgeDatabase;
 import database.nodeDatabase;
 import javafx.collections.ObservableList;
-import map.AStarSearch;
-import map.HospitalMap;
-import map.Node;
+import map.*;
 import exceptions.InvalidLoginException;
 import service.FoodService;
 import service.Service;
@@ -81,7 +79,7 @@ public class KioskEngine{
     }
 
     public ArrayList<Node> findPath(Node start, Node end){
-        AStarSearch search = new AStarSearch();
+        SearchContext search = new SearchContext(new AStarSearch());
         Stack<Node> stack = search.findPath(start,end);
         ArrayList<Node> path = new ArrayList<>();
         path.addAll(stack);

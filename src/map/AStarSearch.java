@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Stack;
 
-public class AStarSearch implements Search {
+public class AStarSearch implements SearchStrategy {
     public AStarSearch(){}
 
     public Stack<Node> findPath(Node start, Node end){
