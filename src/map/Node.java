@@ -16,9 +16,8 @@ public class Node{
     private String ID;      //id of node
     private String type;    //type of node
     private String building; //building where node is located
-    private String team;    //
-    private HashMap<Node, Integer> connections; //connection for node
-    private String floor;  //floor on which node is on
+    private ArrayList<Edge> connections; //connection for node
+    private a_star.FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
     public int fScore;  //greedy + heuristic scores for node
@@ -30,7 +29,7 @@ public class Node{
         this.shortName = name;
         this.ID = ID;   //id of node
         this.type = type;   //type of node
-        this.connections = connections; //connection for node
+        this.connections = new ArrayList<>(); //connection for node
         this.floor = floor; //floor on which node is on
         this.x = x; //x-coordinate of node
         this.y = y; //y-coordinate of node
@@ -99,7 +98,6 @@ public class Node{
         this.ID = ID;
         this.type = type;
         this.building = building;
-        this.team = team;
         this.connections = new HashMap<>();
         this.floor = floor;
         this.x = Integer.parseInt(x);
@@ -144,9 +142,6 @@ public class Node{
     }
     public String getBuilding(){
         return this.building;
-    }
-    public String getTeam(){
-        return this.team;
     }
     public HashMap<Node, Integer> getConnections() { return connections; }
     public String getFloor() {

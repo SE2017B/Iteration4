@@ -76,7 +76,7 @@ public class mainDatabase {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Write to a output Edges csv file
+    // Write to a output Edge csv file
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputEdgesCSV() {
 
@@ -142,7 +142,7 @@ public class mainDatabase {
             }
         }
         ///////////////////////////////////////////////////////////////////////////////
-        // Read from Edges CSV File and store columns in array lists
+        // Read from Edge CSV File and store columns in array lists
         ///////////////////////////////////////////////////////////////////////////////
         public static void readEdgesCSV(String fname) {
 
@@ -282,7 +282,7 @@ public class mainDatabase {
                         "endNode VARCHAR(20))");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
-                System.out.println("Create Edges table Successful!");
+                System.out.println("Create Edge table Successful!");
 
                 conn.commit();
                 stmtCreate2.close();
@@ -300,7 +300,7 @@ public class mainDatabase {
                         "endNode VARCHAR(20))");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
-                System.out.println("Create Edges table Successful!");
+                System.out.println("Create Edge table Successful!");
 
                 conn.commit();
                 stmtCreate2.close();
