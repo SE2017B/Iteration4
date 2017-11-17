@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Node{
-
     private String longName;    //shortName of node
     private String shortName;   //longName of node
     private String ID;      //id of node
@@ -25,6 +24,7 @@ public class Node{
     public int fScore;  //greedy + heuristic scores for node
     public int greedy;  //greedy scores
 
+    //Constructors
     public Node(String name, String ID, String type, HashMap<Node, Integer> connections, String floor, int x, int y) {
         this.longName = name;   //name of node
         this.shortName = name;
@@ -108,6 +108,7 @@ public class Node{
         this.greedy = 10000;
     }
 
+    //Adds edge between nodes
     public void addConnection(Node node){
         int edgeCost = (int)getEuclidianDistance(this, node);
         this.connections.put(node, edgeCost);
