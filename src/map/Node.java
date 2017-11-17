@@ -123,92 +123,58 @@ public class Node{
     }
 
 
-    //Getters and Setters
+    public void addConnection(Node node){
+        int edgeCost = (int)getEuclidianDistance(this, node);
+        this.connections.put(node, edgeCost);
+    }
 
-    //Retrieves the shortName of the node
+
+    //Gets the Euclidian Distance from a start node to an end node
+    public double getEuclidianDistance(Node start, Node end){
+        double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
+        double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
+        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
+        return distance;
+    }
+
+    //Gets the cost from a node to a different node
+    public int getCostFromNode(Node node){
+        for(Node n: connections.keySet()){
+            if(node.toString().equals(n.toString())){
+                return connections.get(n);
+            }
+        }
+        return 0;
+    }
+
+    //Getters
+    public String getLongName() {
+        return longName;
+    }
     public String getShortName() {
         return this.shortName;
     }
-
-    //Sets the name of the node
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    //Gets the longName of the node
-    public String getLongName(){
-        return this.longName;
-    }
-
-    public void setLongName(String longName){
-        this.longName = longName;
-    }
-
-    public String getBuilding(){
-        return this.building;
-    }
-
-    public void setBuilding(String building){
-        this.building = building;
-    }
-
-    public String getTeam(){
-        return this.team;
-    }
-
-    public void setTeam(String team){
-        this.team = team;
-    }
-
-    //Gets the ID number from the node
     public String getID() {
         return ID;
     }
-
-    //Sets the ID number of node
-    public void setID(String ID) {
-        this.ID = ID;
+    public String getBuilding(){
+        return this.building;
     }
-
-    //Gets the type of the node
-    public String getType() {
-        return type;
+    public String getTeam(){
+        return this.team;
     }
-
-    //Sets the type of the node
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    //Gets the connections list for a node
     public HashMap<Node, Integer> getConnections() { return connections; }
-
-    //Sets the connections HashMap for the node
-    public void setConnections(HashMap<Node, Integer> connections) {
-        this.connections = connections;
-    }
-
-    //Gets the floor number
     public String getFloor() {
         return floor;
     }
 
-    //Sets the floor number
-    public void setFloor(String floor) {
-        this.floor = floor;
-    }
-
     //Gets the x-coordinate of the node
-
     public int getX() {
         return x;
     }
     public String getXString(){
         return Integer.toString(this.x);
     }
-
-    //Sets the x-coordinate of the node
-    public void setX(int x) { this.x = x; }
 
     //Gets the y-coordinate of the node
     public int getY() {
@@ -218,46 +184,40 @@ public class Node{
         return Integer.toString(this.y);
     }
 
-    //Sets the y-coordinate of the node
-    public void setY(int y) { this.y = y; }
-
-    //Gets the fScore of a node
     public int getfScore() { return fScore; }
-
-    //Sets the fScore for a node
-    public void setfScore(int fScore) { this.fScore = fScore; }
-
-    //Gets the greedy cost for a node
     public int getGreedy() { return greedy; }
 
-    //Sets the greedy cost for a node
+    //Setters
+    public void setLongName(String longName){
+        this.longName = longName;
+    }
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getType() {
+        return type;
+    }    public void setBuilding(String building){
+        this.building = building;
+    }
+    public void setTeam(String team){
+        this.team = team;
+    }
+    public void setConnections(HashMap<Node, Integer> connections) {
+        this.connections = connections;
+    }
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
+    public void setfScore(int fScore) { this.fScore = fScore; }
     public void setGreedy(int greedy) { this.greedy = greedy; }
-
-    public void addConnection(Node node){
-        int edgeCost = (int)getEuclidianDistance(this, node);
-        this.connections.put(node, edgeCost);
-    }
-
-
-    //Gets the Euclidian Distance from a start node to an end node
-
-    public double getEuclidianDistance(Node start, Node end){
-        double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
-        double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
-        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
-        return distance;
-    }
-
-    //Gets the cost from a node to a different node
-
-    public int getCostFromNode(Node node){
-        for(Node n: connections.keySet()){
-            if(node.toString().equals(n.toString())){
-                return connections.get(n);
-            }
-        }
-        return 0;
-    }
 
     //Override to turn int into a string
     @Override
@@ -287,5 +247,7 @@ public class Node{
         if(!this.getID().equals(other.getID())) return false;
         return true;
     }
+
+
 
 }
