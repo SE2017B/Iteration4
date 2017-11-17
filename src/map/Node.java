@@ -34,8 +34,8 @@ public class Node{
         this.floor = floor; //floor on which node is on
         this.x = x; //x-coordinate of node
         this.y = y; //y-coordinate of node
-        this.fScore = 10000;    //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 10000;    //greedy scores
+        this.fScore = 1000000;    //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 1000000;    //greedy scores
     }
 
     //Added for KioskEngine::AddNode()
@@ -47,8 +47,8 @@ public class Node{
         this.floor = floor;
         this.x = x;
         this.y = y;
-        this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 10000; //greedy scores
+        this.fScore = 1000000; //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 1000000; //greedy scores
 
         for(Node node : connections){
             this.addConnection(node);
@@ -64,8 +64,8 @@ public class Node{
         this.floor = floor; //floor on which node is on
         this.x = x; //x-coordinate of node
         this.y = y; //y-coordinate of node
-        this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 10000; //greedy scores
+        this.fScore = 1000000; //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 1000000; //greedy scores
     }
 
     public Node(int x, int y){
@@ -77,8 +77,8 @@ public class Node{
         this.floor = "1"; //floor on which node is on
         this.x = x;
         this.y = y;
-        this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 10000; //greedy scores
+        this.fScore = 1000000; //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 1000000; //greedy scores
     }
 
     public Node(){
@@ -89,8 +89,8 @@ public class Node{
         this.floor = "1"; //floor on which node is on
         this.x = 100;
         this.y = 100;
-        this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 10000; //greedy scores
+        this.fScore = 1000000; //Need to keep track of greedy and heuristic scores for each Node at all times
+        this.greedy = 1000000; //greedy scores
     }
 
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
@@ -104,8 +104,8 @@ public class Node{
         this.floor = floor;
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
-        this.fScore = 10000;
-        this.greedy = 10000;
+        this.fScore = 1000000;
+        this.greedy = 1000000;
     }
 
     //Adds edge between nodes
@@ -118,8 +118,7 @@ public class Node{
     public double getEuclidianDistance(Node start, Node end){
         double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
-        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
-        return distance;
+        return Math.sqrt(xDeltaSquared + yDeltaSquared);
     }
 
     //Gets the cost from a node to a different node

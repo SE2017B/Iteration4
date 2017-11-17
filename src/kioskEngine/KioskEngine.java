@@ -13,6 +13,8 @@ import database.nodeDatabase;
 import javafx.collections.ObservableList;
 import map.*;
 import exceptions.InvalidLoginException;
+import search.AStarSearch;
+import search.SearchContext;
 import service.FoodService;
 import service.Service;
 import service.Staff;
@@ -20,7 +22,6 @@ import service.Staff;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class KioskEngine{
     private HospitalMap map;
