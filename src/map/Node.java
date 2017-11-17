@@ -44,9 +44,9 @@ public class Node{
         this.shortName = name;
         this.ID = ID;
         this.type = type;
+        this.floor = floor;
         this.x = x;
         this.y = y;
-        this.floor = floor;
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000; //greedy scores
 
@@ -69,31 +69,26 @@ public class Node{
     }
 
     public Node(int x, int y){
-        this.x = x;
-        this.y = y;
-
         this.longName = "BLANK";    //name of node
         this.shortName = "BLANK";
         this.ID = "BLANK"; //id of node
         this.type = "BLANK";  //type of node
         this.connections = new HashMap<>(); //connection for node
         this.floor = "1"; //floor on which node is on
-
+        this.x = x;
+        this.y = y;
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000; //greedy scores
     }
 
     public Node(){
-        this.x = 100;
-        this.y = 100;
-
         this.shortName = "BLANK"; //name of node
         this.ID = "BLANK"; //id of node
         this.type = "BLANK";  //type of node
         this.connections = new HashMap<>(); //connection for node
         this.floor = "1"; //floor on which node is on
-
-
+        this.x = 100;
+        this.y = 100;
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000; //greedy scores
     }
@@ -103,14 +98,14 @@ public class Node{
         this.shortName = shortName;
         this.ID = ID;
         this.type = type;
-        this.x = Integer.parseInt(x);
-        this.y = Integer.parseInt(y);
-        this.floor = floor;
         this.building = building;
         this.team = team;
         this.connections = new HashMap<>();
-        this.greedy = 10000;
+        this.floor = floor;
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
         this.fScore = 10000;
+        this.greedy = 10000;
     }
 
     public void addConnection(Node node){
