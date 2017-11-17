@@ -1,4 +1,4 @@
-This repository hosts the code for Implementation 1 for Software Engineering 3733 at WPI.
+This repository hosts the code for Implementation 2 for Software Engineering 3733 at WPI.
 
 The following list shows the authors (with positions) of the code found in this repository:
     Vojta Mosby - Lead Software Engineer
