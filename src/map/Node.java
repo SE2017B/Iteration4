@@ -7,6 +7,8 @@
 */
 
 package map;
+import exceptions.InvalidNodeExeption;
+
 import java.util.ArrayList;
 
 public class Node{
@@ -20,7 +22,7 @@ public class Node{
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
 
-    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
         this.longName = longName;
         this.shortName = shortName;
         this.ID = ID;
@@ -41,19 +43,19 @@ public class Node{
     public double getEuclidianDistance(Node otherNode){
         double xDeltaSquared = Math.pow((this.x - otherNode.getX()), 2);
         double yDeltaSquared = Math.pow((this.y - otherNode.getY()), 2);
-        double zDeltaSquared =  Math.pow((this.floor.getNodeMapping() - otherNode.getFloor().getNodeMapping()), 2);
+        double zDeltaSquared =  Math.pow((this.floor.getNodeMapping() - otherNode.getFloor().getNodeMapping()), 2) * 10000;
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
         return distance;
     }
 
     //Gets the cost from a node to a different node
-    public int getCostFromNode(Node node){
-        for(int i = 0; i < connections.size(); i++){
-            if(connections.get(i).getID.contains(node.getID())){
-                return connections.get(n);
+    public double getCostFromNode(Node node) throws InvalidNodeExeption{
+        for (int i = 0; i < connections.size(); i++) {
+            if (connections.get(i).getID().contains(node.getID())) {
+                return connections.get(i).getCost();
             }
         }
-        return 0;
+        throw new InvalidNodeExeption();
     }
 
     //Getters
@@ -107,19 +109,18 @@ public class Node{
     }
     public String getType() {
         return type;
-    }    public void setBuilding(String building){
+    }
+    public void setBuilding(String building){
         this.building = building;
     }
     public void setFloor(String floor) {
         this.floor = FloorNumber.fromDbMapping(floor);
     }
-    public void setX(int x) { this.x = x; }
-    public void setY(int y) { this.y = y; }
-
-    //Override to turn int into a string
-    @Override
-    public String toString(){
-        return this.shortName;
+    public void setX(int x){
+        this.x = x;
+    }
+    public void setY(int y){
+        this.y = y;
     }
 
     //Keep this method in mind for when we are having HashTable issues

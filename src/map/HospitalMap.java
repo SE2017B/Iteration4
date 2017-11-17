@@ -9,6 +9,7 @@
 package map;
 import java.util.*;
 import java.util.HashMap;
+
 public class HospitalMap{
     private HashMap<String, Node> map;
 
