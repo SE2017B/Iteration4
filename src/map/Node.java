@@ -10,10 +10,8 @@ package map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-
 public class Node{
 
-    //get floor number
     private String longName;    //shortName of node
     private String shortName;   //longName of node
     private String ID;      //id of node
@@ -28,8 +26,8 @@ public class Node{
     public int greedy;  //greedy scores
 
     public Node(String name, String ID, String type, HashMap<Node, Integer> connections, String floor, int x, int y) {
-        this.shortName = name;   //name of node
-        this.longName = name;
+        this.longName = name;   //name of node
+        this.shortName = name;
         this.ID = ID;   //id of node
         this.type = type;   //type of node
         this.connections = connections; //connection for node
@@ -40,11 +38,10 @@ public class Node{
         this.greedy = 10000;    //greedy scores
     }
 
-
     //Added for KioskEngine::AddNode()
     public Node(String name, String ID, String type, int x, int y, String floor, ArrayList<Node> connections) {
-        this.shortName = name;
         this.longName = name;
+        this.shortName = name;
         this.ID = ID;
         this.type = type;
         this.x = x;
@@ -58,10 +55,9 @@ public class Node{
         }
     }
 
-
     public Node(String name, String ID, String type, String floor, int x, int y) {
-        this.shortName = name; //name of node
-        this.longName = name;
+        this.longName = name;   //name of node
+        this.shortName = name;
         this.ID = ID; //id of node
         this.type = type;  //type of node
         this.connections = new HashMap<>(); //connection for node
@@ -72,23 +68,19 @@ public class Node{
         this.greedy = 10000; //greedy scores
     }
 
-
     public Node(int x, int y){
         this.x = x;
         this.y = y;
 
-        this.shortName = "BLANK"; //name of node
-        this.longName = "BLANK";
+        this.longName = "BLANK";    //name of node
+        this.shortName = "BLANK";
         this.ID = "BLANK"; //id of node
         this.type = "BLANK";  //type of node
         this.connections = new HashMap<>(); //connection for node
         this.floor = "1"; //floor on which node is on
 
-
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000; //greedy scores
-
-
     }
 
     public Node(){
@@ -104,30 +96,27 @@ public class Node{
 
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000; //greedy scores
-
-
     }
+
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+        this.longName = longName;
+        this.shortName = shortName;
         this.ID = ID;
+        this.type = type;
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
         this.floor = floor;
         this.building = building;
-        this.type = type;
-        this.longName = longName;
-        this.shortName = shortName;
         this.team = team;
         this.connections = new HashMap<>();
         this.greedy = 10000;
         this.fScore = 10000;
     }
 
-
     public void addConnection(Node node){
         int edgeCost = (int)getEuclidianDistance(this, node);
         this.connections.put(node, edgeCost);
     }
-
 
     //Gets the Euclidian Distance from a start node to an end node
     public double getEuclidianDistance(Node start, Node end){
@@ -247,7 +236,4 @@ public class Node{
         if(!this.getID().equals(other.getID())) return false;
         return true;
     }
-
-
-
 }
