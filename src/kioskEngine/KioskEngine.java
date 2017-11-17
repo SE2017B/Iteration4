@@ -18,11 +18,8 @@ import service.Service;
 import service.Staff;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Stack;
 
 public class KioskEngine{
@@ -87,8 +84,8 @@ public class KioskEngine{
     }
 
 
-    public void compleatRequest(Staff staffMem){
-        staffMem.completeCurRec();
+    public void completeRequest(Staff staffMem){
+        staffMem.completeCurrentRequest();
     }
 
 

@@ -1,5 +1,6 @@
 package TestTree;
 
+import map.AStarSearch;
 import map.HospitalMap;
 import map.Node;
 import controllers.PathController;
@@ -21,16 +22,16 @@ public class MainTree {
     private FoodService foodService;
     private HospitalMap Map = new HospitalMap();
     //nodes
-    Node MainNode;
-    Node node1;
-    Node node2;
-    Node node3;
-    Node node4;
+    private Node MainNode;
+    private Node node1;
+    private Node node2;
+    private Node node3;
+    private Node node4;
     @Before
     public void initialize(){
         foodService= new FoodService();
         Chidinma= new Staff("bob", "bobby", "cook", "Bobby Bob", 1, foodService);
-        Nodes = new ArrayList<Node>();
+        Nodes = new ArrayList<>();
 
         //A create a bunch of nodes
         MainNode = new Node();
@@ -79,10 +80,11 @@ public class MainTree {
 
     //Path finding test
     public void findPath(){
-        Stack<Node> ans = new Stack<Node>();
+        AStarSearch search = new AStarSearch();
+        Stack<Node> ans = new Stack<>();
         ans.push(MainNode);
         ans.push(node3);
-        assertTrue(Map.findPath(MainNode,node3)==ans);//Todo: Adjust code
+        assertTrue(search.findPath(MainNode,node3)==ans);//Todo: Adjust code
     }
     //display path
     public void displayPath(){

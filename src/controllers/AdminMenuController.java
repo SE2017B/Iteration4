@@ -8,15 +8,12 @@
 
 package controllers;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import service.ServiceRequest;
 import service.Staff;
-import service.TransportService;
 
 public class AdminMenuController implements ControllableScreen{
     private ScreenController parent;
@@ -62,7 +59,7 @@ public class AdminMenuController implements ControllableScreen{
     public void completePressed(ActionEvent e){
         //remove the selected request from the request list and the staff member
         System.out.println("Complete Pressed");
-        staffMember.completeCurRec();
+        staffMember.completeCurrentRequest();
         setForStaff(staffMember);
     }
 

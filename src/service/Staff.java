@@ -52,7 +52,7 @@ public class Staff{
     gives the staff member a new request from the backlog, and if the backlog is empty, frees the
     staff member
      */
-    public void completeCurRec() {
+    public void completeCurrentRequest() {
         currentRequest = jobType.getNextRequest();
         if (currentRequest == null){
             jobType.addAvailable(this);
