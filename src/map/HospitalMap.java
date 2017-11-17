@@ -19,26 +19,6 @@ public class HospitalMap{
         map = new HashMap<>();
     }
 
-    //Getters and Setters
-
-    //Gets the start node
-    public Node getStart() {
-        return start;
-    }
-
-    //Sets the start node
-    public void setStart(Node start) {
-        this.start = start;
-    }
-
-    //Gets the end node
-    public Node getEnd() { return end; }
-
-    //Sets the end node
-    public void setEnd(Node end) {
-        this.end = end;
-    }
-
     //Helper Methods
 
     //Method to add a new node to the map
@@ -64,5 +44,20 @@ public class HospitalMap{
         }
         return output;
     }
+
+    //Getters
+    public Node getStart() {
+        return start;
+    }
+    public Node getEnd() { return end; }
+
+    //Setters
+    public void setStart(Node start) {
+        this.start = start;
+    }
+    public void setEnd(Node end) {
+        this.end = end;
+    }
+
     //Cache for stuff
 }
