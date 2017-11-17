@@ -1,5 +1,6 @@
 package map;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class SearchContext {
@@ -9,7 +10,7 @@ public class SearchContext {
         this.strategy = strategy;
     }
 
-    public Stack<Node> findPath(Node start, Node end){
+    public ArrayList<Node> findPath(Node start, Node end){
         return strategy.findPath(start, end);
     }
 }

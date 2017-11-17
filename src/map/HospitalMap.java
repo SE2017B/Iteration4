@@ -11,8 +11,6 @@ import java.util.*;
 import java.util.HashMap;
 public class HospitalMap{
     private HashMap<String, Node> map;
-    private Node start;
-    private Node end;
 
     //Constructors
     public HospitalMap() {
@@ -20,24 +18,6 @@ public class HospitalMap{
     }
 
     //Getters and Setters
-
-    //Gets the start node
-    public Node getStart() {
-        return start;
-    }
-
-    //Sets the start node
-    public void setStart(Node start) {
-        this.start = start;
-    }
-
-    //Gets the end node
-    public Node getEnd() { return end; }
-
-    //Sets the end node
-    public void setEnd(Node end) {
-        this.end = end;
-    }
 
     //Helper Methods
 

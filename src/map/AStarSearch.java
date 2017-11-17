@@ -9,13 +9,13 @@ public class AStarSearch implements SearchStrategy {
     public AStarSearch(){}
 
     @Override
-    public Stack<Node> findPath(Node start, Node end){
+    public ArrayList<Node> findPath(Node start, Node end){
         LinkedList<Node> frontier = new LinkedList<>();
         ArrayList<Node> explored = new ArrayList<>();
-        Stack<Node> path = new Stack<>();
+        ArrayList<Node> path = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();     //Need to know where each Node's shortest path comes from
         //Key: currentNode, Value: Node that currentNode came from
-        path.push(start);
+        path.add(start);
         //Handles no start case
         if (start == null){
             System.out.println("No start point set, use the other version of this method");
@@ -71,10 +71,10 @@ public class AStarSearch implements SearchStrategy {
     }
 
     @Override
-    public Stack<Node> returnPath(Node current, HashMap<Node, Node> cameFrom){
+    public ArrayList<Node> returnPath(Node current, HashMap<Node, Node> cameFrom){
 
-        Stack<Node> path = new Stack<>();
-        path.push(current);
+        ArrayList<Node> path = new ArrayList<>();
+        path.add(current);
         while(cameFrom.containsKey(current)){       //Each key Node contains the Node from where it came and this path
             current = cameFrom.get(current);        //Is the best path
             path.add(0, current);
