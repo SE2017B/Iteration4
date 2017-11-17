@@ -10,10 +10,8 @@ package map;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-
 public class Node{
 
-    //get floor number
     private String longName;    //shortName of node
     private String shortName;   //longName of node
     private String ID;      //id of node
@@ -28,8 +26,8 @@ public class Node{
     public int greedy;  //greedy scores
 
     public Node(String name, String ID, String type, HashMap<Node, Integer> connections, String floor, int x, int y) {
-        this.shortName = name;   //name of node
-        this.longName = name;
+        this.longName = name;   //name of node
+        this.shortName = name;
         this.ID = ID;   //id of node
         this.type = type;   //type of node
         this.connections = connections; //connection for node
@@ -40,11 +38,10 @@ public class Node{
         this.greedy = 10000;    //greedy scores
     }
 
-
     //Added for KioskEngine::AddNode()
     public Node(String name, String ID, String type, int x, int y, String floor, ArrayList<Node> connections) {
-        this.shortName = name;
         this.longName = name;
+        this.shortName = name;
         this.ID = ID;
         this.type = type;
         this.x = x;
@@ -58,10 +55,9 @@ public class Node{
         }
     }
 
-
     public Node(String name, String ID, String type, String floor, int x, int y) {
-        this.shortName = name; //name of node
-        this.longName = name;
+        this.longName = name;   //name of node
+        this.shortName = name;
         this.ID = ID; //id of node
         this.type = type;  //type of node
         this.connections = new HashMap<>(); //connection for node
@@ -72,23 +68,19 @@ public class Node{
         this.greedy = 10000; //greedy scores
     }
 
-
     public Node(int x, int y){
         this.x = x;
         this.y = y;
 
-        this.shortName = "BLANK"; //name of node
-        this.longName = "BLANK";
+        this.longName = "BLANK";    //name of node
+        this.shortName = "BLANK";
         this.ID = "BLANK"; //id of node
         this.type = "BLANK";  //type of node
         this.connections = new HashMap<>(); //connection for node
         this.floor = "1"; //floor on which node is on
 
-
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000; //greedy scores
-
-
     }
 
     public Node(){
@@ -104,111 +96,74 @@ public class Node{
 
         this.fScore = 10000; //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000; //greedy scores
-
-
     }
+
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+        this.longName = longName;
+        this.shortName = shortName;
         this.ID = ID;
+        this.type = type;
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
         this.floor = floor;
         this.building = building;
-        this.type = type;
-        this.longName = longName;
-        this.shortName = shortName;
         this.team = team;
         this.connections = new HashMap<>();
         this.greedy = 10000;
         this.fScore = 10000;
     }
 
+    public void addConnection(Node node){
+        int edgeCost = (int)getEuclidianDistance(this, node);
+        this.connections.put(node, edgeCost);
+    }
 
-    //Getters and Setters
+    //Gets the Euclidian Distance from a start node to an end node
+    public double getEuclidianDistance(Node start, Node end){
+        double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
+        double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
+        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
+        return distance;
+    }
 
-    //Retrieves the shortName of the node
+    //Gets the cost from a node to a different node
+    public int getCostFromNode(Node node){
+        for(Node n: connections.keySet()){
+            if(node.toString().equals(n.toString())){
+                return connections.get(n);
+            }
+        }
+        return 0;
+    }
+
+    //Getters
+    public String getLongName() {
+        return longName;
+    }
     public String getShortName() {
         return this.shortName;
     }
-
-    //Sets the name of the node
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    //Gets the longName of the node
-    public String getLongName(){
-        return this.longName;
-    }
-
-    public void setLongName(String longName){
-        this.longName = longName;
-    }
-
-    public String getBuilding(){
-        return this.building;
-    }
-
-    public void setBuilding(String building){
-        this.building = building;
-    }
-
-    public String getTeam(){
-        return this.team;
-    }
-
-    public void setTeam(String team){
-        this.team = team;
-    }
-
-    //Gets the ID number from the node
     public String getID() {
         return ID;
     }
-
-    //Sets the ID number of node
-    public void setID(String ID) {
-        this.ID = ID;
+    public String getBuilding(){
+        return this.building;
     }
-
-    //Gets the type of the node
-    public String getType() {
-        return type;
+    public String getTeam(){
+        return this.team;
     }
-
-    //Sets the type of the node
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    //Gets the connections list for a node
     public HashMap<Node, Integer> getConnections() { return connections; }
-
-    //Sets the connections HashMap for the node
-    public void setConnections(HashMap<Node, Integer> connections) {
-        this.connections = connections;
-    }
-
-    //Gets the floor number
     public String getFloor() {
         return floor;
     }
 
-    //Sets the floor number
-    public void setFloor(String floor) {
-        this.floor = floor;
-    }
-
     //Gets the x-coordinate of the node
-
     public int getX() {
         return x;
     }
     public String getXString(){
         return Integer.toString(this.x);
     }
-
-    //Sets the x-coordinate of the node
-    public void setX(int x) { this.x = x; }
 
     //Gets the y-coordinate of the node
     public int getY() {
@@ -218,46 +173,40 @@ public class Node{
         return Integer.toString(this.y);
     }
 
-    //Sets the y-coordinate of the node
-    public void setY(int y) { this.y = y; }
-
-    //Gets the fScore of a node
     public int getfScore() { return fScore; }
-
-    //Sets the fScore for a node
-    public void setfScore(int fScore) { this.fScore = fScore; }
-
-    //Gets the greedy cost for a node
     public int getGreedy() { return greedy; }
 
-    //Sets the greedy cost for a node
+    //Setters
+    public void setLongName(String longName){
+        this.longName = longName;
+    }
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getType() {
+        return type;
+    }    public void setBuilding(String building){
+        this.building = building;
+    }
+    public void setTeam(String team){
+        this.team = team;
+    }
+    public void setConnections(HashMap<Node, Integer> connections) {
+        this.connections = connections;
+    }
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
+    public void setfScore(int fScore) { this.fScore = fScore; }
     public void setGreedy(int greedy) { this.greedy = greedy; }
-
-    public void addConnection(Node node){
-        int edgeCost = (int)getEuclidianDistance(this, node);
-        this.connections.put(node, edgeCost);
-    }
-
-
-    //Gets the Euclidian Distance from a start node to an end node
-
-    public double getEuclidianDistance(Node start, Node end){
-        double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
-        double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
-        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared);
-        return distance;
-    }
-
-    //Gets the cost from a node to a different node
-
-    public int getCostFromNode(Node node){
-        for(Node n: connections.keySet()){
-            if(node.toString().equals(n.toString())){
-                return connections.get(n);
-            }
-        }
-        return 0;
-    }
 
     //Override to turn int into a string
     @Override
@@ -287,5 +236,4 @@ public class Node{
         if(!this.getID().equals(other.getID())) return false;
         return true;
     }
-
 }
