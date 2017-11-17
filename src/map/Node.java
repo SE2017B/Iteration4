@@ -20,7 +20,7 @@ public class Node{
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
 
-    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
         this.longName = longName;
         this.shortName = shortName;
         this.ID = ID;
@@ -50,7 +50,7 @@ public class Node{
     public int getCostFromNode(Node node){
         for(int i = 0; i < connections.size(); i++){
             if(connections.get(i).getID.contains(node.getID())){
-                return connections.get(n);
+                return connections.get(i);
             }
         }
         return 0;

@@ -10,7 +10,6 @@ public class Edge {
         this.ID = ID;
         this.nodeOne = nodeOne;
         this.nodeTwo = nodeTwo;
-
     }
 
     public String getID(){
