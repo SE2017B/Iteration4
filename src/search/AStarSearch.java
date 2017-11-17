@@ -1,9 +1,10 @@
-package map;
+package search;
+
+import map.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class AStarSearch implements SearchStrategy {
     public AStarSearch(){}

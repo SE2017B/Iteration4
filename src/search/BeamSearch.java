@@ -1,11 +1,12 @@
-package map;
+package search;
+
+import map.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
-public class DepthFirstSearch implements SearchStrategy {
-    public DepthFirstSearch(){}
+public class BeamSearch implements SearchStrategy{
+    public BeamSearch(){}
 
     @Override
     public ArrayList<Node> findPath(Node start, Node end) {

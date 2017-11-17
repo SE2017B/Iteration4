@@ -1,11 +1,12 @@
-package map;
+package search;
+
+import map.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
-public class DijkstrasSearch implements SearchStrategy {
-    public DijkstrasSearch(){}
+public class BreadthFirstSearch implements SearchStrategy {
+    public BreadthFirstSearch(){}
 
     @Override
     public ArrayList<Node> findPath(Node start, Node end) {
