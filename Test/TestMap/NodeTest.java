@@ -9,6 +9,7 @@
 //testing file for Node testing each method
 package TestMap;
 
+import exceptions.InvalidNodeExeption;
 import map.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -91,12 +92,13 @@ public class NodeTest {
 
     @Test
     public void testEuclidean3D(){
-    assertEquals(N1.getEuclidianDistance(N4), 223.63, 0.05);
+    assertEquals(N1.getEuclidianDistance(N4), 374.17, 0.05);
     }
 
+    //should be the same as Euclidean distance, for now
     @Test
-    public void testCost(){
-
+    public void testCost() throws InvalidNodeExeption{
+    assertEquals(N1.getCostFromNode(N2), 100, 0.01);
     }
 
     //test the enum
