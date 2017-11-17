@@ -1,7 +1,8 @@
-package map;
+package search;
+
+import map.Node;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class SearchContext {
     private SearchStrategy strategy;

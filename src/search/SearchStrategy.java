@@ -1,4 +1,6 @@
-package map;
+package search;
+
+import map.Node;
 
 import java.util.ArrayList;
 import java.util.HashMap;

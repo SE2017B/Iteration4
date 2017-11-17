@@ -11,6 +11,7 @@ package TestMap;
 import map.*;
 import org.junit.Before;
 import org.junit.Test;
+import search.AStarSearch;
 
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
