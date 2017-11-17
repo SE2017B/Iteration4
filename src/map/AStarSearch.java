@@ -8,8 +8,8 @@ import java.util.Stack;
 public class AStarSearch implements SearchStrategy {
     public AStarSearch(){}
 
+    @Override
     public Stack<Node> findPath(Node start, Node end){
-
         LinkedList<Node> frontier = new LinkedList<>();
         ArrayList<Node> explored = new ArrayList<>();
         Stack<Node> path = new Stack<>();
@@ -67,10 +67,10 @@ public class AStarSearch implements SearchStrategy {
             n.fScore = 10000;       //Reset each Nodes greedy and fScore for next run of findPath
             n.greedy = 10000;
         }
-
         return path;
     }
 
+    @Override
     public Stack<Node> returnPath(Node current, HashMap<Node, Node> cameFrom){
 
         Stack<Node> path = new Stack<>();
@@ -82,6 +82,7 @@ public class AStarSearch implements SearchStrategy {
         return path;
     }
 
+    @Override
     public double getEuclideanDistance(Node start, Node end){
         double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
