@@ -11,8 +11,6 @@ import java.util.*;
 import java.util.HashMap;
 public class HospitalMap{
     private HashMap<String, Node> map;
-    private Node start;
-    private Node end;
 
     //Constructors
     public HospitalMap() {
@@ -44,20 +42,5 @@ public class HospitalMap{
         }
         return output;
     }
-
-    //Getters
-    public Node getStart() {
-        return start;
-    }
-    public Node getEnd() { return end; }
-
-    //Setters
-    public void setStart(Node start) {
-        this.start = start;
-    }
-    public void setEnd(Node end) {
-        this.end = end;
-    }
-
     //Cache for stuff
 }
