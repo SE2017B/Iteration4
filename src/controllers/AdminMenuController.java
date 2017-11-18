@@ -8,15 +8,12 @@
 
 package controllers;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import service.ServiceRequest;
-import service.Staff;
-import service.TransportService;
+import DepartmentSubsystem.ServiceRequest;
+import DepartmentSubsystem.Staff;
 
 public class AdminMenuController implements ControllableScreen{
     private ScreenController parent;
@@ -101,7 +98,7 @@ public class AdminMenuController implements ControllableScreen{
     }
 
     //requestList.setItems(FXCollections.observableArrayList(staffMember.getFullName(), staffMember.getJobTitle()));
-    //Populate the list of service requests
+    //Populate the list of DepartmentSubsystem requests
     public void setRequest(){
         if(staffMember.getCurrentRequest() == null)
         {

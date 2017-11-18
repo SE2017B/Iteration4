@@ -10,9 +10,8 @@ package TestServices;
 
 import map.Node;
 import org.junit.*;
-import service.FoodService;
-import service.ServiceRequest;
-import service.Staff;
+import DepartmentSubsystem.ServiceRequest;
+import DepartmentSubsystem.Staff;
 
 import java.util.ArrayList;
 

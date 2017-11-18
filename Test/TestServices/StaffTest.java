@@ -11,7 +11,7 @@ package TestServices;
 import map.Node;
 import exceptions.InvalidPasswordException;
 import org.junit.*;
-import service.*;
+import DepartmentSubsystem.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;

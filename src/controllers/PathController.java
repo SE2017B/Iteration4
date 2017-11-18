@@ -8,17 +8,13 @@
 
 package controllers;
 
-import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import service.ServiceRequest;
-import service.Staff;
 
 import java.util.ArrayList;
 

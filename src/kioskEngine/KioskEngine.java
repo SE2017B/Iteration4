@@ -14,16 +14,12 @@ import javafx.collections.ObservableList;
 import map.HospitalMap;
 import map.Node;
 import exceptions.InvalidLoginException;
-import service.FoodService;
-import service.Service;
-import service.Staff;
+import DepartmentSubsystem.Service;
+import DepartmentSubsystem.Staff;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Stack;
 
 public class KioskEngine{

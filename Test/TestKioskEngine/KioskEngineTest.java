@@ -9,12 +9,10 @@
 package TestKioskEngine;
 
 import exceptions.InvalidLoginException;
-import exceptions.InvalidPasswordException;
 import kioskEngine.KioskEngine;
 import org.junit.Before;
 import org.junit.Test;
-import service.FoodService;
-import service.Staff;
+import DepartmentSubsystem.Staff;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.*;

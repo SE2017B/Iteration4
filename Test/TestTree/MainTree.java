@@ -2,11 +2,9 @@ package TestTree;
 
 import map.HospitalMap;
 import map.Node;
-import controllers.PathController;
 import org.junit.Before;
 import org.junit.Test;
-import service.FoodService;
-import service.Staff;
+import DepartmentSubsystem.Staff;
 
 import static org.junit.Assert.*;
 import java.util.ArrayList;
