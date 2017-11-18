@@ -13,55 +13,6 @@ public class AStarSearch implements SearchStrategy {
 
     @Override
     public Path findPath(Node start, Node end){
-//        LinkedList<Node> frontier = new LinkedList<>();
-//        ArrayList<Node> explored = new ArrayList<>();
-//        HashMap<Node, Edge> edges = new HashMap<>();
-//        Path path = new Path();
-//        path.addToPath(start);
-//        if(start == null){
-//            System.out.println("Node start point set");
-//            return path;
-//        }
-//        start.setGreedy(0);
-//        start.setFScore((int)getEuclideanDistance(start, end));
-//        frontier.add(start);
-//        for(Edge e : start.getConnections()){
-//            frontier.add(e.getOtherNode(start));
-//        }
-//        while(frontier.size() > 0){
-//            Node currentNode = frontier.getFirst();
-//            int lowestFScore = 1000000;
-//            for(Node n : frontier){
-//                if(n.getFScore() < lowestFScore){
-//                    currentNode = n;
-//                    lowestFScore = n.getFScore();
-//                }
-//            }
-//            explored.add(currentNode);
-//            frontier.remove(currentNode);
-//            if(currentNode == end){
-//                for(Node n : explored){
-//                    n.setFScore(100000);
-//                    n.setGreedy(100000);
-//                }
-//                return returnPath(start, edges);
-//            }
-//            for(Edge e : currentNode.getConnections()){
-//                Node neighbor = e.getOtherNode(currentNode);
-//                if(explored.contains(neighbor)) continue;
-//                if(!frontier.contains(neighbor)) frontier.add(neighbor);
-//
-//                double newGScore = currentNode.getGreedy() + e.getCost();
-//                if(newGScore >= neighbor.getGreedy()) continue;
-//                edges.put(currentNode, e);
-//                neighbor.setGreedy((int)newGScore);
-//                neighbor.setFScore(neighbor.getGreedy() + (int) getEuclideanDistance(neighbor, end));
-//            }
-//        }
-//        for(Node n : explored){
-//            n.setFScore(1000000);
-//            n.setGreedy(1000000);
-//        }
         LinkedList<Node> frontier = new LinkedList<>();
         ArrayList<Node> explored = new ArrayList<>();
         Path path = new Path();
