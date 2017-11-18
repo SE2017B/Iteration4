@@ -1,110 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
-      <SplitPane dividerPositions="0.25" layoutX="106.0" layoutY="172.0" prefHeight="540.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="-7.0" layoutY="-7.0" prefHeight="150.0" prefWidth="1294.0" />
+      <SplitPane dividerPositions="0.18796992481203006" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="220.0" prefHeight="160.0" prefWidth="200.0">
+          <AnchorPane maxHeight="150.0" minHeight="100.0" minWidth="0.0" prefHeight="150.0" prefWidth="160.0">
                <children>
-                  <GridPane layoutX="30.0" layoutY="111.0" prefHeight="538.0" prefWidth="282.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="154.66665649414062" minWidth="10.0" prefWidth="117.33332824707031" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="198.6666717529297" minWidth="10.0" prefWidth="198.6666717529297" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="96.00000762939453" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="185.99999237060547" minHeight="9.0" prefHeight="61.166664123535156" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="277.6666564941406" minHeight="10.0" prefHeight="121.50001525878906" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="269.5" minHeight="10.0" prefHeight="131.99998474121094" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="205.66665649414062" minHeight="10.0" prefHeight="92.5" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="307.66668701171875" minHeight="10.0" prefHeight="172.5" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="213.66665649414062" minHeight="10.0" prefHeight="75.6666259765625" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <GridPane prefHeight="770.0" prefWidth="1294.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="422.0" minWidth="10.0" prefWidth="258.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="568.0" minWidth="10.0" prefWidth="370.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="817.0" minWidth="10.0" prefWidth="347.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="300.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <Button fx:id="btnenter" minWidth="75.0" mnemonicParsing="false" onAction="#enterPressed" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                        <Button fx:id="ntncancel" minWidth="75.0" mnemonicParsing="false" onAction="#cancelPressed" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                        <CheckBox fx:id="chkstairs" mnemonicParsing="false" onAction="#stairsPressed" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                        <JFXButton fx:id="btnEnter" onAction="#enterPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Go!" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXCheckBox style="-fx-border-color: #008faa; -fx-background-color: #ffffff;" text="Stairs?" unCheckedColor="#09b5ff" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
                            <GridPane.margin>
-                              <Insets right="100.0" />
+                              <Insets />
                            </GridPane.margin>
-                        </CheckBox>
-                        <Label fx:id="lblstart" minWidth="75.0" text="Start" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                        </JFXCheckBox>
+                        <JFXTextField focusColor="#408dff" labelFloat="true" promptText="Start" style="-fx-border-color: #008faa; -fx-background-color: #FFFFFF;" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowSpan="2">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="24.0" />
                            </font>
-                        </Label>
-                        <Label fx:id="lblend" minWidth="75.0" text="End" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblstairs" minWidth="75.0" text="Stairs?" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lbldir" text="Directions" GridPane.columnSpan="2" GridPane.halignment="CENTER">
-                           <font>
-                              <Font size="38.0" />
-                           </font>
-                        </Label>
-                        <ChoiceBox fx:id="startChoice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets left="15.0" right="15.0" />
                            </GridPane.margin>
-                        </ChoiceBox>
-                        <ChoiceBox fx:id="endChoice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="10.0" right="10.0" />
-                           </GridPane.margin>
-                        </ChoiceBox>
-                        <Label fx:id="failLabel" text="No Path Found" textAlignment="CENTER" textFill="RED" visible="false" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                        </JFXTextField>
+                        <JFXTextField focusColor="#3ce8ff" labelFloat="true" promptText="End" style="-fx-border-color: #008faa; -fx-background-color: #ffffff;" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.rowSpan="2">
                            <font>
-                              <Font size="25.0" />
+                              <Font size="24.0" />
                            </font>
-                        </Label>
+                           <GridPane.margin>
+                              <Insets left="15.0" right="15.0" />
+                           </GridPane.margin>
+                        </JFXTextField>
+                        <JFXButton fx:id="ntncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Return" GridPane.halignment="CENTER" GridPane.rowSpan="2">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </JFXButton>
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <ScrollPane fitToHeight="true" hvalue="0.36" layoutX="73.0" layoutY="126.0" prefHeight="538.0" prefWidth="670.0" vvalue="0.26" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <content>
-                        <Pane fx:id="mapPane" minHeight="-Infinity" minWidth="-Infinity">
-                           <children>
-                              <ImageView fitHeight="1700.0" fitWidth="2500.0">
-                                 <image>
-                                    <Image url="@../images/02_thesecondfloor.png" />
-                                 </image>
-                                 <viewport>
-                                    <Rectangle2D />
-                                 </viewport>
-                              </ImageView>
-                           </children>
-                        </Pane>
-                     </content>
-                  </ScrollPane>
+                  <JFXTabPane layoutX="-303.0" layoutY="135.0" prefHeight="694.0" prefWidth="1278.0" side="BOTTOM" style="-fx-background-color: #005697;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <tabs>
+                        <Tab fx:id="tL2" text="L2">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab fx:id="tL1" text="L1">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab fx:id="tG" text="G">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab fx:id="t1" text="1">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab fx:id="t2" text="2">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                        <Tab fx:id="t3" text="3">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </JFXTabPane>
                </children>
             </AnchorPane>
         </items>
       </SplitPane>
+      <TitledPane animated="false" layoutY="155.0" text="Directions">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #008faa;">
+               <children>
+                  <JFXListView layoutX="-4.0" layoutY="-105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </content>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TitledPane>
    </children>
 </AnchorPane>
