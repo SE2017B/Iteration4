@@ -16,6 +16,10 @@ public class HospitalMap{
     private Node start;
     private Node end;
 
+    //some extra constructors
+    ArrayList<Edge> Edges;
+    ArrayList<Node> Nodes;
+
     //Constructors
     public HospitalMap() {
         map = new HashMap<String, Node>();
@@ -179,6 +183,33 @@ public class HospitalMap{
             }
         }
         return output;
+    }
+    //somedata base functions
+    public ArrayList<Node> getNodeByFloor(String id, Node node){
+        ArrayList<Node> ans = new ArrayList<>();
+
+        return ans;
+
+    }
+
+    public void DeleteNode(Node node){
+
+    }
+
+    public void EditNode(String id,Node node){
+        //replace the informations of the node with that of the new node
+    }
+
+    public void AddEdge(Edge edge){
+
+    }
+
+    public void loadMap(){
+
+    }
+
+    public void saveMapToCSV(){
+
     }
 
     //Cache for stuff
