@@ -11,7 +11,7 @@ public class Edge {
         this.ID = ID;
         this.nodeOne = nodeOne;
         this.nodeTwo = nodeTwo;
-        cost = this.nodeOne.getEuclidianDistance(this.nodeTwo);
+        this.cost = this.nodeOne.getEuclidianDistance(this.nodeTwo);
         this.nodeOne.addConnection(this);
         this.nodeTwo.addConnection(this);
     }
@@ -19,10 +19,17 @@ public class Edge {
     public String getID(){
         return ID;
     }
-
     public double getCost() {
         return cost;
     }
-
-
+    public Node getNodeOne(){
+        return this.nodeOne;
+    }
+    public Node getNodeTwo(){
+        return this.nodeTwo;
+    }
+    public Node getOtherNode(Node node){
+        if(node.equals(nodeOne)) return nodeTwo;
+        else return nodeOne;
+    }
 }

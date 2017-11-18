@@ -17,19 +17,35 @@ public class Node{
     private String ID;      //id of node
     private String type;    //type of node
     private String building; //building where node is located
+    private String team;
     private ArrayList<Edge> connections; //connection for node
     private FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
-    public int fScore;  //greedy + heuristic scores for node
-    public int greedy;  //greedy scores
+    private int fScore;  //greedy + heuristic scores for node
+    private int greedy;  //greedy scores
 
+    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+        this.longName = longName;
+        this.shortName = shortName;
+        this.ID = ID;
+        this.type = type;
+        this.building = building;
+        this.team = team;
+        this.connections = new ArrayList<>();
+        this.floor = FloorNumber.fromDbMapping(floor);
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
+        this.fScore = 1000000;
+        this.greedy = 1000000;
+    }
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
         this.longName = longName;
         this.shortName = shortName;
         this.ID = ID;
         this.type = type;
         this.building = building;
+        this.team = "H";
         this.connections = new ArrayList<>();
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
@@ -38,9 +54,15 @@ public class Node{
         this.greedy = 1000000;
     }
 
+
     //Adds edge between nodes
     public void addConnection(Edge egde){
         connections.add(egde);
+    }
+    public void addConnection(Node node){
+        Edge e = new Edge("IDK what to put here", this, node);
+//        this.addConnection(e);
+//        node.addConnection(e);
     }
 
     //Gets the Euclidian Distance from a start node to an end node
@@ -75,6 +97,9 @@ public class Node{
     public String getBuilding(){
         return this.building;
     }
+    public String getTeam(){
+        return this.team;
+    }
     public ArrayList<Edge> getConnections() {
         return connections;
     }
@@ -98,7 +123,7 @@ public class Node{
         return Integer.toString(this.y);
     }
 
-    public int getfScore() { return fScore; }
+    public int getFScore() { return fScore; }
     public int getGreedy() { return greedy; }
 
     //Setters
@@ -120,6 +145,9 @@ public class Node{
     public void setBuilding(String building){
         this.building = building;
     }
+    public void setTeam(String team){
+        this.team = team;
+    }
     public void setFloor(String floor) {
         this.floor = FloorNumber.fromDbMapping(floor);
     }
@@ -128,6 +156,12 @@ public class Node{
     }
     public void setY(int y){
         this.y = y;
+    }
+    public void setGreedy(int greedy){
+        this.greedy = greedy;
+    }
+    public void setFScore(int fScore){
+        this.fScore = fScore;
     }
 
     //Override to turn int into a string

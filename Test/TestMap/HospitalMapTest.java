@@ -60,10 +60,8 @@ public class HospitalMapTest {
 
         //Add connections for nodeTwo
         N2.addConnection(N3);
-        N2.addConnection(N1);
 
         //Add connections for nodeThree
-        N3.addConnection(N2);
         N3.addConnection(N9);
 
         //Add connections for nodeFour
@@ -72,34 +70,24 @@ public class HospitalMapTest {
 
         //Add connections for nodeFive
         N5.addConnection(N8);
-        N5.addConnection(N4);
 
         //Add connections for nodeSix
-        N6.addConnection(N1);
         N6.addConnection(N7);
 
         //Add connections for nodeSeven
-        N7.addConnection(N4);
-        N7.addConnection(N6);
         N7.addConnection(N8);
         N7.addConnection(N10);
 
         //Add connections for nodeEight
-        N8.addConnection(N7);
         N8.addConnection(N9);
-        N8.addConnection(N5);
 
         //Add connections for nodeNine
-        N9.addConnection(N3);
-        N9.addConnection(N8);
         N9.addConnection(N15);
 
         //Add connections for nodeTen
-        N10.addConnection(N7);
         N10.addConnection(N11);
 
         //Add connections for nodeEleven
-        N11.addConnection(N10);
         N11.addConnection(N14);
 
         //Add connections for nodeTwelve
@@ -107,54 +95,38 @@ public class HospitalMapTest {
         N12.addConnection(N16);
 
         //Add connections for nodeThirteen
-        N13.addConnection(N12);
         N13.addConnection(N14);
         N13.addConnection(N17);
 
         //Add connections for nodeFourteen
-        N14.addConnection(N11);
-        N14.addConnection(N13);
         N14.addConnection(N15);
         N14.addConnection(N18);
 
         //Add connections for nodeFifteen
-        N15.addConnection(N9);
-        N15.addConnection(N14);
 
         //Add connections for nodeSixteen
-        N16.addConnection(N14);
         N16.addConnection(N17);
 
         //Add connections for nodeSeventeen
-        N17.addConnection(N13);
-        N17.addConnection(N16);
         N17.addConnection(N20);
 
         //Add connections for nodeEighteen
-        N18.addConnection(N14);
         N18.addConnection(N19);
         N18.addConnection(N21);
 
         //Add connections for nodeNineteen
-        N19.addConnection(N18);
         N19.addConnection(N22);
 
         //Add connections for nodeTwenty
-        N20.addConnection(N17);
         N20.addConnection(N21);
 
         //Add connections for nodeTwentyOne
-        N21.addConnection(N18);
-        N21.addConnection(N20);
-        N21.addConnection(N22);
         N21.addConnection(N23);
+        N21.addConnection(N22);
 
         //Add connections for nodeTwentyTwo
-        N22.addConnection(N19);
-        N22.addConnection(N21);
 
         //Add connections for nodeTwentyThree
-        N23.addConnection(N21);
     }
 
     // findPath tests
@@ -202,7 +174,7 @@ public class HospitalMapTest {
     public void testMap3Reverse() throws InterruptedException{
         String answer = search.findPath(N12, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short12, Short16, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
+        assertEquals("[Short12, Short13, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -217,7 +189,7 @@ public class HospitalMapTest {
     public void testMap4Reverse() throws InterruptedException{
         String answer = (search.findPath(N20, N1).toString());
         System.out.println(answer);
-        assertEquals("[Short20, Short17, Short16, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
+        assertEquals("[Short20, Short17, Short13, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -367,12 +339,4 @@ public class HospitalMapTest {
     public void testGetEuclideanDistanceSame(){
         assertEquals(0, search.getEuclideanDistance(N5, N5), .01);
     }
-
-
-    @Test
-    //Node 6 to Node 1
-    public void testTwoPaths(){
-        assertEquals(search.findPath(N4, N1), search.findPath(N4, N1));
-    }
-
 }

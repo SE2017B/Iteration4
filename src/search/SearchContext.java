@@ -1,6 +1,7 @@
 package search;
 
 import map.Node;
+import map.Path;
 
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ public class SearchContext {
         this.strategy = strategy;
     }
 
-    public ArrayList<Node> findPath(Node start, Node end){
+    public Path findPath(Node start, Node end){
         return strategy.findPath(start, end);
     }
 }
