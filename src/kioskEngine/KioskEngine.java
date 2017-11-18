@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import map.*;
 import exceptions.InvalidLoginException;
 import search.AStarSearch;
+import search.BreadthFirstSearch;
 import search.SearchContext;
 import service.FoodService;
 import service.Service;
@@ -82,6 +83,7 @@ public class KioskEngine{
 //        ArrayList<Node> path = new ArrayList<>();
 //        path.addAll(stack);
         SearchContext search = new SearchContext(new AStarSearch());
+        search = new SearchContext(new BreadthFirstSearch());
         ArrayList<Node> path = search.findPath(start, end).getPath();
         return path;
     }
