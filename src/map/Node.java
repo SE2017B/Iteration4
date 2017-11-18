@@ -22,6 +22,7 @@ public class Node{
     private String team;    //
     private HashMap<Node, Integer> connections; //connection for node
     private String floor;  //floor on which node is on
+    private ArrayList<Edge> edges;
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
     public int fScore;  //greedy + heuristic scores for node
@@ -38,6 +39,16 @@ public class Node{
         this.y = y; //y-coordinate of node
         this.fScore = 10000;    //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000;    //greedy scores
+    }
+    //added for Map create node
+    public Node(String Id, int x, int y, String floor, String building,String type){
+        this.ID=Id;
+        this.x = x;
+        this.y=y;
+        this.floor=floor;
+        this.building=building;
+        this.type = type;
+
     }
 
 
@@ -237,6 +248,24 @@ public class Node{
         int edgeCost = (int)getEuclidianDistance(this, node);
         this.connections.put(node, edgeCost);
     }
+    //some new edges variables
+    public void setEdges(ArrayList<Edge> edges1){
+        this.edges=edges1;
+    }
+    public void addEdge(Edge edge){
+        edges.add(edge);
+    }
+
+    public ArrayList<Edge> getEdges(){
+        return this.edges;
+    }
+    public ArrayList<Node> getSiblingNodes(){
+        ArrayList<Node> ans = new ArrayList<Node>();
+        for(Edge e: this.edges ){
+            ans.add(e.getOtherNode(this));
+        }
+        return ans;
+    }
 
 
     //Gets the Euclidian Distance from a start node to an end node
@@ -258,6 +287,7 @@ public class Node{
         }
         return 0;
     }
+
 
     //Override to turn int into a string
     @Override

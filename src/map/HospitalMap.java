@@ -7,10 +7,14 @@
 */
 
 package map;
+import database.edgeDatabase;
+import database.nodeDatabase;
+
 import java.util.*;
 import java.util.HashMap;
 public class HospitalMap{
-    private HashMap<String, Node> map;
+    private HashMap<String, Node> NodeMap;
+    private HashMap<String, Edge> EdgeMap;
     private LinkedList<Node> frontier;
     private ArrayList<Node> explored;
     private Node start;
@@ -22,7 +26,7 @@ public class HospitalMap{
 
     //Constructors
     public HospitalMap() {
-        map = new HashMap<String, Node>();
+        NodeMap = new HashMap<String, Node>();
         frontier = new LinkedList<>();
         explored = new ArrayList<>();
     }
@@ -54,10 +58,7 @@ public class HospitalMap{
         return Math.abs(p1.getX() - p2.getX()) + Math.abs(p1.getY() - p2.getY());
     }
 
-    //Method to add a new node to the map
-    public void addNode(String id, Node node){
-        map.put(id, node);
-    }
+
     //Callable navigation methods
 
     //Method to find the path from a starting node to an end note
@@ -167,7 +168,7 @@ public class HospitalMap{
 
     public ArrayList<Node> getNodesForSearch(){
         ArrayList<Node> output = new ArrayList<Node>();
-        for(Node node : map.values()){
+        for(Node node : NodeMap.values()){
             if(!node.getType().equals("HALL") && node.getFloor().equals("2") && node.getTeam().equals("Team H")){
                 output.add(node);
             }
@@ -177,7 +178,7 @@ public class HospitalMap{
 
     public ArrayList<Node> getNodesForEdit(){
         ArrayList<Node> output = new ArrayList<Node>();
-        for(Node node : map.values()){
+        for(Node node : NodeMap.values()){
             if(node.getFloor().equals("2") && node.getTeam().equals("Team H")){
                 output.add(node);
             }
@@ -185,14 +186,78 @@ public class HospitalMap{
         return output;
     }
     //somedata base functions
-    public ArrayList<Node> getNodeByFloor(String id, Node node){
-        ArrayList<Node> ans = new ArrayList<>();
+    //generate Ids from
+    private String calNodeId(Node node){
+        return "none";
+    }
+    private String calNodeName(Node node){
+        return "name";
+    }
+    private String calEdgeId(Edge edge){
+        return "none";
+    }
+    //Method to add a new node to the map
+    public void addNode( Node node){
 
+        NodeMap.put(calNodeId(node), node);
+        //add to datebase
+        nodeDatabase.addNode(node.getID(),node.getXString(),node.getYString(),node.getFloor(),node.getBuilding(),node.getType(),node.getShortName());
+        System.out.println("Node Added successfully");
+    }
+    public void AddEdge(Edge edge){
+        EdgeMap.put(edge.getId(),edge);
+        //add to database
+        edgeDatabase.addEdge(edge.getStartNode().getLongName(),edge.getEndNode().getLongName());//Todo modify line
+        System.out.println("Edge Added successfully");
+
+
+    }
+    public ArrayList<Node> getNodeByFloor(String floor){
+        ArrayList<Node> ans = new ArrayList<Node>();
+        for(Node n : NodeMap.values()){
+            if(n.getFloor()==floor){
+                ans.add(n);
+            }
+        }
         return ans;
 
     }
 
     public void DeleteNode(Node node){
+        //delete the node first
+        NodeMap.remove(node.getID());
+        nodeDatabase.deleteNode(node);
+
+        //delete the edges associated with it
+        for(Edge e : node.getEdges() ){
+            EdgeMap.remove(e);
+            edgeDatabase.deleteAnyEdge(e.getId());
+        }
+
+    }
+    public Node createNode(int xpos,int ypos,String floor,String building){
+        String type = "Created";
+        String name = "node";
+        String ID="Id";
+        //create node
+        Node node = new Node(ID,xpos,ypos,floor,building,type);
+        ID= calNodeId(node); //recalculate the node id
+        node.setID(ID);
+        return node;
+    }
+    public Node createFromNode(Node n,int xpos,int ypos){
+        //create new node
+        Node newNode= createNode(xpos,ypos,n.getFloor(),n.getBuilding());
+
+        ArrayList<Edge> newedges = new ArrayList<Edge>();
+        //create edge from new node from former node
+        for(Node conN: n.getSiblingNodes()){
+            newedges.add(new Edge("BLANK",conN,newNode));
+        }
+        newNode.setEdges(newedges);
+        //add nodes and edges
+
+        return newNode;
 
     }
 
@@ -200,7 +265,11 @@ public class HospitalMap{
         //replace the informations of the node with that of the new node
     }
 
-    public void AddEdge(Edge edge){
+
+
+    public void DeleteEdge(Edge edge){
+        EdgeMap.remove(edge);
+        edgeDatabase.deleteAnyEdge(edge.getId());
 
     }
 

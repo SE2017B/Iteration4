@@ -16,6 +16,22 @@ public class Edge {
         return this.ID;
     }
 
+    public String getId(){
+        return this.ID;
+    }
+    public Node getStartNode(){
+        return this.StartNode;
+    }
+    public Node getEndNode(){
+        return this.EndNode;
+    }
+    //get a different node from the one given to it
+    public Node getOtherNode(Node n){
+        if(StartNode==n){
+            return EndNode;
+        }
+        return StartNode;
+    }
     public int hashcode(){
         return 0; //for now
     }
@@ -25,4 +41,5 @@ public class Edge {
         }
         return false;
     }
+
 }
