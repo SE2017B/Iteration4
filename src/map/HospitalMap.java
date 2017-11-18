@@ -27,7 +27,7 @@ public class HospitalMap{
     public ArrayList<Node> getNodesForSearch(){
         ArrayList<Node> output = new ArrayList<>();
         for(Node node : map.values()){
-            if(!node.getType().equals("HALL") && node.getFloor().equals("2") && node.getTeam().equals("Team H")){
+            if(!node.getType().equals("HALL") && node.getFloor().getDbMapping().equals("2") && node.getTeam().equals("Team H")){
                 output.add(node);
             }
         }
@@ -37,7 +37,7 @@ public class HospitalMap{
     public ArrayList<Node> getNodesForEdit(){
         ArrayList<Node> output = new ArrayList<>();
         for(Node node : map.values()){
-            if(node.getFloor().equals("2") && node.getTeam().equals("Team H")){
+            if(node.getFloor().getDbMapping().equals("2") && node.getTeam().equals("Team H")){
                 output.add(node);
             }
         }

@@ -176,8 +176,8 @@ public class mainDatabase {
                         tempTwo = allNodes.get(nodeTwo);
                     }
                     if (tempOne != null && tempTwo != null) {
-//                        tempOne.addConnection(tempTwo);
-//                        tempTwo.addConnection(tempOne);
+                        tempOne.addConnection(tempTwo);
+                        tempTwo.addConnection(tempOne);
                     } else {
                         System.out.println(" ");
                     }
