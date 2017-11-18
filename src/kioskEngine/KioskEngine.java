@@ -77,10 +77,12 @@ public class KioskEngine{
     }
 
     public ArrayList<Node> findPath(Node start, Node end){
+//        SearchContext search = new SearchContext(new AStarSearch());
+//        ArrayList<Node> stack = search.findPath(start,end);
+//        ArrayList<Node> path = new ArrayList<>();
+//        path.addAll(stack);
         SearchContext search = new SearchContext(new AStarSearch());
-        ArrayList<Node> stack = search.findPath(start,end);
-        ArrayList<Node> path = new ArrayList<>();
-        path.addAll(stack);
+        ArrayList<Node> path = search.findPath(start, end).getPath();
         return path;
     }
 

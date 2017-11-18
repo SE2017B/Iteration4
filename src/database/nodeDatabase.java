@@ -97,8 +97,8 @@ public class nodeDatabase {
             case "nodeID":
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
@@ -111,8 +111,8 @@ public class nodeDatabase {
             case "xCoord":
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
@@ -126,8 +126,8 @@ public class nodeDatabase {
 
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
@@ -143,7 +143,7 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
@@ -159,7 +159,7 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
@@ -175,8 +175,8 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
                 tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
@@ -190,8 +190,8 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
                 tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
@@ -206,8 +206,8 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
@@ -222,8 +222,8 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();

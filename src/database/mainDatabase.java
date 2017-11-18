@@ -76,7 +76,7 @@ public class mainDatabase {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Write to a output Edges csv file
+    // Write to a output Edge csv file
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputEdgesCSV() {
 
@@ -142,7 +142,7 @@ public class mainDatabase {
             }
         }
         ///////////////////////////////////////////////////////////////////////////////
-        // Read from Edges CSV File and store columns in array lists
+        // Read from Edge CSV File and store columns in array lists
         ///////////////////////////////////////////////////////////////////////////////
         public static void readEdgesCSV(String fname) {
 
@@ -176,8 +176,8 @@ public class mainDatabase {
                         tempTwo = allNodes.get(nodeTwo);
                     }
                     if (tempOne != null && tempTwo != null) {
-                        tempOne.addConnection(tempTwo);
-                        tempTwo.addConnection(tempOne);
+//                        tempOne.addConnection(tempTwo);
+//                        tempTwo.addConnection(tempOne);
                     } else {
                         System.out.println(" ");
                     }
@@ -282,7 +282,7 @@ public class mainDatabase {
                         "endNode VARCHAR(20))");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
-                System.out.println("Create Edges table Successful!");
+                System.out.println("Create Edge table Successful!");
 
                 conn.commit();
                 stmtCreate2.close();
@@ -300,7 +300,7 @@ public class mainDatabase {
                         "endNode VARCHAR(20))");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
-                System.out.println("Create Edges table Successful!");
+                System.out.println("Create Edge table Successful!");
 
                 conn.commit();
                 stmtCreate2.close();
@@ -325,7 +325,7 @@ public class mainDatabase {
                 insertNode.setString(1, allNodes.get(j).getID());
                 insertNode.setString(2, Integer.toString(allNodes.get(j).getX()));
                 insertNode.setString(3, Integer.toString(allNodes.get(j).getY()));
-                insertNode.setString(4, allNodes.get(j).getFloor());
+                insertNode.setString(4, allNodes.get(j).getFloor().getDbMapping());
                 insertNode.setString(5, allNodes.get(j).getBuilding());
                 insertNode.setString(6, allNodes.get(j).getType());
                 insertNode.setString(7, allNodes.get(j).getLongName());
@@ -383,12 +383,12 @@ public class mainDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) throws SQLException {
 
-        try {
-            DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         readNodeCSV("MapHnodes.csv");
         readNodeCSV("MapWnodes.csv");

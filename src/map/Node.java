@@ -7,7 +7,8 @@
 */
 
 package map;
-import java.util.HashMap;
+import exceptions.InvalidNodeExeption;
+
 import java.util.ArrayList;
 
 public class Node{
@@ -16,92 +17,21 @@ public class Node{
     private String ID;      //id of node
     private String type;    //type of node
     private String building; //building where node is located
-    private String team;    //
-    private HashMap<Node, Integer> connections; //connection for node
-    private String floor;  //floor on which node is on
+    private ArrayList<Edge> connections; //connection for node
+    private FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
     public int fScore;  //greedy + heuristic scores for node
     public int greedy;  //greedy scores
 
-    //Constructors
-    public Node(String name, String ID, String type, HashMap<Node, Integer> connections, String floor, int x, int y) {
-        this.longName = name;   //name of node
-        this.shortName = name;
-        this.ID = ID;   //id of node
-        this.type = type;   //type of node
-        this.connections = connections; //connection for node
-        this.floor = floor; //floor on which node is on
-        this.x = x; //x-coordinate of node
-        this.y = y; //y-coordinate of node
-        this.fScore = 1000000;    //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 1000000;    //greedy scores
-    }
-
-    //Added for KioskEngine::AddNode()
-    public Node(String name, String ID, String type, int x, int y, String floor, ArrayList<Node> connections) {
-        this.longName = name;
-        this.shortName = name;
-        this.ID = ID;
-        this.type = type;
-        this.floor = floor;
-        this.x = x;
-        this.y = y;
-        this.fScore = 1000000; //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 1000000; //greedy scores
-
-        for(Node node : connections){
-            this.addConnection(node);
-        }
-    }
-
-    public Node(String name, String ID, String type, String floor, int x, int y) {
-        this.longName = name;   //name of node
-        this.shortName = name;
-        this.ID = ID; //id of node
-        this.type = type;  //type of node
-        this.connections = new HashMap<>(); //connection for node
-        this.floor = floor; //floor on which node is on
-        this.x = x; //x-coordinate of node
-        this.y = y; //y-coordinate of node
-        this.fScore = 1000000; //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 1000000; //greedy scores
-    }
-
-    public Node(int x, int y){
-        this.longName = "BLANK";    //name of node
-        this.shortName = "BLANK";
-        this.ID = "BLANK"; //id of node
-        this.type = "BLANK";  //type of node
-        this.connections = new HashMap<>(); //connection for node
-        this.floor = "1"; //floor on which node is on
-        this.x = x;
-        this.y = y;
-        this.fScore = 1000000; //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 1000000; //greedy scores
-    }
-
-    public Node(){
-        this.shortName = "BLANK"; //name of node
-        this.ID = "BLANK"; //id of node
-        this.type = "BLANK";  //type of node
-        this.connections = new HashMap<>(); //connection for node
-        this.floor = "1"; //floor on which node is on
-        this.x = 100;
-        this.y = 100;
-        this.fScore = 1000000; //Need to keep track of greedy and heuristic scores for each Node at all times
-        this.greedy = 1000000; //greedy scores
-    }
-
-    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
         this.longName = longName;
         this.shortName = shortName;
         this.ID = ID;
         this.type = type;
         this.building = building;
-        this.team = team;
-        this.connections = new HashMap<>();
-        this.floor = floor;
+        this.connections = new ArrayList<>();
+        this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
         this.fScore = 1000000;
@@ -109,26 +39,27 @@ public class Node{
     }
 
     //Adds edge between nodes
-    public void addConnection(Node node){
-        int edgeCost = (int)getEuclidianDistance(this, node);
-        this.connections.put(node, edgeCost);
+    public void addConnection(Edge egde){
+        connections.add(egde);
     }
 
     //Gets the Euclidian Distance from a start node to an end node
-    public double getEuclidianDistance(Node start, Node end){
-        double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
-        double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
-        return Math.sqrt(xDeltaSquared + yDeltaSquared);
+    public double getEuclidianDistance(Node otherNode){
+        double xDeltaSquared = Math.pow((this.x - otherNode.getX()), 2);
+        double yDeltaSquared = Math.pow((this.y - otherNode.getY()), 2);
+        double zDeltaSquared =  Math.pow((this.floor.getNodeMapping() - otherNode.getFloor().getNodeMapping()), 2) * 10000;
+        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
+        return distance;
     }
 
     //Gets the cost from a node to a different node
-    public int getCostFromNode(Node node){
-        for(Node n: connections.keySet()){
-            if(node.toString().equals(n.toString())){
-                return connections.get(n);
+    public double getCostFromNode(Node node) throws InvalidNodeExeption{
+        for (int i = 0; i < connections.size(); i++) {
+            if (connections.get(i).getID().contains(node.getID())) {
+                return connections.get(i).getCost();
             }
         }
-        return 0;
+        throw new InvalidNodeExeption();
     }
 
     //Getters
@@ -144,11 +75,10 @@ public class Node{
     public String getBuilding(){
         return this.building;
     }
-    public String getTeam(){
-        return this.team;
+    public ArrayList<Edge> getConnections() {
+        return connections;
     }
-    public HashMap<Node, Integer> getConnections() { return connections; }
-    public String getFloor() {
+    public FloorNumber getFloor() {
         return floor;
     }
 
@@ -186,22 +116,19 @@ public class Node{
     }
     public String getType() {
         return type;
-    }    public void setBuilding(String building){
+    }
+    public void setBuilding(String building){
         this.building = building;
     }
-    public void setTeam(String team){
-        this.team = team;
-    }
-    public void setConnections(HashMap<Node, Integer> connections) {
-        this.connections = connections;
-    }
     public void setFloor(String floor) {
-        this.floor = floor;
+        this.floor = FloorNumber.fromDbMapping(floor);
     }
-    public void setX(int x) { this.x = x; }
-    public void setY(int y) { this.y = y; }
-    public void setfScore(int fScore) { this.fScore = fScore; }
-    public void setGreedy(int greedy) { this.greedy = greedy; }
+    public void setX(int x){
+        this.x = x;
+    }
+    public void setY(int y){
+        this.y = y;
+    }
 
     //Override to turn int into a string
     @Override
