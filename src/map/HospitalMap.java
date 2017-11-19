@@ -8,40 +8,33 @@
 
 package map;
 import java.util.*;
-import java.util.HashMap;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class HospitalMap{
-    private HashMap<String, Node> map;
+    private ArrayList<Node> nodeMap;
 
     //Constructors
     public HospitalMap() {
-        map = new HashMap<>();
+        nodeMap= new ArrayList<>();
     }
 
     //Helper Methods
 
     //Method to add a new node to the map
-    public void addNode(String id, Node node){
-        map.put(id, node);
-    }
-    public ArrayList<Node> getNodesForSearch(){
-        ArrayList<Node> output = new ArrayList<>();
-        for(Node node : map.values()){
-            if(!node.getType().equals("HALL") && node.getFloor().getDbMapping().equals("2") && node.getTeam().equals("Team H")){
-                output.add(node);
-            }
-        }
-        return output;
+    public void addNode(Node node){
+        nodeMap.add(node);
     }
 
-    public ArrayList<Node> getNodesForEdit(){
+    public ArrayList<Node> getNodeMap() {
+        return nodeMap;
+    }
+
+    public ArrayList<Node> getNodesByFloor(int floor){
         ArrayList<Node> output = new ArrayList<>();
-        for(Node node : map.values()){
-            if(node.getFloor().getDbMapping().equals("2") && node.getTeam().equals("Team H")){
-                output.add(node);
+        for(int i = 0; i < nodeMap.size();i++){
+            if(nodeMap.get(1).getFloor().getNodeMapping() == floor){
+                output.add(nodeMap.get(1));
             }
         }
         return output;

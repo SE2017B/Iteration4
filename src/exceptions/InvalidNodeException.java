@@ -1,8 +1,8 @@
 package exceptions;
 
-public class InvalidNodeExeption extends Exception {
+public class InvalidNodeException extends Exception {
     public String message;
-    public InvalidNodeExeption(){
+    public InvalidNodeException(){
         this.message = "Invalid Node";
     }
 }

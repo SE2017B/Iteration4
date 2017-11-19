@@ -7,7 +7,7 @@
 */
 
 package map;
-import exceptions.InvalidNodeExeption;
+import exceptions.InvalidNodeException;
 
 import java.util.ArrayList;
 
@@ -17,24 +17,10 @@ public class Node{
     private String ID;      //id of node
     private String type;    //type of node
     private String building; //building where node is located
-    private String team;
     private ArrayList<Edge> connections; //connection for node
     private FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
-
-    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
-        this.longName = longName;
-        this.shortName = shortName;
-        this.ID = ID;
-        this.type = type;
-        this.building = building;
-        this.team = team;
-        this.connections = new ArrayList<>();
-        this.floor = FloorNumber.fromDbMapping(floor);
-        this.x = Integer.parseInt(x);
-        this.y = Integer.parseInt(y);
-    }
 
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
         this.longName = longName;
@@ -42,35 +28,15 @@ public class Node{
         this.ID = ID;
         this.type = type;
         this.building = building;
-        this.team = "H";
         this.connections = new ArrayList<>();
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
     }
 
-    //constructor for Chima
-    public Node(String ID, String x, String y, String floor, String building, String type){
-        this.longName = "";
-        this.shortName = "";
-        this.ID = ID;
-        this.type = type;
-        this.building = building;
-        this.team = "H";
-        this.connections = new ArrayList<>();
-        this.floor = FloorNumber.fromDbMapping(floor);
-        this.x = Integer.parseInt(x);
-        this.y = Integer.parseInt(y);
-    }
-
-    //Adds edge between nodes
-    public void addConnection(Edge edge){
-        connections.add(edge);
-    }
-    public void addConnection(Node node){
-        Edge e = new Edge("IDK what to put here", this, node);
-//        this.addConnection(e);
-//        node.addConnection(e);
+    //Adds edge between
+    public void addConnection(Edge egde){
+        connections.add(egde);
     }
 
     //Gets the Euclidian Distance from a start node to an end node
@@ -85,13 +51,13 @@ public class Node{
     }
 
     //Gets the cost from a node to a different node
-    public double getCostFromNode(Node node) throws InvalidNodeExeption{
+    public double getCostFromNode(Node node) throws InvalidNodeException{
         for (int i = 0; i < connections.size(); i++) {
             if (connections.get(i).getID().contains(node.getID())) {
                 return connections.get(i).getCost();
             }
         }
-        throw new InvalidNodeExeption();
+        throw new InvalidNodeException();
     }
 
     //added for Chima
@@ -120,9 +86,6 @@ public class Node{
     }
     public String getBuilding(){
         return this.building;
-    }
-    public String getTeam(){
-        return this.team;
     }
     public ArrayList<Edge> getConnections() {
         return this.connections;
@@ -171,9 +134,6 @@ public class Node{
     }
     public void setBuilding(String building){
         this.building = building;
-    }
-    public void setTeam(String team){
-        this.team = team;
     }
     public void setFloor(String floor) {
         this.floor = FloorNumber.fromDbMapping(floor);
