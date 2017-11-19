@@ -1,7 +1,5 @@
 package search;
 
-import com.sun.applet2.AppletParameters;
-import map.Edge;
 import map.Node;
 import map.Path;
 
@@ -34,19 +32,6 @@ public class BreadthFirstSearch implements SearchStrategy {
             frontier.addAll(newPaths);
         }
         return new Path();
-    }
-
-    @Override
-    public Path returnPath(Node current, HashMap<Node, Node> cameFrom) {
-        Path path = new Path();
-        while(true){
-            path.addToPath(current, 0);
-            if(cameFrom.get(current) != null){
-                current = cameFrom.get(current);
-            } else break;
-        }
-
-        return path;
     }
 
     public double getEuclideanDistance(Node start, Node end) {

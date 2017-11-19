@@ -1,5 +1,6 @@
 package search;
 
+import exceptions.InvalidNodeException;
 import map.Node;
 import map.Path;
 
@@ -17,6 +18,11 @@ public class SearchContext {
     }
 
     public Path findPath(Node start, Node end){
-        return strategy.findPath(start, end);
+        try {
+            return strategy.findPath(start, end);
+        } catch (InvalidNodeException e) {
+            e.printStackTrace();
+            return new Path();
+        }
     }
 }

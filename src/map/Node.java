@@ -7,7 +7,6 @@
 */
 
 package map;
-import exceptions.InvalidNodeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,24 +17,11 @@ public class Node{
     private String ID;      //id of node
     private String type;    //type of node
     private String building; //building where node is located
-    private String team;
     private ArrayList<Edge> connections; //connection for node
     private FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
-
-    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
-        this.longName = longName;
-        this.shortName = shortName;
-        this.ID = ID;
-        this.type = type;
-        this.building = building;
-        this.connections = new ArrayList<>();
-        this.floor = FloorNumber.fromDbMapping(floor);
-        this.x = Integer.parseInt(x);
-        this.y = Integer.parseInt(y);
-        this.team = "H";
-    }
+    private String team;
 
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
         this.longName = longName;
@@ -138,6 +124,10 @@ public class Node{
         return Integer.toString(this.y);
     }
 
+    public String getTeam() {
+        return team;
+    }
+
     //Setters
     public void setLongName(String longName){
         this.longName = longName;
@@ -162,11 +152,6 @@ public class Node{
     }
     public void setY(String y){
         this.y = Integer.parseInt(y);
-    }
-
-    //added for Chima
-    public void setEdges(List<Edge> edges1){
-        this.connections.addAll(edges1);
     }
 
     //Override to turn int into a string
@@ -206,13 +191,5 @@ public class Node{
         for(int i = 0;i < connections.size(); i++){
             connections.get(i).deleteConnection();
         }
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
     }
 }

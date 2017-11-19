@@ -33,8 +33,8 @@ public class HospitalMap{
         nodeMap.add(node);
     }
 
-    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
-        nodeMap.add(new Node(ID,x,y,floor,building,type,longName,shortName));
+    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+        nodeMap.add(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
 
     public void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
@@ -92,7 +92,7 @@ public class HospitalMap{
 //    }
 
     public Node findNode(String nodeID){
-        int tempLoc = nodeMap.indexOf(new Node(nodeID,null,null,null,null,null,null,null));
+        int tempLoc = nodeMap.indexOf(new Node(nodeID,null,null,null,null,null,null,null, null));
 
         return nodeMap.get(tempLoc);
     }

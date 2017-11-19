@@ -1,5 +1,6 @@
 package search;
 
+import exceptions.InvalidNodeException;
 import map.Edge;
 import map.Node;
 import map.Path;
@@ -46,17 +47,6 @@ public class AStarSearch implements SearchStrategy {
         Node end = nodes.get(nodes.size()-1);
 
         return new Path();
-    }
-
-    @Override
-    public Path returnPath(Node current, HashMap<Node, Node> cameFrom){
-        Path path = new Path();
-        path.addToPath(current);
-        while(cameFrom.containsKey(current)){       //Each key Node contains the Node from where it came and this path
-            current = cameFrom.get(current);        //Is the best path
-            path.addToPath(current, 0);
-        }
-        return path;
     }
 
     public double getEuclideanDistance(Node start, Node end){
