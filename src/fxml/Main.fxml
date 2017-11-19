@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
       <JFXTabPane layoutX="396.0" prefHeight="800.0" prefWidth="1280.0" side="BOTTOM" style="-fx-background-color: #005697;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
@@ -62,7 +61,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <JFXButton fx:id="btnlogin" onAction="#loginPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Login" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+            <JFXButton fx:id="btnlogin" onAction="#loginPressed" prefHeight="50.0" prefWidth="150.0" text="Login" GridPane.halignment="LEFT" GridPane.valignment="TOP">
                <font>
                   <Font size="24.0" />
                </font>
@@ -70,7 +69,7 @@
                   <Insets left="15.0" top="15.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton fx:id="btndirection" onAction="#directionPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Directions" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+            <JFXButton fx:id="btndirection" buttonType="RAISED" onAction="#directionPressed" prefHeight="50.0" prefWidth="150.0" text="Directions" textFill="WHITE" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
                <font>
                   <Font size="24.0" />
                </font>
@@ -78,7 +77,7 @@
                   <Insets left="15.0" right="15.0" top="15.0" />
                </GridPane.margin>
             </JFXButton>
-            <TitledPane animated="false" contentDisplay="RIGHT" prefHeight="230.0" prefWidth="930.0" text="Filter" GridPane.columnIndex="1">
+            <TitledPane fx:id="dropDown" animated="false" contentDisplay="RIGHT" prefHeight="230.0" prefWidth="930.0" text="Filter" GridPane.columnIndex="1">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #008faa;">
                      <children>

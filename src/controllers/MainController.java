@@ -38,7 +38,6 @@ public class MainController implements ControllableScreen{
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         System.out.println("Login Pressed");
-        parent.setScreen(ScreenController.LoginID);
     }
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
@@ -48,7 +47,6 @@ public class MainController implements ControllableScreen{
     //when search button is pressed go to search screen
     public void searchPressed(ActionEvent e){
         System.out.println("Search Pressed");
-
     }
     //when filter button is pressed go to filter screen
     public void filterPressed(ActionEvent e){

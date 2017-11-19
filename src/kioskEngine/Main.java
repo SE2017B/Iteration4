@@ -45,7 +45,10 @@ public class Main extends Application {
 
         Group root = new Group();
         root.getChildren().addAll(myScreenController);
-        primaryStage.setScene(new Scene(root, 1280, 720));
+        Scene scene = new Scene(root, 1280,720);
+        String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
+        scene.getStylesheets().add(style);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
