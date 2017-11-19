@@ -12,33 +12,26 @@ public class BreadthFirstSearch implements SearchStrategy {
 
     @Override
     public Path findPath(Node start, Node end) {
-        ArrayList<Node> frontier = new ArrayList<>();
-        ArrayList<Node> explored = new ArrayList<>();
-        HashMap<Node, Node> cameFrom = new HashMap<>();
-        Path path = new Path();
+        ArrayList<Path> frontier = new ArrayList<>();
+        Path first = new Path();
+        first.addToPath(start);
+        frontier.add(first);
 
-        path.addToPath(start);
-        cameFrom.put(start, null);
-
-        if(start == null){
-            System.out.println("No start point set");
-            return path;
-        }
-
-        frontier.add(start);
         while(frontier.size() != 0){
-            Node currentNode = frontier.get(0);
-            if(currentNode == end) return returnPath(currentNode, cameFrom);
+            Path currentPath = frontier.get(0);
+            Node currentNode = currentPath.getPath().get(currentPath.getPath().size()-1);
+            frontier.remove(currentPath);
+            if(currentNode == end) return currentPath;
+            ArrayList<Path> newPaths = new ArrayList<>();
             for(int i=0;i<currentNode.getConnections().size();i++){
                 Node neighbor = currentNode.getConnections().get(i).getOtherNode(currentNode);
-                if(explored.contains(neighbor)) continue;
-                else{
-                    frontier.add(neighbor);
-                    cameFrom.put(neighbor, currentNode);
-                }
+                if(currentPath.getPath().contains(neighbor)) continue;
+                Path add = new Path(currentPath);
+                add.addToPath(neighbor);
+                newPaths.add(add);
             }
-            frontier.remove(0);
-            explored.add(currentNode);
+            Collections.sort(newPaths);
+            frontier.addAll(newPaths);
         }
         return new Path();
     }

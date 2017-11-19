@@ -245,7 +245,7 @@ public class BreadthFirstSearchTest {
     @Test public void testSearch3(){    //Node 4 to Node 23
         String answer = search.findPath(N4, N23).toString();
         System.out.println(answer);
-        assertEquals("[Short4, Short5, Short8, Short9, Short15, Short14, Short18, Short21, Short23]", answer);
+        assertEquals("[Short4, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
     }
     @Test public void testSearch3Reverse(){
         String answer = search.findPath(N23, N4).toString();
@@ -256,12 +256,12 @@ public class BreadthFirstSearchTest {
     @Test public void testSearch4(){    //Node 5 to Node 19
         String answer = search.findPath(N5, N19).toString();
         System.out.println(answer);
-        assertEquals("[Short5, Short8, Short7, Short10, Short11, Short14, Short18, Short19]", answer);
+        assertEquals("[Short5, Short8, Short9, Short15, Short14, Short18, Short19]", answer);
     }
     @Test public void testSearch4Reverse(){     //Node 19 to Node 5
         String answer = search.findPath(N19, N5).toString();
         System.out.println(answer);
-        assertEquals("[Short19, Short18, Short14, Short11, Short10, Short7, Short8, Short5]", answer);
+        assertEquals("[Short19, Short18, Short14, Short15, Short9, Short8, Short5]", answer);
     }
 
     @Test public void testSearchFloor1(){   //Node 1 to Node 1_2
@@ -289,7 +289,7 @@ public class BreadthFirstSearchTest {
     @Test public void testSearchFloor3(){   //Node 3 to Node 22_2
         String answer = search.findPath(N3, N22_2).toString();
         System.out.println(answer);
-        assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short21_2, Short22_2]", answer);
+        assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2, Short22_2]", answer);
     }
     @Test public void testSearchFloor3Reverse(){    //Node 22_2 to Node 3
         String answer= search.findPath(N22_2, N3).toString();
