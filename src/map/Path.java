@@ -3,11 +3,18 @@ package map;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Path {
+public class Path implements Comparable<Path> {
     private ArrayList<Node> path = new ArrayList<>();
     private ArrayList<String> directions = new ArrayList<>();
+    private double distance;
 
-    public Path(){}
+    public Path(){
+        distance = 0;
+    }
+
+    public Path(Path path){
+        this.path.addAll(path.getPath());
+    }
 
     public void addToPath(Node node){
         this.path.add(node);
@@ -25,9 +32,22 @@ public class Path {
     public ArrayList<Node> getPath() {
         return this.path;
     }
+    public double getDistance(){
+        double runningDistance = 0;
+        for(int i=0;i<this.path.size()-1;i++){
+            runningDistance += path.get(i).getEdgeOf(path.get(i+1)).getCost();
+        }
+        return runningDistance;
+    }
 
     @Override
     public String toString(){
         return this.getPath().toString();
+    }
+
+    @Override
+    public int compareTo(Path path){
+        if(this.getDistance() < path.getDistance()) return -1;
+        else return 1;
     }
 }

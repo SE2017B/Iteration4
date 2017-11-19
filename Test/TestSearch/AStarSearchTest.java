@@ -230,7 +230,7 @@ public class AStarSearchTest {
     public void testMap1Reverse() throws InterruptedException{
         String answer = search.findPath(N9, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short9, Short8, Short7, Short6, Short1]", answer);
+        assertEquals("[Short9, Short3, Short2, Short1]", answer);
     }
 
     @Test
@@ -253,7 +253,7 @@ public class AStarSearchTest {
     public void testMap3() throws InterruptedException{
         String answer = search.findPath(N1, N12).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short12]", answer);
+        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short13, Short12]", answer);
     }
     @Test
     //Node 12 to Node 1
@@ -268,7 +268,7 @@ public class AStarSearchTest {
     public void testMap4() throws InterruptedException{
         String answer = search.findPath(N1, N20).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short17, Short20]", answer);
+        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short13, Short17, Short20]", answer);
     }
     @Test
     //Node 20 to Node 1
@@ -283,7 +283,7 @@ public class AStarSearchTest {
     public void testMap5() throws InterruptedException{
         String answer = search.findPath(N1, N23).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
+        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short18, Short21, Short23]", answer);
     }
     @Test
     //Node 23 to Node 1
@@ -305,7 +305,7 @@ public class AStarSearchTest {
     public void testMap6Reverse() throws InterruptedException{
         String answer = search.findPath(N15, N6).toString();
         System.out.println(answer);
-        assertEquals("[Short15, Short14, Short11, Short10, Short7, Short6]", answer);
+        assertEquals("[Short15, Short9, Short8, Short7, Short6]", answer);
     }
 
     @Test
@@ -320,7 +320,7 @@ public class AStarSearchTest {
     public void testMap7Reverse() throws InterruptedException{
         String answer = search.findPath(N22, N3).toString();
         System.out.println(answer);
-        assertEquals("[Short22, Short19, Short18, Short14, Short15, Short9, Short3]", answer);
+        assertEquals("[Short22, Short21, Short18, Short14, Short15, Short9, Short3]", answer);
     }
 
     @Test
@@ -389,12 +389,12 @@ public class AStarSearchTest {
     @Test public void testSearchFloor1(){   //Node 1 to Node 19_2
         String answer = search.findPath(N1, N19_2).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short8, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
+        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
     }
     @Test public void testSearchFloor1Reverse(){    //Node 19_2 to Node 1
         String answer = search.findPath(N19_2, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short8, Short7, Short6, Short1]", answer);
+        assertEquals("[Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
     }
 
     @Test public void testSearchFloor2(){   //Node 3 to Node 23_2
@@ -416,7 +416,7 @@ public class AStarSearchTest {
     @Test public void testSearchFloor3Reverse(){    //Node 4_2 to Node 17
         String answer = search.findPath(N4_2, N17).toString();
         System.out.println(answer);
-        assertEquals("[Short4_2, Short7_2, Short10_2, Short11_2, Short14_2, Short13_2, Short17_2, Short20_2, Short20, Short17]", answer);
+        assertEquals("[Short4_2, Short7_2, Short8_2, Short9_2, Short9, Short15, Short14, Short13, Short17]", answer);
     }
 
 

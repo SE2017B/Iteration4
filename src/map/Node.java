@@ -103,6 +103,12 @@ public class Node{
     public ArrayList<Edge> getConnections() {
         return connections;
     }
+    public Edge getEdgeOf(Node node){
+        for(Edge e : this.connections){
+            if(e.getOtherNode(this) == node) return e;
+        }
+        return null;
+    }
     public FloorNumber getFloor() {
         return floor;
     }
