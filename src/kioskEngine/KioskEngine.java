@@ -11,20 +11,18 @@ package kioskEngine;
 import database.edgeDatabase;
 import database.nodeDatabase;
 import javafx.collections.ObservableList;
-import map.HospitalMap;
-import map.Node;
+import map.*;
 import exceptions.InvalidLoginException;
+import search.AStarSearch;
+import search.BreadthFirstSearch;
+import search.SearchContext;
 import service.FoodService;
 import service.Service;
 import service.Staff;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Stack;
 
 public class KioskEngine{
     private HospitalMap map;
@@ -38,59 +36,27 @@ public class KioskEngine{
     public KioskEngine(){
         loginInfo = new HashMap<>();
         map = new HospitalMap();
-        availableServices = new HashMap<String, Service>();
+        availableServices = new HashMap<>();
         FoodService food = new FoodService();
         availableServices.put("Food",food);
     }
 
-    public void addNode(Node node, ArrayList<Node> connections){
-        for (Node connNode: connections) {
-            node.addConnection(connNode);
-        }
-        map.addNode(node);
 
-    }
-
-    public void deleteNodes(ObservableList<Node> nodes){
-        for(Node node : nodes){
-
-        }
-    }
-
-    public void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName, ArrayList<Node> connections) {
-        try {
-            //Create new Node and add to database
-            Node newNode = new Node(anyNodeID,anyXcoord,anyYcoord,anyFloor,anyBuilding,anyNodeType,anyName,anyName,"Team H");
-            nodeDatabase.addNode(anyNodeID,anyXcoord,anyYcoord,anyFloor,anyBuilding,anyNodeType,anyName);
-            //Add connections in both directions
-            for (Node connectTo: connections) {
-                edgeDatabase.addEdge(anyNodeID,connectTo.getID());
-                newNode.addConnection(connectTo);
-
-                edgeDatabase.addEdge(connectTo.getID(),anyNodeID);
-                connectTo.addConnection(newNode);
-            }
-            //Add node to map Hashmap
-            map.addNode(newNode);
-
-        } catch (Exception e) {
-            System.out.println("DB Add Failed");
-            e.printStackTrace();// end try
-        }
-    }
-
+    /**
     public ArrayList<Node> findPath(Node start, Node end){
-        Stack<Node> stack = map.findPath(start,end);
-        ArrayList<Node> path = new ArrayList<Node>();
-        for (Node node : stack) {
-            path.add(node);
-        }
+//        SearchContext search = new SearchContext(new AStarSearch());
+//        ArrayList<Node> stack = search.findPath(start,end);
+//        ArrayList<Node> path = new ArrayList<>();
+//        path.addAll(stack);
+        SearchContext search = new SearchContext(new AStarSearch());
+        search = new SearchContext(new BreadthFirstSearch());
+        ArrayList<Node> path = search.findPath(start, end).getPath();
         return path;
     }
+     **/
 
-
-    public void compleatRequest(Staff staffMem){
-        staffMem.completeCurRec();
+    public void completeRequest(Staff staffMem){
+        staffMem.completeCurrentRequest();
     }
 
 
@@ -108,10 +74,6 @@ public class KioskEngine{
         } catch (InvalidLoginException e) {
             return false;
         }
-    }
-
-    public HospitalMap getMap() {
-        return map;
     }
 
     public HashMap<String, Staff> getLoginInfo() {

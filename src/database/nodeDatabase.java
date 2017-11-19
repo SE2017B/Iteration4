@@ -49,7 +49,7 @@ public class nodeDatabase {
         }
 
         // Add nodes to their ArrayLists
-        mainDatabase.allNodes.add(new Node(anyNodeID, anyXcoord, anyYcoord, anyFloor, anyBuilding, anyNodeType, anyName, anyName, "Team H"));
+        //mainDatabase.allNodes.add(new Node(anyNodeID, anyXcoord, anyYcoord, anyFloor, anyBuilding, anyNodeType, anyName, anyName, "Team H"));//Todo talk to jack
 
     }
 
@@ -88,7 +88,7 @@ public class nodeDatabase {
 
 
         // Add nodes to their ArrayLists
-        int indexOf = mainDatabase.allNodes.indexOf(new Node(anyNodeID,"0","0","","","","","",""));
+        int indexOf = mainDatabase.allNodes.indexOf(new Node(anyNodeID,"0","0","","","","",""));
 
         String tempID, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort, tempTeam = null;
 
@@ -97,44 +97,44 @@ public class nodeDatabase {
             case "nodeID":
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
+                //tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(setCond, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort, tempTeam));
+                mainDatabase.allNodes.add(new Node(setCond, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort));
                 break;
 
             case "xCoord":
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
+                //tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, setCond, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort, tempTeam));
+                mainDatabase.allNodes.add(new Node(tempID, setCond, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort));
                 break;
 
             case "yCoord":
 
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
+                //tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, setCond, tempFloor, tempBuilding, tempType, tempLong, tempShort, tempTeam));
+                mainDatabase.allNodes.add(new Node(tempID, tempX, setCond, tempFloor, tempBuilding, tempType, tempLong, tempShort));
                 break;
 
 
@@ -143,14 +143,14 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
+                //tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, setCond, tempBuilding, tempType, tempLong, tempShort, tempTeam));
+                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, setCond, tempBuilding, tempType, tempLong, tempShort));
                 break;
 
 
@@ -159,14 +159,14 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
+                //tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, setCond, tempType, tempLong, tempShort, tempTeam));
+                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, setCond, tempType, tempLong, tempShort));
                 break;
 
 
@@ -175,14 +175,14 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
+                //tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, setCond, tempLong, tempShort, tempTeam));
+                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, setCond, tempLong, tempShort));
                 break;
 
             case "longName":
@@ -190,14 +190,14 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
+                //tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, setCond, tempShort, tempTeam));
+                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, setCond, tempShort));
                 break;
 
 
@@ -206,14 +206,14 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
+                //tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, setCond, tempTeam));
+                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, setCond));
                 break;
 
 
@@ -222,14 +222,14 @@ public class nodeDatabase {
                 tempID = mainDatabase.allNodes.get(indexOf).getID();
                 tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
                 tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
+                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor().getDbMapping();
+                tempBuilding = mainDatabase.allNodes.get(indexOf).getBuilding();
                 tempType = mainDatabase.allNodes.get(indexOf).getType();
                 tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
+                //tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
 
                 mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort, setCond));
+                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, setCond));
                 break;
 
             default:

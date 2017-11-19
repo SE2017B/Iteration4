@@ -8,6 +8,7 @@
 
 package controllers;
 
+import exceptions.InvalidNodeException;
 import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
@@ -126,20 +127,21 @@ public class PathController implements ControllableScreen{
     }
 
 
-
-    public void enterPressed(ActionEvent e)
+/**
+    public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
         System.out.println("Enter Pressed");
         //Remove last path from screen
         clearPaths();
         System.out.println(startChoice.getValue() + "->" + endChoice.getValue());
-        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
-        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
+        path = HospitalMap.findPath(startChoice.getValue(),endChoice.getValue());
+        path = HospitalMap.findPath(startChoice.getValue(),endChoice.getValue());
         System.out.println(path);
         diplayPath(path);
 
 
     }
+ **/
     public void cancelPressed(ActionEvent e)
     {
         System.out.println("Cancel Pressed");

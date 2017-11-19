@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import kioskEngine.KioskEngine;
+import map.HospitalMap;
 import map.Node;
 
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class DeleteNodeController implements ControllableScreen {
 
     public void onShow() {
 
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForEdit();
+        ArrayList<Node> nodes = new ArrayList<Node>();//Todo find nodes to display
 
         for (Node node : nodes) {
             NodeCheckBox box = new NodeCheckBox();
@@ -72,7 +73,7 @@ public class DeleteNodeController implements ControllableScreen {
 
     public void enterPressed(ActionEvent e) {
         System.out.println("Delete Nodes");
-        parent.getEngine().deleteNodes(deleteList.getItems());
+        //HospitalMap.deleteNodes(deleteList.getItems());
     }
 
     //comands for button cancel press

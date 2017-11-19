@@ -8,6 +8,7 @@
 
 package controllers;
 
+import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -79,7 +80,7 @@ public class RequestController implements ControllableScreen{
 
     public void onShow(){
         //Update the nodes in the map
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForSearch();
+        ArrayList<Node> nodes = HospitalMap.getNodesForSearch();
 
         //update the items in the checklist
         locationChoiceBox.setItems(FXCollections.observableList(nodes));

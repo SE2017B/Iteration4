@@ -8,6 +8,7 @@
 
 package controllers;
 
+import map.HospitalMap;
 import map.Node;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -190,7 +191,7 @@ public class AddNodeController implements ControllableScreen {
         failText.setVisible(false);
         nodeLocation.setVisible(false);
 
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForEdit();
+        ArrayList<Node> nodes = new ArrayList<Node>();//Todo find nodes to display
         for (Node node : nodes) {
             NodeCheckBox box = new NodeCheckBox();
             box.setNode(node); //sets checkbox to node location
@@ -231,7 +232,7 @@ public class AddNodeController implements ControllableScreen {
                     connections.add(box.getNode());
             }
 
-            parent.getEngine().addNode(nodeID, x, y, floor, building, nodeType, name, connections);
+            HospitalMap.addNode(new Node(nodeID, x, y, floor, building, nodeType, name, name));//Todo add connections
             System.out.println("Enter Pressed");
             parent.setScreen(ScreenController.AdminMenuID);
         } else

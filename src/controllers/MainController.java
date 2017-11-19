@@ -30,16 +30,6 @@ public class MainController implements ControllableScreen{
     private Stage loginStage;
 
 
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public void onShow() {
-
-    }
-
     public void setParentController(ScreenController parent){
         this.parent = parent;
     }
