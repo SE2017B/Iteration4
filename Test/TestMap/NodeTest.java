@@ -22,12 +22,12 @@ import static org.junit.Assert.assertTrue;
 public class NodeTest {
     public NodeTest(){}
 
-    private Node N1 = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1");
-    private Node N1Copy = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1");
-    private Node N2 = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2");
-    private Node N2Copy = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2");
-    private Node N3 = new Node("A3", "200", "200", "L1", "Tower", "Desk", "Long3", "Short3");
-    private Node N4 = new Node("A4", "200", "200", "3", "Tower", "Desk", "Long4", "Short4");
+    private Node N1 = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1", team);
+    private Node N1Copy = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1", team);
+    private Node N2 = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2", team);
+    private Node N2Copy = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2", team);
+    private Node N3 = new Node("A3", "200", "200", "L1", "Tower", "Desk", "Long3", "Short3", team);
+    private Node N4 = new Node("A4", "200", "200", "3", "Tower", "Desk", "Long4", "Short4", team);
 
     @Before
     public void initialize(){

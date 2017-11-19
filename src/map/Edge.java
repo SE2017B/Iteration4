@@ -93,5 +93,6 @@ public class Edge {
     public void deleteConnection() {
         nodeOne.removeConnection(this);
         nodeTwo.removeConnection(this);
+        database
     }
 }

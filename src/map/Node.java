@@ -7,7 +7,6 @@
 */
 
 package map;
-import exceptions.InvalidNodeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,9 @@ public class Node{
     private FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
+    private String team;
 
-    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
+    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
         this.longName = longName;
         this.shortName = shortName;
         this.ID = ID;
@@ -33,6 +33,7 @@ public class Node{
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
+        this.team = team;
     }
 
     //Adds edge between
@@ -120,6 +121,10 @@ public class Node{
         return Integer.toString(this.y);
     }
 
+    public String getTeam() {
+        return team;
+    }
+
     //Setters
     public void setLongName(String longName){
         this.longName = longName;
@@ -144,11 +149,6 @@ public class Node{
     }
     public void setY(String y){
         this.y = Integer.parseInt(y);
-    }
-
-    //added for Chima
-    public void setEdges(List<Edge> edges1){
-        this.connections.addAll(edges1);
     }
 
     //Override to turn int into a string
