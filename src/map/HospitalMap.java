@@ -7,18 +7,23 @@
 */
 
 package map;
+import exceptions.InvalidNodeException;
+import search.AStarSearch;
+import search.SearchContext;
+import search.SearchStrategy;
+
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class HospitalMap{
     private ArrayList<Node> nodeMap;
     private ArrayList<Edge> edgeMap;
+    private SearchContext search;
 
     //Constructors
     public HospitalMap() {
         nodeMap = new ArrayList<>();
         edgeMap = new ArrayList<>();
+        search = new SearchContext(new AStarSearch());
     }
 
     //Helper Methods
@@ -55,6 +60,19 @@ public class HospitalMap{
         edgeMap.add(new Edge(nodeOne,nodeTwo));
     }
 
+    public void removeEdge(Edge edge){
+        edge.deleteConnection();
+        edgeMap.remove(edge);
+    }
+
+    public void editEdge(Edge edge,Node oldNode, Node newNode) throws InvalidNodeException {
+        try {
+            edge.replaceNode(oldNode, newNode);
+        } catch (Exception e){
+            throw new InvalidNodeException("the edge does not contain the old node");
+        }
+    }
+
     public ArrayList<Node> getNodeMap() {
         return nodeMap;
     }
@@ -73,14 +91,18 @@ public class HospitalMap{
 //        return this.map.values().stream().filter(function::apply).collect(Collectors.toList());
 //    }
 
-    private Node findNode(String nodeID){
+    public Node findNode(String nodeID){
         int tempLoc = nodeMap.indexOf(new Node(nodeID,null,null,null,null,null,null,null));
 
         return nodeMap.get(tempLoc);
     }
 
+    public void setSearchStrategy(SearchStrategy searchStrategy){
+        search.setStrategy(searchStrategy);
+    }
+
     public Path findPath(Node start, Node end){
-        return null;
+        return search.findPath(start,end);
     }
     //Cache for stuff
 }

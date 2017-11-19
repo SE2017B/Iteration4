@@ -41,42 +41,6 @@ public class KioskEngine{
         availableServices.put("Food",food);
     }
 
-    public void addNode(Node node, ArrayList<Node> connections){
-        for (Node connNode: connections) {
-            node.addConnection(connNode);
-        }
-        map.addNode(node.getID(),node);
-
-    }
-
-    public void deleteNodes(ObservableList<Node> nodes){
-        for(Node node : nodes){
-
-        }
-    }
-
-    public void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName, ArrayList<Node> connections) {
-        try {
-            //Create new Node and add to database
-            Node newNode = new Node(anyNodeID,anyXcoord,anyYcoord,anyFloor,anyBuilding,anyNodeType,anyName,anyName,"Team H");
-            nodeDatabase.addNode(anyNodeID,anyXcoord,anyYcoord,anyFloor,anyBuilding,anyNodeType,anyName);
-            //Add connections in both directions
-            for (Node connectTo: connections) {
-                edgeDatabase.addEdge(anyNodeID,connectTo.getID());
-                newNode.addConnection(connectTo);
-
-                edgeDatabase.addEdge(connectTo.getID(),anyNodeID);
-                connectTo.addConnection(newNode);
-            }
-            //Add node to map Hashmap
-            map.addNode(anyNodeID,newNode);
-
-        } catch (Exception e) {
-            System.out.println("DB Add Failed");
-            e.printStackTrace();// end try
-        }
-    }
-
     public ArrayList<Node> findPath(Node start, Node end){
 //        SearchContext search = new SearchContext(new AStarSearch());
 //        ArrayList<Node> stack = search.findPath(start,end);
@@ -108,10 +72,6 @@ public class KioskEngine{
         } catch (InvalidLoginException e) {
             return false;
         }
-    }
-
-    public HospitalMap getMap() {
-        return map;
     }
 
     public HashMap<String, Staff> getLoginInfo() {
