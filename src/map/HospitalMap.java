@@ -13,10 +13,12 @@ import java.util.stream.Collectors;
 
 public class HospitalMap{
     private ArrayList<Node> nodeMap;
+    private ArrayList<Edge> edgeMap;
 
     //Constructors
     public HospitalMap() {
-        nodeMap= new ArrayList<>();
+        nodeMap = new ArrayList<>();
+        edgeMap = new ArrayList<>();
     }
 
     //Helper Methods
@@ -24,6 +26,33 @@ public class HospitalMap{
     //Method to add a new node to the map
     public void addNode(Node node){
         nodeMap.add(node);
+    }
+
+    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
+        nodeMap.add(new Node(ID,x,y,floor,building,type,longName,shortName));
+    }
+
+    public void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
+        node.setBuilding(building);
+        node.setFloor(floor);
+        node.setLongName(longName);
+        node.setShortName(shortName);
+        node.setX(x);
+        node.setY(y);
+        node.setType(type);
+    }
+
+    public void removeNode(Node node){
+        node.deleteNode();
+        nodeMap.remove(node);
+    }
+
+    public void addEdge(Edge edge){
+        edgeMap.add(edge);
+    }
+
+    public void addEdge(Node nodeOne,Node nodeTwo){
+        edgeMap.add(new Edge(nodeOne,nodeTwo));
     }
 
     public ArrayList<Node> getNodeMap() {
@@ -39,9 +68,19 @@ public class HospitalMap{
         }
         return output;
     }
+//
+//    public List<Node> getNodesBy(Function<Node, Boolean> function){
+//        return this.map.values().stream().filter(function::apply).collect(Collectors.toList());
+//    }
 
-    public List<Node> getNodesBy(Function<Node, Boolean> function){
-        return this.map.values().stream().filter(function::apply).collect(Collectors.toList());
+    private Node findNode(String nodeID){
+        int tempLoc = nodeMap.indexOf(new Node(nodeID,null,null,null,null,null,null,null));
+
+        return nodeMap.get(tempLoc);
+    }
+
+    public Path findPath(Node start, Node end){
+        return null;
     }
     //Cache for stuff
 }

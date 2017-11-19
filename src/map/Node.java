@@ -10,6 +10,7 @@ package map;
 import exceptions.InvalidNodeException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Node{
     private String longName;    //shortName of node
@@ -51,28 +52,28 @@ public class Node{
     }
 
     //Gets the cost from a node to a different node
-    public double getCostFromNode(Node node) throws InvalidNodeException{
+    /*public double getCostFromNode(Node node) throws InvalidNodeException{
         for (int i = 0; i < connections.size(); i++) {
             if (connections.get(i).getID().contains(node.getID())) {
                 return connections.get(i).getCost();
             }
         }
-        throw new InvalidNodeException();
-    }
+        throw new InvalidNodeException("");
+    }*/
 
-    //added for Chima
-    public void addEdge(Edge edge){
-        connections.add(edge);
-    }
-
-    //takes a node and gets all nodes that it shares an edge with
-    public ArrayList<Node> getSiblingNodes(){
-        ArrayList<Node> ans = new ArrayList<Node>();
-        for(Edge e: this.connections ){
-            ans.add(e.getOtherNode(this));
-        }
-        return ans;
-    }
+//    //added for Chima
+//    public void addEdge(Edge edge){
+//        connections.add(edge);
+//    }
+//
+//    //takes a node and gets all nodes that it shares an edge with
+//    public ArrayList<Node> getSiblingNodes(){
+//        ArrayList<Node> ans = new ArrayList<Node>();
+//        for(Edge e: this.connections ){
+//            ans.add(e.getOtherNode(this));
+//        }
+//        return ans;
+//    }
 
     //Getters
     public String getLongName() {
@@ -90,12 +91,15 @@ public class Node{
     public ArrayList<Edge> getConnections() {
         return this.connections;
     }
-    public Edge getEdgeOf(Node node){
-        for(Edge e : this.connections){
-            if(e.getOtherNode(this) == node) return e;
-        }
-        return null;
-    }
+
+//    public Edge getEdgeOf(Node node){
+//        for(Edge e : this.connections){
+//            if(e.getOtherNode(this) == node) return e;
+//        }
+//        return null;
+//    }
+
+
     public FloorNumber getFloor() {
         return floor;
     }
@@ -123,9 +127,6 @@ public class Node{
     public void setShortName(String shortName) {
         this.shortName = shortName;
     }
-    public void setID(String ID) {
-        this.ID = ID;
-    }
     public void setType(String type) {
         this.type = type;
     }
@@ -138,16 +139,16 @@ public class Node{
     public void setFloor(String floor) {
         this.floor = FloorNumber.fromDbMapping(floor);
     }
-    public void setX(int x){
-        this.x = x;
+    public void setX(String x){
+        this.x = Integer.parseInt(x);
     }
-    public void setY(int y){
-        this.y = y;
+    public void setY(String y){
+        this.y = Integer.parseInt(y);
     }
 
     //added for Chima
-    public void setEdges(ArrayList<Edge> edges1){
-        this.connections=edges1;
+    public void setEdges(List<Edge> edges1){
+        this.connections.addAll(edges1);
     }
 
     //Override to turn int into a string
@@ -177,5 +178,15 @@ public class Node{
         Node other = (Node)obj;
         if(!this.getID().equals(other.getID())) return false;
         return true;
+    }
+
+    public void removeConnection(Edge edge) {
+        connections.remove(edge);
+    }
+
+    public void deleteNode() {
+        for(int i = 0;i < connections.size(); i++){
+            connections.get(i).deleteConnection();
+        }
     }
 }
