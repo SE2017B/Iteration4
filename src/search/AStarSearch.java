@@ -74,6 +74,13 @@ public class AStarSearch implements SearchStrategy {
         return path;
     }
 
+    public Path findPath(ArrayList<Node> nodes){
+        Node start = nodes.get(0);
+        Node end = nodes.get(nodes.size()-1);
+
+        return new Path();
+    }
+
     @Override
     public Path returnPath(Node current, HashMap<Node, Node> cameFrom){
         Path path = new Path();

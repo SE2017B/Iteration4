@@ -56,8 +56,8 @@ public class Node{
 
 
     //Adds edge between nodes
-    public void addConnection(Edge egde){
-        connections.add(egde);
+    public void addConnection(Edge edge){
+        connections.add(edge);
     }
     public void addConnection(Node node){
         Edge e = new Edge("IDK what to put here", this, node);
