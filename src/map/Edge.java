@@ -1,7 +1,6 @@
 package map;
 
 public class Edge {
-
     private Node nodeOne;
     private Node nodeTwo;
     private String ID;
@@ -16,6 +15,7 @@ public class Edge {
         this.nodeTwo.addConnection(this);
     }
 
+    //Getters
     public String getID(){
         return ID;
     }

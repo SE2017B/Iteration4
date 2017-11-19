@@ -22,8 +22,6 @@ public class Node{
     private FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
-    private int fScore;  //greedy + heuristic scores for node
-    private int greedy;  //greedy scores
 
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
         this.longName = longName;
@@ -36,9 +34,8 @@ public class Node{
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
-        this.fScore = 1000000;
-        this.greedy = 1000000;
     }
+
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
         this.longName = longName;
         this.shortName = shortName;
@@ -50,10 +47,21 @@ public class Node{
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
-        this.fScore = 1000000;
-        this.greedy = 1000000;
     }
 
+    //constructor for Chima
+    public Node(String ID, String x, String y, String floor, String building, String type){
+        this.longName = "";
+        this.shortName = "";
+        this.ID = ID;
+        this.type = type;
+        this.building = building;
+        this.team = "H";
+        this.connections = new ArrayList<>();
+        this.floor = FloorNumber.fromDbMapping(floor);
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
+    }
 
     //Adds edge between nodes
     public void addConnection(Edge edge){
@@ -69,6 +77,8 @@ public class Node{
     public double getEuclidianDistance(Node otherNode){
         double xDeltaSquared = Math.pow((this.x - otherNode.getX()), 2);
         double yDeltaSquared = Math.pow((this.y - otherNode.getY()), 2);
+        //scale factor weights the z component so that the path wants to be on the right floor, and it doesn't want to leave it
+        //(may need to increase this value)
         double zDeltaSquared =  Math.pow((this.floor.getNodeMapping() - otherNode.getFloor().getNodeMapping()), 2) * 10000;
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
         return distance;
@@ -82,6 +92,20 @@ public class Node{
             }
         }
         throw new InvalidNodeExeption();
+    }
+
+    //added for Chima
+    public void addEdge(Edge edge){
+        connections.add(edge);
+    }
+
+    //takes a node and gets all nodes that it shares an edge with
+    public ArrayList<Node> getSiblingNodes(){
+        ArrayList<Node> ans = new ArrayList<Node>();
+        for(Edge e: this.connections ){
+            ans.add(e.getOtherNode(this));
+        }
+        return ans;
     }
 
     //Getters
@@ -101,7 +125,7 @@ public class Node{
         return this.team;
     }
     public ArrayList<Edge> getConnections() {
-        return connections;
+        return this.connections;
     }
     public Edge getEdgeOf(Node node){
         for(Edge e : this.connections){
@@ -128,9 +152,6 @@ public class Node{
     public String getYString(){
         return Integer.toString(this.y);
     }
-
-    public int getFScore() { return fScore; }
-    public int getGreedy() { return greedy; }
 
     //Setters
     public void setLongName(String longName){
@@ -163,11 +184,10 @@ public class Node{
     public void setY(int y){
         this.y = y;
     }
-    public void setGreedy(int greedy){
-        this.greedy = greedy;
-    }
-    public void setFScore(int fScore){
-        this.fScore = fScore;
+
+    //added for Chima
+    public void setEdges(ArrayList<Edge> edges1){
+        this.connections=edges1;
     }
 
     //Override to turn int into a string
