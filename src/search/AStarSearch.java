@@ -24,8 +24,7 @@ public class AStarSearch implements SearchStrategy {
             System.out.println("No start point set, use the other version of this method");
             return path;
         }
-        start.setGreedy(0);      //Greedy score from start to start is 0
-        start.setFScore((int)getEuclideanDistance(start, end));     //Total score is only heuristic(getEuclidianDistance)
+
         //Starting the frontier with node 1
         frontier.add(start);
         for(Edge e : start.getConnections()) frontier.add(e.getOtherNode(start));

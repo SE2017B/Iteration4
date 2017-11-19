@@ -1,5 +1,3 @@
-//we need to push this tonight
-
 package map;
 
 public class Edge {
@@ -16,8 +14,6 @@ public class Edge {
         this.nodeOne.addConnection(this);
         this.nodeTwo.addConnection(this);
     }
-
-    // need a function for getting ALL sibling nodes
 
     //Getters
     public String getID(){
