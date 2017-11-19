@@ -18,7 +18,7 @@ public class Node{
     private String type;    //type of node
     private String building; //building where node is located
     private String team;
-    private ArrayList<Edge> edges; //connection for node
+    private ArrayList<Edge> connections; //connection for node
     private FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
     private int y;  //y-coordinate of node
@@ -32,7 +32,7 @@ public class Node{
         this.type = type;
         this.building = building;
         this.team = team;
-        this.edges = new ArrayList<>();
+        this.connections = new ArrayList<>();
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
@@ -46,7 +46,7 @@ public class Node{
         this.type = type;
         this.building = building;
         this.team = "H";
-        this.edges = new ArrayList<>();
+        this.connections = new ArrayList<>();
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
@@ -62,7 +62,7 @@ public class Node{
         this.type = type;
         this.building = building;
         this.team = "H";
-        this.edges = new ArrayList<>();
+        this.connections = new ArrayList<>();
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
@@ -72,7 +72,7 @@ public class Node{
 
     //Adds edge between nodes
     public void addConnection(Edge edge){
-        edges.add(edge);
+        connections.add(edge);
     }
     public void addConnection(Node node){
         Edge e = new Edge("IDK what to put here", this, node);
@@ -91,9 +91,9 @@ public class Node{
 
     //Gets the cost from a node to a different node
     public double getCostFromNode(Node node) throws InvalidNodeExeption{
-        for (int i = 0; i < edges.size(); i++) {
-            if (edges.get(i).getID().contains(node.getID())) {
-                return edges.get(i).getCost();
+        for (int i = 0; i < connections.size(); i++) {
+            if (connections.get(i).getID().contains(node.getID())) {
+                return connections.get(i).getCost();
             }
         }
         throw new InvalidNodeExeption();
@@ -101,12 +101,12 @@ public class Node{
 
     //added for Chima
     public void addEdge(Edge edge){
-        edges.add(edge);
+        connections.add(edge);
     }
 
     public ArrayList<Node> getSiblingNodes(){
         ArrayList<Node> ans = new ArrayList<Node>();
-        for(Edge e: this.edges ){
+        for(Edge e: this.connections ){
             ans.add(e.getOtherNode(this));
         }
         return ans;
@@ -129,7 +129,7 @@ public class Node{
         return this.team;
     }
     public ArrayList<Edge> getConnections() {
-        return this.edges;
+        return this.connections;
     }
     public FloorNumber getFloor() {
         return floor;
@@ -194,7 +194,7 @@ public class Node{
 
     //added for Chima
     public void setEdges(ArrayList<Edge> edges1){
-        this.edges=edges1;
+        this.connections=edges1;
     }
 
     //Override to turn int into a string
