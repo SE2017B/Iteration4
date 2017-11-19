@@ -18,6 +18,7 @@ public class Node{
     private String ID;      //id of node
     private String type;    //type of node
     private String building; //building where node is located
+    private String team;
     private ArrayList<Edge> connections; //connection for node
     private FloorNumber floor;  //floor on which node is on
     private int x;  //x-coordinate of node
@@ -33,6 +34,20 @@ public class Node{
         this.floor = FloorNumber.fromDbMapping(floor);
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
+        this.team = "H";
+    }
+
+    public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+        this.longName = longName;
+        this.shortName = shortName;
+        this.ID = ID;
+        this.type = type;
+        this.building = building;
+        this.connections = new ArrayList<>();
+        this.floor = FloorNumber.fromDbMapping(floor);
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
+        this.team = team;
     }
 
     //Adds edge between
@@ -92,13 +107,16 @@ public class Node{
         return this.connections;
     }
 
-//    public Edge getEdgeOf(Node node){
-//        for(Edge e : this.connections){
-//            if(e.getOtherNode(this) == node) return e;
-//        }
-//        return null;
-//    }
+    public Edge getEdgeOf(Node node){
+        for(Edge e : this.connections){
+            if(e.getOtherNode(this) == node) return e;
+        }
+        return null;
+    }
 
+    public void addConnection(Node node){
+        Edge edge = new Edge(this, node);
+    }
 
     public FloorNumber getFloor() {
         return floor;
@@ -188,5 +206,13 @@ public class Node{
         for(int i = 0;i < connections.size(); i++){
             connections.get(i).deleteConnection();
         }
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 }
