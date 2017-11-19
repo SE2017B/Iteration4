@@ -24,15 +24,12 @@ public class staffDatabase {
             if (!res.next()) {
                 Statement stmtCreateStaffTable = conn.createStatement();
                 String createStaffTable = ("CREATE TABLE hospitalStaff" +
-                        "(temp1 VARCHAR(20) PRIMARY KEY," +
-                        "temp2 VARCHAR(20)," +
-                        "temp3 VARCHAR(20)," +
-                        "temp4 VARCHAR(20)," +
-                        "temp5 VARCHAR(20)," +
-                        "temp6 VARCHAR(20)," +
-                        "temp7 VARCHAR(50)," +
-                        "temp8 VARCHAR(30)," +
-                        "temp9 VARCHAR(20))");
+                        "(username VARCHAR(20) PRIMARY KEY," +
+                        "password VARCHAR(20)," +
+                        "jobTitle VARCHAR(20)," +
+                        "fullname VARCHAR(20)," +
+                        "ID INTEGER," +
+                        "jobType VARCHAR(20))");
 
                 int rsetCreate3 = stmtCreateStaffTable.executeUpdate(createStaffTable);
                 System.out.println("Create Staff table Successful!");
@@ -50,14 +47,11 @@ public class staffDatabase {
                 Statement stmtCreateStaffTable = conn.createStatement();
                 String createStaffTable = ("CREATE TABLE hospitalStaff" +
                         "(staffID VARCHAR(20) PRIMARY KEY," +
-                        "temp2 VARCHAR(20)," +
-                        "temp3 VARCHAR(20)," +
-                        "temp4 VARCHAR(20)," +
-                        "temp5 VARCHAR(20)," +
-                        "temp6 VARCHAR(20)," +
-                        "temp7 VARCHAR(50)," +
-                        "temp8 VARCHAR(30)," +
-                        "temp9 VARCHAR(20))");
+                        "password VARCHAR(20)," +
+                        "jobTitle VARCHAR(20)," +
+                        "fullName VARCHAR(20)," +
+                        "ID INTEGER," +
+                        "jobType VARCHAR(20))");
 
                 int rsetCreate1 = stmtCreateStaffTable.executeUpdate(createStaffTable);
                 System.out.println("Create Staff table Successful!");
@@ -77,7 +71,7 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
 
     // Add new Staff Member to the Staff Members Table
-    public static void addStaff(String anyStaffID, String anyTemp2, String anyTemp3, String anyTemp4, String anyTemp5, String anyTemp6, String anyTemp7) {
+    public static void addStaff(String anyStaffID, String anyPW, String anyTitle, String anyFullname, int anyID, String anyType) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
             conn.setAutoCommit(false);
@@ -86,17 +80,14 @@ public class staffDatabase {
             PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             addAnyStaff.setString(1, anyStaffID);
-            addAnyStaff.setString(2, anyTemp2);
-            addAnyStaff.setString(3, anyTemp3);
-            addAnyStaff.setString(4, anyTemp4);
-            addAnyStaff.setString(5, anyTemp5);
-            addAnyStaff.setString(6, anyTemp6);
-            addAnyStaff.setString(7, anyTemp7);
-            addAnyStaff.setString(8, anyTemp7);
-            addAnyStaff.setString(9, "Team H");
+            addAnyStaff.setString(2, anyPW);
+            addAnyStaff.setString(3, anyTitle);
+            addAnyStaff.setString(4, anyFullname);
+            addAnyStaff.setInt(5, anyID);
+            addAnyStaff.setString(6, anyType);
 
             addAnyStaff.executeUpdate();
-            System.out.println("Insert Node Successful for nodeID: " + anyStaffID);
+            System.out.println("Insert Staff Successful for staffID: " + anyStaffID);
 
             conn.commit();
             addAnyStaff.close();
@@ -116,7 +107,7 @@ public class staffDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            String strModifyStaff = "UPDATE hospitalStaff SET " + colAttr + " = ? WHERE temp1 = ?";
+            String strModifyStaff = "UPDATE hospitalStaff SET " + colAttr + " = ? WHERE anyStaffID = ?";
 
             PreparedStatement modifyAnyStaff = conn.prepareStatement(strModifyStaff);
 
@@ -180,32 +171,28 @@ public class staffDatabase {
             String allStaff = "SELECT * FROM hospitalStaff";
             ResultSet rsetAllStaff = selectAllStaff.executeQuery(allStaff);
 
+
+            String strStaffID = "";
+            String strPW = "";
+            String strTitle = "";
+            String strFullname = "";
             Integer intStaffID = 0;
-            String strtemp2 = "";
-            String strtemp3 = "";
-            String strtemp4 = "";
-            String strtemp5 = "";
-            String strtemp6 = "";
-            String strtemp7 = "";
-            String strtemp8 = "";
-            String strtemp9 = "";
+            String strType = "";
+
 
             System.out.println("");
-            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-50s %-30s %-20s\n", "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName", "teamAssigned");
+            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID", "jobType");
 
             //Process the results
             while (rsetAllStaff.next()) {
-                intStaffID = rsetAllStaff.getInt("staffID");
-                strtemp2 = rsetAllStaff.getString("temp2");
-                strtemp3 = rsetAllStaff.getString("temp3");
-                strtemp4 = rsetAllStaff.getString("temp4");
-                strtemp5 = rsetAllStaff.getString("temp5");
-                strtemp6 = rsetAllStaff.getString("temp6");
-                strtemp7 = rsetAllStaff.getString("temp7");
-                strtemp8 = rsetAllStaff.getString("temp8");
-                strtemp9 = rsetAllStaff.getString("temp9");
+                strStaffID = rsetAllStaff.getString("staffID");
+                strPW = rsetAllStaff.getString("password");
+                strTitle = rsetAllStaff.getString("jobTitle");
+                strFullname = rsetAllStaff.getString("fullName");
+                intStaffID = rsetAllStaff.getInt("ID");
+                strType = rsetAllStaff.getString("jobType");
 
-                System.out.printf("%-20d %-20s %-20s %-20s %-20s %-20s %-50s %-30s %-20s\n", intStaffID, strtemp2, strtemp3, strtemp4, strtemp5, strtemp6, strtemp7, strtemp8, strtemp9);
+                System.out.printf("%-20s %-20s %-20s %-20s %-20d %-20s\n", strStaffID, strPW, strTitle, strFullname, intStaffID, strType);
             } // End While
 
             conn.commit();

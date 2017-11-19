@@ -78,7 +78,6 @@ public class mainDatabase {
 
         mainDatabase testConnection1 = new mainDatabase();
 
-
         nodeDatabase.outputNodesCSV();
         edgeDatabase.outputEdgesCSV();
     }
