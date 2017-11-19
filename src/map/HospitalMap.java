@@ -9,6 +9,9 @@
 package map;
 import java.util.*;
 import java.util.HashMap;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class HospitalMap{
     private HashMap<String, Node> map;
@@ -42,6 +45,10 @@ public class HospitalMap{
             }
         }
         return output;
+    }
+
+    public List<Node> getNodesBy(Function<Node, Boolean> function){
+        return this.map.values().stream().filter(function::apply).collect(Collectors.toList());
     }
     //Cache for stuff
 }
