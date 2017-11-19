@@ -40,17 +40,6 @@ public class Node{
         this.fScore = 10000;    //Need to keep track of greedy and heuristic scores for each Node at all times
         this.greedy = 10000;    //greedy scores
     }
-    //added for Map create node
-    public Node(String Id, int x, int y, String floor, String building,String type){
-        this.ID=Id;
-        this.x = x;
-        this.y=y;
-        this.floor=floor;
-        this.building=building;
-        this.type = type;
-
-    }
-
 
     //Added for KioskEngine::AddNode()
     public Node(String name, String ID, String type, int x, int y, String floor, ArrayList<Node> connections) {
@@ -256,9 +245,6 @@ public class Node{
         edges.add(edge);
     }
 
-    public ArrayList<Edge> getEdges(){
-        return this.edges;
-    }
     public ArrayList<Node> getSiblingNodes(){
         ArrayList<Node> ans = new ArrayList<Node>();
         for(Edge e: this.edges ){
