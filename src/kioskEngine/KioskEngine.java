@@ -47,7 +47,7 @@ public class KioskEngine{
         for (Node connNode: connections) {
             node.addConnection(connNode);
         }
-        map.addNode(node.getID(),node);
+        map.addNode(node);
 
     }
 
@@ -71,7 +71,7 @@ public class KioskEngine{
                 connectTo.addConnection(newNode);
             }
             //Add node to map Hashmap
-            map.addNode(anyNodeID,newNode);
+            map.addNode(newNode);
 
         } catch (Exception e) {
             System.out.println("DB Add Failed");

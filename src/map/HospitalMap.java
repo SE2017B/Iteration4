@@ -13,7 +13,7 @@ import database.nodeDatabase;
 import java.util.*;
 import java.util.HashMap;
 public class HospitalMap{
-    private HashMap<String, Node> NodeMap;
+    private static HashMap<String, Node> NodeMap;
     private HashMap<String, Edge> EdgeMap;
     private LinkedList<Node> frontier;
     private ArrayList<Node> explored;
@@ -281,5 +281,8 @@ public class HospitalMap{
 
     }
 
-    //Cache for stuff
+    public static Collection<Node> getNodes(){
+        return NodeMap.values();
+    }
+
 }

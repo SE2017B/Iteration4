@@ -9,6 +9,7 @@
 package kioskEngine;
 
 import database.mainDatabase;
+import map.HospitalMap;
 import map.Node;
 import controllers.ScreenController;
 import javafx.application.Application;
@@ -63,11 +64,14 @@ public class Main extends Application {
 
 
 
-        for(Node node : mainDatabase.getNodes()){
-            engine.getMap().addNode(node.getID(),node);
+        for(Node node : HospitalMap.getNodes()){
+            engine.getMap().addNode(node);
         }
 
-        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,engine.getMap().getNodesForSearch().get(0),"This is a test");
+        Node stub = new Node("1234567890","1000","400","01","Tower","ELEV","STUB","STUB","Team H");
+        engine.getMap().addNode(stub);
+
+        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,stub,"This is a test");
         req.giveRequest();
 
         launch(args);

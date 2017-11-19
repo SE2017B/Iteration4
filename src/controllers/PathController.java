@@ -78,13 +78,9 @@ public class PathController implements ControllableScreen{
 
     public void onShow(){
         //Update the nodes in the map
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForSearch();
 
         //update the items in the checklist
-        startChoice.setItems(FXCollections.observableList(nodes));
-        endChoice.setItems(FXCollections.observableList(nodes));
 
-        startChoice.setValue(nodes.get(2));
 
         //remove any previous paths from the display
         for (Line line: lines) {

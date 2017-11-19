@@ -164,8 +164,6 @@ public class AddNodeController implements ControllableScreen {
 
     public void init() {
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
-        txtfldX.textProperty().addListener((observable, oldValue, newValue) -> xCoordEntered());
-        txtfldY.textProperty().addListener((observable, oldValue, newValue) -> yCoordEntered());
 
     }
 
@@ -249,7 +247,7 @@ public class AddNodeController implements ControllableScreen {
 
     //set up variables when building drop down selected
     @FXML
-    void buildingSelected(ActionEvent e) {
+    public void buildingSelected(ActionEvent e) {
         System.out.println("Building Selected");
         building = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
@@ -258,16 +256,16 @@ public class AddNodeController implements ControllableScreen {
 
     //set up variable when floor drop down selected
     @FXML
-    void floorSelected(ActionEvent e) {
+    public void floorSelected(ActionEvent e) {
         System.out.println("Floor Selected");
-        floor = ((MenuItem) e.getSource()).getText();
+        //floor = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
-        floorDropDown.setText(floor);
+        //floorDropDown.setText(floor);
     }
 
     //set up variable when floor drop down selected
     @FXML
-    void nodeTypeSelected(ActionEvent e) {
+    public void nodeTypeSelected(ActionEvent e) {
         System.out.println("Node Type Selected");
         nodeType = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
@@ -276,23 +274,23 @@ public class AddNodeController implements ControllableScreen {
 
     //set variable to text from text field name
     @FXML
-    void filledNodeID(ActionEvent e) {
+    public void filledNodeID(ActionEvent e) {
         //Setting the variables equal to values read from UI
         nodeID = txtfldID.getText();
         System.out.println(nodeID);
     }
 
-    void xCoordEntered() {
+    public void xCoordEntered() {
         x = txtfldX.getText();
         drawNodeLocation();
     }
 
-    void yCoordEntered() {
+    public void yCoordEntered() {
         y = txtfldY.getText();
         drawNodeLocation();
     }
 
-    void drawNodeLocation() {
+    public void drawNodeLocation() {
         if (x.length()>0 & y.length()>0) {
             System.out.println("Drawing Node: " + x + " " + y);
             nodeLocation.setLayoutX(Integer.parseInt(x));
@@ -301,4 +299,6 @@ public class AddNodeController implements ControllableScreen {
         }
 
     }
+
+
 }
