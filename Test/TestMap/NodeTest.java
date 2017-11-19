@@ -34,6 +34,7 @@ public class NodeTest {
 
     }
 
+    /*
     @Test
     public void testNodeParameters(){
         assertEquals("A1", N1.getID());
@@ -46,6 +47,12 @@ public class NodeTest {
         assertEquals("Bathroom", N1.getType());
         assertEquals("Long1", N1.getLongName());
         assertEquals("Short1", N1.getShortName());
+    }
+    */
+
+    @Test
+    public void testID(){
+        assertEquals("A1", N1.getID());
     }
 
     //Test toString() override
