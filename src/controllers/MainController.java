@@ -8,19 +8,27 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import map.Node;
 
 
 
 public class MainController implements ControllableScreen{
     private ScreenController parent;
+    private LoginPane loginPane;
+    private Scene loginScene;
+    private Stage loginStage;
+
 
     public void setParentController(ScreenController parent){
         this.parent = parent;
@@ -29,6 +37,15 @@ public class MainController implements ControllableScreen{
 
 
     public void init(){
+        loginPane = new LoginPane();
+        loginScene = new Scene(loginPane,600,400);
+        loginStage = new Stage();
+        loginStage.setScene(loginScene);
+        loginStage.initModality(Modality.APPLICATION_MODAL);
+        loginStage.setTitle("Staff Login");
+
+
+
     }
 
     public void onShow(){
@@ -38,6 +55,7 @@ public class MainController implements ControllableScreen{
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         System.out.println("Login Pressed");
+        loginStage.showAndWait();
     }
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
