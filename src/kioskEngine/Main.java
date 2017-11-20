@@ -35,6 +35,7 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.MainID, ScreenController.MainFile);
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
+        myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
 
         myScreenController.setScreen(ScreenController.MainID);
 

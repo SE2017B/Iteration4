@@ -25,9 +25,6 @@ import service.Staff;
 
 public class MainController implements ControllableScreen{
     private ScreenController parent;
-    private LoginPane loginPane;
-    private Scene loginScene;
-    private Stage loginStage;
 
 
     public void setParentController(ScreenController parent){
@@ -37,12 +34,7 @@ public class MainController implements ControllableScreen{
 
 
     public void init(){
-        loginPane = new LoginPane(this);
-        loginScene = new Scene(loginPane,600,400);
-        loginStage = new Stage();
-        loginStage.setScene(loginScene);
-        loginStage.initModality(Modality.APPLICATION_MODAL);
-        loginStage.setTitle("Staff Login");
+
 
 
 
@@ -55,7 +47,7 @@ public class MainController implements ControllableScreen{
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         System.out.println("Login Pressed");
-        loginStage.showAndWait();
+        parent.setScreen(ScreenController.LoginID);
     }
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
@@ -93,13 +85,6 @@ public class MainController implements ControllableScreen{
 
     }
 
-    //process login from login pane
-    public void successfulLogin(Staff staff){
-        loginStage.close();
-        parent.setScreen(ScreenController.RequestID);
-        ((RequestController)parent.getController(parent.RequestID)).setForStaff(staff);
-
-    }
 
 
 

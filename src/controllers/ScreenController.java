@@ -37,6 +37,8 @@ public class ScreenController extends StackPane {
     public static String PathFile = "/fxml/Path.fxml";
     public static String RequestID = "Request";
     public static String RequestFile = "/fxml/Request.fxml";
+    public static String LoginID = "Login";
+    public static String LoginFile = "/fxml/Login.fxml";
 
 
     private HashMap<String, Node> screens = new HashMap<String, Node>();
