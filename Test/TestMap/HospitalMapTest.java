@@ -213,8 +213,8 @@ public class HospitalMapTest {
         String answer = search.findPath(N9, N1).toString();
         System.out.println(answer);
 
-        assertEquals("[Short9, Short8, Short7, Short6, Short1]", answer);
-    }
+        assertEquals("[Short9, Short3, Short2, Short1]", answer);
+}
 
     @Test
     //Node 1 to Node 10
@@ -286,7 +286,7 @@ public class HospitalMapTest {
         String answer = search.findPath(N23, N1).toString();
         System.out.println(answer);
 
-        assertEquals("[Short23, Short21, Short18, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
+        assertEquals("[Short23, Short21, Short18, Short14, Short15, Short9, Short3, Short2, Short1]", answer);
     }
 
     @Test
@@ -305,7 +305,7 @@ public class HospitalMapTest {
         String answer = search.findPath(N15, N6).toString();
         System.out.println(answer);
 
-        assertEquals("[Short15, Short14, Short11, Short10, Short7, Short6]", answer);
+        assertEquals("[Short15, Short9, Short8, Short7, Short6]", answer);
     }
 
     @Test
