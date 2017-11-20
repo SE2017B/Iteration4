@@ -223,12 +223,12 @@ public class AStarSearchTest {
     @Test
     //Node 1 to Node 9
     public void testMap1() throws InterruptedException {
-
         String answer = search.findPath(N1, N9).toString();
         System.out.println(answer);
         String directions = search.findPath(N1, N9).findDirections().getDirections().toString();
         System.out.println(directions);
         assertEquals("[Short1, Short2, Short3, Short9]", answer);
+        assertEquals("[Go straight from Short1, Go straight through Short2, Take a left at this Short3, Stop at Short9]", directions);
     }
     @Test
     //Node 9 to Node 1
