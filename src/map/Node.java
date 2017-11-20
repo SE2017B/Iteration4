@@ -38,9 +38,25 @@ public class Node{
         this.team = team;
     }
 
-    //Adds edge between
+    //Adds existing edge between
     public void addConnection(Edge edge){
         connections.add(edge);
+    }
+
+    //Adds new edge between
+    public void addConnection(Node node){
+        Edge edge = new Edge(this, node);
+    }
+
+    public void removeConnection(Edge edge) {
+        connections.remove(edge);
+    }
+
+    //this only deletes all the edges, but not the node itself. Should we create a deconstructor?
+    public void deleteNode() {
+        for(int i = 0;i < connections.size(); i++){
+            connections.get(i).deleteConnection();
+        }
     }
 
     //Gets the Euclidian Distance from a start node to an end node
@@ -88,11 +104,20 @@ public class Node{
     public String getID() {
         return ID;
     }
+    public String getType() {
+        return type;
+    }
     public String getBuilding(){
         return this.building;
     }
     public ArrayList<Edge> getConnections() {
         return this.connections;
+    }
+    public FloorNumber getFloor() {
+        return floor;
+    }
+    public String getTeam() {
+        return team;
     }
 
     public Edge getEdgeOf(Node node){
@@ -100,14 +125,6 @@ public class Node{
                 if (e.getOtherNode(this) == node) return e;
             }
         return null;
-    }
-
-    public void addConnection(Node node){
-        Edge edge = new Edge(this, node);
-    }
-
-    public FloorNumber getFloor() {
-        return floor;
     }
 
     //Gets the x-coordinate of the node
@@ -126,10 +143,6 @@ public class Node{
         return Integer.toString(this.y);
     }
 
-    public String getTeam() {
-        return team;
-    }
-
     //Setters
     public void setLongName(String longName){
         this.longName = longName;
@@ -139,9 +152,6 @@ public class Node{
     }
     public void setType(String type) {
         this.type = type;
-    }
-    public String getType() {
-        return type;
     }
     public void setBuilding(String building){
         this.building = building;
@@ -183,15 +193,5 @@ public class Node{
         Node other = (Node)obj;
         if(!this.getID().equals(other.getID())) return false;
         return true;
-    }
-
-    public void removeConnection(Edge edge) {
-        connections.remove(edge);
-    }
-
-    public void deleteNode() {
-        for(int i = 0;i < connections.size(); i++){
-            connections.get(i).deleteConnection();
-        }
     }
 }
