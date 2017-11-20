@@ -25,4 +25,14 @@ public class SearchContext {
             return new Path();
         }
     }
+
+    public Path findNearest(Node start, String type){
+        BreadthFirstSearch search = new BreadthFirstSearch();
+        return search.findPathBy(start, type);
+    }
+
+    public Path findPathPitStop(ArrayList<Node> stops){
+        AStarSearch search = new AStarSearch();
+        return search.findPathPitStop(stops);
+    }
 }

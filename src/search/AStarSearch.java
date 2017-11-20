@@ -51,13 +51,6 @@ public class AStarSearch implements SearchStrategy {
         return path;
     }
 
-    public Path findPath(ArrayList<Node> nodes){
-        Node start = nodes.get(0);
-        Node end = nodes.get(nodes.size()-1);
-
-        return new Path();
-    }
-
     public double getEuclideanDistance(Node start, Node end){
         double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);

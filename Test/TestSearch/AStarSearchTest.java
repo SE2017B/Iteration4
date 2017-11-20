@@ -1,6 +1,7 @@
 package TestSearch;
 
 import map.Node;
+import map.Path;
 import org.junit.Before;
 import org.junit.Test;
 import search.AStarSearch;
