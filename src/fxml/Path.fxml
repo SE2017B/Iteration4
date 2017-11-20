@@ -20,7 +20,7 @@
       <AnchorPane layoutX="-7.0" layoutY="-7.0" prefHeight="150.0" prefWidth="1294.0" />
       <SplitPane dividerPositions="0.18796992481203006" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane maxHeight="100.0" minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <AnchorPane maxHeight="100.0" minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #008faa;">
                <children>
                   <GridPane prefHeight="770.0" prefWidth="1294.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
@@ -40,7 +40,7 @@
                               <Font size="24.0" />
                            </font>
                         </JFXButton>
-                        <JFXCheckBox prefHeight="49.0" prefWidth="102.0" style="-fx-border-color: #008faa; -fx-background-color: #ffffff;" text="Stairs?" unCheckedColor="#09b5ff" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <JFXCheckBox onAction="#stairsPressed" prefHeight="49.0" prefWidth="102.0" style="-fx-border-color: #008faa; -fx-background-color: #ffffff;" text="Stairs?" unCheckedColor="#09b5ff" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -48,7 +48,7 @@
                               <Insets />
                            </GridPane.margin>
                         </JFXCheckBox>
-                        <JFXTextField alignment="CENTER" focusColor="#408dff" labelFloat="true" promptText="Start" style="-fx-border-color: #008faa; -fx-background-color: #FFFFFF;" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                        <JFXTextField fx:id="startChoice" alignment="CENTER" focusColor="#408dff" labelFloat="true" promptText="Start" style="-fx-border-color: #008faa; -fx-background-color: #FFFFFF;" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowSpan="2">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -56,7 +56,7 @@
                               <Insets left="15.0" right="15.0" />
                            </GridPane.margin>
                         </JFXTextField>
-                        <JFXTextField alignment="CENTER" focusColor="#3ce8ff" labelFloat="true" prefWidth="228.0" promptText="End" style="-fx-border-color: #008faa; -fx-background-color: #ffffff;" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.rowSpan="2">
+                        <JFXTextField fx:id="endChoice" alignment="CENTER" focusColor="#3ce8ff" labelFloat="true" prefWidth="228.0" promptText="End" style="-fx-border-color: #008faa; -fx-background-color: #ffffff;" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.rowSpan="2">
                            <font>
                               <Font size="24.0" />
                            </font>
