@@ -14,6 +14,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static map.FloorNumber.FLOOR_LONE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -29,28 +31,18 @@ public class NodeTest {
     private Node N3 = new Node("A3", "200", "200", "L1", "Tower", "Desk", "Long3", "Short3", "team");
     private Node N4 = new Node("A4", "200", "200", "3", "Tower", "Desk", "Long4", "Short4", "team");
 
+    private Edge N1N2Edge;
+    private Edge N2N3Edge;
+    private Edge N3N1Edge;
+
     @Before
     public void initialize(){
-
+        N1N2Edge = new Edge(N1, N2);
+        N2N3Edge = new Edge(N2, N3);
+        N3N1Edge = new Edge(N3, N1);
     }
 
-    /*
-    @Test
-    public void testNodeParameters(){
-        assertEquals("A1", N1.getID());
-        assertEquals(0, N1.getX());
-        assertEquals("0", N1.getXString());
-        assertEquals(100, N1.getY());
-        assertEquals("100", N1.getYString());
-        assertEquals("L1", N1.getFloor());
-        assertEquals("Tower", N1.getBuilding());
-        assertEquals("Bathroom", N1.getType());
-        assertEquals("Long1", N1.getLongName());
-        assertEquals("Short1", N1.getShortName());
-    }
-    */
-
-    //test node parameters
+    //---------------------------BEGIN TEST NODE PARAMS-------------------------------------------//
     @Test
     public void testID(){
         assertEquals("A1", N1.getID());
@@ -76,7 +68,7 @@ public class NodeTest {
         assertEquals("100", N1.getYString());
     }
 
-    //uses enum
+    //tests enum as well
     @Test
     public void testGetFloor(){
         assertEquals(FLOOR_LONE, N1.getFloor());
@@ -106,8 +98,29 @@ public class NodeTest {
     public void testGetTeam(){
         assertEquals("team", N1.getTeam());
     }
+    //---------------------------END TEST EDGE PARAMS-------------------------------------------//
 
-    //Test toString() override
+    @Test
+    public void testAddConnectionNode(){
+        //make an edge between N1 and N4
+        N1.addConnection(N4);
+
+        //check that the last edge added to array list contains N4
+        assertEquals(N1.getConnections().get(2).getNodeTwo(), N4);
+    }
+
+    //"No suitable driver found for jdbc:derby:teamHDB;create=true
+    @Test
+    public void testDeleteNode(){
+        System.out.println("" + N1.getConnections());
+        N1.deleteNode();
+        ArrayList<Edge> edges = new ArrayList<>();
+
+        //check that N1 no longer has any edges
+        assertEquals(edges, N1.getConnections());
+    }
+
+    //----------------------BEGIN TEST toString() OVERRIDE-------------------------------------//
     @Test
     public void testNodeToString1(){
         assertEquals("Short1", N1.toString());
@@ -120,8 +133,9 @@ public class NodeTest {
     public void testNodeToString3(){
         assertEquals("Short3", N3.toString());
     }
+    //------------------------END TEST toString() OVERRIDE-------------------------------------//
 
-    //Test equals() override
+    ////----------------------BEGIN TEST equals() OVERRIDE-------------------------------------//
     @Test
     public void testNodeEquals1(){
         assertTrue(N1.equals(N1Copy));
@@ -138,7 +152,9 @@ public class NodeTest {
     public void testNodeEqualsFail2(){
         assertFalse(N2.equals(N1Copy));
     }
+    //-------------------------END TEST equals() OVERRIDE-------------------------------------//
 
+    //------------------------BEGIN TEST getEuclideanDistance()-------------------------------//
     @Test
     public void testEuclidean1D(){
         assertEquals(N1.getEuclidianDistance(N2), 100.0, 0.01);
@@ -153,10 +169,5 @@ public class NodeTest {
     public void testEuclidean3D(){
     assertEquals(N1.getEuclidianDistance(N4), 374.17, 0.05);
     }
-
-    //test the enum
-    @Test
-    public void testFloorNumber(){
-        assertEquals(FLOOR_LONE, N1.getFloor());
-    }
+    //------------------------END TEST getEuclideanDistance()-------------------------------//
 }

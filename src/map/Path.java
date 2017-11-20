@@ -11,6 +11,7 @@ public class Path implements Comparable<Path> {
     private ArrayList<String> directions = new ArrayList<>();
     private double distance;
 
+    //Constructors
     public Path(){
         distance = 0;
     }
@@ -26,28 +27,14 @@ public class Path implements Comparable<Path> {
         this.path.add(position, node);
     }
     public void addToPath(Path path){
-            this.path.addAll(path.getPath());
+        this.path.addAll(path.getPath());
     }
     public void addDirections(String direction){
         this.directions.add(direction);
     }
-
-    public ArrayList<String> getDirections(){
-        return this.directions;
-    }
-    public ArrayList<Node> getPath() {
-        return this.path;
-    }
-    public double getDistance(){
-        for(int i=0;i<this.path.size()-1;i++){
-            this.distance += this.path.get(i).getEdgeOf(this.path.get(i+1)).getCost();
-        }
-        return distance;
-    }
     public void addDistance(double distance) {
         this.distance += distance;
     }
-
     public Path findDirections(){
         int PVX = 0;
         int PVY = 0;
@@ -131,7 +118,19 @@ public class Path implements Comparable<Path> {
         return this;
     }
 
-
+    //Getters
+    public ArrayList<Node> getPath() {
+        return this.path;
+    }
+    public ArrayList<String> getDirections(){
+        return this.directions;
+    }
+    public double getDistance(){
+        for(int i=0;i<this.path.size()-1;i++){
+            this.distance += this.path.get(i).getEdgeOf(this.path.get(i+1)).getCost();
+        }
+        return distance;
+    }
 
     @Override
     public String toString(){
@@ -143,7 +142,4 @@ public class Path implements Comparable<Path> {
         if(this.getDistance() < path.getDistance()) return -1;
         else return 1;
     }
-
-
-
 }
