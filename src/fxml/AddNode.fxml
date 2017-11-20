@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
    <children>
       <JFXButton fx:id="btnReturn" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Return" translateX="1100.0" translateY="50.0">
          <font>
@@ -27,226 +27,472 @@
         <items>
           <AnchorPane maxWidth="350.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #008faa;">
                <children>
-                  <JFXTabPane prefHeight="798.4" prefWidth="378.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <JFXTabPane prefHeight="798.4" prefWidth="328.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
-                        <Tab text="Add Node">
+                        <Tab text="Node">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane layoutX="14.0" layoutY="86.0" prefHeight="647.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="161.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <JFXTextField fx:id="txtfldNodeAddNodeID" focusColor="WHITE" promptText="Node ID" unFocusColor="#00daff" GridPane.columnSpan="2">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </GridPane.margin>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="txtfldNodeAddX" focusColor="WHITE" promptText="X-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </GridPane.margin>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="txtfldNodeAddY" focusColor="WHITE" promptText="Y-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </GridPane.margin>
-                                          </JFXTextField>
-                                          <JFXButton fx:id="btnAddEnter" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="7">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXButton fx:id="btnAddCancel" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXTextField fx:id="txtfldNodeAddName" focusColor="WHITE" promptText="Name" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </GridPane.margin>
-                                          </JFXTextField>
-                                          <MenuButton fx:id="floorDropDown" mnemonicParsing="false" onAction="#floorSelected" prefWidth="150.0" text="Floor" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                                             <items>
-                                                <MenuItem fx:id="floor3" mnemonicParsing="false" onAction="#floorSelected" text="3" />
-                                                <MenuItem fx:id="floor2" mnemonicParsing="false" onAction="#floorSelected" text="2" />
-                                                <MenuItem fx:id="floor1" mnemonicParsing="false" onAction="#floorSelected" text="1" />
-                                                <MenuItem fx:id="floorG" mnemonicParsing="false" onAction="#floorSelected" text="G" />
-                                                <MenuItem fx:id="floorL1" mnemonicParsing="false" onAction="#floorSelected" text="L1" />
-                                                <MenuItem fx:id="FloorL2" mnemonicParsing="false" onAction="#floorSelected" text="L2" />
-                                             </items>
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </MenuButton>
-                                          <MenuButton fx:id="buildingDropDown" mnemonicParsing="false" onAction="#buildingSelected" prefWidth="150.0" text="Building" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                             <items>
-                                                <MenuItem fx:id="buildingBTM" mnemonicParsing="false" onAction="#buildingSelected" text="BTM" />
-                                                <MenuItem fx:id="buildingShapiro" mnemonicParsing="false" onAction="#buildingSelected" text="Shapiro" />
-                                                <MenuItem fx:id="buldingTower" mnemonicParsing="false" onAction="#buildingSelected" text="Tower" />
-                                                <MenuItem fx:id="building45F" mnemonicParsing="false" onAction="#buildingSelected" text="45 Francis" />
-                                                <MenuItem fx:id="building15F" mnemonicParsing="false" onAction="#buildingSelected" text="15 Francis" />
-                                             </items>
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </MenuButton>
-                                          <MenuButton fx:id="nodeTypeDropDown" mnemonicParsing="false" onAction="#nodeTypeSelected" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-                                             <items>
-                                                <MenuItem fx:id="nTypeHALL" mnemonicParsing="false" onAction="#nodeTypeSelected" text="HALL" />
-                                                <MenuItem fx:id="nTypeELEV" mnemonicParsing="false" onAction="#nodeTypeSelected" text="ELEV" />
-                                                <MenuItem fx:id="nTypeREST" mnemonicParsing="false" onAction="#nodeTypeSelected" text="REST" />
-                                                <MenuItem fx:id="nTypeSTAI" mnemonicParsing="false" onAction="#nodeTypeSelected" text="STAI" />
-                                                <MenuItem fx:id="nTypeDEPT" mnemonicParsing="false" onAction="#nodeTypeSelected" text="DEPT" />
-                                                <MenuItem fx:id="nTypeLABS" mnemonicParsing="false" onAction="#nodeTypeSelected" text="LABS" />
-                                                <MenuItem fx:id="nTypeINFO" mnemonicParsing="false" onAction="#nodeTypeSelected" text="INFO" />
-                                                <MenuItem fx:id="nTypeCONF" mnemonicParsing="false" onAction="#nodeTypeSelected" text="CONF" />
-                                                <MenuItem fx:id="nTypeEXIT" mnemonicParsing="false" onAction="#nodeTypeSelected" text="EXIT" />
-                                                <MenuItem fx:id="nTypeRETL" mnemonicParsing="false" onAction="#nodeTypeSelected" text="RETL" />
-                                                <MenuItem fx:id="nTypeSERV" mnemonicParsing="false" onAction="#nodeTypeSelected" text="SERV" />
-                                             </items>
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </MenuButton>
-                                       </children>
-                                    </GridPane>
+                                    <JFXTabPane prefHeight="798.4" prefWidth="378.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <tabs>
+                                          <Tab text="Add Node">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane layoutX="14.0" layoutY="86.0" prefHeight="647.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="161.0" />
+                                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <JFXTextField fx:id="txtfldNodeAddNodeID" focusColor="WHITE" promptText="Node ID" unFocusColor="#00daff" GridPane.columnSpan="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXTextField fx:id="txtfldNodeAddX" focusColor="WHITE" promptText="X-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXTextField fx:id="txtfldNodeAddY" focusColor="WHITE" promptText="Y-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXButton fx:id="btnAddEnter" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXButton fx:id="btnAddCancel" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXTextField fx:id="txtfldNodeAddName" focusColor="WHITE" promptText="Name" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <MenuButton fx:id="floorDropDown" mnemonicParsing="false" onAction="#floorSelected" prefWidth="150.0" text="Floor" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                               <items>
+                                                                  <MenuItem fx:id="floor3" mnemonicParsing="false" onAction="#floorSelected" text="3" />
+                                                                  <MenuItem fx:id="floor2" mnemonicParsing="false" onAction="#floorSelected" text="2" />
+                                                                  <MenuItem fx:id="floor1" mnemonicParsing="false" onAction="#floorSelected" text="1" />
+                                                                  <MenuItem fx:id="floorG" mnemonicParsing="false" onAction="#floorSelected" text="G" />
+                                                                  <MenuItem fx:id="floorL1" mnemonicParsing="false" onAction="#floorSelected" text="L1" />
+                                                                  <MenuItem fx:id="FloorL2" mnemonicParsing="false" onAction="#floorSelected" text="L2" />
+                                                               </items>
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </MenuButton>
+                                                            <MenuButton fx:id="buildingDropDown" mnemonicParsing="false" onAction="#buildingSelected" prefWidth="150.0" text="Building" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                               <items>
+                                                                  <MenuItem fx:id="buildingBTM" mnemonicParsing="false" onAction="#buildingSelected" text="BTM" />
+                                                                  <MenuItem fx:id="buildingShapiro" mnemonicParsing="false" onAction="#buildingSelected" text="Shapiro" />
+                                                                  <MenuItem fx:id="buldingTower" mnemonicParsing="false" onAction="#buildingSelected" text="Tower" />
+                                                                  <MenuItem fx:id="building45F" mnemonicParsing="false" onAction="#buildingSelected" text="45 Francis" />
+                                                                  <MenuItem fx:id="building15F" mnemonicParsing="false" onAction="#buildingSelected" text="15 Francis" />
+                                                               </items>
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </MenuButton>
+                                                            <MenuButton fx:id="nodeTypeDropDown" mnemonicParsing="false" onAction="#nodeTypeSelected" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                               <items>
+                                                                  <MenuItem fx:id="nTypeHALL" mnemonicParsing="false" onAction="#nodeTypeSelected" text="HALL" />
+                                                                  <MenuItem fx:id="nTypeELEV" mnemonicParsing="false" onAction="#nodeTypeSelected" text="ELEV" />
+                                                                  <MenuItem fx:id="nTypeREST" mnemonicParsing="false" onAction="#nodeTypeSelected" text="REST" />
+                                                                  <MenuItem fx:id="nTypeSTAI" mnemonicParsing="false" onAction="#nodeTypeSelected" text="STAI" />
+                                                                  <MenuItem fx:id="nTypeDEPT" mnemonicParsing="false" onAction="#nodeTypeSelected" text="DEPT" />
+                                                                  <MenuItem fx:id="nTypeLABS" mnemonicParsing="false" onAction="#nodeTypeSelected" text="LABS" />
+                                                                  <MenuItem fx:id="nTypeINFO" mnemonicParsing="false" onAction="#nodeTypeSelected" text="INFO" />
+                                                                  <MenuItem fx:id="nTypeCONF" mnemonicParsing="false" onAction="#nodeTypeSelected" text="CONF" />
+                                                                  <MenuItem fx:id="nTypeEXIT" mnemonicParsing="false" onAction="#nodeTypeSelected" text="EXIT" />
+                                                                  <MenuItem fx:id="nTypeRETL" mnemonicParsing="false" onAction="#nodeTypeSelected" text="RETL" />
+                                                                  <MenuItem fx:id="nTypeSERV" mnemonicParsing="false" onAction="#nodeTypeSelected" text="SERV" />
+                                                               </items>
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </MenuButton>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </Tab>
+                                          <Tab text="Edit Node">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane prefHeight="647.0" prefWidth="320.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="161.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="103.0" minHeight="0.0" prefHeight="94.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <JFXTextField fx:id="txtfldNodeEditNodeID" focusColor="WHITE" promptText="Node ID" unFocusColor="#00daff" GridPane.columnSpan="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXTextField fx:id="txtfldNodeEditX" focusColor="WHITE" promptText="X-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXTextField fx:id="txtfldNodeEditY" focusColor="WHITE" promptText="Y-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXButton fx:id="btnEditEnter" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXButton fx:id="btnEditCancel" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXTextField fx:id="txtfldNodeEditName" focusColor="WHITE" promptText="Name" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXListView GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </Tab>
+                                          <Tab text="Remove Node">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane layoutX="43.0" layoutY="147.0" prefHeight="647.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <columnConstraints>
+                                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="220.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="203.0" minHeight="10.0" prefHeight="203.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <JFXListView GridPane.rowIndex="1" />
+                                                            <JFXListView GridPane.rowIndex="3" />
+                                                            <JFXButton fx:id="btnRemoveCancel" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXButton fx:id="btnRemoveEnter" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.rowIndex="4">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <Label text="Select Node to Remove" GridPane.halignment="CENTER">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label text="Select Edges To Remove" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </Tab>
+                                       </tabs>
+                                    </JFXTabPane>
                                  </children>
                               </AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="Edit Node">
+                        <Tab text="Edge">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane prefHeight="647.0" prefWidth="320.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="161.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="103.0" minHeight="0.0" prefHeight="94.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <JFXTextField fx:id="txtfldNodeEditNodeID" focusColor="WHITE" promptText="Node ID" unFocusColor="#00daff" GridPane.columnSpan="2">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </GridPane.margin>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="txtfldNodeEditX" focusColor="WHITE" promptText="X-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </GridPane.margin>
-                                          </JFXTextField>
-                                          <JFXTextField fx:id="txtfldNodeEditY" focusColor="WHITE" promptText="Y-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </GridPane.margin>
-                                          </JFXTextField>
-                                          <JFXButton fx:id="btnEditEnter" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXButton fx:id="btnEditCancel" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXTextField fx:id="txtfldNodeEditName" focusColor="WHITE" promptText="Name" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                             <GridPane.margin>
-                                                <Insets left="15.0" right="15.0" />
-                                             </GridPane.margin>
-                                          </JFXTextField>
-                                          <JFXListView GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </Tab>
-                        <Tab text="Remove Node">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <GridPane layoutX="43.0" layoutY="147.0" prefHeight="647.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="220.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="203.0" minHeight="10.0" prefHeight="203.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <JFXListView GridPane.rowIndex="1" />
-                                          <JFXListView GridPane.rowIndex="3" />
-                                          <JFXButton fx:id="btnRemoveCancel" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <JFXButton fx:id="btnRemoveEnter" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.rowIndex="4">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </JFXButton>
-                                          <Label text="Select Node to Remove" GridPane.halignment="CENTER">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Select Edges To Remove" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </GridPane>
+                                    <JFXTabPane prefHeight="798.4" prefWidth="378.4">
+                                       <tabs>
+                                          <Tab text="Add Edge">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane layoutX="14.0" layoutY="86.0" prefHeight="647.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="161.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <JFXTextField fx:id="txtfldNodeAddNodeID1" focusColor="WHITE" promptText="Node ID" unFocusColor="#00daff" GridPane.columnSpan="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXTextField fx:id="txtfldNodeAddX1" focusColor="WHITE" promptText="X-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXTextField fx:id="txtfldNodeAddY1" focusColor="WHITE" promptText="Y-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXButton fx:id="btnAddEnter1" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXButton fx:id="btnAddCancel1" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXTextField fx:id="txtfldNodeAddName1" focusColor="WHITE" promptText="Name" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <MenuButton fx:id="floorDropDown1" mnemonicParsing="false" onAction="#floorSelected" prefWidth="150.0" text="Floor" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                               <items>
+                                                                  <MenuItem fx:id="floor31" mnemonicParsing="false" onAction="#floorSelected" text="3" />
+                                                                  <MenuItem fx:id="floor21" mnemonicParsing="false" onAction="#floorSelected" text="2" />
+                                                                  <MenuItem fx:id="floor11" mnemonicParsing="false" onAction="#floorSelected" text="1" />
+                                                                  <MenuItem fx:id="floorG1" mnemonicParsing="false" onAction="#floorSelected" text="G" />
+                                                                  <MenuItem fx:id="floorL11" mnemonicParsing="false" onAction="#floorSelected" text="L1" />
+                                                                  <MenuItem fx:id="FloorL21" mnemonicParsing="false" onAction="#floorSelected" text="L2" />
+                                                               </items>
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </MenuButton>
+                                                            <MenuButton fx:id="buildingDropDown1" mnemonicParsing="false" onAction="#buildingSelected" prefWidth="150.0" text="Building" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                               <items>
+                                                                  <MenuItem fx:id="buildingBTM1" mnemonicParsing="false" onAction="#buildingSelected" text="BTM" />
+                                                                  <MenuItem fx:id="buildingShapiro1" mnemonicParsing="false" onAction="#buildingSelected" text="Shapiro" />
+                                                                  <MenuItem fx:id="buldingTower1" mnemonicParsing="false" onAction="#buildingSelected" text="Tower" />
+                                                                  <MenuItem fx:id="building45F1" mnemonicParsing="false" onAction="#buildingSelected" text="45 Francis" />
+                                                                  <MenuItem fx:id="building15F1" mnemonicParsing="false" onAction="#buildingSelected" text="15 Francis" />
+                                                               </items>
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </MenuButton>
+                                                            <MenuButton fx:id="nodeTypeDropDown1" mnemonicParsing="false" onAction="#nodeTypeSelected" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                               <items>
+                                                                  <MenuItem fx:id="nTypeHALL1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="HALL" />
+                                                                  <MenuItem fx:id="nTypeELEV1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="ELEV" />
+                                                                  <MenuItem fx:id="nTypeREST1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="REST" />
+                                                                  <MenuItem fx:id="nTypeSTAI1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="STAI" />
+                                                                  <MenuItem fx:id="nTypeDEPT1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="DEPT" />
+                                                                  <MenuItem fx:id="nTypeLABS1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="LABS" />
+                                                                  <MenuItem fx:id="nTypeINFO1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="INFO" />
+                                                                  <MenuItem fx:id="nTypeCONF1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="CONF" />
+                                                                  <MenuItem fx:id="nTypeEXIT1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="EXIT" />
+                                                                  <MenuItem fx:id="nTypeRETL1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="RETL" />
+                                                                  <MenuItem fx:id="nTypeSERV1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="SERV" />
+                                                               </items>
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </MenuButton>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab text="Edit Node">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane prefHeight="647.0" prefWidth="320.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="161.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="103.0" minHeight="0.0" prefHeight="94.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <JFXTextField fx:id="txtfldNodeEditNodeID1" focusColor="WHITE" promptText="Node ID" unFocusColor="#00daff" GridPane.columnSpan="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXTextField fx:id="txtfldNodeEditX1" focusColor="WHITE" promptText="X-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXTextField fx:id="txtfldNodeEditY1" focusColor="WHITE" promptText="Y-Coordinate" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXButton fx:id="btnEditEnter1" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXButton fx:id="btnEditCancel1" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXTextField fx:id="txtfldNodeEditName1" focusColor="WHITE" promptText="Name" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets left="15.0" right="15.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                            <JFXListView GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab text="Remove Node">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane layoutX="43.0" layoutY="147.0" prefHeight="647.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="220.0" minHeight="10.0" prefHeight="220.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="203.0" minHeight="10.0" prefHeight="203.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <JFXListView GridPane.rowIndex="1" />
+                                                            <JFXListView GridPane.rowIndex="3" />
+                                                            <JFXButton fx:id="btnRemoveCancel1" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <JFXButton fx:id="btnRemoveEnter1" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Enter" GridPane.rowIndex="4">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXButton>
+                                                            <Label text="Select Node to Remove" GridPane.halignment="CENTER">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label text="Select Edges To Remove" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                               <font>
+                                                                  <Font size="24.0" />
+                                                               </font>
+                                                            </Label>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                       </tabs>
+                                    </JFXTabPane>
                                  </children>
                               </AnchorPane>
                           </content>
