@@ -11,6 +11,7 @@ import database.edgeDatabase;
 import database.nodeDatabase;
 import exceptions.InvalidNodeException;
 import search.AStarSearch;
+import search.BreadthFirstSearch;
 import search.SearchContext;
 import search.SearchStrategy;
 
@@ -108,6 +109,16 @@ public class HospitalMap{
 
     public Path findPath(Node start, Node end){
         return search.findPath(start,end);
+    }
+
+    public Path findNearest(Node start, String type){
+        BreadthFirstSearch search = new BreadthFirstSearch();
+        return search.findPathBy(start, type);
+    }
+
+    public Path findPathPitStop(ArrayList<Node> stops){
+        AStarSearch search = new AStarSearch();
+        return search.findPathPitStop(stops);
     }
     //Cache for stuff
 }
