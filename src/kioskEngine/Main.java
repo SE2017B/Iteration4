@@ -31,14 +31,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         ScreenController myScreenController = new ScreenController(engine);
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
-        myScreenController.loadScreen(ScreenController.AdminMenuID, ScreenController.AdminMenuFile);
-        myScreenController.loadScreen(ScreenController.FilterID, ScreenController.FilterFile);
         myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
         myScreenController.loadScreen(ScreenController.MainID, ScreenController.MainFile);
-        //myScreenController.loadScreen(ScreenController.NodeConfirmID, ScreenController.NodeConfirmFile);
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
-        //myScreenController.loadScreen(ScreenController.ThankYouID, ScreenController.ThankYouFile);
 
         myScreenController.setScreen(ScreenController.MainID);
 

@@ -20,7 +20,6 @@ import service.Staff;
 import service.Service;
 
 
-import controllers.AdminMenuController;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -98,19 +97,7 @@ public class RequestController implements ControllableScreen{
         }
 
     public void requestCreatePressed(ActionEvent e){
-        staffMember = (Staff)staffDropDown.getValue();
-        if(serviceType.equals("Food")){
-            ServiceRequest req = new ServiceRequest(staffMember.getJobType(),requestIDCount, (Node)locationChoiceBox.getValue(),infoText.getText());
-            requestIDCount++;
-            req.giveRequest();
-        }
-        else{
-            System.out.println("Please make a Food Request");
-        }
-
-        System.out.println("Create Pressed: " + staffMember);
-        ((AdminMenuController)parent.getController(ScreenController.AdminMenuID)).setRequest();
-        parent.setScreen(ScreenController.AdminMenuID);
+        //todo create the request
 
     }
     public void cancelPressed(ActionEvent e){
@@ -123,7 +110,7 @@ public class RequestController implements ControllableScreen{
     }
 
     public void editPressed(ActionEvent e){
-        System.out.println("Logout Pressed");
+        System.out.println("Edit Pressed");
         parent.setScreen(ScreenController.AddNodeID);
     }
 

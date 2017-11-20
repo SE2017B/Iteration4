@@ -69,10 +69,6 @@ public class MainController implements ControllableScreen{
     //when filter button is pressed go to filter screen
 
 
-    public void filterPressed(ActionEvent e){
-        System.out.println("Filter Pressed");
-        parent.setScreen(ScreenController.FilterID);
-    }
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
         System.out.println("Zoom In Pressed");

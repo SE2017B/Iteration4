@@ -29,10 +29,6 @@ public class ScreenController extends StackPane {
 
     public static String AddNodeID = "AddNode";
     public static String AddNodeFile = "/fxml/AddNode.fxml";
-    public static String AdminMenuID = "AdminMenu";
-    public static String AdminMenuFile = "/fxml/AdminMenu.fxml";
-    public static String FilterID = "Filter";
-    public static String FilterFile = "/fxml/Filter.fxml";
     public static String LogoutID = "LogoutID";
     public static String LogoutFile = "/fxml/Logout.fxml";
     public static String MainID = "Main";
@@ -41,8 +37,7 @@ public class ScreenController extends StackPane {
     public static String PathFile = "/fxml/Path.fxml";
     public static String RequestID = "Request";
     public static String RequestFile = "/fxml/Request.fxml";
-    public static String ThankYouID = "ThankYou";
-    public static String ThankYouFile = "/fxml/ThankYou.fxml";
+
 
     private HashMap<String, Node> screens = new HashMap<String, Node>();
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
@@ -99,14 +94,14 @@ public class ScreenController extends StackPane {
                 Timeline fade = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(opacityProperty(),
                                 1.0)),
-                        new KeyFrame(new Duration(100), new EventHandler<ActionEvent>() {
+                        new KeyFrame(new Duration(200), new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent t) {
                                 getChildren().remove(0);                    //remove the displayed screen
                                 getChildren().add(0, screens.get(name));     //add the screen
                                 Timeline fadeIn = new Timeline(
                                         new KeyFrame(Duration.ZERO, new KeyValue(opacityProperty(), 0.0)),
-                                        new KeyFrame(new Duration(80), new KeyValue(opacityProperty(), 1.0)));
+                                        new KeyFrame(new Duration(100), new KeyValue(opacityProperty(), 1.0)));
                                 fadeIn.play();
 
                             }

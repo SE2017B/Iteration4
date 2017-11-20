@@ -169,38 +169,38 @@ public class AddNodeController implements ControllableScreen {
     }
 
     public void onShow() {
-        x = "";
-        y = "";
-        name = "";
-        nodeID = "";
-        floor = "";
-        txtfldX.setText("");
-        txtfldY.setText("");
-        txtfldID.setText("");
-        txtfldName.setText("");
+//        x = "";
+//        y = "";
+//        name = "";
+//        nodeID = "";
+//        floor = "";
+//        txtfldX.setText("");
+//        txtfldY.setText("");
+//        txtfldID.setText("");
+//        txtfldName.setText("");
+//
+//        floorDropDown.setText("");
+//        buildingDropDown.setText("");
+//        nodeTypeDropDown.setText("");
+//
+//        for(NodeCheckBox box : nodeCheckBoxes){
+//            box.setVisible(false);
+//            mapPane.getChildren().remove(box);
+//        }
+//        nodeCheckBoxes = new ArrayList<NodeCheckBox>();
+//        failText.setVisible(false);
+//        nodeLocation.setVisible(false);
+//
+//        ArrayList<Node> nodes = new ArrayList<Node>();//Todo find nodes to display
+//        for (Node node : nodes) {
+//            NodeCheckBox box = new NodeCheckBox();
+//            box.setNode(node); //sets checkbox to node location
+//
+//            box.setVisible(true);
+//            mapPane.getChildren().add(box);
+//            nodeCheckBoxes.add(box);
 
-        floorDropDown.setText("");
-        buildingDropDown.setText("");
-        nodeTypeDropDown.setText("");
-
-        for(NodeCheckBox box : nodeCheckBoxes){
-            box.setVisible(false);
-            mapPane.getChildren().remove(box);
-        }
-        nodeCheckBoxes = new ArrayList<NodeCheckBox>();
-        failText.setVisible(false);
-        nodeLocation.setVisible(false);
-
-        ArrayList<Node> nodes = new ArrayList<Node>();//Todo find nodes to display
-        for (Node node : nodes) {
-            NodeCheckBox box = new NodeCheckBox();
-            box.setNode(node); //sets checkbox to node location
-
-            box.setVisible(true);
-            mapPane.getChildren().add(box);
-            nodeCheckBoxes.add(box);
-
-        }
+//        }
     }
 
     public void removeEnterPressed(ActionEvent e) {
@@ -242,7 +242,6 @@ public class AddNodeController implements ControllableScreen {
 
             HospitalMap.addNode(new Node(nodeID, x, y, floor, building, nodeType, name, name));//Todo add connections
             System.out.println("Enter Pressed");
-            parent.setScreen(ScreenController.AdminMenuID);
         } else
             failText.setVisible(true);
 
@@ -256,7 +255,7 @@ public class AddNodeController implements ControllableScreen {
 
     public void returnPressed(ActionEvent e) {
         System.out.println("Return Pressed");
-        parent.setScreen(ScreenController.AdminMenuID);
+        parent.setScreen(ScreenController.RequestID);
     }
 
     //set up variables when building drop down selected
