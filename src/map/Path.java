@@ -11,6 +11,7 @@ public class Path implements Comparable<Path> {
     private ArrayList<String> directions = new ArrayList<>();
     private double distance;
 
+    //Constructors
     public Path(){
         distance = 0;
     }
@@ -31,23 +32,9 @@ public class Path implements Comparable<Path> {
     public void addDirections(String direction){
         this.directions.add(direction);
     }
-
-    public ArrayList<String> getDirections(){
-        return this.directions;
-    }
-    public ArrayList<Node> getPath() {
-        return this.path;
-    }
-    public double getDistance(){
-        for(int i=0;i<this.path.size()-1;i++){
-            this.distance += this.path.get(i).getEdgeOf(this.path.get(i+1)).getCost();
-        }
-        return distance;
-    }
     public void addDistance(double distance) {
         this.distance += distance;
     }
-
     public Path findDirections(){
         int PVX = 0;
         int PVY = 0;
@@ -82,7 +69,6 @@ public class Path implements Comparable<Path> {
                 double sin = (side3 * Math.sin(angle)) / sides.get(0);
                 angle = Math.toDegrees(Math.asin(sin));
             }
-
             if(angle >= 20 && angle <= 160){
                 directions.add("take a right at this " + path.get(i).getShortName());
             } else if(angle >= 200 && angle <= 340){
@@ -90,12 +76,23 @@ public class Path implements Comparable<Path> {
             }else{
                 directions.add("go straight through " + path.get(i).getShortName());
             }
-
         }
         return this;
     }
 
-
+    //Getters
+    public ArrayList<Node> getPath() {
+        return this.path;
+    }
+    public ArrayList<String> getDirections(){
+        return this.directions;
+    }
+    public double getDistance(){
+        for(int i=0;i<this.path.size()-1;i++){
+            this.distance += this.path.get(i).getEdgeOf(this.path.get(i+1)).getCost();
+        }
+        return distance;
+    }
 
     @Override
     public String toString(){
@@ -107,7 +104,4 @@ public class Path implements Comparable<Path> {
         if(this.getDistance() < path.getDistance()) return -1;
         else return 1;
     }
-
-
-
 }
