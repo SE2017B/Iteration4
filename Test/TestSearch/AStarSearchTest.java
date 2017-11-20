@@ -1,9 +1,12 @@
 package TestSearch;
 
 import map.Node;
+import map.Path;
 import org.junit.Before;
 import org.junit.Test;
 import search.AStarSearch;
+
+import java.util.ArrayList;
 
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
@@ -253,7 +256,7 @@ public class AStarSearchTest {
     public void testMap3() throws InterruptedException{
         String answer = search.findPath(N1, N12).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short13, Short12]", answer);
+        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short12]", answer);
     }
     @Test
     //Node 12 to Node 1
@@ -268,7 +271,7 @@ public class AStarSearchTest {
     public void testMap4() throws InterruptedException{
         String answer = search.findPath(N1, N20).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short18, Short21, Short20]", answer);
+        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short17, Short20]", answer);
     }
     @Test
     //Node 20 to Node 1
@@ -283,7 +286,7 @@ public class AStarSearchTest {
     public void testMap5() throws InterruptedException{
         String answer = search.findPath(N1, N23).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short18, Short21, Short23]", answer);
+        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
     }
     @Test
     //Node 23 to Node 1
@@ -320,7 +323,7 @@ public class AStarSearchTest {
     public void testMap7Reverse() throws InterruptedException{
         String answer = search.findPath(N22, N3).toString();
         System.out.println(answer);
-        assertEquals("[Short22, Short21, Short18, Short14, Short15, Short9, Short3]", answer);
+        assertEquals("[Short22, Short19, Short18, Short14, Short15, Short9, Short3]", answer);
     }
 
     @Test
@@ -419,6 +422,16 @@ public class AStarSearchTest {
         assertEquals("[Short4_2, Short7_2, Short8_2, Short9_2, Short9, Short15, Short14, Short13, Short17]", answer);
     }
 
+    // findPathPitStop tests
+    @Test public void testSearchPitStop1(){     //Node 1 to Node 6 to Node 19_2
+        ArrayList<Node> stops = new ArrayList<>();
+        stops.add(N1);
+        stops.add(N6);
+        stops.add(N19_2);
+        String answer = search.findPathPitStop(stops).toString();
+        System.out.println(answer);
+        assertEquals("[Short1, Short6, Short6, Short7, Short8, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
+    }
 
     // getEuclideanDistance tests
     @Test

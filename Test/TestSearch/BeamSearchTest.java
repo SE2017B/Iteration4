@@ -4,14 +4,11 @@ import map.HospitalMap;
 import map.Node;
 import org.junit.Before;
 import org.junit.Test;
-import search.AStarSearch;
-import search.BreadthFirstSearch;
+import search.BeamSearch;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
-public class BreadthFirstSearchTest {
+public class BeamSearchTest {
     private HospitalMap map = new HospitalMap();
     private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
     private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
@@ -62,7 +59,7 @@ public class BreadthFirstSearchTest {
     private Node N23_2 = new Node("A23_2", "800", "0", "L2", "Tower", "Desk", "Long23_2", "Short23_2", "H");
 
 
-    private BreadthFirstSearch search = new BreadthFirstSearch();
+    private BeamSearch search = new BeamSearch(4);
 
     @Before
     public void initialize() {
@@ -220,7 +217,8 @@ public class BreadthFirstSearchTest {
 
     }
 
-    @Test public void testSearch1(){    //Node 1 to Node 10
+    @Test
+    public void testSearch1(){    //Node 1 to Node 10
         String answer = search.findPath(N1, N10).toString();
         System.out.println(answer);
         assertEquals("[Short1, Short6, Short7, Short10]", answer);
@@ -289,40 +287,11 @@ public class BreadthFirstSearchTest {
     @Test public void testSearchFloor3(){   //Node 3 to Node 22_2
         String answer = search.findPath(N3, N22_2).toString();
         System.out.println(answer);
-        assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2, Short22_2]", answer);
+        assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short21_2, Short22_2]", answer);
     }
     @Test public void testSearchFloor3Reverse(){    //Node 22_2 to Node 3
         String answer= search.findPath(N22_2, N3).toString();
         System.out.println(answer);
-        assertEquals("[Short22_2, Short21_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3]", answer);
-    }
-
-    //Tests for finding the nearest path
-
-    @Test public void testNearOne() {
-        String answer = search.findPathBy(N6, "Bathroom").toString();
-        System.out.println(answer);
-        assertEquals("[Short6, Short1]", answer);
-    }
-
-    @Test
-     public void testNearTwo() {
-        String answer = search.findPathBy(N1, "Bathroom").toString();
-        System.out.println(answer);
-        assertEquals("[Short1]", answer);
-    }
-
-    @Test
-    public void testNearThree() {
-        String answer = search.findPathBy(N5, "Bathroom").toString();
-        System.out.println(answer);
-        assertEquals("[Short5, Short8]", answer);
-    }
-
-    @Test
-    public void testNearFour() {
-        String answer = search.findPathBy(N17, "Bathroom").toString();
-        System.out.println(answer);
-        assertEquals("[Short17, Short20, Short21, Short18]", answer);
+        assertEquals("[Short22_2, Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3]", answer);
     }
 }

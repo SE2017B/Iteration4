@@ -4,14 +4,13 @@ import map.HospitalMap;
 import map.Node;
 import org.junit.Before;
 import org.junit.Test;
-import search.AStarSearch;
-import search.BreadthFirstSearch;
+import search.DepthFirstSearch;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class BreadthFirstSearchTest {
+public class DepthFirstSearchTest {
     private HospitalMap map = new HospitalMap();
     private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
     private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
@@ -62,7 +61,7 @@ public class BreadthFirstSearchTest {
     private Node N23_2 = new Node("A23_2", "800", "0", "L2", "Tower", "Desk", "Long23_2", "Short23_2", "H");
 
 
-    private BreadthFirstSearch search = new BreadthFirstSearch();
+    private DepthFirstSearch search = new DepthFirstSearch();
 
     @Before
     public void initialize() {
@@ -220,109 +219,31 @@ public class BreadthFirstSearchTest {
 
     }
 
-    @Test public void testSearch1(){    //Node 1 to Node 10
+    @Test public void searchTestOne() {
         String answer = search.findPath(N1, N10).toString();
         System.out.println(answer);
         assertEquals("[Short1, Short6, Short7, Short10]", answer);
     }
-    @Test public void testSearch1Reverse(){    //Node 10 to Node 1
-        String answer = search.findPath(N10, N1).toString();
+
+    @Test public void searchTestTwo() {
+        String answer = search.findPath(N3, N2).toString();
         System.out.println(answer);
-        assertEquals("[Short10, Short7, Short6, Short1]", answer);
+        assertEquals("[Short3, Short2]", answer);
     }
 
-    @Test public void testSearch2(){    //Node 2 to Node 17
-        String answer = search.findPath(N2, N17).toString();
+    @Test public void searchTestThree() {
+        String answer = search.findPath(N22, N18).toString();
         System.out.println(answer);
-        assertEquals("[Short2, Short3, Short9, Short15, Short14, Short13, Short17]", answer);
-    }
-    @Test public void testSearch2Reverse(){     //Node 17 to Node 2
-        String answer = search.findPath(N17, N2).toString();
-        System.out.println(answer);
-        assertEquals("[Short17, Short13, Short14, Short15, Short9, Short3, Short2]", answer);
+        assertEquals("[Short22, Short19, Short18]", answer);
     }
 
-    @Test public void testSearch3(){    //Node 4 to Node 23
-        String answer = search.findPath(N4, N23).toString();
+    @Test public void searchTestFour() {
+        String answer = search.findPath(N18, N22).toString();
         System.out.println(answer);
-        assertEquals("[Short4, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
-    }
-    @Test public void testSearch3Reverse(){
-        String answer = search.findPath(N23, N4).toString();
-        System.out.println(answer);
-        assertEquals("[Short23, Short21, Short18, Short14, Short11, Short10, Short7, Short4]", answer);
-    }
-
-    @Test public void testSearch4(){    //Node 5 to Node 19
-        String answer = search.findPath(N5, N19).toString();
-        System.out.println(answer);
-        assertEquals("[Short5, Short8, Short9, Short15, Short14, Short18, Short19]", answer);
-    }
-    @Test public void testSearch4Reverse(){     //Node 19 to Node 5
-        String answer = search.findPath(N19, N5).toString();
-        System.out.println(answer);
-        assertEquals("[Short19, Short18, Short14, Short15, Short9, Short8, Short5]", answer);
-    }
-
-    @Test public void testSearchFloor1(){   //Node 1 to Node 1_2
-        String answer = search.findPath(N1, N1_2).toString();
-        System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short3_2, Short2_2, Short1_2]", answer);
-    }
-    @Test public void testSearchFloor1Reverse(){    //Node 1_2 to Node 1
-        String answer = search.findPath(N1_2, N1).toString();
-        System.out.println(answer);
-        assertEquals("[Short1_2, Short2_2, Short3_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
-    }
-
-    @Test public void testSearchFloor2(){   //Node 1 to Node 19_2
-        String answer = search.findPath(N1, N19_2).toString();
-        System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
-    }
-    @Test public void testSearchFloor2Reverse(){    //Node 19_2 to Node 1
-        String answer = search.findPath(N19_2, N1).toString();
-        System.out.println(answer);
-        assertEquals("[Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
-    }
-
-    @Test public void testSearchFloor3(){   //Node 3 to Node 22_2
-        String answer = search.findPath(N3, N22_2).toString();
-        System.out.println(answer);
-        assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2, Short22_2]", answer);
-    }
-    @Test public void testSearchFloor3Reverse(){    //Node 22_2 to Node 3
-        String answer= search.findPath(N22_2, N3).toString();
-        System.out.println(answer);
-        assertEquals("[Short22_2, Short21_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3]", answer);
-    }
-
-    //Tests for finding the nearest path
-
-    @Test public void testNearOne() {
-        String answer = search.findPathBy(N6, "Bathroom").toString();
-        System.out.println(answer);
-        assertEquals("[Short6, Short1]", answer);
-    }
-
-    @Test
-     public void testNearTwo() {
-        String answer = search.findPathBy(N1, "Bathroom").toString();
-        System.out.println(answer);
-        assertEquals("[Short1]", answer);
-    }
-
-    @Test
-    public void testNearThree() {
-        String answer = search.findPathBy(N5, "Bathroom").toString();
-        System.out.println(answer);
-        assertEquals("[Short5, Short8]", answer);
-    }
-
-    @Test
-    public void testNearFour() {
-        String answer = search.findPathBy(N17, "Bathroom").toString();
-        System.out.println(answer);
-        assertEquals("[Short17, Short20, Short21, Short18]", answer);
+        assertEquals("[Short18, Short14, Short11, Short10, Short7, Short4, " +
+                "Short5, Short8, Short9, Short9_2, Short3_2, " +
+                "Short2_2, Short1_2, Short6_2, Short7_2, " +
+                "Short10_2, Short11_2, Short14_2, Short13_2, Short12_2, " +
+                "Short16_2, Short17_2, Short20_2, Short20, Short21, Short22]", answer);
     }
 }
