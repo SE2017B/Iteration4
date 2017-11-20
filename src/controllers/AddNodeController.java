@@ -314,7 +314,7 @@ public class AddNodeController implements ControllableScreen {
     }
 
     public void clearInputs(){
-        //clear all the text and options from UI inputs
+        //todo clear all the text and options from UI inputs
     }
 
 

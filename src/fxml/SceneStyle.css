@@ -2,7 +2,14 @@
     -fx-text-fill: white;
     -fx-background-color: rgb(40,40,60);
     -fx-border-color: whitesmoke;
-    -fx-border-radius: 5;
+    -fx-border-radius: 8;
     -fx-padding: 3 6 6 6;
 }
 
+.pane{
+    -fx-background-color:rgb(0,80,180);
+}
+
+.black{
+    -fx-background-color: black;
+}
