@@ -39,8 +39,8 @@ public class Node{
     }
 
     //Adds edge between
-    public void addConnection(Edge egde){
-        connections.add(egde);
+    public void addConnection(Edge edge){
+        connections.add(edge);
     }
 
     //Gets the Euclidian Distance from a start node to an end node

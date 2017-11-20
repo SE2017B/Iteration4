@@ -48,6 +48,7 @@ public class Edge {
         return this.nodeTwo;
     }
 
+    //should this throw an exception for if the given node is not attached to the edge?
     public Node getOtherNode(Node node) {
         if(node.equals(nodeOne)){
             return nodeTwo;
