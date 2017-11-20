@@ -436,6 +436,8 @@ public class AStarSearchTest {
         stops.add(N19_2);
         String answer = search.findPathPitStop(stops).toString();
         System.out.println(answer);
+        String directions = search.findPathPitStop(stops).findDirections().getDirections().toString();
+        System.out.println(directions);
         assertEquals("[Short1, Short6, Short6, Short7, Short8, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
     }
 

@@ -103,6 +103,7 @@ public class Path implements Comparable<Path> {
             prevElevator = false;
             prevStop = false;
         }
+        directions.add(0, "Go straight from " + this.path.get(0).getShortName());
         directions.add("Stop at " + path.get(path.size()-1).getShortName());
         return this;
     }
