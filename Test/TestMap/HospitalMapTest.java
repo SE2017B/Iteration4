@@ -129,6 +129,73 @@ public class HospitalMapTest {
         //Add connections for nodeTwentyThree
     }
 
+    //------------------------BEGIN TEST HOSPITALMAP PARAMS------------------------//
+    @Test
+    public void testGetNodeMap(){
+
+    }
+    //------------------------END TEST HOSPITALMAP PARAMS------------------------//
+
+    @Test
+    public void testGetNodesByFloor(){
+
+    }
+    /*
+    @Test
+    public void testSetSearchStrategy(){
+        map.setSearchStrategy(what goes here?);
+    }
+    */
+
+    //test short version of addNode()
+    @Test
+    public void testAddNode(){
+
+    }
+
+    //test long version of addNode()
+    @Test
+    public void testAddNode2(){
+
+    }
+
+    @Test
+    public void testEditNode(){
+
+    }
+
+    @Test
+    public void testRemoveNode(){
+
+    }
+
+    //test addEdge(Edge edge)
+    @Test
+    public void testAddEdge(){
+
+    }
+
+    //test addEdge(Node one, Node two)
+    @Test
+    public void testAddEdge2(){
+
+    }
+
+    @Test
+    public void testRemoveEdge(){
+
+    }
+
+    @Test
+    public void testEditEdge(){
+
+    }
+
+    @Test
+    public void testFindNode(){
+
+    }
+
     //------------------------BEGIN TEST findPath()------------------------//
     @Test
     //Node 1 to Node 9
@@ -333,6 +400,16 @@ public class HospitalMapTest {
         assertEquals("[Short9]", answer);
     }
     //------------------------END TEST findPath()------------------------//
+
+    @Test
+    public void testFindNearest(){
+
+    }
+
+    @Test
+    public void testFindPathPitStop(){
+
+    }
 
     //------------------------BEGIN TEST getEuclideanDistance()------------------------//
     @Test

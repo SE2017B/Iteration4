@@ -31,13 +31,13 @@ public class HospitalMap{
 
     //Helper Methods
 
-    //Method to add a new node to the map
+    //Methods to add a new node to the map
     public void addNode(Node node){
         nodeMap.add(node);
     }
 
     public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
-        nodeMap.add(new Node(ID,x,y,floor,building,type,longName,shortName, team));
+        nodeMap.add(new Node(ID ,x, y, floor, building, type, longName, shortName, team));
         //nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
 
@@ -79,32 +79,10 @@ public class HospitalMap{
         //edgeDatabase.modifyEdge(edge);
     }
 
-    public ArrayList<Node> getNodeMap() {
-        return nodeMap;
-    }
-
-    public ArrayList<Node> getNodesByFloor(int floor){
-        ArrayList<Node> output = new ArrayList<>();
-        for(int i = 0; i < nodeMap.size();i++){
-            if(nodeMap.get(1).getFloor().getNodeMapping() == floor){
-                output.add(nodeMap.get(1));
-            }
-        }
-        return output;
-    }
-//
-//    public List<Node> getNodesBy(Function<Node, Boolean> function){
-//        return this.map.values().stream().filter(function::apply).collect(Collectors.toList());
-//    }
-
     public Node findNode(String nodeID){
         int tempLoc = nodeMap.indexOf(new Node(nodeID,null,null,null,null,null,null,null, null));
 
         return nodeMap.get(tempLoc);
-    }
-
-    public void setSearchStrategy(SearchStrategy searchStrategy){
-        search.setStrategy(searchStrategy);
     }
 
     public Path findPath(Node start, Node end){
@@ -120,5 +98,31 @@ public class HospitalMap{
         AStarSearch search = new AStarSearch();
         return search.findPathPitStop(stops);
     }
+
+    //Getters
+    public ArrayList<Node> getNodeMap() {
+        return nodeMap;
+    }
+
+    public ArrayList<Node> getNodesByFloor(int floor){
+        ArrayList<Node> output = new ArrayList<>();
+        for(int i = 0; i < nodeMap.size();i++){
+            if(nodeMap.get(1).getFloor().getNodeMapping() == floor){
+                output.add(nodeMap.get(1));
+            }
+        }
+        return output;
+    }
+
+    //Setters
+    public void setSearchStrategy(SearchStrategy searchStrategy){
+        search.setStrategy(searchStrategy);
+    }
+
+//
+//    public List<Node> getNodesBy(Function<Node, Boolean> function){
+//        return this.map.values().stream().filter(function::apply).collect(Collectors.toList());
+//    }
+
     //Cache for stuff
 }
