@@ -325,4 +325,31 @@ public class BreadthFirstSearchTest {
         System.out.println(answer);
         assertEquals("[Short17, Short20, Short21, Short18]", answer);
     }
+
+    @Test public void testNearFive() {
+        String answer = search.findPathBy(N6_2, "Bathroom").toString();
+        System.out.println(answer);
+        assertEquals("[Short6_2, Short1_2]", answer);
+    }
+
+    @Test
+    public void testNearSix() {
+        String answer = search.findPathBy(N1_2, "Bathroom").toString();
+        System.out.println(answer);
+        assertEquals("[Short1_2]", answer);
+    }
+
+    @Test
+    public void testNearSeven() {
+        String answer = search.findPathBy(N5_2, "Bathroom").toString();
+        System.out.println(answer);
+        assertEquals("[Short5_2, Short8_2]", answer);
+    }
+
+    @Test
+    public void testNearEight() {
+        String answer = search.findPathBy(N17_2, "Bathroom").toString();
+        System.out.println(answer);
+        assertEquals("[Short17_2, Short20_2, Short21_2, Short18_2]", answer);
+    }
 }
