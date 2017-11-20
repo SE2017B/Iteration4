@@ -59,7 +59,7 @@ public class Node{
         for(int i = 0;i < connections.size(); i++){
             connections.get(i).deleteConnection();
         }
-        nodeDatabase.deleteNode(this);
+        //nodeDatabase.deleteNode(this);
     }
 
     //Gets the Euclidian Distance from a start node to an end node
