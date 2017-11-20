@@ -34,7 +34,7 @@ public class BreadthFirstSearch implements SearchStrategy {
         return new Path();
     }
 
-    public Path findPath(Node start, String type){
+    public Path findPathBy(Node start, String type){
 
         ArrayList<Path> frontier = new ArrayList<>();
         Path first = new Path();
