@@ -54,7 +54,7 @@ public class Node{
         connections.remove(edge);
     }
 
-    //this only deletes all the edges, but not the node itself. Should we create a deconstructor?
+    //This only deletes all the edges, but not the node itself. Should we create a deconstructor?
     public void deleteNode() {
         for(int i = 0;i < connections.size(); i++){
             connections.get(i).deleteConnection();
