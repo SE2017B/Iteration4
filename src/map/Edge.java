@@ -48,13 +48,13 @@ public class Edge {
         return this.nodeTwo;
     }
 
-    public Node getOtherNode(Node node) throws InvalidNodeException {
+    public Node getOtherNode(Node node) {
         if(node.equals(nodeOne)){
             return nodeTwo;
         }else if(node.equals(nodeTwo)){
             return nodeOne;
         }else{
-            throw new InvalidNodeException("this node is not part of this edge");
+            return null;
         }
     }
 
@@ -93,6 +93,5 @@ public class Edge {
     public void deleteConnection() {
         nodeOne.removeConnection(this);
         nodeTwo.removeConnection(this);
-        database
     }
 }

@@ -1,5 +1,7 @@
 package map;
 
+import exceptions.InvalidNodeException;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -33,11 +35,10 @@ public class Path implements Comparable<Path> {
         return this.path;
     }
     public double getDistance(){
-        double runningDistance = 0;
         for(int i=0;i<this.path.size()-1;i++){
-            runningDistance += path.get(i).getEdgeOf(path.get(i+1)).getCost();
+            this.distance += this.path.get(i).getEdgeOf(this.path.get(i+1)).getCost();
         }
-        return runningDistance;
+        return distance;
     }
 
     @Override

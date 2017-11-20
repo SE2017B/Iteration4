@@ -8,6 +8,8 @@
 
 package map;
 
+import exceptions.InvalidNodeException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,9 +96,9 @@ public class Node{
     }
 
     public Edge getEdgeOf(Node node){
-        for(Edge e : this.connections){
-            if(e.getOtherNode(this) == node) return e;
-        }
+            for (Edge e : this.connections) {
+                if (e.getOtherNode(this) == node) return e;
+            }
         return null;
     }
 
