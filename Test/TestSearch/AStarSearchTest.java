@@ -226,6 +226,8 @@ public class AStarSearchTest {
 
         String answer = search.findPath(N1, N9).toString();
         System.out.println(answer);
+        String directions = search.findPath(N1, N9).findDirections().getDirections().toString();
+        System.out.println(directions);
         assertEquals("[Short1, Short2, Short3, Short9]", answer);
     }
     @Test

@@ -3,6 +3,7 @@ package map;
 import exceptions.InvalidNodeException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 public class Path implements Comparable<Path> {
@@ -32,7 +33,7 @@ public class Path implements Comparable<Path> {
     }
 
     public ArrayList<String> getDirections(){
-        return null;
+        return this.directions;
     }
     public ArrayList<Node> getPath() {
         return this.path;
@@ -47,34 +48,51 @@ public class Path implements Comparable<Path> {
         this.distance += distance;
     }
 
-    public void findDirections(){
+    public Path findDirections(){
         int PVX = 0;
         int PVY = 0;
         int NVX = 0;
         int NVY = 0;
 
         for(int i = 1; i < path.size() - 1; i++){
-            PVX = path.get(i-1).getX();
-            PVY = path.get(i-1).getY();
-            NVX = path.get(i+1).getX();
-            NVY = path.get(i+1).getY();
+//            PVX = path.get(i-1).getX();
+//            PVY = path.get(i-1).getY();
+//            NVX = path.get(i+1).getX();
+//            NVY = path.get(i+1).getY();
+//
+//            int num = (PVX*NVX + PVY*NVY);
+//            double den = (Math.sqrt(Math.pow(PVX, 2) + Math.pow(PVY, 2)) * (Math.sqrt(Math.pow(NVX, 2) + Math.pow(NVY, 2))) );
+//            double cos =  num / den;
+//            System.out.println(cos);
+//            System.out.println(Math.acos(cos));
+//            double angle = Math.acos(cos);
+            double side1 = path.get(i-1).getEuclidianDistance(path.get(i));
+            double side2 = path.get(i).getEuclidianDistance(path.get(i+1));
+            double side3 = path.get(i-1).getEuclidianDistance(path.get(i+1));
 
-            int num = (PVX*NVX + PVY*NVY);
-            double den = (Math.sqrt(Math.pow(PVX, 2) + Math.pow(PVY, 2)) * (Math.sqrt(Math.pow(NVX, 2) + Math.pow(NVY, 2))) );
-            double cos =  num / den;
-            System.out.println(cos);
-            System.out.println(Math.acos(cos));
-            double angle = Math.acos(cos);
-            if(angle >= 20 || angle <= 160){
+            ArrayList<Double> sides = new ArrayList<>();
+            sides.add(side1);
+            sides.add(side2);
+            sides.add(side3);
+            sides.sort(Collections.reverseOrder());
+
+            double cosBiggest = (Math.pow(side1, 2) + Math.pow(side2, 2) - Math.pow(side3, 2)) / (2 * sides.get(1) * sides.get(2));
+            double angle = Math.toDegrees(Math.acos(cosBiggest));
+            if (!sides.get(0).equals(side3)) {
+                double sin = (side3 * Math.sin(angle)) / sides.get(0);
+                angle = Math.toDegrees(Math.asin(sin));
+            }
+
+            if(angle >= 20 && angle <= 160){
                 directions.add("take a right at this " + path.get(i).getShortName());
-            } else if(angle >= 200 || angle <= 340){
+            } else if(angle >= 200 && angle <= 340){
                 directions.add("take a left at this " + path.get(i).getShortName());
             }else{
                 directions.add("go straight through " + path.get(i).getShortName());
             }
 
         }
-
+        return this;
     }
 
 
