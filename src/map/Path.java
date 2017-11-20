@@ -43,6 +43,9 @@ public class Path implements Comparable<Path> {
         }
         return distance;
     }
+    public void addDistance(double distance) {
+        this.distance += distance;
+    }
 
     public void findDirections(){
         int PVX = 0;

@@ -32,6 +32,7 @@ public class AStarSearch implements SearchStrategy {
 
                 Path add = new Path(currentPath);
                 add.addToPath(node);
+                add.addDistance(node.getEuclidianDistance(end));
                 newPaths.add(add);
             }
 

@@ -41,8 +41,4 @@ public class DepthFirstSearch implements SearchStrategy {
         }
         return new Path();
     }
-
-    public double getEuclideanDistance(Node start, Node end) {
-        return 0;
-    }
 }
