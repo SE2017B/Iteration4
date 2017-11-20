@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import search.AStarSearch;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
 
@@ -419,6 +421,16 @@ public class AStarSearchTest {
         assertEquals("[Short4_2, Short7_2, Short8_2, Short9_2, Short9, Short15, Short14, Short13, Short17]", answer);
     }
 
+    // findPathPitStop tests
+    @Test public void testSearchPitStop1(){     //Node 1 to Node 6 to Node 19_2
+        ArrayList<Node> stops = new ArrayList<>();
+        stops.add(N1);
+        stops.add(N6);
+        stops.add(N19_2);
+        String answer = search.findPathPitStop(stops).toString();
+        System.out.println(answer);
+        assertEquals("[Short1, Short6, Short6, Short7, Short8, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
+    }
 
     // getEuclideanDistance tests
     @Test

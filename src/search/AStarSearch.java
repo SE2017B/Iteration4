@@ -42,6 +42,14 @@ public class AStarSearch implements SearchStrategy {
         return new Path();
     }
 
+    public Path findPathPitStop(ArrayList<Node> stops){
+        Path path = new Path();
+        for(int i=0;i<stops.size()-1;i++){
+            path.addToPath(this.findPath(stops.get(i), stops.get(i+1)));
+        }
+        return path;
+    }
+
     public Path findPath(ArrayList<Node> nodes){
         Node start = nodes.get(0);
         Node end = nodes.get(nodes.size()-1);
