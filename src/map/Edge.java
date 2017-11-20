@@ -24,7 +24,7 @@ public class Edge {
         this.nodeTwo = nodeTwo;
         this.dirOne = "";
         this.dirTwo = "";
-        this.ID = nodeOne.getID() + ":" + nodeTwo.getID();
+        this.ID = nodeOne.getID() + "_ " + nodeTwo.getID();
         setUp();
     }
 
@@ -48,13 +48,13 @@ public class Edge {
         return this.nodeTwo;
     }
 
-    public Node getOtherNode(Node node) {
+    public Node getOtherNode(Node node) throws InvalidNodeException {
         if(node.equals(nodeOne)){
             return nodeTwo;
         }else if(node.equals(nodeTwo)){
             return nodeOne;
         }else{
-            return null;
+            throw new InvalidNodeException("this node is not part of this edge");
         }
     }
 
@@ -93,5 +93,6 @@ public class Edge {
     public void deleteConnection() {
         nodeOne.removeConnection(this);
         nodeTwo.removeConnection(this);
+        //edgeDatabase.deleteEdge(this);
     }
 }

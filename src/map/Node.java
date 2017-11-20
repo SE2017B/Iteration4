@@ -10,6 +10,8 @@ package map;
 
 import exceptions.InvalidNodeException;
 
+import database.nodeDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,9 +98,13 @@ public class Node{
     }
 
     public Edge getEdgeOf(Node node){
+        try {
             for (Edge e : this.connections) {
                 if (e.getOtherNode(this) == node) return e;
             }
+        }catch (Exception e) {
+            return null;
+        }
         return null;
     }
 
@@ -193,5 +199,6 @@ public class Node{
         for(int i = 0;i < connections.size(); i++){
             connections.get(i).deleteConnection();
         }
+        nodeDatabase.deleteNode(this);
     }
 }

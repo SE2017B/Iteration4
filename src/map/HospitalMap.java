@@ -7,6 +7,8 @@
 */
 
 package map;
+import database.edgeDatabase;
+import database.nodeDatabase;
 import exceptions.InvalidNodeException;
 import search.AStarSearch;
 import search.SearchContext;
@@ -35,6 +37,7 @@ public class HospitalMap{
 
     public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
         nodeMap.add(new Node(ID,x,y,floor,building,type,longName,shortName, team));
+        //nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
 
     public void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
@@ -45,6 +48,7 @@ public class HospitalMap{
         node.setX(x);
         node.setY(y);
         node.setType(type);
+        //nodeDatabase.modifyNode(node);
     }
 
     public void removeNode(Node node){
@@ -71,6 +75,7 @@ public class HospitalMap{
         } catch (Exception e){
             throw new InvalidNodeException("the edge does not contain the old node");
         }
+        //edgeDatabase.modifyEdge(edge);
     }
 
     public ArrayList<Node> getNodeMap() {
