@@ -251,7 +251,7 @@ public class AddNodeController implements ControllableScreen {
     //comands for button cancel press
     public void cancelPressed(ActionEvent e) {
         System.out.println("Cancel Pressed");
-        parent.setScreen(ScreenController.AdminMenuID);
+        clearInputs();
     }
 
     public void returnPressed(ActionEvent e) {
@@ -312,6 +312,10 @@ public class AddNodeController implements ControllableScreen {
             nodeLocation.setVisible(true);
         }
 
+    }
+
+    public void clearInputs(){
+        //clear all the text and options from UI inputs
     }
 
 

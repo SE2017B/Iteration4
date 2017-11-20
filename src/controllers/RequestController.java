@@ -119,7 +119,7 @@ public class RequestController implements ControllableScreen{
 
     public void logoutPressed(ActionEvent e){
         System.out.println("Logout Pressed");
-        parent.setScreen(ScreenController.MainID);
+        parent.setScreen(ScreenController.LogoutID);
     }
 
     public void editPressed(ActionEvent e){

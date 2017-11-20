@@ -8,10 +8,18 @@
 
 package controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import kioskEngine.KioskEngine;
 
 import java.io.IOException;
@@ -85,12 +93,34 @@ public class ScreenController extends StackPane {
     //set the screen currently being displayed on the pane
     public boolean setScreen(String name){
         if(screens.containsKey(name)){
+
             if(!getChildren().isEmpty()){
-                getChildren().remove(0);
+                controllers.get(name).onShow();
+                Timeline fade = new Timeline(
+                        new KeyFrame(Duration.ZERO, new KeyValue(opacityProperty(),
+                                1.0)),
+                        new KeyFrame(new Duration(100), new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent t) {
+                                getChildren().remove(0);                    //remove the displayed screen
+                                getChildren().add(0, screens.get(name));     //add the screen
+                                Timeline fadeIn = new Timeline(
+                                        new KeyFrame(Duration.ZERO, new KeyValue(opacityProperty(), 0.0)),
+                                        new KeyFrame(new Duration(80), new KeyValue(opacityProperty(), 1.0)));
+                                fadeIn.play();
+
+                            }
+                        }, new KeyValue(opacityProperty(), 0.0)));
+                fade.play();
             }
-            getChildren().add(screens.get(name));
-            controllers.get(name).onShow();
+            else {
+                getChildren().add(screens.get(name));
+                controllers.get(name).onShow();
+            }
             return true;
+
+
+
         }
         System.out.println("Set Screen Failed");
         return false;
