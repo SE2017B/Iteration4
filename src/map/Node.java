@@ -56,8 +56,10 @@ public class Node{
 
     //This only deletes all the edges, but not the node itself. Should we create a deconstructor?
     public void deleteNode() {
-        for(int i = 0;i < connections.size(); i++){
-            connections.get(i).deleteConnection();
+        int size = connections.size();
+        for(int i = 0; i < size; i++){
+            //have to delete 0 index each time because array shrinks after each iteration
+            connections.get(0).deleteConnection();
         }
         //nodeDatabase.deleteNode(this);
     }

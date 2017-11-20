@@ -112,6 +112,7 @@ public class NodeTest {
     //"No suitable driver found for jdbc:derby:teamHDB;create=true
     @Test
     public void testDeleteNode(){
+        System.out.println("" + N1.getConnections());
         N1.deleteNode();
         ArrayList<Edge> edges = new ArrayList<>();
 
