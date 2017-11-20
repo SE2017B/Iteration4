@@ -1,5 +1,6 @@
 package search;
 
+import exceptions.InvalidNodeException;
 import map.Node;
 import map.Path;
 
@@ -9,7 +10,7 @@ public class BreadthFirstSearch implements SearchStrategy {
     public BreadthFirstSearch(){}
 
     @Override
-    public Path findPath(Node start, Node end) {
+    public Path findPath(Node start, Node end){
         ArrayList<Path> frontier = new ArrayList<>();
         Path first = new Path();
         first.addToPath(start);

@@ -34,32 +34,50 @@ public class Edge {
         this.nodeTwo.addConnection(this);
     }
 
+    public void replaceNode(Node oldNode, Node newNode) throws InvalidNodeException {
+        if(oldNode.equals(nodeOne)){
+            nodeOne.removeConnection(this);
+            nodeOne = newNode;
+        }else if(oldNode.equals(nodeTwo)){
+            nodeTwo.removeConnection(this);
+            nodeTwo = newNode;
+        }else{
+            throw new InvalidNodeException("this node is not part of this edge");
+        }
+        setUp();
+    }
+
+    public void deleteConnection() {
+        nodeOne.removeConnection(this);
+        nodeTwo.removeConnection(this);
+    }
+
     //Getters
-    public String getID(){
-        return ID;
-    }
-    public double getCost() {
-        return cost;
-    }
     public Node getNodeOne(){
         return this.nodeOne;
     }
     public Node getNodeTwo(){
         return this.nodeTwo;
     }
+    public String getID(){
+        return ID;
+    }
+    public double getCost() {
+        return cost;
+    }
 
-    //should this throw an exception for if the given node is not attached to the edge?
-    public Node getOtherNode(Node node) {
+    public Node getOtherNode(Node node){
         if(node.equals(nodeOne)){
             return nodeTwo;
         }else if(node.equals(nodeTwo)){
             return nodeOne;
         }else{
+            System.out.println("This node is not part of this edge");
             return null;
         }
     }
 
-    public String getDir(Node node) throws InvalidNodeException {
+    public String getDir(Node node) throws InvalidNodeException{
         if(node.equals(nodeOne)){
             return dirOne;
         }else if(node.equals(nodeTwo)){
@@ -69,30 +87,11 @@ public class Edge {
         }
     }
 
+    //Setters
     public void setDirOne(String dirOne) {
         this.dirOne = dirOne;
     }
-
     public void setDirTwo(String dirTwo) {
         this.dirTwo = dirTwo;
-    }
-
-    public void replaceNode(Node oldNode,Node newNode) throws InvalidNodeException {
-        if(oldNode.equals(nodeOne)){
-            nodeOne = newNode;
-            nodeOne.removeConnection(this);
-        }else if(oldNode.equals(nodeTwo)){
-            nodeTwo = newNode;
-            nodeTwo.removeConnection(this);
-        }else{
-            throw new InvalidNodeException("this node is not part of this edge");
-        }
-
-        setUp();
-    }
-
-    public void deleteConnection() {
-        nodeOne.removeConnection(this);
-        nodeTwo.removeConnection(this);
     }
 }

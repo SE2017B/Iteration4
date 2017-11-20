@@ -10,16 +10,12 @@ package TestMap;
 
 import exceptions.InvalidNodeException;
 import map.*;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static map.FloorNumber.FLOOR_LONE;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class EdgeTest {
     public EdgeTest(){}
@@ -27,6 +23,7 @@ public class EdgeTest {
     private Node A;
     private Node B;
     private Node C;
+    private Node D;
     private Edge ABEdge;
     private Edge BCEdge;
     private Edge CAEdge;
@@ -36,13 +33,14 @@ public class EdgeTest {
         A = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1", "team");
         B = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2", "team");
         C = new Node("A3", "200", "200", "L1", "Tower", "Desk", "Long3", "Short3", "team");
+        D = new Node("A4", "200", "200", "3", "Tower", "Desk", "Long4", "Short4", "team");
 
         ABEdge = new Edge(A, B);
         BCEdge = new Edge(B, C);
         CAEdge = new Edge(C, A);
     }
 
-    //test Edge parameters
+    //---------------------------BEGIN TEST EDGE PARAMS-------------------------------------------//
     @Test
     public void testNode1(){
         assertEquals(A, ABEdge.getNodeOne());
@@ -71,9 +69,10 @@ public class EdgeTest {
 
         assertEquals(edges, A.getConnections());
     }
+    //---------------------------END TEST EDGE PARAMS-------------------------------------------//
 
     @Test
-    public void testGetOtherNode(){
+    public void testGetOtherNode() throws InvalidNodeException{
         assertEquals(B, ABEdge.getOtherNode(A));
     }
 
@@ -85,18 +84,54 @@ public class EdgeTest {
     }
 
     @Test(expected = InvalidNodeException.class)
-    public void testgetDirFail() throws InvalidNodeException{
+    public void testGetDirFail() throws InvalidNodeException{
         ABEdge.getDir(C);
     }
 
+    //---------------------------BEGIN TEST replaceNode()-------------------------------------------//
     @Test
-    public void testReplaceNode(){
+    public void testNodeReplaced() throws InvalidNodeException{
+        //replace B node with D node
+        ABEdge.replaceNode(B, D);
 
+        assertEquals(D, ABEdge.getNodeTwo());
     }
+
+    @Test
+    public void testConnectionAdded() throws InvalidNodeException{
+        //replace B node with D node
+        ABEdge.replaceNode(B, D);
+        ArrayList<Edge> edges = new ArrayList<>();
+        edges.add(ABEdge);
+
+        //check that ABEdge was added to D's list of edges
+        assertEquals(edges, D.getConnections());
+    }
+
+    @Test
+    public void testConnectionRemoved() throws InvalidNodeException{
+        //replace B node with D node
+        ABEdge.replaceNode(B, D);
+        ArrayList<Edge> edges = new ArrayList<>();
+        //ABEdge should be removed from B's connections
+        edges.add(BCEdge);
+
+        //check that ABEdge was removed from B's list of edges
+        assertEquals(edges, B.getConnections());
+    }
+
+    @Test(expected = InvalidNodeException.class)
+    public void testReplaceNodeFail() throws InvalidNodeException{
+        ABEdge.replaceNode(C, D);
+    }
+    //---------------------------END TEST EDGE replaceNode()-------------------------------------------//
 
     @Test
     public void testDeleteConnection(){
+        ABEdge.deleteConnection();
+        ArrayList<Edge> edges = new ArrayList<>();
+        edges.add(BCEdge);
 
+        assertEquals(edges, B.getConnections());
     }
-
 }
