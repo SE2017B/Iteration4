@@ -23,8 +23,10 @@ public class Staff{
     private boolean available;
     private Department department;
     private Service jobType;
+    private boolean admin;
     private LinkedList<ServiceRequest> currentRequests;
     private ArrayList<ServiceRequest> completedRequests;
+    private ArrayList<String> languages = new ArrayList<>();
 
     public Staff(String username, String password, String jobTitle, String fullName, int ID, boolean available, Department department, Service jobType, LinkedList<ServiceRequest> currentRequests, ArrayList<ServiceRequest> completedRequests) {
         this.username = username;
@@ -37,6 +39,19 @@ public class Staff{
         this.jobType = jobType;
         this.currentRequests = currentRequests;
         this.completedRequests = completedRequests;
+    }
+
+    public Staff(String username, String password, String jobTitle, String fullName, int ID, Service jobType){
+
+        this.username = username;
+        this.password = password;
+        this.jobTitle = jobTitle;
+        this.fullName = fullName;
+        this.ID = ID;
+        this.jobType = jobType;
+        currentRequests = new LinkedList<ServiceRequest>();
+        completedRequests = new ArrayList<ServiceRequest>();
+
     }
 
     //gives the staff member a new request from the backlog, and if the backlog is empty, frees the staff member.
@@ -124,5 +139,17 @@ public class Staff{
     }
     public void setCompletedRequests(ArrayList<ServiceRequest> completedRequests) {
         this.completedRequests = completedRequests;
+    }
+    public boolean isAdmin() {
+        return admin;
+    }
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+    public void setLanguage(String language){
+        this.languages.add(language);
+    }
+    public ArrayList<String> getLanguages() {
+        return languages;
     }
 }

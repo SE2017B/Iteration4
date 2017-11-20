@@ -26,8 +26,9 @@ public class DepartmentSubsystem {
     }
     //login function for staff members
     public boolean login(String username, String password){
-        return false;
+        return mainDatabase.;
     }
+
     //obtains the list of services with noted department from requestServices
     public ArrayList<Service> getService(String department){
         return null;

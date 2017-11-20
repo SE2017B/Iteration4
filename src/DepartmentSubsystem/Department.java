@@ -8,50 +8,32 @@
 
 package DepartmentSubsystem;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.ArrayList;
 
-public abstract class Department {
+public class Department{
     private String type;
     private ArrayList<Staff> personel;
     private ArrayList<Service> services;
-    private Backlog backlog;
+    private HashMap<Integer, ServiceRequest> backlog;
 
+    //Constructor
     public Department(){
 
     }
 
-    //Adds a request to
+    //Adds a request to the backlog
     public void addRequest(int requestID, ServiceRequest serviceRequest){
-        backlog.addRequest(requestID, serviceRequest);
+        backlog.put(requestID, serviceRequest);
     }
 
+    //returns all the available services
     public ArrayList<Service> getServices(){
         return this.services;
     }
 
-    public void completeRequest(int requestID){
-        Backlog.removeRequest(requestID);
-    }
-
-    private class Backlog {
-        Department department;
-        HashMap<Integer, ServiceRequest> requests;
-
-        Backlog() {
-
-        }
-
-        //Adds a request
-        void addRequest(int requestID, ServiceRequest serviceRequest) {
-            requests.put(requestID, serviceRequest);
-        }
-
-        ArrayList<ServiceRequest> getServicesRequests() {
-            return new ArrayList<ServiceRequest>(requests.values());
-        }
-
-        void removeRequest(int requestID){
-            requests.remove(requestID);
-        }
+    //Removes a request (this is done when a request is cancelled or completed
+    public void removeRequest(int requestID){
+        backlog.remove(requestID);
     }
 }

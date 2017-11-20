@@ -118,7 +118,7 @@
                </children>
             </GridPane>
             <ChoiceBox fx:id="staffDropDown" disable="true" prefHeight="40.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <MenuButton fx:id="serviceDropDown" mnemonicParsing="false" prefHeight="40.0" prefWidth="235.0" text="Select a service" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <MenuButton fx:id="serviceDropDown" mnemonicParsing="false" prefHeight="40.0" prefWidth="235.0" text="Select a DepartmentSubsystem" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#serviceSelected" text="Food" />
                   <MenuItem mnemonicParsing="false" onAction="#serviceSelected" text="Translator" />

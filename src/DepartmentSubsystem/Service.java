@@ -8,6 +8,8 @@
 
 package DepartmentSubsystem;
 
+import javafx.event.ActionEvent;
+
 import java.util.ArrayList;
 
 public abstract class Service{
@@ -16,7 +18,7 @@ public abstract class Service{
     private ArrayList<Staff> eligibleStaff;
 
     //CONSTRUCTOR IS NOT NECESSARY
-
+    public void showFields(ActionEvent e){};
     //Getters and Setters
     public Department getDepartment() {
         return department;

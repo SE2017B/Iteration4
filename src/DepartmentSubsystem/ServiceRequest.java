@@ -9,16 +9,16 @@
 package DepartmentSubsystem;
 
 import map.Node;
+import java.util.Date;
 
 public class ServiceRequest{
     private Service service;
     private int requestID;
     private Node location;
-    private String date = "";
+    private Date date;
     private Staff assignedPersonnel;
 
-
-    public ServiceRequest(Service service, int requestID, Node location, String date, Staff assignedPersonnel) {
+    public ServiceRequest(Service service, int requestID, Node location, Date date, Staff assignedPersonnel) {
         this.service = service;
         this.requestID = requestID;
         this.location = location;
@@ -45,10 +45,10 @@ public class ServiceRequest{
     public void setLocation(Node location) {
         this.location = location;
     }
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
     public Staff getAssignedPersonnel() {

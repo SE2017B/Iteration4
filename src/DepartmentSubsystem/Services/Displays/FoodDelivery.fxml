@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Displays.FoodDelivery">
+   <children>
+      <MenuButton layoutX="224.0" layoutY="91.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="153.0" text="Menu Options">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Hamburger" />
+          <MenuItem mnemonicParsing="false" text="Cheburek" />
+        </items>
+      </MenuButton>
+      <TextField layoutX="183.0" layoutY="264.0" prefHeight="43.0" prefWidth="235.0" promptText="Possible Allergies" />
+   </children>
+</AnchorPane>
