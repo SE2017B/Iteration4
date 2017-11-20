@@ -8,6 +8,7 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
 import map.HospitalMap;
 import map.Node;
@@ -56,10 +57,10 @@ public class PathController implements ControllableScreen{
     private Label lbldir;
 
     @FXML
-    private ChoiceBox<Node> startChoice;
+    private JFXTextField startChoice;
 
     @FXML
-    private ChoiceBox<Node> endChoice;
+    private JFXTextField endChoice;
 
     @FXML
     private Pane mapPane;
@@ -127,21 +128,12 @@ public class PathController implements ControllableScreen{
     }
 
 
-/**
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
         System.out.println("Enter Pressed");
         //Remove last path from screen
-        clearPaths();
-        System.out.println(startChoice.getValue() + "->" + endChoice.getValue());
-        path = HospitalMap.findPath(startChoice.getValue(),endChoice.getValue());
-        path = HospitalMap.findPath(startChoice.getValue(),endChoice.getValue());
-        System.out.println(path);
-        diplayPath(path);
-
-
     }
- **/
+
     public void cancelPressed(ActionEvent e)
     {
         System.out.println("Cancel Pressed");

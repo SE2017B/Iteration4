@@ -25,8 +25,6 @@ public class ScreenController extends StackPane {
     public static String AdminMenuFile = "/fxml/AdminMenu.fxml";
     public static String FilterID = "Filter";
     public static String FilterFile = "/fxml/Filter.fxml";
-    public static String LoginID = "Login";
-    public static String LoginFile = "/fxml/Login.fxml";
     public static String LogoutID = "LogoutID";
     public static String LogoutFile = "/fxml/Logout.fxml";
     public static String MainID = "Main";

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
    <children>
       <GridPane layoutX="456.0" layoutY="303.0" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -31,7 +31,7 @@
           <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="73.79997558593755" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Staff Name" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Label fx:id="staffNameLabel" text="Staff Name" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
@@ -83,7 +83,7 @@
                                        </font>
                                     </Label>
                                     <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                    <JFXButton fx:id="btncancel" onAction="#requestCancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                    <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                                     <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                     <JFXTimePicker fx:id="timeMenu" defaultColor="#34ffeb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                     <MenuButton fx:id="serviceDropDown" mnemonicParsing="false" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
@@ -130,7 +130,7 @@
                                                       <Font size="24.0" />
                                                    </font></Label>
                                                 <JFXButton fx:id="btncreate1" onAction="#resolveServicePressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Resolve" GridPane.rowIndex="3" />
-                                                <JFXButton fx:id="btnserviceResCancel" onAction="#cancelResolvePressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <JFXButton fx:id="btnserviceResCancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                           </GridPane>
                                        </children>
@@ -185,8 +185,8 @@
                   </Tab>
                </tabs>
             </JFXTabPane>
-            <JFXButton fx:id="btnLogOut" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Logout" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <JFXButton fx:id="btnEditMap" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Edit Map" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <JFXButton fx:id="btnLogOut" buttonType="RAISED" onAction="#logoutPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Logout" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <JFXButton fx:id="btnEditMap" onAction="#editPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Edit Map" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

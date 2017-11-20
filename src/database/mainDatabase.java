@@ -184,7 +184,7 @@ public class mainDatabase {
                     } else {
                         System.out.println(" ");
                     }
-                    allNodes.get(nodeOne);
+                    //allNodes.get(nodeOne);
                 }
 
                 inputStreamEdges.close();

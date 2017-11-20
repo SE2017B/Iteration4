@@ -20,7 +20,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import map.Node;
-
+import service.Staff;
 
 
 public class MainController implements ControllableScreen{
@@ -37,7 +37,7 @@ public class MainController implements ControllableScreen{
 
 
     public void init(){
-        loginPane = new LoginPane();
+        loginPane = new LoginPane(this);
         loginScene = new Scene(loginPane,600,400);
         loginStage = new Stage();
         loginStage.setScene(loginScene);
@@ -67,6 +67,8 @@ public class MainController implements ControllableScreen{
         System.out.println("Search Pressed");
     }
     //when filter button is pressed go to filter screen
+
+
     public void filterPressed(ActionEvent e){
         System.out.println("Filter Pressed");
         parent.setScreen(ScreenController.FilterID);
@@ -92,6 +94,14 @@ public class MainController implements ControllableScreen{
 
     //map scale set up
     public void setMapScale(double scale){
+
+    }
+
+    //process login from login pane
+    public void successfulLogin(Staff staff){
+        loginStage.close();
+        parent.setScreen(ScreenController.RequestID);
+        ((RequestController)parent.getController(parent.RequestID)).setForStaff(staff);
 
     }
 

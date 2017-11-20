@@ -33,7 +33,6 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
         myScreenController.loadScreen(ScreenController.AdminMenuID, ScreenController.AdminMenuFile);
         myScreenController.loadScreen(ScreenController.FilterID, ScreenController.FilterFile);
-        myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
         myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
         myScreenController.loadScreen(ScreenController.MainID, ScreenController.MainFile);
         //myScreenController.loadScreen(ScreenController.NodeConfirmID, ScreenController.NodeConfirmFile);
@@ -45,7 +44,7 @@ public class Main extends Application {
 
         Group root = new Group();
         root.getChildren().addAll(myScreenController);
-        Scene scene = new Scene(root, 1280,720);
+        Scene scene = new Scene(root, 1280,800);
         String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
         scene.getStylesheets().add(style);
         primaryStage.setScene(scene);
@@ -72,7 +71,7 @@ public class Main extends Application {
         }
 
         Node stub = new Node("1234567890","1000","400","01","Tower","ELEV","STUB","STUB");
-        HospitalMap.addNode(stub);
+
 
         ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,stub,"This is a test");
         req.giveRequest();

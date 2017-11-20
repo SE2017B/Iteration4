@@ -8,6 +8,7 @@
 
 package controllers;
 
+import javafx.scene.layout.Pane;
 import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
@@ -54,6 +55,7 @@ public class RequestController implements ControllableScreen{
     @FXML
     private ChoiceBox staffDropDown;
 
+
     @FXML
     private MenuButton hourDropDown;
 
@@ -75,6 +77,11 @@ public class RequestController implements ControllableScreen{
     @FXML
     private ChoiceBox locationChoiceBox;
 
+
+    @FXML
+    private Label staffNameLabel;
+
+
     public void init(){
     }
 
@@ -87,7 +94,10 @@ public class RequestController implements ControllableScreen{
 
     }
 
-    public void createPressed(ActionEvent e){
+    public void resolveServicePressed(ActionEvent e){//todo
+        }
+
+    public void requestCreatePressed(ActionEvent e){
         staffMember = (Staff)staffDropDown.getValue();
         if(serviceType.equals("Food")){
             ServiceRequest req = new ServiceRequest(staffMember.getJobType(),requestIDCount, (Node)locationChoiceBox.getValue(),infoText.getText());
@@ -105,7 +115,16 @@ public class RequestController implements ControllableScreen{
     }
     public void cancelPressed(ActionEvent e){
         System.out.println("Cancel Pressed");
-        parent.setScreen(ScreenController.AdminMenuID);
+    }
+
+    public void logoutPressed(ActionEvent e){
+        System.out.println("Logout Pressed");
+        parent.setScreen(ScreenController.MainID);
+    }
+
+    public void editPressed(ActionEvent e){
+        System.out.println("Logout Pressed");
+        parent.setScreen(ScreenController.AddNodeID);
     }
 
 
@@ -153,5 +172,10 @@ public class RequestController implements ControllableScreen{
     public void dateSelected(ActionEvent e){
         System.out.println("Date Selected" );
         date = ((DatePicker)e.getSource()).getValue();
+    }
+
+    public void setForStaff(Staff staff){
+        staffMember = staff;
+        staffNameLabel.setText(staff.getFullName());
     }
 }

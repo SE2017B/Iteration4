@@ -203,11 +203,19 @@ public class AddNodeController implements ControllableScreen {
         }
     }
 
+    public void removeEnterPressed(ActionEvent e) {
+        System.out.println("Remove entered");
+    }
+
+    public void removeEdgeEnterPressed(ActionEvent e) {
+        System.out.println("Remove entered");
+    }
+
     //Action upon pressing enter
     //variables for all text fields is set up and populated
     //add node command is executed
     //user is returned to menu screen
-    public void enterPressed(ActionEvent e) {
+    public void addEnterPressed(ActionEvent e) {
         nodeID = txtfldID.getText();
         if (nodeID.length() == 10) {
             //x and y and ints
@@ -243,6 +251,11 @@ public class AddNodeController implements ControllableScreen {
     //comands for button cancel press
     public void cancelPressed(ActionEvent e) {
         System.out.println("Cancel Pressed");
+        parent.setScreen(ScreenController.AdminMenuID);
+    }
+
+    public void returnPressed(ActionEvent e) {
+        System.out.println("Return Pressed");
         parent.setScreen(ScreenController.AdminMenuID);
     }
 
