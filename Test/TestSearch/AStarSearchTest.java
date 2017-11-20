@@ -442,7 +442,7 @@ public class AStarSearchTest {
         stops.add(N6_2);
         String answer = search.findPathPitStop(stops).toString();
         System.out.println(answer);
-        assertEquals("[Short17, Short13, Short14, Short15, Short9, Short9_2, Short8_2, Short5_2, Short4_2, Short7_2, Short6_2]", answer);
+        assertEquals("[Short17, Short13, Short14, Short15, Short9, Short9_2, Short8_2, Short5_2, Short4_2, Short4_2, Short7_2, Short6_2]", answer);
     }
 
     @Test public void testSearchPitStop3(){     //Node 11 to Node 2 to Node 10 to Node 3
@@ -453,7 +453,7 @@ public class AStarSearchTest {
         stops.add(N3);
         String answer = search.findPathPitStop(stops).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short1, Short6, Short7, Short10, Short7, Short8, Short9, Short3]", answer);
+        assertEquals("[Short1, Short2, Short2, Short1, Short6, Short7, Short10, Short10, Short7, Short8, Short9, Short3]", answer);
     }
 
     // getEuclideanDistance tests
