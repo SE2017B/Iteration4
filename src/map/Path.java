@@ -26,7 +26,7 @@ public class Path implements Comparable<Path> {
         this.path.add(position, node);
     }
     public void addToPath(Path path){
-        this.path.addAll(path.getPath());
+            this.path.addAll(path.getPath());
     }
     public void addDirections(String direction){
         this.directions.add(direction);
@@ -53,12 +53,34 @@ public class Path implements Comparable<Path> {
         int PVY = 0;
         int NVX = 0;
         int NVY = 0;
+        int VX = 0;
+        int VY = 0;
+        boolean prevElevator = false;
 
         for(int i = 1; i < path.size() - 1; i++){
 //            PVX = path.get(i-1).getX();
 //            PVY = path.get(i-1).getY();
 //            NVX = path.get(i+1).getX();
 //            NVY = path.get(i+1).getY();
+//            VX = path.get(i).getX();
+//            VY = path.get(i).getY();
+//
+//
+//            double numerator = (PVX - VX) * (VX - NVX) + (PVY - VY) * (VY - NVY);
+//            double denominator = Math.sqrt(Math.pow(PVX - VX, 2) + Math.pow(PVY - VY, 2)) * Math.sqrt(Math.pow(VX - NVX, 2) + Math.pow(VY - NVX, 2));
+//            double cos = numerator / denominator;
+//            double angle = Math.acos(cos);
+
+            int Vector1_2X = path.get(i).getX() - path.get(i-1).getX();
+            int Vector1_2Y = path.get(i).getY() - path.get(i-1).getY();
+            int Vector1_2Z = path.get(i).getFloor().getNodeMapping() - path.get(i-1).getFloor().getNodeMapping();
+            int Vector2_3X = path.get(i+1).getX() - path.get(i).getX();
+            int Vector2_3Y = path.get(i+1).getY() - path.get(i).getY();
+            int Vector2_3Z = path.get(i+1).getFloor().getNodeMapping() - path.get(i).getFloor().getNodeMapping();
+
+            double dot = Vector1_2X * Vector2_3X + Vector1_2Y * Vector2_3Y;
+            double det = Vector1_2X * Vector2_3Y - Vector2_3X * Vector1_2Y;
+            double angle = Math.toDegrees(Math.atan2(det, dot));
 //
 //            int num = (PVX*NVX + PVY*NVY);
 //            double den = (Math.sqrt(Math.pow(PVX, 2) + Math.pow(PVY, 2)) * (Math.sqrt(Math.pow(NVX, 2) + Math.pow(NVY, 2))) );
@@ -66,31 +88,45 @@ public class Path implements Comparable<Path> {
 //            System.out.println(cos);
 //            System.out.println(Math.acos(cos));
 //            double angle = Math.acos(cos);
-            double side1 = path.get(i-1).getEuclidianDistance(path.get(i));
-            double side2 = path.get(i).getEuclidianDistance(path.get(i+1));
-            double side3 = path.get(i-1).getEuclidianDistance(path.get(i+1));
-
-            ArrayList<Double> sides = new ArrayList<>();
-            sides.add(side1);
-            sides.add(side2);
-            sides.add(side3);
-            sides.sort(Collections.reverseOrder());
-
-            double cosBiggest = (Math.pow(side1, 2) + Math.pow(side2, 2) - Math.pow(side3, 2)) / (2 * sides.get(1) * sides.get(2));
-            double angle = Math.toDegrees(Math.acos(cosBiggest));
-            if (!sides.get(0).equals(side3)) {
-                double sin = (side3 * Math.sin(angle)) / sides.get(0);
-                angle = Math.toDegrees(Math.asin(sin));
+//            double side1 = path.get(i-1).getEuclidianDistance(path.get(i));
+//            double side2 = path.get(i).getEuclidianDistance(path.get(i+1));
+//            double side3 = path.get(i-1).getEuclidianDistance(path.get(i+1));
+//
+//
+//            ArrayList<Double> sides = new ArrayList<>();
+//            sides.add(side1);
+//            sides.add(side2);
+//            sides.add(side3);
+//            sides.sort(Collections.reverseOrder());
+//
+//            double cosBiggest = (Math.pow(side1, 2) + Math.pow(side2, 2) - Math.pow(side3, 2)) / (2 * sides.get(1) * sides.get(2));
+//            double angle = Math.toDegrees(Math.acos(cosBiggest));
+//            if (!sides.get(0).equals(side3)) {
+//                double sin = (side3 * Math.sin(angle)) / sides.get(0);
+//                angle = Math.toDegrees(Math.asin(sin));
+//            }
+            if(Vector1_2Z > Vector2_3Z && !prevElevator){
+                directions.add("Go up " + path.get(i).getShortName());
+                prevElevator = true;
+                continue;
+            } else if (Vector1_2Z < Vector2_3Z && !prevElevator) {
+                directions.add("Go down " + path.get(i).getShortName());
+                prevElevator = true;
+                continue;
             }
 
-            if(angle >= 20 && angle <= 160){
-                directions.add("take a right at this " + path.get(i).getShortName());
-            } else if(angle >= 200 && angle <= 340){
-                directions.add("take a left at this " + path.get(i).getShortName());
+            if(angle >= -160 && angle <= -20){
+                if(prevElevator) directions.add("Turn right from " + path.get(i).getShortName());
+                 else directions.add("Take a right at this " + path.get(i).getShortName());
+            }
+            else if(angle >= 20 && angle <= 160){
+                if(prevElevator) directions.add("Turn left from " + path.get(i).getShortName());
+                else directions.add("Take a left at this " + path.get(i).getShortName());
             }else{
-                directions.add("go straight through " + path.get(i).getShortName());
+                if(prevElevator) directions.add("Go straight from " + path.get(i).getShortName());
+                else directions.add("Go straight through " + path.get(i).getShortName());
             }
-
+            prevElevator = false;
         }
         return this;
     }

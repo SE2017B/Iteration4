@@ -258,6 +258,8 @@ public class AStarSearchTest {
     public void testMap3() throws InterruptedException{
         String answer = search.findPath(N1, N12).toString();
         System.out.println(answer);
+        String directions = search.findPath(N1, N12).findDirections().getDirections().toString();
+        System.out.println(directions);
         assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short12]", answer);
     }
     @Test
@@ -394,6 +396,8 @@ public class AStarSearchTest {
     @Test public void testSearchFloor1(){   //Node 1 to Node 19_2
         String answer = search.findPath(N1, N19_2).toString();
         System.out.println(answer);
+        String directions = search.findPath(N1, N19_2).findDirections().getDirections().toString();
+        System.out.println(directions);
         assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
     }
     @Test public void testSearchFloor1Reverse(){    //Node 19_2 to Node 1
