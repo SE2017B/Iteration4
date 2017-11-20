@@ -22,11 +22,11 @@ public class nodeDatabase {
             conn.setAutoCommit(false);
 
             DatabaseMetaData meta = conn.getMetaData();
-            ResultSet res = meta.getTables(null, null, "MAPHNODES", null);
+            ResultSet res = meta.getTables(null, null, "NODES", null);
 
             if (!res.next()) {
                 Statement stmtCreate1 = conn.createStatement();
-                String createNodesTable = ("CREATE TABLE mapHNodes" +
+                String createNodesTable = ("CREATE TABLE nodes" +
                         "(nodeID VARCHAR(20) PRIMARY KEY," +
                         "xCoord VARCHAR(20)," +
                         "yCoord VARCHAR(20)," +
@@ -35,7 +35,9 @@ public class nodeDatabase {
                         "nodeType VARCHAR(20)," +
                         "longName VARCHAR(50)," +
                         "shortName VARCHAR(30)," +
-                        "teamAssigned VARCHAR(20))");
+                        "teamAssigned VARCHAR(20)," +
+                        "CONSTRAINT nodeID_start_FK FOREIGN KEY (nodeID) REFERENCES edges(startNode) ON DELETE CASCADE," +
+                        "CONSTRAINT nodeID_end_FK FOREIGN KEY (nodeID) REFERENCES edges(endNode) ON DELETE CASCADE)");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
@@ -45,12 +47,12 @@ public class nodeDatabase {
                 conn.close();
             } else {
                 Statement stmtDelete1 = conn.createStatement();
-                String deleteNodesTable = ("DROP TABLE mapHNodes");
+                String deleteNodesTable = ("DROP TABLE nodes");
                 int rsetDelete1 = stmtDelete1.executeUpdate(deleteNodesTable);
                 stmtDelete1.close();
 
                 Statement stmtCreate1 = conn.createStatement();
-                String createNodesTable = ("CREATE TABLE mapHNodes" +
+                String createNodesTable = ("CREATE TABLE nodes" +
                         "(nodeID VARCHAR(20) PRIMARY KEY," +
                         "xCoord VARCHAR(20)," +
                         "yCoord VARCHAR(20)," +
@@ -59,7 +61,9 @@ public class nodeDatabase {
                         "nodeType VARCHAR(20)," +
                         "longName VARCHAR(50)," +
                         "shortName VARCHAR(30)," +
-                        "teamAssigned VARCHAR(20))");
+                        "teamAssigned VARCHAR(20)," +
+                        "CONSTRAINT nodeID_start_FK FOREIGN KEY (nodeID) REFERENCES edges(startNode) ON DELETE CASCADE," +
+                        "CONSTRAINT nodeID_end_FK FOREIGN KEY (nodeID) REFERENCES edges(endNode) ON DELETE CASCADE)");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
@@ -83,7 +87,7 @@ public class nodeDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement insertNode = conn.prepareStatement("INSERT INTO mapHNodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement insertNode = conn.prepareStatement("INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             for (int j = 1; j < mainDatabase.allNodes.get(j).getID().length(); j++) {
 
@@ -116,26 +120,26 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
 
     // Add new node to the node table
-    public static void addNode(String anyNodeID, String anyXcoord, String anyYcoord, String anyFloor, String anyBuilding, String anyNodeType, String anyName) {
+    public static void addNode(Node anyNode) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement addAnyNode = conn.prepareStatement("INSERT INTO mapHNodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement addAnyNode = conn.prepareStatement("INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            addAnyNode.setString(1, anyNodeID);
-            addAnyNode.setString(2, anyXcoord);
-            addAnyNode.setString(3, anyYcoord);
-            addAnyNode.setString(4, anyFloor);
-            addAnyNode.setString(5, anyBuilding);
-            addAnyNode.setString(6, anyNodeType);
-            addAnyNode.setString(7, anyName);
-            addAnyNode.setString(8, anyName);
-            addAnyNode.setString(9, "Team H");
+            addAnyNode.setString(1, anyNode.getID());
+            addAnyNode.setString(2, anyNode.getXString());
+            addAnyNode.setString(3, anyNode.getYString());
+            addAnyNode.setString(4, anyNode.getFloor());
+            addAnyNode.setString(5, anyNode.getBuilding());
+            addAnyNode.setString(6, anyNode.getType());
+            addAnyNode.setString(7, anyNode.getLongName());
+            addAnyNode.setString(8, anyNode.getShortName());
+            addAnyNode.setString(9, anyNode.getTeam());
 
             addAnyNode.executeUpdate();
-            System.out.println("Insert Node Successful for nodeID: " + anyNodeID);
+            System.out.println("Insert Node Successful for nodeID: " + anyNode.getID());
 
             conn.commit();
             addAnyNode.close();
@@ -144,195 +148,47 @@ public class nodeDatabase {
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-
-        // Add nodes to their ArrayLists
-        mainDatabase.allNodes.add(new Node(anyNodeID, anyXcoord, anyYcoord, anyFloor, anyBuilding, anyNodeType, anyName, anyName, "Team H"));
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Modify a node from the node table
     ///////////////////////////////////////////////////////////////////////////////
 
-    // Modify item(s) from corresponding ArrayList
-
     // Modify item(s) from node table
-
-    public static void modifyNode(String colAttr, String setCond, String anyNodeID) {
+    public static void modifyNode(Node anyNode) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            String code= "UPDATE MapHNodes SET "+ colAttr+ " = ? WHERE nodeID = ?";
+            String strModDrop = "DELETE FROM nodes WHERE nodeID = ?";
+            String strModAdd = "INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            PreparedStatement modifyAnyNode = conn.prepareStatement(code);
-
-            modifyAnyNode.setString(1, setCond);
-            modifyAnyNode.setString(2, anyNodeID);
-
-            modifyAnyNode.executeUpdate();
-            System.out.println("Update Node Successful!");
-
+            PreparedStatement modDropNode = conn.prepareStatement(strModDrop);
+            modDropNode.setString(1, anyNode.getID());
+            modDropNode.executeUpdate();
             conn.commit();
-            modifyAnyNode.close();
-            conn.close();
+            modDropNode.close();
 
+            PreparedStatement modAddNode = conn.prepareStatement(strModAdd);
+            modAddNode.setString(1, anyNode.getID());
+            modAddNode.setString(2, anyNode.getXString());
+            modAddNode.setString(3, anyNode.getYString());
+            modAddNode.setString(4, anyNode.getFloor());
+            modAddNode.setString(5, anyNode.getBuilding());
+            modAddNode.setString(6, anyNode.getType());
+            modAddNode.setString(7, anyNode.getLongName());
+            modAddNode.setString(8, anyNode.getShortName());
+            modAddNode.setString(9, anyNode.getTeam());
+            modDropNode.executeUpdate();
+            conn.commit();
+            System.out.println("Update Node Successful!");
+            modAddNode.close();
+            conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-
-
-        // Add nodes to their ArrayLists
-        int indexOf = mainDatabase.allNodes.indexOf(new Node(anyNodeID,"0","0","","","","","",""));
-
-        String tempID, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort, tempTeam = null;
-
-        switch (colAttr) {
-
-            case "nodeID":
-                tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempType = mainDatabase.allNodes.get(indexOf).getType();
-                tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(setCond, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort, tempTeam));
-                break;
-
-            case "xCoord":
-                tempID = mainDatabase.allNodes.get(indexOf).getID();
-                tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempType = mainDatabase.allNodes.get(indexOf).getType();
-                tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, setCond, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort, tempTeam));
-                break;
-
-            case "yCoord":
-
-                tempID = mainDatabase.allNodes.get(indexOf).getID();
-                tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempType = mainDatabase.allNodes.get(indexOf).getType();
-                tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, setCond, tempFloor, tempBuilding, tempType, tempLong, tempShort, tempTeam));
-                break;
-
-
-            case "floor":
-
-                tempID = mainDatabase.allNodes.get(indexOf).getID();
-                tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempType = mainDatabase.allNodes.get(indexOf).getType();
-                tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, setCond, tempBuilding, tempType, tempLong, tempShort, tempTeam));
-                break;
-
-
-            case "building":
-
-                tempID = mainDatabase.allNodes.get(indexOf).getID();
-                tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempType = mainDatabase.allNodes.get(indexOf).getType();
-                tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, setCond, tempType, tempLong, tempShort, tempTeam));
-                break;
-
-
-            case "nodeType":
-
-                tempID = mainDatabase.allNodes.get(indexOf).getID();
-                tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, setCond, tempLong, tempShort, tempTeam));
-                break;
-
-            case "longName":
-
-                tempID = mainDatabase.allNodes.get(indexOf).getID();
-                tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempType = mainDatabase.allNodes.get(indexOf).getType();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, setCond, tempShort, tempTeam));
-                break;
-
-
-            case "shortName":
-
-                tempID = mainDatabase.allNodes.get(indexOf).getID();
-                tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempType = mainDatabase.allNodes.get(indexOf).getType();
-                tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempTeam = mainDatabase.allNodes.get(indexOf).getTeam();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, setCond, tempTeam));
-                break;
-
-
-            case "teamAssigned":
-
-                tempID = mainDatabase.allNodes.get(indexOf).getID();
-                tempX = Integer.toString(mainDatabase.allNodes.get(indexOf).getX());
-                tempY = Integer.toString(mainDatabase.allNodes.get(indexOf).getY());
-                tempFloor = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempBuilding = mainDatabase.allNodes.get(indexOf).getFloor();
-                tempType = mainDatabase.allNodes.get(indexOf).getType();
-                tempLong = mainDatabase.allNodes.get(indexOf).getLongName();
-                tempShort = mainDatabase.allNodes.get(indexOf).getShortName();
-
-                mainDatabase.allNodes.remove(indexOf);
-                mainDatabase.allNodes.add(new Node(tempID, tempX, tempY, tempFloor, tempBuilding, tempType, tempLong, tempShort, setCond));
-                break;
-
-            default:
-                break;
-        }
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -352,8 +208,7 @@ public class nodeDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-
-            PreparedStatement deleteAnyNode = conn.prepareStatement("DELETE FROM mapHNodes WHERE nodeID = ?");
+            PreparedStatement deleteAnyNode = conn.prepareStatement("DELETE FROM nodes WHERE nodeID = ?");
 
             // set the corresponding param
             deleteAnyNode.setString(1, anyNodeID);
@@ -369,12 +224,6 @@ public class nodeDatabase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-        // Add nodes to their ArrayLists
-        int indexOf = mainDatabase.allNodes.indexOf(anyNode);
-
-        mainDatabase.allNodes.remove(indexOf);
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -387,7 +236,7 @@ public class nodeDatabase {
             conn.getMetaData();
 
             Statement selectAllNodes = conn.createStatement();
-            String allNodes = "SELECT * FROM MAPHNODES";
+            String allNodes = "SELECT * FROM NODES ORDER BY nodeID DESC";
             ResultSet rsetAllNodes = selectAllNodes.executeQuery(allNodes);
 
             String strNodeID = "";
@@ -430,7 +279,6 @@ public class nodeDatabase {
         }
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////
     // Read from Nodes CSV File and store columns in array lists
     ///////////////////////////////////////////////////////////////////////////////
@@ -460,7 +308,7 @@ public class nodeDatabase {
     // Write to a output Nodes csv file
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputNodesCSV() {
-        String outNodesFileName = "outputNodesTeamH.csv";
+        String outNodesFileName = "outputNodes.csv";
 
         try {
             FileWriter fw1 = new FileWriter(outNodesFileName, false);

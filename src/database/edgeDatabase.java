@@ -21,14 +21,16 @@ public class edgeDatabase {
             conn.setAutoCommit(false);
 
             DatabaseMetaData meta2 = conn.getMetaData();
-            ResultSet res2 = meta2.getTables(null, null, "MAPHEDGES", null);
+            ResultSet res2 = meta2.getTables(null, null, "EDGES", null);
 
             if (!res2.next()) {
                 Statement stmtCreate2 = conn.createStatement();
-                String createEdgesTable = ("CREATE TABLE mapHEdges" +
+                String createEdgesTable = ("CREATE TABLE edges" +
                         "(edgeID VARCHAR(30) PRIMARY KEY," +
                         "startNode VARCHAR(20)," +
-                        "endNode VARCHAR(20))");
+                        "endNode VARCHAR(20)," +
+                        "CONSTRAINT startNode_FK FOREIGN KEY (startNode) REFERENCES node(nodeID) ON DELETE CASCADE," +
+                        "CONSTRAINT endNode_FK FOREIGN KEY (endNode) REFERENCES node(nodeID) ON DELETE CASCADE)");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
                 System.out.println("Create Edges table Successful!");
@@ -38,15 +40,17 @@ public class edgeDatabase {
                 conn.close();
             } else {
                 Statement stmtDelete2 = conn.createStatement();
-                String deleteNodesTable = ("DROP TABLE mapHEdges");
+                String deleteNodesTable = ("DROP TABLE edges");
                 int rsetDelete2 = stmtDelete2.executeUpdate(deleteNodesTable);
                 stmtDelete2.close();
 
                 Statement stmtCreate2 = conn.createStatement();
-                String createEdgesTable = ("CREATE TABLE mapHEdges" +
+                String createEdgesTable = ("CREATE TABLE edges" +
                         "(edgeID VARCHAR(30)," +
                         "startNode VARCHAR(20)," +
-                        "endNode VARCHAR(20))");
+                        "endNode VARCHAR(20)," +
+                        "CONSTRAINT startNode_FK FOREIGN KEY (startNode) REFERENCES node(nodeID) ON DELETE CASCADE," +
+                        "CONSTRAINT endNode_FK FOREIGN KEY (endNode) REFERENCES node(nodeID) ON DELETE CASCADE)");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
                 System.out.println("Create Edges table Successful!");
@@ -69,7 +73,7 @@ public class edgeDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement insertEdge = conn.prepareStatement("INSERT INTO mapHEdges VALUES (?, ?, ?)");
+            PreparedStatement insertEdge = conn.prepareStatement("INSERT INTO edges VALUES (?, ?, ?)");
 
             for (int j = 1; j < mainDatabase.edgeID.toArray().length; j++) {
 
@@ -92,8 +96,6 @@ public class edgeDatabase {
     }
 
 
-
-
     ///////////////////////////////////////////////////////////////////////////////
     // Add an edge function
     ///////////////////////////////////////////////////////////////////////////////
@@ -102,31 +104,24 @@ public class edgeDatabase {
 
     // Add new edge to the edge table
 
-    public static void addEdge(String anyStartNode, String anyEndNode) {
+    public static void addEdge(Edge anyEdge) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            String anyEdgeID = (anyStartNode + "_" + anyEndNode);
+            PreparedStatement addAnyEdge = conn.prepareStatement("INSERT INTO edges VALUES (?, ?, ?)");
 
-            PreparedStatement addAnyEdge = conn.prepareStatement("INSERT INTO mapHEdges VALUES (?, ?, ?)");
-
-            addAnyEdge.setString(1, anyEdgeID);
-            addAnyEdge.setString(2, anyStartNode);
-            addAnyEdge.setString(3, anyEndNode);
+            addAnyEdge.setString(1, anyEdge.getID());
+            addAnyEdge.setString(2, anyEdge.getStartNode());
+            addAnyEdge.setString(3, anyEdge.getEndNode());
 
             addAnyEdge.executeUpdate();
-            System.out.println("Insert Edge Successful for edgeID: " + anyEdgeID);
+            System.out.println("Insert Edge Successful for edgeID: " + anyEdge.getID());
 
             conn.commit();
             addAnyEdge.close();
             conn.close();
-
-            // Add nodes to their ArrayLists
-            mainDatabase.edgeID.add(anyEdgeID);
-            mainDatabase.startNode.add(anyStartNode);
-            mainDatabase.endNode.add(anyEndNode);
 
         } catch (Exception e) {
             e.printStackTrace();// end try
@@ -141,52 +136,33 @@ public class edgeDatabase {
 
     // Modify item(s) from edge table
 
-    public static void modifyEdge(String colAttr, String setCond, String anyEdgeID) {
+    public static void modifyEdge(Edge anyEdge) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            String code= "UPDATE MapHEdges SET "+ colAttr+ " = ? WHERE edgeID = ?";
+            String strModDrop = "DELETE FROM edges WHERE edgeID = ?";
+            String strModAdd = "INSERT INTO edges VALUES (?, ?, ?)";
 
-            PreparedStatement modifyAnyEdge = conn.prepareStatement(code);
+            PreparedStatement modDropEdge = conn.prepareStatement(strModDrop);
+            modDropEdge.setString(1, anyEdge.getID());
 
-            modifyAnyEdge.setString(1, setCond);
-            modifyAnyEdge.setString(2, anyEdgeID);
-
-            modifyAnyEdge.executeUpdate();
-            System.out.println("Update Edge Successful!");
-
+            modDropEdge.executeUpdate();
             conn.commit();
-            modifyAnyEdge.close();
+            modDropEdge.close();
+
+            PreparedStatement modAddEdge = conn.prepareStatement(strModAdd);
+            modAddEdge.setString(1, anyEdge.getID());
+            modAddEdge.setString(2, anyEdge.getStartNode());
+            modAddEdge.setString(3, anyEdge.getEndNode());
+            conn.commit();
+            System.out.println("Update Edge Successful!");
+            modAddEdge.close();
             conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();// end try
-        }
-
-        // Add nodes to their ArrayLists
-        int indexOf = mainDatabase.edgeID.indexOf(anyEdgeID);
-
-        switch (colAttr) {
-
-            case "edgeID":
-                mainDatabase.edgeID.remove(indexOf);
-                mainDatabase.edgeID.add(indexOf, setCond);
-                break;
-
-            case "startNode":
-                mainDatabase.startNode.remove(indexOf);
-                mainDatabase.startNode.add(indexOf, setCond);
-                break;
-
-            case "endNode":
-                mainDatabase.endNode.remove(indexOf);
-                mainDatabase.endNode.add(indexOf, setCond);
-                break;
-
-            default:
-                break;
         }
     }
 
@@ -194,18 +170,18 @@ public class edgeDatabase {
     // Delete an edge from the edge table
     ///////////////////////////////////////////////////////////////////////////////
 
-    // Delete item(s) from corresponding ArrayList
-
     // Delete item(s) from edge table
-    public static void deleteAnyEdge(String delCond) {
+    public static void deleteAnyEdge(Edge anyEdge) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement deleteAnyEdge = conn.prepareStatement("DELETE FROM mapHEdges WHERE edgeID = ?");
+            String strDelEdge = "DELETE FROM edges WHERE edgeID = ?";
 
-            deleteAnyEdge.setString(1, delCond);
+            PreparedStatement deleteAnyEdge = conn.prepareStatement(strDelEdge);
+
+            deleteAnyEdge.setString(1, anyEdge.getID());
 
             deleteAnyEdge.executeUpdate();
             System.out.println("Delete Edge Successful");
@@ -217,13 +193,6 @@ public class edgeDatabase {
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-
-        int indexOf2 = mainDatabase.edgeID.indexOf(delCond);
-
-        mainDatabase.edgeID.remove(indexOf2);
-        mainDatabase.startNode.remove(indexOf2);
-        mainDatabase.endNode.remove(indexOf2);
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -236,7 +205,7 @@ public class edgeDatabase {
             conn.getMetaData();
 
             Statement selectAllEdges = conn.createStatement();
-            String allEdges = "SELECT * FROM MAPHEDGES";
+            String allEdges = "SELECT * FROM edges";
             ResultSet rsetAllEdges = selectAllEdges.executeQuery(allEdges);
 
             String strEdgeID = "";
@@ -322,7 +291,7 @@ public class edgeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputEdgesCSV() {
 
-        String outEdgesFileName = "outputEdgesTeamH.csv";
+        String outEdgesFileName = "outputEdges.csv";
 
         try {
             FileWriter fw2 = new FileWriter(outEdgesFileName, false);

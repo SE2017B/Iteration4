@@ -70,15 +70,23 @@ public class mainDatabase {
             e.printStackTrace();
         }
 
+        nodeDatabase.readNodeCSV("MapAnodes.csv");
+        nodeDatabase.readNodeCSV("MapBnodes.csv");
+        nodeDatabase.readNodeCSV("MapCnodes.csv");
+        nodeDatabase.readNodeCSV("MapDnodes.csv");
+        nodeDatabase.readNodeCSV("MapEnodes.csv");
+        nodeDatabase.readNodeCSV("MapFnodes.csv");
+        nodeDatabase.readNodeCSV("MapGnodes.csv");
         nodeDatabase.readNodeCSV("MapHnodes.csv");
+        nodeDatabase.readNodeCSV("MapInodes.csv");
         nodeDatabase.readNodeCSV("MapWnodes.csv");
 
-        edgeDatabase.readEdgesCSV("MapHedges.csv");
-        edgeDatabase.readEdgesCSV("MapWedges.csv");
+        //edgeDatabase.readEdgesCSV("MapHedges.csv");
+        //edgeDatabase.readEdgesCSV("MapWedges.csv");
 
         mainDatabase testConnection1 = new mainDatabase();
 
         nodeDatabase.outputNodesCSV();
-        edgeDatabase.outputEdgesCSV();
+        //edgeDatabase.outputEdgesCSV();
     }
 }

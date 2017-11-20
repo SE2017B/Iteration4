@@ -8,7 +8,9 @@
 
 package kioskEngine;
 
+import database.edgeDatabase;
 import database.mainDatabase;
+import database.nodeDatabase;
 import map.Node;
 import controllers.ScreenController;
 import javafx.application.Application;
@@ -49,11 +51,11 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        mainDatabase.readNodeCSV("MapHnodes.csv");
-        mainDatabase.readNodeCSV("MapWnodes.csv");
+        nodeDatabase.readNodeCSV("MapHnodes.csv");
+        nodeDatabase.readNodeCSV("MapWnodes.csv");
 
-        mainDatabase.readEdgesCSV("MapHedges.csv");
-        mainDatabase.readEdgesCSV("MapWedges.csv");
+        edgeDatabase.readEdgesCSV("MapHedges.csv");
+        edgeDatabase.readEdgesCSV("MapWedges.csv");
 
         Staff testAdmin =  new Staff("test","","Admin","Admin Test",1234, engine.getService("Food"));
         Staff testStaff =  new Staff("testStaff","","food stuff","Staff Test",1234, engine.getService("Food"));
@@ -73,7 +75,7 @@ public class Main extends Application {
         launch(args);
 
 
-        mainDatabase.outputNodesCSV();
-        mainDatabase.outputEdgesCSV();
+        nodeDatabase.outputNodesCSV();
+        edgeDatabase.outputEdgesCSV();
     }
 }
