@@ -206,135 +206,78 @@ public class AddNodeController implements ControllableScreen {
 //        }
     }
 
-    public void removeEnterPressed(ActionEvent e) {
-        System.out.println("Remove entered");
-    }
-
-    public void removeEdgeEnterPressed(ActionEvent e) {
-        System.out.println("Remove entered");
-    }
-
     //Action upon pressing enter
     //variables for all text fields is set up and populated
     //add node command is executed
     //user is returned to menu screen
-    public void addEnterPressed(ActionEvent e) {
-        nodeID = txtfldID.getText();
-        if (nodeID.length() == 10) {
-            //x and y and ints
-//        x = Integer.valueOf(txtfldX.getText());
-//        y = Integer.valueOf(txtfldY.getText());
-            x = txtfldX.getText();
-            y = txtfldY.getText();
-
-            System.out.println(nodeID);
-            System.out.println(x);
-            System.out.println(y);
-
-            name = txtfldName.getText();
-            System.out.println(floor);
-            System.out.println(nodeType);
-            System.out.println(building);
-            System.out.println(name);
-
-            ArrayList<Node> connections = new ArrayList<Node>();
-            for(NodeCheckBox box : nodeCheckBoxes){
-                if(box.isSelected())
-                    connections.add(box.getNode());
-            }
-
-            HospitalMap.addNode(new Node(nodeID, x, y, floor, building, nodeType, name, name));//Todo add connections
-            System.out.println("Enter Pressed");
-        } else
-            failText.setVisible(true);
-
-    }
-
-    //comands for button cancel press
-    public void cancelPressed(ActionEvent e) {
-        System.out.println("Cancel Pressed");
-        clearInputs();
-    }
-
-    public void returnPressed(ActionEvent e) {
-        System.out.println("Return Pressed");
-        parent.setScreen(ScreenController.RequestID);
-    }
-
-    //set up variables when building drop down selected
-    @FXML
-    public void buildingSelected(ActionEvent e) {
-        System.out.println("Building Selected");
-        building = ((MenuItem) e.getSource()).getText();
-        //Setting the variables equal to values read from UI
-        buildingDropDown.setText(building);
-    }
-
-    //set up variable when floor drop down selected
-    @FXML
-    public void floorSelected(ActionEvent e) {
-        System.out.println("Floor Selected");
-        //floor = ((MenuItem) e.getSource()).getText();
-        //Setting the variables equal to values read from UI
-        //floorDropDown.setText(floor);
-    }
-
-    //set up variable when floor drop down selected
-    @FXML
-    public void nodeTypeSelected(ActionEvent e) {
-        System.out.println("Node Type Selected");
-        nodeType = ((MenuItem) e.getSource()).getText();
-        //Setting the variables equal to values read from UI
-        nodeTypeDropDown.setText(nodeType);
-    }
-
-    //set variable to text from text field name
-    @FXML
-    public void filledNodeID(ActionEvent e) {
-        //Setting the variables equal to values read from UI
-        nodeID = txtfldID.getText();
-        System.out.println(nodeID);
-    }
-
-    public void xCoordEntered() {
-        x = txtfldX.getText();
-        drawNodeLocation();
-    }
-
-    public void yCoordEntered() {
-        y = txtfldY.getText();
-        drawNodeLocation();
-    }
-
-    public void drawNodeLocation() {
-        if (x.length()>0 & y.length()>0) {
-            System.out.println("Drawing Node: " + x + " " + y);
-            nodeLocation.setLayoutX(Integer.parseInt(x));
-            nodeLocation.setLayoutY(Integer.parseInt(y));
-            nodeLocation.setVisible(true);
-        }
-
-    }
 
     public void clearInputs(){
         //todo clear all the text and options from UI inputs
     }
 
+    public void returnPressed(ActionEvent e){
+        System.out.println("Return Pressed");
+        parent.setScreen(ScreenController.RequestID);
+    }
     ////////////////////////////////////////////////////////////
     /////////////           Node ADD
     ////////////////////////////////////////////////////////////
     @FXML
     private JFXTextField nodeAddXField;
     @FXML
+    private JFXTextField nodeAddYField;
+    @FXML
+    private JFXTextField nodeAddShortField;
+    @FXML
+    private JFXTextField nodeAddNameField;
+    @FXML
     private JFXButton nodeAddEnterButton;
     @FXML
     private JFXButton nodeAddCancelButton;
+    @FXML
+    private MenuButton nodeAddFloorDropDown;
+    @FXML
+    private MenuButton nodeAddBuildingDropDown;
+    @FXML
+    private MenuButton nodeAddTypeDropDown;
 
-    public void setNodeAddXEntered(ActionEvent e){
+    public void nodeAddXEntered(ActionEvent e){
         System.out.println("Node Add X Entered");
     }
+    public void nodeAddYEntered(ActionEvent e){
+        System.out.println("Node Add Y Entered");
+    }
 
-    
+    public void nodeAddShortEntered(ActionEvent e){
+        System.out.println("Node Add Short Name Entered");
+    }
+
+    public void nodeAddNameEntered(ActionEvent e){
+        System.out.println("Node Add Long Name Entered");
+    }
+
+    public void nodeAddFloorSelected(ActionEvent e){
+        System.out.println("Node add Floor Selected");
+        String text = ((MenuItem)e.getSource()).getText();
+        nodeAddFloorDropDown.setText(text);
+        this.floor = text;
+    }
+
+    public void nodeAddBuildingSelected(ActionEvent e){
+        System.out.println("Node add Building Selected");
+        String text = ((MenuItem)e.getSource()).getText();
+        nodeAddBuildingDropDown.setText(text);
+        this.building = text;
+    }
+
+    public void nodeAddTypeSelected(ActionEvent e){
+        System.out.println("Node add type Selected");
+        String text = ((MenuItem)e.getSource()).getText();
+        nodeAddTypeDropDown.setText(text);
+        this.nodeType = text;
+    }
+
+
     public void nodeAddEnterPressed(ActionEvent e){
         System.out.println("Node Add Enter Pressed");
 
@@ -382,6 +325,57 @@ public class AddNodeController implements ControllableScreen {
     private JFXButton nodeEditEnterButton;
     @FXML
     private JFXButton nodeEditCancelButton;
+    @FXML
+    private JFXTextField nodeEditXField;
+    @FXML
+    private JFXTextField nodeEditYField;
+    @FXML
+    private JFXTextField nodeEditShortField;
+    @FXML
+    private JFXTextField nodeEditNameField;
+    @FXML
+    private MenuButton nodeEditFloorDropDown;
+    @FXML
+    private MenuButton nodeEditBuildingDropDown;
+    @FXML
+    private MenuButton nodeEditTypeDropDown;
+
+    public void nodeEditXEntered(ActionEvent e){
+        System.out.println("Node Edit X Entered");
+    }
+    public void nodeEditYEntered(ActionEvent e){
+        System.out.println("Node Edit Y Entered");
+    }
+
+    public void nodeEditShortEntered(ActionEvent e){
+        System.out.println("Node Edit Short Name Entered");
+    }
+
+    public void nodeEditNameEntered(ActionEvent e){
+        System.out.println("Node Edit Long Name Entered");
+    }
+
+    public void nodeEditFloorSelected(ActionEvent e){
+        System.out.println("Node Edit Floor Selected");
+        String text = ((MenuItem)e.getSource()).getText();
+        nodeEditFloorDropDown.setText(text);
+        this.floor = text;
+    }
+
+    public void nodeEditBuildingSelected(ActionEvent e){
+        System.out.println("Node Edit Building Selected");
+        String text = ((MenuItem)e.getSource()).getText();
+        nodeEditBuildingDropDown.setText(text);
+        this.building = text;
+    }
+
+    public void nodeEditTypeSelected(ActionEvent e){
+        System.out.println("Node Edit type Selected");
+        String text = ((MenuItem)e.getSource()).getText();
+        nodeEditTypeDropDown.setText(text);
+        this.nodeType = text;
+    }
+
 
     public void nodeEditEnterPressed(ActionEvent e){
         System.out.println("Node Edit Enter Pressed");

@@ -30,13 +30,13 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <JFXTabPane layoutY="-2.0" prefHeight="750.0" prefWidth="327.0" tabMinWidth="105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <JFXTabPane layoutY="-2.0" prefHeight="748.0" prefWidth="302.0" tabMinWidth="105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <tabs>
                                           <Tab text="Add">
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="321.0">
                                                    <children>
-                                                      <GridPane layoutX="14.0" layoutY="86.0" prefHeight="647.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <GridPane layoutX="14.0" layoutY="86.0" prefHeight="718.0" prefWidth="307.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                         <columnConstraints>
                                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="161.0" />
                                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
@@ -60,7 +60,7 @@
                                                                   <Insets left="15.0" right="15.0" />
                                                                </GridPane.margin>
                                                             </JFXTextField>
-                                                            <JFXTextField fx:id="txtfldNodeAddY" focusColor="WHITE" promptText="Y-Coordinate" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                            <JFXTextField fx:id="nodeAddYField" focusColor="WHITE" onAction="#nodeAddYEntered" promptText="Y-Coordinate" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -78,7 +78,7 @@
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXTextField fx:id="txtfldNodeAddName" focusColor="WHITE" promptText="Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                                            <JFXTextField fx:id="nodeAddNameField" focusColor="WHITE" onAction="#nodeAddNameEntered" promptText="Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -86,50 +86,50 @@
                                                                   <Insets left="15.0" right="15.0" />
                                                                </GridPane.margin>
                                                             </JFXTextField>
-                                                            <MenuButton fx:id="floorDropDown" mnemonicParsing="false" onAction="#floorSelected" prefWidth="150.0" text="Floor" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                            <MenuButton fx:id="nodeAddFloorDropDown" mnemonicParsing="false" prefWidth="150.0" text="Floor" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                                                <items>
-                                                                  <MenuItem fx:id="floor3" mnemonicParsing="false" onAction="#floorSelected" text="3" />
-                                                                  <MenuItem fx:id="floor2" mnemonicParsing="false" onAction="#floorSelected" text="2" />
-                                                                  <MenuItem fx:id="floor1" mnemonicParsing="false" onAction="#floorSelected" text="1" />
-                                                                  <MenuItem fx:id="floorG" mnemonicParsing="false" onAction="#floorSelected" text="G" />
-                                                                  <MenuItem fx:id="floorL1" mnemonicParsing="false" onAction="#floorSelected" text="L1" />
-                                                                  <MenuItem fx:id="FloorL2" mnemonicParsing="false" onAction="#floorSelected" text="L2" />
+                                                                  <MenuItem fx:id="floor3" mnemonicParsing="false" onAction="#nodeAddFloorSelected" text="3" />
+                                                                  <MenuItem fx:id="floor2" mnemonicParsing="false" onAction="#nodeAddFloorSelected" text="2" />
+                                                                  <MenuItem fx:id="floor1" mnemonicParsing="false" onAction="#nodeAddFloorSelected" text="1" />
+                                                                  <MenuItem fx:id="floorG" mnemonicParsing="false" onAction="#nodeAddFloorSelected" text="G" />
+                                                                  <MenuItem fx:id="floorL1" mnemonicParsing="false" onAction="#nodeAddFloorSelected" text="L1" />
+                                                                  <MenuItem fx:id="FloorL2" mnemonicParsing="false" onAction="#nodeAddFloorSelected" text="L2" />
                                                                </items>
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </MenuButton>
-                                                            <MenuButton fx:id="buildingDropDown" mnemonicParsing="false" onAction="#buildingSelected" prefWidth="150.0" text="Building" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                            <MenuButton fx:id="nodeAddBuildingDropDown" mnemonicParsing="false" prefWidth="150.0" text="Building" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                                                <items>
-                                                                  <MenuItem fx:id="buildingBTM" mnemonicParsing="false" onAction="#buildingSelected" text="BTM" />
-                                                                  <MenuItem fx:id="buildingShapiro" mnemonicParsing="false" onAction="#buildingSelected" text="Shapiro" />
-                                                                  <MenuItem fx:id="buldingTower" mnemonicParsing="false" onAction="#buildingSelected" text="Tower" />
-                                                                  <MenuItem fx:id="building45F" mnemonicParsing="false" onAction="#buildingSelected" text="45 Francis" />
-                                                                  <MenuItem fx:id="building15F" mnemonicParsing="false" onAction="#buildingSelected" text="15 Francis" />
+                                                                  <MenuItem fx:id="buildingBTM" mnemonicParsing="false" onAction="#nodeAddBuildingSelected" text="BTM" />
+                                                                  <MenuItem fx:id="buildingShapiro" mnemonicParsing="false" onAction="#nodeAddBuildingSelected" text="Shapiro" />
+                                                                  <MenuItem fx:id="buldingTower" mnemonicParsing="false" onAction="#nodeAddBuildingSelected" text="Tower" />
+                                                                  <MenuItem fx:id="building45F" mnemonicParsing="false" onAction="#nodeAddBuildingSelected" text="45 Francis" />
+                                                                  <MenuItem fx:id="building15F" mnemonicParsing="false" onAction="#nodeAddBuildingSelected" text="15 Francis" />
                                                                </items>
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </MenuButton>
-                                                            <MenuButton fx:id="nodeTypeDropDown" mnemonicParsing="false" onAction="#nodeTypeSelected" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                            <MenuButton fx:id="nodeAddTypeDropDown" mnemonicParsing="false" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                                <items>
-                                                                  <MenuItem fx:id="nTypeHALL" mnemonicParsing="false" onAction="#nodeTypeSelected" text="HALL" />
-                                                                  <MenuItem fx:id="nTypeELEV" mnemonicParsing="false" onAction="#nodeTypeSelected" text="ELEV" />
-                                                                  <MenuItem fx:id="nTypeREST" mnemonicParsing="false" onAction="#nodeTypeSelected" text="REST" />
-                                                                  <MenuItem fx:id="nTypeSTAI" mnemonicParsing="false" onAction="#nodeTypeSelected" text="STAI" />
-                                                                  <MenuItem fx:id="nTypeDEPT" mnemonicParsing="false" onAction="#nodeTypeSelected" text="DEPT" />
-                                                                  <MenuItem fx:id="nTypeLABS" mnemonicParsing="false" onAction="#nodeTypeSelected" text="LABS" />
-                                                                  <MenuItem fx:id="nTypeINFO" mnemonicParsing="false" onAction="#nodeTypeSelected" text="INFO" />
-                                                                  <MenuItem fx:id="nTypeCONF" mnemonicParsing="false" onAction="#nodeTypeSelected" text="CONF" />
-                                                                  <MenuItem fx:id="nTypeEXIT" mnemonicParsing="false" onAction="#nodeTypeSelected" text="EXIT" />
-                                                                  <MenuItem fx:id="nTypeRETL" mnemonicParsing="false" onAction="#nodeTypeSelected" text="RETL" />
-                                                                  <MenuItem fx:id="nTypeSERV" mnemonicParsing="false" onAction="#nodeTypeSelected" text="SERV" />
+                                                                  <MenuItem fx:id="nTypeHALL" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="HALL" />
+                                                                  <MenuItem fx:id="nTypeELEV" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="ELEV" />
+                                                                  <MenuItem fx:id="nTypeREST" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="REST" />
+                                                                  <MenuItem fx:id="nTypeSTAI" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="STAI" />
+                                                                  <MenuItem fx:id="nTypeDEPT" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="DEPT" />
+                                                                  <MenuItem fx:id="nTypeLABS" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="LABS" />
+                                                                  <MenuItem fx:id="nTypeINFO" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="INFO" />
+                                                                  <MenuItem fx:id="nTypeCONF" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="CONF" />
+                                                                  <MenuItem fx:id="nTypeEXIT" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="EXIT" />
+                                                                  <MenuItem fx:id="nTypeRETL" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="RETL" />
+                                                                  <MenuItem fx:id="nTypeSERV" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="SERV" />
                                                                </items>
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </MenuButton>
-                                                            <JFXTextField fx:id="txtfldNodeAddNameShort" focusColor="WHITE" promptText="Short Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                            <JFXTextField fx:id="nodeAddShortField" focusColor="WHITE" onAction="#nodeAddShortEntered" promptText="Short Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -240,7 +240,7 @@
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXTextField fx:id="txtfldNodeAddName1" focusColor="WHITE" promptText="Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                            <JFXTextField fx:id="nodeAddNameField" focusColor="WHITE" onAction="#nodeAddNameEntered" promptText="Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -248,44 +248,44 @@
                                                                   <Insets left="15.0" right="15.0" />
                                                                </GridPane.margin>
                                                             </JFXTextField>
-                                                            <MenuButton fx:id="floorDropDown1" mnemonicParsing="false" onAction="#floorSelected" prefWidth="150.0" text="Floor" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                            <MenuButton fx:id="nodeEditFloorDropDown" mnemonicParsing="false" prefWidth="150.0" text="Floor" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                                                <items>
-                                                                  <MenuItem fx:id="floor31" mnemonicParsing="false" onAction="#floorSelected" text="3" />
-                                                                  <MenuItem fx:id="floor21" mnemonicParsing="false" onAction="#floorSelected" text="2" />
-                                                                  <MenuItem fx:id="floor11" mnemonicParsing="false" onAction="#floorSelected" text="1" />
-                                                                  <MenuItem fx:id="floorG1" mnemonicParsing="false" onAction="#floorSelected" text="G" />
-                                                                  <MenuItem fx:id="floorL11" mnemonicParsing="false" onAction="#floorSelected" text="L1" />
-                                                                  <MenuItem fx:id="FloorL21" mnemonicParsing="false" onAction="#floorSelected" text="L2" />
+                                                                  <MenuItem fx:id="floor31" mnemonicParsing="false" onAction="#nodeEditFloorSelected" text="3" />
+                                                                  <MenuItem fx:id="floor21" mnemonicParsing="false" onAction="#nodeEditFloorSelected" text="2" />
+                                                                  <MenuItem fx:id="floor11" mnemonicParsing="false" onAction="#nodeEditFloorSelected" text="1" />
+                                                                  <MenuItem fx:id="floorG1" mnemonicParsing="false" onAction="#nodeEditFloorSelected" text="G" />
+                                                                  <MenuItem fx:id="floorL11" mnemonicParsing="false" onAction="#nodeEditFloorSelected" text="L1" />
+                                                                  <MenuItem fx:id="FloorL21" mnemonicParsing="false" onAction="#nodeEditFloorSelected" text="L2" />
                                                                </items>
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </MenuButton>
-                                                            <MenuButton fx:id="buildingDropDown1" mnemonicParsing="false" onAction="#buildingSelected" prefWidth="150.0" text="Building" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                            <MenuButton fx:id="nodeEditBuildingDropDown" mnemonicParsing="false" prefWidth="150.0" text="Building" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                                <items>
-                                                                  <MenuItem fx:id="buildingBTM1" mnemonicParsing="false" onAction="#buildingSelected" text="BTM" />
-                                                                  <MenuItem fx:id="buildingShapiro1" mnemonicParsing="false" onAction="#buildingSelected" text="Shapiro" />
-                                                                  <MenuItem fx:id="buldingTower1" mnemonicParsing="false" onAction="#buildingSelected" text="Tower" />
-                                                                  <MenuItem fx:id="building45F1" mnemonicParsing="false" onAction="#buildingSelected" text="45 Francis" />
-                                                                  <MenuItem fx:id="building15F1" mnemonicParsing="false" onAction="#buildingSelected" text="15 Francis" />
+                                                                  <MenuItem fx:id="buildingBTM1" mnemonicParsing="false" onAction="#nodeEditBuildingSelected" text="BTM" />
+                                                                  <MenuItem fx:id="buildingShapiro1" mnemonicParsing="false" onAction="#nodeEditBuildingSelected" text="Shapiro" />
+                                                                  <MenuItem fx:id="buldingTower1" mnemonicParsing="false" onAction="#nodeEditBuildingSelected" text="Tower" />
+                                                                  <MenuItem fx:id="building45F1" mnemonicParsing="false" onAction="#nodeEditBuildingSelected" text="45 Francis" />
+                                                                  <MenuItem fx:id="building15F1" mnemonicParsing="false" onAction="#nodeEditBuildingSelected" text="15 Francis" />
                                                                </items>
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </MenuButton>
-                                                            <MenuButton fx:id="nodeTypeDropDown1" mnemonicParsing="false" onAction="#nodeTypeSelected" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                            <MenuButton fx:id="nodeEditTypeDropDown" mnemonicParsing="false" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                                                <items>
-                                                                  <MenuItem fx:id="nTypeHALL1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="HALL" />
-                                                                  <MenuItem fx:id="nTypeELEV1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="ELEV" />
-                                                                  <MenuItem fx:id="nTypeREST1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="REST" />
-                                                                  <MenuItem fx:id="nTypeSTAI1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="STAI" />
-                                                                  <MenuItem fx:id="nTypeDEPT1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="DEPT" />
-                                                                  <MenuItem fx:id="nTypeLABS1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="LABS" />
-                                                                  <MenuItem fx:id="nTypeINFO1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="INFO" />
-                                                                  <MenuItem fx:id="nTypeCONF1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="CONF" />
-                                                                  <MenuItem fx:id="nTypeEXIT1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="EXIT" />
-                                                                  <MenuItem fx:id="nTypeRETL1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="RETL" />
-                                                                  <MenuItem fx:id="nTypeSERV1" mnemonicParsing="false" onAction="#nodeTypeSelected" text="SERV" />
+                                                                  <MenuItem fx:id="nTypeHALL1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="HALL" />
+                                                                  <MenuItem fx:id="nTypeELEV1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="ELEV" />
+                                                                  <MenuItem fx:id="nTypeREST1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="REST" />
+                                                                  <MenuItem fx:id="nTypeSTAI1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="STAI" />
+                                                                  <MenuItem fx:id="nTypeDEPT1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="DEPT" />
+                                                                  <MenuItem fx:id="nTypeLABS1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="LABS" />
+                                                                  <MenuItem fx:id="nTypeINFO1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="INFO" />
+                                                                  <MenuItem fx:id="nTypeCONF1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="CONF" />
+                                                                  <MenuItem fx:id="nTypeEXIT1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="EXIT" />
+                                                                  <MenuItem fx:id="nTypeRETL1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="RETL" />
+                                                                  <MenuItem fx:id="nTypeSERV1" mnemonicParsing="false" onAction="#nodeEditTypeSelected" text="SERV" />
                                                                </items>
                                                                <font>
                                                                   <Font size="18.0" />
@@ -296,7 +296,7 @@
                                                                   <Font size="24.0" />
                                                                </font>
                                                             </Label>
-                                                            <JFXTextField fx:id="txtfldNodeAddName11" focusColor="WHITE" promptText="Short Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                                            <JFXTextField fx:id="nodeEditShortField" focusColor="WHITE" onAction="#nodeEditShortEntered" promptText="Short Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
