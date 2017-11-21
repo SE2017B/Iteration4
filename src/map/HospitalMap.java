@@ -13,6 +13,8 @@ import exceptions.InvalidNodeException;
 import search.*;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class HospitalMap{
     private static ArrayList<Node> nodeMap;
@@ -181,8 +183,9 @@ public class HospitalMap{
     public static Path findPath(Node start, Node end)throws InvalidNodeException{
         return search.findPath(start,end);
     }
-    //Cache for stuff
-    public static ArrayList<Node> getNodesForSearch(){
-        return new ArrayList<Node>(); //Todo return all node to be se
+
+
+    public List<Node> getNodesBy(Function<Node, Boolean> function){
+        return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
     }
 }

@@ -8,6 +8,8 @@
 
 package DepartmentSubsystem;
 
+import DepartmentSubsystem.Services.FoodDelivery;
+
 import java.util.HashMap;
 import java.util.ArrayList;
 
@@ -17,11 +19,13 @@ public class Department{
     private ArrayList<Service> services;
     private HashMap<Integer, ServiceRequest> backlog;
 
-    //Constructor
-    public Department(){
-
+    public Department(String type) {
+        this.type = type;
     }
 
+    public HashMap<Integer, ServiceRequest> getBacklog(){
+        return backlog;
+    }
     //Adds a request to the backlog
     public void addRequest(int requestID, ServiceRequest serviceRequest){
         backlog.put(requestID, serviceRequest);
@@ -35,5 +39,14 @@ public class Department{
     //Removes a request (this is done when a request is cancelled or completed
     public void removeRequest(int requestID){
         backlog.remove(requestID);
+    }
+
+    public void addService(Service service){
+        this.services.add(new FoodDelivery());
+    }
+
+    @Override
+    public String toString(){
+        return this.type;
     }
 }
