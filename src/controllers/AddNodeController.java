@@ -320,6 +320,75 @@ public class AddNodeController implements ControllableScreen {
     }
 
     ////////////////////////////////////////////////////////////
+    /////////////           Node ADD
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXTextField nodeAddXField;
+    @FXML
+    private JFXButton nodeAddEnterButton;
+    @FXML
+    private JFXButton nodeAddCancelButton;
+
+    public void setNodeAddXEntered(ActionEvent e){
+        System.out.println("Node Add X Entered");
+    }
+
+    
+    public void nodeAddEnterPressed(ActionEvent e){
+        System.out.println("Node Add Enter Pressed");
+        //todo add node
+
+        //also get selected nodes and pass them to map to add neighbors
+    }
+
+    public void nodeAddCancelPressed(ActionEvent e){
+        System.out.println("Node Add Cancel Pressed");
+        //todo cancel node add
+    }
+
+    ////////////////////////////////////////////////////////////
+    /////////////           Node Remove
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXButton nodeRemoveEnterButton;
+    @FXML
+    private JFXButton nodeRemoveCancelButton;
+
+
+    public void nodeRemoveEnterPressed(ActionEvent e){
+        System.out.println("Node Remove Enter Pressed");
+        //todo add node
+
+        //also get selected nodes and pass them to map to add neighbors
+    }
+
+    public void nodeRemoveCancelPressed(ActionEvent e){
+        System.out.println("Node Remove Cancel Pressed");
+        //todo cancel node add
+    }
+
+    ////////////////////////////////////////////////////////////
+    /////////////           Node Edit
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXButton nodeEditEnterButton;
+    @FXML
+    private JFXButton nodeEditCancelButton;
+
+    public void nodeEditEnterPressed(ActionEvent e){
+        System.out.println("Node Edit Enter Pressed");
+        //todo add node
+
+        //also get selected nodes and pass them to map to add neighbors
+    }
+
+    public void nodeEditCancelPressed(ActionEvent e){
+        System.out.println("Node Edit Cancel Pressed");
+        //todo cancel node add
+    }
+
+
+    ////////////////////////////////////////////////////////////
     /////////////           EDGE ADD
     ////////////////////////////////////////////////////////////
     @FXML
@@ -371,6 +440,10 @@ public class AddNodeController implements ControllableScreen {
     private JFXTextField edgeEditNodeOneField;
     @FXML
     private JFXTextField edgeEditeNodeTwoField;
+    @FXML
+    private JFXButton edgeEditEnterButton;
+    @FXML
+    private JFXButton edgeEditCancelButton;
 
     public void edgeEditNodeOneEntered(ActionEvent e){
         System.out.println("Edge Edit Node One Entered");
@@ -381,7 +454,11 @@ public class AddNodeController implements ControllableScreen {
     }
 
     public void edgeEditEnterPressed(ActionEvent e){
+        System.out.println("Edge Edit Enter Pressed");
+    }
 
+    public void edgeEditCancelPressed(ActionEvent e){
+        System.out.println("Edge Edit Cancel Pressed");
     }
 
 
