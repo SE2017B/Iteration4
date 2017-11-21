@@ -8,30 +8,44 @@
 
 package controllers;
 
+
 import DepartmentSubsystem.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTimePicker;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import com.jfoenix.skins.JFXTimePickerContent;
+import javafx.collections.ObservableList;
+
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import map.HospitalMap;
 import map.Node;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import DepartmentSubsystem.ServiceRequest;
+import DepartmentSubsystem.Staff;
 
+import search.SearchStrategy;
+import DepartmentSubsystem.DepartmentSubsystem;
+import org.omg.CORBA.Request;
+
+
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
+    private HospitalMap map;
     private String serviceType;
-    private String time;
+    private LocalTime time;
     private Staff staffMember;
-    private String date;
+    private LocalDate date;
     private String nameServiceFile;
     private String nameDept;
     private String nameService;
@@ -40,8 +54,6 @@ public class RequestController implements ControllableScreen{
     private ArrayList<String> deps;
     private ArrayList<Service> serv;
     private DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
-    private HospitalMap map;
-
 
     private static int requestIDCount = 0;
 
@@ -66,9 +78,6 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     private JFXDatePicker dateMenu;
-
-    @FXML
-    private JFXTimePicker timeMenu;
 
     @FXML
     private ChoiceBox<Node> locationChoiceBox;
@@ -103,8 +112,7 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
-        map = HospitalMap.getMap();
-        choiceBoxDept.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> deptSelected());
+        map = new HospitalMap();
     }
 
     public void onShow(){
@@ -114,13 +122,11 @@ public class RequestController implements ControllableScreen{
 
         //todo populate list of requests upon login
         //resolveServiceListView.getItems().add(Department.getBacklog().values());
-        choiceBoxDept.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getDepartments()));
-
 
         //update the items in the checklist
         locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
-        //searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
+        searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
 
     }
     @FXML
@@ -138,10 +144,10 @@ public class RequestController implements ControllableScreen{
     {
         //todo create the request
         //todo get Request ID
+        int reqID = 444;
         //todo does this need to be added t listView or is it handled?
-        requestIDCount++;
         //submitRequest(Service service, String time, String date, Node location, Staff person, int RID){
-        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), time, date, choiceBoxStaff.getValue());
+        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), reqID, locationChoiceBox.getValue(), time.toString(), date.toString(), choiceBoxStaff.getValue());
 
     }
     public void cancelPressed(ActionEvent e)
@@ -151,7 +157,7 @@ public class RequestController implements ControllableScreen{
         choiceBoxStaff.getItems().clear();
         choiceBoxService.getItems().clear();
         choiceBoxDept.getItems().clear();
-        //JFXDatePicker.setTime();
+        //time = JFXDatePicker.setValue(null);
         //date = JFXTimePicker
         //parent.setScreen(ScreenController.LoginID);
     }
@@ -174,33 +180,77 @@ public class RequestController implements ControllableScreen{
         menuButtonAl.setText(selectedAlg);
     }
 
-    public void deptSelected()
+    public void deptSelected(ActionEvent e)
     {
         //todo fix deptSelected. Add listener. Test?
+       // ObservableList<String> obsDeps = FXCollections.observableArrayList(deps);
+        choiceBoxDept.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getDepartments()));
+        nameDept = choiceBoxDept.getSelectionModel().getSelectedItem().toString();
+        choiceBoxDept.setDisable(false);
 
-            nameDept = choiceBoxDept.getSelectionModel().getSelectedItem().toString();
-            //choiceBoxDept.setDisable(false);
-            choiceBoxService.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getServices(nameDept)));
-//            nameService = choiceBoxService.getSelectionModel().getSelectedItem().toString();
-//            choiceBoxService.setDisable(false);
-//
-//            choiceBoxStaff.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getStaff(nameService)));
-//            nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();
-//            choiceBoxStaff.setDisable(false);
+        choiceBoxService.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getServices(nameDept)));
+        nameService = choiceBoxService.getSelectionModel().getSelectedItem().toString();
+        choiceBoxService.setDisable(false);
+
+        choiceBoxStaff.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getStaff(nameService)));
+        nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();
+        choiceBoxStaff.setDisable(false);
 
     }
+//    public void serviceSelected(ActionEvent e){
+//        System.out.println("Service Selected");
+//        serviceType = ((MenuItem) e.getSource()).getText();
+//        serviceDropDown.setText(serviceType);
+//        staff = parent.getEngine().getService(serviceType).getPersonnel();
+//        if(staff.size() != 0) {
+//            staffDropDown.setItems(FXCollections.observableList(staff));
+//            staffDropDown.setDisable(false);
+//        }
+//
+//        if(serviceType.equals("Food")){
+//            infoLabel.setText("Food Type");
+//            infoLabel.setVisible(true);
+//            infoText.setVisible(true);
+//        }
+//        else{
+//            infoLabel.setVisible(false);
+//            infoText.setVisible(false);
+//        }
+//
+//
+//    }
 
     public void timeSelected(ActionEvent e) {
         //todo test?
         System.out.println("Time selescted");
-        time = ((JFXTimePicker)e.getSource()).getValue().toString();
+        //time = ((JFXTimePicker)e.getSource()).getValue();
     }
 
     public void dateSelected(ActionEvent e){
         //todo test?
         System.out.println("Date Selected" );
-        date = ((JFXDatePicker)e.getSource()).getValue().toString();
+        date = ((JFXDatePicker)e.getSource()).getValue();
     }
 
+    public void setForStaff(Staff staff){
+        staffMember = staff;
+        staffNameLabel.setText(staff.getFullName());
+    }
+
+    //////////////////////////////////////////////////////////
+    /////////           Settings Tab
+    //////////////////////////////////////////////////////////
+
+    @FXML
+    private ChoiceBox<SearchStrategy> searchStrategyChoice;
+    @FXML
+    private JFXButton saveSettingsButton;
+
+    public void saveSettingsPressed(ActionEvent e){
+        if(searchStrategyChoice.getValue() != null){
+            map.setSearchStrategy(searchStrategyChoice.getValue());
+        }
+
+    }
 
 }
