@@ -17,55 +17,13 @@ public class DepartmentSubsystem {
     private boolean initRan = false;
     ArrayList<Department> departments = new ArrayList<Department>();
 
-    //Singleton Stuff
-    private static final DepartmentSubsystem singleton = new DepartmentSubsystem();
-    private DepartmentSubsystem(){}
+    //Singleton Stuff (init HAS to be run)
     public static DepartmentSubsystem getSubsystem(){
         return singleton;
     }
-
-    //login function for staff members
-    public boolean login(String username, String password){
-        ArrayList<Staff> allStaff = mainDatabase.getStaff();
-        for(Staff member: allStaff){
-            if(member.getUsername().equals(username)){
-                if(member.getPassword().equals(password)){
-                    return true;
-                }
-                else
-                    break;
-            }
-        }
-        return false;
-    }
-
-    //Getting services and departments
-    public ArrayList<Service> getServices(String department){
-        return getDepartment(department).getServices();
-    }
-    public ArrayList<Department> getDepartments() {
-        return departments;
-    }
-    public ArrayList<Staff> getStaff(Service service){
-        return service.getEligibleStaff();
-    }
-    public Department getDepartment(String departmentName){
-        for(Department d: this.departments){
-            if(d.toString().equals(departmentName)){
-                return d;
-            }
-        }
-        return null;
-    }
-
-    //Assign a service request
-    public void submitRequest(Service service, String time, String date, Node location, Staff person){
-        ServiceRequest temp = new ServiceRequest(service, 0, location,)
-    }
-
-    //Sets up the DSS to have the four departments
-    public void init(){
-
+    private static final DepartmentSubsystem singleton = new DepartmentSubsystem();
+    private DepartmentSubsystem(){init();}
+    private void init(){
         //If the init method was ran, then we dont do it again
         if(initRan = true){ return; }
 
@@ -95,5 +53,44 @@ public class DepartmentSubsystem {
         departments.add(food);
 
         initRan = true;
+    }
+
+    //login function for staff members
+    public boolean login(String username, String password){
+        ArrayList<Staff> allStaff = mainDatabase.getStaff();
+        for(Staff member: allStaff){
+            if(member.getUsername().equals(username)){
+                if(member.getPassword().equals(password)){
+                    return true;
+                }
+                else
+                    break;
+            }
+        }
+        return false;
+    }
+
+    //Getters
+    public Department getDepartment(String departmentName){
+        for(Department d: this.departments){
+            if(d.toString().equals(departmentName)){
+                return d;
+            }
+        }
+        return null;
+    }
+    public ArrayList<Service> getServices(String department){
+        return getDepartment(department).getServices();
+    }
+    public ArrayList<Department> getDepartments() {
+        return departments;
+    }
+    public ArrayList<Staff> getStaff(Service service){
+        return service.getEligibleStaff();
+    }
+
+    //Assign a service request
+    public void submitRequest(Service service, String time, String date, Node location, Staff person){
+        ServiceRequest temp = new ServiceRequest(service, 0, location,)
     }
 }

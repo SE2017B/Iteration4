@@ -21,7 +21,7 @@ import DepartmentSubsystem.ServiceRequest;
 import DepartmentSubsystem.Staff;
 
 public class Main extends Application {
-    private static KioskEngine engine = new KioskEngine();
+    //private static KioskEngine engine = new KioskEngine();
     @Override
     public void start(Stage primaryStage) throws Exception{
         ScreenController myScreenController = new ScreenController(engine);
@@ -50,14 +50,14 @@ public class Main extends Application {
         mainDatabase.readEdgesCSV("MapHedges.csv");
         mainDatabase.readEdgesCSV("MapWedges.csv");
 
-        Staff testAdmin =  new Staff("test","","Admin","Admin Test",1234, engine.getService("Food"));
-        Staff testStaff =  new Staff("testStaff","","food stuff","Staff Test",1234, engine.getService("Food"));
+        //Staff testAdmin =  new Staff("test","","Admin","Admin Test",1234, engine.getService("Food"));
+        //Staff testStaff =  new Staff("testStaff","","food stuff","Staff Test",1234, engine.getService("Food"));
 
-        engine.addStaffLogin(testStaff, "Food");
-        engine.addStaffLogin(testAdmin, "Food");
+        //engine.addStaffLogin(testStaff, "Food");
+        //engine.addStaffLogin(testAdmin, "Food");
 
+        //NEEDS TO BE RAN FOR THE SUBSYSTEM TO POPULATE
         DepartmentSubsystem.getSubsystem();
-        DepartmentSubsystem.getSubsystem();.init();
 
         for(Node node : HospitalMap.getNodes()){
             HospitalMap.addNode(node);
@@ -66,8 +66,8 @@ public class Main extends Application {
         Node stub = new Node("1234567890","1000","400","01","Tower","ELEV","STUB","STUB");
 
 
-        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,stub,"This is a test");
-        req.giveRequest();
+        //ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,stub,"This is a test");
+        //req.giveRequest();
 
 
         launch(args);
