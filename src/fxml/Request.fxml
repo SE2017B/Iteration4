@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -85,7 +84,6 @@
                                     <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                                     <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                                     <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <JFXTimePicker fx:id="timeMenu" defaultColor="#34ffeb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                     <MenuButton fx:id="serviceDropDown" mnemonicParsing="false" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                       <items>
                                         <MenuItem mnemonicParsing="false" text="Action 1" />
