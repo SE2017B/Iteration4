@@ -81,7 +81,7 @@ public class HospitalMap{
         edgeMap.remove(edge);
     }
 
-    public void editEdge(Edge edge,Node oldNode, Node newNode) throws InvalidNodeException {
+    public void editEdge(Edge edge, Node oldNode, Node newNode) throws InvalidNodeException {
         try {
             edge.replaceNode(oldNode, newNode);
         } catch (Exception e){
