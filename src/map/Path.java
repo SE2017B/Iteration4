@@ -29,7 +29,20 @@ public class Path implements Comparable<Path> {
     }
 
     public ArrayList<String> getDirections(){
-        return null;
+        //STUB for UI Testing
+        ArrayList<String> stub = new ArrayList<String>();
+        stub.add("Slide to the left");
+        stub.add("Slide to the right");
+        stub.add("Cris-cross");
+        stub.add("EVERYBODY CLAP YO HANDS");
+        stub.add("Clap");
+        stub.add("Clap");
+        stub.add("Clap");
+        stub.add("Clap");
+        stub.add("Clap");
+        stub.add("Clap");
+        return stub;
+
     }
     public ArrayList<Node> getPath() {
         return this.path;

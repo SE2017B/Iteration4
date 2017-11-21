@@ -9,6 +9,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
 import javafx.scene.image.Image;
@@ -35,8 +36,6 @@ public class PathController implements ControllableScreen{
     private ScreenController parent;
     private ArrayList<Node> path;
     private HospitalMap map;
-
-
     private ArrayList<Line> lines;
 
 
@@ -54,18 +53,6 @@ public class PathController implements ControllableScreen{
     private CheckBox chkstairs;
 
     @FXML
-    private Label lblstart;
-
-    @FXML
-    private Label lblend;
-
-    @FXML
-    private Label lblstairs;
-
-    @FXML
-    private Label lbldir;
-
-    @FXML
     private ChoiceBox<Node> startNodeChoice;
 
     @FXML
@@ -73,6 +60,9 @@ public class PathController implements ControllableScreen{
 
     @FXML
     private Pane mapPane;
+
+    @FXML
+    private TitledPane textDirectionsPane;
 
 
     @FXML
@@ -102,6 +92,8 @@ public class PathController implements ControllableScreen{
 
     private HashMap<FloorNumber,ArrayList<Line>> pathLines;
 
+    @FXML
+    private JFXListView<String> directionsList;
     //Methods start here
     public void init()
     {
@@ -254,10 +246,14 @@ public class PathController implements ControllableScreen{
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
-        setLines(getPath());
+        Path thePath = getPath();
+        setLines(thePath);
         //add background image
+        System.out.println(thePath.getDirections());
         mapImage.setImage(currentFloor);
-
+        directionsList.setItems(FXCollections.observableList(thePath.getDirections()));
+        textDirectionsPane.setVisible(true);
+        textDirectionsPane.setExpanded(false);
         switchPath(currentFloor);
         System.out.println("Enter Pressed");
 
