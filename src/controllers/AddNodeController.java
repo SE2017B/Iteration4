@@ -330,7 +330,7 @@ public class AddNodeController implements ControllableScreen {
     @FXML
     private JFXButton nodeAddCancelButton;
 
-    public void setNodeAddXEntered(ActionEvent e){
+    public void nodeAddXEntered(ActionEvent e){
         System.out.println("Node Add X Entered");
     }
 
