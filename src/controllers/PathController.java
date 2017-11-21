@@ -61,10 +61,10 @@ public class PathController implements ControllableScreen{
     private Label lbldir;
 
     @FXML
-    private JFXTextField startChoice;
+    private ChoiceBox<Node> startNodeChoice;
 
     @FXML
-    private JFXTextField endChoice;
+    private ChoiceBox<Node> endNodeChoice;
 
     @FXML
     private Pane mapPane;
@@ -110,13 +110,11 @@ public class PathController implements ControllableScreen{
         testpath.addToPath(new Node(130,120));
         testpath.addToPath(new Node(1100,800));
 
-
+        mapPane.getChildren().add(backImage);
     }
 
     public void onShow(){
-        //Update the nodes in the map
-
-        //update the items in the checklist
+        //Todo: update the items in the choice boxes
 
 
         //remove any previous paths from the display
@@ -177,6 +175,7 @@ public class PathController implements ControllableScreen{
         }
     }
     private Path getPath(){
+        //HospitalMap.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
         //calculate the path an return it
         return testpath; //for now
     }
@@ -201,6 +200,7 @@ public class PathController implements ControllableScreen{
     //some methods for switching between screens to be edited in the future
     private void switchImage(FloorNumber floor){
         //clear lines first
+        /**
         clearPaths();
         //delete background image if any
         if(mapPane.getChildren().size()>0){
@@ -208,6 +208,11 @@ public class PathController implements ControllableScreen{
         }
         //now add background image
         mapPane.getChildren().add(backImage.getImagePane(floor));
+         **/
+        clearPaths();
+        //Todo: switch paths right here
+        backImage.setImage(floor);
+
     }
 
     public void cancelPressed(ActionEvent e)

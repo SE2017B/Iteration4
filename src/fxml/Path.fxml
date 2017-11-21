@@ -55,22 +55,6 @@
                               <Insets />
                            </GridPane.margin>
                         </JFXCheckBox>
-                        <JFXTextField fx:id="startChoice" alignment="CENTER" focusColor="#408dff" labelFloat="true" promptText="Start" style="-fx-border-color: #008faa; -fx-background-color: #FFFFFF;" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowSpan="2">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </JFXTextField>
-                        <JFXTextField fx:id="endChoice" alignment="CENTER" focusColor="#3ce8ff" labelFloat="true" prefWidth="228.0" promptText="End" style="-fx-border-color: #008faa; -fx-background-color: #ffffff;" unFocusColor="WHITE" GridPane.columnIndex="2" GridPane.rowSpan="2">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </GridPane.margin>
-                        </JFXTextField>
                         <JFXButton fx:id="ntncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Return" GridPane.halignment="CENTER" GridPane.rowSpan="2">
                            <font>
                               <Font size="24.0" />
@@ -79,6 +63,8 @@
                               <Insets />
                            </GridPane.margin>
                         </JFXButton>
+                        <ChoiceBox fx:id="startNodeChoice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <ChoiceBox fx:id="endNodeChoice" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
                </children>

@@ -77,18 +77,11 @@ public class proxyImagePane extends StackPane {
     }
     public boolean setImage(FloorNumber floor){
         //Todo: Isn't set image and add image the same thing
-        /**
-        if(screens.containsKey(name)){
-            if(!getChildren().isEmpty()){
-                getChildren().remove(0);
-            }
-            getChildren().add(screens.get(name));
-            controllers.get(name).onShow();
-            return true;
+       if(this.getChildren().size()>0){
+            this.getChildren().remove(0);
         }
-        System.out.println("Set Screen Failed");
-        return false;
-         **/
+        //now add background image
+        this.getChildren().add(this.getImagePane(floor));
         return true;
     }
     public boolean removeImage(FloorNumber floor){
