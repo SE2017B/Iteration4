@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXTabPane?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
       <AnchorPane layoutX="-7.0" layoutY="-7.0" prefHeight="150.0" prefWidth="1294.0" />
       <SplitPane dividerPositions="0.18796992481203006" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane maxHeight="100.0" minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #008faa;">
+          <AnchorPane maxHeight="100.0" minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="pane">
                <children>
                   <GridPane prefHeight="770.0" prefWidth="1294.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
@@ -42,12 +36,12 @@
                         <RowConstraints />
                      </rowConstraints>
                      <children>
-                        <JFXButton fx:id="btnEnter" onAction="#enterPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Go!" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <JFXButton fx:id="btnEnter" onAction="#enterPressed" prefHeight="50.0" prefWidth="150.0" text="Go!" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </JFXButton>
-                        <JFXCheckBox onAction="#stairsPressed" prefHeight="49.0" prefWidth="102.0" style="-fx-border-color: #008faa; -fx-background-color: #ffffff;" text="Stairs?" unCheckedColor="#09b5ff" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <JFXCheckBox onAction="#stairsPressed" prefHeight="49.0" prefWidth="102.0" styleClass="text-on-dark" text="Stairs?" unCheckedColor="#09b5ff" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -55,7 +49,7 @@
                               <Insets />
                            </GridPane.margin>
                         </JFXCheckBox>
-                        <JFXButton fx:id="ntncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Return" GridPane.halignment="CENTER" GridPane.rowSpan="2">
+                        <JFXButton fx:id="ntncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Return" GridPane.halignment="CENTER" GridPane.rowSpan="2">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -115,9 +109,9 @@
       </SplitPane>
       <TitledPane animated="false" layoutY="110.0" text="Directions">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #008faa;">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <JFXListView layoutX="-4.0" layoutY="-105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <JFXListView layoutX="13.4" layoutY="10.4" prefHeight="200.0" prefWidth="216.0" AnchorPane.bottomAnchor="-16.0" AnchorPane.leftAnchor="-15.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="-18.0" />
                </children>
             </AnchorPane>
          </content>
