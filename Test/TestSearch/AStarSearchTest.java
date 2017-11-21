@@ -1,30 +1,14 @@
-/*
-* Software Engineering 3733, Worcester Polytechnic Institute
-* Team H
-* Code produced for Iteration1
-* Original author(s): Nicholas Fajardo, Tyrone Patterson, Leo Grande, Meghana Bhatia
-* The following code
-*/
+package TestSearch;
 
-package TestMap;
-
-import map.*;
+import map.Node;
 import org.junit.Before;
 import org.junit.Test;
 import search.AStarSearch;
 
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
 /**
-public class HospitalMapTest {
-
-    //set up example map for testing
-    public HospitalMapTest() {
-    }
-
-    private HospitalMap map = new HospitalMap();
+public class AStarSearchTest {
     private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
     private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
     private Node N3 = new Node("A3", "0", "0", "L1", "Tower", "Desk", "Long3", "Short3", "H");
@@ -48,6 +32,30 @@ public class HospitalMapTest {
     private Node N21 = new Node("A21", "700", "100", "L1", "Tower", "Stairs", "Long21", "Short21", "H");
     private Node N22 = new Node("A22", "700", "0", "L1", "Tower", "Desk", "Long22", "Short22", "H");
     private Node N23 = new Node("A23", "800", "0", "L1", "Tower", "Desk", "Long23", "Short23", "H");
+
+    private Node N1_2 = new Node("A1_2", "0", "400", "L2", "Tower", "Bathroom", "Long1_2", "Short1_2", "H");
+    private Node N2_2 = new Node("A2_2", "0", "200", "L2", "Tower", "Desk", "Long2_2", "Short2_2", "H");
+    private Node N3_2 = new Node("A3_2", "0", "0", "L2", "Tower", "Desk", "Long3_2", "Short3_2", "H");
+    private Node N4_2 = new Node("A4_2", "100", "300", "L2", "Tower", "Desk", "Long4_2", "Short4_2", "H");
+    private Node N5_2 = new Node("A5_2", "100", "100", "L2", "Tower", "Stairs", "Long5_2", "Short5_2", "H");
+    private Node N6_2 = new Node("A6_2", "200", "400", "L2", "Tower", "Desk", "Long6_2", "Short6_2", "H");
+    private Node N7_2 = new Node("A7_2", "200", "300", "L2", "Tower", "Desk", "Long7_2", "Short7_2", "H");
+    private Node N8_2 = new Node("A8_2", "200", "100", "L2", "Tower", "Bathroom", "Long8_2", "Short8_2", "H");
+    private Node N9_2 = new Node("A9_2", "200", "0", "L2", "Tower", "Elevator", "Long9_2", "Short9_2", "H");
+    private Node N10_2 = new Node("A10_2", "300", "300", "L2", "Tower", "Desk", "Long10_2", "Short10_2", "H");
+    private Node N11_2 = new Node("A11_2", "300", "100", "L2", "Tower", "Bathroom", "Long11_2", "Short11_2", "H");
+    private Node N12_2 = new Node("A12_2", "400", "400", "L2", "Tower", "Desk", "Long12_2", "Short12_2", "H");
+    private Node N13_2 = new Node("A13_2", "400", "100", "L2", "Tower", "Desk", "Long13_2", "Short13_2", "H");
+    private Node N14_2 = new Node("A14_2", "400", "100", "L2", "Tower", "Desk", "Long14_2", "Short14_2", "H");
+    private Node N15_2 = new Node("A15_2", "400", "0", "L2", "Tower", "Stairs", "Long15_2", "Short15_2", "H");
+    private Node N16_2 = new Node("A16_2", "600", "400", "L2", "Tower", "Office", "Long16_2", "Short16_2", "H");
+    private Node N17_2 = new Node("A17_2", "600", "300", "L2", "Tower", "Office", "Long17_2", "Short17_2", "H");
+    private Node N18_2 = new Node("A18_2", "500", "100", "L2", "Tower", "Bathroom", "Long18_2", "Short18_2", "H");
+    private Node N19_2 = new Node("A19_2", "500", "0", "L2", "Tower", "Stairs", "Long19_2", "Short19_2", "H");
+    private Node N20_2 = new Node("A20_2", "700", "300", "L2", "Tower", "Elevator", "Long20_2", "Short20_2", "H");
+    private Node N21_2 = new Node("A21_2", "700", "100", "L2", "Tower", "Stairs", "Long21_2", "Short21_2", "H");
+    private Node N22_2 = new Node("A22_2", "700", "0", "L2", "Tower", "Desk", "Long22_2", "Short22_2", "H");
+    private Node N23_2 = new Node("A23_2", "800", "0", "L2", "Tower", "Desk", "Long23_2", "Short23_2", "H");
 
     private AStarSearch search = new AStarSearch();
 
@@ -73,9 +81,9 @@ public class HospitalMapTest {
         N5.addConnection(N8);
 
         //Add connections for nodeSix
-        N6.addConnection(N7);
 
         //Add connections for nodeSeven
+        N7.addConnection(N6);
         N7.addConnection(N8);
         N7.addConnection(N10);
 
@@ -84,6 +92,7 @@ public class HospitalMapTest {
 
         //Add connections for nodeNine
         N9.addConnection(N15);
+        N9.addConnection(N9_2);
 
         //Add connections for nodeTen
         N10.addConnection(N11);
@@ -120,6 +129,7 @@ public class HospitalMapTest {
 
         //Add connections for nodeTwenty
         N20.addConnection(N21);
+        N20.addConnection(N20_2);
 
         //Add connections for nodeTwentyOne
         N21.addConnection(N23);
@@ -128,6 +138,81 @@ public class HospitalMapTest {
         //Add connections for nodeTwentyTwo
 
         //Add connections for nodeTwentyThree
+
+        //Add connections for nodeOne_1
+        N1_2.addConnection(N2_2);
+        N1_2.addConnection(N6_2);
+
+        //Add connections for nodeTwo_2
+        N2_2.addConnection(N3_2);
+
+        //Add connections for nodeThree_2
+        N3_2.addConnection(N9_2);
+
+        //Add connections for nodeFour_2
+        N4_2.addConnection(N7_2);
+        N4_2.addConnection(N5_2);
+
+        //Add connections for nodeFive_2
+        N5_2.addConnection(N8_2);
+
+        //Add connections for nodeSix_2
+
+        //Add connections for nodeSeven_2
+        N7_2.addConnection(N6_2);
+        N7_2.addConnection(N8_2);
+        N7_2.addConnection(N10_2);
+
+        //Add connections for nodeEight_2
+        N8_2.addConnection(N9_2);
+
+        //Add connections for nodeNine_2
+        N9_2.addConnection(N15_2);
+
+        //Add connections for nodeTen_2
+        N10_2.addConnection(N11_2);
+
+        //Add connections for nodeEleven_2
+        N11_2.addConnection(N14_2);
+
+        //Add connections for nodeTwelve_2
+        N12_2.addConnection(N13_2);
+        N12_2.addConnection(N16_2);
+
+        //Add connections for nodeThirteen_2
+        N13_2.addConnection(N14_2);
+        N13_2.addConnection(N17_2);
+
+        //Add connections for nodeFourteen_2
+        N14_2.addConnection(N15_2);
+        N14_2.addConnection(N18_2);
+
+        //Add connections for nodeFifteen_2
+
+        //Add connections for nodeSixteen_2
+        N16_2.addConnection(N17_2);
+
+        //Add connections for nodeSeventeen_2
+        N17_2.addConnection(N20_2);
+
+        //Add connections for nodeEighteen_2
+        N18_2.addConnection(N19_2);
+        N18_2.addConnection(N21_2);
+
+        //Add connections for nodeNineteen_2
+        N19_2.addConnection(N22_2);
+
+        //Add connections for nodeTwenty_2
+        N20_2.addConnection(N21_2);
+
+        //Add connections for nodeTwentyOne_2
+        N21_2.addConnection(N23_2);
+        N21_2.addConnection(N22_2);
+
+        //Add connections for nodeTwentyTwo_2
+
+        //Add connections for nodeTwentyThree_2
+
     }
 
     // findPath tests
@@ -145,7 +230,7 @@ public class HospitalMapTest {
     public void testMap1Reverse() throws InterruptedException{
         String answer = search.findPath(N9, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short9, Short8, Short7, Short6, Short1]", answer);
+        assertEquals("[Short9, Short3, Short2, Short1]", answer);
     }
 
     @Test
@@ -168,7 +253,7 @@ public class HospitalMapTest {
     public void testMap3() throws InterruptedException{
         String answer = search.findPath(N1, N12).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short12]", answer);
+        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short13, Short12]", answer);
     }
     @Test
     //Node 12 to Node 1
@@ -183,7 +268,7 @@ public class HospitalMapTest {
     public void testMap4() throws InterruptedException{
         String answer = search.findPath(N1, N20).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short17, Short20]", answer);
+        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short13, Short17, Short20]", answer);
     }
     @Test
     //Node 20 to Node 1
@@ -198,7 +283,7 @@ public class HospitalMapTest {
     public void testMap5() throws InterruptedException{
         String answer = search.findPath(N1, N23).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
+        assertEquals("[Short1, Short2, Short3, Short9, Short15, Short14, Short18, Short21, Short23]", answer);
     }
     @Test
     //Node 23 to Node 1
@@ -220,7 +305,7 @@ public class HospitalMapTest {
     public void testMap6Reverse() throws InterruptedException{
         String answer = search.findPath(N15, N6).toString();
         System.out.println(answer);
-        assertEquals("[Short15, Short14, Short11, Short10, Short7, Short6]", answer);
+        assertEquals("[Short15, Short9, Short8, Short7, Short6]", answer);
     }
 
     @Test
@@ -235,7 +320,7 @@ public class HospitalMapTest {
     public void testMap7Reverse() throws InterruptedException{
         String answer = search.findPath(N22, N3).toString();
         System.out.println(answer);
-        assertEquals("[Short22, Short19, Short18, Short14, Short15, Short9, Short3]", answer);
+        assertEquals("[Short22, Short21, Short18, Short14, Short15, Short9, Short3]", answer);
     }
 
     @Test
@@ -300,6 +385,40 @@ public class HospitalMapTest {
 
     }
 
+    //MultiFloor Pathfinding Tests
+    @Test public void testSearchFloor1(){   //Node 1 to Node 19_2
+        String answer = search.findPath(N1, N19_2).toString();
+        System.out.println(answer);
+        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
+    }
+    @Test public void testSearchFloor1Reverse(){    //Node 19_2 to Node 1
+        String answer = search.findPath(N19_2, N1).toString();
+        System.out.println(answer);
+        assertEquals("[Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
+    }
+
+    @Test public void testSearchFloor2(){   //Node 3 to Node 23_2
+        String answer = search.findPath(N3, N23_2).toString();
+        System.out.println(answer);
+        assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short21_2, Short23_2]", answer);
+    }
+    @Test public void testSearchFloor2Reverse(){    //Node 23_2 to Node 3
+        String answer = search.findPath(N23_2, N3).toString();
+        System.out.println(answer);
+        assertEquals("[Short23_2, Short21_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3]", answer);
+    }
+
+    @Test public void testSearchFloor3(){   //Node 17 to Node 4_2
+        String answer = search.findPath(N17, N4_2).toString();
+        System.out.println(answer);
+        assertEquals("[Short17, Short13, Short14, Short15, Short9, Short9_2, Short8_2, Short5_2, Short4_2]", answer);
+    }
+    @Test public void testSearchFloor3Reverse(){    //Node 4_2 to Node 17
+        String answer = search.findPath(N4_2, N17).toString();
+        System.out.println(answer);
+        assertEquals("[Short4_2, Short7_2, Short8_2, Short9_2, Short9, Short15, Short14, Short13, Short17]", answer);
+    }
+
 
     // getEuclideanDistance tests
     @Test
@@ -341,4 +460,4 @@ public class HospitalMapTest {
         assertEquals(0, search.getEuclideanDistance(N5, N5), .01);
     }
 }
- **/
+**/

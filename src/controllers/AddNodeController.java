@@ -8,6 +8,7 @@
 
 package controllers;
 
+import map.HospitalMap;
 import map.Node;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -164,51 +165,57 @@ public class AddNodeController implements ControllableScreen {
 
     public void init() {
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
-        txtfldX.textProperty().addListener((observable, oldValue, newValue) -> xCoordEntered());
-        txtfldY.textProperty().addListener((observable, oldValue, newValue) -> yCoordEntered());
 
     }
 
     public void onShow() {
-        x = "";
-        y = "";
-        name = "";
-        nodeID = "";
-        floor = "";
-        txtfldX.setText("");
-        txtfldY.setText("");
-        txtfldID.setText("");
-        txtfldName.setText("");
+//        x = "";
+//        y = "";
+//        name = "";
+//        nodeID = "";
+//        floor = "";
+//        txtfldX.setText("");
+//        txtfldY.setText("");
+//        txtfldID.setText("");
+//        txtfldName.setText("");
+//
+//        floorDropDown.setText("");
+//        buildingDropDown.setText("");
+//        nodeTypeDropDown.setText("");
+//
+//        for(NodeCheckBox box : nodeCheckBoxes){
+//            box.setVisible(false);
+//            mapPane.getChildren().remove(box);
+//        }
+//        nodeCheckBoxes = new ArrayList<NodeCheckBox>();
+//        failText.setVisible(false);
+//        nodeLocation.setVisible(false);
+//
+//        ArrayList<Node> nodes = new ArrayList<Node>();//Todo find nodes to display
+//        for (Node node : nodes) {
+//            NodeCheckBox box = new NodeCheckBox();
+//            box.setNode(node); //sets checkbox to node location
+//
+//            box.setVisible(true);
+//            mapPane.getChildren().add(box);
+//            nodeCheckBoxes.add(box);
 
-        floorDropDown.setText("");
-        buildingDropDown.setText("");
-        nodeTypeDropDown.setText("");
+//        }
+    }
 
-        for(NodeCheckBox box : nodeCheckBoxes){
-            box.setVisible(false);
-            mapPane.getChildren().remove(box);
-        }
-        nodeCheckBoxes = new ArrayList<NodeCheckBox>();
-        failText.setVisible(false);
-        nodeLocation.setVisible(false);
+    public void removeEnterPressed(ActionEvent e) {
+        System.out.println("Remove entered");
+    }
 
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForEdit();
-        for (Node node : nodes) {
-            NodeCheckBox box = new NodeCheckBox();
-            box.setNode(node); //sets checkbox to node location
-
-            box.setVisible(true);
-            mapPane.getChildren().add(box);
-            nodeCheckBoxes.add(box);
-
-        }
+    public void removeEdgeEnterPressed(ActionEvent e) {
+        System.out.println("Remove entered");
     }
 
     //Action upon pressing enter
     //variables for all text fields is set up and populated
     //add node command is executed
     //user is returned to menu screen
-    public void enterPressed(ActionEvent e) {
+    public void addEnterPressed(ActionEvent e) {
         nodeID = txtfldID.getText();
         if (nodeID.length() == 10) {
             //x and y and ints
@@ -233,9 +240,8 @@ public class AddNodeController implements ControllableScreen {
                     connections.add(box.getNode());
             }
 
-            parent.getEngine().addNode(nodeID, x, y, floor, building, nodeType, name, connections);
+            HospitalMap.addNode(new Node(nodeID, x, y, floor, building, nodeType, name, name));//Todo add connections
             System.out.println("Enter Pressed");
-            parent.setScreen(ScreenController.AdminMenuID);
         } else
             failText.setVisible(true);
 
@@ -244,12 +250,17 @@ public class AddNodeController implements ControllableScreen {
     //comands for button cancel press
     public void cancelPressed(ActionEvent e) {
         System.out.println("Cancel Pressed");
-        parent.setScreen(ScreenController.AdminMenuID);
+        clearInputs();
+    }
+
+    public void returnPressed(ActionEvent e) {
+        System.out.println("Return Pressed");
+        parent.setScreen(ScreenController.RequestID);
     }
 
     //set up variables when building drop down selected
     @FXML
-    void buildingSelected(ActionEvent e) {
+    public void buildingSelected(ActionEvent e) {
         System.out.println("Building Selected");
         building = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
@@ -258,16 +269,16 @@ public class AddNodeController implements ControllableScreen {
 
     //set up variable when floor drop down selected
     @FXML
-    void floorSelected(ActionEvent e) {
+    public void floorSelected(ActionEvent e) {
         System.out.println("Floor Selected");
-        floor = ((MenuItem) e.getSource()).getText();
+        //floor = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
-        floorDropDown.setText(floor);
+        //floorDropDown.setText(floor);
     }
 
     //set up variable when floor drop down selected
     @FXML
-    void nodeTypeSelected(ActionEvent e) {
+    public void nodeTypeSelected(ActionEvent e) {
         System.out.println("Node Type Selected");
         nodeType = ((MenuItem) e.getSource()).getText();
         //Setting the variables equal to values read from UI
@@ -276,23 +287,23 @@ public class AddNodeController implements ControllableScreen {
 
     //set variable to text from text field name
     @FXML
-    void filledNodeID(ActionEvent e) {
+    public void filledNodeID(ActionEvent e) {
         //Setting the variables equal to values read from UI
         nodeID = txtfldID.getText();
         System.out.println(nodeID);
     }
 
-    void xCoordEntered() {
+    public void xCoordEntered() {
         x = txtfldX.getText();
         drawNodeLocation();
     }
 
-    void yCoordEntered() {
+    public void yCoordEntered() {
         y = txtfldY.getText();
         drawNodeLocation();
     }
 
-    void drawNodeLocation() {
+    public void drawNodeLocation() {
         if (x.length()>0 & y.length()>0) {
             System.out.println("Drawing Node: " + x + " " + y);
             nodeLocation.setLayoutX(Integer.parseInt(x));
@@ -301,4 +312,10 @@ public class AddNodeController implements ControllableScreen {
         }
 
     }
+
+    public void clearInputs(){
+        //todo clear all the text and options from UI inputs
+    }
+
+
 }

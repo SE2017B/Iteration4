@@ -9,6 +9,7 @@
 package kioskEngine;
 
 import database.mainDatabase;
+import map.HospitalMap;
 import map.Node;
 import controllers.ScreenController;
 import javafx.application.Application;
@@ -24,21 +25,20 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         ScreenController myScreenController = new ScreenController(engine);
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
-        myScreenController.loadScreen(ScreenController.AdminMenuID, ScreenController.AdminMenuFile);
-        myScreenController.loadScreen(ScreenController.FilterID, ScreenController.FilterFile);
-        myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
         myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
         myScreenController.loadScreen(ScreenController.MainID, ScreenController.MainFile);
-        //myScreenController.loadScreen(ScreenController.NodeConfirmID, ScreenController.NodeConfirmFile);
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
-        //myScreenController.loadScreen(ScreenController.ThankYouID, ScreenController.ThankYouFile);
+        myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
 
         myScreenController.setScreen(ScreenController.MainID);
 
         Group root = new Group();
         root.getChildren().addAll(myScreenController);
-        primaryStage.setScene(new Scene(root, 1280, 720));
+        Scene scene = new Scene(root, 1280,800);
+        String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
+        scene.getStylesheets().add(style);
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
@@ -57,12 +57,16 @@ public class Main extends Application {
 
 
 
-        for(Node node : mainDatabase.getNodes()){
-            engine.getMap().addNode(node.getID(),node);
+        for(Node node : HospitalMap.getNodes()){
+            HospitalMap.addNode(node);
         }
 
-        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,engine.getMap().getNodesForSearch().get(0),"This is a test");
+        Node stub = new Node("1234567890","1000","400","01","Tower","ELEV","STUB","STUB");
+
+
+        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,stub,"This is a test");
         req.giveRequest();
+
 
         launch(args);
 

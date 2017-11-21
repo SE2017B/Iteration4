@@ -22,7 +22,7 @@ public class StaffTest{
     private FoodService foodService;
     private ServiceRequest appleRequest;
     private ServiceRequest orangeRequest;
-    Node location;
+    private Node location;
 
     public StaffTest(){}
 
@@ -71,7 +71,7 @@ public class StaffTest{
     public void testCompleteCurRec(){
         foodService.assignPerson(Bob);
         foodService.addRequest(appleRequest);
-        Bob.completeCurRec();
+        Bob.completeCurrentRequest();
         assertTrue(Bob.getCurrentRequest() == null);
     }
 
@@ -83,7 +83,7 @@ public class StaffTest{
     public void testCompleteCurRec2(){
         foodService.assignPerson(Bob);
         foodService.addRequest(appleRequest);
-        Bob.completeCurRec();
+        Bob.completeCurrentRequest();
         ArrayList<Staff> available = new ArrayList<>();
         available.add(Bob);
         assertEquals(foodService.getAvailablePer(), available);
@@ -97,7 +97,7 @@ public class StaffTest{
     public void testCompleteCurRec3(){
         foodService.assignPerson(Bob);
         foodService.addRequest(appleRequest);
-        Bob.completeCurRec();
+        Bob.completeCurrentRequest();
         assertFalse(Bob.isBusy()); //Bob should not be busy now
     }
 
@@ -109,7 +109,7 @@ public class StaffTest{
         foodService.assignPerson(Bob);
         foodService.addRequest(appleRequest);
         foodService.addRequest(orangeRequest);
-        Bob.completeCurRec();
+        Bob.completeCurrentRequest();
         assertEquals(Bob.getCurrentRequest(), orangeRequest);
     }
 }

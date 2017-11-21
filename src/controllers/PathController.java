@@ -8,6 +8,9 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXTextField;
+import exceptions.InvalidNodeException;
+import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -51,10 +54,10 @@ public class PathController implements ControllableScreen{
     private Label lbldir;
 
     @FXML
-    private ChoiceBox<Node> startChoice;
+    private JFXTextField startChoice;
 
     @FXML
-    private ChoiceBox<Node> endChoice;
+    private JFXTextField endChoice;
 
     @FXML
     private Pane mapPane;
@@ -74,13 +77,9 @@ public class PathController implements ControllableScreen{
 
     public void onShow(){
         //Update the nodes in the map
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForSearch();
 
         //update the items in the checklist
-        startChoice.setItems(FXCollections.observableList(nodes));
-        endChoice.setItems(FXCollections.observableList(nodes));
 
-        startChoice.setValue(nodes.get(2));
 
         //remove any previous paths from the display
         for (Line line: lines) {
@@ -126,20 +125,12 @@ public class PathController implements ControllableScreen{
     }
 
 
-
-    public void enterPressed(ActionEvent e)
+    public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
         System.out.println("Enter Pressed");
         //Remove last path from screen
-        clearPaths();
-        System.out.println(startChoice.getValue() + "->" + endChoice.getValue());
-        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
-        path = parent.getEngine().findPath(startChoice.getValue(),endChoice.getValue());
-        System.out.println(path);
-        diplayPath(path);
-
-
     }
+
     public void cancelPressed(ActionEvent e)
     {
         System.out.println("Cancel Pressed");

@@ -8,6 +8,8 @@
 
 package controllers;
 
+import javafx.scene.layout.Pane;
+import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -16,7 +18,7 @@ import javafx.scene.control.*;
 import DepartmentSubsystem.ServiceRequest;
 import DepartmentSubsystem.Staff;
 
-
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -50,6 +52,7 @@ public class RequestController implements ControllableScreen{
     @FXML
     private ChoiceBox staffDropDown;
 
+
     @FXML
     private MenuButton hourDropDown;
 
@@ -71,37 +74,42 @@ public class RequestController implements ControllableScreen{
     @FXML
     private ChoiceBox locationChoiceBox;
 
+
+    @FXML
+    private Label staffNameLabel;
+
+
     public void init(){
     }
 
     public void onShow(){
         //Update the nodes in the map
-        ArrayList<Node> nodes = parent.getEngine().getMap().getNodesForSearch();
+        ArrayList<Node> nodes = HospitalMap.getNodesForSearch();
 
         //update the items in the checklist
         locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
     }
 
-    public void createPressed(ActionEvent e){
-        staffMember = (Staff)staffDropDown.getValue();
-        if(serviceType.equals("Food")){
-            ServiceRequest req = new ServiceRequest(staffMember.getJobType(),requestIDCount, (Node)locationChoiceBox.getValue(),infoText.getText());
-            requestIDCount++;
-            req.giveRequest();
-        }
-        else{
-            System.out.println("Please make a Food Request");
+    public void resolveServicePressed(ActionEvent e){//todo
         }
 
-        System.out.println("Create Pressed: " + staffMember);
-        ((AdminMenuController)parent.getController(ScreenController.AdminMenuID)).setRequest();
-        parent.setScreen(ScreenController.AdminMenuID);
+    public void requestCreatePressed(ActionEvent e){
+        //todo create the request
 
     }
     public void cancelPressed(ActionEvent e){
         System.out.println("Cancel Pressed");
-        parent.setScreen(ScreenController.AdminMenuID);
+    }
+
+    public void logoutPressed(ActionEvent e){
+        System.out.println("Logout Pressed");
+        parent.setScreen(ScreenController.LogoutID);
+    }
+
+    public void editPressed(ActionEvent e){
+        System.out.println("Edit Pressed");
+        parent.setScreen(ScreenController.AddNodeID);
     }
 
 
@@ -149,5 +157,10 @@ public class RequestController implements ControllableScreen{
     public void dateSelected(ActionEvent e){
         System.out.println("Date Selected" );
         date = ((DatePicker)e.getSource()).getValue();
+    }
+
+    public void setForStaff(Staff staff){
+        staffMember = staff;
+        staffNameLabel.setText(staff.getFullName());
     }
 }

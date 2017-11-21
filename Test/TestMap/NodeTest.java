@@ -9,29 +9,30 @@
 //testing file for Node testing each method
 package TestMap;
 
-import map.*;
-import org.junit.Assert;
+import exceptions.InvalidNodeException;
+import map.FloorNumber;
+import map.Node;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class NodeTest {
     public NodeTest(){}
 
-    private Node N1 = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
-    private Node N1Copy = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
-    private Node N2 = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2", "H");
-    private Node N2Copy = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2", "H");
-    private Node N3 = new Node("A3", "200", "200", "L1", "Tower", "Desk", "Long3", "Short3", "H");
+    private Node N1 = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1");
+    private Node N1Copy = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1");
+    private Node N2 = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2");
+    private Node N2Copy = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2");
+    private Node N3 = new Node("A3", "200", "200", "L1", "Tower", "Desk", "Long3", "Short3");
+    private Node N4 = new Node("A4", "200", "200", "3", "Tower", "Desk", "Long4", "Short4");
 
     @Before
     public void initialize(){
 
     }
 
+    /*
     @Test
     public void testNodeParameters(){
         assertEquals("A1", N1.getID());
@@ -44,7 +45,12 @@ public class NodeTest {
         assertEquals("Bathroom", N1.getType());
         assertEquals("Long1", N1.getLongName());
         assertEquals("Short1", N1.getShortName());
-        assertEquals("H", N1.getTeam());
+    }
+    */
+
+    @Test
+    public void testID(){
+        assertEquals("A1", N1.getID());
     }
 
     //Test toString() override
@@ -80,6 +86,29 @@ public class NodeTest {
     }
 
     @Test
-    public void testCost(){
+    public void testEuclidean1D(){
+        assertEquals(N1.getEuclidianDistance(N2), 100.0, 0.01);
+    }
+
+    @Test
+    public void testEuclidean2D(){
+        assertEquals(N2.getEuclidianDistance(N3), 223.61, 0.05);
+    }
+
+    @Test
+    public void testEuclidean3D(){
+    assertEquals(N1.getEuclidianDistance(N4), 374.17, 0.05);
+    }
+
+    //should be the same as Euclidean distance, for now
+    @Test
+    public void testCost() throws InvalidNodeException{
+    //assertEquals(N1.getCostFromNode(N2), 100, 0.01);
+    }
+
+    //test the enum
+    @Test
+    public void testFloorNumber(){
+        assertEquals(FloorNumber.FLOOR_LONE, N1.getFloor());
     }
 }

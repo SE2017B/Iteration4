@@ -7,6 +7,8 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
+
+import map.Edge;
 import map.Node;
 
 public class mainDatabase {
@@ -62,8 +64,8 @@ public class mainDatabase {
                         allNodes.get(j).getBuilding() + "," +
                         allNodes.get(j).getType() + "," +
                         allNodes.get(j).getLongName() + "," +
-                        allNodes.get(j).getShortName()+ "," +
-                        allNodes.get(j).getTeam()
+                        allNodes.get(j).getShortName()+ ","
+                        //allNodes.get(j).getTeam()
                 );
                 System.out.println(j + ": Node Record Saved!");
             }
@@ -76,7 +78,7 @@ public class mainDatabase {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Write to a output Edges csv file
+    // Write to a output Edge csv file
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputEdgesCSV() {
 
@@ -121,7 +123,7 @@ public class mainDatabase {
                     String[] nodeValues = nodeData.split(",");
 
 
-                    allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
+                    //allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
                     /*
                     nodeID.add(nodeValues[0]);
                     xCoord.add(nodeValues[1]);
@@ -142,7 +144,7 @@ public class mainDatabase {
             }
         }
         ///////////////////////////////////////////////////////////////////////////////
-        // Read from Edges CSV File and store columns in array lists
+        // Read from Edge CSV File and store columns in array lists
         ///////////////////////////////////////////////////////////////////////////////
         public static void readEdgesCSV(String fname) {
 
@@ -162,26 +164,27 @@ public class mainDatabase {
                     startNode.add(edgeValues[1]);
                     endNode.add(edgeValues[2]);
 
-                    nodeOne = allNodes.indexOf(new Node(edgeValues[1], "-1", "-1", null, null, null, null, null, null));
+                    nodeOne = allNodes.indexOf(new Node(edgeValues[1], "-1", "-1", null, null, null, null, null));
 
                     if (nodeOne < 0) {
                         System.out.println("Error: invalid edge");
                     } else {
                         tempOne = allNodes.get(nodeOne);
                     }
-                    nodeTwo = allNodes.indexOf(new Node(edgeValues[2], "-1", "-1", null, null, null, null, null, null));
+                    nodeTwo = allNodes.indexOf(new Node(edgeValues[2], "-1", "-1", null, null, null, null, null));
                     if (nodeTwo < 0) {
                         System.out.println("Error: invalid edge");
                     } else {
                         tempTwo = allNodes.get(nodeTwo);
                     }
                     if (tempOne != null && tempTwo != null) {
-                        tempOne.addConnection(tempTwo);
-                        tempTwo.addConnection(tempOne);
+                        Edge tempEdge = new Edge(tempOne,tempTwo);
+                        tempOne.addConnection(tempEdge);
+                        tempTwo.addConnection(tempEdge);
                     } else {
                         System.out.println(" ");
                     }
-                    allNodes.get(nodeOne);
+                    //allNodes.get(nodeOne);
                 }
 
                 inputStreamEdges.close();
@@ -282,7 +285,7 @@ public class mainDatabase {
                         "endNode VARCHAR(20))");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
-                System.out.println("Create Edges table Successful!");
+                System.out.println("Create Edge table Successful!");
 
                 conn.commit();
                 stmtCreate2.close();
@@ -300,7 +303,7 @@ public class mainDatabase {
                         "endNode VARCHAR(20))");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
-                System.out.println("Create Edges table Successful!");
+                System.out.println("Create Edge table Successful!");
 
                 conn.commit();
                 stmtCreate2.close();
@@ -325,12 +328,12 @@ public class mainDatabase {
                 insertNode.setString(1, allNodes.get(j).getID());
                 insertNode.setString(2, Integer.toString(allNodes.get(j).getX()));
                 insertNode.setString(3, Integer.toString(allNodes.get(j).getY()));
-                insertNode.setString(4, allNodes.get(j).getFloor());
+                insertNode.setString(4, allNodes.get(j).getFloor().getDbMapping());
                 insertNode.setString(5, allNodes.get(j).getBuilding());
                 insertNode.setString(6, allNodes.get(j).getType());
                 insertNode.setString(7, allNodes.get(j).getLongName());
                 insertNode.setString(8, allNodes.get(j).getShortName());
-                insertNode.setString(9, allNodes.get(j).getTeam());
+                //insertNode.setString(9, allNodes.get(j).getTeam());
 
                 insertNode.executeUpdate();
                 System.out.println(j + ": Insert Node Successful!");
@@ -383,12 +386,12 @@ public class mainDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     public static void main(String[] args) throws SQLException {
 
-        try {
-            DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
         readNodeCSV("MapHnodes.csv");
         readNodeCSV("MapWnodes.csv");
