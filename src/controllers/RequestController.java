@@ -133,7 +133,7 @@ public class RequestController implements ControllableScreen{
         //update the items in the checklist
         locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
-        searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
+        //searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
 
     }
     @FXML
