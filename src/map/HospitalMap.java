@@ -135,7 +135,7 @@ public class HospitalMap{
 
 
 
-    public void DeleteEdge(Edge edge){
+    public static void DeleteEdge(Edge edge){
         edgeMap.remove(edge);
         edgeDatabase.deleteAnyEdge(edge.getID());
 

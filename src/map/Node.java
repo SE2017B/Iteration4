@@ -92,7 +92,7 @@ public class Node{
         return this.connections;
     }
 
-    public Edge getEdgeOf(Node node) throws InvalidNodeException{
+    public Edge getEdgeOf(Node node){
         for(Edge e : this.connections){
             if(e.getOtherNode(this) == node) return e;
         }
