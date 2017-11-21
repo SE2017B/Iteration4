@@ -5,12 +5,15 @@ import map.Node;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class edgeDatabase {
 
     private static final String JDBC_URL_MAP = "jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
+
+    static ArrayList<Edge> allEdges = new ArrayList<>();
 
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the edges
@@ -73,11 +76,11 @@ public class edgeDatabase {
 
             PreparedStatement insertEdge = conn.prepareStatement("INSERT INTO edges VALUES (?, ?, ?)");
 
-            for (int j = 1; j < mainDatabase.allEdges.size(); j++) {
+            for (int j = 1; j < allEdges.size(); j++) {
 
-                insertEdge.setString(1, mainDatabase.allEdges.get(j).getID());
-                insertEdge.setString(2, mainDatabase.allEdges.get(j).getNodeOne().getID());
-                insertEdge.setString(3, mainDatabase.allEdges.get(j).getNodeTwo().getID());
+                insertEdge.setString(1, allEdges.get(j).getID());
+                insertEdge.setString(2, allEdges.get(j).getNodeOne().getID());
+                insertEdge.setString(3, allEdges.get(j).getNodeTwo().getID());
 
                 insertEdge.executeUpdate();
                 System.out.println(j + ": Insert Edge Successful!");
@@ -247,22 +250,22 @@ public class edgeDatabase {
                 Node tempOne = null, tempTwo = null;
                 String[] edgeValues = edgeData.split(",");
 
-                nodeOne = mainDatabase.allNodes.indexOf(new Node(edgeValues[1], "-1", "-1", null, null, null, null, null, null));
+                nodeOne = nodeDatabase.allNodes.indexOf(new Node(edgeValues[1], "-1", "-1", null, null, null, null, null, null));
 
                 if (nodeOne < 0) {
                     System.out.println(nodeOne + "Error: invalid edge 1" + edgeValues[1]);
                 } else {
-                    tempOne = mainDatabase.allNodes.get(nodeOne);
+                    tempOne = nodeDatabase.allNodes.get(nodeOne);
                 }
-                nodeTwo = mainDatabase.allNodes.indexOf(new Node(edgeValues[2], "-1", "-1", null, null, null, null, null, null));
+                nodeTwo = nodeDatabase.allNodes.indexOf(new Node(edgeValues[2], "-1", "-1", null, null, null, null, null, null));
                 if (nodeTwo < 0) {
                     System.out.println("Error: invalid edge 2");
                 } else {
-                    tempTwo = mainDatabase.allNodes.get(nodeTwo);
+                    tempTwo = nodeDatabase.allNodes.get(nodeTwo);
                 }
                 if (tempOne != null && tempTwo != null) {
                     Edge edge = new Edge(edgeValues[0],tempOne,tempTwo);
-                    mainDatabase.allEdges.add(edge);
+                    allEdges.add(edge);
                 } else {
                     System.out.println(" ");
                 }
@@ -289,11 +292,11 @@ public class edgeDatabase {
 
             pw2.println("edgeID,startNode,endNode");
 
-            for (int j = 0; j < mainDatabase.allEdges.size(); j++) {
+            for (int j = 0; j < allEdges.size(); j++) {
 
-                pw2.println(mainDatabase.allEdges.get(j).getID() + "," +
-                        mainDatabase.allEdges.get(j).getNodeOne().getID() + "," +
-                        mainDatabase.allEdges.get(j).getNodeTwo().getID()
+                pw2.println(allEdges.get(j).getID() + "," +
+                        allEdges.get(j).getNodeOne().getID() + "," +
+                        allEdges.get(j).getNodeTwo().getID()
                 );
 
                 System.out.println(j + ": Edge Record Saved!");

@@ -8,7 +8,7 @@
 
 package kioskEngine;
 
-import database.mainDatabase;
+import database.*;
 import map.HospitalMap;
 import map.Node;
 import controllers.ScreenController;
@@ -18,6 +18,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import DepartmentSubsystem.ServiceRequest;
 import DepartmentSubsystem.Staff;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Main extends Application {
 
@@ -42,18 +45,51 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        mainDatabase.readNodeCSV("MapHnodes.csv");
-        mainDatabase.readNodeCSV("MapWnodes.csv");
-        mainDatabase.readEdgesCSV("MapHedges.csv");
-        mainDatabase.readEdgesCSV("MapWedges.csv");
+    public static void main(String[] args) throws SQLException {
+        try {
+            DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        mainDatabase testConnection1 = new mainDatabase();
 
 
+        nodeDatabase.createNodeTable();
+        edgeDatabase.createEdgeTable();
+
+        nodeDatabase.readNodeCSV("MapAnodes.csv");
+        nodeDatabase.readNodeCSV("MapBnodes.csv");
+        nodeDatabase.readNodeCSV("MapCnodes.csv");
+        nodeDatabase.readNodeCSV("MapDnodes.csv");
+        nodeDatabase.readNodeCSV("MapEnodes.csv");
+        nodeDatabase.readNodeCSV("MapFnodes.csv");
+        nodeDatabase.readNodeCSV("MapGnodes.csv");
+        nodeDatabase.readNodeCSV("MapHnodes.csv");
+        nodeDatabase.readNodeCSV("MapInodes.csv");
+        nodeDatabase.readNodeCSV("MapWnodes.csv");
+        nodeDatabase.insertNodesFromCSV();
+
+        edgeDatabase.readEdgesCSV("MapAedges.csv");
+        edgeDatabase.readEdgesCSV("MapBedges.csv");
+        edgeDatabase.readEdgesCSV("MapCedges.csv");
+        edgeDatabase.readEdgesCSV("MapDedges.csv");
+        edgeDatabase.readEdgesCSV("MapEedges.csv");
+        edgeDatabase.readEdgesCSV("MapFedges.csv");
+        edgeDatabase.readEdgesCSV("MapGedges.csv");
+        edgeDatabase.readEdgesCSV("MapHedges.csv");
+        edgeDatabase.readEdgesCSV("MapIedges.csv");
+        edgeDatabase.readEdgesCSV("MapWedges.csv");
+        edgeDatabase.insertEdgesFromCSV();
+
+        nodeDatabase.queryAllNodes();
+        edgeDatabase.queryAllEdges();
+        nodeDatabase.cntNodes();
 
         launch(args);
 
-
-        mainDatabase.outputNodesCSV();
-        mainDatabase.outputEdgesCSV();
+        nodeDatabase.outputNodesCSV();
+        edgeDatabase.outputEdgesCSV();
     }
 }

@@ -1,16 +1,9 @@
+/*
 package database;
 
-import java.io.*;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.io.FileNotFoundException;
-
-import DepartmentSubsystem.Staff;
-import map.Node;
-import map.Edge;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 public class mainDatabase {
 
     private static final String DRIVER="org.apache.derby.jdbc.EmbeddedDriver";
@@ -21,10 +14,11 @@ public class mainDatabase {
     private static Connection conn1;
     private static Connection conn2;
 
-    static ArrayList<Node>allNodes=new ArrayList<Node>();
-    static ArrayList<Edge>allEdges=new ArrayList<Edge>();
-    static ArrayList<Staff>allStaff=new ArrayList<Staff>();
 
+
+
+
+    /*
     public mainDatabase() throws SQLException {
 
         // Connect to embedded database
@@ -52,14 +46,10 @@ public class mainDatabase {
             Logger.getLogger(mainDatabase.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+    */
 
-    public static ArrayList<Node> getNodes(){
-        return allNodes;
-    }
-    public static ArrayList<Staff> getStaff(){
-        return allStaff;
-    }
 
+/*
     ///////////////////////////////////////////////////////////////////////////////
     // Main Database Function
     ///////////////////////////////////////////////////////////////////////////////
@@ -110,3 +100,4 @@ public class mainDatabase {
 
     }
 }
+*/

@@ -10,6 +10,12 @@ public class staffDatabase {
     private static final String JDBC_URL_STAFF="jdbc:derby:hospitalStaffDB;create=true";
     private static Connection conn;
 
+    static ArrayList<Staff>allStaff=new ArrayList<Staff>();
+
+    public static ArrayList<Staff> getStaff(){
+        return allStaff;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the Staff Members
     ///////////////////////////////////////////////////////////////////////////////
@@ -97,7 +103,7 @@ public class staffDatabase {
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-        mainDatabase.allStaff.add(anyStaff);
+        allStaff.add(anyStaff);
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -164,8 +170,8 @@ public class staffDatabase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        int indexOf = mainDatabase.allStaff.indexOf(anyStaff);
-        mainDatabase.allStaff.remove(indexOf);
+        int indexOf = allStaff.indexOf(anyStaff);
+        allStaff.remove(indexOf);
     }
 
     ///////////////////////////////////////////////////////////////////////////////

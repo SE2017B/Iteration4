@@ -4,6 +4,7 @@ import map.Node;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class nodeDatabase {
@@ -22,6 +23,12 @@ public class nodeDatabase {
     public static int exitCounter;
     public static int retlCounter;
     public static int servCounter;
+
+    static ArrayList<Node> allNodes=new ArrayList<Node>();
+
+    public static ArrayList<Node> getNodes(){
+        return allNodes;
+    }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the nodes
@@ -99,17 +106,17 @@ public class nodeDatabase {
             PreparedStatement insertNode = conn.prepareStatement("INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 
-            for (int j = 1; j < mainDatabase.allNodes.size(); j++) {
+            for (int j = 1; j < allNodes.size(); j++) {
 
-                insertNode.setString(1, mainDatabase.allNodes.get(j).getID());
-                insertNode.setString(2, Integer.toString(mainDatabase.allNodes.get(j).getX()));
-                insertNode.setString(3, Integer.toString(mainDatabase.allNodes.get(j).getY()));
-                insertNode.setString(4, mainDatabase.allNodes.get(j).getFloor().getDbMapping());
-                insertNode.setString(5, mainDatabase.allNodes.get(j).getBuilding());
-                insertNode.setString(6, mainDatabase.allNodes.get(j).getType());
-                insertNode.setString(7, mainDatabase.allNodes.get(j).getLongName());
-                insertNode.setString(8, mainDatabase.allNodes.get(j).getShortName());
-                insertNode.setString(9, mainDatabase.allNodes.get(j).getTeam());
+                insertNode.setString(1, allNodes.get(j).getID());
+                insertNode.setString(2, Integer.toString(allNodes.get(j).getX()));
+                insertNode.setString(3, Integer.toString(allNodes.get(j).getY()));
+                insertNode.setString(4, nodeDatabase.allNodes.get(j).getFloor().getDbMapping());
+                insertNode.setString(5, nodeDatabase.allNodes.get(j).getBuilding());
+                insertNode.setString(6, nodeDatabase.allNodes.get(j).getType());
+                insertNode.setString(7, nodeDatabase.allNodes.get(j).getLongName());
+                insertNode.setString(8, nodeDatabase.allNodes.get(j).getShortName());
+                insertNode.setString(9, nodeDatabase.allNodes.get(j).getTeam());
 
                 insertNode.executeUpdate();
                 System.out.println(j + ": Insert Node Successful!");
@@ -469,7 +476,7 @@ public class nodeDatabase {
                 String nodeData = inputStreamNodes.nextLine();
                 String[] nodeValues = nodeData.split(",");
 
-                mainDatabase.allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
+                nodeDatabase.allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
 
             }
             inputStreamNodes.close();
@@ -491,18 +498,18 @@ public class nodeDatabase {
             PrintWriter pw1 = new PrintWriter(bw1);
 
             pw1.println("nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName,teamAssigned");
-            for (int j = 0; j < mainDatabase.allNodes.size(); j++) {
+            for (int j = 0; j < nodeDatabase.allNodes.size(); j++) {
 
 
-                pw1.println(mainDatabase.allNodes.get(j).getID() + "," +
-                        mainDatabase.allNodes.get(j).getX()+ "," +
-                        mainDatabase.allNodes.get(j).getY() + "," +
-                        mainDatabase.allNodes.get(j).getFloor().getDbMapping() + "," +
-                        mainDatabase.allNodes.get(j).getBuilding() + "," +
-                        mainDatabase.allNodes.get(j).getType() + "," +
-                        mainDatabase.allNodes.get(j).getLongName() + "," +
-                        mainDatabase.allNodes.get(j).getShortName()+ "," +
-                        mainDatabase.allNodes.get(j).getTeam()
+                pw1.println(nodeDatabase.allNodes.get(j).getID() + "," +
+                        nodeDatabase.allNodes.get(j).getX()+ "," +
+                        nodeDatabase.allNodes.get(j).getY() + "," +
+                        nodeDatabase.allNodes.get(j).getFloor().getDbMapping() + "," +
+                        nodeDatabase.allNodes.get(j).getBuilding() + "," +
+                        nodeDatabase.allNodes.get(j).getType() + "," +
+                        nodeDatabase.allNodes.get(j).getLongName() + "," +
+                        nodeDatabase.allNodes.get(j).getShortName()+ "," +
+                        nodeDatabase.allNodes.get(j).getTeam()
                 );
                 System.out.println(j + ": Node Record Saved!");
             }
