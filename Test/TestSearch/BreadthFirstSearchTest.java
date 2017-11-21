@@ -10,56 +10,56 @@ import search.BreadthFirstSearch;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
+/**
 public class BreadthFirstSearchTest {
     private HospitalMap map = new HospitalMap();
-    private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
-    private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
-    private Node N3 = new Node("A3", "0", "0", "L1", "Tower", "Desk", "Long3", "Short3", "H");
-    private Node N4 = new Node("A4", "100", "300", "L1", "Tower", "Desk", "Long4", "Short4", "H");
-    private Node N5 = new Node("A5", "100", "100", "L1", "Tower", "Stairs", "Long5", "Short5", "H");
-    private Node N6 = new Node("A6", "200", "400", "L1", "Tower", "Desk", "Long6", "Short6", "H");
-    private Node N7 = new Node("A7", "200", "300", "L1", "Tower", "Desk", "Long7", "Short7", "H");
-    private Node N8 = new Node("A8", "200", "100", "L1", "Tower", "Bathroom", "Long8", "Short8", "H");
-    private Node N9 = new Node("A9", "200", "0", "L1", "Tower", "Elevator", "Long9", "Short9", "H");
-    private Node N10 = new Node("A10", "300", "300", "L1", "Tower", "Desk", "Long10", "Short10", "H");
-    private Node N11 = new Node("A11", "300", "100", "L1", "Tower", "Bathroom", "Long11", "Short11", "H");
-    private Node N12 = new Node("A12", "400", "400", "L1", "Tower", "Desk", "Long12", "Short12", "H");
-    private Node N13 = new Node("A13", "400", "100", "L1", "Tower", "Desk", "Long13", "Short13", "H");
-    private Node N14 = new Node("A14", "400", "100", "L1", "Tower", "Desk", "Long14", "Short14", "H");
-    private Node N15 = new Node("A15", "400", "0", "L1", "Tower", "Stairs", "Long15", "Short15", "H");
-    private Node N16 = new Node("A16", "600", "400", "L1", "Tower", "Office", "Long16", "Short16", "H");
-    private Node N17 = new Node("A17", "600", "300", "L1", "Tower", "Office", "Long17", "Short17", "H");
-    private Node N18 = new Node("A18", "500", "100", "L1", "Tower", "Bathroom", "Long18", "Short18", "H");
-    private Node N19 = new Node("A19", "500", "0", "L1", "Tower", "Stairs", "Long19", "Short19", "H");
-    private Node N20 = new Node("A20", "700", "300", "L1", "Tower", "Elevator", "Long20", "Short20", "H");
-    private Node N21 = new Node("A21", "700", "100", "L1", "Tower", "Stairs", "Long21", "Short21", "H");
-    private Node N22 = new Node("A22", "700", "0", "L1", "Tower", "Desk", "Long22", "Short22", "H");
-    private Node N23 = new Node("A23", "800", "0", "L1", "Tower", "Desk", "Long23", "Short23", "H");
+    private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1");
+    private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2");
+    private Node N3 = new Node("A3", "0", "0", "L1", "Tower", "Desk", "Long3", "Short3");
+    private Node N4 = new Node("A4", "100", "300", "L1", "Tower", "Desk", "Long4", "Short4");
+    private Node N5 = new Node("A5", "100", "100", "L1", "Tower", "Stairs", "Long5", "Short5");
+    private Node N6 = new Node("A6", "200", "400", "L1", "Tower", "Desk", "Long6", "Short6");
+    private Node N7 = new Node("A7", "200", "300", "L1", "Tower", "Desk", "Long7", "Short7");
+    private Node N8 = new Node("A8", "200", "100", "L1", "Tower", "Bathroom", "Long8", "Short8");
+    private Node N9 = new Node("A9", "200", "0", "L1", "Tower", "Elevator", "Long9", "Short9");
+    private Node N10 = new Node("A10", "300", "300", "L1", "Tower", "Desk", "Long10", "Short10");
+    private Node N11 = new Node("A11", "300", "100", "L1", "Tower", "Bathroom", "Long11", "Short11");
+    private Node N12 = new Node("A12", "400", "400", "L1", "Tower", "Desk", "Long12", "Short12");
+    private Node N13 = new Node("A13", "400", "100", "L1", "Tower", "Desk", "Long13", "Short13");
+    private Node N14 = new Node("A14", "400", "100", "L1", "Tower", "Desk", "Long14", "Short14");
+    private Node N15 = new Node("A15", "400", "0", "L1", "Tower", "Stairs", "Long15", "Short15");
+    private Node N16 = new Node("A16", "600", "400", "L1", "Tower", "Office", "Long16", "Short16");
+    private Node N17 = new Node("A17", "600", "300", "L1", "Tower", "Office", "Long17", "Short17");
+    private Node N18 = new Node("A18", "500", "100", "L1", "Tower", "Bathroom", "Long18", "Short18");
+    private Node N19 = new Node("A19", "500", "0", "L1", "Tower", "Stairs", "Long19", "Short19");
+    private Node N20 = new Node("A20", "700", "300", "L1", "Tower", "Elevator", "Long20", "Short20");
+    private Node N21 = new Node("A21", "700", "100", "L1", "Tower", "Stairs", "Long21", "Short21");
+    private Node N22 = new Node("A22", "700", "0", "L1", "Tower", "Desk", "Long22", "Short22");
+    private Node N23 = new Node("A23", "800", "0", "L1", "Tower", "Desk", "Long23", "Short23");
 
-    private Node N1_2 = new Node("A1_2", "0", "400", "L2", "Tower", "Bathroom", "Long1_2", "Short1_2", "H");
-    private Node N2_2 = new Node("A2_2", "0", "200", "L2", "Tower", "Desk", "Long2_2", "Short2_2", "H");
-    private Node N3_2 = new Node("A3_2", "0", "0", "L2", "Tower", "Desk", "Long3_2", "Short3_2", "H");
-    private Node N4_2 = new Node("A4_2", "100", "300", "L2", "Tower", "Desk", "Long4_2", "Short4_2", "H");
-    private Node N5_2 = new Node("A5_2", "100", "100", "L2", "Tower", "Stairs", "Long5_2", "Short5_2", "H");
-    private Node N6_2 = new Node("A6_2", "200", "400", "L2", "Tower", "Desk", "Long6_2", "Short6_2", "H");
-    private Node N7_2 = new Node("A7_2", "200", "300", "L2", "Tower", "Desk", "Long7_2", "Short7_2", "H");
-    private Node N8_2 = new Node("A8_2", "200", "100", "L2", "Tower", "Bathroom", "Long8_2", "Short8_2", "H");
-    private Node N9_2 = new Node("A9_2", "200", "0", "L2", "Tower", "Elevator", "Long9_2", "Short9_2", "H");
-    private Node N10_2 = new Node("A10_2", "300", "300", "L2", "Tower", "Desk", "Long10_2", "Short10_2", "H");
-    private Node N11_2 = new Node("A11_2", "300", "100", "L2", "Tower", "Bathroom", "Long11_2", "Short11_2", "H");
-    private Node N12_2 = new Node("A12_2", "400", "400", "L2", "Tower", "Desk", "Long12_2", "Short12_2", "H");
-    private Node N13_2 = new Node("A13_2", "400", "100", "L2", "Tower", "Desk", "Long13_2", "Short13_2", "H");
-    private Node N14_2 = new Node("A14_2", "400", "100", "L2", "Tower", "Desk", "Long14_2", "Short14_2", "H");
-    private Node N15_2 = new Node("A15_2", "400", "0", "L2", "Tower", "Stairs", "Long15_2", "Short15_2", "H");
-    private Node N16_2 = new Node("A16_2", "600", "400", "L2", "Tower", "Office", "Long16_2", "Short16_2", "H");
-    private Node N17_2 = new Node("A17_2", "600", "300", "L2", "Tower", "Office", "Long17_2", "Short17_2", "H");
-    private Node N18_2 = new Node("A18_2", "500", "100", "L2", "Tower", "Bathroom", "Long18_2", "Short18_2", "H");
-    private Node N19_2 = new Node("A19_2", "500", "0", "L2", "Tower", "Stairs", "Long19_2", "Short19_2", "H");
-    private Node N20_2 = new Node("A20_2", "700", "300", "L2", "Tower", "Elevator", "Long20_2", "Short20_2", "H");
-    private Node N21_2 = new Node("A21_2", "700", "100", "L2", "Tower", "Stairs", "Long21_2", "Short21_2", "H");
-    private Node N22_2 = new Node("A22_2", "700", "0", "L2", "Tower", "Desk", "Long22_2", "Short22_2", "H");
-    private Node N23_2 = new Node("A23_2", "800", "0", "L2", "Tower", "Desk", "Long23_2", "Short23_2", "H");
+    private Node N1_2 = new Node("A1_2", "0", "400", "L2", "Tower", "Bathroom", "Long1_2", "Short1_2");
+    private Node N2_2 = new Node("A2_2", "0", "200", "L2", "Tower", "Desk", "Long2_2", "Short2_2");
+    private Node N3_2 = new Node("A3_2", "0", "0", "L2", "Tower", "Desk", "Long3_2", "Short3_2");
+    private Node N4_2 = new Node("A4_2", "100", "300", "L2", "Tower", "Desk", "Long4_2", "Short4_2");
+    private Node N5_2 = new Node("A5_2", "100", "100", "L2", "Tower", "Stairs", "Long5_2", "Short5_2");
+    private Node N6_2 = new Node("A6_2", "200", "400", "L2", "Tower", "Desk", "Long6_2", "Short6_2");
+    private Node N7_2 = new Node("A7_2", "200", "300", "L2", "Tower", "Desk", "Long7_2", "Short7_2");
+    private Node N8_2 = new Node("A8_2", "200", "100", "L2", "Tower", "Bathroom", "Long8_2", "Short8_2");
+    private Node N9_2 = new Node("A9_2", "200", "0", "L2", "Tower", "Elevator", "Long9_2", "Short9_2");
+    private Node N10_2 = new Node("A10_2", "300", "300", "L2", "Tower", "Desk", "Long10_2", "Short10_2");
+    private Node N11_2 = new Node("A11_2", "300", "100", "L2", "Tower", "Bathroom", "Long11_2", "Short11_2");
+    private Node N12_2 = new Node("A12_2", "400", "400", "L2", "Tower", "Desk", "Long12_2", "Short12_2");
+    private Node N13_2 = new Node("A13_2", "400", "100", "L2", "Tower", "Desk", "Long13_2", "Short13_2");
+    private Node N14_2 = new Node("A14_2", "400", "100", "L2", "Tower", "Desk", "Long14_2", "Short14_2");
+    private Node N15_2 = new Node("A15_2", "400", "0", "L2", "Tower", "Stairs", "Long15_2", "Short15_2");
+    private Node N16_2 = new Node("A16_2", "600", "400", "L2", "Tower", "Office", "Long16_2", "Short16_2");
+    private Node N17_2 = new Node("A17_2", "600", "300", "L2", "Tower", "Office", "Long17_2", "Short17_2");
+    private Node N18_2 = new Node("A18_2", "500", "100", "L2", "Tower", "Bathroom", "Long18_2", "Short18_2");
+    private Node N19_2 = new Node("A19_2", "500", "0", "L2", "Tower", "Stairs", "Long19_2", "Short19_2");
+    private Node N20_2 = new Node("A20_2", "700", "300", "L2", "Tower", "Elevator", "Long20_2", "Short20_2");
+    private Node N21_2 = new Node("A21_2", "700", "100", "L2", "Tower", "Stairs", "Long21_2", "Short21_2");
+    private Node N22_2 = new Node("A22_2", "700", "0", "L2", "Tower", "Desk", "Long22_2", "Short22_2");
+    private Node N23_2 = new Node("A23_2", "800", "0", "L2", "Tower", "Desk", "Long23_2", "Short23_2");
 
 
     private BreadthFirstSearch search = new BreadthFirstSearch();
@@ -362,3 +362,4 @@ public class BreadthFirstSearchTest {
         assertEquals("[Short23, Short21, Short20]", answer);
     }
 }
+**/

@@ -11,18 +11,13 @@ package TestServices;
 import map.Node;
 import exceptions.InvalidPasswordException;
 import org.junit.*;
-import service.*;
+import DepartmentSubsystem.*;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 public class StaffTest{
 
-    private Staff Bob;
-    private FoodService foodService;
-    private ServiceRequest appleRequest;
-    private ServiceRequest orangeRequest;
-    private Node location;
 
     public StaffTest(){}
 

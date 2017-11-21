@@ -1,147 +1,204 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
+<?import com.jfoenix.controls.JFXTimePicker?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
    <children>
-      <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane layoutX="456.0" layoutY="303.0" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="158.39999999999998" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="996.7999755859377" minWidth="10.0" prefWidth="949.6000244140627" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="169.9999755859376" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="60.60000228881836" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="656.8000244140625" minHeight="10.0" prefHeight="656.8000244140625" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="73.79997558593755" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btncreate" mnemonicParsing="false" onAction="#createPressed" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="7">
-               <font>
-                  <Font size="24.0" />
-               </font></Button>
-            <Button fx:id="btncancel" mnemonicParsing="false" onAction="#cancelPressed" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
-               <font>
-                  <Font size="24.0" />
-               </font></Button>
-            <Label text="Service Request Form" GridPane.columnSpan="2" GridPane.halignment="CENTER">
-               <font>
-                  <Font size="56.0" />
-               </font>
-            </Label>
-            <Label text="Service" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label fx:id="staffNameLabel" text="Staff Name" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
-            <Label text="Staff Member" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <font>
-                  <Font size="36.0" />
-               </font></Label>
-            <Label text="Date" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-               <font>
-                  <Font size="36.0" />
-               </font></Label>
-            <Label text="Time" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-               <font>
-                  <Font size="36.0" />
-               </font></Label>
-            <Label GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <DatePicker fx:id="dateMenu" onAction="#dateSelected" prefHeight="36.0" prefWidth="249.0" promptText="Select a date" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <GridPane hgap="10.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-                  <RowConstraints />
-              </rowConstraints>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding>
-               <children>
-                  <MenuButton fx:id="hourDropDown" mnemonicParsing="false" onAction="#hourSelected" prefHeight="42.0" prefWidth="84.0" text="HH">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="1" />
-                      <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="2" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="3" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="4" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="5" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="6" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="7" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="8" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="9" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="10" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="11" />
-                        <MenuItem mnemonicParsing="false" onAction="#hourSelected" text="12" />
-                    </items>
-                  </MenuButton>
-                  <MenuButton fx:id="minDropDown" mnemonicParsing="false" onAction="#minSelected" prefHeight="39.0" prefWidth="77.0" text="MM" GridPane.columnIndex="1">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#minSelected" text="00" />
-                        <MenuItem mnemonicParsing="false" onAction="#minSelected" text="15" />
-                        <MenuItem mnemonicParsing="false" onAction="#minSelected" text="30" />
-                        <MenuItem mnemonicParsing="false" onAction="#minSelected" text="45" />
-                     </items>
-                  </MenuButton>
-                  <MenuButton fx:id="meridDropDown" mnemonicParsing="false" onAction="#meridSelected" prefHeight="33.0" prefWidth="76.0" text="     " GridPane.columnIndex="2">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#meridSelected" text="AM" />
-                        <MenuItem mnemonicParsing="false" onAction="#meridSelected" text="PM" />
-                     </items>
-                  </MenuButton>
-               </children>
-            </GridPane>
-            <ChoiceBox fx:id="staffDropDown" disable="true" prefHeight="40.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <MenuButton fx:id="serviceDropDown" mnemonicParsing="false" prefHeight="40.0" prefWidth="235.0" text="Select a service" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#serviceSelected" text="Food" />
-                  <MenuItem mnemonicParsing="false" onAction="#serviceSelected" text="Translator" />
-                  <MenuItem mnemonicParsing="false" onAction="#serviceSelected" text="Transportation" />
-              </items>
-            </MenuButton>
-            <Label fx:id="infoLabel" text="Food" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font></Label>
-            <TextArea fx:id="infoText" prefHeight="200.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <JFXTabPane prefHeight="267.0" prefWidth="495.0" side="BOTTOM" tabMinHeight="60.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <tabs>
+                  <Tab text="Request Service">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="pane">
+                           <children>
+                              <GridPane layoutX="352.0" layoutY="209.0" prefHeight="528.0" prefWidth="755.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.3999877929688" minWidth="10.0" prefWidth="645.3999877929688" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Service" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Staff Member" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Date" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Time" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="choiceBoxDept" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <Label text="Location" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                    <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                    <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                    <JFXTimePicker fx:id="timeMenu" defaultColor="#34ffeb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                    <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                    <Pane fx:id="servicePane1" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                                    <Label text="Department " GridPane.halignment="CENTER">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="choiceBoxService" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="choiceBoxStaff" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Resolve Service">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <SplitPane dividerPositions="0.29797979797979796" layoutX="245.0" layoutY="170.0" prefHeight="528.0" prefWidth="755.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
+                                       <children>
+                                          <GridPane layoutX="11.0" layoutY="197.0" prefHeight="526.0" prefWidth="221.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label text="Select Service" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="lblSelectedService" text="Selected Service" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font></Label>
+                                                <JFXButton fx:id="btncreate1" onAction="#resolveServicePressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Resolve" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </GridPane.margin></JFXButton>
+                                                <JFXButton fx:id="btnserviceResCancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </GridPane.margin></JFXButton>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
+                                       <children>
+                                          <JFXListView fx:id="resolveServiceListView" layoutX="54.0" layoutY="37.0" prefHeight="526.0" prefWidth="526.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Settings">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <GridPane layoutX="292.0" layoutY="188.0" prefHeight="622.4" prefWidth="950.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Select Algorithm for Path " GridPane.halignment="CENTER">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="searchStrategyChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <JFXButton fx:id="saveSettingsButton" onAction="#saveSettingsPressed" text="Save" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                              </GridPane>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+               </tabs>
+            </JFXTabPane>
+            <JFXButton fx:id="btnLogOut" buttonType="RAISED" onAction="#logoutPressed" prefHeight="50.0" prefWidth="150.0" text="Logout" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </GridPane.margin>
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </TextArea>
-            <Label text="Location" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-               <font>
-                  <Font size="36.0" />
-               </font></Label>
-            <ChoiceBox fx:id="locationChoiceBox" prefHeight="40.0" prefWidth="235.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin></JFXButton>
+            <JFXButton fx:id="btnEditMap" onAction="#editPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Edit Map" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin></JFXButton>
          </children>
       </GridPane>
    </children>

@@ -8,11 +8,19 @@
 
 package controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
-import kioskEngine.KioskEngine;
+import javafx.util.Duration;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,12 +29,6 @@ public class ScreenController extends StackPane {
 
     public static String AddNodeID = "AddNode";
     public static String AddNodeFile = "/fxml/AddNode.fxml";
-    public static String AdminMenuID = "AdminMenu";
-    public static String AdminMenuFile = "/fxml/AdminMenu.fxml";
-    public static String FilterID = "Filter";
-    public static String FilterFile = "/fxml/Filter.fxml";
-    public static String LoginID = "Login";
-    public static String LoginFile = "/fxml/Login.fxml";
     public static String LogoutID = "LogoutID";
     public static String LogoutFile = "/fxml/Logout.fxml";
     public static String MainID = "Main";
@@ -35,16 +37,16 @@ public class ScreenController extends StackPane {
     public static String PathFile = "/fxml/Path.fxml";
     public static String RequestID = "Request";
     public static String RequestFile = "/fxml/Request.fxml";
-    public static String ThankYouID = "ThankYou";
-    public static String ThankYouFile = "/fxml/ThankYou.fxml";
+    public static String LoginID = "Login";
+    public static String LoginFile = "/fxml/Login.fxml";
+
 
     private HashMap<String, Node> screens = new HashMap<String, Node>();
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
-    private KioskEngine engine;
 
-    public ScreenController(KioskEngine engine){
+
+    public ScreenController(){
         super();
-        this.engine = engine;
     }
 
     //add a new screen to the screens HashMap
@@ -87,12 +89,34 @@ public class ScreenController extends StackPane {
     //set the screen currently being displayed on the pane
     public boolean setScreen(String name){
         if(screens.containsKey(name)){
+
             if(!getChildren().isEmpty()){
-                getChildren().remove(0);
+                controllers.get(name).onShow();
+                Timeline fade = new Timeline(
+                        new KeyFrame(Duration.ZERO, new KeyValue(opacityProperty(),
+                                1.0)),
+                        new KeyFrame(new Duration(200), new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent t) {
+                                getChildren().remove(0);                    //remove the displayed screen
+                                getChildren().add(0, screens.get(name));     //add the screen
+                                Timeline fadeIn = new Timeline(
+                                        new KeyFrame(Duration.ZERO, new KeyValue(opacityProperty(), 0.0)),
+                                        new KeyFrame(new Duration(100), new KeyValue(opacityProperty(), 1.0)));
+                                fadeIn.play();
+
+                            }
+                        }, new KeyValue(opacityProperty(), 0.0)));
+                fade.play();
             }
-            getChildren().add(screens.get(name));
-            controllers.get(name).onShow();
+            else {
+                getChildren().add(screens.get(name));
+                controllers.get(name).onShow();
+            }
             return true;
+
+
+
         }
         System.out.println("Set Screen Failed");
         return false;
@@ -104,7 +128,4 @@ public class ScreenController extends StackPane {
         return true;
     }
 
-    public KioskEngine getEngine() {
-        return engine;
-    }
 }

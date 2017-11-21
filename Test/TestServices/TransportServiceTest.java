@@ -10,8 +10,7 @@ package TestServices;
 
 import org.junit.Before;
 import org.junit.Test;
-import service.Staff;
-import service.TransportService;
+import DepartmentSubsystem.Staff;
 
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -20,10 +19,6 @@ public class TransportServiceTest {
 
     public TransportServiceTest(){}
 
-    private Staff wheelchairJim;
-    private Staff wheelchairMary;
-    private ArrayList<Staff> transports;
-    private TransportService service;
 
     @Before
     public void initialize(){

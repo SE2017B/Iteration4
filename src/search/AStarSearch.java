@@ -11,7 +11,7 @@ public class AStarSearch implements SearchStrategy {
     public AStarSearch(){}
 
     @Override
-    public Path findPath(Node start, Node end){
+    public Path findPath(Node start, Node end)throws InvalidNodeException{
         ArrayList<Path> frontier = new ArrayList<>();
         Path first = new Path();
         first.addToPath(start);
@@ -55,5 +55,10 @@ public class AStarSearch implements SearchStrategy {
         double xDeltaSquared = Math.pow((end.getX()-start.getX()), 2);
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
         return Math.sqrt(xDeltaSquared + yDeltaSquared);
+    }
+
+    @Override
+    public String toString(){
+        return "AStar";
     }
 }

@@ -11,14 +11,12 @@ package TestServices;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import service.Staff;
-import service.TranslatorService;
+import DepartmentSubsystem.Staff;
 
 import java.util.ArrayList;
 
 public class TranslatorServiceTest {
 
-    public TranslatorServiceTest(){}
 
     private Staff spanishJoe;
     private Staff frenchBen;
