@@ -11,6 +11,18 @@ public class nodeDatabase {
     private static final String JDBC_URL_MAP="jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
 
+    public static int hallCounter;
+    public static int elevCounter;
+    public static int restCounter;
+    public static int staiCounter;
+    public static int deptCounter;
+    public static int labsCounter;
+    public static int infoCounter;
+    public static int confCounter;
+    public static int exitCounter;
+    public static int retlCounter;
+    public static int servCounter;
+
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the nodes
     ///////////////////////////////////////////////////////////////////////////////
@@ -271,6 +283,42 @@ public class nodeDatabase {
 
             rsetAllNodes.close();
             selectAllNodes.close();
+            conn.close();
+
+        } // end try
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Find how many Hall Nodes and set hall counter
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void cntHallNodes() {
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_MAP);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            Statement cntAllType = conn.createStatement();
+            String strCntNodes = "SELECT COUNT(nodeType) FROM nodes WHERE nodeType = HALL";
+            ResultSet rsetCntNodesHall = cntAllType.executeQuery(strCntNodes);
+
+            int numHall = 0;
+            System.out.printf("%-20s\n", "nodeType");
+
+            //Process the results
+            while (rsetCntNodesHall.next()) {
+                numHall = rsetCntNodesHall.getInt("nodeType");
+                numHall = hallCounter;
+                System.out.printf("%-20d\n", numHall);
+            } // End While
+
+            System.out.println("hallCounter = " + hallCounter);
+
+            conn.commit();
+            rsetCntNodesHall.close();
+            cntAllType.close();
             conn.close();
 
         } // end try
