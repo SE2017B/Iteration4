@@ -360,73 +360,73 @@ public class nodeDatabase {
         }
     }
 
-    public int getHallCounter() {
+    public static int getHallCounter() {
         int temp = hallCounter;
         hallCounter++;
         return temp;
     }
 
-    public int getRestCounter() {
+    public static int getRestCounter() {
         int temp = restCounter;
         restCounter++;
         return temp;
     }
 
-    public int getRetlCounter() {
+    public static int getRetlCounter() {
         int temp = retlCounter;
         retlCounter++;
         return temp;
     }
 
-    public int getElevCounter() {
+    public static int getElevCounter() {
         int temp = elevCounter;
         elevCounter++;
         return temp;
     }
 
-    public int getStaiCounter() {
+    public static int getStaiCounter() {
         int temp = staiCounter;
         staiCounter++;
         return temp;
     }
 
-    public int getDeptCounter() {
+    public static int getDeptCounter() {
         int temp = deptCounter;
         deptCounter++;
         return temp;
     }
 
-    public int getLabsCounter() {
+    public static int getLabsCounter() {
         int temp = labsCounter;
         labsCounter++;
         return temp;
     }
 
-    public int getInfoCounter() {
+    public static int getInfoCounter() {
         int temp = infoCounter;
         infoCounter++;
         return temp;
     }
 
-    public int getConfCounter() {
+    public static int getConfCounter() {
         int temp = confCounter;
         confCounter++;
         return temp;
     }
 
-    public int getExitCounter() {
+    public static int getExitCounter() {
         int temp = exitCounter;
         exitCounter++;
         return temp;
     }
 
-    public int getServCounter() {
+    public static int getServCounter() {
         int temp = servCounter;
         servCounter++;
         return temp;
     }
 
-    public int getNodeID(String anyType) {
+    public static int getNodeID(String anyType) {
         switch (anyType) {
             case "REST":
                 return getRestCounter();
