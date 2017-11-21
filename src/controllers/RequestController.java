@@ -8,6 +8,7 @@
 
 package controllers;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import map.HospitalMap;
 import map.Node;
@@ -30,6 +31,7 @@ public class RequestController implements ControllableScreen{
     private String merid;
     private Staff staffMember;
     private LocalDate date;
+    private String nameServiceFile;
 
     private static int requestIDCount = 0;
 
@@ -72,6 +74,9 @@ public class RequestController implements ControllableScreen{
     private TextArea infoText;
 
     @FXML
+    private Pane servicePane1;
+
+    @FXML
     private ChoiceBox locationChoiceBox;
 
 
@@ -90,7 +95,30 @@ public class RequestController implements ControllableScreen{
         locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
     }
+    @FXML
+    public void loadServicePane(ActionEvent e){
 
+        nameServiceFile = ((MenuItem) e.getSource()).getText();
+
+        if( nameServiceFile == "Food Delivery")
+        {
+            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/FoodDelivery.fxml"));
+            servicePane1.getChildren().add(newServicePane);
+        }else if ( nameServiceFile == "Sanitation")
+        {
+            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Sanitation.fxml"));
+            servicePane1.getChildren().add(newServicePane);
+        }else if ( nameServiceFile == "Translation")
+        {
+            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Translation.fxml"));
+            servicePane1.getChildren().add(newServicePane);
+        }else if ( nameServiceFile == "Transport")
+        {
+            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Transport.fxml"));
+            servicePane1.getChildren().add(newServicePane);
+        }
+
+    }
     public void resolveServicePressed(ActionEvent e){//todo
         }
 

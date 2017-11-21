@@ -96,8 +96,7 @@
                                     </MenuButton>
                                     <ChoiceBox fx:id="staffDropDown" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                    <Pane fx:id="servicePane1" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="5" />
-                                    <Pane fx:id="servicePane2" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Pane fx:id="servicePane1" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
                                  </children>
                               </GridPane>
                            </children>

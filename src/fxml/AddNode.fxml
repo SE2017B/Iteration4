@@ -345,8 +345,8 @@
                                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                         </rowConstraints>
                                                          <children>
-                                                            <Label text="Select First Node" />
-                                                            <Label text="Select Second Node" GridPane.rowIndex="1" />
+                                                            <Label text="Select First Node" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+                                                            <Label text="Select Second Node" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                                             <JFXButton prefHeight="100.0" prefWidth="150.0" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                             <JFXButton prefHeight="100.0" prefWidth="150.0" text="Canclel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                                          </children>
