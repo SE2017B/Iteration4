@@ -2,7 +2,7 @@
 * Software Engineering 3733, Worcester Polytechnic Institute
 * Team H
 * Code produced for Iteration1
-* Original author(s): Travis Norris, Andrey Yuzvik
+* Original author(s): Travis Norris, Andrey Yuzvik, Oluchukwu Okafor
 * The following code
 */
 
@@ -71,7 +71,17 @@ public class PathController implements ControllableScreen{
     @FXML
     private Label failLabel;
 
-    private proxyImagePane backImage;
+    @FXML
+    private Button startFloor;
+
+    @FXML
+    private Button endFloor;
+
+    private proxyImagePane backImage = new proxyImagePane();
+
+    private FloorNumber currentFloor;// the current floor where the kiosk is.
+
+    private ArrayList<FloorNumber> floors; //list of floors available
 
     //Methods start here
     public void init()
@@ -79,6 +89,14 @@ public class PathController implements ControllableScreen{
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
         onShow();
+        currentFloor = FloorNumber.fromDbMapping("L1");
+        //set up floor variables
+        floors = new ArrayList<FloorNumber>();
+        floors.add(FloorNumber.fromDbMapping("1"));
+        floors.add(FloorNumber.fromDbMapping("2"));
+        //add the test background image
+        switchImage(currentFloor);
+
 
     }
 
@@ -117,6 +135,7 @@ public class PathController implements ControllableScreen{
                 line.setStrokeWidth(5);
                 mapPane.getChildren().add(line);
                 lines.add(line);
+                //
 
             }
         }
@@ -128,6 +147,20 @@ public class PathController implements ControllableScreen{
         for(Line line : lines){
             line.setVisible(false);
             mapPane.getChildren().remove(line);
+        }
+    }
+    //button methods
+    public void startPressed(ActionEvent e){
+        //show the first screen when clicked on
+        if(floors.size()>0){
+            switchImage(floors.get(0));
+        }
+
+    }
+
+    public void endPressed(ActionEvent e){
+        if(floors.size()>1){
+            switchImage(floors.get(1));
         }
     }
 

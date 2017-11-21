@@ -96,7 +96,31 @@
                               </ScrollPane>
                            </children>
                         </AnchorPane>
-                      <AnchorPane />
+                      <AnchorPane>
+                           <children>
+                              <GridPane prefHeight="124.0" prefWidth="1276.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button fx:id="startFloor" mnemonicParsing="false" onAction="#startPressed" prefHeight="126.0" prefWidth="636.0" text="Start Floor">
+                                       <font>
+                                          <Font size="47.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="endFloor" mnemonicParsing="false" onAction="#endPressed" prefHeight="124.0" prefWidth="639.0" text="End Floor" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font size="49.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
                     </items>
                   </SplitPane>
                </children>
