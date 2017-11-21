@@ -20,7 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import kioskEngine.KioskEngine;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -43,11 +43,10 @@ public class ScreenController extends StackPane {
 
     private HashMap<String, Node> screens = new HashMap<String, Node>();
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
-    private KioskEngine engine;
 
-    public ScreenController(KioskEngine engine){
+
+    public ScreenController(){
         super();
-        this.engine = engine;
     }
 
     //add a new screen to the screens HashMap
@@ -129,7 +128,4 @@ public class ScreenController extends StackPane {
         return true;
     }
 
-    //public KioskEngine getEngine() {
-    //   return engine;
-    //}
 }

@@ -8,6 +8,9 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import map.Edge;
 import map.HospitalMap;
 import map.Node;
 import javafx.event.ActionEvent;
@@ -22,8 +25,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import kioskEngine.KioskEngine.*;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,8 @@ public class AddNodeController implements ControllableScreen {
 
     //Nodes in the map
     private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
+    private ArrayList<EdgeCheckBox> edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
+
 
 
 
@@ -316,6 +319,183 @@ public class AddNodeController implements ControllableScreen {
     public void clearInputs(){
         //todo clear all the text and options from UI inputs
     }
+
+    ////////////////////////////////////////////////////////////
+    /////////////           Node ADD
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXTextField nodeAddXField;
+    @FXML
+    private JFXButton nodeAddEnterButton;
+    @FXML
+    private JFXButton nodeAddCancelButton;
+
+    public void setNodeAddXEntered(ActionEvent e){
+        System.out.println("Node Add X Entered");
+    }
+
+    
+    public void nodeAddEnterPressed(ActionEvent e){
+        System.out.println("Node Add Enter Pressed");
+        //todo add node
+
+        //also get selected nodes and pass them to map to add neighbors
+    }
+
+    public void nodeAddCancelPressed(ActionEvent e){
+        System.out.println("Node Add Cancel Pressed");
+        //todo cancel node add
+    }
+
+    ////////////////////////////////////////////////////////////
+    /////////////           Node Remove
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXButton nodeRemoveEnterButton;
+    @FXML
+    private JFXButton nodeRemoveCancelButton;
+
+
+    public void nodeRemoveEnterPressed(ActionEvent e){
+        System.out.println("Node Remove Enter Pressed");
+        //todo add node
+
+        //also get selected nodes and pass them to map to add neighbors
+    }
+
+    public void nodeRemoveCancelPressed(ActionEvent e){
+        System.out.println("Node Remove Cancel Pressed");
+        //todo cancel node add
+    }
+
+    ////////////////////////////////////////////////////////////
+    /////////////           Node Edit
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXButton nodeEditEnterButton;
+    @FXML
+    private JFXButton nodeEditCancelButton;
+
+    public void nodeEditEnterPressed(ActionEvent e){
+        System.out.println("Node Edit Enter Pressed");
+        //todo add node
+
+        //also get selected nodes and pass them to map to add neighbors
+    }
+
+    public void nodeEditCancelPressed(ActionEvent e){
+        System.out.println("Node Edit Cancel Pressed");
+        //todo cancel node add
+    }
+
+
+    ////////////////////////////////////////////////////////////
+    /////////////           EDGE ADD
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXButton edgeAddEnterButton;
+    @FXML
+    private JFXButton edgeAddCancelButton;
+    @FXML
+    private Label edgeAddID1Label;
+    @FXML
+    private Label edgeAddID2Label;
+
+    public void edgeAddEnterPressed(ActionEvent e){
+        System.out.println("Edge Add Enter Pressed");
+        //todo add edge
+        Node nodeOne = null;
+        Node nodeTwo = null;
+        for(NodeCheckBox n : nodeCheckBoxes){
+            if(n.isSelected())  {
+                if(nodeOne == null) nodeOne = n.getNode();
+                else if(nodeTwo == null) nodeTwo = n.getNode();
+                else {
+                    System.out.println("Warning: More than two nodes selected.");
+                    return;
+                }
+            }
+        }
+        if(nodeOne == null || nodeTwo == null){
+            System.out.println("Warning: Less than two nodes selected.");
+        } else {
+            HospitalMap.addEdge(new Edge(nodeOne, nodeTwo));
+        }
+    }
+
+    public void edgeAddCancelPressed(ActionEvent e){
+        System.out.println("Edge Add Cancel Pressed");
+        //todo cancel edge add
+    }
+
+    ////////////////////////////////////////////////////////////
+    /////////////           EDGE REMOVE
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXButton edgeRemoveEnterButton;
+    @FXML
+    private JFXButton edgeRemoveCancelButton;
+    @FXML
+    private Label edgeRemoveIDLabel;
+
+    public void edgeRemoveEnterPressed(ActionEvent e){
+        System.out.println("Edge Remove Enter Pressed");
+        Node nodeOne = null;
+        Node nodeTwo = null;
+        for(NodeCheckBox n : nodeCheckBoxes){
+            if(n.isSelected()){
+                if(nodeOne == null) nodeOne = n.getNode();
+                else if(nodeTwo == null) nodeTwo = n.getNode();
+                else {
+                    System.out.println("Warning: More than two nodes selected.");
+                    break;
+                }
+            }
+        }
+        if(nodeOne == null || nodeTwo == null){
+            System.out.println("Warning: Less than two nodes selected. ");
+        } else {
+            HospitalMap.DeleteEdge(nodeOne.getEdgeOf(nodeTwo));
+        }
+        //todo remove edge
+    }
+
+    public void edgeRemoveCancelPressed(ActionEvent e){
+        System.out.println("Edge Remove Cancel Pressed");
+        //todo cancel edge add
+    }
+
+
+    ////////////////////////////////////////////////////////////
+    /////////////           EDGE EDIT
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private Label edgeEditIDLabel;
+    @FXML
+    private JFXTextField edgeEditNodeOneField;
+    @FXML
+    private JFXTextField edgeEditeNodeTwoField;
+    @FXML
+    private JFXButton edgeEditEnterButton;
+    @FXML
+    private JFXButton edgeEditCancelButton;
+
+    public void edgeEditNodeOneEntered(ActionEvent e){
+        System.out.println("Edge Edit Node One Entered");
+    }
+
+    public void edgeEditNodeTwoEntered(ActionEvent e){
+        System.out.println("Edge Edit Node Two Entered");
+    }
+
+    public void edgeEditEnterPressed(ActionEvent e){
+        System.out.println("Edge Edit Enter Pressed");
+    }
+
+    public void edgeEditCancelPressed(ActionEvent e){
+        System.out.println("Edge Edit Cancel Pressed");
+    }
+
 
 
 }
