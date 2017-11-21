@@ -113,7 +113,7 @@ public class NodeTest {
     @Test
     public void testDeleteNode(){
         System.out.println("" + N1.getConnections());
-        N1.deleteNode();
+        //N1.deleteNode();
         ArrayList<Edge> edges = new ArrayList<>();
 
         //check that N1 no longer has any edges
