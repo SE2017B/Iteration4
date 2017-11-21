@@ -50,7 +50,7 @@ public class Node{
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
         this.team = team;
-        //this.ID = nodeDatabase.gegNodeID(this);
+        this.ID = "H" + this.type + this.floor.getDbMapping() +  nodeDatabase.getNodeID(this.type);
     }
 
     //Adds existing edge between
