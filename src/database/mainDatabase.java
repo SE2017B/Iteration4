@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import java.io.FileNotFoundException;
 import map.Node;
 import map.Edge;
+import service.Staff;
 
 public class mainDatabase {
 
@@ -22,6 +23,7 @@ public class mainDatabase {
 
     static ArrayList<Node>allNodes=new ArrayList<Node>();
     static ArrayList<Edge>allEdges=new ArrayList<Edge>();
+    static ArrayList<Staff>allStaff=new ArrayList<Staff>();
 
     public mainDatabase() throws SQLException {
 
@@ -54,6 +56,9 @@ public class mainDatabase {
     public static ArrayList<Node> getNodes(){
         return allNodes;
     }
+    public static ArrayList<Staff> getStaff(){
+        return allStaff;
+    }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Main Database Function
@@ -81,13 +86,9 @@ public class mainDatabase {
         nodeDatabase.readNodeCSV("MapFnodes.csv");
         nodeDatabase.readNodeCSV("MapGnodes.csv");
         nodeDatabase.readNodeCSV("MapHnodes.csv");
-        //nodeDatabase.readNodeCSV("MapInodes.csv");
+        nodeDatabase.readNodeCSV("MapInodes.csv");
         nodeDatabase.readNodeCSV("MapWnodes.csv");
         nodeDatabase.insertNodesFromCSV();
-
-
-        nodeDatabase.cntNodes("HALL");
-
 
         edgeDatabase.readEdgesCSV("MapAedges.csv");
         edgeDatabase.readEdgesCSV("MapBedges.csv");
@@ -97,14 +98,15 @@ public class mainDatabase {
         edgeDatabase.readEdgesCSV("MapFedges.csv");
         edgeDatabase.readEdgesCSV("MapGedges.csv");
         edgeDatabase.readEdgesCSV("MapHedges.csv");
-        //edgeDatabase.readEdgesCSV("MapIedges.csv");
+        edgeDatabase.readEdgesCSV("MapIedges.csv");
         edgeDatabase.readEdgesCSV("MapWedges.csv");
         edgeDatabase.insertEdgesFromCSV();
 
-
-
         nodeDatabase.outputNodesCSV();
         edgeDatabase.outputEdgesCSV();
-        //nodeDatabase.queryAllNodes();
+        nodeDatabase.queryAllNodes();
+        edgeDatabase.queryAllEdges();
+        nodeDatabase.cntNodes();
+
     }
 }

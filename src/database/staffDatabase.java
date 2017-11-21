@@ -1,7 +1,9 @@
 package database;
 
+import service.Service;
 import service.Staff;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class staffDatabase {
 
@@ -28,8 +30,7 @@ public class staffDatabase {
                         "password VARCHAR(20)," +
                         "jobTitle VARCHAR(20)," +
                         "fullname VARCHAR(20)," +
-                        "ID INTEGER," +
-                        "jobType VARCHAR(20))");
+                        "ID INTEGER)");
 
                 int rsetCreate3 = stmtCreateStaffTable.executeUpdate(createStaffTable);
                 System.out.println("Create Staff table Successful!");
@@ -51,8 +52,7 @@ public class staffDatabase {
                         "password VARCHAR(20)," +
                         "jobTitle VARCHAR(20)," +
                         "fullName VARCHAR(20)," +
-                        "ID INTEGER," +
-                        "jobType VARCHAR(20))");
+                        "ID INTEGER)");
 
                 int rsetCreate1 = stmtCreateStaffTable.executeUpdate(createStaffTable);
                 System.out.println("Create Staff table Successful!");
@@ -72,23 +72,25 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
 
     // Add new Staff Member to the Staff Members Table
-    public static void addStaff(String anyStaffID, String anyPW, String anyTitle, String anyFullname, int anyID, String anyType) {
+    public static void addStaff(String anyStaffID, String anyPW, String anyTitle, String anyFullname, int anyID, Service anyType) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
             addAnyStaff.setString(1, anyStaffID);
             addAnyStaff.setString(2, anyPW);
             addAnyStaff.setString(3, anyTitle);
             addAnyStaff.setString(4, anyFullname);
             addAnyStaff.setInt(5, anyID);
-            addAnyStaff.setString(6, anyType);
+
 
             addAnyStaff.executeUpdate();
             System.out.println("Insert Staff Successful for staffID: " + anyStaffID);
+
+            mainDatabase.allStaff.add(new Staff(anyStaffID, anyPW, anyTitle, anyFullname, anyID));
 
             conn.commit();
             addAnyStaff.close();
@@ -97,6 +99,7 @@ public class staffDatabase {
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -131,7 +134,7 @@ public class staffDatabase {
     // Delete a staff member from the staff table
     ///////////////////////////////////////////////////////////////////////////////
 
-    // Delete item(s) from node table
+    // Delete item(s) from staff table
     public static void deleteStaff(Staff anyStaff){
 
         int anyStaffID = anyStaff.getID();
@@ -178,11 +181,10 @@ public class staffDatabase {
             String strTitle = "";
             String strFullname = "";
             Integer intStaffID = 0;
-            String strType = "";
 
 
             System.out.println("");
-            System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID", "jobType");
+            System.out.printf("%-20s %-20s %-20s %-20s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID");
 
             //Process the results
             while (rsetAllStaff.next()) {
@@ -191,9 +193,8 @@ public class staffDatabase {
                 strTitle = rsetAllStaff.getString("jobTitle");
                 strFullname = rsetAllStaff.getString("fullName");
                 intStaffID = rsetAllStaff.getInt("ID");
-                strType = rsetAllStaff.getString("jobType");
 
-                System.out.printf("%-20s %-20s %-20s %-20s %-20d %-20s\n", strStaffID, strPW, strTitle, strFullname, intStaffID, strType);
+                System.out.printf("%-20s %-20s %-20s %-20s %-20d\n", strStaffID, strPW, strTitle, strFullname, intStaffID);
             } // End While
 
             conn.commit();

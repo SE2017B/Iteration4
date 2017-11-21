@@ -39,15 +39,15 @@ public class nodeDatabase {
             if (!res.next()) {
                 Statement stmtCreate1 = conn.createStatement();
                 String createNodesTable = ("CREATE TABLE nodes" +
-                        "(nodeID VARCHAR(20) PRIMARY KEY," +
-                        "xCoord VARCHAR(20)," +
-                        "yCoord VARCHAR(20)," +
-                        "floor VARCHAR(20)," +
-                        "buiding VARCHAR(20)," +
-                        "nodeType VARCHAR(20)," +
-                        "longName VARCHAR(50)," +
-                        "shortName VARCHAR(30)," +
-                        "teamAssigned VARCHAR(20))");
+                        "(nodeID VARCHAR(50) PRIMARY KEY," +
+                        "xCoord VARCHAR(50)," +
+                        "yCoord VARCHAR(50)," +
+                        "floor VARCHAR(50)," +
+                        "building VARCHAR(50)," +
+                        "nodeType VARCHAR(50)," +
+                        "longName VARCHAR(75)," +
+                        "shortName VARCHAR(50)," +
+                        "teamAssigned VARCHAR(50))");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
@@ -64,15 +64,15 @@ public class nodeDatabase {
 
                 Statement stmtCreate1 = conn.createStatement();
                 String createNodesTable = ("CREATE TABLE nodes" +
-                        "(nodeID VARCHAR(20) PRIMARY KEY," +
-                        "xCoord VARCHAR(20)," +
-                        "yCoord VARCHAR(20)," +
-                        "floor VARCHAR(20)," +
-                        "building VARCHAR(20)," +
-                        "nodeType VARCHAR(20)," +
-                        "longName VARCHAR(50)," +
-                        "shortName VARCHAR(30)," +
-                        "teamAssigned VARCHAR(20))");
+                        "(nodeID VARCHAR(50) PRIMARY KEY," +
+                        "xCoord VARCHAR(50)," +
+                        "yCoord VARCHAR(50)," +
+                        "floor VARCHAR(50)," +
+                        "building VARCHAR(50)," +
+                        "nodeType VARCHAR(50)," +
+                        "longName VARCHAR(75)," +
+                        "shortName VARCHAR(50)," +
+                        "teamAssigned VARCHAR(50))");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
@@ -98,7 +98,8 @@ public class nodeDatabase {
 
             PreparedStatement insertNode = conn.prepareStatement("INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-            for (int j = 1; j < mainDatabase.allNodes.get(j).getID().length(); j++) {
+
+            for (int j = 1; j < mainDatabase.allNodes.size(); j++) {
 
                 insertNode.setString(1, mainDatabase.allNodes.get(j).getID());
                 insertNode.setString(2, Integer.toString(mainDatabase.allNodes.get(j).getX()));
@@ -291,27 +292,62 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Find how many Hall Nodes and set hall counter
     ///////////////////////////////////////////////////////////////////////////////
-    public static void cntNodes(String type) {
+    public static void cntNodes() {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
             Statement cntAllType = conn.createStatement();
-            String strCntNodes = "SELECT COUNT(nodeType) FROM nodes GROUP BY nodeType HAVING nodeType IN (HALL)";
+            String strCntNodes = "SELECT nodeType, COUNT(nodeType) AS type FROM nodes GROUP BY nodeType";
             ResultSet rsetCntNodesHall = cntAllType.executeQuery(strCntNodes);
 
+            String aType = "";
             int numHall = 0;
-            System.out.printf("%-20s\n", "nodeType");
+            System.out.printf("%-20s %-20s\n", "nodeType", "COUNT(nodeType)");
 
             //Process the results
             while (rsetCntNodesHall.next()) {
-                numHall = rsetCntNodesHall.getInt("nodeType");
-                numHall = hallCounter;
-                System.out.printf("%-20d\n", numHall);
-            } // End While
+                aType = rsetCntNodesHall.getString("nodeType");
+                numHall = rsetCntNodesHall.getInt("type");
 
-            System.out.println("hallCounter = " + hallCounter);
+                switch (aType) {
+                    case "REST":
+                        restCounter = numHall;
+                        break;
+                    case "CONF":
+                        confCounter = numHall;
+                        break;
+                    case "DEPT":
+                        deptCounter = numHall;
+                        break;
+                    case "ELEV":
+                        elevCounter = numHall;
+                        break;
+                    case "EXIT":
+                        exitCounter = numHall;
+                        break;
+                    case "HALL":
+                        hallCounter = numHall;
+                        break;
+                    case "INFO":
+                        infoCounter = numHall;
+                        break;
+                    case "LABS":
+                        labsCounter = numHall;
+                        break;
+                    case "RETL":
+                        retlCounter = numHall;
+                        break;
+                    case "SERV":
+                        servCounter = numHall;
+                        break;
+                    case "STAI":
+                        staiCounter = numHall;
+                }
+
+                System.out.printf("%-20s %-20s\n", aType, numHall);
+            } // End While
 
             conn.commit();
             rsetCntNodesHall.close();
@@ -322,6 +358,100 @@ public class nodeDatabase {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getHallCounter() {
+        int temp = hallCounter;
+        hallCounter++;
+        return temp;
+    }
+
+    public int getRestCounter() {
+        int temp = restCounter;
+        restCounter++;
+        return temp;
+    }
+
+    public int getRetlCounter() {
+        int temp = retlCounter;
+        retlCounter++;
+        return temp;
+    }
+
+    public int getElevCounter() {
+        int temp = elevCounter;
+        elevCounter++;
+        return temp;
+    }
+
+    public int getStaiCounter() {
+        int temp = staiCounter;
+        staiCounter++;
+        return temp;
+    }
+
+    public int getDeptCounter() {
+        int temp = deptCounter;
+        deptCounter++;
+        return temp;
+    }
+
+    public int getLabsCounter() {
+        int temp = labsCounter;
+        labsCounter++;
+        return temp;
+    }
+
+    public int getInfoCounter() {
+        int temp = infoCounter;
+        infoCounter++;
+        return temp;
+    }
+
+    public int getConfCounter() {
+        int temp = confCounter;
+        confCounter++;
+        return temp;
+    }
+
+    public int getExitCounter() {
+        int temp = exitCounter;
+        exitCounter++;
+        return temp;
+    }
+
+    public int getServCounter() {
+        int temp = servCounter;
+        servCounter++;
+        return temp;
+    }
+
+    public int getNodeID(String anyType) {
+        switch (anyType) {
+            case "REST":
+                return getRestCounter();
+            case "CONF":
+                return getConfCounter();
+            case "DEPT":
+                return getDeptCounter();
+            case "ELEV":
+                return getElevCounter();
+            case "EXIT":
+                return getExitCounter();
+            case "HALL":
+                return getHallCounter();
+            case "INFO":
+                return getInfoCounter();
+            case "LABS":
+                return getLabsCounter();
+            case "RETL":
+                return getRetlCounter();
+            case "SERV":
+                return getServCounter();
+            case "STAI":
+                return getStaiCounter();
+        }
+        return 0;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -367,7 +497,7 @@ public class nodeDatabase {
                 pw1.println(mainDatabase.allNodes.get(j).getID() + "," +
                         mainDatabase.allNodes.get(j).getX()+ "," +
                         mainDatabase.allNodes.get(j).getY() + "," +
-                        mainDatabase.allNodes.get(j).getFloor() + "," +
+                        mainDatabase.allNodes.get(j).getFloor().getDbMapping() + "," +
                         mainDatabase.allNodes.get(j).getBuilding() + "," +
                         mainDatabase.allNodes.get(j).getType() + "," +
                         mainDatabase.allNodes.get(j).getLongName() + "," +

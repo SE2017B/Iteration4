@@ -29,7 +29,7 @@ public class StaffTest{
     @Before
     public void initialize() {
         foodService = new FoodService();
-        Bob = new Staff("bob", "bobby", "cook", "Bobby Bob", 1, foodService);
+        Bob = new Staff("bob", "bobby", "cook", "Bobby Bob", 1);
         appleRequest = new ServiceRequest(foodService, 1, location, "apple");
         orangeRequest = new ServiceRequest(foodService, 2, location, "orange");
     }

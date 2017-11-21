@@ -21,14 +21,14 @@ public class Staff{
     private boolean isBusy;
 
 
-    public Staff(String username, String password, String jobTitle, String fullName, int ID, Service jobType){
+    public Staff(String username, String password, String jobTitle, String fullName, int ID){
 
         this.username = username;
         this.password = password;
         this.jobTitle = jobTitle;
         this.fullName = fullName;
         this.ID = ID;
-        this.jobType = jobType;
+
         currentRequest = null;
         isBusy = false;
 

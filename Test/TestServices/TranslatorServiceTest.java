@@ -27,8 +27,8 @@ public class TranslatorServiceTest {
 
     @Before
     public void initialize(){
-        spanishJoe = new Staff("joe", "joe", "Translator", "Joe Man", 2, service);
-        frenchBen = new Staff("ben", "ben", "Translator" ,"Ben Man", 3, service);
+        spanishJoe = new Staff("joe", "joe", "Translator", "Joe Man", 2);
+        frenchBen = new Staff("ben", "ben", "Translator" ,"Ben Man", 3);
         service = new TranslatorService("Spanish", 100);
     }
 

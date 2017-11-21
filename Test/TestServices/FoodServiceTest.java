@@ -34,8 +34,8 @@ public class FoodServiceTest {
     @Before
     public void setup () {
         foodService = new FoodService();
-        John = new Staff("johndoe", "abc", "Head cook", "John Doe", 123, foodService);
-        Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456, foodService);
+        John = new Staff("johndoe", "abc", "Head cook", "John Doe", 123);
+        Jane = new Staff("janedoe", "efg", "cook", "Jane Doe", 456);
 //        location = new Node(200,400);
         foodRequest = new ServiceRequest(foodService, 1, location, "apple");
         orangeRequest = new ServiceRequest(foodService, 2, location, "orange");
