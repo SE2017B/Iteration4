@@ -85,7 +85,12 @@ public class MainController implements ControllableScreen{
 
     //map scale set up
     public void setMapScale(double scale){
+    }
 
+    public void floorButtonPressed(ActionEvent e){
+       String floor =  ((JFXButton)e.getSource()).getText();
+       System.out.println("Floor Pressed: " + floor);
+       mapImage.setImage(FloorNumber.fromDbMapping(floor));
     }
 
 

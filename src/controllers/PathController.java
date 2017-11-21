@@ -8,6 +8,7 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
 import javafx.scene.image.Image;
@@ -78,7 +79,7 @@ public class PathController implements ControllableScreen{
     @FXML
     private Button endFloor;
 
-    private proxyImagePane backImage = new proxyImagePane();
+    private proxyImagePane mapImage = new proxyImagePane();
 
     private FloorNumber currentFloor;// the current floor where the kiosk is.
 
@@ -110,7 +111,7 @@ public class PathController implements ControllableScreen{
         testpath.addToPath(new Node(130,120));
         testpath.addToPath(new Node(1100,800));
 
-        mapPane.getChildren().add(backImage);
+        mapPane.getChildren().add(mapImage);
     }
 
     public void onShow(){
@@ -199,20 +200,7 @@ public class PathController implements ControllableScreen{
     }
     //some methods for switching between screens to be edited in the future
     private void switchImage(FloorNumber floor){
-        //clear lines first
-        /**
-        clearPaths();
-        //delete background image if any
-        if(mapPane.getChildren().size()>0){
-            mapPane.getChildren().remove(0);
-        }
-        //now add background image
-        mapPane.getChildren().add(backImage.getImagePane(floor));
-         **/
-        clearPaths();
-        //Todo: switch paths right here
-        backImage.setImage(floor);
-
+        mapImage.setImage(floor);
     }
 
     public void cancelPressed(ActionEvent e)
@@ -224,8 +212,15 @@ public class PathController implements ControllableScreen{
 
     public void stairsPressed(ActionEvent e)
     {
-
         System.out.println("Checked off stairs");
     }
+
+    public void floorButtonPressed(ActionEvent e){
+        String floor =  ((JFXButton)e.getSource()).getText();
+        System.out.println("Floor Pressed: " + floor);
+        mapImage.setImage(FloorNumber.fromDbMapping(floor));
+    }
+
+
 
 }
