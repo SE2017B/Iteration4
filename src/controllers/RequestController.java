@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.skins.JFXTimePickerContent;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
@@ -130,6 +131,7 @@ public class RequestController implements ControllableScreen{
         //resolveServiceListView.getItems().remove(selectedService);
         //List<Integer> selectedRequests = new ArrayList<Integer>(resolveServiceListView.getSelectionModel().getSelectedItems());
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
+        System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
     }
 
     public void requestCreatePressed(ActionEvent e)
@@ -145,8 +147,12 @@ public class RequestController implements ControllableScreen{
     {
         //todo clear the selected items
         System.out.println("Cancel Pressed");
-
-        parent.setScreen(ScreenController.LoginID);
+        choiceBoxStaff.getItems().clear();
+        choiceBoxService.getItems().clear();
+        choiceBoxDept.getItems().clear();
+        //time = JFXDatePicker.setValue(null);
+        //date = JFXTimePicker
+        //parent.setScreen(ScreenController.LoginID);
     }
 
     public void logoutPressed(ActionEvent e){
