@@ -25,6 +25,7 @@ public class HospitalMap{
         nodeMap = new ArrayList<>();
         edgeMap = new ArrayList<>();
         search = new SearchContext(new AStarSearch());
+        searches = new ArrayList<SearchStrategy>();
         searches.add(new AStarSearch());
         searches.add(new BeamSearch());
         searches.add(new BreadthFirstSearch());

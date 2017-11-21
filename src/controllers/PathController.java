@@ -2,7 +2,7 @@
 * Software Engineering 3733, Worcester Polytechnic Institute
 * Team H
 * Code produced for Iteration1
-* Original author(s): Travis Norris, Andrey Yuzvik
+* Original author(s): Travis Norris, Andrey Yuzvik, Oluchukwu Okafor
 * The following code
 */
 
@@ -10,6 +10,9 @@ package controllers;
 
 import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
@@ -18,6 +21,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+
+import map.Path;
+import DepartmentSubsystem.*;
+
 
 import java.util.ArrayList;
 
@@ -54,10 +61,10 @@ public class PathController implements ControllableScreen{
     private Label lbldir;
 
     @FXML
-    private JFXTextField startChoice;
+    private ChoiceBox<Node> startNodeChoice;
 
     @FXML
-    private JFXTextField endChoice;
+    private ChoiceBox<Node> endNodeChoice;
 
     @FXML
     private Pane mapPane;
@@ -65,20 +72,49 @@ public class PathController implements ControllableScreen{
     @FXML
     private Label failLabel;
 
+    @FXML
+    private Button startFloor;
+
+    @FXML
+    private Button endFloor;
+
+    private proxyImagePane backImage = new proxyImagePane();
+
+    private FloorNumber currentFloor;// the current floor where the kiosk is.
+
+    private ArrayList<FloorNumber> floors; //list of floors available
+
+    private Path testpath;
 
     //Methods start here
     public void init()
     {
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
+        failLabel = new Label();
         onShow();
+        currentFloor = FloorNumber.fromDbMapping("1");
+        //set up floor variables
+        floors = new ArrayList<FloorNumber>();
+        floors.add(FloorNumber.fromDbMapping("1"));
+        floors.add(FloorNumber.fromDbMapping("2"));
+        //add the test background image
+        switchImage(currentFloor);
 
+        //create test path
+        testpath = new Path();
+        testpath.addToPath(new Node(100,100));
+        testpath.addToPath(new Node(100,105));
+        testpath.addToPath(new Node(105,105));
+        testpath.addToPath(new Node(110,115));
+        testpath.addToPath(new Node(130,120));
+        testpath.addToPath(new Node(1100,800));
+
+        mapPane.getChildren().add(backImage);
     }
 
     public void onShow(){
-        //Update the nodes in the map
-
-        //update the items in the checklist
+        //Todo: update the items in the choice boxes
 
 
         //remove any previous paths from the display
@@ -89,16 +125,16 @@ public class PathController implements ControllableScreen{
         lines = new ArrayList<>();
     }
 
-    public void diplayPath(ArrayList<Node> path){
-        if( path.size() <= 1){
+    public void diplayPath(Path path){
+        if( path.getPath().size() <= 1){
             System.out.println("NO PATH FOUND");
             failLabel.setVisible(true);
-        } else if(path.size() > 1) {
+        } else if(path.getPath().size() > 1) {
             failLabel.setVisible(false);
-            for (int i = 0; i < path.size() - 1; i++) {
+            for (int i = 0; i < path.getPath().size() - 1; i++) {
                 Line line = new Line();
-                Node start = path.get(i);
-                Node end = path.get(i + 1);
+                Node start = path.getPath().get(i);
+                Node end = path.getPath().get(i + 1);
                 line.setLayoutX((start.getX())/2);
                 line.setLayoutY((start.getY())/2);
 
@@ -107,9 +143,10 @@ public class PathController implements ControllableScreen{
                 line.setEndY((end.getY() - start.getY())/2);
 
                 line.setVisible(true);
-                line.setStrokeWidth(5);
+                line.setStrokeWidth(2);
                 mapPane.getChildren().add(line);
                 lines.add(line);
+                //
 
             }
         }
@@ -123,12 +160,59 @@ public class PathController implements ControllableScreen{
             mapPane.getChildren().remove(line);
         }
     }
+    //button methods
+    public void startPressed(ActionEvent e){
+        //show the first screen when clicked on
+        if(floors.size()>0){
+            switchImage(floors.get(0));
+        }
+
+    }
+
+    public void endPressed(ActionEvent e){
+        if(floors.size()>1){
+            switchImage(floors.get(1));
+        }
+    }
+    private Path getPath(){
+        //HospitalMap.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
+        //calculate the path an return it
+        return testpath; //for now
+    }
 
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
+        //add background image
+        switchImage(currentFloor);
+
+
+        //draw path
         System.out.println("Enter Pressed");
         //Remove last path from screen
+        clearPaths();
+        //test get path
+        diplayPath(getPath());
+
+
+
+    }
+    //some methods for switching between screens to be edited in the future
+    private void switchImage(FloorNumber floor){
+        //clear lines first
+        /**
+        clearPaths();
+        //delete background image if any
+        if(mapPane.getChildren().size()>0){
+            mapPane.getChildren().remove(0);
+        }
+        //now add background image
+        mapPane.getChildren().add(backImage.getImagePane(floor));
+         **/
+        clearPaths();
+        //Todo: switch paths right here
+        backImage.setImage(floor);
+
     }
 
     public void cancelPressed(ActionEvent e)

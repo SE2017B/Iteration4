@@ -35,6 +35,13 @@ public class Node{
         this.y = Integer.parseInt(y);
     }
 
+    //to be deleted
+    public Node(int xPos, int yPos){
+
+        this.x= xPos;
+        this.y=yPos;
+    }
+
     //Adds edge between
     public void addConnection(Edge egde){
         connections.add(egde);
