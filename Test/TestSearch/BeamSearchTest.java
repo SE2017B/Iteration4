@@ -9,7 +9,7 @@ import search.BeamSearch;
 import static org.junit.Assert.assertEquals;
 
 public class BeamSearchTest {
-    private HospitalMap map = new HospitalMap();
+    private HospitalMap map = HospitalMap.getMap();
     private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
     private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
     private Node N3 = new Node("A3", "0", "0", "L1", "Tower", "Desk", "Long3", "Short3", "H");

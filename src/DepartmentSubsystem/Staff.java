@@ -8,7 +8,6 @@
 
 package DepartmentSubsystem;
 
-import database.mainDatabase;
 import exceptions.InvalidPasswordException;
 
 import java.util.ArrayList;

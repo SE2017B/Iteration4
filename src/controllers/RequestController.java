@@ -13,31 +13,18 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTimePicker;
-import com.jfoenix.skins.JFXTimePickerContent;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.Pane;
-import map.HospitalMap;
-import map.Node;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import DepartmentSubsystem.ServiceRequest;
-import DepartmentSubsystem.Staff;
-import DepartmentSubsystem.DepartmentSubsystem;
-import org.omg.CORBA.Request;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.Pane;
+import map.HospitalMap;
+import map.Node;
 
-
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
@@ -133,7 +120,7 @@ public class RequestController implements ControllableScreen{
         //update the items in the checklist
         locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
-        searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
+        //searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
 
     }
     @FXML
