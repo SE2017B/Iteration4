@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FilterController">
+   <children>
+      <SplitPane dividerPositions="0.2554858934169279" layoutX="121.0" layoutY="101.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane maxWidth="-Infinity" minHeight="0.0" minWidth="150.0" prefHeight="160.0" prefWidth="300.0">
+               <children>
+                  <GridPane hgap="10.0" layoutX="-25.0" layoutY="91.0" prefHeight="398.4" prefWidth="175.2" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="164.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="106.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Bathrooms" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Label text="Icon Filter" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="Exits" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <CheckBox fx:id="checkBoxBathrooms" mnemonicParsing="false" onAction="#bathRoomChecked" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <CheckBox fx:id="checkBoxExits" mnemonicParsing="false" onAction="#exitChecked" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#cancelPressed" text="Cancel" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ScrollPane hvalue="0.33" layoutX="109.0" layoutY="91.0" prefHeight="398.0" prefWidth="417.0" vvalue="0.14" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <Pane>
+                           <children>
+                              <ImageView fitHeight="800.0" fitWidth="1280.0" nodeOrientation="INHERIT">
+                                 <image>
+                                    <Image url="@../images/SecondFloorNOICONS.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="bathIconW1" fitHeight="18.0" fitWidth="12.0" layoutX="193.0" layoutY="217.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" translateX="200.0">
+                                 <image>
+                                    <Image url="@../images/WCwomen.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="exitIcon2" fitHeight="15.0" fitWidth="11.0" layoutX="320.0" layoutY="196.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" translateX="200.0">
+                                 <image>
+                                    <Image url="@../images/Exit%20Icon.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="exitIcon1" fitHeight="15.0" fitWidth="11.0" layoutX="256.0" layoutY="281.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" translateX="200.0">
+                                 <image>
+                                    <Image url="@../images/Exit%20Icon.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="bathIconM1" fitHeight="18.0" fitWidth="13.0" layoutX="392.0" layoutY="196.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/WCmen.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="bathIconF1" fitHeight="18.0" fitWidth="13.0" layoutX="261.0" layoutY="286.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" translateX="300.0">
+                                 <image>
+                                    <Image url="@../images/WCall.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="bathIconF2" fitHeight="18.0" fitWidth="12.0" layoutX="257.0" layoutY="222.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" translateX="300.0">
+                                 <image>
+                                    <Image url="@../images/WCall.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
