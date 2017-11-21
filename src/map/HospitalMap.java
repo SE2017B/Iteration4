@@ -63,7 +63,11 @@ public class HospitalMap{
 
     public void removeNode(Node node){
         //get all connections and remove from edgeMap
-        node.deleteNode();
+        int size = node.getConnections().size();
+        for(int i = 0; i < size; i++){
+            //have to delete 0 index each time because array shrinks after each iteration
+            removeEdge(node.getConnections().get(0));
+        }
         nodeMap.remove(node);
     }
 
