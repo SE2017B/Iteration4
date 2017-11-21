@@ -2,7 +2,7 @@ package ServicesTest;
 /*
 import exceptions.InvalidPasswordException;
 import org.junit.*;
-import service.*;
+import DepartmentSubsystem.*;
 
 
 import static org.junit.Assert.*;

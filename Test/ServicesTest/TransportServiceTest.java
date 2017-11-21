@@ -2,8 +2,8 @@ package ServicesTest;
 /*
 import org.junit.Before;
 import org.junit.Test;
-import service.Staff;
-import service.TransportService;
+import DepartmentSubsystem.Staff;
+import DepartmentSubsystem.TransportService;
 
 import java.util.ArrayList;
 import static org.junit.Assert.*;
@@ -15,28 +15,28 @@ public class TransportServiceTest {
     private Staff wheelchairJim;
     private Staff wheelchairMary;
     private ArrayList<Staff> transports;
-    private TransportService service;
+    private TransportService DepartmentSubsystem;
 
     @Before
     public void initialize(){
-        wheelchairJim = new Staff("jim", "abc", "Transport", "Jim Man", 3, service);
-        wheelchairMary = new Staff("mary", "abc", "Transport", "Mary Woman", 4,service);
+        wheelchairJim = new Staff("jim", "abc", "Transport", "Jim Man", 3, DepartmentSubsystem);
+        wheelchairMary = new Staff("mary", "abc", "Transport", "Mary Woman", 4,DepartmentSubsystem);
         transports = new ArrayList<>();
-        service = new TransportService("Wheelchair");
+        DepartmentSubsystem = new TransportService("Wheelchair");
     }
 
     @Test
     public void assignPersonTest(){
-        service.assignPerson(wheelchairJim);
-        assertTrue(service.getPersonnel().contains(wheelchairJim));
+        DepartmentSubsystem.assignPerson(wheelchairJim);
+        assertTrue(DepartmentSubsystem.getPersonnel().contains(wheelchairJim));
     }
 
     @Test
     public void assignPeopleTest(){
         transports.add(wheelchairJim);
         transports.add(wheelchairMary);
-        service.assignPeople(transports);
-        assertTrue(service.getPersonnel().contains(wheelchairJim) && service.getPersonnel().contains(wheelchairMary));
+        DepartmentSubsystem.assignPeople(transports);
+        assertTrue(DepartmentSubsystem.getPersonnel().contains(wheelchairJim) && DepartmentSubsystem.getPersonnel().contains(wheelchairMary));
     }
 }
 */

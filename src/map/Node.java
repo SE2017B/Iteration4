@@ -35,6 +35,13 @@ public class Node{
         this.y = Integer.parseInt(y);
     }
 
+    //to be deleted
+    public Node(int xPos, int yPos){
+
+        this.x= xPos;
+        this.y=yPos;
+    }
+
     //Adds edge between
     public void addConnection(Edge egde){
         connections.add(egde);
@@ -92,7 +99,7 @@ public class Node{
         return this.connections;
     }
 
-    public Edge getEdgeOf(Node node) throws InvalidNodeException{
+    public Edge getEdgeOf(Node node){
         for(Edge e : this.connections){
             if(e.getOtherNode(this) == node) return e;
         }

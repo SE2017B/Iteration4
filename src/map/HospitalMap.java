@@ -10,9 +10,7 @@ package map;
 import database.edgeDatabase;
 import database.nodeDatabase;
 import exceptions.InvalidNodeException;
-import search.AStarSearch;
-import search.SearchContext;
-import search.SearchStrategy;
+import search.*;
 
 import java.util.*;
 
@@ -20,23 +18,30 @@ public class HospitalMap{
     private static ArrayList<Node> nodeMap;
     private static ArrayList<Edge> edgeMap;
     private static SearchContext search;
+    private static ArrayList<SearchStrategy> searches;
 
     //Constructors
     public HospitalMap() {
         nodeMap = new ArrayList<>();
         edgeMap = new ArrayList<>();
         search = new SearchContext(new AStarSearch());
+        searches = new ArrayList<SearchStrategy>();
+        searches.add(new AStarSearch());
+        searches.add(new BeamSearch());
+        searches.add(new BreadthFirstSearch());
+        searches.add(new DepthFirstSearch());
+        searches.add(new DijkstrasSearch());
     }
 
     //Helper Methods
 
     //Method to add a new node to the map
 
-    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName){
+    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
         this.addNode(new Node(ID,x,y,floor,building,type,longName,shortName));
     }
 
-    public void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
+    public static  void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
         node.setBuilding(building);
         node.setFloor(floor);
         node.setLongName(longName);
@@ -47,9 +52,9 @@ public class HospitalMap{
     }
 
 
-    public void addEdge(Node nodeOne,Node nodeTwo){
+    public static void addEdge(Node nodeOne, Node nodeTwo){
 
-        this.addEdge(new Edge(nodeOne,nodeTwo));
+        addEdge(new Edge(nodeOne,nodeTwo));
 
     }
 
@@ -105,6 +110,14 @@ public class HospitalMap{
             addEdge(e);
         }
     }
+    public static void addNodeandEdges(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team, ArrayList<Node> connections){
+        Node temp = new Node(ID ,x, y, floor, building, type, longName, shortName);
+        nodeMap.add(temp);
+        for(int i = 0; i < connections.size(); i++){
+            addEdge(temp,connections.get(i));
+        }
+        //nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
+    }
 
     public static void addEdge(Edge edge){
         edgeMap.add(edge);
@@ -114,7 +127,7 @@ public class HospitalMap{
 
     }
 
-    public void deleteNode(Node node){
+    public static void deleteNode(Node node){
         //delete the node first
         nodeMap.remove(node);
         nodeDatabase.deleteNode(node);
@@ -135,7 +148,7 @@ public class HospitalMap{
 
 
 
-    public void DeleteEdge(Edge edge){
+    public static void DeleteEdge(Edge edge){
         edgeMap.remove(edge);
         edgeDatabase.deleteAnyEdge(edge.getID());
 
@@ -155,6 +168,10 @@ public class HospitalMap{
 
     public void setSearchStrategy(SearchStrategy searchStrategy){
         search.setStrategy(searchStrategy);
+    }
+
+    public static ArrayList<SearchStrategy> getSearches(){
+        return searches;
     }
 
     public static Path findPath(Node start, Node end)throws InvalidNodeException{

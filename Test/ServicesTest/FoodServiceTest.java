@@ -2,9 +2,9 @@ package ServicesTest;
 /*
 import a_star.Node;
 import org.junit.*;
-import service.FoodService;
-import service.ServiceRequest;
-import service.Staff;
+import DepartmentSubsystem.FoodService;
+import DepartmentSubsystem.ServiceRequest;
+import DepartmentSubsystem.Staff;
 
 import java.util.ArrayList;
 

@@ -19,33 +19,28 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import map.FloorNumber;
 import map.Node;
-import service.Staff;
+import DepartmentSubsystem.Staff;
 
 
 public class MainController implements ControllableScreen{
     private ScreenController parent;
-    private LoginPane loginPane;
-    private Scene loginScene;
-    private Stage loginStage;
 
 
     public void setParentController(ScreenController parent){
         this.parent = parent;
     }
 
+    @FXML
+    private Pane mapPane;
 
+    private proxyImagePane mapImage;
 
-    public void init(){
-        loginPane = new LoginPane(this);
-        loginScene = new Scene(loginPane,600,400);
-        loginStage = new Stage();
-        loginStage.setScene(loginScene);
-        loginStage.initModality(Modality.APPLICATION_MODAL);
-        loginStage.setTitle("Staff Login");
-
-
-
+    public void init() {
+        mapImage = new proxyImagePane();
+        mapImage.setImage(FloorNumber.FLOOR_G);
+        mapPane.getChildren().add(mapImage);
     }
 
     public void onShow(){
@@ -55,7 +50,7 @@ public class MainController implements ControllableScreen{
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         System.out.println("Login Pressed");
-        loginStage.showAndWait();
+        parent.setScreen(ScreenController.LoginID);
     }
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
@@ -90,16 +85,14 @@ public class MainController implements ControllableScreen{
 
     //map scale set up
     public void setMapScale(double scale){
-
     }
 
-    //process login from login pane
-    public void successfulLogin(Staff staff){
-        loginStage.close();
-        parent.setScreen(ScreenController.RequestID);
-        ((RequestController)parent.getController(parent.RequestID)).setForStaff(staff);
-
+    public void floorButtonPressed(ActionEvent e){
+       String floor =  ((JFXButton)e.getSource()).getText();
+       System.out.println("Floor Pressed: " + floor);
+       mapImage.setImage(FloorNumber.fromDbMapping(floor));
     }
+
 
 
 

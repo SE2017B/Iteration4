@@ -8,6 +8,8 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import map.HospitalMap;
 import map.Node;
@@ -15,10 +17,9 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import service.ServiceRequest;
-import service.Staff;
-import service.Service;
-
+import DepartmentSubsystem.ServiceRequest;
+import DepartmentSubsystem.Staff;
+import search.SearchStrategy;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -26,12 +27,14 @@ import java.util.ArrayList;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
+    private HospitalMap map;
     private String serviceType;
     private String hour;
     private String min;
     private String merid;
     private Staff staffMember;
     private LocalDate date;
+    private String nameServiceFile;
 
     private static int requestIDCount = 0;
 
@@ -74,6 +77,9 @@ public class RequestController implements ControllableScreen{
     private TextArea infoText;
 
     @FXML
+    private Pane servicePane1;
+
+    @FXML
     private ChoiceBox locationChoiceBox;
 
 
@@ -82,6 +88,7 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
+        map = new HospitalMap();
     }
 
     public void onShow(){
@@ -91,8 +98,33 @@ public class RequestController implements ControllableScreen{
         //update the items in the checklist
         locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
-    }
+        searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
 
+    }
+    @FXML
+    public void loadServicePane(ActionEvent e){
+
+//        nameServiceFile = ((MenuItem) e.getSource()).getText();
+//
+//        if( nameServiceFile == "Food Delivery")
+//        {
+//            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/FoodDelivery.fxml"));
+//            servicePane1.getChildren().add(newServicePane);
+//        }else if ( nameServiceFile == "Sanitation")
+//        {
+//            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Sanitation.fxml"));
+//            servicePane1.getChildren().add(newServicePane);
+//        }else if ( nameServiceFile == "Translation")
+//        {
+//            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Translation.fxml"));
+//            servicePane1.getChildren().add(newServicePane);
+//        }else if ( nameServiceFile == "Transport")
+//        {
+//            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Transport.fxml"));
+//            servicePane1.getChildren().add(newServicePane);
+//        }
+
+    }
     public void resolveServicePressed(ActionEvent e){//todo
         }
 
@@ -117,25 +149,6 @@ public class RequestController implements ControllableScreen{
 
     public void serviceSelected(ActionEvent e){
         System.out.println("Service Selected");
-        serviceType = ((MenuItem) e.getSource()).getText();
-        serviceDropDown.setText(serviceType);
-        staff = parent.getEngine().getService(serviceType).getPersonnel();
-        if(staff.size() != 0) {
-            staffDropDown.setItems(FXCollections.observableList(staff));
-            staffDropDown.setDisable(false);
-        }
-
-        if(serviceType.equals("Food")){
-            infoLabel.setText("Food Type");
-            infoLabel.setVisible(true);
-            infoText.setVisible(true);
-        }
-        else{
-            infoLabel.setVisible(false);
-            infoText.setVisible(false);
-        }
-
-
     }
 
     public void hourSelected(ActionEvent e){
@@ -165,4 +178,22 @@ public class RequestController implements ControllableScreen{
         staffMember = staff;
         staffNameLabel.setText(staff.getFullName());
     }
+
+    //////////////////////////////////////////////////////////
+    /////////           Settings Tab
+    //////////////////////////////////////////////////////////
+
+    @FXML
+    private ChoiceBox<SearchStrategy> searchStrategyChoice;
+    @FXML
+    private JFXButton saveSettingsButton;
+
+    public void saveSettingsPressed(ActionEvent e){
+        if(searchStrategyChoice.getValue() != null){
+            map.setSearchStrategy(searchStrategyChoice.getValue());
+        }
+
+    }
+
+
 }

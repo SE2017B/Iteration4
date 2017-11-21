@@ -11,38 +11,45 @@ import java.util.HashMap;
 public class proxyImagePane extends StackPane {
 
     //pointers to images and their fxml files
-    public static String floorL1 = "00_thelowerlever1.png";
-    public static String floorL2 = "00_thelowerlever2.png";
-    public static String floorG = "00_thegroundfloor.png";
-    public static String floor1 = "01_thefirstfloor.png";
-    public static String floor2 = "02_thesecondfloor.png";
-    public static String floor3 = "03_thethirdfloor.png";
+    private String floorL1 = "images/00_thelowerlever1.png";
+    private String floorL2 = "images/00_thelowerlever2.png";
+    private String floorG = "images/00_thegroundfloor.png";
+    private String floor1 = "images/01_thefirstfloor.png";
+    private String floor2 = "images/02_thesecondfloor.png";
+    private String floor3 = "images/03_thethirdfloor.png";
 
-    private HashMap<FloorNumber,ImageView> floors;
+    private HashMap<FloorNumber,ImageView> floors = new HashMap<FloorNumber,ImageView>();
 
     public proxyImagePane(){
         super();
-
+        //add all floors
+        addImage(FloorNumber.fromDbMapping("L2"));
+        addImage(FloorNumber.fromDbMapping("L1"));
+        addImage(FloorNumber.fromDbMapping("G"));
+        addImage(FloorNumber.fromDbMapping("1"));
+        addImage(FloorNumber.fromDbMapping("2"));
+        addImage(FloorNumber.fromDbMapping("3"));
     }
+
     private String getImage(FloorNumber floor){
         //return corresponding image type
-        if(floor.getDbMapping()=="L2"){
-            return floorL2;
+        if(floor.getDbMapping().equals("L2")){
+            return "images/00_thelowerlevel2.png";
         }
-        if(floor.getDbMapping()=="L1"){
-            return floorL1;
+        if(floor.getDbMapping().equals("L1")){
+            return "images/00_thelowerlevel1.png";
         }
-        if(floor.getDbMapping()=="G"){
-            return floorG;
+        if(floor.getDbMapping().equals("G")){
+            return "images/00_thegroundfloor.png";
         }
-        if(floor.getDbMapping()=="1"){
-            return floor1;
+        if(floor.getDbMapping().equals("1")){
+            return "images/01_thefirstfloor.png";
         }
-        if(floor.getDbMapping()=="2"){
-            return floor2;
+        if(floor.getDbMapping().equals("2")){
+            return "images/02_thesecondfloor.png";
         }
-        if(floor.getDbMapping()=="3"){
-            return floor3;
+        if(floor.getDbMapping().equals("3")){
+            return "images/03_thethirdfloor.png";
         }
         return null;
 
@@ -52,26 +59,29 @@ public class proxyImagePane extends StackPane {
     }
     public boolean addImage(FloorNumber floor){
         //Todo: create new image view
-        String name = this.getImage(floor);//get image name for floor
-        Image img = new Image(name); //create new image
-        ImageView imgView = new ImageView(img); //create new image view pane
-        floors.put(floor,imgView);//add new image view to hash map floors
-        return true;
+        if(floor!=null){
+            String name = this.getImage(floor);//get image name for floor
+            System.out.println("Path is "+name);
+            Image img = new Image(name); //create new image
+            System.out.println("We made it baby");
+            ImageView imgView = new ImageView(img); //create new image view pane
+            imgView.setFitWidth(2500);
+            imgView.setFitHeight(1700);
+            imgView.setVisible(true);
+            floors.put(floor,imgView);//add new image view to hash map floors
+            //get the image pane directly instead
+
+            return true;
+        }
+        return false;
     }
     public boolean setImage(FloorNumber floor){
         //Todo: Isn't set image and add image the same thing
-        /**
-        if(screens.containsKey(name)){
-            if(!getChildren().isEmpty()){
-                getChildren().remove(0);
-            }
-            getChildren().add(screens.get(name));
-            controllers.get(name).onShow();
-            return true;
+       if(this.getChildren().size()>0){
+            this.getChildren().remove(0);
         }
-        System.out.println("Set Screen Failed");
-        return false;
-         **/
+        //now add background image
+        this.getChildren().add(this.getImagePane(floor));
         return true;
     }
     public boolean removeImage(FloorNumber floor){

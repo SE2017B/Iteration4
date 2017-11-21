@@ -13,28 +13,23 @@ import map.HospitalMap;
 import map.Node;
 import controllers.ScreenController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import service.FoodService;
-import service.ServiceRequest;
-import service.Staff;
-
-import java.util.ArrayList;
+import DepartmentSubsystem.ServiceRequest;
+import DepartmentSubsystem.Staff;
 
 public class Main extends Application {
-    private static KioskEngine engine = new KioskEngine();
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        ScreenController myScreenController = new ScreenController(engine);
+        ScreenController myScreenController = new ScreenController();
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
         myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
         myScreenController.loadScreen(ScreenController.MainID, ScreenController.MainFile);
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
+        myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
 
         myScreenController.setScreen(ScreenController.MainID);
 
@@ -50,27 +45,9 @@ public class Main extends Application {
     public static void main(String[] args) {
         mainDatabase.readNodeCSV("MapHnodes.csv");
         mainDatabase.readNodeCSV("MapWnodes.csv");
-
         mainDatabase.readEdgesCSV("MapHedges.csv");
         mainDatabase.readEdgesCSV("MapWedges.csv");
 
-        Staff testAdmin =  new Staff("test","","Admin","Admin Test",1234, engine.getService("Food"));
-        Staff testStaff =  new Staff("testStaff","","food stuff","Staff Test",1234, engine.getService("Food"));
-
-        engine.addStaffLogin(testStaff, "Food");
-        engine.addStaffLogin(testAdmin, "Food");
-
-
-
-        for(Node node : HospitalMap.getNodes()){
-            HospitalMap.addNode(node);
-        }
-
-        Node stub = new Node("1234567890","1000","400","01","Tower","ELEV","STUB","STUB");
-
-
-        ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,stub,"This is a test");
-        req.giveRequest();
 
 
         launch(args);
