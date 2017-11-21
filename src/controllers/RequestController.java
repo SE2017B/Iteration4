@@ -53,7 +53,7 @@ public class RequestController implements ControllableScreen{
     private ArrayList<String> deps;
     private ArrayList<Service> serv;
     private DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
-
+    private HospitalMap map;
 
 
     private static int requestIDCount = 0;
