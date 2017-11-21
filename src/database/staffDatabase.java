@@ -48,7 +48,7 @@ public class staffDatabase {
 
                 Statement stmtCreateStaffTable = conn.createStatement();
                 String createStaffTable = ("CREATE TABLE hospitalStaff" +
-                        "(staffID VARCHAR(20) PRIMARY KEY," +
+                        "(username VARCHAR(20) PRIMARY KEY," +
                         "password VARCHAR(20)," +
                         "jobTitle VARCHAR(20)," +
                         "fullName VARCHAR(20)," +
@@ -68,11 +68,11 @@ public class staffDatabase {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Add a node function
+    // Add a Staff member Function
     ///////////////////////////////////////////////////////////////////////////////
 
     // Add new Staff Member to the Staff Members Table
-    public static void addStaff(String anyStaffID, String anyPW, String anyTitle, String anyFullname, int anyID, Service anyType) {
+    public static void addStaff(Staff anyStaff) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
             conn.setAutoCommit(false);
@@ -80,17 +80,15 @@ public class staffDatabase {
 
             PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-            addAnyStaff.setString(1, anyStaffID);
-            addAnyStaff.setString(2, anyPW);
-            addAnyStaff.setString(3, anyTitle);
-            addAnyStaff.setString(4, anyFullname);
-            addAnyStaff.setInt(5, anyID);
+            addAnyStaff.setString(1, anyStaff.getUsername());
+            addAnyStaff.setString(2, anyStaff.getPassword());
+            addAnyStaff.setString(3, anyStaff.getJobTitle());
+            addAnyStaff.setString(4, anyStaff.getFullName());
+            addAnyStaff.setInt(5, anyStaff.getID());
 
 
             addAnyStaff.executeUpdate();
-            System.out.println("Insert Staff Successful for staffID: " + anyStaffID);
-
-            mainDatabase.allStaff.add(new Staff(anyStaffID, anyPW, anyTitle, anyFullname, anyID));
+            System.out.println("Insert Staff Successful for staffID: " + anyStaff.getID());
 
             conn.commit();
             addAnyStaff.close();
@@ -99,30 +97,36 @@ public class staffDatabase {
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-
+        mainDatabase.allStaff.add(anyStaff);
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Modify a Staff Member in the Staff Database
     ///////////////////////////////////////////////////////////////////////////////
-    public static void modifyStaff(String colAttr, String setCond, String anyStaffID) {
+    public static void modifyStaff(Staff anyStaff) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            String strModifyStaff = "UPDATE hospitalStaff SET " + colAttr + " = ? WHERE anyStaffID = ?";
+            String strModDrop = "DELETE FROM hospitalStaff WHERE ID = ?";
+            String strModAdd = "INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)";
 
-            PreparedStatement modifyAnyStaff = conn.prepareStatement(strModifyStaff);
+            PreparedStatement modDelAnyStaff = conn.prepareStatement(strModDrop);
+            modDelAnyStaff.setInt(1, anyStaff.getID());
+            modDelAnyStaff.executeUpdate();
 
-            modifyAnyStaff.setString(1, setCond);
-            modifyAnyStaff.setString(2, anyStaffID);
+            PreparedStatement modAddAnyStaff = conn.prepareStatement(strModAdd);
+            modAddAnyStaff.setString(1, anyStaff.getUsername());
+            modAddAnyStaff.setString(2, anyStaff.getPassword());
+            modAddAnyStaff.setString(3, anyStaff.getJobTitle());
+            modAddAnyStaff.setString(4, anyStaff.getFullName());
+            modAddAnyStaff.setInt(5, anyStaff.getID());
 
-            modifyAnyStaff.executeUpdate();
             System.out.println("Update Staff Member Successful!");
 
             conn.commit();
-            modifyAnyStaff.close();
+            modAddAnyStaff.close();
             conn.close();
 
         } catch (Exception e) {
@@ -144,7 +148,7 @@ public class staffDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement deleteAnyStaff = conn.prepareStatement("DELETE FROM hospitalStaff WHERE staffID = ?");
+            PreparedStatement deleteAnyStaff = conn.prepareStatement("DELETE FROM hospitalStaff WHERE ID = ?");
 
             // set the corresponding param
             deleteAnyStaff.setInt(1, anyStaffID);
@@ -160,6 +164,8 @@ public class staffDatabase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        int indexOf = mainDatabase.allStaff.indexOf(anyStaff);
+        mainDatabase.allStaff.remove(indexOf);
     }
 
     ///////////////////////////////////////////////////////////////////////////////
