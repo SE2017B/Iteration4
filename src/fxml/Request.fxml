@@ -50,6 +50,7 @@
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
                                 </columnConstraints>
                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -59,44 +60,49 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Service" GridPane.halignment="CENTER">
+                                    <Label text="Service" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Staff Member" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <Label text="Staff Member" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Date" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                    <Label text="Date" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Time" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                    <Label text="Time" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Location" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                    <Label text="Location" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                    <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                    <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <JFXTimePicker fx:id="timeMenu" defaultColor="#34ffeb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                    <MenuButton fx:id="serviceDropDown" mnemonicParsing="false" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                    <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                    <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                    <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                    <JFXTimePicker fx:id="timeMenu" defaultColor="#34ffeb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                    <MenuButton fx:id="serviceDropDown" mnemonicParsing="false" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                       <items>
                                         <MenuItem mnemonicParsing="false" text="Action 1" />
                                         <MenuItem mnemonicParsing="false" text="Action 2" />
                                       </items>
                                     </MenuButton>
-                                    <ChoiceBox fx:id="staffDropDown" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                    <Pane fx:id="servicePane1" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                                    <ChoiceBox fx:id="staffDropDown" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                    <Pane fx:id="servicePane1" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                                    <Label text="Department " GridPane.halignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </GridPane>
                            </children>
