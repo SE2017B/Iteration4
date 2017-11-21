@@ -25,7 +25,7 @@ public class DepartmentSubsystem {
     private DepartmentSubsystem(){init();}
     private void init(){
         //If the init method was ran, then we dont do it again
-        //if(initRan = true){ return; }
+        if(initRan = true){ return; }
 
         //TODO assign staff to departments and services
         Department translationDepartment = new Department("Translation Department");
