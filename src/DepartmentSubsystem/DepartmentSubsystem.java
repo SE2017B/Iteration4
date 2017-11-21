@@ -90,7 +90,13 @@ public class DepartmentSubsystem {
     }
 
     //Assign a service request
-    public void submitRequest(Service service, String time, String date, Node location, Staff person){
-        ServiceRequest temp = new ServiceRequest(service, 0, location,)
+    public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID){
+        Department temp = new Department("TEMPORARY");
+        for(Department dept: departments){
+            if(dept.getServices().contains(service)){
+                temp = dept;
+            }
+        }
+        temp.addRequest(RID, new ServiceRequest(service, RID, location, time, date, person));
     }
 }

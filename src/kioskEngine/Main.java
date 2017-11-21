@@ -65,13 +65,10 @@ public class Main extends Application {
 
         Node stub = new Node("1234567890","1000","400","01","Tower","ELEV","STUB","STUB");
 
-
         //ServiceRequest req = new ServiceRequest(engine.getService("Food"),1,stub,"This is a test");
         //req.giveRequest();
 
-
         launch(args);
-
 
         mainDatabase.outputNodesCSV();
         mainDatabase.outputEdgesCSV();
