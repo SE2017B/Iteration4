@@ -41,9 +41,6 @@ public class MainController implements ControllableScreen{
         mapImage = new proxyImagePane();
         mapImage.setImage(FloorNumber.FLOOR_G);
         mapPane.getChildren().add(mapImage);
-
-
-
     }
 
     public void onShow(){

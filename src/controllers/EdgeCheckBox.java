@@ -3,6 +3,7 @@ package controllers;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import map.Edge;
 
@@ -40,6 +41,12 @@ public class EdgeCheckBox extends Line {
 
     public void select(){
         this.selected = !this.selected;
+        if(selected){
+            this.setStroke(Color.YELLOW);
+        }
+        else{
+            this.setStroke(Color.BLACK);
+        }
     }
 
 
