@@ -70,14 +70,21 @@ public class PathController implements ControllableScreen{
     @FXML
     private Pane mapPane;
 
-    @FXML
-    private Label failLabel;
 
     @FXML
-    private Button startFloor;
-
+    private JFXButton floorL2Button;
     @FXML
-    private Button endFloor;
+    private JFXButton floorL1Button;
+    @FXML
+    private JFXButton floorGButton;
+    @FXML
+    private JFXButton floor1Button;
+    @FXML
+    private JFXButton floor2Button;
+    @FXML
+    private JFXButton floor3Button;
+
+
 
     private proxyImagePane mapImage = new proxyImagePane();
 
@@ -92,7 +99,6 @@ public class PathController implements ControllableScreen{
     {
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
-        failLabel = new Label();
         onShow();
         currentFloor = FloorNumber.fromDbMapping("1");
         //set up floor variables
@@ -129,9 +135,7 @@ public class PathController implements ControllableScreen{
     public void diplayPath(Path path){
         if( path.getPath().size() <= 1){
             System.out.println("NO PATH FOUND");
-            failLabel.setVisible(true);
         } else if(path.getPath().size() > 1) {
-            failLabel.setVisible(false);
             for (int i = 0; i < path.getPath().size() - 1; i++) {
                 Line line = new Line();
                 Node start = path.getPath().get(i);
@@ -194,7 +198,7 @@ public class PathController implements ControllableScreen{
         diplayPath(getPath());
 
         //todo: draw path on this floor
-
+        //todo: disable floor buttons not in the path
 
 
     }
