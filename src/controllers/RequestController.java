@@ -45,7 +45,6 @@ public class RequestController implements ControllableScreen{
     private String nameStaff;
     private ArrayList<String> deps;
     private ArrayList<Service> serv;
-    private ArrayList<String>
     private DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
 
     private static int requestIDCount = 0;
@@ -58,7 +57,7 @@ public class RequestController implements ControllableScreen{
     private Label staffNameLabel;
 
     @FXML
-    private ChoiceBox<String> choiceBoxDept;
+    private ChoiceBox<Department> choiceBoxDept;
 
     @FXML
     private MenuButton menuButtonAl;
@@ -82,10 +81,10 @@ public class RequestController implements ControllableScreen{
     private Pane servicePane1;
 
     @FXML
-    private ChoiceBox<String> choiceBoxService;
+    private ChoiceBox<Service> choiceBoxService;
 
     @FXML
-    private ChoiceBox<String> choiceBoxStaff;
+    private ChoiceBox<Staff> choiceBoxStaff;
 
     @FXML
     private Label lblSelectedService;
