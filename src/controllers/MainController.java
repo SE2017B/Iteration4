@@ -9,6 +9,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -35,12 +36,16 @@ public class MainController implements ControllableScreen{
     @FXML
     private Pane mapPane;
 
+    @FXML
+    private JFXSlider slideBarZoom;
+
     private proxyImagePane mapImage;
 
     public void init() {
         mapImage = new proxyImagePane();
         mapImage.setImage(FloorNumber.FLOOR_G);
         mapPane.getChildren().add(mapImage);
+        
     }
 
     public void onShow(){
@@ -67,25 +72,22 @@ public class MainController implements ControllableScreen{
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
         System.out.println("Zoom In Pressed");
-
+        slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
+        mapImage.setScale(4-slideBarZoom.getValue());
 
     }
 
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
-
-
-
+        slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
+        mapImage.setScale(4-slideBarZoom.getValue());
     }
 
     //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){
-
+        mapImage.setScale(4-slideBarZoom.getValue());
     }
 
-    //map scale set up
-    public void setMapScale(double scale){
-    }
 
     public void floorButtonPressed(ActionEvent e){
        String floor =  ((JFXButton)e.getSource()).getText();

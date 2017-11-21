@@ -21,7 +21,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="pane">
                <children>
-                  <ScrollPane prefHeight="694.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane hvalue="0.5" prefHeight="694.0" prefWidth="1278.0" vvalue="0.16" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
                         <Pane fx:id="mapPane" />
                      </content></ScrollPane>
@@ -42,7 +42,7 @@
                               <Font size="24.0" />
                            </font>
                         </JFXButton>
-                        <JFXSlider fx:id="slideBarZoom" orientation="VERTICAL" prefWidth="50.0" />
+                        <JFXSlider fx:id="slideBarZoom" max="3.0" min="1.0" orientation="VERTICAL" prefWidth="50.0" value="2.0" />
                         <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="50.0" prefWidth="50.0" text="-">
                            <font>
                               <Font size="24.0" />
@@ -108,7 +108,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="160.0" styleClass="pane">
                <children>
-                  <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" hvalue="0.43" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
                         <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0" styleClass="pane">
                            <columnConstraints>
