@@ -32,6 +32,7 @@ import java.util.List;
 
 public class AddNodeController implements ControllableScreen {
     private ScreenController parent;
+    private HospitalMap map;
 
 
     //node variables
@@ -48,118 +49,10 @@ public class AddNodeController implements ControllableScreen {
     private ArrayList<EdgeCheckBox> edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
 
 
-
-
     //setter for parent
     public void setParentController(ScreenController parent) {
         this.parent = parent;
     }
-
-
-    @FXML
-    private TextField txtfldX;
-
-    @FXML
-    private Label failText;
-
-    @FXML
-    private TextField txtfldY;
-
-    @FXML
-    private Label menubtnFloor;
-
-    @FXML
-    private Button btnEnter;
-
-    @FXML
-    private Button btnCancel;
-
-    @FXML
-    private MenuButton floorDropDown;
-
-    @FXML
-    private MenuItem floor3;
-
-    @FXML
-    private MenuItem floor2;
-
-    @FXML
-    private MenuItem floor1;
-
-    @FXML
-    private MenuItem floorG;
-
-    @FXML
-    private MenuItem floorL1;
-
-    @FXML
-    private MenuItem FloorL2;
-
-    @FXML
-    private TextField txtfldID;
-
-    @FXML
-    private Label menubtnBuilding;
-
-    @FXML
-    private MenuButton buildingDropDown;
-
-    @FXML
-    private MenuItem buildingBTM;
-
-    @FXML
-    private MenuItem buildingShapiro;
-
-    @FXML
-    private MenuItem buldingTower;
-
-    @FXML
-    private MenuItem building45F;
-
-    @FXML
-    private MenuItem building15F;
-
-    @FXML
-    private Label menubtnNodeType;
-
-    @FXML
-    private MenuButton nodeTypeDropDown;
-
-    @FXML
-    private MenuItem nTypeHALL;
-
-    @FXML
-    private MenuItem nTypeELEV;
-
-    @FXML
-    private MenuItem nTypeREST;
-
-    @FXML
-    private MenuItem nTypeSTAI;
-
-    @FXML
-    private MenuItem nTypeDEPT;
-
-    @FXML
-    private MenuItem nTypeLABS;
-
-    @FXML
-    private MenuItem nTypeINFO;
-
-    @FXML
-    private MenuItem nTypeCONF;
-
-    @FXML
-    private MenuItem nTypeEXIT;
-
-    @FXML
-    private MenuItem nTypeRETL;
-
-    @FXML
-    private MenuItem nTypeSERV;
-
-    @FXML
-    private TextField txtfldName;
 
     @FXML
     private Pane mapPane;
@@ -168,43 +61,24 @@ public class AddNodeController implements ControllableScreen {
     private Circle nodeLocation;
 
     public void init() {
+
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
+        edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
+        map = new HospitalMap();
+
+        for (Node node:map.getNodeMap()) {
+            NodeCheckBox cb = new NodeCheckBox(node);
+            nodeCheckBoxes.add(cb);
+        }
+//        for (Edge edge:map.getEdgeMap()){
+//            EdgeCheckBox cb = new EdgeCheckBox(edge);
+//            edgeCheckBoxes.add(cb);
+//        }
+
 
     }
 
     public void onShow() {
-//        x = "";
-//        y = "";
-//        name = "";
-//        nodeID = "";
-//        floor = "";
-//        txtfldX.setText("");
-//        txtfldY.setText("");
-//        txtfldID.setText("");
-//        txtfldName.setText("");
-//
-//        floorDropDown.setText("");
-//        buildingDropDown.setText("");
-//        nodeTypeDropDown.setText("");
-//
-//        for(NodeCheckBox box : nodeCheckBoxes){
-//            box.setVisible(false);
-//            mapPane.getChildren().remove(box);
-//        }
-//        nodeCheckBoxes = new ArrayList<NodeCheckBox>();
-//        failText.setVisible(false);
-//        nodeLocation.setVisible(false);
-//
-//        ArrayList<Node> nodes = new ArrayList<Node>();//Todo find nodes to display
-//        for (Node node : nodes) {
-//            NodeCheckBox box = new NodeCheckBox();
-//            box.setNode(node); //sets checkbox to node location
-//
-//            box.setVisible(true);
-//            mapPane.getChildren().add(box);
-//            nodeCheckBoxes.add(box);
-
-//        }
     }
 
     //Action upon pressing enter
@@ -321,6 +195,12 @@ public class AddNodeController implements ControllableScreen {
     private JFXButton nodeRemoveEnterButton;
     @FXML
     private JFXButton nodeRemoveCancelButton;
+    @FXML
+    private JFXListView<NodeCheckBox> nodeRemoveSelectedList;
+
+    public void nodeRemoveAddToList(NodeCheckBox node){
+        nodeRemoveSelectedList.getItems().add(node);
+    }
 
     public void nodeRemoveEnterPressed(ActionEvent e){
         System.out.println("Node Remove Enter Pressed");

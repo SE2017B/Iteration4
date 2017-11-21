@@ -7,6 +7,11 @@ import javafx.fxml.FXML;
 public class NodeCheckBox extends JFXCheckBox {
     private Node node;
 
+    public NodeCheckBox(Node node){
+        super();
+        setNode(node);
+    }
+
     public void setNode(Node node) {
         this.node = node;
         this.setLayoutX((node.getX()-10)/2);
