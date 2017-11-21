@@ -6,7 +6,7 @@ HHALL00302,2035,900,2,Tower,HALL,Hallway Connector 3 Floor 2,Hallway H00302,Team
 HSTAI00102,2060,880,2,Tower,STAI,Stairwell 1 Floor 2,Stairwell 0102,Team H
 HHALL00402,1875,1025,2,Tower,HALL,Hallway Connector 4 Floor 2,Hallway H00402,Team H
 HHALL00502,1825,1025,2,Tower,HALL,Hallway Connector 5 Floor 2,Hallway H00502,Team H
-HRETL00202,1615,1025,2,Tower,RETL,Vending Machine Floor 2,Vending Machine,Team H
+HRETL00202,1615,1025,2,Tower,RETL,Vending Machine Floor 2?,Vending Machine,Team H
 HBATH00102,1605,1008,2,Tower,BATH,Bathroom 1 Tower Floor 2,Bathroom 0102,Team H
 HRETL00302,1825,1080,2,Tower,RETL,Gift Shop Tower Floor 2,Gift Shop,Team H
 HHALL00602,1775,1080,2,Tower,HALL,Hallway Connector 6 Floor 2,Hallway H00602,Team H
