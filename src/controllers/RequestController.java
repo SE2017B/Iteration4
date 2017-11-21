@@ -93,7 +93,7 @@ public class RequestController implements ControllableScreen{
 
     public void onShow(){
         //Update the nodes in the map
-        ArrayList<Node> nodes = HospitalMap.getNodesForSearch();
+        ArrayList<Node> nodes = map.getNodeMap();
 
         //update the items in the checklist
         locationChoiceBox.setItems(FXCollections.observableList(nodes));

@@ -28,10 +28,12 @@ import DepartmentSubsystem.*;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PathController implements ControllableScreen{
     private ScreenController parent;
     private ArrayList<Node> path;
+    private HospitalMap map;
 
     private ArrayList<Line> lines;
 
@@ -97,6 +99,7 @@ public class PathController implements ControllableScreen{
     //Methods start here
     public void init()
     {
+        map = new HospitalMap();
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
         onShow();
@@ -221,6 +224,13 @@ public class PathController implements ControllableScreen{
         //todo: hide the lines from the other floors
         FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         System.out.println("Floor Pressed: " + floor);
+
+        //EXAMPLE
+        List<Node> nodesOnFloor = map.getNodesBy(n -> n.getFloor().equals(floor));
+
+        //EXAMPLE
+        List<Node> notHallsOnFloor = map.getNodesBy(n -> n.getFloor().equals(floor) && n.getType()!="HALL");
+
         mapImage.setImage(floor);
 
     }
