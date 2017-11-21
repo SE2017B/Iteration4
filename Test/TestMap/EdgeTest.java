@@ -30,10 +30,10 @@ public class EdgeTest {
 
     @Before
     public void initialize(){
-        A = new Node("A1", "0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1", "team");
-        B = new Node("A2", "100","100", "L1", "Tower", "Restaurant", "Long2", "Short2", "team");
-        C = new Node("A3", "200", "200", "L1", "Tower", "Desk", "Long3", "Short3", "team");
-        D = new Node("A4", "200", "200", "3", "Tower", "Desk", "Long4", "Short4", "team");
+        A = new Node("0", "100", "L1", "Tower", "Bathroom", "Long1", "Short1", "team");
+        B = new Node("100","100", "L1", "Tower", "Restaurant", "Long2", "Short2", "team");
+        C = new Node( "200", "200", "L1", "Tower", "Desk", "Long3", "Short3", "team");
+        D = new Node( "200", "200", "3", "Tower", "Desk", "Long4", "Short4", "team");
 
         ABEdge = new Edge(A, B);
         BCEdge = new Edge(B, C);

@@ -51,6 +51,7 @@ public class Node{
         this.y = Integer.parseInt(y);
         this.team = team;
         this.ID = "H" + this.type + this.floor.getDbMapping() +  nodeDatabase.getNodeID(this.type);
+        System.out.println(this.ID);
     }
 
     //Adds existing edge between
