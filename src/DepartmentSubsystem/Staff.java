@@ -8,6 +8,7 @@
 
 package DepartmentSubsystem;
 
+import database.mainDatabase;
 import exceptions.InvalidPasswordException;
 
 import java.util.ArrayList;
@@ -75,6 +76,11 @@ public class Staff{
         catch(InvalidPasswordException e) {
             System.out.println("invalid password"); //mainly for testing purposes
         }
+    }
+
+    //Updates Database with the current staff object
+    public void uptadeDB(){
+        mainDatabase.modifyStaff(this);
     }
 
     //Important Getters and Setters
