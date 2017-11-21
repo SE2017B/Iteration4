@@ -177,13 +177,13 @@
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton mnemonicParsing="false" text="MenuButton" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                    <MenuButton fx:id="menuButtonAl" mnemonicParsing="false" onAction="#selectAlgorithmPath" text="MenuButton" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                       <items>
-                                        <MenuItem mnemonicParsing="false" text="A*" />
-                                        <MenuItem mnemonicParsing="false" text="Breadth First Search" />
-                                          <MenuItem mnemonicParsing="false" text="Depth First Search" />
-                                          <MenuItem mnemonicParsing="false" text="Dijkstra's Algorithm" />
-                                          <MenuItem mnemonicParsing="false" text="Beam Search" />
+                                        <MenuItem mnemonicParsing="false" onAction="#selectAlgorithmPath" text="A*" />
+                                        <MenuItem mnemonicParsing="false" onAction="#selectAlgorithmPath" text="Breadth First Search" />
+                                          <MenuItem mnemonicParsing="false" onAction="#selectAlgorithmPath" text="Depth First Search" />
+                                          <MenuItem mnemonicParsing="false" onAction="#selectAlgorithmPath" text="Dijkstra's Algorithm" />
+                                          <MenuItem mnemonicParsing="false" onAction="#selectAlgorithmPath" text="Beam Search" />
                                       </items>
                                        <font>
                                           <Font size="18.0" />
