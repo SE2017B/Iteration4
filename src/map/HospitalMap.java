@@ -31,7 +31,7 @@ public class HospitalMap{
 
     //Helper Methods
 
-    //Methods to add a new node to the map
+    //Methods to add a new, isolated node to the map
     public void addNode(Node node){
         nodeMap.add(node);
     }
@@ -62,6 +62,7 @@ public class HospitalMap{
     }
 
     public void removeNode(Node node){
+        //get all connections and remove from edgeMap
         node.deleteNode();
         nodeMap.remove(node);
     }
@@ -70,6 +71,7 @@ public class HospitalMap{
         edgeMap.add(edge);
     }
 
+    //this is the one used by the engine and therefore the tests
     public void addEdge(Node nodeOne,Node nodeTwo){
         edgeMap.add(new Edge(nodeOne,nodeTwo));
     }
@@ -112,12 +114,14 @@ public class HospitalMap{
     public ArrayList<Node> getNodeMap() {
         return nodeMap;
     }
-
+    public ArrayList<Edge> getEdgeMap() {
+        return edgeMap;
+    }
     public ArrayList<Node> getNodesByFloor(int floor){
         ArrayList<Node> output = new ArrayList<>();
-        for(int i = 0; i < nodeMap.size();i++){
-            if(nodeMap.get(1).getFloor().getNodeMapping() == floor){
-                output.add(nodeMap.get(1));
+        for(int i = 0; i < nodeMap.size(); i++){
+            if(nodeMap.get(i).getFloor().getNodeMapping() == floor){
+                output.add(nodeMap.get(i));
             }
         }
         return output;

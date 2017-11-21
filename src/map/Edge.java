@@ -94,4 +94,14 @@ public class Edge {
     public void setDirTwo(String dirTwo) {
         this.dirTwo = dirTwo;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(!(obj instanceof Edge)) return false;
+        Edge other = (Edge)obj;
+        if(!this.getID().equals(other.getID())) return false;
+        return true;
+    }
 }
