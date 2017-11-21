@@ -12,6 +12,7 @@ public class nodeDatabase {
     private static final String JDBC_URL_MAP="jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
 
+    // Counters for # total count on each nodeType
     public static int hallCounter;
     public static int elevCounter;
     public static int restCounter;
@@ -24,8 +25,10 @@ public class nodeDatabase {
     public static int retlCounter;
     public static int servCounter;
 
+    // All nodes from the node table in hospitalMapDB
     static ArrayList<Node> allNodes=new ArrayList<Node>();
 
+    // Getter for Arraylist of all nodes
     public static ArrayList<Node> getNodes(){
         return allNodes;
     }

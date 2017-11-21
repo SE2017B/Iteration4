@@ -8,16 +8,13 @@
 
 package kioskEngine;
 
-import database.*;
-import map.HospitalMap;
-import map.Node;
 import controllers.ScreenController;
+import database.edgeDatabase;
+import database.nodeDatabase;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import DepartmentSubsystem.ServiceRequest;
-import DepartmentSubsystem.Staff;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -53,7 +50,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-        mainDatabase testConnection1 = new mainDatabase();
 
 
         nodeDatabase.createNodeTable();
