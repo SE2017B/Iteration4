@@ -100,7 +100,7 @@ public class PathController implements ControllableScreen{
         floors.add(FloorNumber.fromDbMapping("1"));
         floors.add(FloorNumber.fromDbMapping("2"));
         //add the test background image
-        switchImage(currentFloor);
+        mapImage.setImage(currentFloor);
 
         //create test path
         testpath = new Path();
@@ -165,14 +165,14 @@ public class PathController implements ControllableScreen{
     public void startPressed(ActionEvent e){
         //show the first screen when clicked on
         if(floors.size()>0){
-            switchImage(floors.get(0));
+            mapImage.setImage(floors.get(0));
         }
 
     }
 
     public void endPressed(ActionEvent e){
         if(floors.size()>1){
-            switchImage(floors.get(1));
+            mapImage.setImage(floors.get(1));
         }
     }
     private Path getPath(){
@@ -185,23 +185,20 @@ public class PathController implements ControllableScreen{
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
         //add background image
-        switchImage(currentFloor);
+        mapImage.setImage(currentFloor);
 
-
-        //draw path
-        System.out.println("Enter Pressed");
         //Remove last path from screen
         clearPaths();
+        System.out.println("Enter Pressed");
         //test get path
         diplayPath(getPath());
 
+        //todo: draw path on this floor
+
 
 
     }
-    //some methods for switching between screens to be edited in the future
-    private void switchImage(FloorNumber floor){
-        mapImage.setImage(floor);
-    }
+
 
     public void cancelPressed(ActionEvent e)
     {
@@ -216,9 +213,12 @@ public class PathController implements ControllableScreen{
     }
 
     public void floorButtonPressed(ActionEvent e){
-        String floor =  ((JFXButton)e.getSource()).getText();
+        //todo: display the lines form the path on the floor that was pressed
+        //todo: hide the lines from the other floors
+        FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         System.out.println("Floor Pressed: " + floor);
-        mapImage.setImage(FloorNumber.fromDbMapping(floor));
+        mapImage.setImage(floor);
+
     }
 
 

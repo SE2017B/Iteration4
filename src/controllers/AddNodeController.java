@@ -99,6 +99,15 @@ public class AddNodeController implements ControllableScreen {
         System.out.println("Return Pressed");
         parent.setScreen(ScreenController.RequestID);
     }
+
+    public void floorButtonPressed(ActionEvent e){
+        //todo: display the nodes and edges for the floor that was pressed
+        //todo: hide the nodes and edges from the other floors
+        FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
+        System.out.println("Floor Pressed: " + floor);
+        mapImage.setImage(floor);
+
+    }
     ////////////////////////////////////////////////////////////
     /////////////           Node ADD
     ////////////////////////////////////////////////////////////
