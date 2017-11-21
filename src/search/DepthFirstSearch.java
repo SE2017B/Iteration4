@@ -3,6 +3,7 @@ package search;
 import map.Node;
 import map.Path;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 
 public class DepthFirstSearch implements SearchStrategy {
@@ -18,7 +19,8 @@ public class DepthFirstSearch implements SearchStrategy {
         return new Path();
     }
 
-    public double getEuclideanDistance(Node start, Node end) {
-        return 0;
+    @Override
+    public String toString(){
+        return "DepthFirst";
     }
 }

@@ -65,4 +65,9 @@ public class AStarSearch implements SearchStrategy {
         double yDeltaSquared = Math.pow((end.getY()-start.getY()), 2);
         return Math.sqrt(xDeltaSquared + yDeltaSquared);
     }
+
+    @Override
+    public String toString(){
+        return "AStar";
+    }
 }

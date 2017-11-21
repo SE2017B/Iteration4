@@ -50,7 +50,8 @@ public class BreadthFirstSearch implements SearchStrategy {
         return path;
     }
 
-    public double getEuclideanDistance(Node start, Node end) {
-        return 0;
+    @Override
+    public String toString(){
+        return "BreadthFirst";
     }
 }

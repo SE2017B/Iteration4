@@ -10,9 +10,7 @@ package map;
 import database.edgeDatabase;
 import database.nodeDatabase;
 import exceptions.InvalidNodeException;
-import search.AStarSearch;
-import search.SearchContext;
-import search.SearchStrategy;
+import search.*;
 
 import java.util.*;
 
@@ -20,12 +18,18 @@ public class HospitalMap{
     private static ArrayList<Node> nodeMap;
     private static ArrayList<Edge> edgeMap;
     private static SearchContext search;
+    private static ArrayList<SearchStrategy> searches;
 
     //Constructors
     public HospitalMap() {
         nodeMap = new ArrayList<>();
         edgeMap = new ArrayList<>();
         search = new SearchContext(new AStarSearch());
+        searches.add(new AStarSearch());
+        searches.add(new BeamSearch());
+        searches.add(new BreadthFirstSearch());
+        searches.add(new DepthFirstSearch());
+        searches.add(new DijkstrasSearch());
     }
 
     //Helper Methods
@@ -163,6 +167,10 @@ public class HospitalMap{
 
     public void setSearchStrategy(SearchStrategy searchStrategy){
         search.setStrategy(searchStrategy);
+    }
+
+    public static ArrayList<SearchStrategy> getSearches(){
+        return searches;
     }
 
     public static Path findPath(Node start, Node end)throws InvalidNodeException{
