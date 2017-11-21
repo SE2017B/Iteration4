@@ -26,13 +26,13 @@
                <children>
                   <JFXTabPane prefHeight="798.4" prefWidth="328.0" tabMinHeight="50.0" tabMinWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
-                        <Tab text="Node">
+                        <Tab fx:id="nodeTab" text="Node">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <JFXTabPane layoutY="-2.0" prefHeight="748.0" prefWidth="302.0" tabMinWidth="105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <tabs>
-                                          <Tab text="Add">
+                                          <Tab fx:id="nodeAddTab" text="Add">
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="321.0">
                                                    <children>
@@ -143,7 +143,7 @@
                                                 </AnchorPane>
                                             </content>
                                           </Tab>
-                                          <Tab text="Remove">
+                                          <Tab fx:id="nodeRemoveTab" text="Remove">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="718.0" prefWidth="324.0">
                                                    <children>
@@ -191,7 +191,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </Tab>
-                                          <Tab text="Edit">
+                                          <Tab fx:id="nodeEditTab" text="Edit">
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="718.0" prefWidth="323.0">
                                                    <children>
@@ -314,13 +314,13 @@
                               </AnchorPane>
                           </content>
                         </Tab>
-                        <Tab text="Edge">
+                        <Tab fx:id="edgeTab" text="Edge">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <JFXTabPane prefHeight="748.0" prefWidth="317.0" tabMinWidth="105.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <tabs>
-                                          <Tab text="Add">
+                                          <Tab fx:id="edgeAddTab" text="Add">
                                              <content>
                                                 <AnchorPane prefHeight="718.0" prefWidth="291.0">
                                                    <children>
@@ -367,7 +367,7 @@
                                                       </GridPane>
                                                    </children></AnchorPane>
                                              </content></Tab>
-                                          <Tab text="Remove">
+                                          <Tab fx:id="edgeRemoveTab" text="Remove">
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="718.0" prefWidth="323.0">
                                                    <children>
@@ -400,7 +400,7 @@
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXListView GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                                            <JFXListView fx:id="edgeRemoveList" GridPane.columnSpan="2" GridPane.rowIndex="1">
                                                                <GridPane.margin>
                                                                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                </GridPane.margin>
