@@ -16,9 +16,12 @@ public abstract class Service{
     private Department department;
     private String description;
     private ArrayList<Staff> eligibleStaff;
+    private String URL;
 
     //CONSTRUCTOR IS NOT NECESSARY
     public void showFields(ActionEvent e){};
+
+
     //Getters and Setters
     public Department getDepartment() {
         return department;
@@ -37,5 +40,11 @@ public abstract class Service{
     }
     public void setEligibleStaff(ArrayList<Staff> eligibleStaff) {
         this.eligibleStaff = eligibleStaff;
+    }
+    public String getURL() {
+        return URL;
+    }
+    public void setURL(String URL) {
+        this.URL = URL;
     }
 }

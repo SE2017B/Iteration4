@@ -15,13 +15,15 @@ public class ServiceRequest{
     private Service service;
     private int requestID;
     private Node location;
-    private Date date;
+    private String time;
+    private String date;
     private Staff assignedPersonnel;
 
-    public ServiceRequest(Service service, int requestID, Node location, Date date, Staff assignedPersonnel) {
+    public ServiceRequest(Service service, int requestID, Node location, String time, String date, Staff assignedPersonnel) {
         this.service = service;
         this.requestID = requestID;
         this.location = location;
+        this.time = time;
         this.date = date;
         this.assignedPersonnel = assignedPersonnel;
     }
@@ -45,10 +47,16 @@ public class ServiceRequest{
     public void setLocation(Node location) {
         this.location = location;
     }
-    public Date getDate() {
+    public String getTime() {
+        return time;
+    }
+    public void setTime(String time) {
+        this.time = time;
+    }
+    public String getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     public Staff getAssignedPersonnel() {

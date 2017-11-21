@@ -33,11 +33,4 @@ public class FoodDelivery extends Service {
     //These two fields contain the selected items and any allergies
     private ArrayList<String> selectedFood;
     private String allergies = ""; //allergy field
-
-
-    public void showFields(ActionEvent e){
-        TextField allergies = new TextField();
-
-
-    }
 }
