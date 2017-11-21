@@ -41,6 +41,7 @@ public class Node{
         this.x= xPos;
         this.y=yPos;
         this.floor=f;
+        this.connections = new ArrayList<>();
     }
 
     //Adds edge between

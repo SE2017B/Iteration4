@@ -11,6 +11,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.ObservableList;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
@@ -81,10 +82,27 @@ public class AddNodeController implements ControllableScreen {
             edgeCheckBoxes.add(cb);
         }
 
+        //////////    STUB FOR TESTING  ////////////////////////////////////
+        Node test1 = new Node(1000,400,FloorNumber.FLOOR_ONE);
+        Node test2 = new Node(1200,400,FloorNumber.FLOOR_ONE);
+        Node test3 = new Node(1200,400,FloorNumber.FLOOR_TWO);
+        Node test4 = new Node(1000,400,FloorNumber.FLOOR_TWO);
+        nodeCheckBoxes.add(new NodeCheckBox(test1));
+        nodeCheckBoxes.add(new NodeCheckBox(test2));
+        nodeCheckBoxes.add(new NodeCheckBox(test3));
+        nodeCheckBoxes.add(new NodeCheckBox(test4));
+        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test1,test2)));
+        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test2,test3)));
+        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test3,test4)));
+
+
+
 
     }
 
     public void onShow() {
+        mapImage.setImage(FloorNumber.FLOOR_ONE);
+        showNodesandEdgesbyFloor(FloorNumber.FLOOR_ONE);
     }
 
     //Action upon pressing enter
@@ -108,6 +126,20 @@ public class AddNodeController implements ControllableScreen {
         System.out.println("Floor Pressed: " + floor);
         mapImage.setImage(floor);
 
+    }
+
+    public void showNodesandEdgesbyFloor(FloorNumber floor){
+        ObservableList children = mapPane.getChildren();
+        for(NodeCheckBox cb : nodeCheckBoxes){
+            if(cb.getNode().getFloor().equals(floor))
+                cb.setVisible(true);
+                children.add(cb);
+        }
+        for(EdgeCheckBox cb : edgeCheckBoxes){
+            if(cb.getEdge().getNodeOne().getFloor().equals(floor))
+                cb.setVisible(true);
+                children.add(cb);
+        }
     }
     ////////////////////////////////////////////////////////////
     /////////////           Node ADD
