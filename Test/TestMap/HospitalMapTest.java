@@ -13,6 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 import search.AStarSearch;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,10 +23,9 @@ import static org.junit.Assert.assertFalse;
 public class HospitalMapTest {
 
     //set up example map for testing
-    public HospitalMapTest() {
-    }
+    public HospitalMapTest() {}
 
-    private HospitalMap map = new HospitalMap();
+    private HospitalMap easyMap = new HospitalMap();
     private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
     private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
     private Node N3 = new Node("A3", "0", "0", "L1", "Tower", "Desk", "Long3", "Short3", "H");
@@ -48,11 +50,27 @@ public class HospitalMapTest {
     private Node N22 = new Node("A22", "700", "0", "L1", "Tower", "Desk", "Long22", "Short22", "H");
     private Node N23 = new Node("A23", "800", "0", "L1", "Tower", "Desk", "Long23", "Short23", "H");
 
+    //nodes for easyMap
+    private Node A = new Node("A", "0", "100", "L1", "Tower", "Bathroom", "LongA", "ShortA", "team");
+    private Node B = new Node("B", "100","100", "L1", "Tower", "Restaurant", "LongB", "ShortB", "team");
+    private Node C = new Node("C", "200", "200", "L1", "Tower", "Desk", "LongC", "ShortC", "team");
+    private Node D = new Node("D", "100", "200", "L1", "Tower", "Desk", "LongD", "ShortD", "team");
+
     private AStarSearch search = new AStarSearch();
 
     @Before
     public void initialize() {
-        //Creating nodes for the map
+        //Add just a few nodes to easyMap
+        easyMap.addNode(A);
+        easyMap.addNode(B);
+        easyMap.addNode(C);
+        easyMap.addNode(D);
+
+        //create edges between nodes and add to map
+        easyMap.addEdge(A, B);
+        easyMap.addEdge(B, C);
+        easyMap.addEdge(B, D);
+        easyMap.addEdge(C, D);
 
         //Add connections for nodeOne
         N1.addConnection(N2);
@@ -132,14 +150,43 @@ public class HospitalMapTest {
     //------------------------BEGIN TEST HOSPITALMAP PARAMS------------------------//
     @Test
     public void testGetNodeMap(){
+        ArrayList<Node> nodes = new ArrayList<>();
+        nodes.add(A);
+        nodes.add(B);
+        nodes.add(C);
+        nodes.add(D);
 
+        assertEquals(nodes, easyMap.getNodeMap());
+    }
+
+    @Test
+    public void testGetEdgeMap(){
+        Edge AB = new Edge(A, B);
+        Edge BC = new Edge(B, C);
+        Edge BD = new Edge(B, D);
+        Edge CD = new Edge(C, D);
+        ArrayList<Edge> edges = new ArrayList<>();
+        edges.add(AB);
+        edges.add(BC);
+        edges.add(BD);
+        edges.add(CD);
+
+        assertEquals(edges, easyMap.getEdgeMap());
     }
     //------------------------END TEST HOSPITALMAP PARAMS------------------------//
 
     @Test
     public void testGetNodesByFloor(){
+        easyMap.addNode("E", "0", "0", "3", "Tower", "Stairs", "LongE", "ShortE", "team");
+        ArrayList<Node> nodes = new ArrayList<>();
+        nodes.add(A);
+        nodes.add(B);
+        nodes.add(C);
+        nodes.add(D);
 
+        assertEquals(nodes, easyMap.getNodesByFloor(2));
     }
+
     /*
     @Test
     public void testSetSearchStrategy(){
@@ -147,26 +194,53 @@ public class HospitalMapTest {
     }
     */
 
-    //test short version of addNode()
-    @Test
-    public void testAddNode(){
-
-    }
-
-    //test long version of addNode()
-    @Test
-    public void testAddNode2(){
-
-    }
-
     @Test
     public void testEditNode(){
+        easyMap.editNode(A, "0", "100", "L1", "Tower", "Elevator", "LongA", "ShortA");
 
+        assertEquals("Elevator", A.getType());
     }
 
     @Test
     public void testRemoveNode(){
+        easyMap.removeNode(A);
+        ArrayList<Node> nodes = new ArrayList<>();
+        nodes.add(B);
+        nodes.add(C);
+        nodes.add(D);
 
+        assertEquals(nodes, easyMap.getNodeMap());
+    }
+
+    //fails - removeNode does not remove corresponding edge from edge map
+    @Test
+    public void testRemoveNode2(){
+        easyMap.removeNode(A);
+        Edge BC = new Edge(B, C);
+        Edge BD = new Edge(B, D);
+        Edge CD = new Edge(C, D);
+        ArrayList<Edge> edges = new ArrayList<>();
+        edges.add(BC);
+        edges.add(BD);
+        edges.add(CD);
+
+        assertEquals(edges, easyMap.getEdgeMap());
+    }
+
+    //what? It's saying that B has 4 edges, but that's impossible.
+    //It was only ever attached to 3 other nodes
+    @Test
+    public void testRemoveNode3(){
+        System.out.println(B.getConnections());
+        easyMap.removeNode(A);
+        Edge BC = new Edge(B, C);
+        Edge BD = new Edge(B, D);
+        ArrayList<Edge> edges = new ArrayList<>();
+        edges.add(BC);
+        edges.add(BD);
+
+        System.out.print(B.getConnections());
+        assertEquals(edges, B.getConnections());
     }
 
     //test addEdge(Edge edge)
