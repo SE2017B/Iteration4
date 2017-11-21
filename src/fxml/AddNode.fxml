@@ -14,19 +14,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
    <children>
-      <JFXButton fx:id="btnReturn2" buttonType="RAISED" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Return" translateX="1100.0" translateY="50.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </JFXButton>
-      <SplitPane dividerPositions="0.2589984350547731" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.2589984350547731" prefHeight="800.0" prefWidth="1280.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane maxWidth="400.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="400.0">
+          <AnchorPane maxWidth="400.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="400.0" styleClass="pane">
                <children>
                   <JFXTabPane prefHeight="798.4" prefWidth="328.0" tabMinHeight="50.0" tabMinWidth="158.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
@@ -425,11 +421,18 @@
                   </JFXTabPane>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
                <children>
-                  <SplitPane dividerPositions="0.8676544450025113" layoutX="186.0" layoutY="353.0" orientation="VERTICAL" prefHeight="798.4" prefWidth="944.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.8676544450025113" layoutX="186.0" layoutY="353.0" orientation="VERTICAL" prefHeight="798.4" prefWidth="944.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="pane">
+                           <children>
+                              <ScrollPane prefHeight="687.0" prefWidth="941.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <Pane fx:id="mapPane" />
+                                 </content>
+                              </ScrollPane>
+                           </children></AnchorPane>
                       <AnchorPane minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                               <children>
                                     <ScrollPane hbarPolicy="ALWAYS" prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER">

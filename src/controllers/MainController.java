@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import map.FloorNumber;
 import map.Node;
 import DepartmentSubsystem.Staff;
 
@@ -31,10 +32,15 @@ public class MainController implements ControllableScreen{
         this.parent = parent;
     }
 
+    @FXML
+    private Pane mapPane;
 
+    private proxyImagePane mapImage;
 
-    public void init(){
-
+    public void init() {
+        mapImage = new proxyImagePane();
+        mapImage.setImage(FloorNumber.FLOOR_G);
+        mapPane.getChildren().add(mapImage);
 
 
 

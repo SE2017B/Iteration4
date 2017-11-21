@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import map.Edge;
+import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
 import javafx.event.ActionEvent;
@@ -60,8 +61,12 @@ public class AddNodeController implements ControllableScreen {
     @FXML
     private Circle nodeLocation;
 
-    public void init() {
+    private proxyImagePane mapImage;
 
+    public void init() {
+        mapImage = new proxyImagePane();
+        mapImage.setImage(FloorNumber.FLOOR_G);
+        mapPane.getChildren().add(mapImage);
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
         map = new HospitalMap();

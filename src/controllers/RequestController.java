@@ -8,6 +8,7 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import map.HospitalMap;
@@ -18,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import DepartmentSubsystem.ServiceRequest;
 import DepartmentSubsystem.Staff;
+import search.SearchStrategy;
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
+    private HospitalMap map;
     private String serviceType;
     private String hour;
     private String min;
@@ -85,6 +88,7 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
+        map = new HospitalMap();
     }
 
     public void onShow(){
@@ -93,6 +97,8 @@ public class RequestController implements ControllableScreen{
 
         //update the items in the checklist
         locationChoiceBox.setItems(FXCollections.observableList(nodes));
+
+        searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
 
     }
     @FXML
@@ -172,4 +178,22 @@ public class RequestController implements ControllableScreen{
         staffMember = staff;
         staffNameLabel.setText(staff.getFullName());
     }
+
+    //////////////////////////////////////////////////////////
+    /////////           Settings Tab
+    //////////////////////////////////////////////////////////
+
+    @FXML
+    private ChoiceBox<SearchStrategy> searchStrategyChoice;
+    @FXML
+    private JFXButton saveSettingsButton;
+
+    public void saveSettingsPressed(ActionEvent e){
+        if(searchStrategyChoice.getValue() != null){
+            map.setSearchStrategy(searchStrategyChoice.getValue());
+        }
+
+    }
+
+
 }
