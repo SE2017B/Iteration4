@@ -8,6 +8,7 @@
 
 package kioskEngine;
 
+import DepartmentSubsystem.DepartmentSubsystem;
 import database.mainDatabase;
 import map.HospitalMap;
 import map.Node;
@@ -55,7 +56,8 @@ public class Main extends Application {
         engine.addStaffLogin(testStaff, "Food");
         engine.addStaffLogin(testAdmin, "Food");
 
-
+        DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
+        DSS.setup();
 
         for(Node node : HospitalMap.getNodes()){
             HospitalMap.addNode(node);
