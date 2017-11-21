@@ -40,6 +40,7 @@ public class staffDatabase {
             } else {
                 Statement stmtDeleteStaffTable = conn.createStatement();
                 String deleteStaffTable = ("DROP TABLE hospitalStaff");
+                System.out.println("Drop Staff Table Successful!");
                 int rsetDeleteStaffTable = stmtDeleteStaffTable.executeUpdate(deleteStaffTable);
 
                 stmtDeleteStaffTable.close();

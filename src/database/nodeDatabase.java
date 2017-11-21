@@ -47,9 +47,7 @@ public class nodeDatabase {
                         "nodeType VARCHAR(20)," +
                         "longName VARCHAR(50)," +
                         "shortName VARCHAR(30)," +
-                        "teamAssigned VARCHAR(20)," +
-                        "CONSTRAINT nodeID_start_FK FOREIGN KEY (nodeID) REFERENCES edges(startNode) ON DELETE CASCADE," +
-                        "CONSTRAINT nodeID_end_FK FOREIGN KEY (nodeID) REFERENCES edges(endNode) ON DELETE CASCADE)");
+                        "teamAssigned VARCHAR(20))");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
@@ -61,6 +59,7 @@ public class nodeDatabase {
                 Statement stmtDelete1 = conn.createStatement();
                 String deleteNodesTable = ("DROP TABLE nodes");
                 int rsetDelete1 = stmtDelete1.executeUpdate(deleteNodesTable);
+                System.out.println("Drop Node Table Successful!");
                 stmtDelete1.close();
 
                 Statement stmtCreate1 = conn.createStatement();
@@ -73,9 +72,7 @@ public class nodeDatabase {
                         "nodeType VARCHAR(20)," +
                         "longName VARCHAR(50)," +
                         "shortName VARCHAR(30)," +
-                        "teamAssigned VARCHAR(20)," +
-                        "CONSTRAINT nodeID_start_FK FOREIGN KEY (nodeID) REFERENCES edges(startNode) ON DELETE CASCADE," +
-                        "CONSTRAINT nodeID_end_FK FOREIGN KEY (nodeID) REFERENCES edges(endNode) ON DELETE CASCADE)");
+                        "teamAssigned VARCHAR(20))");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
@@ -106,7 +103,7 @@ public class nodeDatabase {
                 insertNode.setString(1, mainDatabase.allNodes.get(j).getID());
                 insertNode.setString(2, Integer.toString(mainDatabase.allNodes.get(j).getX()));
                 insertNode.setString(3, Integer.toString(mainDatabase.allNodes.get(j).getY()));
-                insertNode.setString(4, mainDatabase.allNodes.get(j).getFloor());
+                insertNode.setString(4, mainDatabase.allNodes.get(j).getFloor().getDbMapping());
                 insertNode.setString(5, mainDatabase.allNodes.get(j).getBuilding());
                 insertNode.setString(6, mainDatabase.allNodes.get(j).getType());
                 insertNode.setString(7, mainDatabase.allNodes.get(j).getLongName());
@@ -143,7 +140,7 @@ public class nodeDatabase {
             addAnyNode.setString(1, anyNode.getID());
             addAnyNode.setString(2, anyNode.getXString());
             addAnyNode.setString(3, anyNode.getYString());
-            addAnyNode.setString(4, anyNode.getFloor());
+            addAnyNode.setString(4, anyNode.getFloor().getDbMapping());
             addAnyNode.setString(5, anyNode.getBuilding());
             addAnyNode.setString(6, anyNode.getType());
             addAnyNode.setString(7, anyNode.getLongName());
@@ -186,13 +183,13 @@ public class nodeDatabase {
             modAddNode.setString(1, anyNode.getID());
             modAddNode.setString(2, anyNode.getXString());
             modAddNode.setString(3, anyNode.getYString());
-            modAddNode.setString(4, anyNode.getFloor());
+            modAddNode.setString(4, anyNode.getFloor().getDbMapping());
             modAddNode.setString(5, anyNode.getBuilding());
             modAddNode.setString(6, anyNode.getType());
             modAddNode.setString(7, anyNode.getLongName());
             modAddNode.setString(8, anyNode.getShortName());
             modAddNode.setString(9, anyNode.getTeam());
-            modDropNode.executeUpdate();
+            modAddNode.executeUpdate();
             conn.commit();
             System.out.println("Update Node Successful!");
             modAddNode.close();
@@ -248,7 +245,7 @@ public class nodeDatabase {
             conn.getMetaData();
 
             Statement selectAllNodes = conn.createStatement();
-            String allNodes = "SELECT * FROM NODES ORDER BY nodeID DESC";
+            String allNodes = "SELECT * FROM NODES";
             ResultSet rsetAllNodes = selectAllNodes.executeQuery(allNodes);
 
             String strNodeID = "";
@@ -294,14 +291,14 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Find how many Hall Nodes and set hall counter
     ///////////////////////////////////////////////////////////////////////////////
-    public static void cntHallNodes() {
+    public static void cntNodes(String type) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
             conn.getMetaData();
 
             Statement cntAllType = conn.createStatement();
-            String strCntNodes = "SELECT COUNT(nodeType) FROM nodes WHERE nodeType = HALL";
+            String strCntNodes = "SELECT COUNT(nodeType) FROM nodes GROUP BY nodeType HAVING nodeType IN (HALL)";
             ResultSet rsetCntNodesHall = cntAllType.executeQuery(strCntNodes);
 
             int numHall = 0;

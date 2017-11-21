@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
 import map.Node;
+import map.Edge;
 
 public class mainDatabase {
 
@@ -19,12 +20,8 @@ public class mainDatabase {
     private static Connection conn1;
     private static Connection conn2;
 
-    static ArrayList<String>edgeID=new ArrayList<String>();
-    static ArrayList<String>startNode=new ArrayList<String>();
-    static ArrayList<String>endNode=new ArrayList<String>();
-
     static ArrayList<Node>allNodes=new ArrayList<Node>();
-    //static ArrayList<Edges>allEdges=new ArrayList<Edges>();
+    static ArrayList<Edge>allEdges=new ArrayList<Edge>();
 
     public mainDatabase() throws SQLException {
 
@@ -37,9 +34,9 @@ public class mainDatabase {
                 System.out.println("Hospital Map Database Connected!");
             }
             conn1.close();
-            } catch (SQLException e) {
-                Logger.getLogger(mainDatabase.class.getName()).log(Level.SEVERE, null, e);
-            }
+        } catch (SQLException e) {
+            Logger.getLogger(mainDatabase.class.getName()).log(Level.SEVERE, null, e);
+        }
         // Connect to embedded database
         try {
             conn2 = DriverManager.getConnection(JDBC_URL_STAFF);
@@ -52,7 +49,7 @@ public class mainDatabase {
         } catch (SQLException e) {
             Logger.getLogger(mainDatabase.class.getName()).log(Level.SEVERE, null, e);
         }
-        }
+    }
 
     public static ArrayList<Node> getNodes(){
         return allNodes;
@@ -70,6 +67,12 @@ public class mainDatabase {
             e.printStackTrace();
         }
 
+        mainDatabase testConnection1 = new mainDatabase();
+
+
+        nodeDatabase.createNodeTable();
+        edgeDatabase.createEdgeTable();
+
         nodeDatabase.readNodeCSV("MapAnodes.csv");
         nodeDatabase.readNodeCSV("MapBnodes.csv");
         nodeDatabase.readNodeCSV("MapCnodes.csv");
@@ -78,15 +81,30 @@ public class mainDatabase {
         nodeDatabase.readNodeCSV("MapFnodes.csv");
         nodeDatabase.readNodeCSV("MapGnodes.csv");
         nodeDatabase.readNodeCSV("MapHnodes.csv");
-        nodeDatabase.readNodeCSV("MapInodes.csv");
+        //nodeDatabase.readNodeCSV("MapInodes.csv");
         nodeDatabase.readNodeCSV("MapWnodes.csv");
+        nodeDatabase.insertNodesFromCSV();
 
-        //edgeDatabase.readEdgesCSV("MapHedges.csv");
-        //edgeDatabase.readEdgesCSV("MapWedges.csv");
 
-        mainDatabase testConnection1 = new mainDatabase();
+        nodeDatabase.cntNodes("HALL");
+
+
+        edgeDatabase.readEdgesCSV("MapAedges.csv");
+        edgeDatabase.readEdgesCSV("MapBedges.csv");
+        edgeDatabase.readEdgesCSV("MapCedges.csv");
+        edgeDatabase.readEdgesCSV("MapDedges.csv");
+        edgeDatabase.readEdgesCSV("MapEedges.csv");
+        edgeDatabase.readEdgesCSV("MapFedges.csv");
+        edgeDatabase.readEdgesCSV("MapGedges.csv");
+        edgeDatabase.readEdgesCSV("MapHedges.csv");
+        //edgeDatabase.readEdgesCSV("MapIedges.csv");
+        edgeDatabase.readEdgesCSV("MapWedges.csv");
+        edgeDatabase.insertEdgesFromCSV();
+
+
 
         nodeDatabase.outputNodesCSV();
-        //edgeDatabase.outputEdgesCSV();
+        edgeDatabase.outputEdgesCSV();
+        //nodeDatabase.queryAllNodes();
     }
 }

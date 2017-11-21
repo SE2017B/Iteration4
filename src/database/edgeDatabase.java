@@ -29,9 +29,7 @@ public class edgeDatabase {
                 String createEdgesTable = ("CREATE TABLE edges" +
                         "(edgeID VARCHAR(30) PRIMARY KEY," +
                         "startNode VARCHAR(20)," +
-                        "endNode VARCHAR(20)," +
-                        "CONSTRAINT startNode_FK FOREIGN KEY (startNode) REFERENCES node(nodeID) ON DELETE CASCADE," +
-                        "CONSTRAINT endNode_FK FOREIGN KEY (endNode) REFERENCES node(nodeID) ON DELETE CASCADE)");
+                        "endNode VARCHAR(20))");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
                 System.out.println("Create Edges table Successful!");
@@ -43,15 +41,14 @@ public class edgeDatabase {
                 Statement stmtDelete2 = conn.createStatement();
                 String deleteNodesTable = ("DROP TABLE edges");
                 int rsetDelete2 = stmtDelete2.executeUpdate(deleteNodesTable);
+                System.out.println("Drop Edges table Successful!");
                 stmtDelete2.close();
 
                 Statement stmtCreate2 = conn.createStatement();
                 String createEdgesTable = ("CREATE TABLE edges" +
                         "(edgeID VARCHAR(30)," +
                         "startNode VARCHAR(20)," +
-                        "endNode VARCHAR(20)," +
-                        "CONSTRAINT startNode_FK FOREIGN KEY (startNode) REFERENCES node(nodeID) ON DELETE CASCADE," +
-                        "CONSTRAINT endNode_FK FOREIGN KEY (endNode) REFERENCES node(nodeID) ON DELETE CASCADE)");
+                        "endNode VARCHAR(20))");
 
                 int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
                 System.out.println("Create Edges table Successful!");
@@ -76,11 +73,11 @@ public class edgeDatabase {
 
             PreparedStatement insertEdge = conn.prepareStatement("INSERT INTO edges VALUES (?, ?, ?)");
 
-            for (int j = 1; j < mainDatabase.edgeID.toArray().length; j++) {
+            for (int j = 1; j < mainDatabase.allEdges.size(); j++) {
 
-                insertEdge.setString(1, mainDatabase.edgeID.toArray()[j].toString());
-                insertEdge.setString(2, mainDatabase.startNode.toArray()[j].toString());
-                insertEdge.setString(3, mainDatabase.endNode.toArray()[j].toString());
+                insertEdge.setString(1, mainDatabase.allEdges.get(j).getID());
+                insertEdge.setString(2, mainDatabase.allEdges.get(j).getNodeOne().getID());
+                insertEdge.setString(3, mainDatabase.allEdges.get(j).getNodeTwo().getID());
 
                 insertEdge.executeUpdate();
                 System.out.println(j + ": Insert Edge Successful!");
@@ -96,12 +93,9 @@ public class edgeDatabase {
         }
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////
     // Add an edge function
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Add item(s) from corresponding ArrayList
 
     // Add new edge to the edge table
 
@@ -114,8 +108,8 @@ public class edgeDatabase {
             PreparedStatement addAnyEdge = conn.prepareStatement("INSERT INTO edges VALUES (?, ?, ?)");
 
             addAnyEdge.setString(1, anyEdge.getID());
-            addAnyEdge.setString(2, anyEdge.getStartNode());
-            addAnyEdge.setString(3, anyEdge.getEndNode());
+            addAnyEdge.setString(2, anyEdge.getNodeOne().getID());
+            addAnyEdge.setString(3, anyEdge.getNodeTwo().getID());
 
             addAnyEdge.executeUpdate();
             System.out.println("Insert Edge Successful for edgeID: " + anyEdge.getID());
@@ -132,8 +126,6 @@ public class edgeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Modify an edge from the edge table
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Modify item(s) from corresponding ArrayList
 
     // Modify item(s) from edge table
 
@@ -155,8 +147,9 @@ public class edgeDatabase {
 
             PreparedStatement modAddEdge = conn.prepareStatement(strModAdd);
             modAddEdge.setString(1, anyEdge.getID());
-            modAddEdge.setString(2, anyEdge.getStartNode());
-            modAddEdge.setString(3, anyEdge.getEndNode());
+            modAddEdge.setString(2, anyEdge.getNodeOne().getID());
+            modAddEdge.setString(3, anyEdge.getNodeTwo().getID());
+
             conn.commit();
             System.out.println("Update Edge Successful!");
             modAddEdge.close();
@@ -254,30 +247,25 @@ public class edgeDatabase {
                 Node tempOne = null, tempTwo = null;
                 String[] edgeValues = edgeData.split(",");
 
-                mainDatabase.edgeID.add(edgeValues[0]);
-                mainDatabase.startNode.add(edgeValues[1]);
-                mainDatabase.endNode.add(edgeValues[2]);
-
                 nodeOne = mainDatabase.allNodes.indexOf(new Node(edgeValues[1], "-1", "-1", null, null, null, null, null, null));
 
                 if (nodeOne < 0) {
-                    System.out.println("Error: invalid edge");
+                    System.out.println(nodeOne + "Error: invalid edge 1" + edgeValues[1]);
                 } else {
                     tempOne = mainDatabase.allNodes.get(nodeOne);
                 }
                 nodeTwo = mainDatabase.allNodes.indexOf(new Node(edgeValues[2], "-1", "-1", null, null, null, null, null, null));
                 if (nodeTwo < 0) {
-                    System.out.println("Error: invalid edge");
+                    System.out.println("Error: invalid edge 2");
                 } else {
                     tempTwo = mainDatabase.allNodes.get(nodeTwo);
                 }
                 if (tempOne != null && tempTwo != null) {
-                    tempOne.addConnection(tempTwo);
-                    tempTwo.addConnection(tempOne);
+                    Edge edge = new Edge(edgeValues[0],tempOne,tempTwo);
+                    mainDatabase.allEdges.add(edge);
                 } else {
                     System.out.println(" ");
                 }
-                mainDatabase.allNodes.get(nodeOne);
             }
 
             inputStreamEdges.close();
@@ -301,11 +289,11 @@ public class edgeDatabase {
 
             pw2.println("edgeID,startNode,endNode");
 
-            for (int j = 0; j < mainDatabase.edgeID.toArray().length; j++) {
+            for (int j = 0; j < mainDatabase.allEdges.size(); j++) {
 
-                pw2.println(mainDatabase.edgeID.toArray()[j].toString() + "," +
-                        mainDatabase.startNode.toArray()[j].toString() + "," +
-                        mainDatabase.endNode.toArray()[j].toString()
+                pw2.println(mainDatabase.allEdges.get(j).getID() + "," +
+                        mainDatabase.allEdges.get(j).getNodeOne().getID() + "," +
+                        mainDatabase.allEdges.get(j).getNodeTwo().getID()
                 );
 
                 System.out.println(j + ": Edge Record Saved!");
