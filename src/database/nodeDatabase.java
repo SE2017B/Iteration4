@@ -36,7 +36,6 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the nodes
     ///////////////////////////////////////////////////////////////////////////////
-
     public static void createNodeTable() {
 
         try {
@@ -46,6 +45,7 @@ public class nodeDatabase {
             DatabaseMetaData meta = conn.getMetaData();
             ResultSet res = meta.getTables(null, null, "NODES", null);
 
+            // Node table does not exist
             if (!res.next()) {
                 Statement stmtCreate1 = conn.createStatement();
                 String createNodesTable = ("CREATE TABLE nodes" +
@@ -65,6 +65,8 @@ public class nodeDatabase {
                 conn.commit();
                 stmtCreate1.close();
                 conn.close();
+
+                // Node table already exists delete and re-add
             } else {
                 Statement stmtDelete1 = conn.createStatement();
                 String deleteNodesTable = ("DROP TABLE nodes");
@@ -138,8 +140,6 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Add a node function
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Add new node to the node table
     public static void addNode(Node anyNode) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
@@ -173,8 +173,6 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Modify a node from the node table
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Modify item(s) from node table
     public static void modifyNode(Node anyNode) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
@@ -201,6 +199,7 @@ public class nodeDatabase {
             modAddNode.setString(8, anyNode.getShortName());
             modAddNode.setString(9, anyNode.getTeam());
             modAddNode.executeUpdate();
+
             conn.commit();
             System.out.println("Update Node Successful!");
             modAddNode.close();
