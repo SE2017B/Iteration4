@@ -24,9 +24,10 @@ public class DepartmentSubsystem {
     public static DepartmentSubsystem getSubsystem(){
         return singleton;
     }
+
     //login function for staff members
     public boolean login(String username, String password){
-        return mainDatabase.;
+        return true;
     }
 
     //obtains the list of services with noted department from requestServices

@@ -34,7 +34,7 @@ public class FoodDelivery extends Service {
     private ArrayList<String> selectedFood;
     private String allergies = ""; //allergy field
 
-    @Override
+
     public void showFields(ActionEvent e){
         TextField allergies = new TextField();
 

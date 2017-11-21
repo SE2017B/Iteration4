@@ -98,25 +98,25 @@ public class RequestController implements ControllableScreen{
     @FXML
     public void loadServicePane(ActionEvent e){
 
-        nameServiceFile = ((MenuItem) e.getSource()).getText();
-
-        if( nameServiceFile == "Food Delivery")
-        {
-            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/FoodDelivery.fxml"));
-            servicePane1.getChildren().add(newServicePane);
-        }else if ( nameServiceFile == "Sanitation")
-        {
-            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Sanitation.fxml"));
-            servicePane1.getChildren().add(newServicePane);
-        }else if ( nameServiceFile == "Translation")
-        {
-            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Translation.fxml"));
-            servicePane1.getChildren().add(newServicePane);
-        }else if ( nameServiceFile == "Transport")
-        {
-            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Transport.fxml"));
-            servicePane1.getChildren().add(newServicePane);
-        }
+//        nameServiceFile = ((MenuItem) e.getSource()).getText();
+//
+//        if( nameServiceFile == "Food Delivery")
+//        {
+//            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/FoodDelivery.fxml"));
+//            servicePane1.getChildren().add(newServicePane);
+//        }else if ( nameServiceFile == "Sanitation")
+//        {
+//            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Sanitation.fxml"));
+//            servicePane1.getChildren().add(newServicePane);
+//        }else if ( nameServiceFile == "Translation")
+//        {
+//            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Translation.fxml"));
+//            servicePane1.getChildren().add(newServicePane);
+//        }else if ( nameServiceFile == "Transport")
+//        {
+//            Pane newServicePane = FXMLLoader.load(getClass().getResource("/DepartmentSubsystem/Services/Displays/Transport.fxml"));
+//            servicePane1.getChildren().add(newServicePane);
+//        }
 
     }
     public void resolveServicePressed(ActionEvent e){//todo
@@ -143,25 +143,6 @@ public class RequestController implements ControllableScreen{
 
     public void serviceSelected(ActionEvent e){
         System.out.println("Service Selected");
-        serviceType = ((MenuItem) e.getSource()).getText();
-        serviceDropDown.setText(serviceType);
-        staff = parent.getEngine().getService(serviceType).getPersonnel();
-        if(staff.size() != 0) {
-            staffDropDown.setItems(FXCollections.observableList(staff));
-            staffDropDown.setDisable(false);
-        }
-
-        if(serviceType.equals("Food")){
-            infoLabel.setText("Food Type");
-            infoLabel.setVisible(true);
-            infoText.setVisible(true);
-        }
-        else{
-            infoLabel.setVisible(false);
-            infoText.setVisible(false);
-        }
-
-
     }
 
     public void hourSelected(ActionEvent e){

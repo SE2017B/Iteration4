@@ -20,7 +20,7 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import map.Node;
-import service.Staff;
+import DepartmentSubsystem.Staff;
 
 
 public class MainController implements ControllableScreen{
