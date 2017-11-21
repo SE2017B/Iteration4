@@ -87,6 +87,8 @@ public class PathController implements ControllableScreen{
     private JFXButton floor2Button;
     @FXML
     private JFXButton floor3Button;
+    @FXML
+    private ScrollPane floorScrollPane;
 
 
 
@@ -283,13 +285,7 @@ public class PathController implements ControllableScreen{
         //todo: hide the lines from the other floors
         FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         System.out.println("Floor Pressed: " + floor);
-
-        //EXAMPLE
-        List<Node> nodesOnFloor = map.getNodesBy(n -> n.getFloor().equals(floor));
-
-        //EXAMPLE
-        List<Node> notHallsOnFloor = map.getNodesBy(n -> n.getFloor().equals(floor) && n.getType()!="HALL");
-
+        floorScrollPane.setHvalue((((JFXButton) e.getSource()).getLayoutX()-415)/1000);
         mapImage.setImage(floor);
         switchPath(floor);
     }

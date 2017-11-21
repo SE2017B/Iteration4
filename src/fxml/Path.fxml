@@ -77,7 +77,7 @@
                         </AnchorPane>
                       <AnchorPane>
                            <children>
-                              <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER">
+                              <ScrollPane fx:id="floorScrollPane" fitToHeight="true" hbarPolicy="ALWAYS" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER">
                                  <content>
                                     <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0" styleClass="pane">
                                        <columnConstraints>

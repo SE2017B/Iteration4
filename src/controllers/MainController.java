@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -37,6 +38,9 @@ public class MainController implements ControllableScreen{
     private Pane mapPane;
 
     @FXML
+    private ScrollPane floorScrollPane;
+
+    @FXML
     private JFXSlider slideBarZoom;
 
     private proxyImagePane mapImage;
@@ -45,7 +49,7 @@ public class MainController implements ControllableScreen{
         mapImage = new proxyImagePane();
         mapImage.setImage(FloorNumber.FLOOR_G);
         mapPane.getChildren().add(mapImage);
-        
+
     }
 
     public void onShow(){
@@ -91,6 +95,8 @@ public class MainController implements ControllableScreen{
 
     public void floorButtonPressed(ActionEvent e){
        String floor =  ((JFXButton)e.getSource()).getText();
+       System.out.println(((JFXButton) e.getSource()).getLayoutX());
+       floorScrollPane.setHvalue((((JFXButton) e.getSource()).getLayoutX()-415)/1000);
        System.out.println("Floor Pressed: " + floor);
        mapImage.setImage(FloorNumber.fromDbMapping(floor));
     }

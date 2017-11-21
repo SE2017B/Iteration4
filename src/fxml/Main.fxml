@@ -108,7 +108,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="160.0" styleClass="pane">
                <children>
-                  <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" hvalue="0.43" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane fx:id="floorScrollPane" fitToHeight="true" hbarPolicy="ALWAYS" hvalue="0.43" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
                         <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0" styleClass="pane">
                            <columnConstraints>
