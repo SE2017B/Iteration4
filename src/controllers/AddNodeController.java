@@ -8,6 +8,8 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import map.HospitalMap;
 import map.Node;
 import javafx.event.ActionEvent;
@@ -41,6 +43,8 @@ public class AddNodeController implements ControllableScreen {
 
     //Nodes in the map
     private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
+    private ArrayList<EdgeCheckBox> edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
+
 
 
 
@@ -314,6 +318,72 @@ public class AddNodeController implements ControllableScreen {
     public void clearInputs(){
         //todo clear all the text and options from UI inputs
     }
+
+    ////////////////////////////////////////////////////////////
+    /////////////           EDGE ADD
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXButton edgeAddEnterButton;
+    @FXML
+    private JFXButton edgeAddCancelButton;
+    @FXML
+    private Label edgeAddID1Label;
+    @FXML
+    private Label edgeAddID2Label;
+
+    public void edgeAddEnterPressed(ActionEvent e){
+        System.out.println("Edge Add Enter Pressed");
+        //todo add edge
+    }
+
+    public void edgeAddCancelPressed(ActionEvent e){
+        System.out.println("Edge Add Cancel Pressed");
+        //todo cancel edge add
+    }
+
+    ////////////////////////////////////////////////////////////
+    /////////////           EDGE REMOVE
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private JFXButton edgeRemoveEnterButton;
+    @FXML
+    private JFXButton edgeRemoveCancelButton;
+    @FXML
+    private Label edgeRemoveIDLabel;
+
+    public void edgeRemoveEnterPressed(ActionEvent e){
+        System.out.println("Edge Remove Enter Pressed");
+        //todo remove edge
+    }
+
+    public void edgeRemoveCancelPressed(ActionEvent e){
+        System.out.println("Edge Remove Cancel Pressed");
+        //todo cancel edge add
+    }
+
+
+    ////////////////////////////////////////////////////////////
+    /////////////           EDGE EDIT
+    ////////////////////////////////////////////////////////////
+    @FXML
+    private Label edgeEditIDLabel;
+    @FXML
+    private JFXTextField edgeEditNodeOneField;
+    @FXML
+    private JFXTextField edgeEditeNodeTwoField;
+
+    public void edgeEditNodeOneEntered(ActionEvent e){
+        System.out.println("Edge Edit Node One Entered");
+    }
+
+    public void edgeEditNodeTwoEntered(ActionEvent e){
+        System.out.println("Edge Edit Node Two Entered");
+    }
+
+    public void edgeEditEnterPressed(ActionEvent e){
+
+    }
+
 
 
 }

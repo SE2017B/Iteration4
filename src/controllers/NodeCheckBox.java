@@ -1,10 +1,10 @@
 package controllers;
 
+import com.jfoenix.controls.JFXCheckBox;
 import map.Node;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
 
-public class NodeCheckBox extends CheckBox {
+public class NodeCheckBox extends JFXCheckBox {
     private Node node;
 
     public void setNode(Node node) {
