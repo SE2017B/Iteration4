@@ -104,4 +104,9 @@ public class Edge {
         if(!this.getID().equals(other.getID())) return false;
         return true;
     }
+
+    @Override
+    public String toString(){
+        return this.ID;
+    }
 }
