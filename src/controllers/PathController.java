@@ -10,6 +10,8 @@ package controllers;
 
 import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
@@ -132,6 +134,35 @@ public class PathController implements ControllableScreen{
     {
         System.out.println("Enter Pressed");
         //Remove last path from screen
+        clearPaths();
+        //draw some random lines for now
+        Line line = new Line();
+        line.setLayoutX(100);
+        line.setLayoutY(100);
+        line.setEndX(300);
+        line.setEndY((300));
+        line.setVisible(true);
+        line.setStrokeWidth(5);
+        mapPane.getChildren().add(line);
+        lines.add(line);
+
+        Line line1 = new Line();
+        line1.setLayoutX(0);
+        line1.setLayoutY(0);
+        line1.setEndX(1000);
+        line1.setEndY((1000));
+        line1.setVisible(true);
+        line1.setStrokeWidth(5);
+        mapPane.getChildren().add(line1);
+        lines.add(line1);
+
+        Image img = new Image("@../images/02_thesecondfloor.png"); //create new image
+        ImageView imgView = new ImageView(img); //create new image view pane
+        imgView.setFitWidth(2000);
+        imgView.setFitHeight(3000);
+        imgView.setVisible(true);
+        mapPane.getChildren().add(imgView);
+
     }
 
     public void cancelPressed(ActionEvent e)
