@@ -227,7 +227,7 @@ public class HospitalMapTest {
         assertEquals(edges, easyMap.getEdgeMap());
     }
 
-    //what? It's saying that B has 4 edges, but that's impossible.
+    // what? It's saying that B has 4 edges, but that's impossible.
     //It was only ever attached to 3 other nodes
     @Test
     public void testRemoveNode3(){
