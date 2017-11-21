@@ -80,6 +80,7 @@
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
+                                    <ChoiceBox fx:id="choiceBoxDept" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                     <Label text="Location" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                        <font>
                                           <Font size="24.0" />
@@ -89,20 +90,15 @@
                                     <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
                                     <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                     <JFXTimePicker fx:id="timeMenu" defaultColor="#34ffeb" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                    <MenuButton fx:id="serviceDropDown" mnemonicParsing="false" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                      <items>
-                                        <MenuItem mnemonicParsing="false" text="Action 1" />
-                                        <MenuItem mnemonicParsing="false" text="Action 2" />
-                                      </items>
-                                    </MenuButton>
-                                    <ChoiceBox fx:id="staffDropDown" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                     <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                     <Pane fx:id="servicePane1" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="6" />
                                     <Label text="Department " GridPane.halignment="CENTER">
                                        <font>
-                                          <Font size="18.0" />
+                                          <Font size="24.0" />
                                        </font>
                                     </Label>
+                                    <ChoiceBox fx:id="choiceBoxService" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="choiceBoxStaff" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children>

@@ -129,7 +129,7 @@ public class ScreenController extends StackPane {
         return true;
     }
 
-    public KioskEngine getEngine() {
-        return engine;
-    }
+    //public KioskEngine getEngine() {
+    //   return engine;
+    //}
 }
