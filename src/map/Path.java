@@ -29,7 +29,9 @@ public class Path implements Comparable<Path> {
     public void addDistance(double distance) {
         this.distance += distance;
     }
-    public Path findDirections(){
+
+
+    public ArrayList<String> findDirections(){
         int PVX = 0;
         int PVY = 0;
         int NVX = 0;
@@ -64,7 +66,7 @@ public class Path implements Comparable<Path> {
             double det = Vector1_2X * Vector2_3Y - Vector2_3X * Vector1_2Y;
             double angle = Math.toDegrees(Math.atan2(det, dot));
 
-
+            System.out.println(angle);
 
             if(Vector1_2Z > Vector2_3Z && !prevElevator){
                 directions.add("Go up " + path.get(i).getShortName());
@@ -99,7 +101,7 @@ public class Path implements Comparable<Path> {
         }
         directions.add(0, "Go straight from " + this.path.get(0).getShortName());
         directions.add("Stop at " + path.get(path.size()-1).getShortName());
-        return this;
+        return directions;
     }
 
     //Getters

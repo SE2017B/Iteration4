@@ -357,7 +357,7 @@ public class BreadthFirstSearchTest {
     public void testNearNine(){
         String answer = search.findPathBy(N23, "Elevator").toString();
         System.out.println(answer);
-        String directions = search.findPathBy(N23, "Elevator").findDirections().getDirections().toString();
+        String directions = search.findPathBy(N23, "Elevator").findDirections().toString();
         System.out.println(directions);
         assertEquals("[Short23, Short21, Short20]", answer);
     }

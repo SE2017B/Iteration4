@@ -225,7 +225,7 @@ public class AStarSearchTest {
     public void testMap1() throws InterruptedException {
         String answer = search.findPath(N1, N9).toString();
         System.out.println(answer);
-        String directions = search.findPath(N1, N9).findDirections().getDirections().toString();
+        String directions = search.findPath(N1, N9).findDirections().toString();
         System.out.println(directions);
         assertEquals("[Short1, Short2, Short3, Short9]", answer);
         assertEquals("[Go straight from Short1, Go straight through Short2, Take a left at this Short3, Stop at Short9]", directions);
@@ -258,7 +258,7 @@ public class AStarSearchTest {
     public void testMap3() throws InterruptedException{
         String answer = search.findPath(N1, N12).toString();
         System.out.println(answer);
-        String directions = search.findPath(N1, N12).findDirections().getDirections().toString();
+        String directions = search.findPath(N1, N12).findDirections().toString();
         System.out.println(directions);
         assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short12]", answer);
     }
@@ -268,6 +268,14 @@ public class AStarSearchTest {
         String answer = search.findPath(N12, N1).toString();
         System.out.println(answer);
         assertEquals("[Short12, Short13, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
+    }
+
+    @Test
+    //Node 12 to Node 1
+    public void testMap3StepByStep() throws InterruptedException{
+        ArrayList<String> answer = search.findPath(N12, N1).findDirections();
+        System.out.println(answer);
+        //assertEquals("[Short12, Short13, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
     }
 
     @Test
@@ -393,67 +401,78 @@ public class AStarSearchTest {
     }
 
     //MultiFloor Pathfinding Tests
-    @Test public void testSearchFloor1(){   //Node 1 to Node 19_2
+    @Test
+    public void testSearchFloor1(){   //Node 1 to Node 19_2
         String answer = search.findPath(N1, N19_2).toString();
         System.out.println(answer);
-        String directions = search.findPath(N1, N19_2).findDirections().getDirections().toString();
+        String directions = search.findPath(N1, N19_2).findDirections().toString();
         System.out.println(directions);
         assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
     }
-    @Test public void testSearchFloor1Reverse(){    //Node 19_2 to Node 1
+    @Test
+    public void testSearchFloor1Reverse(){    //Node 19_2 to Node 1
         String answer = search.findPath(N19_2, N1).toString();
         System.out.println(answer);
         assertEquals("[Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
     }
 
-    @Test public void testSearchFloor2(){   //Node 3 to Node 23_2
+    @Test
+    public void testSearchFloor2(){   //Node 3 to Node 23_2
         String answer = search.findPath(N3, N23_2).toString();
         System.out.println(answer);
         assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short21_2, Short23_2]", answer);
     }
-    @Test public void testSearchFloor2Reverse(){    //Node 23_2 to Node 3
+    @Test
+    public void testSearchFloor2Reverse(){    //Node 23_2 to Node 3
         String answer = search.findPath(N23_2, N3).toString();
         System.out.println(answer);
         assertEquals("[Short23_2, Short21_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3]", answer);
     }
 
-    @Test public void testSearchFloor3(){   //Node 17 to Node 4_2
+    @Test
+    public void testSearchFloor3(){   //Node 17 to Node 4_2
         String answer = search.findPath(N17, N4_2).toString();
         System.out.println(answer);
         assertEquals("[Short17, Short13, Short14, Short15, Short9, Short9_2, Short8_2, Short5_2, Short4_2]", answer);
     }
-    @Test public void testSearchFloor3Reverse(){    //Node 4_2 to Node 17
+
+
+    @Test
+    public void testSearchFloor3Reverse(){    //Node 4_2 to Node 17
         String answer = search.findPath(N4_2, N17).toString();
         System.out.println(answer);
         assertEquals("[Short4_2, Short7_2, Short8_2, Short9_2, Short9, Short15, Short14, Short13, Short17]", answer);
     }
 
     // findPathPitStop tests
-    @Test public void testSearchPitStop1(){     //Node 1 to Node 6 to Node 19_2
+    @Test
+    public void testSearchPitStop1(){     //Node 1 to Node 6 to Node 19_2
         ArrayList<Node> stops = new ArrayList<>();
         stops.add(N1);
         stops.add(N6);
         stops.add(N19_2);
         String answer = search.findPathPitStop(stops).toString();
         System.out.println(answer);
-        String directions = search.findPathPitStop(stops).findDirections().getDirections().toString();
+        String directions = search.findPathPitStop(stops).findDirections().toString();
         System.out.println(directions);
         assertEquals("[Short1, Short6, Short6, Short7, Short8, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
     }
 
-    @Test public void testSearchPitStop2(){     //Node 17 to Node 4_2 to Node 6_2
+    @Test
+    public void testSearchPitStop2(){     //Node 17 to Node 4_2 to Node 6_2
         ArrayList<Node> stops = new ArrayList<>();
         stops.add(N17);
         stops.add(N4_2);
         stops.add(N6_2);
         String answer = search.findPathPitStop(stops).toString();
         System.out.println(answer);
-        String directions = search.findPathPitStop(stops).findDirections().getDirections().toString();
+        String directions = search.findPathPitStop(stops).findDirections().toString();
         System.out.println(directions);
         assertEquals("[Short17, Short13, Short14, Short15, Short9, Short9_2, Short8_2, Short5_2, Short4_2, Short4_2, Short7_2, Short6_2]", answer);
     }
 
-    @Test public void testSearchPitStop3(){     //Node 11 to Node 2 to Node 10 to Node 3
+    @Test
+    public void testSearchPitStop3(){     //Node 11 to Node 2 to Node 10 to Node 3
         ArrayList<Node> stops = new ArrayList<>();
         stops.add(N1);
         stops.add(N2);

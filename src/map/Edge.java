@@ -24,7 +24,7 @@ public class Edge {
         this.nodeTwo = nodeTwo;
         this.dirOne = "";
         this.dirTwo = "";
-        this.ID = nodeOne.getID() + ":" + nodeTwo.getID();
+        this.ID = nodeOne.getID() + "_ " + nodeTwo.getID();
         setUp();
     }
 
