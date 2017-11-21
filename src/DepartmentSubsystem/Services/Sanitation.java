@@ -8,11 +8,17 @@
 
 package DepartmentSubsystem.Services;
 
+import DepartmentSubsystem.Department;
 import DepartmentSubsystem.Service;
 import java.util.ArrayList;
 public class Sanitation extends Service {
     //This contains all the possible requests for a specific locaiton
     private ArrayList<String> serviceTypes = populateServiceTypes();
+
+    public Sanitation(Department department, String description) {
+        super(department, description);
+    }
+
     private ArrayList<String> populateServiceTypes(){
         ArrayList<String> returnVal = new ArrayList<>();
         returnVal.add("Spill Cleaning");

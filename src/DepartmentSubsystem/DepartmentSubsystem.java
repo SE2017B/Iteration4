@@ -25,29 +25,29 @@ public class DepartmentSubsystem {
     private DepartmentSubsystem(){init();}
     private void init(){
         //If the init method was ran, then we dont do it again
-        if(initRan = true){ return; }
+        //if(initRan = true){ return; }
 
         //TODO assign staff to departments and services
         Department translationDepartment = new Department("Translation Department");
-        Service translation = new Translation();
+        Service translation = new Translation(translationDepartment, "translation service");
         translation.setURL("/DepartmentSubsystem/Services/Displays/Translation.fxml");
         translationDepartment.addService(translation);
         departments.add(translationDepartment);
 
         Department transportationDepartment = new Department("Transportation Department");
-        Service transport = new Transport();
+        Service transport = new Transport(transportationDepartment,  "Transport service");
         transport.setURL("/DepartmentSubsystem/Services/Displays/Transport.fxml");
-        transportationDepartment.addService(new Transport());
+        transportationDepartment.addService(transport);
         departments.add(transportationDepartment);
 
         Department facilities = new Department("Facilities");
-        Service sanitation = new Sanitation();
+        Service sanitation = new Sanitation(facilities, "Sanitation");
         sanitation.setURL("/DepartmentSubsystem/Services/Displays/Sanitation.fxml");
         facilities.addService(sanitation);
         departments.add(facilities);
 
         Department food = new Department("Food");
-        Service foodDelivery = new FoodDelivery();
+        Service foodDelivery = new FoodDelivery(food, "Food Delivery Service");
         foodDelivery.setURL("/DepartmentSubsystem/Services/Displays/FoodDelivery.fxml");
         food.addService(foodDelivery);
         departments.add(food);
@@ -57,8 +57,8 @@ public class DepartmentSubsystem {
 
     //login function for staff members
     public boolean login(String username, String password){
-        //todo test with database
-        ArrayList<Staff> allStaff = new ArrayList<Staff>(); //mainDatabase.getStaff();
+        ArrayList<Staff> allStaff = new ArrayList<>();
+        //ArrayList<Staff> allStaff = mainDatabase.getStaff();
         for(Staff member: allStaff){
             if(member.getUsername().equals(username)){
                 if(member.getPassword().equals(password)){

@@ -80,7 +80,6 @@ public class Staff{
 
     //Updates Database with the current staff object
     public void uptadeDB(){
-        //todo: Actually edit the database
         //mainDatabase.modifyStaff(this);
     }
 

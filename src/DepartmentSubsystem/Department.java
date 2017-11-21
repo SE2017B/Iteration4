@@ -21,6 +21,9 @@ public class Department{
 
     public Department(String type) {
         this.type = type;
+        this.personel = new ArrayList<Staff>();
+        this.services = new ArrayList<Service>();
+        this.backlog = new HashMap<Integer, ServiceRequest>();
     }
 
     public HashMap<Integer, ServiceRequest> getBacklog(){
@@ -42,7 +45,7 @@ public class Department{
     }
 
     public void addService(Service service){
-        this.services.add(new FoodDelivery());
+        this.services.add(service);
     }
 
     @Override
