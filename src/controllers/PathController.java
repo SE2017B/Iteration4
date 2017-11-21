@@ -70,14 +70,21 @@ public class PathController implements ControllableScreen{
     @FXML
     private Pane mapPane;
 
-    @FXML
-    private Label failLabel;
 
     @FXML
-    private Button startFloor;
-
+    private JFXButton floorL2Button;
     @FXML
-    private Button endFloor;
+    private JFXButton floorL1Button;
+    @FXML
+    private JFXButton floorGButton;
+    @FXML
+    private JFXButton floor1Button;
+    @FXML
+    private JFXButton floor2Button;
+    @FXML
+    private JFXButton floor3Button;
+
+
 
     private proxyImagePane mapImage = new proxyImagePane();
 
@@ -92,7 +99,6 @@ public class PathController implements ControllableScreen{
     {
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
-        failLabel = new Label();
         onShow();
         currentFloor = FloorNumber.fromDbMapping("1");
         //set up floor variables
@@ -100,7 +106,7 @@ public class PathController implements ControllableScreen{
         floors.add(FloorNumber.fromDbMapping("1"));
         floors.add(FloorNumber.fromDbMapping("2"));
         //add the test background image
-        switchImage(currentFloor);
+        mapImage.setImage(currentFloor);
 
         //create test path
         testpath = new Path();
@@ -129,9 +135,7 @@ public class PathController implements ControllableScreen{
     public void diplayPath(Path path){
         if( path.getPath().size() <= 1){
             System.out.println("NO PATH FOUND");
-            failLabel.setVisible(true);
         } else if(path.getPath().size() > 1) {
-            failLabel.setVisible(false);
             for (int i = 0; i < path.getPath().size() - 1; i++) {
                 Line line = new Line();
                 Node start = path.getPath().get(i);
@@ -165,14 +169,14 @@ public class PathController implements ControllableScreen{
     public void startPressed(ActionEvent e){
         //show the first screen when clicked on
         if(floors.size()>0){
-            switchImage(floors.get(0));
+            mapImage.setImage(floors.get(0));
         }
 
     }
 
     public void endPressed(ActionEvent e){
         if(floors.size()>1){
-            switchImage(floors.get(1));
+            mapImage.setImage(floors.get(1));
         }
     }
     private Path getPath(){
@@ -185,23 +189,20 @@ public class PathController implements ControllableScreen{
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
         //add background image
-        switchImage(currentFloor);
+        mapImage.setImage(currentFloor);
 
-
-        //draw path
-        System.out.println("Enter Pressed");
         //Remove last path from screen
         clearPaths();
+        System.out.println("Enter Pressed");
         //test get path
         diplayPath(getPath());
 
+        //todo: draw path on this floor
+        //todo: disable floor buttons not in the path
 
 
     }
-    //some methods for switching between screens to be edited in the future
-    private void switchImage(FloorNumber floor){
-        mapImage.setImage(floor);
-    }
+
 
     public void cancelPressed(ActionEvent e)
     {
@@ -216,9 +217,12 @@ public class PathController implements ControllableScreen{
     }
 
     public void floorButtonPressed(ActionEvent e){
-        String floor =  ((JFXButton)e.getSource()).getText();
+        //todo: display the lines form the path on the floor that was pressed
+        //todo: hide the lines from the other floors
+        FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         System.out.println("Floor Pressed: " + floor);
-        mapImage.setImage(FloorNumber.fromDbMapping(floor));
+        mapImage.setImage(floor);
+
     }
 
 

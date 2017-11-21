@@ -86,7 +86,7 @@
                            <children>
                               <ScrollPane fitToHeight="true" hbarPolicy="ALWAYS" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER">
                                  <content>
-                                    <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0">
+                                    <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0" styleClass="pane">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />

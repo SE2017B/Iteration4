@@ -74,6 +74,10 @@ public class HospitalMap{
         return nodeMap;
     }
 
+    public ArrayList<Edge> getEdgeMap() {
+        return edgeMap;
+    }
+
 //
 //    public List<Node> getNodesBy(Function<Node, Boolean> function){
 //        return this.map.values().stream().filter(function::apply).collect(Collectors.toList());

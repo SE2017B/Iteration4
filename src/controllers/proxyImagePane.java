@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 public class proxyImagePane extends StackPane {
 
+
     //pointers to images and their fxml files
     private String floorL1 = "images/00_thelowerlever1.png";
     private String floorL2 = "images/00_thelowerlever2.png";
@@ -20,9 +21,11 @@ public class proxyImagePane extends StackPane {
 
     private HashMap<FloorNumber,ImageView> floors = new HashMap<FloorNumber,ImageView>();
 
+
     public proxyImagePane(){
         super();
         //add all floors
+        System.out.println("Loading map images");
         addImage(FloorNumber.fromDbMapping("L2"));
         addImage(FloorNumber.fromDbMapping("L1"));
         addImage(FloorNumber.fromDbMapping("G"));
@@ -54,16 +57,12 @@ public class proxyImagePane extends StackPane {
         return null;
 
     }
-    public ImageView getImagePane(FloorNumber floor){
-        return floors.get(floor);
-    }
+
     public boolean addImage(FloorNumber floor){
         //Todo: create new image view
         if(floor!=null){
             String name = this.getImage(floor);//get image name for floor
-            System.out.println("Path is "+name);
             Image img = new Image(name); //create new image
-            System.out.println("We made it baby");
             ImageView imgView = new ImageView(img); //create new image view pane
             imgView.setFitWidth(2500);
             imgView.setFitHeight(1700);
@@ -81,7 +80,7 @@ public class proxyImagePane extends StackPane {
             this.getChildren().remove(0);
         }
         //now add background image
-        this.getChildren().add(this.getImagePane(floor));
+        this.getChildren().add(floors.get(floor));
         return true;
     }
     public boolean removeImage(FloorNumber floor){

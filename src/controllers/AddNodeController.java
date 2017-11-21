@@ -61,6 +61,7 @@ public class AddNodeController implements ControllableScreen {
     @FXML
     private Circle nodeLocation;
 
+
     private proxyImagePane mapImage;
 
     public void init() {
@@ -75,10 +76,10 @@ public class AddNodeController implements ControllableScreen {
             NodeCheckBox cb = new NodeCheckBox(node);
             nodeCheckBoxes.add(cb);
         }
-//        for (Edge edge:map.getEdgeMap()){
-//            EdgeCheckBox cb = new EdgeCheckBox(edge);
-//            edgeCheckBoxes.add(cb);
-//        }
+        for (Edge edge:map.getEdgeMap()){
+            EdgeCheckBox cb = new EdgeCheckBox(edge);
+            edgeCheckBoxes.add(cb);
+        }
 
 
     }
@@ -98,6 +99,15 @@ public class AddNodeController implements ControllableScreen {
     public void returnPressed(ActionEvent e){
         System.out.println("Return Pressed");
         parent.setScreen(ScreenController.RequestID);
+    }
+
+    public void floorButtonPressed(ActionEvent e){
+        //todo: display the nodes and edges for the floor that was pressed
+        //todo: hide the nodes and edges from the other floors
+        FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
+        System.out.println("Floor Pressed: " + floor);
+        mapImage.setImage(floor);
+
     }
     ////////////////////////////////////////////////////////////
     /////////////           Node ADD
