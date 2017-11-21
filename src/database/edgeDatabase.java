@@ -1,5 +1,6 @@
 package database;
 
+import map.Edge;
 import map.Node;
 
 import java.io.*;
