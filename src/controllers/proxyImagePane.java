@@ -65,8 +65,8 @@ public class proxyImagePane extends StackPane {
             Image img = new Image(name); //create new image
             System.out.println("We made it baby");
             ImageView imgView = new ImageView(img); //create new image view pane
-            imgView.setFitWidth(2000);
-            imgView.setFitHeight(3000);
+            imgView.setFitWidth(2500);
+            imgView.setFitHeight(1700);
             imgView.setVisible(true);
             floors.put(floor,imgView);//add new image view to hash map floors
             //get the image pane directly instead

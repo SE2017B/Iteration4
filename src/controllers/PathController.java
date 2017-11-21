@@ -22,6 +22,7 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import map.Path;
 import service.ServiceRequest;
 import service.Staff;
 
@@ -83,19 +84,31 @@ public class PathController implements ControllableScreen{
 
     private ArrayList<FloorNumber> floors; //list of floors available
 
+    private Path testpath;
+
     //Methods start here
     public void init()
     {
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
+        failLabel = new Label();
         onShow();
-        currentFloor = FloorNumber.fromDbMapping("L1");
+        currentFloor = FloorNumber.fromDbMapping("1");
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
         floors.add(FloorNumber.fromDbMapping("1"));
         floors.add(FloorNumber.fromDbMapping("2"));
         //add the test background image
         switchImage(currentFloor);
+
+        //create test path
+        testpath = new Path();
+        testpath.addToPath(new Node(100,100));
+        testpath.addToPath(new Node(100,105));
+        testpath.addToPath(new Node(105,105));
+        testpath.addToPath(new Node(110,115));
+        testpath.addToPath(new Node(130,120));
+        testpath.addToPath(new Node(1100,800));
 
 
     }
@@ -114,16 +127,16 @@ public class PathController implements ControllableScreen{
         lines = new ArrayList<>();
     }
 
-    public void diplayPath(ArrayList<Node> path){
-        if( path.size() <= 1){
+    public void diplayPath(Path path){
+        if( path.getPath().size() <= 1){
             System.out.println("NO PATH FOUND");
             failLabel.setVisible(true);
-        } else if(path.size() > 1) {
+        } else if(path.getPath().size() > 1) {
             failLabel.setVisible(false);
-            for (int i = 0; i < path.size() - 1; i++) {
+            for (int i = 0; i < path.getPath().size() - 1; i++) {
                 Line line = new Line();
-                Node start = path.get(i);
-                Node end = path.get(i + 1);
+                Node start = path.getPath().get(i);
+                Node end = path.getPath().get(i + 1);
                 line.setLayoutX((start.getX())/2);
                 line.setLayoutY((start.getY())/2);
 
@@ -132,7 +145,7 @@ public class PathController implements ControllableScreen{
                 line.setEndY((end.getY() - start.getY())/2);
 
                 line.setVisible(true);
-                line.setStrokeWidth(5);
+                line.setStrokeWidth(2);
                 mapPane.getChildren().add(line);
                 lines.add(line);
                 //
@@ -163,43 +176,24 @@ public class PathController implements ControllableScreen{
             switchImage(floors.get(1));
         }
     }
+    private Path getPath(){
+        //calculate the path an return it
+        return testpath; //for now
+    }
 
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
         //add background image
-        Image img = new Image("images/03_thethirdfloor.png"); //create new image
-        ImageView imgView = new ImageView(img); //create new image view pane
-        imgView.setFitWidth(2000);
-        imgView.setFitHeight(3000);
-        imgView.setVisible(true);
-        //mapPane
-        mapPane.getChildren().add(imgView);
+        switchImage(currentFloor);
+
 
         //draw path
         System.out.println("Enter Pressed");
         //Remove last path from screen
         clearPaths();
-        //draw some random lines for now
-        Line line = new Line();
-        line.setLayoutX(100);
-        line.setLayoutY(100);
-        line.setEndX(300);
-        line.setEndY((300));
-        line.setVisible(true);
-        line.setStrokeWidth(5);
-        mapPane.getChildren().add(line);
-        lines.add(line);
-
-        Line line1 = new Line();
-        line1.setLayoutX(0);
-        line1.setLayoutY(0);
-        line1.setEndX(1000);
-        line1.setEndY((1000));
-        line1.setVisible(true);
-        line1.setStrokeWidth(5);
-        mapPane.getChildren().add(line1);
-        lines.add(line1);
+        //test get path
+        diplayPath(getPath());
 
 
 
