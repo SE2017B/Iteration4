@@ -61,7 +61,7 @@ public class Staff{
             completedRequests.add(currentRequests.pop());
         }
         catch (NoSuchElementException exception){
-            available = true;
+         //   available = true;
         }
     }
 

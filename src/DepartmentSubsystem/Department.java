@@ -23,7 +23,9 @@ public class Department{
         this.type = type;
     }
 
-
+    public HashMap<Integer, ServiceRequest> getBacklog(){
+        return backlog;
+    }
     //Adds a request to the backlog
     public void addRequest(int requestID, ServiceRequest serviceRequest){
         backlog.put(requestID, serviceRequest);
