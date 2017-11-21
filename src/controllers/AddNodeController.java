@@ -10,6 +10,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import map.Edge;
 import map.HospitalMap;
 import map.Node;
 import javafx.event.ActionEvent;
@@ -334,6 +335,23 @@ public class AddNodeController implements ControllableScreen {
     public void edgeAddEnterPressed(ActionEvent e){
         System.out.println("Edge Add Enter Pressed");
         //todo add edge
+        Node nodeOne = null;
+        Node nodeTwo = null;
+        for(NodeCheckBox n : nodeCheckBoxes){
+            if(n.isSelected())  {
+                if(nodeOne == null) nodeOne = n.getNode();
+                else if(nodeTwo == null) nodeTwo = n.getNode();
+                else {
+                    System.out.println("Warning: More than two nodes selected.");
+                    return;
+                }
+            }
+        }
+        if(nodeOne == null || nodeTwo == null){
+            System.out.println("Warning: Less than two nodes selected.");
+        } else {
+            HospitalMap.addEdge(new Edge(nodeOne, nodeTwo));
+        }
     }
 
     public void edgeAddCancelPressed(ActionEvent e){
@@ -353,6 +371,23 @@ public class AddNodeController implements ControllableScreen {
 
     public void edgeRemoveEnterPressed(ActionEvent e){
         System.out.println("Edge Remove Enter Pressed");
+        Node nodeOne = null;
+        Node nodeTwo = null;
+        for(NodeCheckBox n : nodeCheckBoxes){
+            if(n.isSelected()){
+                if(nodeOne == null) nodeOne = n.getNode();
+                else if(nodeTwo == null) nodeTwo = n.getNode();
+                else {
+                    System.out.println("Warning: More than two nodes selected.");
+                    break;
+                }
+            }
+        }
+        if(nodeOne == null || nodeTwo == null){
+            System.out.println("Warning: Less than two nodes selected. ");
+        } else {
+            HospitalMap.DeleteEdge(nodeOne.getEdgeOf(nodeTwo));
+        }
         //todo remove edge
     }
 
