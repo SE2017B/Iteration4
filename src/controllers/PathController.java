@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
 import javafx.collections.FXCollections;
@@ -70,6 +71,7 @@ public class PathController implements ControllableScreen{
     @FXML
     private Label failLabel;
 
+    private proxyImagePane backImage;
 
     //Methods start here
     public void init()
@@ -132,6 +134,16 @@ public class PathController implements ControllableScreen{
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
+        //add background image
+        Image img = new Image("images/03_thethirdfloor.png"); //create new image
+        ImageView imgView = new ImageView(img); //create new image view pane
+        imgView.setFitWidth(2000);
+        imgView.setFitHeight(3000);
+        imgView.setVisible(true);
+        //mapPane
+        mapPane.getChildren().add(imgView);
+
+        //draw path
         System.out.println("Enter Pressed");
         //Remove last path from screen
         clearPaths();
@@ -156,13 +168,19 @@ public class PathController implements ControllableScreen{
         mapPane.getChildren().add(line1);
         lines.add(line1);
 
-        Image img = new Image("@../images/02_thesecondfloor.png"); //create new image
-        ImageView imgView = new ImageView(img); //create new image view pane
-        imgView.setFitWidth(2000);
-        imgView.setFitHeight(3000);
-        imgView.setVisible(true);
-        mapPane.getChildren().add(imgView);
 
+
+    }
+    //some methods for switching between screens to be edited in the future
+    private void switchImage(FloorNumber floor){
+        //clear lines first
+        clearPaths();
+        //delete background image if any
+        if(mapPane.getChildren().size()>0){
+            mapPane.getChildren().remove(0);
+        }
+        //now add background image
+        mapPane.getChildren().add(backImage.getImagePane(floor));
     }
 
     public void cancelPressed(ActionEvent e)

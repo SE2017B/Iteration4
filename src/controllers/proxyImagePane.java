@@ -11,12 +11,12 @@ import java.util.HashMap;
 public class proxyImagePane extends StackPane {
 
     //pointers to images and their fxml files
-    public static String floorL1 = "00_thelowerlever1.png";
-    public static String floorL2 = "00_thelowerlever2.png";
-    public static String floorG = "00_thegroundfloor.png";
-    public static String floor1 = "01_thefirstfloor.png";
-    public static String floor2 = "02_thesecondfloor.png";
-    public static String floor3 = "03_thethirdfloor.png";
+    public static String floorL1 = "images/00_thelowerlever1.png";
+    public static String floorL2 = "images/00_thelowerlever2.png";
+    public static String floorG = "images/00_thegroundfloor.png";
+    public static String floor1 = "images/01_thefirstfloor.png";
+    public static String floor2 = "images/02_thesecondfloor.png";
+    public static String floor3 = "images/03_thethirdfloor.png";
 
     private HashMap<FloorNumber,ImageView> floors;
 
