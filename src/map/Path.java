@@ -104,6 +104,20 @@ public class Path implements Comparable<Path> {
         return directions;
     }
 
+    //Retrieves the list of floors visited within a path
+    public ArrayList<FloorNumber> floorNumberList() {
+        ArrayList<FloorNumber> floorNumList = new ArrayList<>();
+
+        for(int i=0; i<path.size(); i++) {
+            FloorNumber floor = path.get(i).getFloor();
+            if (floorNumList.contains(floor)) {
+                continue;
+            }
+            floorNumList.add(floor);
+        }
+        return floorNumList;
+    }
+
     //Getters
     public ArrayList<Node> getPath() {
         return this.path;
