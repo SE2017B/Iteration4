@@ -40,6 +40,19 @@ public class Node{
         this.team = team;
     }
 
+    public Node(String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+        this.longName = longName;
+        this.shortName = shortName;
+        this.type = type;
+        this.building = building;
+        this.connections = new ArrayList<>();
+        this.floor = FloorNumber.fromDbMapping(floor);
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
+        this.team = team;
+        //this.ID = nodeDatabase.gegNodeID(this);
+    }
+
     //Adds existing edge between
     public void addConnection(Edge edge){
         connections.add(edge);

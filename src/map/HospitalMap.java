@@ -41,6 +41,15 @@ public class HospitalMap{
         //nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
 
+    public void addNodeandEdges(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team, ArrayList<Node> connections){
+        Node temp = new Node(ID ,x, y, floor, building, type, longName, shortName, team);
+        nodeMap.add(temp);
+        for(int i = 0; i < connections.size(); i++){
+            addEdge(temp,connections.get(i));
+        }
+        //nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
+    }
+
     public void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
         node.setBuilding(building);
         node.setFloor(floor);
