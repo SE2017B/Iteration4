@@ -12,14 +12,15 @@ public class proxyImagePane extends StackPane {
 
 
     //pointers to images and their fxml files
-    private String floorL1 = "images/00_thelowerlever1.png";
-    private String floorL2 = "images/00_thelowerlever2.png";
+    private String floorL1 = "images/00_thelowerlevel1.png";
+    private String floorL2 = "images/00_thelowerlevel2.png";
     private String floorG = "images/00_thegroundfloor.png";
     private String floor1 = "images/01_thefirstfloor.png";
     private String floor2 = "images/02_thesecondfloor.png";
     private String floor3 = "images/03_thethirdfloor.png";
 
     private HashMap<FloorNumber,ImageView> floors = new HashMap<FloorNumber,ImageView>();
+    private double scale = 2.0;
 
 
     public proxyImagePane(){
@@ -64,8 +65,8 @@ public class proxyImagePane extends StackPane {
             String name = this.getImage(floor);//get image name for floor
             Image img = new Image(name); //create new image
             ImageView imgView = new ImageView(img); //create new image view pane
-            imgView.setFitWidth(2500);
-            imgView.setFitHeight(1700);
+            imgView.setFitWidth(5000/scale);
+            imgView.setFitHeight(3400/scale);
             imgView.setVisible(true);
             floors.put(floor,imgView);//add new image view to hash map floors
             //get the image pane directly instead
@@ -73,6 +74,20 @@ public class proxyImagePane extends StackPane {
             return true;
         }
         return false;
+    }
+    public void setScale(double s){
+        scale=s;
+        //now adjust all floors
+        for(ImageView img: floors.values()){
+            img.setFitWidth(5000/scale);
+            img.setFitHeight(3400/scale);
+        }
+    }
+    public double getScale(){
+        return this.scale;
+    }
+    public void changeScale(double ds){
+        this.scale+=ds;
     }
     public boolean setImage(FloorNumber floor){
         //Todo: Isn't set image and add image the same thing

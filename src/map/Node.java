@@ -36,10 +36,11 @@ public class Node{
     }
 
     //to be deleted
-    public Node(int xPos, int yPos){
+    public Node(int xPos, int yPos, FloorNumber f){
 
         this.x= xPos;
         this.y=yPos;
+        this.floor=f;
     }
 
     //Adds edge between
