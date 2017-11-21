@@ -8,11 +8,16 @@
 
 package DepartmentSubsystem.Services;
 
+import DepartmentSubsystem.Department;
 import DepartmentSubsystem.Service;
 import map.Node;
 
 public class Transport extends Service {
     private Node endLocation;
+
+    public Transport(Department department, String description) {
+        super(department, description);
+    }
 
     public Node getEndLocation() {
         return endLocation;

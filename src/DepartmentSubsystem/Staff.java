@@ -80,7 +80,7 @@ public class Staff{
 
     //Updates Database with the current staff object
     public void uptadeDB(){
-        mainDatabase.modifyStaff(this);
+        //mainDatabase.modifyStaff(this);
     }
 
     //Important Getters and Setters
