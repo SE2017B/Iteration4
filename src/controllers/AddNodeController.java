@@ -337,8 +337,13 @@ public class AddNodeController implements ControllableScreen {
     
     public void nodeAddEnterPressed(ActionEvent e){
         System.out.println("Node Add Enter Pressed");
-        //todo add node
 
+        //todo add node
+        ArrayList<Node> connections = new ArrayList<>();
+        for(NodeCheckBox n : nodeCheckBoxes){
+            if(n.isSelected()) connections.add(n.getNode());
+        }
+        HospitalMap.addNodeandEdges(nodeID, x, y, floor, building, nodeType, name, name, "H", connections);
         //also get selected nodes and pass them to map to add neighbors
     }
 
@@ -359,7 +364,9 @@ public class AddNodeController implements ControllableScreen {
     public void nodeRemoveEnterPressed(ActionEvent e){
         System.out.println("Node Remove Enter Pressed");
         //todo add node
-
+        for(NodeCheckBox n : nodeCheckBoxes){
+            if(n.isSelected()) HospitalMap.deleteNode(n.getNode());
+        }
         //also get selected nodes and pass them to map to add neighbors
     }
 
@@ -379,7 +386,21 @@ public class AddNodeController implements ControllableScreen {
     public void nodeEditEnterPressed(ActionEvent e){
         System.out.println("Node Edit Enter Pressed");
         //todo add node
-
+        Node node = null;
+        for(NodeCheckBox n : nodeCheckBoxes){
+            if(n.isSelected()){
+                if(node == null) node = n.getNode();
+                else{
+                    System.out.println("Warning: More than one node selected.");
+                    return;
+                }
+            }
+        }
+        if(node == null){
+            System.out.println("Warning: No nodes selected.");
+            return;
+        }
+        HospitalMap.editNode(node, x, y, floor, building, nodeType, name, name);
         //also get selected nodes and pass them to map to add neighbors
     }
 
