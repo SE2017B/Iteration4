@@ -25,7 +25,4 @@ public class Sanitation extends Service {
 
     //Set this to the service that is requested
     private String requestedService;
-
-    public Sanitation() {
-    }
 }

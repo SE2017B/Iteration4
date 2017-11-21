@@ -56,8 +56,8 @@ public class Main extends Application {
         engine.addStaffLogin(testStaff, "Food");
         engine.addStaffLogin(testAdmin, "Food");
 
-        DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
-        DSS.setup();
+        DepartmentSubsystem.getSubsystem();
+        DepartmentSubsystem.getSubsystem();.init();
 
         for(Node node : HospitalMap.getNodes()){
             HospitalMap.addNode(node);
