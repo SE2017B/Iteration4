@@ -9,6 +9,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import map.Edge;
 import map.HospitalMap;
@@ -240,41 +241,52 @@ public class AddNodeController implements ControllableScreen {
     private MenuButton nodeAddBuildingDropDown;
     @FXML
     private MenuButton nodeAddTypeDropDown;
+    @FXML
+    private Circle nodeAddIndicator;
 
     public void nodeAddXEntered(ActionEvent e){
         System.out.println("Node Add X Entered");
+        String text = nodeAddXField.getText();
+        nodeAddXField.setText(text);
     }
     public void nodeAddYEntered(ActionEvent e){
         System.out.println("Node Add Y Entered");
+        String text = nodeAddYField.getText();
+        nodeAddYField.setText(text);
+        nodeAddIndicator = new Circle();
+        nodeAddIndicator.setCenterX((double)Integer.parseInt(nodeAddXField.getText()));
+        nodeAddIndicator.setCenterY((double)Integer.parseInt(nodeAddYField.getText()));
+        nodeAddIndicator.setRadius(50.0f);
     }
 
     public void nodeAddShortEntered(ActionEvent e){
         System.out.println("Node Add Short Name Entered");
+        String text = nodeAddShortField.getText();
+        nodeAddYField.setText(text);
     }
 
     public void nodeAddNameEntered(ActionEvent e){
         System.out.println("Node Add Long Name Entered");
+        String text = nodeAddNameField.getText();
+        nodeAddNameField.setText(text);
     }
 
     public void nodeAddFloorSelected(ActionEvent e){
         System.out.println("Node add Floor Selected");
         String text = ((MenuItem)e.getSource()).getText();
         nodeAddFloorDropDown.setText(text);
-        this.floor = text;
     }
 
     public void nodeAddBuildingSelected(ActionEvent e){
         System.out.println("Node add Building Selected");
         String text = ((MenuItem)e.getSource()).getText();
         nodeAddBuildingDropDown.setText(text);
-        this.building = text;
     }
 
     public void nodeAddTypeSelected(ActionEvent e){
         System.out.println("Node add type Selected");
         String text = ((MenuItem)e.getSource()).getText();
         nodeAddTypeDropDown.setText(text);
-        this.nodeType = text;
     }
 
 
@@ -286,7 +298,14 @@ public class AddNodeController implements ControllableScreen {
         for(NodeCheckBox n : nodeCheckBoxes){
             if(n.isSelected()) connections.add(n.getNode());
         }
-        HospitalMap.addNodeandEdges(nodeID, x, y, floor, building, nodeType, name, name, "H", connections);
+        HospitalMap.addNodeandEdges("putNodeIDHere",
+                nodeAddXField.getText(),
+                nodeAddYField.getText(),
+                nodeAddFloorDropDown.getText(),
+                nodeAddBuildingDropDown.getText(),
+                nodeAddTypeDropDown.getText(),
+                nodeAddNameField.getText(),
+                nodeAddShortField.getText(),"H", connections);
         //also get selected nodes and pass them to map to add neighbors
     }
 
@@ -302,7 +321,6 @@ public class AddNodeController implements ControllableScreen {
     private JFXButton nodeRemoveEnterButton;
     @FXML
     private JFXButton nodeRemoveCancelButton;
-
 
     public void nodeRemoveEnterPressed(ActionEvent e){
         System.out.println("Node Remove Enter Pressed");
@@ -342,38 +360,43 @@ public class AddNodeController implements ControllableScreen {
 
     public void nodeEditXEntered(ActionEvent e){
         System.out.println("Node Edit X Entered");
+        String text = nodeEditXField.getText();
+        nodeEditXField.setText(text);
     }
     public void nodeEditYEntered(ActionEvent e){
         System.out.println("Node Edit Y Entered");
+        String text = nodeEditYField.getText();
+        nodeEditYField.setText(text);
     }
 
     public void nodeEditShortEntered(ActionEvent e){
         System.out.println("Node Edit Short Name Entered");
+        String text = nodeEditShortField.getText();
+        nodeEditShortField.setText(text);
     }
 
     public void nodeEditNameEntered(ActionEvent e){
         System.out.println("Node Edit Long Name Entered");
+        String text = nodeEditNameField.getText();
+        nodeEditNameField.setText(text);
     }
 
     public void nodeEditFloorSelected(ActionEvent e){
         System.out.println("Node Edit Floor Selected");
         String text = ((MenuItem)e.getSource()).getText();
         nodeEditFloorDropDown.setText(text);
-        this.floor = text;
     }
 
     public void nodeEditBuildingSelected(ActionEvent e){
         System.out.println("Node Edit Building Selected");
         String text = ((MenuItem)e.getSource()).getText();
         nodeEditBuildingDropDown.setText(text);
-        this.building = text;
     }
 
     public void nodeEditTypeSelected(ActionEvent e){
         System.out.println("Node Edit type Selected");
         String text = ((MenuItem)e.getSource()).getText();
         nodeEditTypeDropDown.setText(text);
-        this.nodeType = text;
     }
 
 
@@ -394,7 +417,14 @@ public class AddNodeController implements ControllableScreen {
             System.out.println("Warning: No nodes selected.");
             return;
         }
-        HospitalMap.editNode(node, x, y, floor, building, nodeType, name, name);
+        HospitalMap.editNode(node,
+                nodeEditXField.getText(),
+                nodeEditYField.getText(),
+                nodeEditFloorDropDown.getText(),
+                nodeEditBuildingDropDown.getText(),
+                nodeEditTypeDropDown.getText(),
+                nodeAddNameField.getText(),
+                nodeAddShortField.getText());
         //also get selected nodes and pass them to map to add neighbors
     }
 
@@ -479,38 +509,4 @@ public class AddNodeController implements ControllableScreen {
         System.out.println("Edge Remove Cancel Pressed");
         //todo cancel edge add
     }
-
-
-    ////////////////////////////////////////////////////////////
-    /////////////           EDGE EDIT
-    ////////////////////////////////////////////////////////////
-    @FXML
-    private Label edgeEditIDLabel;
-    @FXML
-    private JFXTextField edgeEditNodeOneField;
-    @FXML
-    private JFXTextField edgeEditeNodeTwoField;
-    @FXML
-    private JFXButton edgeEditEnterButton;
-    @FXML
-    private JFXButton edgeEditCancelButton;
-
-    public void edgeEditNodeOneEntered(ActionEvent e){
-        System.out.println("Edge Edit Node One Entered");
-    }
-
-    public void edgeEditNodeTwoEntered(ActionEvent e){
-        System.out.println("Edge Edit Node Two Entered");
-    }
-
-    public void edgeEditEnterPressed(ActionEvent e){
-        System.out.println("Edge Edit Enter Pressed");
-    }
-
-    public void edgeEditCancelPressed(ActionEvent e){
-        System.out.println("Edge Edit Cancel Pressed");
-    }
-
-
-
 }

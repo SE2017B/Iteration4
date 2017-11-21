@@ -36,7 +36,7 @@ public class HospitalMap{
         this.addNode(new Node(ID,x,y,floor,building,type,longName,shortName));
     }
 
-    public static void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
+    public static  void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
         node.setBuilding(building);
         node.setFloor(floor);
         node.setLongName(longName);
