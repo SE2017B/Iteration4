@@ -12,18 +12,10 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import map.FloorNumber;
-import map.Node;
-import DepartmentSubsystem.Staff;
 
 
 public class MainController implements ControllableScreen{
@@ -47,7 +39,7 @@ public class MainController implements ControllableScreen{
 
     public void init() {
         mapImage = new proxyImagePane();
-        mapImage.setImage(FloorNumber.FLOOR_G);
+        mapImage.setImage(FloorNumber.FLOOR_GROUND);
         mapPane.getChildren().add(mapImage);
 
     }

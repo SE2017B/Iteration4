@@ -1,7 +1,7 @@
 package database;
 
-import service.Service;
-import service.Staff;
+import DepartmentSubsystem.Staff;
+
 import java.sql.*;
 import java.util.ArrayList;
 

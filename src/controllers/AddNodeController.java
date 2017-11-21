@@ -65,12 +65,13 @@ public class AddNodeController implements ControllableScreen {
     private proxyImagePane mapImage;
 
     public void init() {
+        map = HospitalMap.getMap();
         mapImage = new proxyImagePane();
-        mapImage.setImage(FloorNumber.FLOOR_G);
+        mapImage.setImage(FloorNumber.FLOOR_GROUND);
         mapPane.getChildren().add(mapImage);
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
-        map = new HospitalMap();
+        map = HospitalMap.getMap();
 
         for (Node node:map.getNodeMap()) {
             NodeCheckBox cb = new NodeCheckBox(node);
@@ -187,7 +188,7 @@ public class AddNodeController implements ControllableScreen {
         for(NodeCheckBox n : nodeCheckBoxes){
             if(n.isSelected()) connections.add(n.getNode());
         }
-        HospitalMap.addNodeandEdges("putNodeIDHere",
+        map.addNodeandEdges("putNodeIDHere",
                 nodeAddXField.getText(),
                 nodeAddYField.getText(),
                 nodeAddFloorDropDown.getText(),
@@ -221,7 +222,7 @@ public class AddNodeController implements ControllableScreen {
         System.out.println("Node Remove Enter Pressed");
         //todo add node
         for(NodeCheckBox n : nodeCheckBoxes){
-            if(n.isSelected()) HospitalMap.deleteNode(n.getNode());
+            if(n.isSelected()) map.removeNode(n.getNode());
         }
         //also get selected nodes and pass them to map to add neighbors
     }
@@ -312,7 +313,7 @@ public class AddNodeController implements ControllableScreen {
             System.out.println("Warning: No nodes selected.");
             return;
         }
-        HospitalMap.editNode(node,
+        map.editNode(node,
                 nodeEditXField.getText(),
                 nodeEditYField.getText(),
                 nodeEditFloorDropDown.getText(),
@@ -359,7 +360,7 @@ public class AddNodeController implements ControllableScreen {
         if(nodeOne == null || nodeTwo == null){
             System.out.println("Warning: Less than two nodes selected.");
         } else {
-            HospitalMap.addEdge(new Edge(nodeOne, nodeTwo));
+            map.addEdge(new Edge(nodeOne, nodeTwo));
         }
     }
 
@@ -395,7 +396,7 @@ public class AddNodeController implements ControllableScreen {
         if(nodeOne == null || nodeTwo == null){
             System.out.println("Warning: Less than two nodes selected. ");
         } else {
-            HospitalMap.DeleteEdge(nodeOne.getEdgeOf(nodeTwo));
+            map.removeEdge(nodeOne.getEdgeOf(nodeTwo));
         }
         //todo remove edge
     }

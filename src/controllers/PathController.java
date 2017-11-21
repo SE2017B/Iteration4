@@ -97,7 +97,7 @@ public class PathController implements ControllableScreen{
     //Methods start here
     public void init()
     {
-        map = new HospitalMap();
+        map = HospitalMap.getMap();
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
         pathLines = new HashMap<FloorNumber,ArrayList<Line>>(); //hash map to lines for each floor
@@ -111,12 +111,6 @@ public class PathController implements ControllableScreen{
         mapImage.setImage(currentFloor);
 
         //create test path
-        testpath = new Path();
-        testpath.addToPath(new Node(0,0,FloorNumber.fromDbMapping("L1")));
-        testpath.addToPath(new Node(1000,400,FloorNumber.fromDbMapping("L1")));
-        testpath.addToPath(new Node(1000,400,FloorNumber.fromDbMapping("L2")));
-        testpath.addToPath(new Node(0,1000,FloorNumber.fromDbMapping("L2")));
-
         mapPane.getChildren().add(mapImage);
     }
 

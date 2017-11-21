@@ -7,26 +7,40 @@
 */
 
 package map;
-import database.edgeDatabase;
-import database.nodeDatabase;
 import exceptions.InvalidNodeException;
-import search.AStarSearch;
-import search.BreadthFirstSearch;
-import search.SearchContext;
-import search.SearchStrategy;
+import search.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class HospitalMap{
     private ArrayList<Node> nodeMap;
     private ArrayList<Edge> edgeMap;
+    private ArrayList<SearchStrategy> posSerchStrat;
     private SearchContext search;
+    private static HospitalMap map;
 
     //Constructors
-    public HospitalMap() {
+    private HospitalMap() {
         nodeMap = new ArrayList<>();
         edgeMap = new ArrayList<>();
         search = new SearchContext(new AStarSearch());
+        posSerchStrat = new ArrayList<>();
+        posSerchStrat.add(new AStarSearch());
+        posSerchStrat.add(new BeamSearch(3));
+        posSerchStrat.add(new BreadthFirstSearch());
+        posSerchStrat.add(new DepthFirstSearch());
+        posSerchStrat.add(new DijkstrasSearch());
+
+    }
+
+    public static HospitalMap getMap() {
+        if(map == null){
+            map = new HospitalMap();
+        }
+        return map;
     }
 
     //Helper Methods
@@ -109,7 +123,7 @@ public class HospitalMap{
         return search.findPathBy(start, type);
     }
 
-    public Path findPathPitStop(ArrayList<Node> stops){
+    public Path findPathPitStop(ArrayList<Node> stops) throws InvalidNodeException {
         AStarSearch search = new AStarSearch();
         return search.findPathPitStop(stops);
     }
@@ -136,10 +150,12 @@ public class HospitalMap{
         search.setStrategy(searchStrategy);
     }
 
-//
-//    public List<Node> getNodesBy(Function<Node, Boolean> function){
-//        return this.map.values().stream().filter(function::apply).collect(Collectors.toList());
-//    }
+    public ArrayList<SearchStrategy> getSearches() {
+        return posSerchStrat;
+    }
 
-    //Cache for stuff
+
+    public List<Node> getNodesBy(Function<Node, Boolean> function){
+        return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
+    }
 }

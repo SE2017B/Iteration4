@@ -43,7 +43,7 @@ public class AStarSearch implements SearchStrategy {
         return new Path();
     }
 
-    public Path findPathPitStop(ArrayList<Node> stops){
+    public Path findPathPitStop(ArrayList<Node> stops) throws InvalidNodeException {
         Path path = new Path();
         for(int i=0;i<stops.size()-1;i++){
             path.addToPath(this.findPath(stops.get(i), stops.get(i+1)));

@@ -31,7 +31,7 @@ public class SearchContext {
         return search.findPathBy(start, type);
     }
 
-    public Path findPathPitStop(ArrayList<Node> stops){
+    public Path findPathPitStop(ArrayList<Node> stops) throws InvalidNodeException {
         AStarSearch search = new AStarSearch();
         return search.findPathPitStop(stops);
     }

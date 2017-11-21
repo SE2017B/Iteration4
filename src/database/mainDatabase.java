@@ -7,10 +7,10 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.FileNotFoundException;
+
+import DepartmentSubsystem.Staff;
 import map.Node;
 import map.Edge;
-import service.Staff;
-
 public class mainDatabase {
 
     private static final String DRIVER="org.apache.derby.jdbc.EmbeddedDriver";
