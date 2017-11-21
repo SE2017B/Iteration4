@@ -88,6 +88,16 @@ public class DepartmentSubsystem {
     public ArrayList<Staff> getStaff(Service service){
         return service.getEligibleStaff();
     }
+    public ArrayList<Staff> getStaff(String service){
+        for(Department dept: this.departments) {
+            ArrayList<Service> temp = dept.getServices();
+            for(Service ser: temp){
+                if(ser.toString().equals(service)){
+                    return ser.getEligibleStaff();
+                }
+            }
+        }
+    }
 
     //Assign a service request
     public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID){
