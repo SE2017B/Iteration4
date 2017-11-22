@@ -369,60 +369,70 @@ public class nodeDatabase {
         }
     }
 
+    // NodeType hallCounter getter and increments counter when it is called
     public static int getHallCounter() {
         int temp = hallCounter;
         hallCounter++;
         return temp;
     }
 
+    // NodeType restCounter getter and increments counter when it is called
     public static int getRestCounter() {
         int temp = restCounter;
         restCounter++;
         return temp;
     }
 
+    // NodeType retlCounter getter and increments counter when it is called
     public static int getRetlCounter() {
         int temp = retlCounter;
         retlCounter++;
         return temp;
     }
 
+    // NodeType elevCounter getter and increments counter when it is called
     public static int getElevCounter() {
         int temp = elevCounter;
         elevCounter++;
         return temp;
     }
 
+    // NodeType staiCounter getter and increments counter when it is called
     public static int getStaiCounter() {
         int temp = staiCounter;
         staiCounter++;
         return temp;
     }
 
+    // NodeType deptCounter getter and increments counter when it is called
     public static int getDeptCounter() {
         int temp = deptCounter;
         deptCounter++;
         return temp;
     }
 
+    // NodeType labsCounter getter and increments counter when it is called
     public static int getLabsCounter() {
         int temp = labsCounter;
         labsCounter++;
         return temp;
     }
 
+    // NodeType infoCounter getter and increments counter when it is called
     public static int getInfoCounter() {
         int temp = infoCounter;
         infoCounter++;
         return temp;
     }
 
+    // NodeType confCounter getter and increments counter when it is called
     public static int getConfCounter() {
         int temp = confCounter;
         confCounter++;
         return temp;
     }
 
+    // NodeType exitCounter getter and increments counter when it is called
     public static int getExitCounter() {
         int temp = exitCounter;
         exitCounter++;
@@ -435,6 +445,7 @@ public class nodeDatabase {
         return temp;
     }
 
+    // Assign nodeType counter based upon the String it is given
     public static int getNodeID(String anyType) {
         switch (anyType) {
             case "REST":

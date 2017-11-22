@@ -50,8 +50,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
-
-
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
 
@@ -79,8 +77,6 @@ public class Main extends Application {
         edgeDatabase.readEdgesCSV("MapWedges.csv");
         edgeDatabase.insertEdgesFromCSV();
 
-        nodeDatabase.queryAllNodes();
-        edgeDatabase.queryAllEdges();
         nodeDatabase.cntNodes();
 
         launch(args);
