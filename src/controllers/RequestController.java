@@ -115,27 +115,20 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
-        System.out.println("hello 61 \n\n\n");
-        choiceBoxDept.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> deptSelected());
+        //choiceBoxDept.setItems(FXCollections.observableList(testList));
+        choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
 
         System.out.println("hello 61 \n\n\n");
-        choiceBoxService.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> servSelected());
+        choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
 
         System.out.println("hello 61 \n\n\n");
-        choiceBoxStaff.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> staffSelected());
+        choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
 
         System.out.println("hello 61 \n\n\n");
         depSub = DepartmentSubsystem.getSubsystem();
     }
 
     public void onShow(){
- //test for removing service off list
-//        ServiceRequest test = new ServiceRequest(null,2,null,null,null, null);
-//        ServiceRequest test2 = new ServiceRequest(null,3,null,null,null, null);
-//        ServiceRequest test3 = new ServiceRequest(null,4,null,null,null, null);
-//        resolveServiceListView.getItems().add(test);
-//        resolveServiceListView.getItems().add(test2);
-//        resolveServiceListView.getItems().add(test3);
 
         //Update the nodes in the map
         ArrayList<Node> nodes = HospitalMap.getNodesForSearch();
@@ -199,14 +192,16 @@ public class RequestController implements ControllableScreen{
         menuButtonAl.setText(selectedAlg);
     }
 
-    public void deptSelected()
+    public void deptSelected(Department newValue)
     {
         //todo fix deptSelected. Add listener. Test?
-        //nameDept = newVal;
-        nameDept = choiceBoxDept.getValue().toString();
+        nameDept = newValue.toString();
+       // nameDept = choiceBoxDept.getValue().toString();
         System.out.println("hello 51 \n\n\n" + nameDept);
+
         choiceBoxDept.setDisable(false);
         System.out.println("hello 52 \n\n\n");
+
             choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
         System.out.println("hello 53 \n\n\n");
 //            nameService = choiceBoxService.getSelectionModel().getSelectedItem().toString();
@@ -217,24 +212,26 @@ public class RequestController implements ControllableScreen{
 //            choiceBoxStaff.setDisable(false);
 
     }
-    public void servSelected()
+    public void servSelected(Service newValue)
     {
         //todo fix deptSelected. Add listener. Test?
 
 //        nameDept = choiceBoxDept.getSelectionModel().getSelectedItem().toString();
 //        choiceBoxDept.setDisable(false);
 //        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
-            nameService = choiceBoxService.getSelectionModel().getSelectedItem().toString();
+            nameService = newValue.toString();
             choiceBoxService.setDisable(false);
             choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
+            choiceBoxStaff.setDisable(false);
 //            nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();
 //            choiceBoxStaff.setDisable(false);
 
     }
-    public void staffSelected()
+    public void staffSelected(Staff newValue)
     {
-        nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();
-        choiceBoxStaff.setDisable(false);
+
+        nameStaff = newValue.toString();
+
     }
 
     public void timeSelected(ActionEvent e) {
