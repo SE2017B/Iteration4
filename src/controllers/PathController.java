@@ -12,6 +12,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import map.FloorNumber;
@@ -23,11 +25,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Circle;
 
 import map.Path;
 import DepartmentSubsystem.*;
 
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +41,7 @@ public class PathController implements ControllableScreen{
     private ArrayList<Node> path;
     private HospitalMap map;
     private ArrayList<Line> lines;
+    private ArrayList<Circle> points;
 
 
     public void setParentController(ScreenController parent){
@@ -92,6 +97,8 @@ public class PathController implements ControllableScreen{
 
     private HashMap<FloorNumber,ArrayList<Line>> pathLines;
 
+    private HashMap<FloorNumber, ArrayList<Circle>> pathPoints;
+
     @FXML
     private JFXListView<String> directionsList;
     //Methods start here
@@ -100,7 +107,9 @@ public class PathController implements ControllableScreen{
         map = new HospitalMap();
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
+        points = new ArrayList<Circle>();
         pathLines = new HashMap<FloorNumber,ArrayList<Line>>(); //hash map to lines for each floor
+        pathPoints = new HashMap<FloorNumber, ArrayList<Circle>>();
         onShow();
         currentFloor = FloorNumber.fromDbMapping("1");
         //set up floor variables
@@ -131,21 +140,43 @@ public class PathController implements ControllableScreen{
         }
         lines = new ArrayList<>();
     }
+    private Circle getPoint(int x, int y){
+        Circle c = new Circle();
+        c.setCenterX(x/mapImage.getScale());
+        c.setCenterY(y/mapImage.getScale());
+        c.setVisible(true);
+        c.setRadius(10/mapImage.getScale());
+        return c;
+    }
     private void setLines(Path path){
         //clear all lines and paths
         pathLines.clear();
         floors.clear();
         lines.clear();
+        points.clear();
         FloorNumber current=null; // pointer to the current node of the floor
         for(int i=0;i<path.getPath().size();i++){
             //get first floor
             if(path.getPath().get(i).getFloor()!=current){
                 current = path.getPath().get(i).getFloor();
                 floors.add(current);
-                //create new hashmap element
+                //create new hashmap elements
                 pathLines.put(current,new ArrayList<Line>());
+                pathPoints.put(current,new ArrayList<Circle>());
                 if(i==0){
                     currentFloor=current;
+                }
+                //add point for current node
+                Circle newp = getPoint(path.getPath().get(i).getX(),path.getPath().get(i).getY());
+                pathPoints.get(current).add(newp);
+                mapPane.getChildren().add(newp);
+                points.add(newp);
+                //add last point if it exists
+                if(i>0){
+                    Circle newp1 = getPoint(path.getPath().get(i-1).getX(),path.getPath().get(i-1).getY());
+                    pathPoints.get(current).add(getPoint(path.getPath().get(i-1).getX(),path.getPath().get(i-1).getY()));
+                    mapPane.getChildren().add(newp);
+                    points.add(newp1);
                 }
             }
             else if(path.getPath().get(i).getFloor()==current){
@@ -165,15 +196,23 @@ public class PathController implements ControllableScreen{
                 mapPane.getChildren().add(line);//add all lines to mapPane
                 lines.add(line);
             }
+            if(i==path.getPath().size()-1 && i>0){
+                Circle newP2 = getPoint(path.getPath().get(i-1).getX(),path.getPath().get(i-1).getY());
+                pathPoints.get(current).add(newP2);
+                mapPane.getChildren().add(newP2);
+            }
+            //Todo: add points at nodes with a steep change in direction
         }
     }
     //method to switch between paths when toggling between floors
     private void switchPath(FloorNumber floor){
         hidePaths(lines);
+        hidePoints(points);
         if(pathLines.containsKey(floor)){
             System.out.println("Switching to path " + floor);
             //add all in to mapPane
             showPaths(pathLines.get(floor));
+            showPoints(pathPoints.get(floor));
         }
     }
 
@@ -217,10 +256,23 @@ public class PathController implements ControllableScreen{
         }
 
     }
+    public void hidePoints(ArrayList<Circle> thispoints){
+        for(Circle c: thispoints){
+            c.setVisible(false);
+            System.out.println("Point has been hidden");
+        }
+
+    }
     public void showPaths(ArrayList<Line> thislines){
         for(Line line : thislines){
             line.setVisible(true);
             System.out.println("Line has been shown");
+        }
+    }
+    public void showPoints(ArrayList<Circle> thispoints){
+        for(Circle c: thispoints){
+            c.setVisible(true);
+            System.out.println("Circle has been shown");
         }
     }
     //button methods
