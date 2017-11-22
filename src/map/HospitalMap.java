@@ -53,7 +53,7 @@ public class HospitalMap{
     //Methods to add a new, isolated node to the map
     public void addNode(Node node){
         nodeMap.add(node);
-
+        nodeDatabase.addNode(node);
     }
 
     public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
@@ -89,6 +89,7 @@ public class HospitalMap{
             removeEdge(node.getConnections().get(0));
         }
         nodeMap.remove(node);
+        nodeDatabase.deleteNode(node);
     }
 
     public void addEdge(Edge edge){
@@ -105,6 +106,7 @@ public class HospitalMap{
     public void removeEdge(Edge edge){
         edge.deleteConnection();
         edgeMap.remove(edge);
+        edgeDatabase.deleteAnyEdge(edge);
     }
 
     public void editEdge(Edge edge, Node oldNode, Node newNode) throws InvalidNodeException {
