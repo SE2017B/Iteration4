@@ -26,10 +26,15 @@ public class DepartmentSubsystem {
 
         //TODO assign staff to departments and services
         Department translationDepartment = new Department("Translation Department");
+        System.out.println("hello 33 \n\n\n");
         Service translation = new Translation(translationDepartment, "translation service");
+        System.out.println("hello 34 \n\n\n");
         translation.setURL("/DepartmentSubsystem/Services/Displays/Translation.fxml");
+        System.out.println("hello 35 \n\n\n");
         translationDepartment.addService(translation);
+        System.out.println("hello 36 \n\n\n");
         departments.add(translationDepartment);
+        System.out.println("hello 37 \n\n\n");
 
         Department transportationDepartment = new Department("Transportation Department");
         Service transport = new Transport(transportationDepartment,  "Transport service");

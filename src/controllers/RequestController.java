@@ -51,7 +51,7 @@ public class RequestController implements ControllableScreen{
     private String selectedAlg;
     private ArrayList<String> deps;
     private ArrayList<Service> serv;
-    private DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
+    private DepartmentSubsystem depSub;
 
 
 
@@ -115,25 +115,33 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
+        System.out.println("hello 61 \n\n\n");
         choiceBoxDept.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> deptSelected());
+
+        System.out.println("hello 61 \n\n\n");
         choiceBoxService.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> servSelected());
+
+        System.out.println("hello 61 \n\n\n");
         choiceBoxStaff.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> staffSelected());
+
+        System.out.println("hello 61 \n\n\n");
+        depSub = DepartmentSubsystem.getSubsystem();
     }
 
     public void onShow(){
  //test for removing service off list
-        ServiceRequest test = new ServiceRequest(null,2,null,null,null, null);
-        ServiceRequest test2 = new ServiceRequest(null,3,null,null,null, null);
-        ServiceRequest test3 = new ServiceRequest(null,4,null,null,null, null);
-        resolveServiceListView.getItems().add(test);
-        resolveServiceListView.getItems().add(test2);
-        resolveServiceListView.getItems().add(test3);
+//        ServiceRequest test = new ServiceRequest(null,2,null,null,null, null);
+//        ServiceRequest test2 = new ServiceRequest(null,3,null,null,null, null);
+//        ServiceRequest test3 = new ServiceRequest(null,4,null,null,null, null);
+//        resolveServiceListView.getItems().add(test);
+//        resolveServiceListView.getItems().add(test2);
+//        resolveServiceListView.getItems().add(test3);
 
         //Update the nodes in the map
         ArrayList<Node> nodes = HospitalMap.getNodesForSearch();
         //todo populate list of requests upon login
         //resolveServiceListView.getItems().add(Department.getBacklog().values());
-        choiceBoxDept.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getDepartments()));
+        choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
 
         //update the items in the checklist
@@ -194,13 +202,17 @@ public class RequestController implements ControllableScreen{
     public void deptSelected()
     {
         //todo fix deptSelected. Add listener. Test?
-            nameDept = choiceBoxDept.getSelectionModel().getSelectedItem().toString();
-            choiceBoxDept.setDisable(false);
-            choiceBoxService.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getServices(nameDept)));
+        //nameDept = newVal;
+        nameDept = choiceBoxDept.getValue().toString();
+        System.out.println("hello 51 \n\n\n" + nameDept);
+        choiceBoxDept.setDisable(false);
+        System.out.println("hello 52 \n\n\n");
+            choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
+        System.out.println("hello 53 \n\n\n");
 //            nameService = choiceBoxService.getSelectionModel().getSelectedItem().toString();
-            choiceBoxService.setDisable(false);
+//            choiceBoxService.setDisable(false);
 //
-//            choiceBoxStaff.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getStaff(nameService)));
+//            choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
 //            nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();
 //            choiceBoxStaff.setDisable(false);
 
@@ -211,10 +223,10 @@ public class RequestController implements ControllableScreen{
 
 //        nameDept = choiceBoxDept.getSelectionModel().getSelectedItem().toString();
 //        choiceBoxDept.setDisable(false);
-//        choiceBoxService.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getServices(nameDept)));
+//        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
             nameService = choiceBoxService.getSelectionModel().getSelectedItem().toString();
             choiceBoxService.setDisable(false);
-            choiceBoxStaff.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getStaff(nameService)));
+            choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
 //            nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();
 //            choiceBoxStaff.setDisable(false);
 
