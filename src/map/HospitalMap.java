@@ -155,18 +155,15 @@ public class HospitalMap{
         }
         return output;
     }
+    public ArrayList<SearchStrategy> getSearches() {
+        return posSerchStrat;
+    }
+    public List<Node> getNodesBy(Function<Node, Boolean> function){
+        return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
+    }
 
     //Setters
     public void setSearchStrategy(SearchStrategy searchStrategy){
         search.setStrategy(searchStrategy);
-    }
-
-    public ArrayList<SearchStrategy> getSearches() {
-        return posSerchStrat;
-    }
-
-
-    public List<Node> getNodesBy(Function<Node, Boolean> function){
-        return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
     }
 }

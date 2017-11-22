@@ -245,7 +245,6 @@ public class HospitalMapTest {
         assertEquals(nodes, easyMap.getNodeMap());
     }
 
-    //fails - removeNode does not remove corresponding edge from edge map
     @Test
     public void testRemoveNode2(){
         easyMap.removeNode(A);
@@ -304,9 +303,11 @@ public class HospitalMapTest {
         easyMap.editEdge(BC, F, E);
     }
 
+    //fails: NumberFormatException: null
+    //seems like something to do with the indexOf function
     @Test
     public void testFindNode(){
-
+        assertEquals(A, easyMap.findNode("A"));
     }
 
     //------------------------BEGIN TEST findPath()------------------------//
@@ -631,7 +632,7 @@ public class HospitalMapTest {
 
     @Test
     public void testFindNearest(){
-
+        assertEquals("[A, B, D]", easyMap.findNearest(A, "Desk").toString());
     }
 
     @Test
