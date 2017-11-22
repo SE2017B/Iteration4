@@ -297,7 +297,7 @@ public class PathController implements ControllableScreen{
     private Path getPath(){
         //HospitalMap.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
         //calculate the path an return it
-        return null; //for now
+        return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
     }
 
 
