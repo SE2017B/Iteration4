@@ -248,6 +248,9 @@ public class AddNodeController implements ControllableScreen {
                 edgeAddNode2 = null;
                 edgeAddID2Label.setText("");
             }
+            else{
+                source.setSelected(false);
+            }
         }
         else if (nodeTab.isSelected() && nodeEditTab.isSelected()) {
             if (nodeEditSelectedNode == null) {
