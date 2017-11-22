@@ -10,26 +10,38 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import map.FloorNumber;
+import map.HospitalMap;
+import map.Node;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import map.FloorNumber;
-import map.HospitalMap;
-import map.Node;
-import map.Path;
+import javafx.scene.shape.Circle;
 
+import map.Path;
+import DepartmentSubsystem.*;
+
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PathController implements ControllableScreen{
     private ScreenController parent;
     private ArrayList<Node> path;
     private HospitalMap map;
     private ArrayList<Line> lines;
+    private ArrayList<Circle> points;
 
 
     public void setParentController(ScreenController parent){
@@ -81,9 +93,11 @@ public class PathController implements ControllableScreen{
 
     private ArrayList<FloorNumber> floors; //list of floors available
 
-    private Path testpath;
+    //private Path testpath;
 
     private HashMap<FloorNumber,ArrayList<Line>> pathLines;
+
+    private HashMap<FloorNumber, ArrayList<Circle>> pathPoints;
 
     @FXML
     private JFXListView<String> directionsList;
@@ -93,21 +107,21 @@ public class PathController implements ControllableScreen{
         map = HospitalMap.getMap();
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
+        points = new ArrayList<Circle>();
         pathLines = new HashMap<FloorNumber,ArrayList<Line>>(); //hash map to lines for each floor
+        pathPoints = new HashMap<FloorNumber, ArrayList<Circle>>();
         onShow();
         currentFloor = FloorNumber.fromDbMapping("1");
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
-        floors.add(FloorNumber.fromDbMapping("1"));
-        floors.add(FloorNumber.fromDbMapping("2"));
+        //floors.add(FloorNumber.fromDbMapping("1"));
+        //floors.add(FloorNumber.fromDbMapping("2"));
         //add the test background image
         mapImage.setImage(currentFloor);
 
-        //create test path
+
+
         mapPane.getChildren().add(mapImage);
-
-
-
     }
 
     public void onShow(){
@@ -118,27 +132,42 @@ public class PathController implements ControllableScreen{
 
 
         //remove any previous paths from the display
-        for (Line line: lines) {
-            line.setVisible(false);
-            mapPane.getChildren().remove(line);
-        }
-        lines = new ArrayList<>();
+        clearPaths();
+        //lines = new ArrayList<>();
+    }
+    private Circle getPoint(int x, int y){
+        Circle c = new Circle();
+        c.setCenterX(x/mapImage.getScale());
+        c.setCenterY(y/mapImage.getScale());
+        c.setVisible(true);
+        c.setRadius(10/mapImage.getScale());
+        return c;
     }
     private void setLines(Path path){
-        //clear all lines and paths
-        pathLines.clear();
-        floors.clear();
-        lines.clear();
+        clearPaths();
         FloorNumber current=null; // pointer to the current node of the floor
         for(int i=0;i<path.getPath().size();i++){
             //get first floor
             if(path.getPath().get(i).getFloor()!=current){
                 current = path.getPath().get(i).getFloor();
                 floors.add(current);
-                //create new hashmap element
+                //create new hashmap elements
                 pathLines.put(current,new ArrayList<Line>());
+                pathPoints.put(current,new ArrayList<Circle>());
                 if(i==0){
                     currentFloor=current;
+                }
+                //add point for current node
+                Circle newp = getPoint(path.getPath().get(i).getX(),path.getPath().get(i).getY());
+                pathPoints.get(current).add(newp);
+                mapPane.getChildren().add(newp);
+                points.add(newp);
+                //add last point if it exists
+                if(i>0){
+                    Circle newp1 = getPoint(path.getPath().get(i-1).getX(),path.getPath().get(i-1).getY());
+                    pathPoints.get(path.getPath().get(i-1).getFloor()).add(newp1);
+                    mapPane.getChildren().add(newp1);
+                    points.add(newp1);
                 }
             }
             else if(path.getPath().get(i).getFloor()==current){
@@ -153,20 +182,30 @@ public class PathController implements ControllableScreen{
                 line.setEndY((end.getY() - start.getY())/mapImage.getScale());
 
                 line.setVisible(true);
+                //line.setStroke();
                 line.setStrokeWidth(4/mapImage.getScale());// make the line width vary with the scale
                 pathLines.get(current).add(line);
                 mapPane.getChildren().add(line);//add all lines to mapPane
                 lines.add(line);
             }
+            if(i==path.getPath().size()-1 && i>0){
+                Circle newP2 = getPoint(path.getPath().get(i).getX(),path.getPath().get(i).getY());
+                pathPoints.get(current).add(newP2);
+                mapPane.getChildren().add(newP2);
+                points.add(newP2);
+            }
+            //Todo: add points at nodes with a steep change in direction
         }
     }
     //method to switch between paths when toggling between floors
     private void switchPath(FloorNumber floor){
         hidePaths(lines);
+        hidePoints(points);
         if(pathLines.containsKey(floor)){
             System.out.println("Switching to path " + floor);
             //add all in to mapPane
             showPaths(pathLines.get(floor));
+            showPoints(pathPoints.get(floor));
         }
     }
 
@@ -202,7 +241,19 @@ public class PathController implements ControllableScreen{
             line.setVisible(false);
             mapPane.getChildren().remove(line);
         }
+        for(Circle c: points){
+            c.setVisible(false);
+            mapPane.getChildren().remove(c);
+        }
+        //clear all lines and paths
+        pathLines = new HashMap<>();
+        pathPoints = new HashMap<>();
+        floors= new ArrayList<>();
+        lines=new ArrayList<>();
+        points= new ArrayList<>();
+        System.out.println("All entities cleared");
     }
+
     public void hidePaths(ArrayList<Line> thislines){
         for(Line line : thislines){
             line.setVisible(false);
@@ -210,10 +261,23 @@ public class PathController implements ControllableScreen{
         }
 
     }
+    public void hidePoints(ArrayList<Circle> thispoints){
+        for(Circle c: thispoints){
+            c.setVisible(false);
+            System.out.println("Point has been hidden");
+        }
+
+    }
     public void showPaths(ArrayList<Line> thislines){
         for(Line line : thislines){
             line.setVisible(true);
             System.out.println("Line has been shown");
+        }
+    }
+    public void showPoints(ArrayList<Circle> thispoints){
+        for(Circle c: thispoints){
+            c.setVisible(true);
+            System.out.println("Point has been shown");
         }
     }
     //button methods
@@ -233,7 +297,7 @@ public class PathController implements ControllableScreen{
     private Path getPath(){
         //HospitalMap.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
         //calculate the path an return it
-        return testpath; //for now
+        return null; //for now
     }
 
 
@@ -248,12 +312,32 @@ public class PathController implements ControllableScreen{
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
         switchPath(currentFloor);
+        clearScreen(); //remove other screens
         System.out.println("Enter Pressed");
 
         //todo: draw path on this floor
         //todo: disable floor buttons not in the path
 
 
+    }
+
+    private void clearScreen(){
+        //check each button
+        checkScreen(floorL2Button);
+        checkScreen(floorL1Button);
+        checkScreen(floorGButton);
+        checkScreen(floor1Button);
+        checkScreen(floor2Button);
+        checkScreen(floor3Button);
+
+    }
+    private void checkScreen(JFXButton b){
+        if(floors.contains(FloorNumber.fromDbMapping(b.getText()))){
+            b.setDisable(false);
+        }
+        else{
+            b.setDisable(true);
+        }
     }
 
 

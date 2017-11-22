@@ -15,15 +15,20 @@ public class EdgeCheckBox extends Line {
     private boolean selected;
 
 
-    public EdgeCheckBox(Edge edge) {
+    public EdgeCheckBox(Edge edge, double scale) {
         super();
         this.edge = edge;
         selected = false;
-        this.setStartX(edge.getNodeOne().getX());
-        this.setStartY(edge.getNodeOne().getY());
-        this.setEndX(edge.getNodeTwo().getX());
-        this.setEndY(edge.getNodeTwo().getY());
-        this.setStrokeWidth(5);
+        int startX = edge.getNodeOne().getX();
+        int startY = edge.getNodeOne().getY();
+        this.setLayoutX(startX/scale);
+        this.setLayoutY(startY/scale);
+        this.setStartX(0);
+        this.setStartY(0);
+        this.setEndX((edge.getNodeTwo().getX() - startX)/scale);
+        this.setEndY((edge.getNodeTwo().getY() - startY)/scale);
+        this.setStrokeWidth(8);
+        this.setVisible(false);
 
         this.setOnMouseClicked(new EventHandler<MouseEvent>(){
             public void handle(MouseEvent e){
@@ -37,6 +42,12 @@ public class EdgeCheckBox extends Line {
 
     public boolean isSelected() {
         return selected;
+    }
+
+    public void setSelected(boolean sel){
+        if(selected != sel){
+            select();
+        }
     }
 
     public void select(){
