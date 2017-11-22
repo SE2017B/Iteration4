@@ -112,7 +112,7 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
-        map = new HospitalMap();
+        map = HospitalMap.getMap();
     }
 
     public void onShow(){

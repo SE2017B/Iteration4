@@ -83,21 +83,6 @@ public class AddNodeController implements ControllableScreen {
             edgeCheckBoxes.add(cb);
         }
 
-        //////////    STUB FOR TESTING  ////////////////////////////////////
-        Node test1 = new Node(1000,400,FloorNumber.FLOOR_ONE);
-        Node test2 = new Node(1200,400,FloorNumber.FLOOR_ONE);
-        Node test3 = new Node(1200,400,FloorNumber.FLOOR_TWO);
-        Node test4 = new Node(1000,400,FloorNumber.FLOOR_TWO);
-        nodeCheckBoxes.add(new NodeCheckBox(test1));
-        nodeCheckBoxes.add(new NodeCheckBox(test2));
-        nodeCheckBoxes.add(new NodeCheckBox(test3));
-        nodeCheckBoxes.add(new NodeCheckBox(test4));
-        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test1,test2)));
-        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test2,test3)));
-        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test3,test4)));
-
-
-
 
     }
 
