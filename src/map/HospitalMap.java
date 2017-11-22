@@ -53,11 +53,12 @@ public class HospitalMap{
     //Methods to add a new, isolated node to the map
     public void addNode(Node node){
         nodeMap.add(node);
+
     }
 
     public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
         nodeMap.add(new Node(ID ,x, y, floor, building, type, longName, shortName, team));
-        //nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
+        nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
 
     public void addNodeandEdges(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team, ArrayList<Node> connections){
@@ -66,7 +67,7 @@ public class HospitalMap{
         for(int i = 0; i < connections.size(); i++){
             addEdge(temp,connections.get(i));
         }
-        //nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
+        nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
 
     public void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
@@ -77,7 +78,7 @@ public class HospitalMap{
         node.setX(x);
         node.setY(y);
         node.setType(type);
-        //nodeDatabase.modifyNode(node);
+        nodeDatabase.modifyNode(node);
     }
 
     public void removeNode(Node node){
@@ -96,7 +97,9 @@ public class HospitalMap{
 
     //this is the one used by the engine and therefore the tests
     public void addEdge(Node nodeOne,Node nodeTwo){
-        edgeMap.add(new Edge(nodeOne,nodeTwo));
+        Edge tempEdge = new Edge(nodeOne,nodeTwo);
+        edgeMap.add(tempEdge);
+        edgeDatabase.addEdge(tempEdge);
     }
 
     public void removeEdge(Edge edge){

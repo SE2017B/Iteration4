@@ -100,25 +100,6 @@ public class AddNodeController implements ControllableScreen {
             cb.setOnMouseClicked(e -> edgeSelected(e));
         }
 
-        //////////    STUB FOR TESTING  ////////////////////////////////////
-        Node test1 = new Node(1000,400,FloorNumber.FLOOR_ONE);
-        Node test2 = new Node(1200,400,FloorNumber.FLOOR_ONE);
-        Node test3 = new Node(1200,400,FloorNumber.FLOOR_TWO);
-        Node test4 = new Node(1000,400,FloorNumber.FLOOR_TWO);
-        test1.setLongName("Test 1");
-        test2.setLongName("Test 2");
-        test3.setLongName("Test 3");
-        test4.setLongName("Test 4");
-        nodeCheckBoxes.add(new NodeCheckBox(test1, mapImage.getScale()));
-        nodeCheckBoxes.add(new NodeCheckBox(test2, mapImage.getScale()));
-        nodeCheckBoxes.add(new NodeCheckBox(test3, mapImage.getScale()));
-        nodeCheckBoxes.add(new NodeCheckBox(test4, mapImage.getScale()));
-        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test1,test2), mapImage.getScale()));
-        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test2,test3), mapImage.getScale()));
-        edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test3,test4), mapImage.getScale()));
-
-        /////////////////////////////////////////////////////////////////////////
-
 
 
 
