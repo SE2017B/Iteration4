@@ -169,7 +169,7 @@ public class PathController implements ControllableScreen{
         if(positionVars.containsKey(floor)){
             mapScrollPane.setHvalue(positionVars.get(floor).get(0)*mapImage.getScale()/5000);
             mapScrollPane.setVvalue(positionVars.get(floor).get(1)*mapImage.getScale()/3500);
-            System.out.println("Screen Adjust");
+            System.out.println("Screen Adjusted");
         }
     }
 
@@ -281,6 +281,7 @@ public class PathController implements ControllableScreen{
             mapPane.getChildren().remove(c);
         }
         //clear all lines and paths
+        positionVars = new HashMap<>();
         pathLines = new HashMap<>();
         pathPoints = new HashMap<>();
         floors= new ArrayList<>();
@@ -343,7 +344,7 @@ public class PathController implements ControllableScreen{
         //add background image
         System.out.println(thePath.getDirections());
         mapImage.setImage(currentFloor);
-        directionsList.setItems(FXCollections.observableList(thePath.getDirections()));
+        directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
         switchPath(currentFloor);
