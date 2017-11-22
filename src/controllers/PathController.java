@@ -10,6 +10,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
 import javafx.scene.control.Button;
@@ -87,6 +88,9 @@ public class PathController implements ControllableScreen{
 
     @FXML
     private ScrollPane mapScrollPane;
+
+    @FXML
+    private JFXSlider slideBarZoom;
 
 
 
@@ -247,33 +251,6 @@ public class PathController implements ControllableScreen{
         }
     }
 
-    public void diplayPath(Path path){
-        if( path.getPath().size() <= 1){
-            System.out.println("NO PATH FOUND");
-        } else if(path.getPath().size() > 1) {
-            for (int i = 0; i < path.getPath().size() - 1; i++) {
-                Line line = new Line();
-                Node start = path.getPath().get(i);
-                Node end = path.getPath().get(i + 1);
-                line.setLayoutX((start.getX())/2);
-                line.setLayoutY((start.getY())/2);
-
-
-                line.setEndX((end.getX() - start.getX())/2);
-                line.setEndY((end.getY() - start.getY())/2);
-
-                line.setVisible(true);
-                line.setStrokeWidth(2);
-                mapPane.getChildren().add(line);
-                lines.add(line);
-                //
-
-            }
-        }
-        else{
-            System.out.println("ERROR: No Path Found");
-        }
-    }
     public void clearPaths(){
         for(Line line : lines){
             line.setVisible(false);
@@ -319,6 +296,23 @@ public class PathController implements ControllableScreen{
             System.out.println("Point has been shown");
         }
     }
+
+    public void setMapScale(double scale){
+        double oldScale = mapImage.getScale();
+        for(Line l : lines){
+            l.setLayoutX((l.getLayoutX())*oldScale/scale);
+            l.setLayoutY((l.getLayoutY())*oldScale/scale);
+
+            l.setEndX(l.getEndX()*oldScale/scale);
+            l.setEndY(l.getEndY()*oldScale/scale);
+        }
+        for(Circle c : points){
+            c.setCenterX(c.getCenterX()*oldScale/scale);
+            c.setCenterY(c.getCenterY()*oldScale/scale);
+        }
+        mapImage.setScale(scale);
+    }
+
     //button methods
     public void startPressed(ActionEvent e){
         //show the first screen when clicked on
@@ -392,6 +386,20 @@ public class PathController implements ControllableScreen{
         mapImage.slideButtons(floorScrollPane,floor);
         mapImage.setImage(floor);
         switchPath(floor);
+    }
+
+    //when + button is pressed zoom in map
+    public void zinPressed(ActionEvent e){
+        System.out.println("Zoom In Pressed");
+        slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
+        setMapScale(4-slideBarZoom.getValue());
+
+    }
+
+    //when - button pressed zoom out map
+    public void zoutPressed(ActionEvent e){
+        slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
+        setMapScale(4-slideBarZoom.getValue());
     }
 
 
