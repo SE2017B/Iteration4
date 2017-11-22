@@ -159,8 +159,9 @@ public class RequestController implements ControllableScreen{
         //todo does this need to be added t listView or is it handled?
         requestIDCount++;
         //submitRequest(Service service, String time, String date, Node location, Staff person, int RID){
-        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), time, date, choiceBoxStaff.getValue());
-
+       // ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), time, date, choiceBoxStaff.getValue());
+        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, null, null, null, null);
+        depSub.submitRequest(null, "1", "2", null, null, requestIDCount);
     }
     public void cancelPressed(ActionEvent e)
     {
@@ -201,28 +202,17 @@ public class RequestController implements ControllableScreen{
 
         choiceBoxDept.setDisable(false);
         System.out.println("hello 52 \n\n\n");
-
-            choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
+        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
         System.out.println("hello 53 \n\n\n");
-//            nameService = choiceBoxService.getSelectionModel().getSelectedItem().toString();
-//            choiceBoxService.setDisable(false);
-//
-//            choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
-//            nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();
-//            choiceBoxStaff.setDisable(false);
 
     }
     public void servSelected(Service newValue)
     {
         //todo fix deptSelected. Add listener. Test?
-
-//        nameDept = choiceBoxDept.getSelectionModel().getSelectedItem().toString();
-//        choiceBoxDept.setDisable(false);
-//        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
             nameService = newValue.toString();
             choiceBoxService.setDisable(false);
             choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
-            choiceBoxStaff.setDisable(false);
+//            choiceBoxStaff.setDisable(false);
 //            nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();
 //            choiceBoxStaff.setDisable(false);
 
