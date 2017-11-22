@@ -105,6 +105,8 @@ public class AddNodeController implements ControllableScreen {
         currentFloor = FloorNumber.FLOOR_ONE;
         mapImage.setImage(currentFloor);
         refreshNodesandEdges();
+        nodeAddFloorDropDown.setText(currentFloor.getDbMapping());
+        nodeEditFloorDropDown.setText(currentFloor.getDbMapping());
     }
 
     //Action upon pressing enter
@@ -122,12 +124,13 @@ public class AddNodeController implements ControllableScreen {
     }
 
     public void floorButtonPressed(ActionEvent e){
-        //todo: display the nodes and edges for the floor that was pressed
-        //todo: hide the nodes and edges from the other floors
         FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         System.out.println("Floor Pressed: " + floor);
         currentFloor = floor;
+        nodeAddFloorDropDown.setText(floor.getDbMapping());
+        nodeEditFloorDropDown.setText(floor.getDbMapping());
         mapImage.setImage(floor);
+        refreshNodesandEdges();
 
     }
 
@@ -137,12 +140,14 @@ public class AddNodeController implements ControllableScreen {
             showNodesbyFloor(currentFloor);
             if(nodeRemoveTab.isSelected()){
                 nodeRemoveSelectedList.getItems().clear();
+            } else if(nodeEditTab.isSelected()){
+                resetNodeEdit();
             }
         }
         else{
             if(edgeAddTab.isSelected()){
-                showNodesbyFloor(currentFloor);
                 showEdgesbyFloor(currentFloor);
+                showNodesbyFloor(currentFloor);
                 edgeAddNode1 = null;
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
@@ -193,8 +198,7 @@ public class AddNodeController implements ControllableScreen {
     }
 
     public void refreshNodes(){
-        //todo reinsert this
-        //nodeCheckBoxes.clear();
+        nodeCheckBoxes.clear();
         for (Node node:map.getNodeMap()) {
             NodeCheckBox cb = new NodeCheckBox(node, mapImage.getScale());
             nodeCheckBoxes.add(cb);
@@ -203,12 +207,11 @@ public class AddNodeController implements ControllableScreen {
     }
 
     public void refreshEdges(){
-        //todo reinsert this
-        //edgeCheckBoxes.clear();
+        edgeCheckBoxes.clear();
         for (Edge edge:map.getEdgeMap()){
             EdgeCheckBox cb = new EdgeCheckBox(edge, mapImage.getScale());
             edgeCheckBoxes.add(cb);
-            cb.setOnMouseClicked(e -> edgeSelected(e));
+            cb.setOnMousePressed(e -> edgeSelected(e));
         }
     }
 
@@ -253,13 +256,15 @@ public class AddNodeController implements ControllableScreen {
                 nodeEditNameField.setText(n.getLongName());
                 nodeEditShortField.setText(n.getShortName());
                 nodeEditBuildingDropDown.setText(n.getBuilding());
-                nodeEditFloorDropDown.setText(n.getFloor().toString());
+                nodeEditFloorDropDown.setText(n.getFloor().getDbMapping());
                 nodeEditTypeDropDown.setText(n.getType());
                 nodeEditXField.setText(Integer.toString(n.getX()));
                 nodeEditYField.setText(Integer.toString(n.getY()));
                 nodeEditIDLabel.setText(n.getID());
             } else if (nodeEditSelectedNode.equals(source.getNode())) {
                 resetNodeEdit();
+            } else{
+                source.setSelected(false);
             }
         }
     }
@@ -267,7 +272,8 @@ public class AddNodeController implements ControllableScreen {
 
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
-        if(!source.isSelected()) {
+        source.select();
+        if(source.isSelected()) {
             System.out.println("Edge Added to List");
             if (!edgeRemoveList.getItems().contains(source.getEdge()))
                 edgeRemoveList.getItems().add(source.getEdge());
@@ -485,9 +491,9 @@ public class AddNodeController implements ControllableScreen {
                 nodeEditFloorDropDown.getText(),
                 nodeEditBuildingDropDown.getText(),
                 nodeEditTypeDropDown.getText(),
-                nodeAddNameField.getText(),
-                nodeAddShortField.getText());
-        //also get selected nodes and pass them to map to add neighbors
+                nodeEditNameField.getText(),
+                nodeEditShortField.getText());
+        refreshNodesandEdges();
     }
 
     public void nodeEditCancelPressed(ActionEvent e){

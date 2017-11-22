@@ -30,13 +30,6 @@ public class EdgeCheckBox extends Line {
         this.setStrokeWidth(8);
         this.setVisible(false);
 
-        this.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            public void handle(MouseEvent e){
-                if(e.getSource() instanceof EdgeCheckBox){
-                    ((EdgeCheckBox)e.getSource()).select();
-                }
-            }
-        });
 
     }
 

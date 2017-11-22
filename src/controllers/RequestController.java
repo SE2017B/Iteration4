@@ -117,6 +117,8 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
+
+        map = HospitalMap.getMap();
         //choiceBoxDept.setItems(FXCollections.observableList(testList));
         choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
 

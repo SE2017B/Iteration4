@@ -213,7 +213,7 @@
                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                          </rowConstraints>
                                                          <children>
-                                                            <JFXTextField fx:id="txtfldNodeAddX1" focusColor="WHITE" promptText="X-Coordinate" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                            <JFXTextField fx:id="nodeEditXField" focusColor="WHITE" onAction="#nodeEditXEntered" promptText="X-Coordinate" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -221,7 +221,7 @@
                                                                   <Insets left="15.0" right="15.0" />
                                                                </GridPane.margin>
                                                             </JFXTextField>
-                                                            <JFXTextField fx:id="txtfldNodeAddY1" focusColor="WHITE" promptText="Y-Coordinate" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                                            <JFXTextField fx:id="nodeEditYField" focusColor="WHITE" onAction="#nodeEditYEntered" promptText="Y-Coordinate" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.rowIndex="2">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -239,7 +239,7 @@
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXTextField fx:id="nodeAddNameField1" focusColor="WHITE" onAction="#nodeAddNameEntered" promptText="Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                            <JFXTextField fx:id="nodeEditNameField" focusColor="WHITE" onAction="#nodeAddNameEntered" promptText="Name" styleClass="text-on-dark" unFocusColor="#00daff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -428,7 +428,7 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="pane">
                            <children>
-                              <ScrollPane prefHeight="687.0" prefWidth="941.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ScrollPane hvalue="0.44" prefHeight="687.0" prefWidth="941.0" vvalue="0.18" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <Pane fx:id="mapPane">
                                        <children>
