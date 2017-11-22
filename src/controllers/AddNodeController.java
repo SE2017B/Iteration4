@@ -120,7 +120,7 @@ public class AddNodeController implements ControllableScreen {
 
     public void returnPressed(ActionEvent e){
         System.out.println("Return Pressed");
-        parent.setScreen(ScreenController.RequestID);
+        parent.setScreen(ScreenController.RequestID, "RIGHT");
     }
 
     public void floorButtonPressed(ActionEvent e){

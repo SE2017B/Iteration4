@@ -381,7 +381,7 @@ public class PathController implements ControllableScreen{
     {
         System.out.println("Cancel Pressed");
         clearPaths();
-        parent.setScreen(ScreenController.MainID);
+        parent.setScreen(ScreenController.MainID,"RIGHT");
     }
 
     public void stairsPressed(ActionEvent e)

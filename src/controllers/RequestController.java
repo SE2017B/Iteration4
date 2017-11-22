@@ -180,7 +180,7 @@ public class RequestController implements ControllableScreen{
 
     public void editPressed(ActionEvent e){
         System.out.println("Edit Pressed");
-        parent.setScreen(ScreenController.AddNodeID);
+        parent.setScreen(ScreenController.AddNodeID, "LEFT");
     }
 
     public void selectAlgorithmPath(ActionEvent e)

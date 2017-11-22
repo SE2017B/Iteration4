@@ -51,12 +51,12 @@ public class MainController implements ControllableScreen{
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         System.out.println("Login Pressed");
-        parent.setScreen(ScreenController.LoginID);
+        parent.setScreen(ScreenController.LoginID,"RIGHT");
     }
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
         System.out.println("Direction Pressed");
-        parent.setScreen(ScreenController.PathID);
+        parent.setScreen(ScreenController.PathID,"LEFT");
     }
     //when search button is pressed go to search screen
     public void searchPressed(ActionEvent e){

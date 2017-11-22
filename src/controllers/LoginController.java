@@ -41,7 +41,7 @@ public class LoginController implements ControllableScreen{
 
     public void returnPressed(ActionEvent e){
         System.out.println("Return Pressed");
-        parent.setScreen(ScreenController.MainID);
+        parent.setScreen(ScreenController.MainID,"LEFT");
 
     }
 
