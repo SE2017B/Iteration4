@@ -44,6 +44,7 @@ public class MainController implements ControllableScreen{
     public void init() {
         mapImage = new proxyImagePane();
         mapImage.setImage(FloorNumber.FLOOR_GROUND);
+        mapImage.slideButtons(floorScrollPane,FloorNumber.FLOOR_GROUND);
         mapPane.getChildren().add(mapImage);
 
     }
@@ -90,11 +91,9 @@ public class MainController implements ControllableScreen{
 
 
     public void floorButtonPressed(ActionEvent e){
-       String floor =  ((JFXButton)e.getSource()).getText();
-       System.out.println(((JFXButton) e.getSource()).getLayoutX());
-       mapImage.slideButtons(floorScrollPane,(JFXButton)e.getSource());
-       System.out.println("Floor Pressed: " + floor);
-       mapImage.setImage(FloorNumber.fromDbMapping(floor));
+       FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
+       mapImage.slideButtons(floorScrollPane,floor);
+       mapImage.setImage(floor);
     }
 
 
