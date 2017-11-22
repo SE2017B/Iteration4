@@ -112,7 +112,7 @@ public class RequestController implements ControllableScreen{
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
         depSub = DepartmentSubsystem.getSubsystem();
 
-        
+
 
         lblSelectedService.setText("Service" + resolveServiceListView.getSelectionModel().getSelectedItems().toString());
     }
@@ -134,6 +134,7 @@ public class RequestController implements ControllableScreen{
         choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
 
+        searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
         //update the items in the checklist
         //locationChoiceBox.setItems(FXCollections.observableList(nodes));
 

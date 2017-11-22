@@ -60,4 +60,9 @@ public class BreadthFirstSearch implements SearchStrategy {
         }
         return new Path();
     }
+
+    @Override
+    public String toString(){
+        return "Breadth First";
+    }
 }

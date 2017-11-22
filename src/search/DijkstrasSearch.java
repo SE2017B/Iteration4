@@ -41,4 +41,9 @@ public class DijkstrasSearch implements SearchStrategy {
     }
         return new Path();
     }
+
+    @Override
+    public String toString(){
+        return "Dijkstras";
+    }
 }
