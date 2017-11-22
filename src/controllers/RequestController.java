@@ -119,14 +119,8 @@ public class RequestController implements ControllableScreen{
     public void init(){
         //choiceBoxDept.setItems(FXCollections.observableList(testList));
         choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
-
-        System.out.println("hello 61 \n\n\n");
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
-
-        System.out.println("hello 61 \n\n\n");
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
-
-        System.out.println("hello 61 \n\n\n");
         depSub = DepartmentSubsystem.getSubsystem();
     }
 
@@ -202,12 +196,9 @@ public class RequestController implements ControllableScreen{
         //todo fix deptSelected. Add listener. Test?
         nameDept = newValue.toString();
        // nameDept = choiceBoxDept.getValue().toString();
-        System.out.println("hello 51 \n\n\n" + nameDept);
-
         choiceBoxDept.setDisable(false);
-        System.out.println("hello 52 \n\n\n");
         choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
-        System.out.println("hello 53 \n\n\n");
+
 
     }
     public void servSelected(Service newValue)
