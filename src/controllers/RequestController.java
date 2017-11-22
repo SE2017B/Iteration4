@@ -29,6 +29,7 @@ import DepartmentSubsystem.ServiceRequest;
 import DepartmentSubsystem.Staff;
 import DepartmentSubsystem.DepartmentSubsystem;
 import org.omg.CORBA.Request;
+import search.SearchStrategy;
 
 
 import java.io.IOException;
@@ -239,5 +240,19 @@ public class RequestController implements ControllableScreen{
         date = ((JFXDatePicker)e.getSource()).getValue().toString();
     }
 
+//////////////////////////////////////////////////////////
+    /////////           Settings Tab
+    //////////////////////////////////////////////////////////
 
+    @FXML
+    private ChoiceBox<SearchStrategy> searchStrategyChoice;
+    @FXML
+    private JFXButton saveSettingsButton;
+
+    public void saveSettingsPressed(ActionEvent e){
+        if(searchStrategyChoice.getValue() != null){
+            map.setSearchStrategy(searchStrategyChoice.getValue());
+        }
+
+    }
 }

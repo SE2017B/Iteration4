@@ -8,9 +8,11 @@
 
 package kioskEngine;
 
+import DepartmentSubsystem.Staff;
 import controllers.ScreenController;
 import database.edgeDatabase;
 import database.nodeDatabase;
+import database.staffDatabase;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -52,6 +54,7 @@ public class Main extends Application {
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
+        staffDatabase.createStaffTable();
 
         nodeDatabase.readNodeCSV("MapAnodes.csv");
         nodeDatabase.readNodeCSV("MapBnodes.csv");
@@ -78,6 +81,11 @@ public class Main extends Application {
         edgeDatabase.insertEdgesFromCSV();
 
         nodeDatabase.cntNodes();
+
+        staffDatabase.addStaff(new Staff("bross", "1234", "Dope Artist", "Bob Ross", 1));
+        staffDatabase.addStaff(new Staff("ncage", "password", "Lead in National Treasure", "Nick Cage", 2));
+        staffDatabase.addStaff(new Staff("user1", "password", "Random User", "User Number One", 3));
+        staffDatabase.addStaff(new Staff("user2", "password", "Random User", "User Number Two", 4));
 
         launch(args);
 
