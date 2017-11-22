@@ -13,16 +13,15 @@ public class edgeDatabase {
     private static final String JDBC_URL_MAP = "jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
 
+    // All edges from the edge table in hospitalMapDB
     static ArrayList<Edge> allEdges = new ArrayList<>();
 
-    public static ArrayList<Edge> getEdges(){
-        return allEdges;
-    }
+    // Getter for ArrayList of all Edges
+    public static ArrayList<Edge> getEdges(){ return allEdges; }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the edges
     ///////////////////////////////////////////////////////////////////////////////
-
     public static void createEdgeTable() {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
@@ -31,6 +30,7 @@ public class edgeDatabase {
             DatabaseMetaData meta2 = conn.getMetaData();
             ResultSet res2 = meta2.getTables(null, null, "EDGES", null);
 
+            // Edge table DNE just add edge table
             if (!res2.next()) {
                 Statement stmtCreate2 = conn.createStatement();
                 String createEdgesTable = ("CREATE TABLE edges" +
@@ -44,7 +44,9 @@ public class edgeDatabase {
                 conn.commit();
                 stmtCreate2.close();
                 conn.close();
-            } else {
+            }
+            // Edge table already exists delete and re-add
+            else {
                 Statement stmtDelete2 = conn.createStatement();
                 String deleteNodesTable = ("DROP TABLE edges");
                 int rsetDelete2 = stmtDelete2.executeUpdate(deleteNodesTable);
@@ -103,9 +105,6 @@ public class edgeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Add an edge function
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Add new edge to the edge table
-
     public static void addEdge(Edge anyEdge) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
@@ -133,9 +132,6 @@ public class edgeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Modify an edge from the edge table
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Modify item(s) from edge table
-
     public static void modifyEdge(Edge anyEdge) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
@@ -161,17 +157,14 @@ public class edgeDatabase {
             System.out.println("Update Edge Successful!");
             modAddEdge.close();
             conn.close();
-
         } catch (Exception e) {
-            e.printStackTrace();// end try
+            e.printStackTrace();
         }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Delete an edge from the edge table
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Delete item(s) from edge table
     public static void deleteAnyEdge(Edge anyEdge) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
@@ -192,7 +185,7 @@ public class edgeDatabase {
             conn.close();
 
         } catch (Exception e) {
-            e.printStackTrace();// end try
+            e.printStackTrace();
         }
     }
 
@@ -311,5 +304,4 @@ public class edgeDatabase {
             e.printStackTrace();
         }
     }
-
 }

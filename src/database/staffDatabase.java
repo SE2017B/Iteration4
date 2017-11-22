@@ -10,16 +10,15 @@ public class staffDatabase {
     private static final String JDBC_URL_STAFF="jdbc:derby:hospitalStaffDB;create=true";
     private static Connection conn;
 
+    // All staff members from the staff table in hospitalStaffDB
     static ArrayList<Staff>allStaff=new ArrayList<Staff>();
 
-    public static ArrayList<Staff> getStaff(){
-        return allStaff;
-    }
+    // Getter for all staff array list
+    public static ArrayList<Staff> getStaff(){ return allStaff; }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the Staff Members
     ///////////////////////////////////////////////////////////////////////////////
-
     public static void createStaffTable() {
 
         try {
@@ -29,6 +28,7 @@ public class staffDatabase {
             DatabaseMetaData meta = conn.getMetaData();
             ResultSet res = meta.getTables(null, null, "hospitalStaff", null);
 
+            // Staff table DNE just add
             if (!res.next()) {
                 Statement stmtCreateStaffTable = conn.createStatement();
                 String createStaffTable = ("CREATE TABLE hospitalStaff" +
@@ -44,7 +44,9 @@ public class staffDatabase {
                 conn.commit();
                 stmtCreateStaffTable.close();
                 conn.close();
-            } else {
+            }
+            // Staff table already exists delete and re-add
+            else {
                 Statement stmtDeleteStaffTable = conn.createStatement();
                 String deleteStaffTable = ("DROP TABLE hospitalStaff");
                 System.out.println("Drop Staff Table Successful!");
@@ -74,10 +76,8 @@ public class staffDatabase {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Add a Staff member Function
+    // Add a Staff member to Staff table Function
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Add new Staff Member to the Staff Members Table
     public static void addStaff(Staff anyStaff) {
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
@@ -91,7 +91,6 @@ public class staffDatabase {
             addAnyStaff.setString(3, anyStaff.getJobTitle());
             addAnyStaff.setString(4, anyStaff.getFullName());
             addAnyStaff.setInt(5, anyStaff.getID());
-
 
             addAnyStaff.executeUpdate();
             System.out.println("Insert Staff Successful for staffID: " + anyStaff.getID());
@@ -143,8 +142,6 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Delete a staff member from the staff table
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Delete item(s) from staff table
     public static void deleteStaff(Staff anyStaff){
 
         int anyStaffID = anyStaff.getID();
@@ -220,5 +217,4 @@ public class staffDatabase {
             e.printStackTrace();
         }
     }
-
 }
