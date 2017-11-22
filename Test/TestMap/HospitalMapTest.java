@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import static java.lang.Math.sqrt;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class HospitalMapTest {
 
@@ -196,6 +197,37 @@ public class HospitalMapTest {
     */
 
     @Test
+    public void testAddNodeAndEdges(){
+        ArrayList<Node> nodesToAttach = new ArrayList<>();
+        nodesToAttach.add(B);
+        nodesToAttach.add(C);
+        easyMap.addNodeandEdges("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+                "ShortE", "team", nodesToAttach);
+        Node E = new Node("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+                "ShortE", "team");
+
+        //test that the appropriate node was added to the array list
+        assertTrue(easyMap.getNodeMap().contains(E));
+    }
+
+    @Test
+    public void testAddNodeAndEdges2(){
+        ArrayList<Node> nodesToAttach = new ArrayList<>();
+        nodesToAttach.add(B);
+        nodesToAttach.add(C);
+        easyMap.addNodeandEdges("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+                "ShortE", "team", nodesToAttach);
+        Node E = new Node("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+                "ShortE", "team");
+        Edge EB = new Edge(E, B);
+        Edge EC = new Edge(E, C);
+
+        //test that the appropriate edges were added to the array list
+        assertTrue(easyMap.getEdgeMap().contains(EB));
+        assertTrue(easyMap.getEdgeMap().contains(EC));
+    }
+
+    @Test
     public void testEditNode(){
         easyMap.editNode(A, "0", "100", "L1", "Tower", "Elevator", "LongA", "ShortA");
 
@@ -241,12 +273,35 @@ public class HospitalMapTest {
 
     @Test
     public void testRemoveEdge(){
+        easyMap.removeEdge(C.getEdgeOf(D));
 
+        //show that an edge has been deleted
+        assertEquals(1, C.getConnections().size());
+        //show that C and D are no longer connected
+        assertEquals(B, C.getConnections().get(0).getOtherNode(C));
     }
 
     @Test
-    public void testEditEdge(){
+    public void testEditEdge()throws InvalidNodeException{
+        Node E = new Node("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+                "ShortE", "team");
+        Edge BC = B.getEdgeOf(C);
+        easyMap.addNode(E);
+        easyMap.editEdge(BC, C, E);
 
+        //show that the edge was moved from between B and C to B and E
+        assertEquals(E, B.getConnections().get(1).getOtherNode(B));
+    }
+
+    @Test(expected = InvalidNodeException.class)
+    public void testEditEdgeFail()throws InvalidNodeException{
+        Node E = new Node("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+                "ShortE", "team");
+        Node F = new Node("F", "200", "0", "L1", "Tower", "Desk", "LongF",
+                "ShortF", "team");
+        Edge BC = B.getEdgeOf(C);
+        easyMap.addNode(E);
+        easyMap.editEdge(BC, F, E);
     }
 
     @Test
