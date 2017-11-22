@@ -130,11 +130,7 @@
                                                    <font>
                                                       <Font size="24.0" />
                                                    </font></Label>
-                                                <JFXButton fx:id="btncreate1" onAction="#resolveServicePressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Resolve" GridPane.rowIndex="3">
-                                                   <GridPane.margin>
-                                                      <Insets left="20.0" right="20.0" />
-                                                   </GridPane.margin></JFXButton>
-                                                <JFXButton fx:id="btnserviceResCancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <JFXButton fx:id="btncreate1" onAction="#resolveServicePressed" prefHeight="50.0" prefWidth="150.0" text="Resolve" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="20.0" right="20.0" />
                                                    </GridPane.margin></JFXButton>

@@ -118,9 +118,19 @@ public class RequestController implements ControllableScreen{
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
         depSub = DepartmentSubsystem.getSubsystem();
+
+        
+
+        lblSelectedService.setText("Service" + resolveServiceListView.getSelectionModel().getSelectedItems().toString());
     }
 
     public void onShow(){
+                ServiceRequest test = new ServiceRequest(null,2,null,null,null, null);
+                ServiceRequest test2 = new ServiceRequest(null,3,null,null,null, null);
+                ServiceRequest test3 = new ServiceRequest(null,4,null,null,null, null);
+                resolveServiceListView.getItems().add(test);
+                resolveServiceListView.getItems().add(test2);
+                resolveServiceListView.getItems().add(test3);
 
         //Update the nodes in the map
 
