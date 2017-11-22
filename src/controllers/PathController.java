@@ -114,17 +114,17 @@ public class PathController implements ControllableScreen{
         currentFloor = FloorNumber.fromDbMapping("1");
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
-        floors.add(FloorNumber.fromDbMapping("1"));
-        floors.add(FloorNumber.fromDbMapping("2"));
+        //floors.add(FloorNumber.fromDbMapping("1"));
+        //floors.add(FloorNumber.fromDbMapping("2"));
         //add the test background image
         mapImage.setImage(currentFloor);
 
         //create test path
         testpath = new Path();
-        testpath.addToPath(new Node(0,0,FloorNumber.fromDbMapping("L1")));
+        testpath.addToPath(new Node(950,350,FloorNumber.fromDbMapping("L1")));
         testpath.addToPath(new Node(1000,400,FloorNumber.fromDbMapping("L1")));
-        testpath.addToPath(new Node(1000,400,FloorNumber.fromDbMapping("L2")));
-        testpath.addToPath(new Node(0,1000,FloorNumber.fromDbMapping("L2")));
+        testpath.addToPath(new Node(1010,410,FloorNumber.fromDbMapping("L2")));
+        testpath.addToPath(new Node(1060,350,FloorNumber.fromDbMapping("L2")));
 
         mapPane.getChildren().add(mapImage);
     }
@@ -174,8 +174,8 @@ public class PathController implements ControllableScreen{
                 //add last point if it exists
                 if(i>0){
                     Circle newp1 = getPoint(path.getPath().get(i-1).getX(),path.getPath().get(i-1).getY());
-                    pathPoints.get(current).add(getPoint(path.getPath().get(i-1).getX(),path.getPath().get(i-1).getY()));
-                    mapPane.getChildren().add(newp);
+                    pathPoints.get(path.getPath().get(i-1).getFloor()).add(newp1);
+                    mapPane.getChildren().add(newp1);
                     points.add(newp1);
                 }
             }
@@ -197,9 +197,10 @@ public class PathController implements ControllableScreen{
                 lines.add(line);
             }
             if(i==path.getPath().size()-1 && i>0){
-                Circle newP2 = getPoint(path.getPath().get(i-1).getX(),path.getPath().get(i-1).getY());
+                Circle newP2 = getPoint(path.getPath().get(i).getX(),path.getPath().get(i).getY());
                 pathPoints.get(current).add(newP2);
                 mapPane.getChildren().add(newP2);
+                points.add(newP2);
             }
             //Todo: add points at nodes with a steep change in direction
         }
@@ -272,7 +273,7 @@ public class PathController implements ControllableScreen{
     public void showPoints(ArrayList<Circle> thispoints){
         for(Circle c: thispoints){
             c.setVisible(true);
-            System.out.println("Circle has been shown");
+            System.out.println("Point has been shown");
         }
     }
     //button methods
