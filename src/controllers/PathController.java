@@ -93,7 +93,7 @@ public class PathController implements ControllableScreen{
 
     private ArrayList<FloorNumber> floors; //list of floors available
 
-    private Path testpath;
+    //private Path testpath;
 
     private HashMap<FloorNumber,ArrayList<Line>> pathLines;
 
@@ -119,12 +119,7 @@ public class PathController implements ControllableScreen{
         //add the test background image
         mapImage.setImage(currentFloor);
 
-        //create test path
-        testpath = new Path();
-        testpath.addToPath(new Node(950,350,FloorNumber.fromDbMapping("L1")));
-        testpath.addToPath(new Node(1000,400,FloorNumber.fromDbMapping("L1")));
-        testpath.addToPath(new Node(1010,410,FloorNumber.fromDbMapping("L2")));
-        testpath.addToPath(new Node(1060,350,FloorNumber.fromDbMapping("L2")));
+
 
         mapPane.getChildren().add(mapImage);
     }
@@ -299,7 +294,7 @@ public class PathController implements ControllableScreen{
     private Path getPath(){
         //HospitalMap.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
         //calculate the path an return it
-        return testpath; //for now
+        return null; //for now
     }
 
 
@@ -314,12 +309,32 @@ public class PathController implements ControllableScreen{
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
         switchPath(currentFloor);
+        clearScreen(); //remove other screens
         System.out.println("Enter Pressed");
 
         //todo: draw path on this floor
         //todo: disable floor buttons not in the path
 
 
+    }
+
+    private void clearScreen(){
+        //check each button
+        checkScreen(floorL2Button);
+        checkScreen(floorL1Button);
+        checkScreen(floorGButton);
+        checkScreen(floor1Button);
+        checkScreen(floor2Button);
+        checkScreen(floor3Button);
+
+    }
+    private void checkScreen(JFXButton b){
+        if(floors.contains(FloorNumber.fromDbMapping(b.getText()))){
+            b.setDisable(false);
+        }
+        else{
+            b.setDisable(true);
+        }
     }
 
 
