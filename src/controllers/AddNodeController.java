@@ -365,15 +365,19 @@ public class AddNodeController implements ControllableScreen {
         for(NodeCheckBox n : nodeCheckBoxes){
             if(n.isSelected()) connections.add(n.getNode());
         }
-        map.addNodeandEdges("putNodeIDHere",
-                nodeAddXField.getText(),
-                nodeAddYField.getText(),
-                nodeAddFloorDropDown.getText(),
-                nodeAddBuildingDropDown.getText(),
-                nodeAddTypeDropDown.getText(),
-                nodeAddNameField.getText(),
-                nodeAddShortField.getText(),"H", connections);
-
+        try {
+            map.addNodeandEdges("putNodeIDHere",
+                    nodeAddXField.getText(),
+                    nodeAddYField.getText(),
+                    nodeAddFloorDropDown.getText(),
+                    nodeAddBuildingDropDown.getText(),
+                    nodeAddTypeDropDown.getText(),
+                    nodeAddNameField.getText(),
+                    nodeAddShortField.getText(), "H", connections);
+        }
+        catch (Exception ex){
+            System.out.println("Add failed");
+        }
         refreshNodesandEdges();
     }
 
