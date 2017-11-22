@@ -85,6 +85,9 @@ public class PathController implements ControllableScreen{
     @FXML
     private ScrollPane floorScrollPane;
 
+    @FXML
+    private ScrollPane mapScrollPane;
+
 
 
     private proxyImagePane mapImage = new proxyImagePane();
@@ -93,11 +96,12 @@ public class PathController implements ControllableScreen{
 
     private ArrayList<FloorNumber> floors; //list of floors available
 
-    //private Path testpath;
 
     private HashMap<FloorNumber,ArrayList<Line>> pathLines;
 
     private HashMap<FloorNumber, ArrayList<Circle>> pathPoints;
+
+    private HashMap<FloorNumber,ArrayList<Integer>> positionVars;
 
     @FXML
     private JFXListView<String> directionsList;
@@ -110,6 +114,7 @@ public class PathController implements ControllableScreen{
         points = new ArrayList<Circle>();
         pathLines = new HashMap<FloorNumber,ArrayList<Line>>(); //hash map to lines for each floor
         pathPoints = new HashMap<FloorNumber, ArrayList<Circle>>();
+        positionVars= new HashMap<FloorNumber,ArrayList<Integer>>();
         onShow();
         currentFloor = FloorNumber.fromDbMapping("1");
         //set up floor variables
@@ -143,6 +148,31 @@ public class PathController implements ControllableScreen{
         c.setRadius(10/mapImage.getScale());
         return c;
     }
+    private void getVars(FloorNumber floor,Circle c){
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        if(positionVars.containsKey(floor)){
+            if(positionVars.get(floor).get(0)<c.getCenterX()){
+                positionVars.get(floor).set(0,(int)c.getCenterX());
+            }
+            if(positionVars.get(floor).get(1)<c.getCenterY()){
+                positionVars.get(floor).set(1,(int)c.getCenterY());
+            }
+        }
+        else{
+            ArrayList<Integer> temp = new ArrayList<Integer>();
+            temp.add((int)c.getCenterX());
+            temp.add((int)c.getCenterY());
+            positionVars.put(floor,temp);
+        }
+    }
+    private void controlScroller(FloorNumber floor){
+        if(positionVars.containsKey(floor)){
+            mapScrollPane.setHvalue(positionVars.get(floor).get(0)*mapImage.getScale()/5000);
+            mapScrollPane.setVvalue(positionVars.get(floor).get(1)*mapImage.getScale()/3500);
+            System.out.println("Screen Adjust");
+        }
+    }
+
     private void setLines(Path path){
         clearPaths();
         FloorNumber current=null; // pointer to the current node of the floor
@@ -160,12 +190,14 @@ public class PathController implements ControllableScreen{
                 //add point for current node
                 Circle newp = getPoint(path.getPath().get(i).getX(),path.getPath().get(i).getY());
                 pathPoints.get(current).add(newp);
+                getVars(current, newp);
                 mapPane.getChildren().add(newp);
                 points.add(newp);
                 //add last point if it exists
                 if(i>0){
                     Circle newp1 = getPoint(path.getPath().get(i-1).getX(),path.getPath().get(i-1).getY());
                     pathPoints.get(path.getPath().get(i-1).getFloor()).add(newp1);
+                    getVars(current, newp1);
                     mapPane.getChildren().add(newp1);
                     points.add(newp1);
                 }
@@ -191,6 +223,7 @@ public class PathController implements ControllableScreen{
             if(i==path.getPath().size()-1 && i>0){
                 Circle newP2 = getPoint(path.getPath().get(i).getX(),path.getPath().get(i).getY());
                 pathPoints.get(current).add(newP2);
+                getVars(current, newP2);
                 mapPane.getChildren().add(newP2);
                 points.add(newP2);
             }
@@ -206,6 +239,8 @@ public class PathController implements ControllableScreen{
             //add all in to mapPane
             showPaths(pathLines.get(floor));
             showPoints(pathPoints.get(floor));
+            //adjust screen
+            controlScroller(floor);
         }
     }
 
