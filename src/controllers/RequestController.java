@@ -129,6 +129,12 @@ public class RequestController implements ControllableScreen{
     }
 
     public void onShow(){
+                ServiceRequest test = new ServiceRequest(null,2,null,null,null, null);
+                ServiceRequest test2 = new ServiceRequest(null,3,null,null,null, null);
+                ServiceRequest test3 = new ServiceRequest(null,4,null,null,null, null);
+                resolveServiceListView.getItems().add(test);
+                resolveServiceListView.getItems().add(test2);
+                resolveServiceListView.getItems().add(test3);
 
         //Update the nodes in the map
         ArrayList<Node> nodes = HospitalMap.getNodesForSearch();
