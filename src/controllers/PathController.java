@@ -10,27 +10,20 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import map.FloorNumber;
-import map.HospitalMap;
-import map.Node;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-
+import map.FloorNumber;
+import map.HospitalMap;
+import map.Node;
 import map.Path;
-import DepartmentSubsystem.*;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class PathController implements ControllableScreen{
     private ScreenController parent;
@@ -113,14 +106,15 @@ public class PathController implements ControllableScreen{
         //create test path
         mapPane.getChildren().add(mapImage);
 
-        startNodeChoice.setItems(FXCollections.observableList(
-                map.getNodesBy(n -> n.getType()!="HALL")));
-        endNodeChoice.setItems(FXCollections.observableList(
-                map.getNodesBy(n -> n.getType()!="HALL")));
+
+
     }
 
     public void onShow(){
-        //Todo: update the items in the choice boxes
+        startNodeChoice.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> !n.getType().equals("HALL"))));
+        endNodeChoice.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> !n.getType().equals("HALL"))));
 
 
         //remove any previous paths from the display

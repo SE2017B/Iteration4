@@ -7,6 +7,8 @@
 */
 
 package map;
+import database.edgeDatabase;
+import database.nodeDatabase;
 import exceptions.InvalidNodeException;
 import search.*;
 
@@ -33,6 +35,9 @@ public class HospitalMap{
         posSerchStrat.add(new BreadthFirstSearch());
         posSerchStrat.add(new DepthFirstSearch());
         posSerchStrat.add(new DijkstrasSearch());
+
+        nodeMap.addAll(nodeDatabase.getNodes());
+        edgeMap.addAll(edgeDatabase.getEdges());
 
     }
 

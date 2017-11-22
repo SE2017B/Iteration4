@@ -45,7 +45,7 @@ public class nodeDatabase {
             DatabaseMetaData meta = conn.getMetaData();
             ResultSet res = meta.getTables(null, null, "NODES", null);
 
-            // Node table does not exist
+            // Node table DNE just add a new node table
             if (!res.next()) {
                 Statement stmtCreate1 = conn.createStatement();
                 String createNodesTable = ("CREATE TABLE nodes" +

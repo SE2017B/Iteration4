@@ -15,6 +15,10 @@ public class edgeDatabase {
 
     static ArrayList<Edge> allEdges = new ArrayList<>();
 
+    public static ArrayList<Edge> getEdges(){
+        return allEdges;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the edges
     ///////////////////////////////////////////////////////////////////////////////
