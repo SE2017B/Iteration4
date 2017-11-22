@@ -12,31 +12,20 @@ import DepartmentSubsystem.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.skins.JFXTimePickerContent;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.Pane;
-import map.HospitalMap;
-import map.Node;
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import DepartmentSubsystem.ServiceRequest;
-import DepartmentSubsystem.Staff;
-import DepartmentSubsystem.DepartmentSubsystem;
-import org.omg.CORBA.Request;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.Pane;
+import map.HospitalMap;
+import map.Node;
 import search.SearchStrategy;
 
-
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
@@ -81,6 +70,9 @@ public class RequestController implements ControllableScreen{
     private JFXDatePicker dateMenu;
 
     @FXML
+    private JFXTimePicker timeMenu;
+
+    @FXML
     private ChoiceBox<Node> locationChoiceBox;
 
     @FXML
@@ -113,6 +105,7 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
+        map = HospitalMap.getMap();
         //choiceBoxDept.setItems(FXCollections.observableList(testList));
         choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
@@ -218,7 +211,7 @@ public class RequestController implements ControllableScreen{
     public void timeSelected(ActionEvent e) {
         //todo test?
         System.out.println("Time selescted");
-        //time = ((JFXTimePicker)e.getSource()).getValue().toString();
+        time = ((JFXTimePicker)e.getSource()).getValue().toString();
     }
 
     public void dateSelected(ActionEvent e){

@@ -28,7 +28,6 @@ public class AStarSearch implements SearchStrategy {
             ArrayList<Path> newPaths = new ArrayList<>();
             for(Edge e : currentPath.getPath().get(currentPath.getPath().size()-1).getConnections()){
                 Node node = e.getOtherNode(currentPath.getPath().get(currentPath.getPath().size()-1));
-                System.out.println(node.getShortName() + node.getFloor().getDbMapping());
                 if(currentPath.getPath().contains(node)){
                     continue;
                 }
