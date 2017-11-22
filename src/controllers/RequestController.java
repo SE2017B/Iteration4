@@ -115,7 +115,7 @@ public class RequestController implements ControllableScreen{
 
 
     public void init(){
-        choiceBoxDept.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> deptSelected(null));
+        choiceBoxDept.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> deptSelected());
         choiceBoxService.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> servSelected());
         choiceBoxStaff.getSelectionModel().selectedIndexProperty().addListener( (v, oldValue, newValue) -> staffSelected());
     }
@@ -191,15 +191,14 @@ public class RequestController implements ControllableScreen{
         menuButtonAl.setText(selectedAlg);
     }
 
-    public void deptSelected(ActionEvent e)
+    public void deptSelected()
     {
         //todo fix deptSelected. Add listener. Test?
-
             nameDept = choiceBoxDept.getSelectionModel().getSelectedItem().toString();
             choiceBoxDept.setDisable(false);
             choiceBoxService.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getServices(nameDept)));
 //            nameService = choiceBoxService.getSelectionModel().getSelectedItem().toString();
-//            choiceBoxService.setDisable(false);
+            choiceBoxService.setDisable(false);
 //
 //            choiceBoxStaff.setItems(FXCollections.observableList(DepartmentSubsystem.getSubsystem().getStaff(nameService)));
 //            nameStaff = choiceBoxStaff.getSelectionModel().getSelectedItem().toString();

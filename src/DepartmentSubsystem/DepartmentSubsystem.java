@@ -17,11 +17,8 @@ public class DepartmentSubsystem {
     private boolean initRan = false;
     ArrayList<Department> departments = new ArrayList<Department>();
 
-    //Singleton Stuff (init HAS to be run)
-    public static DepartmentSubsystem getSubsystem(){
-        return singleton;
-    }
-    private static final DepartmentSubsystem singleton = new DepartmentSubsystem();
+
+    private static DepartmentSubsystem singleton;
     private DepartmentSubsystem(){init();}
     private void init(){
         //If the init method was ran, then we dont do it again
@@ -53,6 +50,15 @@ public class DepartmentSubsystem {
         departments.add(food);
 
         initRan = true;
+    }
+
+    //Singleton Stuff (init HAS to be run)
+    public static DepartmentSubsystem getSubsystem(){
+        if(singleton == null){
+            singleton =  new DepartmentSubsystem();
+        }
+        return singleton;
+
     }
 
     //login function for staff members
