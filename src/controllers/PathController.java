@@ -145,7 +145,7 @@ public class PathController implements ControllableScreen{
         //lines = new ArrayList<>();
     }
     private Circle getPoint(int x, int y){
-        Circle c = new Circle();
+        Circle c = new AnimatedCircle();
         c.setCenterX(x/mapImage.getScale());
         c.setCenterY(y/mapImage.getScale());
         c.setVisible(true);

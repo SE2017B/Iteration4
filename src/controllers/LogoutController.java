@@ -23,7 +23,7 @@ public class LogoutController implements ControllableScreen {
     public void init(){}
     //display the logout confirmation screen
     public void onShow(){
-        PauseTransition pause = new PauseTransition(Duration.millis(1000));
+        PauseTransition pause = new PauseTransition(Duration.millis(1200));
         pause.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
