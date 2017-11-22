@@ -12,26 +12,21 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-
-import java.lang.*;
-
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AddNodeController implements ControllableScreen {
     private ScreenController parent;
@@ -86,19 +81,10 @@ public class AddNodeController implements ControllableScreen {
         mapImage = new proxyImagePane();
         mapImage.setImage(FloorNumber.FLOOR_GROUND);
         mapPane.getChildren().add(mapImage);
+
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
 
-        for (Node node:map.getNodeMap()) {
-            NodeCheckBox cb = new NodeCheckBox(node, mapImage.getScale());
-            nodeCheckBoxes.add(cb);
-            cb.setOnAction(e -> nodeSelected(e));
-        }
-        for (Edge edge:map.getEdgeMap()){
-            EdgeCheckBox cb = new EdgeCheckBox(edge, mapImage.getScale());
-            edgeCheckBoxes.add(cb);
-            cb.setOnMouseClicked(e -> edgeSelected(e));
-        }
 
 
 
@@ -112,12 +98,13 @@ public class AddNodeController implements ControllableScreen {
         edgeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
 
 
+        refreshNodesandEdges();
     }
 
     public void onShow() {
         currentFloor = FloorNumber.FLOOR_ONE;
         mapImage.setImage(currentFloor);
-        showNodesandEdges();
+        refreshNodesandEdges();
     }
 
     //Action upon pressing enter
@@ -155,6 +142,7 @@ public class AddNodeController implements ControllableScreen {
         else{
             if(edgeAddTab.isSelected()){
                 showNodesbyFloor(currentFloor);
+                showEdgesbyFloor(currentFloor);
                 edgeAddNode1 = null;
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
@@ -204,6 +192,32 @@ public class AddNodeController implements ControllableScreen {
         }
     }
 
+    public void refreshNodes(){
+        //todo reinsert this
+        //nodeCheckBoxes.clear();
+        for (Node node:map.getNodeMap()) {
+            NodeCheckBox cb = new NodeCheckBox(node, mapImage.getScale());
+            nodeCheckBoxes.add(cb);
+            cb.setOnAction(e -> nodeSelected(e));
+        }
+    }
+
+    public void refreshEdges(){
+        //todo reinsert this
+        //edgeCheckBoxes.clear();
+        for (Edge edge:map.getEdgeMap()){
+            EdgeCheckBox cb = new EdgeCheckBox(edge, mapImage.getScale());
+            edgeCheckBoxes.add(cb);
+            cb.setOnMouseClicked(e -> edgeSelected(e));
+        }
+    }
+
+    public void refreshNodesandEdges(){
+        refreshNodes();
+        refreshEdges();
+        showNodesandEdges();
+    }
+
     public void nodeSelected(ActionEvent e){
         NodeCheckBox source = (NodeCheckBox)e.getSource();
         if(nodeTab.isSelected() && nodeRemoveTab.isSelected()){
@@ -231,19 +245,32 @@ public class AddNodeController implements ControllableScreen {
                 edgeAddNode2 = null;
                 edgeAddID2Label.setText("");
             }
-
-
         }
-
+        else if (nodeTab.isSelected() && nodeEditTab.isSelected()) {
+            if (nodeEditSelectedNode == null) {
+                Node n = source.getNode();
+                nodeEditSelectedNode = n;
+                nodeEditNameField.setText(n.getLongName());
+                nodeEditShortField.setText(n.getShortName());
+                nodeEditBuildingDropDown.setText(n.getBuilding());
+                nodeEditFloorDropDown.setText(n.getFloor().toString());
+                nodeEditTypeDropDown.setText(n.getType());
+                nodeEditXField.setText(Integer.toString(n.getX()));
+                nodeEditYField.setText(Integer.toString(n.getY()));
+                nodeEditIDLabel.setText(n.getID());
+            } else if (nodeEditSelectedNode.equals(source.getNode())) {
+                resetNodeEdit();
+            }
+        }
     }
-
 
 
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
         if(!source.isSelected()) {
             System.out.println("Edge Added to List");
-            edgeRemoveList.getItems().add(source.getEdge());
+            if (!edgeRemoveList.getItems().contains(source.getEdge()))
+                edgeRemoveList.getItems().add(source.getEdge());
         }
         else{
             System.out.println("Edge Removed from List");
@@ -287,10 +314,9 @@ public class AddNodeController implements ControllableScreen {
         System.out.println("Node Add Y Entered");
         String text = nodeAddYField.getText();
         nodeAddYField.setText(text);
-        nodeAddIndicator = new Circle();
         nodeAddIndicator.setCenterX((double)Integer.parseInt(nodeAddXField.getText()));
         nodeAddIndicator.setCenterY((double)Integer.parseInt(nodeAddYField.getText()));
-        nodeAddIndicator.setRadius(50.0f);
+        nodeAddIndicator.setRadius(10.0f);
     }
 
     public void nodeAddShortEntered(ActionEvent e){
@@ -326,8 +352,6 @@ public class AddNodeController implements ControllableScreen {
 
     public void nodeAddEnterPressed(ActionEvent e){
         System.out.println("Node Add Enter Pressed");
-
-        //todo add node
         ArrayList<Node> connections = new ArrayList<>();
         for(NodeCheckBox n : nodeCheckBoxes){
             if(n.isSelected()) connections.add(n.getNode());
@@ -340,7 +364,8 @@ public class AddNodeController implements ControllableScreen {
                 nodeAddTypeDropDown.getText(),
                 nodeAddNameField.getText(),
                 nodeAddShortField.getText(),"H", connections);
-        //also get selected nodes and pass them to map to add neighbors
+
+        refreshNodesandEdges();
     }
 
     public void nodeAddCancelPressed(ActionEvent e){
@@ -364,16 +389,18 @@ public class AddNodeController implements ControllableScreen {
 
     public void nodeRemoveEnterPressed(ActionEvent e){
         System.out.println("Node Remove Enter Pressed");
-        //todo add node
         for(NodeCheckBox n : nodeCheckBoxes){
             if(n.isSelected()) map.removeNode(n.getNode());
         }
-        //also get selected nodes and pass them to map to add neighbors
+        refreshNodesandEdges();
+        nodeRemoveSelectedList.getItems().clear();
+
     }
 
     public void nodeRemoveCancelPressed(ActionEvent e){
         System.out.println("Node Remove Cancel Pressed");
-        //todo cancel node add
+        nodeRemoveSelectedList.getItems().clear();
+        refreshNodesandEdges();
     }
 
     ////////////////////////////////////////////////////////////
@@ -381,6 +408,8 @@ public class AddNodeController implements ControllableScreen {
     ////////////////////////////////////////////////////////////
     @FXML
     private JFXButton nodeEditEnterButton;
+    @FXML
+    private Label nodeEditIDLabel;
     @FXML
     private JFXButton nodeEditCancelButton;
     @FXML
@@ -397,6 +426,8 @@ public class AddNodeController implements ControllableScreen {
     private MenuButton nodeEditBuildingDropDown;
     @FXML
     private MenuButton nodeEditTypeDropDown;
+
+    private Node nodeEditSelectedNode;
 
     public void nodeEditXEntered(ActionEvent e){
         System.out.println("Node Edit X Entered");
@@ -442,17 +473,8 @@ public class AddNodeController implements ControllableScreen {
 
     public void nodeEditEnterPressed(ActionEvent e){
         System.out.println("Node Edit Enter Pressed");
-        //todo add node
-        Node node = null;
-        for(NodeCheckBox n : nodeCheckBoxes){
-            if(n.isSelected()){
-                if(node == null) node = n.getNode();
-                else{
-                    System.out.println("Warning: More than one node selected.");
-                    return;
-                }
-            }
-        }
+        Node node = nodeEditSelectedNode;
+        
         if(node == null){
             System.out.println("Warning: No nodes selected.");
             return;
@@ -470,9 +492,21 @@ public class AddNodeController implements ControllableScreen {
 
     public void nodeEditCancelPressed(ActionEvent e){
         System.out.println("Node Edit Cancel Pressed");
-        //todo cancel node add
+        resetNodeEdit();
     }
 
+
+    public void resetNodeEdit(){
+        nodeEditSelectedNode = null;
+        nodeEditNameField.setText("Name");
+        nodeEditShortField.setText("Short Name");
+        nodeEditBuildingDropDown.setText("Building");
+        nodeEditFloorDropDown.setText("Floor");
+        nodeEditTypeDropDown.setText("Type");
+        nodeEditXField.setText("X Coordinate");
+        nodeEditYField.setText("Y Coordinate");
+        nodeEditIDLabel.setText("Node ID");
+    }
 
     ////////////////////////////////////////////////////////////
     /////////////           EDGE ADD
@@ -493,29 +527,21 @@ public class AddNodeController implements ControllableScreen {
 
     public void edgeAddEnterPressed(ActionEvent e){
         System.out.println("Edge Add Enter Pressed");
-        //todo add edge
-        Node nodeOne = null;
-        Node nodeTwo = null;
-        for(NodeCheckBox n : nodeCheckBoxes){
-            if(n.isSelected())  {
-                if(nodeOne == null) nodeOne = n.getNode();
-                else if(nodeTwo == null) nodeTwo = n.getNode();
-                else {
-                    System.out.println("Warning: More than two nodes selected.");
-                    return;
-                }
-            }
-        }
+
+        Node nodeOne = edgeAddNode1;
+        Node nodeTwo = edgeAddNode2;
+
         if(nodeOne == null || nodeTwo == null){
             System.out.println("Warning: Less than two nodes selected.");
         } else {
             map.addEdge(new Edge(nodeOne, nodeTwo));
         }
+        refreshNodesandEdges();
     }
 
     public void edgeAddCancelPressed(ActionEvent e){
         System.out.println("Edge Add Cancel Pressed");
-        //todo cancel edge add
+        refreshNodesandEdges();
     }
 
     ////////////////////////////////////////////////////////////
@@ -530,28 +556,17 @@ public class AddNodeController implements ControllableScreen {
 
     public void edgeRemoveEnterPressed(ActionEvent e){
         System.out.println("Edge Remove Enter Pressed");
-        Node nodeOne = null;
-        Node nodeTwo = null;
-        for(NodeCheckBox n : nodeCheckBoxes){
-            if(n.isSelected()){
-                if(nodeOne == null) nodeOne = n.getNode();
-                else if(nodeTwo == null) nodeTwo = n.getNode();
-                else {
-                    System.out.println("Warning: More than two nodes selected.");
-                    break;
-                }
-            }
+
+        for(Edge edge : edgeRemoveList.getItems()){
+            map.removeEdge(edge);
         }
-        if(nodeOne == null || nodeTwo == null){
-            System.out.println("Warning: Less than two nodes selected. ");
-        } else {
-            map.removeEdge(nodeOne.getEdgeOf(nodeTwo));
-        }
-        //todo remove edge
+        edgeRemoveList.getItems().clear();
+        refreshNodesandEdges();
     }
 
     public void edgeRemoveCancelPressed(ActionEvent e){
         System.out.println("Edge Remove Cancel Pressed");
-        //todo cancel edge add
+        edgeRemoveList.getItems().clear();
+        refreshNodesandEdges();
     }
 }

@@ -213,11 +213,6 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Delete a node from the node table
     ///////////////////////////////////////////////////////////////////////////////
-
-    // Delete item(s) from corresponding ArrayList
-
-    // Delete item(s) from node table
-
     public static void deleteNode(Node anyNode){
 
         String anyNodeID = anyNode.getID();
@@ -298,9 +293,9 @@ public class nodeDatabase {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
-    // Find how many Hall Nodes and set hall counter
-    ///////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
+    // Find how many nodes are part of each nodeType and set each count to respective counter
+    //////////////////////////////////////////////////////////////////////////////////////////
     public static void cntNodes() {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
@@ -313,7 +308,7 @@ public class nodeDatabase {
 
             String aType = "";
             int numHall = 0;
-            System.out.printf("%-20s %-20s\n", "nodeType", "COUNT(nodeType)");
+            //System.out.printf("%-20s %-20s\n", "nodeType", "COUNT(nodeType)");
 
             //Process the results
             while (rsetCntNodesHall.next()) {
@@ -355,7 +350,7 @@ public class nodeDatabase {
                         staiCounter = numHall;
                 }
 
-                System.out.printf("%-20s %-20s\n", aType, numHall);
+                //System.out.printf("%-20s %-20s\n", aType, numHall);
             } // End While
 
             conn.commit();
