@@ -112,6 +112,11 @@ public class PathController implements ControllableScreen{
 
         //create test path
         mapPane.getChildren().add(mapImage);
+
+        startNodeChoice.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> n.getType()!="HALL")));
+        endNodeChoice.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> n.getType()!="HALL")));
     }
 
     public void onShow(){
