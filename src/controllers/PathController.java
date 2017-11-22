@@ -390,11 +390,9 @@ public class PathController implements ControllableScreen{
     }
 
     public void floorButtonPressed(ActionEvent e){
-        //todo: display the lines form the path on the floor that was pressed
-        //todo: hide the lines from the other floors
         FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         System.out.println("Floor Pressed: " + floor);
-        floorScrollPane.setHvalue((((JFXButton) e.getSource()).getLayoutX()-415)/1000);
+        mapImage.slideButtons(floorScrollPane,(JFXButton)e.getSource());
         mapImage.setImage(floor);
         switchPath(floor);
     }

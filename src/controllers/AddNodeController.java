@@ -14,10 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -72,6 +69,9 @@ public class AddNodeController implements ControllableScreen {
 
     @FXML
     private Circle nodeLocation;
+
+    @FXML
+    private ScrollPane floorScrollPane;
 
 
     private proxyImagePane mapImage;
@@ -130,6 +130,7 @@ public class AddNodeController implements ControllableScreen {
         nodeAddFloorDropDown.setText(floor.getDbMapping());
         nodeEditFloorDropDown.setText(floor.getDbMapping());
         mapImage.setImage(floor);
+        mapImage.slideButtons(floorScrollPane,(JFXButton)e.getSource());
         refreshNodesandEdges();
 
     }

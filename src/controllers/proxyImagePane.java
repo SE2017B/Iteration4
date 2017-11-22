@@ -1,8 +1,15 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import map.FloorNumber;
 
 import java.util.HashMap;
@@ -101,6 +108,16 @@ public class proxyImagePane extends StackPane {
     public boolean removeImage(FloorNumber floor){
         floors.remove(floor);
         return true;
+    }
+
+    public void slideButtons(ScrollPane sp, JFXButton b) {
+        Timeline slideButtons = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(sp.hvalueProperty(), sp.getHvalue())),
+                new KeyFrame(new Duration(300),
+                        new KeyValue(sp.hvalueProperty(), ((b.getLayoutX() - 415) / 1000)))
+        );
+        slideButtons.play();
     }
 
 }

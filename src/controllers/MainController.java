@@ -10,11 +10,15 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import map.FloorNumber;
 
 
@@ -88,7 +92,7 @@ public class MainController implements ControllableScreen{
     public void floorButtonPressed(ActionEvent e){
        String floor =  ((JFXButton)e.getSource()).getText();
        System.out.println(((JFXButton) e.getSource()).getLayoutX());
-       floorScrollPane.setHvalue((((JFXButton) e.getSource()).getLayoutX()-415)/1000);
+       mapImage.slideButtons(floorScrollPane,(JFXButton)e.getSource());
        System.out.println("Floor Pressed: " + floor);
        mapImage.setImage(FloorNumber.fromDbMapping(floor));
     }
