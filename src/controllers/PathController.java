@@ -134,11 +134,8 @@ public class PathController implements ControllableScreen{
 
 
         //remove any previous paths from the display
-        for (Line line: lines) {
-            line.setVisible(false);
-            mapPane.getChildren().remove(line);
-        }
-        lines = new ArrayList<>();
+        clearPaths();
+        //lines = new ArrayList<>();
     }
     private Circle getPoint(int x, int y){
         Circle c = new Circle();
@@ -149,11 +146,7 @@ public class PathController implements ControllableScreen{
         return c;
     }
     private void setLines(Path path){
-        //clear all lines and paths
-        pathLines.clear();
-        floors.clear();
-        lines.clear();
-        points.clear();
+        clearPaths();
         FloorNumber current=null; // pointer to the current node of the floor
         for(int i=0;i<path.getPath().size();i++){
             //get first floor
@@ -191,6 +184,7 @@ public class PathController implements ControllableScreen{
                 line.setEndY((end.getY() - start.getY())/mapImage.getScale());
 
                 line.setVisible(true);
+                //line.setStroke();
                 line.setStrokeWidth(4/mapImage.getScale());// make the line width vary with the scale
                 pathLines.get(current).add(line);
                 mapPane.getChildren().add(line);//add all lines to mapPane
@@ -249,7 +243,19 @@ public class PathController implements ControllableScreen{
             line.setVisible(false);
             mapPane.getChildren().remove(line);
         }
+        for(Circle c: points){
+            c.setVisible(false);
+            mapPane.getChildren().remove(c);
+        }
+        //clear all lines and paths
+        pathLines = new HashMap<>();
+        pathPoints = new HashMap<>();
+        floors= new ArrayList<>();
+        lines=new ArrayList<>();
+        points= new ArrayList<>();
+        System.out.println("All entities cleared");
     }
+
     public void hidePaths(ArrayList<Line> thislines){
         for(Line line : thislines){
             line.setVisible(false);
