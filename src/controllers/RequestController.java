@@ -126,6 +126,10 @@ public class RequestController implements ControllableScreen{
 
         System.out.println("hello 61 \n\n\n");
         depSub = DepartmentSubsystem.getSubsystem();
+
+        
+
+        lblSelectedService.setText("Service" + resolveServiceListView.getSelectionModel().getSelectedItems().toString());
     }
 
     public void onShow(){
