@@ -93,7 +93,7 @@ public class PathController implements ControllableScreen{
 
     private ArrayList<FloorNumber> floors; //list of floors available
 
-    private Path testpath;
+    //private Path testpath;
 
     private HashMap<FloorNumber,ArrayList<Line>> pathLines;
 
@@ -119,12 +119,7 @@ public class PathController implements ControllableScreen{
         //add the test background image
         mapImage.setImage(currentFloor);
 
-        //create test path
-        testpath = new Path();
-        testpath.addToPath(new Node(950,350,FloorNumber.fromDbMapping("L1")));
-        testpath.addToPath(new Node(1000,400,FloorNumber.fromDbMapping("L1")));
-        testpath.addToPath(new Node(1010,410,FloorNumber.fromDbMapping("L2")));
-        testpath.addToPath(new Node(1060,350,FloorNumber.fromDbMapping("L2")));
+
 
         mapPane.getChildren().add(mapImage);
     }
@@ -299,7 +294,7 @@ public class PathController implements ControllableScreen{
     private Path getPath(){
         //HospitalMap.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
         //calculate the path an return it
-        return testpath; //for now
+        return null; //for now
     }
 
 

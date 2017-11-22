@@ -35,14 +35,6 @@ public class Node{
         this.y = Integer.parseInt(y);
     }
 
-    //to be deleted
-    public Node(int xPos, int yPos, FloorNumber f){
-        this.ID = "TEST" + Integer.toString(xPos);
-        this.x= xPos;
-        this.y=yPos;
-        this.floor=f;
-        this.connections = new ArrayList<>();
-    }
 
     //Adds edge between
     public void addConnection(Edge egde){
