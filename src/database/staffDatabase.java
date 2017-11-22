@@ -102,7 +102,7 @@ public class staffDatabase {
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-        allStaff.add(anyStaff);
+        allStaff.add(new Staff(anyStaff.getUsername(), anyStaff.getPassword(), anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID()));
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ public class staffDatabase {
 
             //Process the results
             while (rsetAllStaff.next()) {
-                strStaffID = rsetAllStaff.getString("staffID");
+                strStaffID = rsetAllStaff.getString("username");
                 strPW = rsetAllStaff.getString("password");
                 strTitle = rsetAllStaff.getString("jobTitle");
                 strFullname = rsetAllStaff.getString("fullName");
