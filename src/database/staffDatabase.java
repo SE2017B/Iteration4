@@ -26,7 +26,7 @@ public class staffDatabase {
             conn.setAutoCommit(false);
 
             DatabaseMetaData meta = conn.getMetaData();
-            ResultSet res = meta.getTables(null, null, "hospitalStaff", null);
+            ResultSet res = meta.getTables(null, null, "HOSPITALSTAFF", null);
 
             // Staff table DNE just add
             if (!res.next()) {
@@ -34,7 +34,7 @@ public class staffDatabase {
                 String createStaffTable = ("CREATE TABLE hospitalStaff" +
                         "(username VARCHAR(20) PRIMARY KEY," +
                         "password VARCHAR(20)," +
-                        "jobTitle VARCHAR(20)," +
+                        "jobTitle VARCHAR(50)," +
                         "fullname VARCHAR(20)," +
                         "ID INTEGER)");
 
@@ -58,7 +58,7 @@ public class staffDatabase {
                 String createStaffTable = ("CREATE TABLE hospitalStaff" +
                         "(username VARCHAR(20) PRIMARY KEY," +
                         "password VARCHAR(20)," +
-                        "jobTitle VARCHAR(20)," +
+                        "jobTitle VARCHAR(50)," +
                         "fullName VARCHAR(20)," +
                         "ID INTEGER)");
 
@@ -84,7 +84,7 @@ public class staffDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
 
             addAnyStaff.setString(1, anyStaff.getUsername());
             addAnyStaff.setString(2, anyStaff.getPassword());
