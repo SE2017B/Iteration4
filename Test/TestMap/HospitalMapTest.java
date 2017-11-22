@@ -635,6 +635,7 @@ public class HospitalMapTest {
         assertEquals("[A, B, D]", easyMap.findNearest(A, "Desk").toString());
     }
 
+    //not sure how the code works, so I can't test it - how do you know where to start the path?
     @Test
     public void testFindPathPitStop(){
 
