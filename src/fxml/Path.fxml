@@ -121,7 +121,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <TitledPane fx:id="textDirectionsPane" animated="false" layoutY="110.0" styleClass="pane" text="Text Directions" visible="false">
+      <TitledPane fx:id="textDirectionsPane" animated="false" layoutY="110.0" prefHeight="220.0" prefWidth="273.0" styleClass="pane" text="Text Directions" visible="false">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
