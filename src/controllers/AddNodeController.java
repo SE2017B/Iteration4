@@ -117,6 +117,8 @@ public class AddNodeController implements ControllableScreen {
         edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test2,test3), mapImage.getScale()));
         edgeCheckBoxes.add(new EdgeCheckBox(new Edge(test3,test4), mapImage.getScale()));
 
+        /////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -172,6 +174,11 @@ public class AddNodeController implements ControllableScreen {
         else{
             if(edgeAddTab.isSelected()){
                 showNodesbyFloor(currentFloor);
+                edgeAddNode1 = null;
+                edgeAddNode2 = null;
+                edgeAddID1Label.setText("");
+                edgeAddID2Label.setText("");
+
             }
             else{
                 showEdgesbyFloor(currentFloor);
@@ -218,15 +225,38 @@ public class AddNodeController implements ControllableScreen {
 
     public void nodeSelected(ActionEvent e){
         NodeCheckBox source = (NodeCheckBox)e.getSource();
-        if(nodeRemoveTab.isSelected()){
-            if(!source.isSelected()){
+        if(nodeTab.isSelected() && nodeRemoveTab.isSelected()){
+            if(source.isSelected()){
                 nodeRemoveSelectedList.getItems().add(source.getNode());
             }
             else {
                 nodeRemoveSelectedList.getItems().remove(source.getNode());
             }
         }
+        else if (edgeTab.isSelected() && edgeAddTab.isSelected()){
+            if(edgeAddNode1 == null){
+                edgeAddNode1 = source.getNode();
+                edgeAddID1Label.setText(source.getNode().getID());
+            }
+            else if(edgeAddNode1.equals(source.getNode())){
+                edgeAddNode1 = null;
+                edgeAddID1Label.setText("");
+            }
+            else if(edgeAddNode2 == null){
+                edgeAddNode2 = source.getNode();
+                edgeAddID2Label.setText(source.getNode().getID());
+            }
+            else if(edgeAddNode2.equals(source.getNode())){
+                edgeAddNode2 = null;
+                edgeAddID2Label.setText("");
+            }
+
+
+        }
+
     }
+
+
 
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
@@ -263,6 +293,7 @@ public class AddNodeController implements ControllableScreen {
     private MenuButton nodeAddTypeDropDown;
     @FXML
     private Circle nodeAddIndicator;
+
 
 
 
@@ -473,6 +504,11 @@ public class AddNodeController implements ControllableScreen {
     private Label edgeAddID1Label;
     @FXML
     private Label edgeAddID2Label;
+
+    private Node edgeAddNode1;
+
+    private Node edgeAddNode2;
+
 
     public void edgeAddEnterPressed(ActionEvent e){
         System.out.println("Edge Add Enter Pressed");

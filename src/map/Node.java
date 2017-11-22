@@ -37,7 +37,7 @@ public class Node{
 
     //to be deleted
     public Node(int xPos, int yPos, FloorNumber f){
-
+        this.ID = "TEST" + Integer.toString(xPos);
         this.x= xPos;
         this.y=yPos;
         this.floor=f;
