@@ -314,12 +314,32 @@ public class PathController implements ControllableScreen{
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
         switchPath(currentFloor);
+        clearScreen(); //remove other screens
         System.out.println("Enter Pressed");
 
         //todo: draw path on this floor
         //todo: disable floor buttons not in the path
 
 
+    }
+
+    private void clearScreen(){
+        //check each button
+        checkScreen(floorL2Button);
+        checkScreen(floorL1Button);
+        checkScreen(floorGButton);
+        checkScreen(floor1Button);
+        checkScreen(floor2Button);
+        checkScreen(floor3Button);
+
+    }
+    private void checkScreen(JFXButton b){
+        if(floors.contains(FloorNumber.fromDbMapping(b.getText()))){
+            b.setDisable(false);
+        }
+        else{
+            b.setDisable(true);
+        }
     }
 
 
