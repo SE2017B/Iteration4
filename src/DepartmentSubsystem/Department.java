@@ -20,10 +20,12 @@ public class Department{
     private HashMap<Integer, ServiceRequest> backlog;
 
     public Department(String type) {
+        System.out.println("hello 42 \n\n\n");
         this.type = type;
         this.personel = new ArrayList<Staff>();
         this.services = new ArrayList<Service>();
         this.backlog = new HashMap<Integer, ServiceRequest>();
+        System.out.println("hello 43 \n\n\n");
     }
 
     public HashMap<Integer, ServiceRequest> getBacklog(){
@@ -36,6 +38,7 @@ public class Department{
 
     //returns all the available services
     public ArrayList<Service> getServices(){
+        System.out.println("hello 44 \n\n\n");
         return this.services;
     }
 

@@ -37,7 +37,9 @@ public abstract class Service{
         this.description = description;
     }
     public ArrayList<Staff> getEligibleStaff() {
+        System.out.println("get Staff");
         return eligibleStaff;
+
     }
     public void setEligibleStaff(ArrayList<Staff> eligibleStaff) {
         this.eligibleStaff = eligibleStaff;
