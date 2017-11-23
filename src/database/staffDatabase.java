@@ -185,11 +185,11 @@ public class staffDatabase {
             ResultSet rsetAllStaff = selectAllStaff.executeQuery(allStaff);
 
 
-            String strStaffID = "";
-            String strPW = "";
-            String strTitle = "";
-            String strFullname = "";
-            Integer intStaffID = 0;
+            String strUsername;
+            String strPW;
+            String strTitle;
+            String strFullname;
+            Integer intStaffID;
 
 
             System.out.println("");
@@ -197,13 +197,13 @@ public class staffDatabase {
 
             //Process the results
             while (rsetAllStaff.next()) {
-                strStaffID = rsetAllStaff.getString("username");
+                strUsername = rsetAllStaff.getString("username");
                 strPW = rsetAllStaff.getString("password");
                 strTitle = rsetAllStaff.getString("jobTitle");
                 strFullname = rsetAllStaff.getString("fullName");
                 intStaffID = rsetAllStaff.getInt("ID");
 
-                System.out.printf("%-20s %-20s %-20s %-20s %-20d\n", strStaffID, strPW, strTitle, strFullname, intStaffID);
+                System.out.printf("%-20s %-20s %-20s %-20s %-20d\n", strUsername, strPW, strTitle, strFullname, intStaffID);
             } // End While
 
             conn.commit();
