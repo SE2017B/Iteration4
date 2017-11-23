@@ -13,17 +13,17 @@ public class nodeDatabase {
     private static Connection conn;
 
     // Counters for # total count on each nodeType
-    public static int hallCounter;
-    public static int elevCounter;
-    public static int restCounter;
-    public static int staiCounter;
-    public static int deptCounter;
-    public static int labsCounter;
-    public static int infoCounter;
-    public static int confCounter;
-    public static int exitCounter;
-    public static int retlCounter;
-    public static int servCounter;
+    private static int hallCounter;
+    private static int elevCounter;
+    private static int restCounter;
+    private static int staiCounter;
+    private static int deptCounter;
+    private static int labsCounter;
+    private static int infoCounter;
+    private static int confCounter;
+    private static int exitCounter;
+    private static int retlCounter;
+    private static int servCounter;
 
     // All nodes from the node table in hospitalMapDB
     static ArrayList<Node> allNodes=new ArrayList<Node>();
