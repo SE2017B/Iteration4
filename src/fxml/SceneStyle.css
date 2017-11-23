@@ -6,7 +6,10 @@
     -fx-border-radius: 1;
     -fx-padding: 3 6 6 6;
 }
-
+.scroll-pane{
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}
 
 
 .jfx-tab-pane .headers-region, .tab-pane {
@@ -17,11 +20,7 @@
 }
 .jfx-tab-pane .tab-selected-line{
     -fx-background-color: darkorange;
-    -fx-min-height: 4;
-    -fx-min-width: 4;
-    -fx-fill-height: 4;
-    -fx-fill-width: 4;
-    -fx-stroke-width: 4;
+
 }
 .jfx-tab-pane .tab-header-area .jfx-rippler{
     -jfx-rippler-fill: darkorange;
