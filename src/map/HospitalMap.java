@@ -23,6 +23,7 @@ public class HospitalMap{
     private ArrayList<SearchStrategy> posSerchStrat;
     private SearchContext search;
     private static HospitalMap map;
+    private Node kioskLocation;
 
     //Constructors
     private HospitalMap() {
@@ -35,9 +36,10 @@ public class HospitalMap{
         posSerchStrat.add(new BreadthFirstSearch());
         posSerchStrat.add(new DepthFirstSearch());
         posSerchStrat.add(new DijkstrasSearch());
-
         nodeMap.addAll(nodeDatabase.getNodes());
         edgeMap.addAll(edgeDatabase.getEdges());
+
+        kioskLocation = getNodesBy(n -> n.getID().equals("FINFO00101")).get(0);
 
     }
 
@@ -164,6 +166,13 @@ public class HospitalMap{
         return posSerchStrat;
     }
 
+    public Node getKioskLocation(){
+        return kioskLocation;
+    }
+
+    public void setKioskLocation(Node node){
+        kioskLocation = node;
+    }
 
     public List<Node> getNodesBy(Function<Node, Boolean> function){
         return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
