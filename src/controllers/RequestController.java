@@ -12,7 +12,7 @@ import DepartmentSubsystem.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTimePicker;
+//import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -69,8 +69,8 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXDatePicker dateMenu;
 
-    @FXML
-    private JFXTimePicker timeMenu;
+    //@FXML
+    //private JFXTimePicker timeMenu;
 
     @FXML
     private ChoiceBox<Node> locationChoiceBox;
@@ -211,7 +211,7 @@ public class RequestController implements ControllableScreen{
     public void timeSelected(ActionEvent e) {
         //todo test?
         System.out.println("Time selescted");
-        time = ((JFXTimePicker)e.getSource()).getValue().toString();
+        //time = ((JFXTimePicker)e.getSource()).getValue().toString();
     }
 
     public void dateSelected(ActionEvent e){
