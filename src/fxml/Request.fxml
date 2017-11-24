@@ -176,6 +176,12 @@
                                           <Font size="20.0" />
                                        </font>
                                     </JFXButton>
+                                    <Label text="Select Kiosk Location" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="kioskLocationChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>

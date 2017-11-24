@@ -162,6 +162,8 @@ public class HospitalMap{
         search.setStrategy(searchStrategy);
     }
 
+    public SearchStrategy getSearchStrategy() {return search.getStrategy();}
+
     public ArrayList<SearchStrategy> getSearches() {
         return posSerchStrat;
     }

@@ -135,6 +135,11 @@ public class RequestController implements ControllableScreen{
 
 
         searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
+        System.out.println(map.getSearchStrategy() + " ");
+        searchStrategyChoice.setValue(map.getSearchStrategy());
+        kioskLocationChoice.setItems(FXCollections.observableList(map.getNodeMap()));
+        kioskLocationChoice.setValue(map.getKioskLocation());
+
         //update the items in the checklist
         //locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
@@ -239,6 +244,8 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<SearchStrategy> searchStrategyChoice;
     @FXML
     private JFXButton saveSettingsButton;
+    @FXML
+    private ChoiceBox<Node> kioskLocationChoice;
 
     public void saveSettingsPressed(ActionEvent e){
         if(searchStrategyChoice.getValue() != null){
@@ -246,4 +253,5 @@ public class RequestController implements ControllableScreen{
         }
 
     }
+
 }

@@ -144,7 +144,7 @@ public class PathController implements ControllableScreen{
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
         mapImage.setImage(currentFloor);
         mapImage.slideButtons(floorScrollPane,currentFloor);
-
+        startNodeChoice.setValue(map.getKioskLocation());
         //remove any previous paths from the display
         clearPaths();
         //lines = new ArrayList<>();
