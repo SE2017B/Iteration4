@@ -68,8 +68,8 @@ public class HospitalMap{
                                 String shortName, String team, ArrayList<Node> attachedNodes){
         Node temp = new Node(ID ,x, y, floor, building, type, longName, shortName, team);
         nodeMap.add(temp);
-        for(int i = 0; i < connections.size(); i++){
-            addEdge(temp,connections.get(i));
+        for(int i = 0; i < attachedNodes.size(); i++){
+            addEdge(temp,attachedNodes.get(i));
         }
         nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
