@@ -39,7 +39,20 @@ public class HospitalMap{
         nodeMap.addAll(nodeDatabase.getNodes());
         edgeMap.addAll(edgeDatabase.getEdges());
 
-        kioskLocation = getNodesBy(n -> n.getID().equals("FINFO00101")).get(0);
+        try {
+            // place the kiosk at the main info desk
+            kioskLocation = getNodesBy(n -> n.getID().equals("FINFO00101")).get(0);
+        }
+        catch (IndexOutOfBoundsException e){
+            if (!nodeMap.isEmpty()){
+                //add a some an arbitrary node from the map if that one doesn't exist
+               kioskLocation = nodeMap.get(0);
+            }
+            else{
+                System.out.println("No nodes found for kiosk location");
+                kioskLocation = null;
+            }
+        }
 
     }
 
