@@ -210,7 +210,7 @@ public class PathController implements ControllableScreen{
                 getVars(current, newp);
                 mapPane.getChildren().add(newp);
                 points.add(newp);
-                newp.setStroke(Color.RED);
+                newp.setFill(Color.RED);
                 //shapes.add(newp);
                 //add last point if it exists
 //                if(i>0){
@@ -490,6 +490,7 @@ public class PathController implements ControllableScreen{
         setMapScale(4-slideBarZoom.getValue());
         //redraw animation o ensure that it is well positioned
         switchPath(currentFloor);
+        controlScroller(currentFloor);
     }
 
     //when - button pressed zoom out map
@@ -498,6 +499,7 @@ public class PathController implements ControllableScreen{
         setMapScale(4-slideBarZoom.getValue());
         //redraw animation to ensure that it is well positioned
         switchPath(currentFloor);
+        controlScroller(currentFloor);
     }
 
 
