@@ -1,8 +1,15 @@
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import map.FloorNumber;
 
 import java.util.HashMap;
@@ -33,6 +40,8 @@ public class proxyImagePane extends StackPane {
         addImage(FloorNumber.fromDbMapping("1"));
         addImage(FloorNumber.fromDbMapping("2"));
         addImage(FloorNumber.fromDbMapping("3"));
+
+
     }
 
     private String getImage(FloorNumber floor){
@@ -60,7 +69,7 @@ public class proxyImagePane extends StackPane {
     }
 
     public boolean addImage(FloorNumber floor){
-        //Todo: create new image view
+        //create new image view
         if(floor!=null){
             String name = this.getImage(floor);//get image name for floor
             Image img = new Image(name); //create new image
@@ -69,8 +78,6 @@ public class proxyImagePane extends StackPane {
             imgView.setFitHeight(3400/scale);
             imgView.setVisible(true);
             floors.put(floor,imgView);//add new image view to hash map floors
-            //get the image pane directly instead
-
             return true;
         }
         return false;
@@ -90,7 +97,7 @@ public class proxyImagePane extends StackPane {
         this.scale+=ds;
     }
     public boolean setImage(FloorNumber floor){
-        //Todo: Isn't set image and add image the same thing
+        //remove existing image
        if(this.getChildren().size()>0){
             this.getChildren().remove(0);
         }
@@ -98,9 +105,20 @@ public class proxyImagePane extends StackPane {
         this.getChildren().add(floors.get(floor));
         return true;
     }
+
     public boolean removeImage(FloorNumber floor){
         floors.remove(floor);
         return true;
+    }
+
+    public void slideButtons(ScrollPane sp, FloorNumber floor) {
+        Timeline slideButtons = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(sp.hvalueProperty(), sp.getHvalue())),
+                new KeyFrame(new Duration(300),
+                        new KeyValue(sp.hvalueProperty(),(floor.getNodeMapping() - 1)/5.0))
+        );
+        slideButtons.play();
     }
 
 }

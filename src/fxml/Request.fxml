@@ -130,11 +130,7 @@
                                                    <font>
                                                       <Font size="24.0" />
                                                    </font></Label>
-                                                <JFXButton fx:id="btncreate1" onAction="#resolveServicePressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Resolve" GridPane.rowIndex="3">
-                                                   <GridPane.margin>
-                                                      <Insets left="20.0" right="20.0" />
-                                                   </GridPane.margin></JFXButton>
-                                                <JFXButton fx:id="btnserviceResCancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                <JFXButton fx:id="btncreate1" onAction="#resolveServicePressed" prefHeight="50.0" prefWidth="150.0" text="Resolve" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="20.0" right="20.0" />
                                                    </GridPane.margin></JFXButton>
@@ -180,6 +176,12 @@
                                           <Font size="20.0" />
                                        </font>
                                     </JFXButton>
+                                    <Label text="Select Kiosk Location" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="kioskLocationChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
@@ -187,11 +189,12 @@
                   </Tab>
                </tabs>
             </JFXTabPane>
+            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="tab-pane" GridPane.columnSpan="3" GridPane.rowIndex="2" />
             <JFXButton fx:id="btnLogOut" buttonType="RAISED" onAction="#logoutPressed" prefHeight="50.0" prefWidth="150.0" text="Logout" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </GridPane.margin></JFXButton>
-            <JFXButton fx:id="btnEditMap" onAction="#editPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #d6d6d6;" text="Edit Map" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <JFXButton fx:id="btnEditMap" onAction="#editPressed" prefHeight="50.0" prefWidth="150.0" text="Edit Map" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </GridPane.margin></JFXButton>

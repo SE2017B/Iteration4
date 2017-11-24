@@ -39,4 +39,9 @@ public class BeamSearch implements SearchStrategy{
         }
         return new Path();
     }
+
+    @Override
+    public String toString(){
+        return "Beam Search";
+    }
 }

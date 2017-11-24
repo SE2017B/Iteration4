@@ -13,20 +13,20 @@ public class nodeDatabase {
     private static Connection conn;
 
     // Counters for # total count on each nodeType
-    public static int hallCounter;
-    public static int elevCounter;
-    public static int restCounter;
-    public static int staiCounter;
-    public static int deptCounter;
-    public static int labsCounter;
-    public static int infoCounter;
-    public static int confCounter;
-    public static int exitCounter;
-    public static int retlCounter;
-    public static int servCounter;
+    private static int hallCounter;
+    private static int elevCounter;
+    private static int restCounter;
+    private static int staiCounter;
+    private static int deptCounter;
+    private static int labsCounter;
+    private static int infoCounter;
+    private static int confCounter;
+    private static int exitCounter;
+    private static int retlCounter;
+    private static int servCounter;
 
     // All nodes from the node table in hospitalMapDB
-    static ArrayList<Node> allNodes=new ArrayList<Node>();
+    static ArrayList<Node> allNodes=new ArrayList<>();
 
     // Getter for Arraylist of all nodes
     public static ArrayList<Node> getNodes(){
@@ -253,15 +253,15 @@ public class nodeDatabase {
             String allNodes = "SELECT * FROM NODES";
             ResultSet rsetAllNodes = selectAllNodes.executeQuery(allNodes);
 
-            String strNodeID = "";
-            String strXCoord = "";
-            String strYCoord = "";
-            String strFloor = "";
-            String strBuilding = "";
-            String strNodeType = "";
-            String strLongName = "";
-            String strShortName = "";
-            String strTeamAssigned = "";
+            String strNodeID;
+            String strXCoord;
+            String strYCoord;
+            String strFloor;
+            String strBuilding;
+            String strNodeType;
+            String strLongName;
+            String strShortName;
+            String strTeamAssigned;
 
             System.out.println("");
             System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-50s %-30s %-20s\n", "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName", "teamAssigned");
@@ -306,9 +306,8 @@ public class nodeDatabase {
             String strCntNodes = "SELECT nodeType, COUNT(nodeType) AS type FROM nodes GROUP BY nodeType";
             ResultSet rsetCntNodesHall = cntAllType.executeQuery(strCntNodes);
 
-            String aType = "";
-            int numHall = 0;
-            //System.out.printf("%-20s %-20s\n", "nodeType", "COUNT(nodeType)");
+            String aType;
+            int numHall;
 
             //Process the results
             while (rsetCntNodesHall.next()) {
@@ -349,9 +348,7 @@ public class nodeDatabase {
                     case "STAI":
                         staiCounter = numHall;
                 }
-
-                //System.out.printf("%-20s %-20s\n", aType, numHall);
-            } // End While
+            }
 
             conn.commit();
             rsetCntNodesHall.close();
@@ -365,76 +362,76 @@ public class nodeDatabase {
     }
 
     // NodeType hallCounter getter and increments counter when it is called
-    public static int getHallCounter() {
+    private static int getHallCounter() {
         int temp = hallCounter;
         hallCounter++;
         return temp;
     }
 
     // NodeType restCounter getter and increments counter when it is called
-    public static int getRestCounter() {
+    private static int getRestCounter() {
         int temp = restCounter;
         restCounter++;
         return temp;
     }
 
     // NodeType retlCounter getter and increments counter when it is called
-    public static int getRetlCounter() {
+    private static int getRetlCounter() {
         int temp = retlCounter;
         retlCounter++;
         return temp;
     }
 
     // NodeType elevCounter getter and increments counter when it is called
-    public static int getElevCounter() {
+    private static int getElevCounter() {
         int temp = elevCounter;
         elevCounter++;
         return temp;
     }
 
     // NodeType staiCounter getter and increments counter when it is called
-    public static int getStaiCounter() {
+    private static int getStaiCounter() {
         int temp = staiCounter;
         staiCounter++;
         return temp;
     }
 
     // NodeType deptCounter getter and increments counter when it is called
-    public static int getDeptCounter() {
+    private static int getDeptCounter() {
         int temp = deptCounter;
         deptCounter++;
         return temp;
     }
 
     // NodeType labsCounter getter and increments counter when it is called
-    public static int getLabsCounter() {
+    private static int getLabsCounter() {
         int temp = labsCounter;
         labsCounter++;
         return temp;
     }
 
     // NodeType infoCounter getter and increments counter when it is called
-    public static int getInfoCounter() {
+    private static int getInfoCounter() {
         int temp = infoCounter;
         infoCounter++;
         return temp;
     }
 
     // NodeType confCounter getter and increments counter when it is called
-    public static int getConfCounter() {
+    private static int getConfCounter() {
         int temp = confCounter;
         confCounter++;
         return temp;
     }
 
     // NodeType exitCounter getter and increments counter when it is called
-    public static int getExitCounter() {
+    private static int getExitCounter() {
         int temp = exitCounter;
         exitCounter++;
         return temp;
     }
 
-    public static int getServCounter() {
+    private static int getServCounter() {
         int temp = servCounter;
         servCounter++;
         return temp;

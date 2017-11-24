@@ -24,7 +24,8 @@
                   <ScrollPane hvalue="0.5" prefHeight="694.0" prefWidth="1278.0" vvalue="0.16" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
                         <Pane fx:id="mapPane" />
-                     </content></ScrollPane>
+                     </content>
+                  </ScrollPane>
                   <JFXButton fx:id="btnlogin" layoutX="40.0" layoutY="40.0" onAction="#loginPressed" prefHeight="50.0" prefWidth="150.0" text="Login">
                      <font>
                         <Font size="24.0" />
@@ -35,7 +36,7 @@
                         <Font size="24.0" />
                      </font>
                   </JFXButton>
-                  <VBox alignment="CENTER" layoutX="20.0" layoutY="300.0" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER" layoutX="1150.0" layoutY="300.0" prefHeight="200.0" prefWidth="100.0">
                      <children>
                         <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
                            <font>

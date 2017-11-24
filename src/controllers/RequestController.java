@@ -111,9 +111,19 @@ public class RequestController implements ControllableScreen{
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
         depSub = DepartmentSubsystem.getSubsystem();
+
+
+
+        lblSelectedService.setText("Service" + resolveServiceListView.getSelectionModel().getSelectedItems().toString());
     }
 
     public void onShow(){
+                ServiceRequest test = new ServiceRequest(null,2,null,null,null, null);
+                ServiceRequest test2 = new ServiceRequest(null,3,null,null,null, null);
+                ServiceRequest test3 = new ServiceRequest(null,4,null,null,null, null);
+                resolveServiceListView.getItems().add(test);
+                resolveServiceListView.getItems().add(test2);
+                resolveServiceListView.getItems().add(test3);
 
         //Update the nodes in the map
 
@@ -123,6 +133,12 @@ public class RequestController implements ControllableScreen{
         //resolveServiceListView.getItems().add(Department.getBacklog().values());
         choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
+
+        searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
+        System.out.println(map.getSearchStrategy() + " ");
+        searchStrategyChoice.setValue(map.getSearchStrategy());
+        kioskLocationChoice.setItems(FXCollections.observableList(map.getNodeMap()));
+        kioskLocationChoice.setValue(map.getKioskLocation());
 
         //update the items in the checklist
         //locationChoiceBox.setItems(FXCollections.observableList(nodes));
@@ -169,7 +185,7 @@ public class RequestController implements ControllableScreen{
 
     public void editPressed(ActionEvent e){
         System.out.println("Edit Pressed");
-        parent.setScreen(ScreenController.AddNodeID);
+        parent.setScreen(ScreenController.AddNodeID, "LEFT");
     }
 
     public void selectAlgorithmPath(ActionEvent e)
@@ -228,6 +244,8 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<SearchStrategy> searchStrategyChoice;
     @FXML
     private JFXButton saveSettingsButton;
+    @FXML
+    private ChoiceBox<Node> kioskLocationChoice;
 
     public void saveSettingsPressed(ActionEvent e){
         if(searchStrategyChoice.getValue() != null){
@@ -235,4 +253,5 @@ public class RequestController implements ControllableScreen{
         }
 
     }
+
 }

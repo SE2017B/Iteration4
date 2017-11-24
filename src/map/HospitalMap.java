@@ -23,6 +23,7 @@ public class HospitalMap{
     private ArrayList<SearchStrategy> posSerchStrat;
     private SearchContext search;
     private static HospitalMap map;
+    private Node kioskLocation;
 
     //Constructors
     private HospitalMap() {
@@ -35,9 +36,10 @@ public class HospitalMap{
         posSerchStrat.add(new BreadthFirstSearch());
         posSerchStrat.add(new DepthFirstSearch());
         posSerchStrat.add(new DijkstrasSearch());
-
         nodeMap.addAll(nodeDatabase.getNodes());
         edgeMap.addAll(edgeDatabase.getEdges());
+
+        kioskLocation = getNodesBy(n -> n.getID().equals("FINFO00101")).get(0);
 
     }
 
@@ -56,16 +58,18 @@ public class HospitalMap{
         nodeDatabase.addNode(node);
     }
 
-    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName,
+                        String shortName, String team){
         nodeMap.add(new Node(ID ,x, y, floor, building, type, longName, shortName, team));
         nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
 
-    public void addNodeandEdges(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team, ArrayList<Node> connections){
+    public void addNodeandEdges(String ID, String x, String y, String floor, String building, String type, String longName,
+                                String shortName, String team, ArrayList<Node> attachedNodes){
         Node temp = new Node(ID ,x, y, floor, building, type, longName, shortName, team);
         nodeMap.add(temp);
-        for(int i = 0; i < connections.size(); i++){
-            addEdge(temp,connections.get(i));
+        for(int i = 0; i < attachedNodes.size(); i++){
+            addEdge(temp,attachedNodes.get(i));
         }
         nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
@@ -160,10 +164,19 @@ public class HospitalMap{
         search.setStrategy(searchStrategy);
     }
 
+    public SearchStrategy getSearchStrategy() {return search.getStrategy();}
+
     public ArrayList<SearchStrategy> getSearches() {
         return posSerchStrat;
     }
 
+    public Node getKioskLocation(){
+        return kioskLocation;
+    }
+
+    public void setKioskLocation(Node node){
+        kioskLocation = node;
+    }
 
     public List<Node> getNodesBy(Function<Node, Boolean> function){
         return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());

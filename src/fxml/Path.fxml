@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXSlider?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ScrollPane?>
@@ -19,11 +14,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
-      <AnchorPane layoutX="-7.0" layoutY="-7.0" prefHeight="150.0" prefWidth="1294.0" />
       <SplitPane dividerPositions="0.18796992481203006" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane maxHeight="100.0" minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="pane">
@@ -70,15 +65,30 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="pane">
                <children>
-                  <SplitPane dividerPositions="0.8159420289855073" orientation="VERTICAL" prefHeight="692.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.8517441860465116" orientation="VERTICAL" prefHeight="692.0" prefWidth="1278.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                            <children>
-                              <ScrollPane fx:id="mapScrollPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <ScrollPane fx:id="mapScrollPane" hvalue="0.53" vvalue="0.19" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <Pane fx:id="mapPane" />
                                  </content>
                               </ScrollPane>
+                              <VBox alignment="CENTER" layoutX="1150.0" layoutY="180.0" prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </JFXButton>
+                                    <JFXSlider fx:id="slideBarZoom" disable="true" max="3.0" min="1.0" orientation="VERTICAL" prefWidth="50.0" value="2.0" />
+                                    <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="50.0" prefWidth="50.0" text="-">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </JFXButton>
+                                 </children>
+                              </VBox>
                            </children>
                         </AnchorPane>
                       <AnchorPane>
@@ -125,7 +135,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="271.0">
                <children>
-                  <JFXListView fx:id="directionsList" layoutX="13.4" layoutY="10.4" prefHeight="200.0" prefWidth="216.0" AnchorPane.bottomAnchor="-16.0" AnchorPane.leftAnchor="-15.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="-18.0" />
+                  <JFXListView fx:id="directionsList" layoutX="13.4" layoutY="10.4" prefHeight="200.0" prefWidth="216.0" styleClass="pane" AnchorPane.bottomAnchor="-16.0" AnchorPane.leftAnchor="-15.0" AnchorPane.rightAnchor="-15.0" AnchorPane.topAnchor="-18.0" />
                </children>
             </AnchorPane>
          </content>

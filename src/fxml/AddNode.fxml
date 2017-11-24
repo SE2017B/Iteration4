@@ -439,7 +439,7 @@
                            </children></AnchorPane>
                       <AnchorPane minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                               <children>
-                                    <ScrollPane hbarPolicy="ALWAYS" prefWidth="941.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <ScrollPane fx:id="floorScrollPane" hbarPolicy="ALWAYS" prefWidth="941.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <content>
                                     <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0" styleClass="pane">
                                        <columnConstraints>

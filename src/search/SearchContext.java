@@ -17,6 +17,8 @@ public class SearchContext {
         this.strategy = strategy;
     }
 
+    public SearchStrategy getStrategy(){ return strategy;}
+
     public Path findPath(Node start, Node end){
         try {
             return strategy.findPath(start, end);

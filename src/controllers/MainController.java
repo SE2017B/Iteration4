@@ -10,12 +10,19 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import map.FloorNumber;
+import map.HospitalMap;
 
 
 public class MainController implements ControllableScreen{
@@ -37,26 +44,45 @@ public class MainController implements ControllableScreen{
 
     private proxyImagePane mapImage;
 
+    private AnimatedCircle kioskIndicator;
+
+    private FloorNumber curerntFloor;
+
+    private HospitalMap map;
+
     public void init() {
         mapImage = new proxyImagePane();
-        mapImage.setImage(FloorNumber.FLOOR_GROUND);
-        mapPane.getChildren().add(mapImage);
+        curerntFloor = FloorNumber.FLOOR_ONE;
+        mapImage.setImage(curerntFloor);
+        map = HospitalMap.getMap();
+        kioskIndicator = new AnimatedCircle();
+        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapImage.getScale());
+        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapImage.getScale());
+        kioskIndicator.setVisible(true);
+        kioskIndicator.setFill(Color.rgb(0,84,153));
+        kioskIndicator.setStroke(Color.rgb(40,40,60));
+        kioskIndicator.setStrokeWidth(3);
+        System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
+        mapImage.slideButtons(floorScrollPane,FloorNumber.FLOOR_GROUND);
+        mapPane.getChildren().addAll(mapImage,kioskIndicator);
 
     }
 
     public void onShow(){
-
+        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapImage.getScale());
+        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapImage.getScale());
+        setFloor(curerntFloor);
     }
 
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         System.out.println("Login Pressed");
-        parent.setScreen(ScreenController.LoginID);
+        parent.setScreen(ScreenController.LoginID,"RIGHT");
     }
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
         System.out.println("Direction Pressed");
-        parent.setScreen(ScreenController.PathID);
+        parent.setScreen(ScreenController.PathID,"LEFT");
     }
     //when search button is pressed go to search screen
     public void searchPressed(ActionEvent e){
@@ -67,16 +93,21 @@ public class MainController implements ControllableScreen{
 
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
-        System.out.println("Zoom In Pressed");
         slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
-        mapImage.setScale(4-slideBarZoom.getValue());
+        setZoom(slideBarZoom.getValue());
 
     }
 
+    //Pass in a value from 0-3. 0 is smallest, 3 is largest
+    public void setZoom(double zoom){
+        mapImage.setScale(4-zoom);
+        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapImage.getScale());
+        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapImage.getScale());
+    }
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
         slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
-        mapImage.setScale(4-slideBarZoom.getValue());
+        setZoom(slideBarZoom.getValue());
     }
 
     //adjusts map zoom through slider
@@ -84,13 +115,21 @@ public class MainController implements ControllableScreen{
         mapImage.setScale(4-slideBarZoom.getValue());
     }
 
+    public void setFloor(FloorNumber floor){
+        mapImage.slideButtons(floorScrollPane,floor);
+        mapImage.setImage(floor);
+        if (floor.equals(map.getKioskLocation().getFloor())){
+            kioskIndicator.setVisible(true);
+        }
+        else{
+            kioskIndicator.setVisible(false);
+        }
+
+    }
 
     public void floorButtonPressed(ActionEvent e){
-       String floor =  ((JFXButton)e.getSource()).getText();
-       System.out.println(((JFXButton) e.getSource()).getLayoutX());
-       floorScrollPane.setHvalue((((JFXButton) e.getSource()).getLayoutX()-415)/1000);
-       System.out.println("Floor Pressed: " + floor);
-       mapImage.setImage(FloorNumber.fromDbMapping(floor));
+       FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
+       setFloor(floor);
     }
 
 
