@@ -202,9 +202,9 @@ public class edgeDatabase {
             String allEdges = "SELECT * FROM edges";
             ResultSet rsetAllEdges = selectAllEdges.executeQuery(allEdges);
 
-            String strEdgeID = "";
-            String strStartNode = "";
-            String strEndNode = "";
+            String strEdgeID;
+            String strStartNode;
+            String strEndNode;
 
             System.out.println("");
             System.out.printf("%-30s %-20s %-20s\n", "edgeID", "startNode", "endNode");
