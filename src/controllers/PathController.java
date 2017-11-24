@@ -13,26 +13,31 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
+import javafx.animation.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.MoveTo;
+import javafx.util.Duration;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
+import map.Path;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.*;
+import javafx.animation.PathTransition;
 
-import map.Path;
+
 import DepartmentSubsystem.*;
 
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -246,6 +251,7 @@ public class PathController implements ControllableScreen{
             //add all in to mapPane
             showPaths(pathLines.get(floor));
             showPoints(pathPoints.get(floor));
+            animatePath(pathLines.get(floor));
             //adjust screen
             controlScroller(floor);
         }
@@ -331,6 +337,40 @@ public class PathController implements ControllableScreen{
         return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
     }
 
+    private void animatePath(ArrayList<Line> ls){
+
+        //indicator to follow the path
+        Rectangle rect = new Rectangle (0,0, 10, 10);
+        rect.setVisible(true);
+        rect.setFill(Color.DODGERBLUE);
+
+        //animation that moves the indicator
+        PathTransition pathTransition = new PathTransition();
+
+        //path to follow
+        javafx.scene.shape.Path p = new javafx.scene.shape.Path();
+        p.setStroke(Color.RED);
+        mapPane.getChildren().addAll(rect,p);
+        //to remove the red line, remove p ^
+
+        //starting point defined by MoveTo
+        p.getElements().add(new MoveTo(ls.get(0).getLayoutX()-5, ls.get(0).getLayoutY()-5));
+
+        //line movements along drawn lines
+        for(Line l : ls){
+            p.getElements().add(new LineTo(l.getLayoutX(),l.getLayoutY()));
+
+        }
+        //define the animation actions
+        pathTransition.setDuration(Duration.millis(10000));
+        pathTransition.setNode(rect);
+        pathTransition.setPath(p);
+        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pathTransition.setCycleCount(Transition.INDEFINITE);
+        pathTransition.play();
+
+    }
+
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
@@ -344,16 +384,15 @@ public class PathController implements ControllableScreen{
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
         switchPath(currentFloor);
-        clearScreen(); //remove other screens
+        disableUnusedButtons(); //remove other screens
         System.out.println("Enter Pressed");
 
     }
 
-    private void clearScreen(){
+    private void disableUnusedButtons(){
         //check each button
         checkScreen(floorL2Button);
         checkScreen(floorL1Button);
-        checkScreen(floorGButton);
         checkScreen(floor1Button);
         checkScreen(floor2Button);
         checkScreen(floor3Button);
