@@ -22,6 +22,9 @@ import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
+import ui.EdgeCheckBox;
+import ui.NodeCheckBox;
+import ui.proxyImagePane;
 
 import java.util.ArrayList;
 

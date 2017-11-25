@@ -1,4 +1,4 @@
-package controllers;
+package ui;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.KeyFrame;
