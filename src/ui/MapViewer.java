@@ -49,7 +49,8 @@ public class MapViewer extends Observable{
         addFloor(FloorNumber.FLOOR_LONE);
         addFloor(FloorNumber.FLOOR_LTWO);
         mapImage = new proxyImagePane();
-        pane.getStyleClass().add("Pane");
+        pane.getStyleClass().add("pane");
+        container.getStyleClass().add("pane");
         pane.setPannable(true);
         currentFloor = FloorNumber.FLOOR_ONE;
         setFloor(currentFloor);

@@ -53,7 +53,7 @@ public class MainController implements ControllableScreen, Observer{
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
-        mapButtons = new MapViewer();
+        mapButtons = new MapViewer(this);
         mapButtons.setFloor(curerntFloor);
         kioskIndicator = new AnimatedCircle();
         kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
@@ -64,7 +64,6 @@ public class MainController implements ControllableScreen, Observer{
         kioskIndicator.setStrokeWidth(3);
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
         buttonHolderPane.getChildren().add(mapButtons.getPane());
-        mapButtons.addObserver(this);
         mapPane.getChildren().addAll(mapButtons.getMapImage(),kioskIndicator);
 
     }
