@@ -8,11 +8,9 @@
 
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -20,14 +18,13 @@ import javafx.scene.paint.Color;
 import map.FloorNumber;
 import map.HospitalMap;
 import ui.AnimatedCircle;
-import ui.MapButtonsPane;
-import ui.proxyImagePane;
+import ui.MapViewer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 
-public class MainController implements ControllableScreen{
+public class MainController implements ControllableScreen, Observer{
     private ScreenController parent;
 
 
@@ -42,7 +39,7 @@ public class MainController implements ControllableScreen{
     private JFXSlider slideBarZoom;
 
 
-    private MapButtonsPane mapButtons;
+    private MapViewer mapButtons;
 
     private AnimatedCircle kioskIndicator;
 
@@ -56,7 +53,7 @@ public class MainController implements ControllableScreen{
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
-        mapButtons = new MapButtonsPane();
+        mapButtons = new MapViewer();
         mapButtons.setFloor(curerntFloor);
         kioskIndicator = new AnimatedCircle();
         kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
@@ -67,6 +64,7 @@ public class MainController implements ControllableScreen{
         kioskIndicator.setStrokeWidth(3);
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
         buttonHolderPane.getChildren().add(mapButtons.getPane());
+        mapButtons.addObserver(this);
         mapPane.getChildren().addAll(mapButtons.getMapImage(),kioskIndicator);
 
     }
@@ -118,18 +116,20 @@ public class MainController implements ControllableScreen{
         mapButtons.setScale(4-slideBarZoom.getValue());
     }
 
-    public void setFloor(FloorNumber floor){
-        mapButtons.setFloor(floor);
-        if (floor.equals(map.getKioskLocation().getFloor())){
+    private void setFloor(FloorNumber floor){
+        curerntFloor = floor;
+        if (curerntFloor.equals(map.getKioskLocation().getFloor())){
             kioskIndicator.setVisible(true);
         }
         else{
             kioskIndicator.setVisible(false);
         }
-
     }
 
+    public void update(Observable o, Object arg) {
+        if(arg instanceof FloorNumber){
+            setFloor((FloorNumber) arg);
+        }
 
-
-
+    }
 }

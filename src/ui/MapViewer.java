@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Observable;
 
-public class MapButtonsPane extends Observable{
+public class MapViewer extends Observable{
     private final int SPACER_WIDTH = 500;
     private final int SPACING = 10;
     private final int BUTTON_HEIGHT = 80;
@@ -37,7 +37,7 @@ public class MapButtonsPane extends Observable{
     private proxyImagePane mapImage;
 
 
-    public MapButtonsPane(){
+    public MapViewer(){
         super();
         pane = new ScrollPane();
         buttonOrder = new ArrayList<String>();
