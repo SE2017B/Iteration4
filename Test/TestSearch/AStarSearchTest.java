@@ -230,6 +230,42 @@ public class AStarSearchTest {
         assertEquals("[A1, A2, A3, A9]", answer);
         assertEquals("[Go straight from Short1, Go straight through Short2, Take a left at this Short3, Stop at Short9]", directions);
     }
+
+    @Test
+    //Node 9 to Node 1
+    public void testTextMap2() throws InterruptedException {
+        String answer = search.findPath(N9, N1).toString();
+        System.out.println(answer);
+        String directions = search.findPath(N9, N1).findDirections().toString();
+        System.out.println(directions);
+        assertEquals("[A9, A8, A7, A6, A1]", answer);
+        assertEquals("[Go straight from Short9, Go straight through Short8, Go straight through Short7, Take a left at this Short6, Stop at Short1]", directions);
+    }
+
+    @Test
+    //Node 1 to Node 19_2
+    public void testTextMap3() throws InterruptedException {
+        String answer = search.findPath(N1, N19_2).toString();
+        System.out.println(answer);
+        String directions = search.findPath(N1, N19_2).findDirections().toString();
+        System.out.println(directions);
+        assertEquals("[A1, A6, A7, A8, A9, A9_2, A15_2, A14_2, A18_2, A19_2]", answer);
+        assertEquals("[Go straight from Short1, Take a right at this Short6, Go straight through Short7, Go straight through Short8, Go up Short9, Go straight from Short9_2, " +
+                "Take a left at this Short15_2, Take a right at this Short14_2, Take a right at this Short18_2, Stop at Short19_2]", directions);
+    }
+
+    @Test
+    //Node 19_2 to Node 1
+    public void testTextMap4() throws InterruptedException {
+        String answer = search.findPath(N19_2, N1).toString();
+        System.out.println(answer);
+        String directions = search.findPath(N19_2, N1).findDirections().toString();
+        System.out.println(directions);
+        assertEquals("[A19_2, A18_2, A14_2, A15_2, A9_2, A9, A8, A7, A6, A1]", answer);
+        assertEquals("[Go straight from Short19_2, Take a left at this Short18_2, Take a left at this Short14_2, Take a right at this Short15_2, " +
+                "Go down Short9_2, Go straight from Short9, Go straight through Short8, Go straight through Short7, Take a left at this Short6, Stop at Short1]", directions);
+    }
+
     @Test
     //Node 9 to Node 1
     public void testMap1Reverse() throws InterruptedException{
