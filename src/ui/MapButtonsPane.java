@@ -98,6 +98,8 @@ public class MapButtonsPane extends Observable{
     public void floorButtonPressed(ActionEvent e){
         FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         setFloor(floor);
+        setChanged();
+        notifyObservers(floor);
     }
 
 
@@ -133,4 +135,6 @@ public class MapButtonsPane extends Observable{
         }
         setFloor(floors.get(0));
     }
+
+
 }
