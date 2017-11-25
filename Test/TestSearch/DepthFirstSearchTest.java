@@ -220,28 +220,24 @@ public class DepthFirstSearchTest {
     @Test public void searchTestOne() {
         String answer = search.findPath(N1, N10).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10]", answer);
+        assertEquals("[A1, A6, A7, A10]", answer);
     }
 
     @Test public void searchTestTwo() {
         String answer = search.findPath(N3, N2).toString();
         System.out.println(answer);
-        assertEquals("[Short3, Short2]", answer);
+        assertEquals("[A3, A2]", answer);
     }
 
     @Test public void searchTestThree() {
         String answer = search.findPath(N22, N18).toString();
         System.out.println(answer);
-        assertEquals("[Short22, Short19, Short18]", answer);
+        assertEquals("[A22, A19, A18]", answer);
     }
 
     @Test public void searchTestFour() {
         String answer = search.findPath(N18, N22).toString();
         System.out.println(answer);
-        assertEquals("[Short18, Short14, Short11, Short10, Short7, Short4, " +
-                "Short5, Short8, Short9, Short9_2, Short3_2, " +
-                "Short2_2, Short1_2, Short6_2, Short7_2, " +
-                "Short10_2, Short11_2, Short14_2, Short13_2, Short12_2, " +
-                "Short16_2, Short17_2, Short20_2, Short20, Short21, Short22]", answer);
+        assertEquals("[A18, A21, A22]", answer);
     }
 }

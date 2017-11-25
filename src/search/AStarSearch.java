@@ -24,7 +24,7 @@ public class AStarSearch implements SearchStrategy {
         frontier.add(start);
 
         while(!frontier.isEmpty()){
-            frontier.sort((n1, n2) -> (int)(n1.getEuclidianDistance(end) - n2.getEuclidianDistance(end)));
+            frontier.sort((n1, n2) -> (int)(fScore.get(n1) - fScore.get(n2)));
             Node currentNode = frontier.get(0);
             if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
             frontier.remove(currentNode);

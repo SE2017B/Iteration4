@@ -221,77 +221,77 @@ public class BeamSearchTest {
     public void testSearch1(){    //Node 1 to Node 10
         String answer = search.findPath(N1, N10).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10]", answer);
+        assertEquals("[A1, A6, A7, A10]", answer);
     }
     @Test public void testSearch1Reverse(){    //Node 10 to Node 1
         String answer = search.findPath(N10, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short10, Short7, Short6, Short1]", answer);
+        assertEquals("[A10, A7, A6, A1]", answer);
     }
 
     @Test public void testSearch2(){    //Node 2 to Node 17
         String answer = search.findPath(N2, N17).toString();
         System.out.println(answer);
-        assertEquals("[Short2, Short3, Short9, Short15, Short14, Short13, Short17]", answer);
+        assertEquals("[A2, A3, A9, A15, A14, A13, A17]", answer);
     }
     @Test public void testSearch2Reverse(){     //Node 17 to Node 2
         String answer = search.findPath(N17, N2).toString();
         System.out.println(answer);
-        assertEquals("[Short17, Short13, Short14, Short15, Short9, Short3, Short2]", answer);
+        assertEquals("[A17, A13, A14, A15, A9, A3, A2]", answer);
     }
 
     @Test public void testSearch3(){    //Node 4 to Node 23
         String answer = search.findPath(N4, N23).toString();
         System.out.println(answer);
-        assertEquals("[Short4, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
+        assertEquals("[A4, A7, A10, A11, A14, A18, A21, A23]", answer);
     }
     @Test public void testSearch3Reverse(){
         String answer = search.findPath(N23, N4).toString();
         System.out.println(answer);
-        assertEquals("[Short23, Short21, Short18, Short14, Short11, Short10, Short7, Short4]", answer);
+        assertEquals("[A23, A21, A18, A14, A11, A10, A7, A4]", answer);
     }
 
     @Test public void testSearch4(){    //Node 5 to Node 19
         String answer = search.findPath(N5, N19).toString();
         System.out.println(answer);
-        assertEquals("[Short5, Short8, Short9, Short15, Short14, Short18, Short19]", answer);
+        assertEquals("[A5, A8, A9, A15, A14, A18, A19]", answer);
     }
     @Test public void testSearch4Reverse(){     //Node 19 to Node 5
         String answer = search.findPath(N19, N5).toString();
         System.out.println(answer);
-        assertEquals("[Short19, Short18, Short14, Short15, Short9, Short8, Short5]", answer);
+        assertEquals("[A19, A18, A14, A11, A10, A7, A4, A5]", answer);
     }
 
     @Test public void testSearchFloor1(){   //Node 1 to Node 1_2
         String answer = search.findPath(N1, N1_2).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short3_2, Short2_2, Short1_2]", answer);
+        assertEquals("[A1, A2, A3, A9, A9_2, A8_2, A7_2, A6_2, A1_2]", answer);
     }
     @Test public void testSearchFloor1Reverse(){    //Node 1_2 to Node 1
         String answer = search.findPath(N1_2, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short1_2, Short2_2, Short3_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
+        assertEquals("[A1_2, A2_2, A3_2, A9_2, A9, A8, A7, A6, A1]", answer);
     }
 
     @Test public void testSearchFloor2(){   //Node 1 to Node 19_2
         String answer = search.findPath(N1, N19_2).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
+        assertEquals("[A1, A6, A7, A8, A9, A9_2, A15_2, A14_2, A18_2, A19_2]", answer);
     }
     @Test public void testSearchFloor2Reverse(){    //Node 19_2 to Node 1
         String answer = search.findPath(N19_2, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
+        assertEquals("[A19_2, A18_2, A14_2, A15_2, A9_2, A9, A8, A7, A6, A1]", answer);
     }
 
     @Test public void testSearchFloor3(){   //Node 3 to Node 22_2
         String answer = search.findPath(N3, N22_2).toString();
         System.out.println(answer);
-        assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short21_2, Short22_2]", answer);
+        assertEquals("[A3, A9, A9_2, A15_2, A14_2, A18_2, A19_2, A22_2]", answer);
     }
     @Test public void testSearchFloor3Reverse(){    //Node 22_2 to Node 3
         String answer= search.findPath(N22_2, N3).toString();
         System.out.println(answer);
-        assertEquals("[Short22_2, Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3]", answer);
+        assertEquals("[A22_2, A21_2, A18_2, A14_2, A15_2, A9_2, A9, A3]", answer);
     }
 }
