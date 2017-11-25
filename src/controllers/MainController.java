@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import map.FloorNumber;
@@ -35,9 +36,6 @@ public class MainController implements ControllableScreen{
     private Pane mapPane;
 
     @FXML
-    private ScrollPane floorScrollPane;
-
-    @FXML
     private JFXSlider slideBarZoom;
 
     private proxyImagePane mapImage;
@@ -47,6 +45,9 @@ public class MainController implements ControllableScreen{
     private AnimatedCircle kioskIndicator;
 
     private FloorNumber curerntFloor;
+
+    @FXML
+    private AnchorPane buttonHolderPane;
 
     private HospitalMap map;
 
@@ -64,6 +65,7 @@ public class MainController implements ControllableScreen{
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
         mapButtons = new MapButtonsPane(mapImage);
         mapButtons.setFloor(curerntFloor);
+        buttonHolderPane.getChildren().add(mapButtons);
         mapPane.getChildren().addAll(mapImage,kioskIndicator);
 
     }
