@@ -159,7 +159,7 @@ public class PathController implements ControllableScreen{
         c.setCenterX(x/mapImage.getScale());
         c.setCenterY(y/mapImage.getScale());
         c.setVisible(true);
-        c.setRadius(10/mapImage.getScale());
+        c.setRadius(7/mapImage.getScale());
         return c;
     }
     private void getVars(FloorNumber floor,Circle c){
@@ -412,11 +412,11 @@ public class PathController implements ControllableScreen{
 
         //line movements along drawn lines
         for(Line l : ls){
-            p.getElements().add(new LineTo(l.getLayoutX(),l.getLayoutY()));
-            //Todo: Add the last line to the path
+            //add to line end so that animation gets to the end
+            p.getElements().add(new LineTo(l.getLayoutX()+l.getEndX(),l.getLayoutY()+l.getEndY()));
         }
         //define the animation actions
-        pathTransition.setDuration(Duration.millis(10000));
+        pathTransition.setDuration(Duration.millis(8000));
         pathTransition.setNode(rect);
         pathTransition.setPath(p);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
