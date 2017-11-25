@@ -26,6 +26,9 @@ public class Path implements Comparable<Path> {
     public void addToPath(Path path){
         this.path.addAll(path.getPath());
     }
+    public void addToPath(Node node, int index){
+        this.path.add(index, node);
+    }
     public void addDistance(double distance) {
         this.distance += distance;
     }
