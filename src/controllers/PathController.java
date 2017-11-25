@@ -144,7 +144,6 @@ public class PathController implements ControllableScreen{
         endNodeChoice.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
         mapImage.setImage(currentFloor);
-        mapImage.slideButtons(floorScrollPane,currentFloor);
         startNodeChoice.setValue(map.getKioskLocation());
         //remove any previous paths from the display
         clearPaths();
@@ -429,7 +428,6 @@ public class PathController implements ControllableScreen{
         //add background image
         System.out.println(thePath.getDirections());
         mapImage.setImage(currentFloor);
-        mapImage.slideButtons(floorScrollPane,currentFloor);
         directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
@@ -473,7 +471,6 @@ public class PathController implements ControllableScreen{
 
     public void floorButtonPressed(ActionEvent e){
         FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
-        mapImage.slideButtons(floorScrollPane,floor);
         mapImage.setImage(floor);
         currentFloor=floor;//update Current floor
         switchPath(floor);

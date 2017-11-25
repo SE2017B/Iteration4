@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import map.FloorNumber;
 import map.HospitalMap;
 import ui.AnimatedCircle;
+import ui.MapButtonsPane;
 import ui.proxyImagePane;
 
 
@@ -41,6 +42,8 @@ public class MainController implements ControllableScreen{
 
     private proxyImagePane mapImage;
 
+    private MapButtonsPane mapButtons;
+
     private AnimatedCircle kioskIndicator;
 
     private FloorNumber curerntFloor;
@@ -50,7 +53,6 @@ public class MainController implements ControllableScreen{
     public void init() {
         mapImage = new proxyImagePane();
         curerntFloor = FloorNumber.FLOOR_ONE;
-        mapImage.setImage(curerntFloor);
         map = HospitalMap.getMap();
         kioskIndicator = new AnimatedCircle();
         kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapImage.getScale());
@@ -60,7 +62,8 @@ public class MainController implements ControllableScreen{
         kioskIndicator.setStroke(Color.rgb(40,40,60));
         kioskIndicator.setStrokeWidth(3);
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
-        mapImage.slideButtons(floorScrollPane,FloorNumber.FLOOR_GROUND);
+        mapButtons = new MapButtonsPane(mapImage);
+        mapButtons.setFloor(curerntFloor);
         mapPane.getChildren().addAll(mapImage,kioskIndicator);
 
     }
@@ -113,8 +116,7 @@ public class MainController implements ControllableScreen{
     }
 
     public void setFloor(FloorNumber floor){
-        mapImage.slideButtons(floorScrollPane,floor);
-        mapImage.setImage(floor);
+        mapButtons.setFloor(floor);
         if (floor.equals(map.getKioskLocation().getFloor())){
             kioskIndicator.setVisible(true);
         }

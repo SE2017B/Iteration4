@@ -133,7 +133,6 @@ public class AddNodeController implements ControllableScreen {
         nodeAddFloorDropDown.setText(floor.getDbMapping());
         nodeEditFloorDropDown.setText(floor.getDbMapping());
         mapImage.setImage(floor);
-        mapImage.slideButtons(floorScrollPane,floor);
         refreshNodesandEdges();
 
     }
