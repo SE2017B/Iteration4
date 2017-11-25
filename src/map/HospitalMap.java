@@ -73,18 +73,26 @@ public class HospitalMap{
 
     public void addNode(String ID, String x, String y, String floor, String building, String type, String longName,
                         String shortName, String team){
-        nodeMap.add(new Node(ID ,x, y, floor, building, type, longName, shortName, team));
-        nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
+        Node newNode = new Node(ID ,x, y, floor, building, type, longName, shortName, team);
+        nodeMap.add(newNode);
+        nodeDatabase.addNode(newNode);
     }
 
-    public void addNodeandEdges(String ID, String x, String y, String floor, String building, String type, String longName,
+    public void addNode(String x, String y, String floor, String building, String type, String longName,
+                        String shortName, String team){
+        Node newNode = new Node(x, y, floor, building, type, longName, shortName, team);
+        nodeMap.add(newNode);
+        nodeDatabase.addNode(newNode);
+    }
+
+    public void addNodeandEdges(String x, String y, String floor, String building, String type, String longName,
                                 String shortName, String team, ArrayList<Node> attachedNodes){
-        Node temp = new Node(ID ,x, y, floor, building, type, longName, shortName, team);
+        Node temp = new Node(x, y, floor, building, type, longName, shortName, team);
         nodeMap.add(temp);
         for(int i = 0; i < attachedNodes.size(); i++){
             addEdge(temp,attachedNodes.get(i));
         }
-        nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
+        nodeDatabase.addNode(new Node(x,y,floor,building,type,longName,shortName, team));
     }
 
     public void editNode(Node node, String x, String y, String floor, String building, String type, String longName, String shortName){
