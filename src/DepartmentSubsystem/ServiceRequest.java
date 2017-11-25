@@ -65,4 +65,11 @@ public class ServiceRequest{
     public void setAssignedPersonnel(Staff assignedPersonnel) {
         this.assignedPersonnel = assignedPersonnel;
     }
+
+    @Override
+    public String toString(){
+        String name = String.valueOf(requestID) + " " + time + " " + date;
+        System.out.println(name);
+        return name;
+    }
 }
