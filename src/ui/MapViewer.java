@@ -14,13 +14,12 @@ import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 import map.FloorNumber;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Observable;
+import java.util.*;
 
 public class MapViewer extends Observable{
-    private final int SPACER_WIDTH = 500;
+    private int PANE_WIDTH = 1280;
+    private int SCROLL_WIDTH = 2000;
+    private int SPACER_WIDTH = 500;
     private final int SPACING = 10;
     private final int BUTTON_HEIGHT = 80;
     private final int BUTTON_WIDTH = 150;
@@ -37,7 +36,7 @@ public class MapViewer extends Observable{
     private proxyImagePane mapImage;
 
 
-    public MapViewer(){
+    public MapViewer(Observer o){
         super();
         pane = new ScrollPane();
         buttonOrder = new ArrayList<String>();
@@ -54,10 +53,9 @@ public class MapViewer extends Observable{
         pane.setPannable(true);
         currentFloor = FloorNumber.FLOOR_ONE;
         setFloor(currentFloor);
-        pane.setPrefWidth(1280);
+        pane.setPrefWidth(PANE_WIDTH);
         pane.setPrefHeight(150);
-        System.out.println("Spacer Width: " + spacerLeft.getPrefWidth());
-
+        addObserver(o);
     }
 
     private void setContainer(){
@@ -79,8 +77,15 @@ public class MapViewer extends Observable{
         button.setOnAction(e -> floorButtonPressed(e));
         buttonOrder.add(0,button.getText());
         container.getChildren().add(1,button);
-        int overallWidth = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
-        container.setPrefWidth(overallWidth);
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
+        container.setPrefWidth(SCROLL_WIDTH);
+    }
+    public void setSpacerWidth(int width){
+        SPACER_WIDTH = width;
+        spacerLeft.setPrefWidth(SPACER_WIDTH);
+        spacerRight.setPrefWidth(SPACER_WIDTH);
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
+        container.setPrefWidth(SCROLL_WIDTH);
     }
 
     public proxyImagePane getMapImage(){

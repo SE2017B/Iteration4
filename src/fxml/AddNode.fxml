@@ -437,42 +437,7 @@
                                  </content>
                               </ScrollPane>
                            </children></AnchorPane>
-                      <AnchorPane minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                              <children>
-                                    <ScrollPane fx:id="floorScrollPane" hbarPolicy="ALWAYS" prefWidth="941.0" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <content>
-                                    <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0" styleClass="pane">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <JFXButton fx:id="floorL2Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="L2" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                          <JFXButton fx:id="floorL1Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="L1" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-                                          <JFXButton fx:id="floorGButton" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="G" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                                          <JFXButton fx:id="floor2Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="2" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
-                                          <JFXButton fx:id="floor3Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="134.0" text="3" GridPane.columnIndex="7" GridPane.halignment="CENTER" />
-                                          <JFXButton fx:id="floor1Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="1" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </GridPane>
-                                 </content>
-                                    </ScrollPane>
-
-
-                           </children>
-                        </AnchorPane>
+                      <AnchorPane fx:id="mapButtonHolder" minHeight="100.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
                     </items>
                   </SplitPane>
                </children>
