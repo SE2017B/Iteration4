@@ -23,6 +23,9 @@ import ui.AnimatedCircle;
 import ui.MapButtonsPane;
 import ui.proxyImagePane;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainController implements ControllableScreen{
     private ScreenController parent;
@@ -63,7 +66,7 @@ public class MainController implements ControllableScreen{
         kioskIndicator.setStroke(Color.rgb(40,40,60));
         kioskIndicator.setStrokeWidth(3);
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
-        buttonHolderPane.getChildren().add(mapButtons);
+        buttonHolderPane.getChildren().add(mapButtons.getPane());
         mapPane.getChildren().addAll(mapButtons.getMapImage(),kioskIndicator);
 
     }
