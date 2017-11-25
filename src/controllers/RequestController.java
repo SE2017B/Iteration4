@@ -25,6 +25,7 @@ import map.HospitalMap;
 import map.Node;
 import search.SearchStrategy;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class RequestController implements ControllableScreen{
@@ -78,6 +79,8 @@ public class RequestController implements ControllableScreen{
     @FXML
     private Pane servicePane1;
 
+    private ScreenController serviceScreens;
+
     @FXML
     private ChoiceBox<Service> choiceBoxService;
 
@@ -115,6 +118,16 @@ public class RequestController implements ControllableScreen{
 
 
         lblSelectedService.setText("Service" + resolveServiceListView.getSelectionModel().getSelectedItems().toString());
+        serviceScreens = new ScreenController();
+        try {
+            serviceScreens.loadScreen(Service.FoodDeliveryID, Service.FoodDeliveryPath);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Unable to load Service Screen");
+        }
+        serviceScreens.setScreen(Service.FoodDeliveryID);
+        servicePane1.getChildren().add(serviceScreens);
     }
 
     public void onShow(){
