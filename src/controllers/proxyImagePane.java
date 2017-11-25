@@ -90,6 +90,7 @@ public class proxyImagePane extends StackPane {
             img.setFitHeight(3400/scale);
         }
     }
+
     public double getScale(){
         return this.scale;
     }

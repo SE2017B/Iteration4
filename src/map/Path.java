@@ -139,7 +139,7 @@ public class Path implements Comparable<Path> {
 
     @Override
     public int compareTo(Path path){
-        if(this.getDistance() < path.getDistance()) return -1;
-        else return 1;
+        if(this.getDistance() < path.getDistance()) return 1;
+        else return -1;
     }
 }

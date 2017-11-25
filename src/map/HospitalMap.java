@@ -39,7 +39,20 @@ public class HospitalMap{
         nodeMap.addAll(nodeDatabase.getNodes());
         edgeMap.addAll(edgeDatabase.getEdges());
 
-        kioskLocation = getNodesBy(n -> n.getID().equals("FINFO00101")).get(0);
+        try {
+            // place the kiosk at the main info desk
+            kioskLocation = getNodesBy(n -> n.getID().equals("FINFO00101")).get(0);
+        }
+        catch (IndexOutOfBoundsException e){
+            if (!nodeMap.isEmpty()){
+                //add a some an arbitrary node from the map if that one doesn't exist
+               kioskLocation = nodeMap.get(0);
+            }
+            else{
+                System.out.println("No nodes found for kiosk location");
+                kioskLocation = null;
+            }
+        }
 
     }
 
@@ -58,16 +71,18 @@ public class HospitalMap{
         nodeDatabase.addNode(node);
     }
 
-    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
+    public void addNode(String ID, String x, String y, String floor, String building, String type, String longName,
+                        String shortName, String team){
         nodeMap.add(new Node(ID ,x, y, floor, building, type, longName, shortName, team));
         nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }
 
-    public void addNodeandEdges(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team, ArrayList<Node> connections){
+    public void addNodeandEdges(String ID, String x, String y, String floor, String building, String type, String longName,
+                                String shortName, String team, ArrayList<Node> attachedNodes){
         Node temp = new Node(ID ,x, y, floor, building, type, longName, shortName, team);
         nodeMap.add(temp);
-        for(int i = 0; i < connections.size(); i++){
-            addEdge(temp,connections.get(i));
+        for(int i = 0; i < attachedNodes.size(); i++){
+            addEdge(temp,attachedNodes.get(i));
         }
         nodeDatabase.addNode(new Node(ID,x,y,floor,building,type,longName,shortName, team));
     }

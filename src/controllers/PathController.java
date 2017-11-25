@@ -48,6 +48,7 @@ public class PathController implements ControllableScreen{
     private HospitalMap map;
     private ArrayList<Line> lines;
     private ArrayList<Circle> points;
+    private ArrayList<Shape> shapes;
 
 
     public void setParentController(ScreenController parent){
@@ -110,6 +111,8 @@ public class PathController implements ControllableScreen{
 
     private HashMap<FloorNumber, ArrayList<Circle>> pathPoints;
 
+    private HashMap<FloorNumber, ArrayList<Shape>> pathShapes;
+
     private HashMap<FloorNumber,ArrayList<Integer>> positionVars;
 
     @FXML
@@ -121,6 +124,8 @@ public class PathController implements ControllableScreen{
         path = new ArrayList<Node>();
         lines = new ArrayList<Line>();
         points = new ArrayList<Circle>();
+        shapes = new ArrayList<Shape>();
+        pathShapes = new HashMap<FloorNumber,ArrayList<Shape>>();
         pathLines = new HashMap<FloorNumber,ArrayList<Line>>(); //hash map to lines for each floor
         pathPoints = new HashMap<FloorNumber, ArrayList<Circle>>();
         positionVars= new HashMap<FloorNumber,ArrayList<Integer>>();
@@ -154,7 +159,7 @@ public class PathController implements ControllableScreen{
         c.setCenterX(x/mapImage.getScale());
         c.setCenterY(y/mapImage.getScale());
         c.setVisible(true);
-        c.setRadius(10/mapImage.getScale());
+        c.setRadius(7/mapImage.getScale());
         return c;
     }
     private void getVars(FloorNumber floor,Circle c){
@@ -205,6 +210,8 @@ public class PathController implements ControllableScreen{
                 getVars(current, newp);
                 mapPane.getChildren().add(newp);
                 points.add(newp);
+                newp.setFill(Color.RED);
+                //shapes.add(newp);
                 //add last point if it exists
 //                if(i>0){
 //                    Circle newp1 = getPoint(lastNode.getX(),lastNode.getY());
@@ -231,6 +238,7 @@ public class PathController implements ControllableScreen{
                 pathLines.get(current).add(line);
                 mapPane.getChildren().add(line);//add all lines to mapPane
                 lines.add(line);
+                //shapes.add(line);
             }
             if(i==path.getPath().size()-1 && i>0){
                 Circle newP2 = getPoint(path.getPath().get(i).getX(),path.getPath().get(i).getY());
@@ -246,12 +254,13 @@ public class PathController implements ControllableScreen{
     private void switchPath(FloorNumber floor){
         hidePaths(lines);
         hidePoints(points);
+        hideShapes(shapes);
         if(pathLines.containsKey(floor)){
             System.out.println("Switching to path " + floor);
             //add all in to mapPane
             showPaths(pathLines.get(floor));
             showPoints(pathPoints.get(floor));
-            animatePath(pathLines.get(floor));
+            animatePath(floor,pathLines.get(floor));
             //adjust screen
             controlScroller(floor);
         }
@@ -266,13 +275,19 @@ public class PathController implements ControllableScreen{
             c.setVisible(false);
             mapPane.getChildren().remove(c);
         }
+        for(Shape s: shapes){
+            s.setVisible(false);
+            mapPane.getChildren().remove(s);
+        }
         //clear all lines and paths
         positionVars = new HashMap<>();
         pathLines = new HashMap<>();
         pathPoints = new HashMap<>();
+        pathShapes = new HashMap<>();
         floors= new ArrayList<>();
         lines=new ArrayList<>();
         points= new ArrayList<>();
+        shapes=new ArrayList<>();
         System.out.println("All entities cleared");
     }
 
@@ -290,6 +305,13 @@ public class PathController implements ControllableScreen{
         }
 
     }
+    public void hideShapes(ArrayList<Shape> thisshapes){
+        for(Shape s: thisshapes){
+            s.setVisible(false);
+        }
+        System.out.println("Shape has been hidden");
+
+    }
     public void showPaths(ArrayList<Line> thislines){
         for(Line line : thislines){
             line.setVisible(true);
@@ -301,6 +323,13 @@ public class PathController implements ControllableScreen{
             c.setVisible(true);
             System.out.println("Point has been shown");
         }
+    }
+    public void showShapes(ArrayList<Shape> thisshapes){
+        for(Shape s: thisshapes){
+            s.setVisible(true);
+        }
+        System.out.println("Shape has been shown");
+
     }
 
     public void setMapScale(double scale){
@@ -316,7 +345,21 @@ public class PathController implements ControllableScreen{
             c.setCenterX(c.getCenterX()*oldScale/scale);
             c.setCenterY(c.getCenterY()*oldScale/scale);
         }
+        calVars();
+        //reposition map
         mapImage.setScale(scale);
+    }
+
+    public void calVars(){
+        //function to help reposition the screen on zoom
+        for(FloorNumber f : floors){
+            for(Circle p: points){
+                if(positionVars.get(f).contains(p)){
+                    getVars(f,p);
+                }
+            }
+        }
+
     }
 
     //button methods
@@ -337,7 +380,11 @@ public class PathController implements ControllableScreen{
         return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
     }
 
-    private void animatePath(ArrayList<Line> ls){
+    private void animatePath(FloorNumber floor,ArrayList<Line> ls){
+        //create new hashMap element for floor if none existes
+        if(!pathShapes.containsKey(floor)){
+            pathShapes.put(floor,new ArrayList<Shape>());
+        }
 
         //indicator to follow the path
         Rectangle rect = new Rectangle (0,0, 10, 10);
@@ -350,7 +397,14 @@ public class PathController implements ControllableScreen{
         //path to follow
         javafx.scene.shape.Path p = new javafx.scene.shape.Path();
         p.setStroke(Color.RED);
+        p.setVisible(false);//let animation move along our line
         mapPane.getChildren().addAll(rect,p);
+        //add path and rect to shape hash map
+        pathShapes.get(floor).add(rect);
+        pathShapes.get(floor).add(p);
+        //add all shapes to shape
+        shapes.add(rect);
+        shapes.add(p);
         //to remove the red line, remove p ^
 
         //starting point defined by MoveTo
@@ -358,11 +412,11 @@ public class PathController implements ControllableScreen{
 
         //line movements along drawn lines
         for(Line l : ls){
-            p.getElements().add(new LineTo(l.getLayoutX(),l.getLayoutY()));
-
+            //add to line end so that animation gets to the end
+            p.getElements().add(new LineTo(l.getLayoutX()+l.getEndX(),l.getLayoutY()+l.getEndY()));
         }
         //define the animation actions
-        pathTransition.setDuration(Duration.millis(10000));
+        pathTransition.setDuration(Duration.millis(8000));
         pathTransition.setNode(rect);
         pathTransition.setPath(p);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
@@ -393,6 +447,7 @@ public class PathController implements ControllableScreen{
         //check each button
         checkScreen(floorL2Button);
         checkScreen(floorL1Button);
+        checkScreen(floorGButton);
         checkScreen(floor1Button);
         checkScreen(floor2Button);
         checkScreen(floor3Button);
@@ -424,6 +479,7 @@ public class PathController implements ControllableScreen{
         FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         mapImage.slideButtons(floorScrollPane,floor);
         mapImage.setImage(floor);
+        currentFloor=floor;//update Current floor
         switchPath(floor);
     }
 
@@ -432,13 +488,18 @@ public class PathController implements ControllableScreen{
         System.out.println("Zoom In Pressed");
         slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
         setMapScale(4-slideBarZoom.getValue());
-
+        //redraw animation o ensure that it is well positioned
+        switchPath(currentFloor);
+        controlScroller(currentFloor);
     }
 
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
         slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
         setMapScale(4-slideBarZoom.getValue());
+        //redraw animation to ensure that it is well positioned
+        switchPath(currentFloor);
+        controlScroller(currentFloor);
     }
 
 
