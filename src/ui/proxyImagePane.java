@@ -112,14 +112,4 @@ public class proxyImagePane extends StackPane {
         return true;
     }
 
-    public void slideButtons(ScrollPane sp, FloorNumber floor) {
-        Timeline slideButtons = new Timeline(
-                new KeyFrame(Duration.ZERO,
-                        new KeyValue(sp.hvalueProperty(), sp.getHvalue())),
-                new KeyFrame(new Duration(300),
-                        new KeyValue(sp.hvalueProperty(),(floor.getNodeMapping() - 1)/5.0))
-        );
-        slideButtons.play();
-    }
-
 }
