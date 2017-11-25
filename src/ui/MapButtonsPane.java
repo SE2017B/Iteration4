@@ -13,9 +13,16 @@ import javafx.util.Duration;
 import map.FloorNumber;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 public class MapButtonsPane extends ScrollPane{
+    private final int OVERALL_WIDTH = 1800;
+    private final int SPACING = 10;
+    private final int BUTTON_HEIGHT = 60;
+    private final int BUTTON_WIDTH = 150;
+
     private ArrayList<JFXButton> buttons;
+    public FloorNumber currentFloor;
 
     private HBox container;
     private Pane spacerLeft;
@@ -25,7 +32,7 @@ public class MapButtonsPane extends ScrollPane{
     private proxyImagePane mapImage;
 
 
-    public MapButtonsPane(proxyImagePane mapImage){
+    public MapButtonsPane(){
         super();
         buttons = new ArrayList<JFXButton>();
         setContainer();
@@ -36,8 +43,11 @@ public class MapButtonsPane extends ScrollPane{
         addFloor(FloorNumber.FLOOR_GROUND);
         addFloor(FloorNumber.FLOOR_LONE);
         addFloor(FloorNumber.FLOOR_LTWO);
-        this.mapImage = mapImage;
+        mapImage = new proxyImagePane();
         getStyleClass().add("Pane");
+        setPannable(true);
+        currentFloor = FloorNumber.FLOOR_ONE;
+        setFloor(currentFloor);
     }
 
     private void setContainer(){
@@ -45,20 +55,33 @@ public class MapButtonsPane extends ScrollPane{
         spacerRight = new Pane();
         container = new HBox();
         container.setFillHeight(false);
-        container.setPrefWidth(1200);
-        container.setSpacing(10);
-        //container.getChildren().addAll(spacerLeft,spacerRight);
-        //HBox.setHgrow(spacerLeft, Priority.ALWAYS);
-        //HBox.setHgrow(spacerRight, Priority.ALWAYS);
+        container.setPrefWidth(OVERALL_WIDTH);
+        container.setSpacing(SPACING);
+        container.getChildren().addAll(spacerLeft,spacerRight);
     }
 
     private void addFloor(FloorNumber floor){
         JFXButton button = new JFXButton();
         button.setText(floor.getDbMapping());
-        button.setPrefSize(150,80);
+        button.setMinSize(BUTTON_WIDTH,BUTTON_HEIGHT);
         button.setOnAction(e -> floorButtonPressed(e));
-        buttons.add(button);
-        container.getChildren().add(button);
+        buttons.add(0,button);
+        container.getChildren().add(1,button);
+        int spacerWidth = (OVERALL_WIDTH - (buttons.size()*(BUTTON_WIDTH+SPACING+SPACING))/2);
+        spacerLeft.setPrefWidth(spacerWidth);
+        spacerRight.setPrefWidth(spacerWidth);
+    }
+
+    public proxyImagePane getMapImage(){
+        return mapImage;
+    }
+
+    public double getScale(){
+        return  mapImage.getScale();
+    }
+
+    public void setScale(double scale){
+        mapImage.setScale(scale);
     }
 
     public void floorButtonPressed(ActionEvent e){
@@ -78,7 +101,11 @@ public class MapButtonsPane extends ScrollPane{
         slideButtons.play();
     }
 
-    public void setButtonsByFloor(ArrayList<FloorNumber> floors){
+    public FloorNumber getFloor(){
+        return currentFloor;
+    }
 
+    public void setButtonsByFloor(ArrayList<FloorNumber> floors){
+        //todo clear all current buttons and set to new ones
     }
 }

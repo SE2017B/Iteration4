@@ -38,7 +38,6 @@ public class MainController implements ControllableScreen{
     @FXML
     private JFXSlider slideBarZoom;
 
-    private proxyImagePane mapImage;
 
     private MapButtonsPane mapButtons;
 
@@ -52,27 +51,26 @@ public class MainController implements ControllableScreen{
     private HospitalMap map;
 
     public void init() {
-        mapImage = new proxyImagePane();
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
+        mapButtons = new MapButtonsPane();
+        mapButtons.setFloor(curerntFloor);
         kioskIndicator = new AnimatedCircle();
-        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapImage.getScale());
-        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapImage.getScale());
-        kioskIndicator.setVisible(true);
+        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
+        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapButtons.getScale());
+        kioskIndicator.setVisible(false);
         kioskIndicator.setFill(Color.rgb(0,84,153));
         kioskIndicator.setStroke(Color.rgb(40,40,60));
         kioskIndicator.setStrokeWidth(3);
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
-        mapButtons = new MapButtonsPane(mapImage);
-        mapButtons.setFloor(curerntFloor);
         buttonHolderPane.getChildren().add(mapButtons);
-        mapPane.getChildren().addAll(mapImage,kioskIndicator);
+        mapPane.getChildren().addAll(mapButtons.getMapImage(),kioskIndicator);
 
     }
 
     public void onShow(){
-        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapImage.getScale());
-        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapImage.getScale());
+        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
+        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapButtons.getScale());
         setFloor(curerntFloor);
     }
 
@@ -102,9 +100,9 @@ public class MainController implements ControllableScreen{
 
     //Pass in a value from 0-3. 0 is smallest, 3 is largest
     public void setZoom(double zoom){
-        mapImage.setScale(4-zoom);
-        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapImage.getScale());
-        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapImage.getScale());
+        mapButtons.setScale(4-zoom);
+        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
+        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapButtons.getScale());
     }
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
@@ -114,7 +112,7 @@ public class MainController implements ControllableScreen{
 
     //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){
-        mapImage.setScale(4-slideBarZoom.getValue());
+        mapButtons.setScale(4-slideBarZoom.getValue());
     }
 
     public void setFloor(FloorNumber floor){
@@ -126,11 +124,6 @@ public class MainController implements ControllableScreen{
             kioskIndicator.setVisible(false);
         }
 
-    }
-
-    public void floorButtonPressed(ActionEvent e){
-       FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
-       setFloor(floor);
     }
 
 
