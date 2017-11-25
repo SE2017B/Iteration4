@@ -13,6 +13,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
 //import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.controls.JFXTimePicker;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import map.HospitalMap;
 import map.Node;
 import search.SearchStrategy;
@@ -69,8 +73,8 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXDatePicker dateMenu;
 
-    //@FXML
-    //private JFXTimePicker timeMenu;
+    @FXML
+    private JFXTimePicker timeMenu;
 
     @FXML
     private ChoiceBox<Node> locationChoiceBox;
@@ -94,7 +98,7 @@ public class RequestController implements ControllableScreen{
     private JFXButton btnserviceResCancel;
 
     @FXML
-    private JFXListView<ServiceRequest> resolveServiceListView;
+    private JFXListView<String> resolveServiceListView;
 
     @FXML
     private JFXButton btnLogOut;
@@ -112,18 +116,36 @@ public class RequestController implements ControllableScreen{
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
         depSub = DepartmentSubsystem.getSubsystem();
 
+        //location set up
+        locationChoiceBox.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> !n.getType().equals("HALL"))));
 
 
-        lblSelectedService.setText("Service" + resolveServiceListView.getSelectionModel().getSelectedItems().toString());
+        //Display selected request on label
+        resolveServiceListView.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observable,
+                                        String oldValue, String newValue) {
+                        lblSelectedService.setText(newValue);
+
+                    }
+                }
+        );
+
+
+        //String requestSel = resolveServiceListView.getSelectionModel().getSelectedItems().toString();
+        //System.out.println(requestSel);
+        //lblSelectedService.setText("Service " + requestSel);
     }
 
     public void onShow(){
-                ServiceRequest test = new ServiceRequest(null,2,null,null,null, null);
-                ServiceRequest test2 = new ServiceRequest(null,3,null,null,null, null);
-                ServiceRequest test3 = new ServiceRequest(null,4,null,null,null, null);
-                resolveServiceListView.getItems().add(test);
-                resolveServiceListView.getItems().add(test2);
-                resolveServiceListView.getItems().add(test3);
+                ServiceRequest test = new ServiceRequest(null,2,null,"123456","22/22/22", null);
+                ServiceRequest test2 = new ServiceRequest(null,3,null,"asdf","zxcv", null);
+                ServiceRequest test3 = new ServiceRequest(null,4,null,"qwer","zxcv", null);
+                resolveServiceListView.getItems().add(test.toString());
+                resolveServiceListView.getItems().add(test2.toString());
+                resolveServiceListView.getItems().add(test3.toString());
 
         //Update the nodes in the map
 
@@ -152,6 +174,7 @@ public class RequestController implements ControllableScreen{
         //resolveServiceListView.getItems().remove(selectedService);
         //List<Integer> selectedRequests = new ArrayList<Integer>(resolveServiceListView.getSelectionModel().getSelectedItems());
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
+       // resolveServiceListView.getSelectionModel().setSelectionMode();
         System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
     }
 
@@ -169,13 +192,26 @@ public class RequestController implements ControllableScreen{
     public void cancelPressed(ActionEvent e)
     {
         //todo clear the selected items
+
+
         System.out.println("Cancel Pressed");
+
+        //clear choiceboxes
         choiceBoxStaff.getItems().clear();
         choiceBoxService.getItems().clear();
-        choiceBoxDept.getItems().clear();
-        //JFXDatePicker.setTime();
-        //date = JFXTimePicker
-        //parent.setScreen(ScreenController.LoginID);
+        //choiceBoxDept.getItems().clear();
+
+        //clear time and date
+        //timeMenu.getEditor().clear();
+        dateMenu.getEditor().clear();
+
+        //repopulate choiceboxes
+        choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
+
+        //repopulate location choice box
+        locationChoiceBox.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> !n.getType().equals("HALL"))));
+
     }
 
     public void logoutPressed(ActionEvent e){
