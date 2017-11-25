@@ -46,9 +46,56 @@ public class DijkstrasSearch implements SearchStrategy {
         frontier.add(start);
         greedy.put(start, 0);
         while(!frontier.isEmpty()){
-            frontier.sort((n1, n2) -> (int)(n1.getEuclidianDistance(end) - n2.getEuclidianDistance(end)));
+            frontier.sort((n1, n2) -> (greedy.get(n1) - greedy.get(n2)));
             Node currentNode = frontier.get(0);
             if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
+            frontier.remove(currentNode);
+            explored.add(currentNode);
+            for(Edge e : currentNode.getConnections()){
+                Node neighbor = e.getOtherNode(currentNode);
+                if(explored.contains(neighbor)) continue;
+                if(!frontier.contains(neighbor)) frontier.add(neighbor);
+                int newGreedy = greedy.get(currentNode) + (int)e.getCost();
+                if(greedy.containsKey(neighbor) && newGreedy >= greedy.get(neighbor)) continue;
+                cameFrom.put(neighbor, currentNode);
+                greedy.put(neighbor, newGreedy);
+            }
+        }
+        return new Path();
+    }
+
+    public Path findPathBy(Node start, String type){
+//        ArrayList<Path> frontier = new ArrayList<>();
+//        Path first = new Path();
+//        first.addToPath(start);
+//        frontier.add(first);
+//
+//        while(frontier.size() != 0){
+//            Path currentPath = frontier.get(0);
+//            Node currentNode = currentPath.getPath().get(currentPath.getPath().size()-1);
+//            frontier.remove(currentPath);
+//            if(currentNode.getType().equals(type)) return currentPath;
+//            ArrayList<Path> newPaths = new ArrayList<>();
+//            for(int i=0;i<currentNode.getConnections().size();i++){
+//                Node neighbor = currentNode.getConnections().get(i).getOtherNode(currentNode);
+//                if(currentPath.getPath().contains(neighbor)) continue;
+//                Path add = new Path(currentPath);
+//                add.addToPath(neighbor);
+//                newPaths.add(add);
+//            }
+//            Collections.sort(newPaths);
+//            frontier.addAll(newPaths);
+//        }
+        ArrayList<Node> frontier = new ArrayList<>();
+        ArrayList<Node> explored = new ArrayList<>();
+        HashMap<Node, Node> cameFrom = new HashMap<>();
+        HashMap<Node, Integer> greedy = new HashMap<>();
+        frontier.add(start);
+        greedy.put(start, 0);
+        while(!frontier.isEmpty()){
+            frontier.sort((n1, n2) -> (greedy.get(n1) - greedy.get(n2)));
+            Node currentNode = frontier.get(0);
+            if(currentNode.getType().equals(type)) return returnPath(cameFrom, currentNode);
             frontier.remove(currentNode);
             explored.add(currentNode);
             for(Edge e : currentNode.getConnections()){

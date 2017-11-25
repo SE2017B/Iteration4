@@ -29,7 +29,7 @@ public class SearchContext {
     }
 
     public Path findNearest(Node start, String type){
-        BreadthFirstSearch search = new BreadthFirstSearch();
+        DijkstrasSearch search = new DijkstrasSearch();
         return search.findPathBy(start, type);
     }
 
