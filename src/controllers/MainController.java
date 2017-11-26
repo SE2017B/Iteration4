@@ -8,6 +8,7 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import map.FloorNumber;
 import map.HospitalMap;
+import map.Node;
 import ui.AnimatedCircle;
 import ui.MapViewer;
 
@@ -50,6 +52,21 @@ public class MainController implements ControllableScreen, Observer{
 
     private HospitalMap map;
 
+    @FXML
+    private JFXButton btnbath;
+
+    @FXML
+    private JFXButton btnexit;
+
+    @FXML
+    private JFXButton btnelev;
+
+    @FXML
+    private JFXButton btnvend;
+
+    @FXML
+    private JFXButton btnstairs;
+
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
@@ -66,6 +83,63 @@ public class MainController implements ControllableScreen, Observer{
         buttonHolderPane.getChildren().add(mapButtons.getPane());
         mapPane.getChildren().addAll(mapButtons.getMapImage(),kioskIndicator);
 
+    }
+
+    //circle helper function for nodeTypePressed
+    public void makeCircle(Node node){
+        //make a new AnimatedCircle + initialize it
+        AnimatedCircle newIndicator = new AnimatedCircle();
+        newIndicator.setCenterX(node.getX()/mapButtons.getScale());
+        newIndicator.setCenterY(node.getY()/mapButtons.getScale());
+        newIndicator.setVisible(true);
+        newIndicator.setFill(Color.rgb(153, 0, 0)); //not sure what color this should be
+        newIndicator.setStroke(Color.rgb(60, 0, 0));
+        newIndicator.setStrokeWidth(3);
+    }
+
+    //bathroom type
+    public void bathTypePressed(ActionEvent e){
+        System.out.println("Bathrooms Pressed");
+        //find nearest node of given type
+        Node node = map.findNearest(/*what goes here?*/, "Bathroom");
+        //make a new AnimatedCircle + initialize it
+        makeCircle(node);
+    }
+
+    //Exit type
+    public void exitTypePressed(ActionEvent e){
+        System.out.println("Exit Pressed");
+        //find nearest node of given type
+        Node node = map.findNearest(/*what goes here?*/, "Exit");
+        //make a new AnimatedCircle + initialize it
+        makeCircle(node);
+    }
+
+    //Elevator type
+    public void elevTypePressed(ActionEvent e){
+        System.out.println("Elevator Pressed");
+        //find nearest node of given type
+        Node node = map.findNearest(/*what goes here?*/, "Elevator");
+        //make a new AnimatedCircle + initialize it
+        makeCircle(node);
+    }
+
+    //Vending Machine type
+    public void vendTypePressed(ActionEvent e){
+        System.out.println("Vending Machine Pressed");
+        //find nearest node of given type
+        Node node = map.findNearest(/*what goes here?*/, "Vending Machine");
+        //make a new AnimatedCircle + initialize it
+        makeCircle(node);
+    }
+
+    //stairs type
+    public void stairsTypePressed(ActionEvent e){
+        System.out.println("Stairs Pressed");
+        //find nearest node of given type
+        Node node = map.findNearest(/*what goes here?*/, "Stairs");
+        //make a new AnimatedCircle + initialize it
+        makeCircle(node);
     }
 
     public void onShow(){

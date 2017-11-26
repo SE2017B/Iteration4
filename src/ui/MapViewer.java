@@ -108,7 +108,6 @@ public class MapViewer extends Observable{
         notifyObservers(floor);
     }
 
-
     public void setFloor(FloorNumber floor){
         mapImage.setImage(floor);
         Timeline slideButtons = new Timeline(
