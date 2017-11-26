@@ -64,11 +64,11 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <JFXButton fx:id="btnbath" prefWidth="150.0" text="Bathrooms" GridPane.halignment="CENTER" />
-                                    <JFXButton fx:id="btnexit" prefWidth="150.0" text="Exits" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <JFXButton fx:id="btnelev" prefWidth="150.0" text="Elevators" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <JFXButton fx:id="btnvend" prefWidth="150.0" text="Vending Machines" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                    <JFXButton fx:id="btnstairs" prefWidth="150.0" text="Stairs" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <JFXButton fx:id="btnbath" onAction="#bathTypePressed" prefWidth="150.0" text="Bathrooms" GridPane.halignment="CENTER" />
+                                    <JFXButton fx:id="btnexit" onAction="#exitTypePressed" prefWidth="150.0" text="Exits" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <JFXButton fx:id="btnelev" onAction="#elevTypePressed" prefWidth="150.0" text="Elevators" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <JFXButton fx:id="btnvend" onAction="#vendTypePressed" prefWidth="150.0" text="Vending Machines" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <JFXButton fx:id="btnstairs" onAction="#stairsTypePressed" prefWidth="150.0" text="Stairs" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                  </children>
                               </GridPane>
                            </children>

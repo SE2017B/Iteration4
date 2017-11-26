@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
+import map.Path;
 import ui.AnimatedCircle;
 import ui.MapViewer;
 
@@ -92,52 +93,79 @@ public class MainController implements ControllableScreen, Observer{
         newIndicator.setCenterX(node.getX()/mapButtons.getScale());
         newIndicator.setCenterY(node.getY()/mapButtons.getScale());
         newIndicator.setVisible(true);
-        newIndicator.setFill(Color.rgb(153, 0, 0)); //not sure what color this should be
-        newIndicator.setStroke(Color.rgb(60, 0, 0));
+        newIndicator.setFill(Color.rgb(153, 63, 62)); //not sure what color this should be
+        newIndicator.setStroke(Color.rgb(60, 26, 26));
         newIndicator.setStrokeWidth(3);
+    }
+
+    //what if two buttons are pressed? Or if a button is pressed twice?
+    //nodeTypePressed
+    public void nodeTypePressed(ActionEvent e, String type){
+        System.out.println("Button Pressed: " + type);
+        switch (type){
+            case "Bathroom":
+                bathTypePressed(e);
+                break;
+            case "Exit":
+                exitTypePressed(e);
+                break;
+            case "Elevator":
+                elevTypePressed(e);
+                break;
+            case "Vending Machine":
+                vendTypePressed(e);
+                break;
+            case "Stairs":
+                stairsTypePressed(e);
+        }
     }
 
     //bathroom type
     public void bathTypePressed(ActionEvent e){
-        System.out.println("Bathrooms Pressed");
         //find nearest node of given type
-        Node node = map.findNearest(/*what goes here?*/, "Bathroom");
+        Path path = map.findNearest(map.getKioskLocation(), "Bathroom");
+        int size = path.getPath().size();
+        Node node = path.getPath().get(size - 1);
         //make a new AnimatedCircle + initialize it
         makeCircle(node);
     }
 
     //Exit type
     public void exitTypePressed(ActionEvent e){
-        System.out.println("Exit Pressed");
         //find nearest node of given type
-        Node node = map.findNearest(/*what goes here?*/, "Exit");
+        Path path = map.findNearest(map.getKioskLocation(), "Exit");
+        int size = path.getPath().size();
+        Node node = path.getPath().get(size - 1);
         //make a new AnimatedCircle + initialize it
         makeCircle(node);
     }
 
     //Elevator type
     public void elevTypePressed(ActionEvent e){
-        System.out.println("Elevator Pressed");
         //find nearest node of given type
-        Node node = map.findNearest(/*what goes here?*/, "Elevator");
+        Path path = map.findNearest(map.getKioskLocation(), "Elevator");
+        int size = path.getPath().size();
+        Node node = path.getPath().get(size - 1);
         //make a new AnimatedCircle + initialize it
         makeCircle(node);
     }
 
     //Vending Machine type
     public void vendTypePressed(ActionEvent e){
-        System.out.println("Vending Machine Pressed");
         //find nearest node of given type
-        Node node = map.findNearest(/*what goes here?*/, "Vending Machine");
+        Path path = map.findNearest(map.getKioskLocation(), "Vending Machine");
+        int size = path.getPath().size();
+        Node node = path.getPath().get(size - 1);
         //make a new AnimatedCircle + initialize it
         makeCircle(node);
     }
 
     //stairs type
     public void stairsTypePressed(ActionEvent e){
-        System.out.println("Stairs Pressed");
         //find nearest node of given type
-        Node node = map.findNearest(/*what goes here?*/, "Stairs");
+        Path path = map.findNearest(map.getKioskLocation(), "Stairs");
+        int size = path.getPath().size();
+        Node node = path.getPath().get(size - 1);
         //make a new AnimatedCircle + initialize it
         makeCircle(node);
     }
