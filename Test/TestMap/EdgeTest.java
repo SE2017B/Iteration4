@@ -53,7 +53,7 @@ public class EdgeTest {
 
     @Test
     public void testID(){
-        assertEquals("A1:A2", ABEdge.getID());
+        assertEquals("HBathroomL10_ HRestaurantL10", ABEdge.getID());
     }
 
     @Test
