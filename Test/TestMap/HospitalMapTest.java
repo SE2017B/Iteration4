@@ -201,7 +201,7 @@ public class HospitalMapTest {
         ArrayList<Node> nodesToAttach = new ArrayList<>();
         nodesToAttach.add(B);
         nodesToAttach.add(C);
-        easyMap.addNodeandEdges("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+        easyMap.addNodeandEdges("200", "100", "L1", "Tower", "Desk", "LongE",
                 "ShortE", "team", nodesToAttach);
         Node E = new Node("E", "200", "100", "L1", "Tower", "Desk", "LongE",
                 "ShortE", "team");
@@ -215,9 +215,9 @@ public class HospitalMapTest {
         ArrayList<Node> nodesToAttach = new ArrayList<>();
         nodesToAttach.add(B);
         nodesToAttach.add(C);
-        easyMap.addNodeandEdges("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+        easyMap.addNodeandEdges( "200", "100", "L1", "Tower", "Desk", "LongE",
                 "ShortE", "team", nodesToAttach);
-        Node E = new Node("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+        Node E = new Node( "200", "100", "L1", "Tower", "Desk", "LongE",
                 "ShortE", "team");
         Edge EB = new Edge(E, B);
         Edge EC = new Edge(E, C);
