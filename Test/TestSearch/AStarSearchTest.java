@@ -264,6 +264,7 @@ public class AStarSearchTest {
         System.out.println(directions);
         assertEquals("[A1, A6, A7, A10, A11, A14, A13, A12]", answer);
     }
+    //
     @Test
     //Node 12 to Node 1
     public void testMap3Reverse() throws InterruptedException{
