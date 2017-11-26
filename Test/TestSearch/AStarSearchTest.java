@@ -267,6 +267,30 @@ public class AStarSearchTest {
     }
 
     @Test
+    //Node 1 to Node 12
+    public void testTextMap5() throws InterruptedException {
+        String answer = search.findPath(N1, N12).toString();
+        System.out.println(answer);
+        String directions = search.findPath(N1, N12).findDirections().toString();
+        System.out.println(directions);
+        assertEquals("[A1, A6, A7, A10, A11, A14, A13, A12]", answer);
+        assertEquals("[Go straight from Short1, Take a right at this Short6, Take a left at this Short7, Take a right at this Short10, " +
+                "Take a left at this Short11, Take a left at this Short14, Go straight through Short13, Stop at Short12]", directions);
+    }
+
+    @Test
+    //Node 12 to Node 1
+    public void testTextMap6() throws InterruptedException {
+        String answer = search.findPath(N12, N1).toString();
+        System.out.println(answer);
+        String directions = search.findPath(N12, N1).findDirections().toString();
+        System.out.println(directions);
+        assertEquals("[A12, A13, A14, A11, A10, A7, A6, A1]", answer);
+        assertEquals("[Go straight from Short12, Go straight through Short13, Take a right at this Short14, Take a right at this Short11, " +
+                "Take a left at this Short10, Take a right at this Short7, Take a left at this Short6, Stop at Short1]", directions);
+    }
+
+    @Test
     //Node 9 to Node 1
     public void testMap1Reverse() throws InterruptedException{
         String answer = search.findPath(N9, N1).toString();
