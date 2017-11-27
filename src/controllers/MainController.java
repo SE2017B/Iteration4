@@ -103,6 +103,10 @@ public class MainController implements ControllableScreen, Observer{
         newIndicator.setFill(Color.rgb(153, 63, 62)); //not sure what color this should be
         newIndicator.setStroke(Color.rgb(60, 26, 26));
         newIndicator.setStrokeWidth(3);
+        newIndicator.getTimeline().stop();
+        newIndicator.getTimeline().setCycleCount(5);
+        newIndicator.getTimeline().setOnFinished(e -> { newIndicator.setVisible(false); });
+        newIndicator.getTimeline().play();
         return newIndicator;
     }
 
