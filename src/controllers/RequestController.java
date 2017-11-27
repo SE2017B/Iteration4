@@ -110,7 +110,6 @@ public class RequestController implements ControllableScreen{
 
     public void init(){
         map = HospitalMap.getMap();
-        //choiceBoxDept.setItems(FXCollections.observableList(testList));
         choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
@@ -132,14 +131,10 @@ public class RequestController implements ControllableScreen{
                     }
                 }
         );
-
-
-        //String requestSel = resolveServiceListView.getSelectionModel().getSelectedItems().toString();
-        //System.out.println(requestSel);
-        //lblSelectedService.setText("Service " + requestSel);
     }
 
     public void onShow(){
+        //Dummy requests for testing
                 ServiceRequest test = new ServiceRequest(null,2,null,"123456","22/22/22", null);
                 ServiceRequest test2 = new ServiceRequest(null,3,null,"asdf","zxcv", null);
                 ServiceRequest test3 = new ServiceRequest(null,4,null,"qwer","zxcv", null);
@@ -148,7 +143,6 @@ public class RequestController implements ControllableScreen{
                 resolveServiceListView.getItems().add(test3.toString());
 
         //Update the nodes in the map
-
         ArrayList<Node> nodes = map.getNodeMap();
 
         //todo populate list of requests upon login
@@ -171,10 +165,7 @@ public class RequestController implements ControllableScreen{
     public void resolveServicePressed(ActionEvent e)
     {
         //todo test?
-        //resolveServiceListView.getItems().remove(selectedService);
-        //List<Integer> selectedRequests = new ArrayList<Integer>(resolveServiceListView.getSelectionModel().getSelectedItems());
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
-       // resolveServiceListView.getSelectionModel().setSelectionMode();
         System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
     }
 
@@ -187,7 +178,7 @@ public class RequestController implements ControllableScreen{
         //submitRequest(Service service, String time, String date, Node location, Staff person, int RID){
        // ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), time, date, choiceBoxStaff.getValue());
         ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, null, null, null, null);
-        depSub.submitRequest(null, "1", "2", null, null, requestIDCount);
+        depSub.submitRequest(null, "1", "2", null, null, requestIDCount, false, "hi email test");
     }
     public void cancelPressed(ActionEvent e)
     {

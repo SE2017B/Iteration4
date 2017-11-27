@@ -17,6 +17,7 @@ public abstract class Service{
     private String description;
     private ArrayList<Staff> eligibleStaff;
     private String URL;
+    private boolean Used = false;
 
     public Service(Department department, String description) {
         this.department = department;
@@ -39,17 +40,19 @@ public abstract class Service{
     public ArrayList<Staff> getEligibleStaff() {
         System.out.println("get Staff");
         return eligibleStaff;
-
     }
     public void setEligibleStaff(ArrayList<Staff> eligibleStaff) {
         this.eligibleStaff = eligibleStaff;
     }
+    public void addEligibleStaff(Staff person){this.eligibleStaff.add(person);}
     public String getURL() {
         return URL;
     }
     public void setURL(String URL) {
         this.URL = URL;
     }
+    public void use(){Used = true;}
+    public boolean isUsed(){return this.Used;}
 
     @Override
     public String toString(){
