@@ -15,6 +15,7 @@ import exceptions.InvalidNodeException;
 import javafx.animation.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.util.Duration;
@@ -32,13 +33,16 @@ import javafx.animation.PathTransition;
 
 
 import ui.AnimatedCircle;
+import ui.MapViewer;
 import ui.proxyImagePane;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
-public class PathController implements ControllableScreen{
+public class PathController implements ControllableScreen, Observer{
     private ScreenController parent;
     private ArrayList<Node> path;
     private HospitalMap map;
@@ -94,9 +98,12 @@ public class PathController implements ControllableScreen{
     @FXML
     private JFXSlider slideBarZoom;
 
+    @FXML
+    private AnchorPane buttonHolderPane;
 
 
-    private proxyImagePane mapImage = new proxyImagePane();
+
+    private MapViewer mapViewer;
 
     private FloorNumber currentFloor;// the current floor where the kiosk is.
 
@@ -126,16 +133,18 @@ public class PathController implements ControllableScreen{
         pathPoints = new HashMap<FloorNumber, ArrayList<Circle>>();
         positionVars= new HashMap<FloorNumber,ArrayList<Integer>>();
         currentFloor = FloorNumber.FLOOR_ONE;
+        mapViewer = new MapViewer(this);
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
         //floors.add(FloorNumber.fromDbMapping("1"));
         //floors.add(FloorNumber.fromDbMapping("2"));
         //add the test background image
-        mapImage.setImage(currentFloor);
 
 
 
-        mapPane.getChildren().add(mapImage);
+
+        mapPane.getChildren().add(mapViewer.getMapImage());
+        buttonHolderPane.getChildren().add(mapViewer.getPane());
     }
 
     public void onShow(){
@@ -143,7 +152,6 @@ public class PathController implements ControllableScreen{
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
         endNodeChoice.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
-        mapImage.setImage(currentFloor);
         startNodeChoice.setValue(map.getKioskLocation());
         //remove any previous paths from the display
         clearPaths();
@@ -151,10 +159,10 @@ public class PathController implements ControllableScreen{
     }
     private Circle getPoint(int x, int y){
         Circle c = new AnimatedCircle();
-        c.setCenterX(x/mapImage.getScale());
-        c.setCenterY(y/mapImage.getScale());
+        c.setCenterX(x/mapViewer.getScale());
+        c.setCenterY(y/mapViewer.getScale());
         c.setVisible(true);
-        c.setRadius(7/mapImage.getScale());
+        c.setRadius(7/mapViewer.getScale());
         return c;
     }
     private void getVars(FloorNumber floor,Circle c){
@@ -193,8 +201,8 @@ public class PathController implements ControllableScreen{
             double sy = positionVars.get(floor).get(1)-positionVars.get(floor).get(3);
             focustopath(sx,sy);//focus to path
              **/
-            mapScrollPane.setHvalue(x*mapImage.getScale()/5000);
-            mapScrollPane.setVvalue(y*mapImage.getScale()/3500);
+            mapScrollPane.setHvalue(x*mapViewer.getScale()/5000);
+            mapScrollPane.setVvalue(y*mapViewer.getScale()/3500);
             System.out.println("Screen Adjusted");
         }
     }
@@ -203,7 +211,7 @@ public class PathController implements ControllableScreen{
         double x =Math.abs(sx);
         double y =Math.abs(sy);
         if(y>2){
-            mapImage.setScale(4);
+            mapViewer.setScale(4);
             System.out.println("hahahaddhahaiofefjisejfonfo;wiefjw");
         }
         //if(y>x){
@@ -254,15 +262,15 @@ public class PathController implements ControllableScreen{
                 Line line = new Line();
                 Node start = path.getPath().get(i-1);//the last node is the start node
                 Node end = path.getPath().get(i);
-                line.setLayoutX((start.getX())/mapImage.getScale());
-                line.setLayoutY((start.getY())/mapImage.getScale());
+                line.setLayoutX((start.getX())/mapViewer.getScale());
+                line.setLayoutY((start.getY())/mapViewer.getScale());
 
-                line.setEndX((end.getX() - start.getX())/mapImage.getScale());
-                line.setEndY((end.getY() - start.getY())/mapImage.getScale());
+                line.setEndX((end.getX() - start.getX())/mapViewer.getScale());
+                line.setEndY((end.getY() - start.getY())/mapViewer.getScale());
 
                 line.setVisible(true);
                 //line.setStroke();
-                line.setStrokeWidth(4/mapImage.getScale());// make the line width vary with the scale
+                line.setStrokeWidth(4/mapViewer.getScale());// make the line width vary with the scale
                 pathLines.get(current).add(line);
                 mapPane.getChildren().add(line);//add all lines to mapPane
                 lines.add(line);
@@ -363,7 +371,7 @@ public class PathController implements ControllableScreen{
     }
 
     public void setMapScale(double scale){
-        double oldScale = mapImage.getScale();
+        double oldScale = mapViewer.getScale();
         for(Line l : lines){
             l.setLayoutX((l.getLayoutX())*oldScale/scale);
             l.setLayoutY((l.getLayoutY())*oldScale/scale);
@@ -377,7 +385,7 @@ public class PathController implements ControllableScreen{
         }
         calVars();
         //reposition map
-        mapImage.setScale(scale);
+        mapViewer.setScale(scale);
     }
 
     public void calVars(){
@@ -392,20 +400,8 @@ public class PathController implements ControllableScreen{
 
     }
 
-    //button methods
-    public void startPressed(ActionEvent e){
-        //show the first screen when clicked on
-        if(floors.size()>0){
-            mapImage.setImage(floors.get(0));
-        }
 
-    }
 
-    public void endPressed(ActionEvent e){
-        if(floors.size()>1){
-            mapImage.setImage(floors.get(1));
-        }
-    }
     private Path getPath(){
         return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
     }
@@ -460,9 +456,9 @@ public class PathController implements ControllableScreen{
     {
         Path thePath = getPath();
         setLines(thePath);
+        mapViewer.setButtonsByFloor(floors);
         //add background image
         System.out.println(thePath.getDirections());
-        mapImage.setImage(currentFloor);
         directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
@@ -504,11 +500,12 @@ public class PathController implements ControllableScreen{
         System.out.println("Checked off stairs");
     }
 
-    public void floorButtonPressed(ActionEvent e){
-        FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
-        mapImage.setImage(floor);
-        currentFloor=floor;//update Current floor
-        switchPath(floor);
+    public void update(Observable o, Object arg){
+        if(arg instanceof FloorNumber) {
+            FloorNumber floor = (FloorNumber) arg;
+            currentFloor = floor;//update Current floor
+            switchPath(floor);
+        }
     }
 
     //when + button is pressed zoom in map

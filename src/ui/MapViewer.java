@@ -133,8 +133,8 @@ public class MapViewer extends Observable{
 
     public void setButtonsByFloor(List<FloorNumber> floors){
         clearButtons();
-        for (FloorNumber floor: floors) {
-            addFloor(floor);
+        for (int i = floors.size()-1; i >= 0; i--) {
+            addFloor(floors.get(i));
         }
         setFloor(floors.get(0));
     }
