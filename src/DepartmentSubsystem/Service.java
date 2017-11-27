@@ -8,8 +8,6 @@
 
 package DepartmentSubsystem;
 
-import javafx.event.ActionEvent;
-
 import java.util.ArrayList;
 
 public abstract class Service{
@@ -20,10 +18,12 @@ public abstract class Service{
     private String description;
     private ArrayList<Staff> eligibleStaff;
     private String URL;
+    private boolean Used = false;
 
     public Service(Department department, String description) {
         this.department = department;
         this.description = description;
+        this.eligibleStaff = new ArrayList<Staff>();
     }
 
     //Getters and Setters
@@ -42,10 +42,14 @@ public abstract class Service{
     public ArrayList<Staff> getEligibleStaff() {
         System.out.println("get Staff");
         return eligibleStaff;
-
     }
     public void setEligibleStaff(ArrayList<Staff> eligibleStaff) {
         this.eligibleStaff = eligibleStaff;
+    }
+    public void addEligibleStaff(Staff person){
+        if(person != null) {
+            this.eligibleStaff.add(person);
+        }
     }
     public String getURL() {
         return URL;
@@ -53,6 +57,8 @@ public abstract class Service{
     public void setURL(String URL) {
         this.URL = URL;
     }
+    public void use(){Used = true;}
+    public boolean isUsed(){return this.Used;}
 
     @Override
     public String toString(){

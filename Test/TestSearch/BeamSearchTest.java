@@ -9,54 +9,53 @@ import search.BeamSearch;
 import static org.junit.Assert.assertEquals;
 
 public class BeamSearchTest {
-    private HospitalMap map = HospitalMap.getMap();
-    private Node N1 = new Node("A1", "0", "400", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
+    private Node N1 = new Node("A1", "0", "0", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
     private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
-    private Node N3 = new Node("A3", "0", "0", "L1", "Tower", "Desk", "Long3", "Short3", "H");
-    private Node N4 = new Node("A4", "100", "300", "L1", "Tower", "Desk", "Long4", "Short4", "H");
-    private Node N5 = new Node("A5", "100", "100", "L1", "Tower", "Stairs", "Long5", "Short5", "H");
-    private Node N6 = new Node("A6", "200", "400", "L1", "Tower", "Desk", "Long6", "Short6", "H");
-    private Node N7 = new Node("A7", "200", "300", "L1", "Tower", "Desk", "Long7", "Short7", "H");
-    private Node N8 = new Node("A8", "200", "100", "L1", "Tower", "Bathroom", "Long8", "Short8", "H");
-    private Node N9 = new Node("A9", "200", "0", "L1", "Tower", "Elevator", "Long9", "Short9", "H");
-    private Node N10 = new Node("A10", "300", "300", "L1", "Tower", "Desk", "Long10", "Short10", "H");
-    private Node N11 = new Node("A11", "300", "100", "L1", "Tower", "Bathroom", "Long11", "Short11", "H");
-    private Node N12 = new Node("A12", "400", "400", "L1", "Tower", "Desk", "Long12", "Short12", "H");
+    private Node N3 = new Node("A3", "0", "400", "L1", "Tower", "Desk", "Long3", "Short3", "H");
+    private Node N4 = new Node("A4", "100", "100", "L1", "Tower", "Desk", "Long4", "Short4", "H");
+    private Node N5 = new Node("A5", "100", "300", "L1", "Tower", "Stairs", "Long5", "Short5", "H");
+    private Node N6 = new Node("A6", "200", "0", "L1", "Tower", "Desk", "Long6", "Short6", "H");
+    private Node N7 = new Node("A7", "200", "100", "L1", "Tower", "Desk", "Long7", "Short7", "H");
+    private Node N8 = new Node("A8", "200", "300", "L1", "Tower", "Bathroom", "Long8", "Short8", "H");
+    private Node N9 = new Node("A9", "200", "400", "L1", "Tower", "Elevator", "Long9", "Short9", "H");
+    private Node N10 = new Node("A10", "300", "100", "L1", "Tower", "Desk", "Long10", "Short10", "H");
+    private Node N11 = new Node("A11", "300", "300", "L1", "Tower", "Bathroom", "Long11", "Short11", "H");
+    private Node N12 = new Node("A12", "400", "0", "L1", "Tower", "Desk", "Long12", "Short12", "H");
     private Node N13 = new Node("A13", "400", "100", "L1", "Tower", "Desk", "Long13", "Short13", "H");
-    private Node N14 = new Node("A14", "400", "100", "L1", "Tower", "Desk", "Long14", "Short14", "H");
-    private Node N15 = new Node("A15", "400", "0", "L1", "Tower", "Stairs", "Long15", "Short15", "H");
-    private Node N16 = new Node("A16", "600", "400", "L1", "Tower", "Office", "Long16", "Short16", "H");
-    private Node N17 = new Node("A17", "600", "300", "L1", "Tower", "Office", "Long17", "Short17", "H");
-    private Node N18 = new Node("A18", "500", "100", "L1", "Tower", "Bathroom", "Long18", "Short18", "H");
-    private Node N19 = new Node("A19", "500", "0", "L1", "Tower", "Stairs", "Long19", "Short19", "H");
-    private Node N20 = new Node("A20", "700", "300", "L1", "Tower", "Elevator", "Long20", "Short20", "H");
-    private Node N21 = new Node("A21", "700", "100", "L1", "Tower", "Stairs", "Long21", "Short21", "H");
-    private Node N22 = new Node("A22", "700", "0", "L1", "Tower", "Desk", "Long22", "Short22", "H");
-    private Node N23 = new Node("A23", "800", "0", "L1", "Tower", "Desk", "Long23", "Short23", "H");
+    private Node N14 = new Node("A14", "400", "300", "L1", "Tower", "Desk", "Long14", "Short14", "H");
+    private Node N15 = new Node("A15", "400", "400", "L1", "Tower", "Stairs", "Long15", "Short15", "H");
+    private Node N16 = new Node("A16", "600", "0", "L1", "Tower", "Office", "Long16", "Short16", "H");
+    private Node N17 = new Node("A17", "600", "100", "L1", "Tower", "Office", "Long17", "Short17", "H");
+    private Node N18 = new Node("A18", "500", "300", "L1", "Tower", "Bathroom", "Long18", "Short18", "H");
+    private Node N19 = new Node("A19", "500", "400", "L1", "Tower", "Stairs", "Long19", "Short19", "H");
+    private Node N20 = new Node("A20", "700", "100", "L1", "Tower", "Elevator", "Long20", "Short20", "H");
+    private Node N21 = new Node("A21", "700", "300", "L1", "Tower", "Stairs", "Long21", "Short21", "H");
+    private Node N22 = new Node("A22", "700", "400", "L1", "Tower", "Desk", "Long22", "Short22", "H");
+    private Node N23 = new Node("A23", "800", "400", "L1", "Tower", "Desk", "Long23", "Short23", "H");
 
-    private Node N1_2 = new Node("A1_2", "0", "400", "L2", "Tower", "Bathroom", "Long1_2", "Short1_2", "H");
+    private Node N1_2 = new Node("A1_2", "0", "0", "L2", "Tower", "Bathroom", "Long1_2", "Short1_2", "H");
     private Node N2_2 = new Node("A2_2", "0", "200", "L2", "Tower", "Desk", "Long2_2", "Short2_2", "H");
-    private Node N3_2 = new Node("A3_2", "0", "0", "L2", "Tower", "Desk", "Long3_2", "Short3_2", "H");
-    private Node N4_2 = new Node("A4_2", "100", "300", "L2", "Tower", "Desk", "Long4_2", "Short4_2", "H");
-    private Node N5_2 = new Node("A5_2", "100", "100", "L2", "Tower", "Stairs", "Long5_2", "Short5_2", "H");
-    private Node N6_2 = new Node("A6_2", "200", "400", "L2", "Tower", "Desk", "Long6_2", "Short6_2", "H");
-    private Node N7_2 = new Node("A7_2", "200", "300", "L2", "Tower", "Desk", "Long7_2", "Short7_2", "H");
-    private Node N8_2 = new Node("A8_2", "200", "100", "L2", "Tower", "Bathroom", "Long8_2", "Short8_2", "H");
-    private Node N9_2 = new Node("A9_2", "200", "0", "L2", "Tower", "Elevator", "Long9_2", "Short9_2", "H");
-    private Node N10_2 = new Node("A10_2", "300", "300", "L2", "Tower", "Desk", "Long10_2", "Short10_2", "H");
-    private Node N11_2 = new Node("A11_2", "300", "100", "L2", "Tower", "Bathroom", "Long11_2", "Short11_2", "H");
-    private Node N12_2 = new Node("A12_2", "400", "400", "L2", "Tower", "Desk", "Long12_2", "Short12_2", "H");
+    private Node N3_2 = new Node("A3_2", "0", "400", "L2", "Tower", "Desk", "Long3_2", "Short3_2", "H");
+    private Node N4_2 = new Node("A4_2", "100", "100", "L2", "Tower", "Desk", "Long4_2", "Short4_2", "H");
+    private Node N5_2 = new Node("A5_2", "100", "300", "L2", "Tower", "Stairs", "Long5_2", "Short5_2", "H");
+    private Node N6_2 = new Node("A6_2", "200", "0", "L2", "Tower", "Desk", "Long6_2", "Short6_2", "H");
+    private Node N7_2 = new Node("A7_2", "200", "100", "L2", "Tower", "Desk", "Long7_2", "Short7_2", "H");
+    private Node N8_2 = new Node("A8_2", "200", "300", "L2", "Tower", "Bathroom", "Long8_2", "Short8_2", "H");
+    private Node N9_2 = new Node("A9_2", "200", "400", "L2", "Tower", "Elevator", "Long9_2", "Short9_2", "H");
+    private Node N10_2 = new Node("A10_2", "300", "100", "L2", "Tower", "Desk", "Long10_2", "Short10_2", "H");
+    private Node N11_2 = new Node("A11_2", "300", "300", "L2", "Tower", "Bathroom", "Long11_2", "Short11_2", "H");
+    private Node N12_2 = new Node("A12_2", "400", "0", "L2", "Tower", "Desk", "Long12_2", "Short12_2", "H");
     private Node N13_2 = new Node("A13_2", "400", "100", "L2", "Tower", "Desk", "Long13_2", "Short13_2", "H");
-    private Node N14_2 = new Node("A14_2", "400", "100", "L2", "Tower", "Desk", "Long14_2", "Short14_2", "H");
-    private Node N15_2 = new Node("A15_2", "400", "0", "L2", "Tower", "Stairs", "Long15_2", "Short15_2", "H");
-    private Node N16_2 = new Node("A16_2", "600", "400", "L2", "Tower", "Office", "Long16_2", "Short16_2", "H");
-    private Node N17_2 = new Node("A17_2", "600", "300", "L2", "Tower", "Office", "Long17_2", "Short17_2", "H");
-    private Node N18_2 = new Node("A18_2", "500", "100", "L2", "Tower", "Bathroom", "Long18_2", "Short18_2", "H");
-    private Node N19_2 = new Node("A19_2", "500", "0", "L2", "Tower", "Stairs", "Long19_2", "Short19_2", "H");
-    private Node N20_2 = new Node("A20_2", "700", "300", "L2", "Tower", "Elevator", "Long20_2", "Short20_2", "H");
-    private Node N21_2 = new Node("A21_2", "700", "100", "L2", "Tower", "Stairs", "Long21_2", "Short21_2", "H");
-    private Node N22_2 = new Node("A22_2", "700", "0", "L2", "Tower", "Desk", "Long22_2", "Short22_2", "H");
-    private Node N23_2 = new Node("A23_2", "800", "0", "L2", "Tower", "Desk", "Long23_2", "Short23_2", "H");
+    private Node N14_2 = new Node("A14_2", "400", "300", "L2", "Tower", "Desk", "Long14_2", "Short14_2", "H");
+    private Node N15_2 = new Node("A15_2", "400", "400", "L2", "Tower", "Stairs", "Long15_2", "Short15_2", "H");
+    private Node N16_2 = new Node("A16_2", "600", "0", "L2", "Tower", "Office", "Long16_2", "Short16_2", "H");
+    private Node N17_2 = new Node("A17_2", "600", "100", "L2", "Tower", "Office", "Long17_2", "Short17_2", "H");
+    private Node N18_2 = new Node("A18_2", "500", "300", "L2", "Tower", "Bathroom", "Long18_2", "Short18_2", "H");
+    private Node N19_2 = new Node("A19_2", "500", "400", "L2", "Tower", "Stairs", "Long19_2", "Short19_2", "H");
+    private Node N20_2 = new Node("A20_2", "700", "100", "L2", "Tower", "Elevator", "Long20_2", "Short20_2", "H");
+    private Node N21_2 = new Node("A21_2", "700", "300", "L2", "Tower", "Stairs", "Long21_2", "Short21_2", "H");
+    private Node N22_2 = new Node("A22_2", "700", "400", "L2", "Tower", "Desk", "Long22_2", "Short22_2", "H");
+    private Node N23_2 = new Node("A23_2", "800", "400", "L2", "Tower", "Desk", "Long23_2", "Short23_2", "H");
 
 
     private BeamSearch search = new BeamSearch(4);
@@ -221,77 +220,77 @@ public class BeamSearchTest {
     public void testSearch1(){    //Node 1 to Node 10
         String answer = search.findPath(N1, N10).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short6, Short7, Short10]", answer);
+        assertEquals("[A1, A6, A7, A10]", answer);
     }
     @Test public void testSearch1Reverse(){    //Node 10 to Node 1
         String answer = search.findPath(N10, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short10, Short7, Short6, Short1]", answer);
+        assertEquals("[A10, A7, A6, A1]", answer);
     }
 
     @Test public void testSearch2(){    //Node 2 to Node 17
         String answer = search.findPath(N2, N17).toString();
         System.out.println(answer);
-        assertEquals("[Short2, Short3, Short9, Short15, Short14, Short13, Short17]", answer);
+        assertEquals("[A2, A3, A9, A15, A14, A13, A17]", answer);
     }
     @Test public void testSearch2Reverse(){     //Node 17 to Node 2
         String answer = search.findPath(N17, N2).toString();
         System.out.println(answer);
-        assertEquals("[Short17, Short13, Short14, Short15, Short9, Short3, Short2]", answer);
+        assertEquals("[A17, A13, A14, A15, A9, A3, A2]", answer);
     }
 
     @Test public void testSearch3(){    //Node 4 to Node 23
         String answer = search.findPath(N4, N23).toString();
         System.out.println(answer);
-        assertEquals("[Short4, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
+        assertEquals("[A4, A7, A10, A11, A14, A18, A21, A23]", answer);
     }
     @Test public void testSearch3Reverse(){
         String answer = search.findPath(N23, N4).toString();
         System.out.println(answer);
-        assertEquals("[Short23, Short21, Short18, Short14, Short11, Short10, Short7, Short4]", answer);
+        assertEquals("[A23, A21, A18, A14, A11, A10, A7, A4]", answer);
     }
 
     @Test public void testSearch4(){    //Node 5 to Node 19
         String answer = search.findPath(N5, N19).toString();
         System.out.println(answer);
-        assertEquals("[Short5, Short8, Short9, Short15, Short14, Short18, Short19]", answer);
+        assertEquals("[A5, A8, A9, A15, A14, A18, A19]", answer);
     }
     @Test public void testSearch4Reverse(){     //Node 19 to Node 5
         String answer = search.findPath(N19, N5).toString();
         System.out.println(answer);
-        assertEquals("[Short19, Short18, Short14, Short15, Short9, Short8, Short5]", answer);
+        assertEquals("[A19, A18, A14, A11, A10, A7, A4, A5]", answer);
     }
 
     @Test public void testSearchFloor1(){   //Node 1 to Node 1_2
         String answer = search.findPath(N1, N1_2).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short3_2, Short2_2, Short1_2]", answer);
+        assertEquals("[A1, A2, A3, A9, A9_2, A8_2, A7_2, A6_2, A1_2]", answer);
     }
     @Test public void testSearchFloor1Reverse(){    //Node 1_2 to Node 1
         String answer = search.findPath(N1_2, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short1_2, Short2_2, Short3_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
+        assertEquals("[A1_2, A2_2, A3_2, A9_2, A9, A8, A7, A6, A1]", answer);
     }
 
     @Test public void testSearchFloor2(){   //Node 1 to Node 19_2
         String answer = search.findPath(N1, N19_2).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short19_2]", answer);
+        assertEquals("[A1, A6, A7, A8, A9, A9_2, A15_2, A14_2, A18_2, A19_2]", answer);
     }
     @Test public void testSearchFloor2Reverse(){    //Node 19_2 to Node 1
         String answer = search.findPath(N19_2, N1).toString();
         System.out.println(answer);
-        assertEquals("[Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3, Short2, Short1]", answer);
+        assertEquals("[A19_2, A18_2, A14_2, A15_2, A9_2, A9, A8, A7, A6, A1]", answer);
     }
 
     @Test public void testSearchFloor3(){   //Node 3 to Node 22_2
         String answer = search.findPath(N3, N22_2).toString();
         System.out.println(answer);
-        assertEquals("[Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short21_2, Short22_2]", answer);
+        assertEquals("[A3, A9, A9_2, A15_2, A14_2, A18_2, A19_2, A22_2]", answer);
     }
     @Test public void testSearchFloor3Reverse(){    //Node 22_2 to Node 3
         String answer= search.findPath(N22_2, N3).toString();
         System.out.println(answer);
-        assertEquals("[Short22_2, Short19_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short3]", answer);
+        assertEquals("[A22_2, A21_2, A18_2, A14_2, A15_2, A9_2, A9, A3]", answer);
     }
 }

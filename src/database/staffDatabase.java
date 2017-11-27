@@ -2,8 +2,10 @@ package database;
 
 import DepartmentSubsystem.Staff;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class staffDatabase {
 
@@ -73,6 +75,42 @@ public class staffDatabase {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Insert into staff table using a prepared statement from csv
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void insertStaffFromCSV() {
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
+
+
+            for (int j = 1; j < allStaff.size(); j++) {
+
+                insertStaff.setString(1, allStaff.get(j).getUsername());
+                insertStaff.setString(2, allStaff.get(j).getPassword());
+                insertStaff.setString(3, allStaff.get(j).getJobTitle());
+                insertStaff.setString(4, allStaff.get(j).getFullName());
+                insertStaff.setInt(5, allStaff.get(j).getID());
+
+
+                insertStaff.executeUpdate();
+                System.out.println(j + ": Insert Staff Successful!");
+            }
+
+            conn.commit();
+            insertStaff.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();// end try
+        }
+
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -214,6 +252,61 @@ public class staffDatabase {
 
         } // end try
         catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Read from Staff CSV File and store columns in staff array lists
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void readStaffCSV (String fname) {
+
+        File staffFile = new File(fname);
+
+        try {
+            Scanner inputStreamStaff = new Scanner(staffFile);
+            inputStreamStaff.nextLine();
+            while (inputStreamStaff.hasNext()) {
+
+                String staffData = inputStreamStaff.nextLine();
+                String[] staffValues = staffData.split(",");
+
+                staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(staffValues[4])));
+
+            }
+            inputStreamStaff.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Write to a output Staff csv file
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void outputStaffCSV() {
+        String outStaffFileName = "outputStaff.csv";
+
+        try {
+            FileWriter fw3 = new FileWriter(outStaffFileName, false);
+            BufferedWriter bw3 = new BufferedWriter(fw3);
+            PrintWriter pw3 = new PrintWriter(bw3);
+
+            pw3.println("username,password,jobTitle,fullName,ID");
+            for (int j = 0; j < staffDatabase.allStaff.size(); j++) {
+
+                pw3.println(staffDatabase.allStaff.get(j).getUsername() + "," +
+                        staffDatabase.allStaff.get(j).getPassword() + "," +
+                        staffDatabase.allStaff.get(j).getJobTitle() + "," +
+                        staffDatabase.allStaff.get(j).getFullName() + "," +
+                        staffDatabase.allStaff.get(j).getID()
+                );
+                System.out.println(j + ": Staff Record Saved!");
+            }
+            pw3.flush();
+            pw3.close();
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

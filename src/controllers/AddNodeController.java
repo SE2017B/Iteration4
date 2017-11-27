@@ -376,8 +376,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(n.isSelected()) connections.add(n.getNode());
         }
         try {
-            map.addNodeandEdges("putNodeIDHere",
-                    nodeAddXField.getText(),
+            map.addNodeandEdges(nodeAddXField.getText(),
                     nodeAddYField.getText(),
                     nodeAddFloorDropDown.getText(),
                     nodeAddBuildingDropDown.getText(),

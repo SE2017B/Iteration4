@@ -201,7 +201,7 @@ public class HospitalMapTest {
         ArrayList<Node> nodesToAttach = new ArrayList<>();
         nodesToAttach.add(B);
         nodesToAttach.add(C);
-        easyMap.addNodeandEdges("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+        easyMap.addNodeandEdges("200", "100", "L1", "Tower", "Desk", "LongE",
                 "ShortE", "team", nodesToAttach);
         Node E = new Node("E", "200", "100", "L1", "Tower", "Desk", "LongE",
                 "ShortE", "team");
@@ -215,9 +215,9 @@ public class HospitalMapTest {
         ArrayList<Node> nodesToAttach = new ArrayList<>();
         nodesToAttach.add(B);
         nodesToAttach.add(C);
-        easyMap.addNodeandEdges("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+        easyMap.addNodeandEdges( "200", "100", "L1", "Tower", "Desk", "LongE",
                 "ShortE", "team", nodesToAttach);
-        Node E = new Node("E", "200", "100", "L1", "Tower", "Desk", "LongE",
+        Node E = new Node( "200", "100", "L1", "Tower", "Desk", "LongE",
                 "ShortE", "team");
         Edge EB = new Edge(E, B);
         Edge EC = new Edge(E, C);
@@ -326,7 +326,7 @@ public class HospitalMapTest {
     //Fails: gets [Short9, Short3, Short2, Short1]
     public void testMap1Reverse() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N9, N1).toString();
+        answer = search.findPath(N9, N1).toString();
         System.out.println(answer);
 
         assertEquals("[Short9, Short3, Short2, Short1]", answer);
@@ -336,7 +336,7 @@ public class HospitalMapTest {
     //Node 1 to Node 10
     public void testMap2() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N1, N10).toString();
+        answer = search.findPath(N1, N10).toString();
         System.out.println(answer);
 
         assertEquals("[Short1, Short6, Short7, Short10]", answer);
@@ -346,7 +346,7 @@ public class HospitalMapTest {
     //Node 10 to Node 1
     public void testMap2Reverse() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N10, N1).toString();
+        answer = search.findPath(N10, N1).toString();
         System.out.println(answer);
 
         assertEquals("[Short10, Short7, Short6, Short1]", answer);
@@ -356,7 +356,7 @@ public class HospitalMapTest {
     //Node 1 to Node 12
     public void testMap3() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N1, N12).toString();
+        answer = search.findPath(N1, N12).toString();
         System.out.println(answer);
 
         assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short12]", answer);
@@ -366,7 +366,7 @@ public class HospitalMapTest {
     //Node 12 to Node 1
     public void testMap3Reverse() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N12, N1).toString();
+        answer = search.findPath(N12, N1).toString();
         System.out.println(answer);
 
         assertEquals("[Short12, Short13, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
@@ -376,7 +376,7 @@ public class HospitalMapTest {
     //Node 1 to Node 20
     public void testMap4() throws InterruptedException {
         String answer = null;
-            answer = search.findPath(N1, N20).toString();
+        answer = search.findPath(N1, N20).toString();
         System.out.println(answer);
 
         assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short13, Short17, Short20]", answer);
@@ -386,7 +386,7 @@ public class HospitalMapTest {
     //Node 20 to Node 1
     public void testMap4Reverse() throws InterruptedException{
         String answer = null;
-            answer = (search.findPath(N20, N1).toString());
+        answer = (search.findPath(N20, N1).toString());
         System.out.println(answer);
 
         assertEquals("[Short20, Short17, Short13, Short14, Short11, Short10, Short7, Short6, Short1]", answer);
@@ -396,7 +396,7 @@ public class HospitalMapTest {
     //Node 1 to Node 23
     public void testMap5() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N1, N23).toString();
+        answer = search.findPath(N1, N23).toString();
         System.out.println(answer);
 
         assertEquals("[Short1, Short6, Short7, Short10, Short11, Short14, Short18, Short21, Short23]", answer);
@@ -407,7 +407,7 @@ public class HospitalMapTest {
     //Fails: gets [Short23, Short21, Short18, Short14, Short15, Short9, Short3, Short2, Short1]
     public void testMap5Reverse() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N23, N1).toString();
+        answer = search.findPath(N23, N1).toString();
         System.out.println(answer);
 
         assertEquals("[Short23, Short21, Short18, Short14, Short15, Short9, Short3, Short2, Short1]", answer);
@@ -417,7 +417,7 @@ public class HospitalMapTest {
     //Node 6 to Node 15
     public void testMap6() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N6, N15).toString();
+        answer = search.findPath(N6, N15).toString();
         System.out.println(answer);
 
         assertEquals("[Short6, Short7, Short8, Short9, Short15]", answer);
@@ -428,7 +428,7 @@ public class HospitalMapTest {
     //Fails: gets [Short15, Short9, Short8, Short7, Short6]
     public void testMap6Reverse() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N15, N6).toString();
+        answer = search.findPath(N15, N6).toString();
         System.out.println(answer);
 
         assertEquals("[Short15, Short9, Short8, Short7, Short6]", answer);
@@ -438,7 +438,7 @@ public class HospitalMapTest {
     //Node 3 to Node 22
     public void testMap7() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N3, N22).toString();
+        answer = search.findPath(N3, N22).toString();
         System.out.println(answer);
 
         assertEquals("[Short3, Short9, Short15, Short14, Short18, Short19, Short22]", answer);
@@ -448,7 +448,7 @@ public class HospitalMapTest {
     //Node 22 to Node 3
     public void testMap7Reverse() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N22, N3).toString();
+        answer = search.findPath(N22, N3).toString();
         System.out.println(answer);
 
         assertEquals("[Short22, Short19, Short18, Short14, Short15, Short9, Short3]", answer);
@@ -458,7 +458,7 @@ public class HospitalMapTest {
     //Node 4 to Node 2
     public void testMap8() throws InterruptedException {
         String answer = null;
-            answer = search.findPath(N4, N2).toString();
+        answer = search.findPath(N4, N2).toString();
         System.out.println(answer);
 
         assertEquals("[Short4, Short7, Short6, Short1, Short2]", answer);
@@ -468,7 +468,7 @@ public class HospitalMapTest {
     //Node 2 to Node 4
     public void testMap8Reverse() throws InterruptedException {
         String answer = null;
-            answer = search.findPath(N2, N4).toString();
+        answer = search.findPath(N2, N4).toString();
         System.out.println(answer);
 
         assertEquals("[Short2, Short1, Short6, Short7, Short4]", answer);
@@ -478,7 +478,7 @@ public class HospitalMapTest {
     //Node 7 to Node 3
     public void testMap9() throws InterruptedException {
         String answer = null;
-            answer = search.findPath(N7, N3).toString();
+        answer = search.findPath(N7, N3).toString();
         System.out.println(answer);
 
         assertEquals("[Short7, Short8, Short9, Short3]", answer);
@@ -488,7 +488,7 @@ public class HospitalMapTest {
     //Node 3 to Node 7
     public void testMap9Reverse() throws InterruptedException {
         String answer = null;
-            answer = search.findPath(N3, N7).toString();
+        answer = search.findPath(N3, N7).toString();
         System.out.println(answer);
 
         assertEquals("[Short3, Short9, Short8, Short7]", answer);
@@ -498,9 +498,9 @@ public class HospitalMapTest {
     //Node 7 to Node 3
     public void testMap9Repeat() throws InterruptedException{
         String answer1 = null;
-            answer1 = search.findPath(N7, N3).toString();
+        answer1 = search.findPath(N7, N3).toString();
         String answer2 = null;
-            answer2 = search.findPath(N7, N3).toString();
+        answer2 = search.findPath(N7, N3).toString();
         System.out.println(answer1);
 
         assertEquals(answer1, answer2);
@@ -511,7 +511,7 @@ public class HospitalMapTest {
     //Node 6 to Node 6
     public void testMap1Same() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N6, N6).toString();
+        answer = search.findPath(N6, N6).toString();
         System.out.println(answer);
 
         assertEquals("[Short6]", answer);
@@ -521,7 +521,7 @@ public class HospitalMapTest {
     //Node 18 to Node 18
     public void testMap2Same() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N18, N18).toString();
+        answer = search.findPath(N18, N18).toString();
         System.out.println(answer);
 
         assertEquals("[Short18]", answer);
@@ -531,7 +531,7 @@ public class HospitalMapTest {
     //Node 9 to Node 9
     public void testMap3Same() throws InterruptedException{
         String answer = null;
-            answer = search.findPath(N9, N9).toString();
+        answer = search.findPath(N9, N9).toString();
         System.out.println(answer);
 
         assertEquals("[Short9]", answer);

@@ -4,6 +4,7 @@ import exceptions.InvalidNodeException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class Path implements Comparable<Path> {
@@ -45,18 +46,7 @@ public class Path implements Comparable<Path> {
         boolean prevStop = false;
 
         for(int i = 1; i < path.size() - 1; i++){
-//            PVX = path.get(i-1).getX();
-//            PVY = path.get(i-1).getY();
-//            NVX = path.get(i+1).getX();
-//            NVY = path.get(i+1).getY();
-//            VX = path.get(i).getX();
-//            VY = path.get(i).getY();
-//
-//
-//            double numerator = (PVX - VX) * (VX - NVX) + (PVY - VY) * (VY - NVY);
-//            double denominator = Math.sqrt(Math.pow(PVX - VX, 2) + Math.pow(PVY - VY, 2)) * Math.sqrt(Math.pow(VX - NVX, 2) + Math.pow(VY - NVX, 2));
-//            double cos = numerator / denominator;
-//            double angle = Math.acos(cos);
+            HashMap<Node, Integer> ignored = new HashMap<>();
 
             int Vector1_2X = path.get(i).getX() - path.get(i-1).getX();
             int Vector1_2Y = path.get(i).getY() - path.get(i-1).getY();
@@ -70,13 +60,16 @@ public class Path implements Comparable<Path> {
             double angle = Math.toDegrees(Math.atan2(det, dot));
 
             System.out.println(angle);
+            System.out.println("Node 1: " + path.get(i-1).getShortName());
+            System.out.println("Node 2: " + path.get(i).getShortName());
+            System.out.println("Node 3: " + path.get(i+1).getShortName() + "\n");
 
             if(Vector1_2Z > Vector2_3Z && !prevElevator){
-                directions.add("Go up " + path.get(i).getShortName());
+                directions.add("Go down " + path.get(i).getShortName());
                 prevElevator = true;
                 continue;
             } else if (Vector1_2Z < Vector2_3Z && !prevElevator) {
-                directions.add("Go down " + path.get(i).getShortName());
+                directions.add("Go up " + path.get(i).getShortName());
                 prevElevator = true;
                 continue;
             }
@@ -86,14 +79,22 @@ public class Path implements Comparable<Path> {
                 prevStop = true;
             }
 
-            if(angle >= -160 && angle <= -20){
-                if(prevElevator || prevStop) directions.add("Turn right from " + path.get(i).getShortName());
-                 else directions.add("Take a right at this " + path.get(i).getShortName());
-            }
-            else if(angle >= 20 && angle <= 160){
+            if(angle >= -155 && angle <= -25){
                 if(prevElevator || prevStop) directions.add("Turn left from " + path.get(i).getShortName());
-                else directions.add("Take a left at this " + path.get(i).getShortName());
-            }else if (angle > -20 && angle < 20){
+                else {
+                    if(angle >= -40) directions.add("Take a slight left at this " + path.get(i).getShortName());
+                    else if(angle <= -140) directions.add("Take a sharp left at this " + path.get(i).getShortName());
+                    else directions.add("Take a left at this " + path.get(i).getShortName());
+                }
+            }
+            else if(angle >= 25 && angle <= 155){
+                if(prevElevator || prevStop) directions.add("Turn right from " + path.get(i).getShortName());
+                else {
+                    if(angle <= 40) directions.add("Take a slight right at this " + path.get(i).getShortName());
+                    else if(angle >= 140) directions.add("Take a sharp right at this " + path.get(i).getShortName());
+                    else directions.add("Take a right at this " + path.get(i).getShortName());
+                }
+            }else if (angle > -25 && angle < 25){
                 if(prevElevator || prevStop) directions.add("Go straight from " + path.get(i).getShortName());
                 else directions.add("Go straight through " + path.get(i).getShortName());
             } else {
@@ -111,8 +112,8 @@ public class Path implements Comparable<Path> {
     public ArrayList<FloorNumber> floorNumberList() {
         ArrayList<FloorNumber> floorNumList = new ArrayList<>();
 
-        for(int i=0; i<path.size(); i++) {
-            FloorNumber floor = path.get(i).getFloor();
+        for (Node aPath : path) {
+            FloorNumber floor = aPath.getFloor();
             if (floorNumList.contains(floor)) {
                 continue;
             }

@@ -8,6 +8,15 @@ import map.Path;
 import java.util.*;
 import java.util.function.DoubleToLongFunction;
 
+
+/*
+
+This class contains functions to find a path based on the AStar search method,
+returning paths based on the Astar search method,
+finding paths with pit stops,
+and a method that obtains the Euclidean distance between two nodes.
+
+ */
 public class AStarSearch implements SearchStrategy {
     public AStarSearch(){}
 
@@ -24,7 +33,7 @@ public class AStarSearch implements SearchStrategy {
         frontier.add(start);
 
         while(!frontier.isEmpty()){
-            frontier.sort((n1, n2) -> (int)(n1.getEuclidianDistance(end) - n2.getEuclidianDistance(end)));
+            frontier.sort((n1, n2) -> (int)(fScore.get(n1) - fScore.get(n2)));
             Node currentNode = frontier.get(0);
             if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
             frontier.remove(currentNode);
