@@ -67,6 +67,9 @@ public class MainController implements ControllableScreen, Observer{
     @FXML
     private JFXButton btnstairs;
 
+    @FXML
+    private JFXButton btnclear;
+
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
@@ -81,6 +84,13 @@ public class MainController implements ControllableScreen, Observer{
         kioskIndicator.setStrokeWidth(3);
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
         buttonHolderPane.getChildren().add(mapButtons.getPane());
+        mapPane.getChildren().addAll(mapButtons.getMapImage(), kioskIndicator);
+    }
+
+    //clear button
+    public void clearPressed(ActionEvent e){
+        int size = mapPane.getChildren().size();
+        mapPane.getChildren().remove(0, size);
         mapPane.getChildren().addAll(mapButtons.getMapImage(), kioskIndicator);
     }
 
