@@ -53,11 +53,9 @@ public class LoginController implements ControllableScreen{
 
     public void enterPressed(ActionEvent e){
         System.out.println("Enter Pressed");
-        //depSub.login(usernameField.getText(), passwordField.getText());
         parent.setScreen(ScreenController.RequestID,"UP");
-        //staffLoggedIn = usernameField.getText();
         boolean result = (depSub.login(usernameField.getText(),passwordField.getText()));
-        
+        System.out.println(result);
         if(result)
         {
             parent.setScreen(ScreenController.RequestID,"UP");
