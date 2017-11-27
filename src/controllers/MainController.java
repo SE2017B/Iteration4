@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
@@ -61,7 +62,7 @@ public class MainController implements ControllableScreen, Observer{
     private JFXButton btnelev;
 
     @FXML
-    private JFXButton btnvend;
+    private JFXButton btnretail;
 
     @FXML
     private JFXButton btnstairs;
@@ -80,11 +81,11 @@ public class MainController implements ControllableScreen, Observer{
         kioskIndicator.setStrokeWidth(3);
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
         buttonHolderPane.getChildren().add(mapButtons.getPane());
-        mapPane.getChildren().addAll(mapButtons.getMapImage(),kioskIndicator);
+        mapPane.getChildren().addAll(mapButtons.getMapImage(), kioskIndicator);
     }
 
     //circle helper function for nodeTypePressed
-    public void makeCircle(Node node){
+    public Circle makeCircle(Node node){
         AnimatedCircle newIndicator = new AnimatedCircle();
         newIndicator.setCenterX(node.getX()/mapButtons.getScale());
         newIndicator.setCenterY(node.getY()/mapButtons.getScale());
@@ -92,78 +93,79 @@ public class MainController implements ControllableScreen, Observer{
         newIndicator.setFill(Color.rgb(153, 63, 62)); //not sure what color this should be
         newIndicator.setStroke(Color.rgb(60, 26, 26));
         newIndicator.setStrokeWidth(3);
-    }
-    @FXML
-    //what if two buttons are pressed? Or if a button is pressed twice?
-    public void nodeTypePressed(ActionEvent e, String type){
-        System.out.println("Button Pressed: " + type);
-        switch (type){
-            case "Bathroom":
-                bathTypePressed(e);
-                break;
-            case "Exit":
-                exitTypePressed(e);
-                break;
-            case "Elevator":
-                elevTypePressed(e);
-                break;
-            case "Vending Machine":
-                vendTypePressed(e);
-                break;
-            case "Stairs":
-                stairsTypePressed(e);
-        }
+        return newIndicator;
     }
 
     //Bathroom type
     public void bathTypePressed(ActionEvent e){
         //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "Bathroom");
-        System.out.println("" + path.toString());
+        Path path = map.findNearest(map.getKioskLocation(), "REST");
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
-        //make a new AnimatedCircle + initialize it
-        makeCircle(node);
+        //if nearest node is on same floor as kiosk, make a circle
+        if(node.getFloor() == map.getKioskLocation().getFloor()){
+            //make a new AnimatedCircle + initialize it
+            Circle c = makeCircle(node);
+            mapPane.getChildren().add(c);
+        }
     }
 
     //Exit type
     public void exitTypePressed(ActionEvent e){
         //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "Exit");
+        Path path = map.findNearest(map.getKioskLocation(), "EXIT");
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
-        //make a new AnimatedCircle + initialize it
-        makeCircle(node);
+        //if nearest node is on same floor as kiosk, make a circle
+        if(node.getFloor() == map.getKioskLocation().getFloor()){
+            //make a new AnimatedCircle + initialize it
+            Circle c = makeCircle(node);
+            mapPane.getChildren().add(c);
+        }
     }
 
     //Elevator type
     public void elevTypePressed(ActionEvent e){
         //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "Elevator");
+        Path path = map.findNearest(map.getKioskLocation(), "ELEV");
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
-        //make a new AnimatedCircle + initialize it
-        makeCircle(node);
+        //if nearest node is on same floor as kiosk, make a circle
+        if(node.getFloor() == map.getKioskLocation().getFloor()){
+            //make a new AnimatedCircle + initialize it
+            Circle c = makeCircle(node);
+            mapPane.getChildren().add(c);
+        }
     }
 
-    //Vending Machine type
-    public void vendTypePressed(ActionEvent e){
+
+    //Retail type
+    public void retailTypePressed(ActionEvent e){
         //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "Vending Machine");
+        Path path = map.findNearest(map.getKioskLocation(), "RETL");
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
-        //make a new AnimatedCircle + initialize it
-        makeCircle(node);
+        //if nearest node is on same floor as kiosk, make a circle
+        if(node.getFloor() == map.getKioskLocation().getFloor()){
+            //make a new AnimatedCircle + initialize it
+            Circle c = makeCircle(node);
+            mapPane.getChildren().add(c);
+        }
     }
+
 
     //stairs type
     public void stairsTypePressed(ActionEvent e){
         //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "Stairs");
+        Path path = map.findNearest(map.getKioskLocation(), "STAI");
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
-        //make a new AnimatedCircle + initialize it
-        makeCircle(node);
+        //if nearest node is on same floor as kiosk, make a circle
+        if(node.getFloor() == map.getKioskLocation().getFloor()){
+            //make a new AnimatedCircle + initialize it
+            Circle c = makeCircle(node);
+            mapPane.getChildren().add(c);
+        }
     }
 
     public void onShow(){
@@ -186,14 +188,11 @@ public class MainController implements ControllableScreen, Observer{
     public void searchPressed(ActionEvent e){
         System.out.println("Search Pressed");
     }
-    //when filter button is pressed go to filter screen
-
 
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
         slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
         setZoom(slideBarZoom.getValue());
-
     }
 
     //Pass in a value from 0-3. 0 is smallest, 3 is largest
@@ -227,6 +226,5 @@ public class MainController implements ControllableScreen, Observer{
         if(arg instanceof FloorNumber){
             setFloor((FloorNumber) arg);
         }
-
     }
 }
