@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class DepartmentSubsystem {
     private boolean initRan = false;
     ArrayList<Department> departments = new ArrayList<Department>();
+    private Staff currentlyLoggedIn = null;
 
     /**
      * The order of method calls should be this for DSS:
@@ -106,19 +107,20 @@ public class DepartmentSubsystem {
     }
 
     //login function for staff members
-    public Staff login(String username, String password){
+    public boolean login(String username, String password){
         //ArrayList<Staff> allStaff = new ArrayList<>();
         ArrayList<Staff> allStaff = staffDatabase.getStaff();
         for(Staff member: allStaff){
             if(member.getUsername().equals(username)){
                 if(member.getPassword().equals(password)){
-                    return member;
+                    this.currentlyLoggedIn = member;
+                    return true;
                 }
                 else
                     break;
             }
         }
-        return null;
+        return false;
     }
 
     //Getters
@@ -151,7 +153,9 @@ public class DepartmentSubsystem {
 
         return returnList;
     }
-
+    public Staff getCurrentLoggedIn(){
+        return this.currentlyLoggedIn;
+    }
     public ArrayList<Service> getAllServices(){
         ArrayList<Service> allServices = new ArrayList<Service>();
         for(Department dept: this.getDepartments()){

@@ -1,5 +1,6 @@
 package controllers;
 
+import DepartmentSubsystem.*;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -9,6 +10,11 @@ import javafx.fxml.FXML;
 public class LoginController implements ControllableScreen{
     public LoginController(){}
     ScreenController parent;
+    private Staff member;
+    private DepartmentSubsystem depSub;
+
+
+    public String staffLoggedIn;
 
     @FXML
     private JFXTextField usernameField;
@@ -47,6 +53,17 @@ public class LoginController implements ControllableScreen{
 
     public void enterPressed(ActionEvent e){
         System.out.println("Enter Pressed");
+        //depSub.login(usernameField.getText(), passwordField.getText());
         parent.setScreen(ScreenController.RequestID,"UP");
+        //staffLoggedIn = usernameField.getText();
+        boolean result = (depSub.login(usernameField.getText(),passwordField.getText()));
+        
+        if(result)
+        {
+            parent.setScreen(ScreenController.RequestID,"UP");
+        }else
+        {
+            System.out.println("Wrong Pass/Login");
+        }
     }
 }
