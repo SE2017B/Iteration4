@@ -8,8 +8,6 @@
 
 package DepartmentSubsystem;
 
-import javafx.event.ActionEvent;
-
 import java.util.ArrayList;
 
 public abstract class Service{
@@ -22,6 +20,7 @@ public abstract class Service{
     public Service(Department department, String description) {
         this.department = department;
         this.description = description;
+        this.eligibleStaff = new ArrayList<Staff>();
     }
 
     //Getters and Setters
@@ -44,7 +43,11 @@ public abstract class Service{
     public void setEligibleStaff(ArrayList<Staff> eligibleStaff) {
         this.eligibleStaff = eligibleStaff;
     }
-    public void addEligibleStaff(Staff person){this.eligibleStaff.add(person);}
+    public void addEligibleStaff(Staff person){
+        if(person != null) {
+            this.eligibleStaff.add(person);
+        }
+    }
     public String getURL() {
         return URL;
     }

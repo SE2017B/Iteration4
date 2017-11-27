@@ -71,17 +71,25 @@ public class DepartmentSubsystem {
     //Reads the DB, and puts the staff in their corresponding places
     private void staffPlacement(){
         ArrayList<Staff> allStaff = staffDatabase.getStaff();
+
         for(Staff person: allStaff){
             String title = person.getJobTitle();
+
             for(Service currentService: this.getAllServices()) {
-                if (title.equalsIgnoreCase("TRANSLATOR") && currentService.toString().equalsIgnoreCase("TRANSLATION SERVICE"))
+
+                if (title.equalsIgnoreCase("TRANSLATOR") && currentService.toString().equalsIgnoreCase("TRANSLATION SERVICE")) {
                     currentService.addEligibleStaff(person);
-                else if (title.equalsIgnoreCase("JANITOR") && currentService.toString().equalsIgnoreCase("SANITATION"))
+                }
+                else if (title.equalsIgnoreCase("JANITOR") && currentService.toString().equalsIgnoreCase("SANITATION")) {
                     currentService.addEligibleStaff(person);
-                else if (title.equalsIgnoreCase("CHEF") || title.equalsIgnoreCase("FOOD DELIVERY") && currentService.toString().equalsIgnoreCase("FOOD DELIVERY SERVICE"))
+                }
+                else if ((title.equalsIgnoreCase("CHEF") || title.equalsIgnoreCase("FOOD DELIVERY")) && currentService.toString().equalsIgnoreCase("FOOD DELIVERY SERVICE")) {
                     currentService.addEligibleStaff(person);
-                else if (title.equalsIgnoreCase("TRANSPORT STAFF") && currentService.toString().equalsIgnoreCase("TRANSPORT SERVICE"))
+                }
+                else if (title.equalsIgnoreCase("TRANSPORT STAFF") && currentService.toString().equalsIgnoreCase("TRANSPORT SERVICE")) {
                     currentService.addEligibleStaff(person);
+                }
+
 //                else if (title.equalsIgnoreCase("TRANSLATOR" /* TRANSPORT STAFF?*/) && currentService.toString().equalsIgnoreCase("TRANSPORT SERVICE"))
 //                    currentService.addEligibleStaff(person);
             }
