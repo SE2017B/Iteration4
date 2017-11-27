@@ -1,4 +1,4 @@
-package controllers;
+package ui;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -10,10 +10,10 @@ import java.sql.Time;
 
 public class AnimatedCircle extends Circle {
 
-
+    private Timeline timeline;
 
     public AnimatedCircle(){
-        Timeline timeline  = new Timeline(
+        timeline  = new Timeline(
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(opacityProperty(), 1.0),
                         new KeyValue(radiusProperty(), 10) ),
@@ -25,5 +25,9 @@ public class AnimatedCircle extends Circle {
         timeline.setAutoReverse(true);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+    }
+
+    public Timeline getTimeline() {
+        return timeline;
     }
 }

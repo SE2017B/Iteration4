@@ -1,4 +1,4 @@
-package controllers;
+package ui;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,13 +7,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import map.Edge;
 
-
-
-
 public class EdgeCheckBox extends Line {
     private Edge edge;
     private boolean selected;
-
 
     public EdgeCheckBox(Edge edge, double scale) {
         super();
@@ -29,18 +25,10 @@ public class EdgeCheckBox extends Line {
         this.setEndY((edge.getNodeTwo().getY() - startY)/scale);
         this.setStrokeWidth(8);
         this.setVisible(false);
-
-
     }
 
     public boolean isSelected() {
         return selected;
-    }
-
-    public void setSelected(boolean sel){
-        if(selected != sel){
-            select();
-        }
     }
 
     public void select(){
@@ -53,9 +41,14 @@ public class EdgeCheckBox extends Line {
         }
     }
 
-
     public Edge getEdge(){
         return edge;
 
+    }
+
+    public void setSelected(boolean sel){
+        if(selected != sel){
+            select();
+        }
     }
 }
