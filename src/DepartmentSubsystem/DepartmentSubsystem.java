@@ -93,19 +93,19 @@ public class DepartmentSubsystem {
     }
 
     //login function for staff members
-    public boolean login(String username, String password){
+    public Staff login(String username, String password){
         //ArrayList<Staff> allStaff = new ArrayList<>();
         ArrayList<Staff> allStaff = mainDatabase.getStaff();
         for(Staff member: allStaff){
             if(member.getUsername().equals(username)){
                 if(member.getPassword().equals(password)){
-                    return true;
+                    return member;
                 }
                 else
                     break;
             }
         }
-        return false;
+        return null;
     }
 
     //Getters
@@ -173,6 +173,7 @@ public class DepartmentSubsystem {
             }
         }
         ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person);
+        person.add
         temp.addRequest(RID, request);
         if(email){
             processEmailRequest(emailRecipient, request);

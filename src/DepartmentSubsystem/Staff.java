@@ -108,6 +108,9 @@ public class Staff{
         //If its not known, then LET IT BE KNOWN!
         if(!this.languages.contains(language)){this.languages.add(language);}
     }
+    public void addRequest(ServiceRequest request){
+        this.currentRequests.add(request);
+    }
 
     //Other Getters and Setters
     public void setAdmin(boolean admin) {
