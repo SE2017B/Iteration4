@@ -250,7 +250,7 @@ public class AStarSearchTest {
         String directions = search.findPath(N1, N19_2).findDirections().toString();
         System.out.println(directions);
         assertEquals("[A1, A6, A7, A8, A9, A9_2, A15_2, A14_2, A18_2, A19_2]", answer);
-        assertEquals("[Go straight from Short1, Take a right at this Short6, Go straight through Short7, Go straight through Short8, Go up Short9, Go straight from Short9_2, " +
+        assertEquals("[Go straight from Short1, Take a right at this Short6, Go straight through Short7, Go straight through Short8, Go down Short9, Go straight from Short9_2, " +
                 "Take a left at this Short15_2, Take a right at this Short14_2, Take a right at this Short18_2, Stop at Short19_2]", directions);
     }
 
@@ -263,7 +263,7 @@ public class AStarSearchTest {
         System.out.println(directions);
         assertEquals("[A19_2, A18_2, A14_2, A15_2, A9_2, A9, A8, A7, A6, A1]", answer);
         assertEquals("[Go straight from Short19_2, Take a left at this Short18_2, Take a left at this Short14_2, Take a right at this Short15_2, " +
-                "Go down Short9_2, Go straight from Short9, Go straight through Short8, Go straight through Short7, Take a left at this Short6, Stop at Short1]", directions);
+                "Go up Short9_2, Go straight from Short9, Go straight through Short8, Go straight through Short7, Take a left at this Short6, Stop at Short1]", directions);
     }
 
     @Test
@@ -289,6 +289,7 @@ public class AStarSearchTest {
         assertEquals("[Go straight from Short12, Go straight through Short13, Take a right at this Short14, Take a right at this Short11, " +
                 "Take a left at this Short10, Take a right at this Short7, Take a left at this Short6, Stop at Short1]", directions);
     }
+
 
     @Test
     //Node 9 to Node 1
