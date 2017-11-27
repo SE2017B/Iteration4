@@ -8,13 +8,16 @@
 
 package DepartmentSubsystem;
 
-import DepartmentSubsystem.Services.*;
-import database.mainDatabase;
+import DepartmentSubsystem.Services.FoodDelivery;
+import DepartmentSubsystem.Services.Sanitation;
+import DepartmentSubsystem.Services.Translation;
+import DepartmentSubsystem.Services.Transport;
+import database.staffDatabase;
 import map.Node;
-import java.mail.*;
-import java.mail.internet.*;
 
-import java.util.*;
+//import java.mail.*;
+//import java.mail.internet.*;
+import java.util.ArrayList;
 
 public class DepartmentSubsystem {
     private boolean initRan = false;
@@ -67,7 +70,7 @@ public class DepartmentSubsystem {
 
     //Reads the DB, and puts the staff in their corresponding places
     private void staffPlacement(){
-        ArrayList<Staff> allStaff = mainDatabase.getStaff();
+        ArrayList<Staff> allStaff = staffDatabase.getStaff();
         for(Staff person: allStaff){
             String title = person.getJobTitle();
             for(Service currentService: this.getAllServices()) {
@@ -75,10 +78,12 @@ public class DepartmentSubsystem {
                     currentService.addEligibleStaff(person);
                 else if (title.equalsIgnoreCase("JANITOR") && currentService.toString().equalsIgnoreCase("SANITATION"))
                     currentService.addEligibleStaff(person);
-                else if (title.equalsIgnoreCase("CHEF") || title.equalsIgnoreCase("FOOD DELIVERY PERSON") && currentService.toString().equalsIgnoreCase("FOOD DELIVERY SERVICE"))
+                else if (title.equalsIgnoreCase("CHEF") || title.equalsIgnoreCase("FOOD DELIVERY") && currentService.toString().equalsIgnoreCase("FOOD DELIVERY SERVICE"))
                     currentService.addEligibleStaff(person);
-                else if (title.equalsIgnoreCase("TRANSLATOR") && currentService.toString().equalsIgnoreCase("TRANSPORT SERVICE"))
+                else if (title.equalsIgnoreCase("TRANSPORT STAFF") && currentService.toString().equalsIgnoreCase("TRANSPORT SERVICE"))
                     currentService.addEligibleStaff(person);
+//                else if (title.equalsIgnoreCase("TRANSLATOR" /* TRANSPORT STAFF?*/) && currentService.toString().equalsIgnoreCase("TRANSPORT SERVICE"))
+//                    currentService.addEligibleStaff(person);
             }
         }
     }
@@ -95,7 +100,7 @@ public class DepartmentSubsystem {
     //login function for staff members
     public boolean login(String username, String password){
         //ArrayList<Staff> allStaff = new ArrayList<>();
-        ArrayList<Staff> allStaff = mainDatabase.getStaff();
+        ArrayList<Staff> allStaff = staffDatabase.getStaff();
         for(Staff member: allStaff){
             if(member.getUsername().equals(username)){
                 if(member.getPassword().equals(password)){
@@ -180,11 +185,11 @@ public class DepartmentSubsystem {
     }
 
     private boolean processEmailRequest(String recipient, ServiceRequest request){
-        //TODO make a gmail for the team so we can do this
-        String username = "";
-        String password = "";
-        String message = request.toString();
-        sendFromGMail(username, password, recipient, "HOSPITAL SERVICE REQUEST AUTOMATED MESSAGE", message);
-        return false;
+//        //TODO make a gmail for the team so we can do this
+//        String username = "";
+//        String password = "";
+//        String message = request.toString();
+//        sendFromGMail(username, password, recipient, "HOSPITAL SERVICE REQUEST AUTOMATED MESSAGE", message);
+       return false;
     }
 }
