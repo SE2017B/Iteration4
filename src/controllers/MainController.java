@@ -24,6 +24,7 @@ import map.Path;
 import ui.AnimatedCircle;
 import ui.MapViewer;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -70,6 +71,18 @@ public class MainController implements ControllableScreen, Observer{
     @FXML
     private JFXButton btnclear;
 
+    @FXML
+    private JFXButton bathFilterButton;
+    @FXML
+    private JFXButton exitFilterButton;
+    @FXML
+    private JFXButton elevatorFilterButton;
+    @FXML
+    private JFXButton retailFilterButton;
+    @FXML
+    private JFXButton stairsFilterButton;
+
+
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
@@ -94,6 +107,10 @@ public class MainController implements ControllableScreen, Observer{
         mapPane.getChildren().addAll(mapButtons.getMapImage(), kioskIndicator);
     }
 
+    public void clearMousePressed(MouseEvent e){
+        clearPressed(new ActionEvent());
+    }
+
     //circle helper function for nodeTypePressed
     public Circle makeCircle(Node node){
         AnimatedCircle newIndicator = new AnimatedCircle();
@@ -107,6 +124,12 @@ public class MainController implements ControllableScreen, Observer{
         newIndicator.getTimeline().setCycleCount(5);
         newIndicator.getTimeline().setOnFinished(e -> { newIndicator.setVisible(false); });
         newIndicator.getTimeline().play();
+        return newIndicator;
+    }
+
+    public Circle makeClearCircle(Node node){
+        Circle newIndicator = makeCircle(node);
+        newIndicator.setFill(Color.TRANSPARENT);
         return newIndicator;
     }
 
@@ -182,6 +205,30 @@ public class MainController implements ControllableScreen, Observer{
         }
     }
 
+    public void filterButtonPressed(ActionEvent e) {
+        clearPressed(new ActionEvent());
+        System.out.println("Filter Pressed");
+        JFXButton pressed = (JFXButton) e.getSource();
+        ArrayList<Node> filteredNodes = new ArrayList<Node>();
+        if (pressed.equals(bathFilterButton)) {
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("REST")));
+        } else if (pressed.equals(exitFilterButton)) {
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("EXIT")));
+        } else if (pressed.equals(elevatorFilterButton)) {
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("ELEV")));
+        } else if (pressed.equals(retailFilterButton)) {
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("RETL")));
+        } else if (pressed.equals(stairsFilterButton)) {
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("STAI")));
+        }
+        for (Node n: filteredNodes)
+        {
+            Circle c = makeClearCircle(n);
+            mapPane.getChildren().add(c);
+        }
+    }
+
+
     public void onShow(){
         kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
         kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapButtons.getScale());
@@ -228,6 +275,7 @@ public class MainController implements ControllableScreen, Observer{
 
     private void setFloor(FloorNumber floor){
         curerntFloor = floor;
+        clearPressed(new ActionEvent());
         if (curerntFloor.equals(map.getKioskLocation().getFloor())){
             kioskIndicator.setVisible(true);
         }

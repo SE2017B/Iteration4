@@ -1,4 +1,4 @@
-.button, .menu-button, .choice-box{
+.button, .menu-button, .choice-box, .titled-pane .title{
     -fx-text-fill: white;
     -fx-background-color: rgb(40,40,60);
     -fx-border-color: whitesmoke;
@@ -47,7 +47,7 @@
     -fx-background-color: black;
 }
 
-.text-on-dark{
+.text-on-dark, .titled-pane{
     -fx-text-fill: white;
     -fx-prompt-text-fill: white;
 }
