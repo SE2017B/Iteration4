@@ -77,20 +77,6 @@ public class PathController implements ControllableScreen, Observer{
     private TitledPane textDirectionsPane;
 
 
-    @FXML
-    private JFXButton floorL2Button;
-    @FXML
-    private JFXButton floorL1Button;
-    @FXML
-    private JFXButton floorGButton;
-    @FXML
-    private JFXButton floor1Button;
-    @FXML
-    private JFXButton floor2Button;
-    @FXML
-    private JFXButton floor3Button;
-    @FXML
-    private ScrollPane floorScrollPane;
 
     @FXML
     private ScrollPane mapScrollPane;
@@ -434,7 +420,7 @@ public class PathController implements ControllableScreen, Observer{
         //to remove the red line, remove p ^
 
         //starting point defined by MoveTo
-        p.getElements().add(new MoveTo(ls.get(0).getLayoutX()-5, ls.get(0).getLayoutY()-5));
+        p.getElements().add(new MoveTo(ls.get(0).getLayoutX(), ls.get(0).getLayoutY()));
 
         //line movements along drawn lines
         for(Line l : ls){
@@ -455,7 +441,10 @@ public class PathController implements ControllableScreen, Observer{
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
         Path thePath = getPath();
+
+        System.out.println(thePath.toString());
         setLines(thePath);
+        System.out.println(floors);
         mapViewer.setButtonsByFloor(floors);
         //add background image
         System.out.println(thePath.getDirections());
@@ -463,28 +452,8 @@ public class PathController implements ControllableScreen, Observer{
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
         switchPath(currentFloor);
-        disableUnusedButtons(); //remove other screens
         System.out.println("Enter Pressed");
 
-    }
-
-    private void disableUnusedButtons(){
-        //check each button
-        checkScreen(floorL2Button);
-        checkScreen(floorL1Button);
-        checkScreen(floorGButton);
-        checkScreen(floor1Button);
-        checkScreen(floor2Button);
-        checkScreen(floor3Button);
-
-    }
-    private void checkScreen(JFXButton b){
-        if(floors.contains(FloorNumber.fromDbMapping(b.getText()))){
-            b.setDisable(false);
-        }
-        else{
-            b.setDisable(true);
-        }
     }
 
 

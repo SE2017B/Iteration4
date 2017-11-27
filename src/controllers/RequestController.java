@@ -19,10 +19,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import map.HospitalMap;
@@ -130,7 +127,6 @@ public class RequestController implements ControllableScreen{
                     public void changed(ObservableValue<? extends String> observable,
                                         String oldValue, String newValue) {
                         lblSelectedService.setText(newValue);
-
                     }
                 }
         );
@@ -171,6 +167,7 @@ public class RequestController implements ControllableScreen{
 
     public void resolveServicePressed(ActionEvent e)
     {
+
         //todo test?
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
         System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
