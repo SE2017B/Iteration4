@@ -296,6 +296,8 @@ public class PathController implements ControllableScreen{
             animatePath(floor,pathLines.get(floor));
             //adjust screen
             controlScroller(floor);
+            //Update Current floor
+            currentFloor=floor;
         }
     }
 
@@ -533,6 +535,29 @@ public class PathController implements ControllableScreen{
         //redraw animation to ensure that it is well positioned
         switchPath(currentFloor);
         controlScroller(currentFloor);
+    }
+    //when left is pressed
+    public void rightPressed(ActionEvent e){
+        for(int i=0;i<floors.size();i++){
+            if(floors.get(i)==currentFloor){
+                if(i<floors.size()-1){
+                    switchPath(floors.get(i+1));
+                }
+                break;
+            }
+        }
+
+    }
+    //when right is pressed
+    public void leftPressed(ActionEvent e){
+        for(int i=0;i<floors.size();i++){
+            if(floors.get(i)==currentFloor){
+                if(i>0){
+                    switchPath(floors.get(i-1));
+                }
+                break;
+            }
+        }
     }
 
 

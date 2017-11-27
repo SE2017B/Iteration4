@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXListView?>
@@ -17,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
       <SplitPane dividerPositions="0.18796992481203006" orientation="VERTICAL" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -93,7 +99,7 @@
                         </AnchorPane>
                       <AnchorPane>
                            <children>
-                              <ScrollPane fx:id="floorScrollPane" fitToHeight="true" hbarPolicy="ALWAYS" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER">
+                              <ScrollPane fx:id="floorScrollPane" fitToHeight="true" hbarPolicy="ALWAYS" layoutX="-51.0" layoutY="1.0" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER">
                                  <content>
                                     <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0" styleClass="pane">
                                        <columnConstraints>
@@ -143,5 +149,11 @@
             <Font size="18.0" />
          </font>
       </TitledPane>
+      <AnchorPane layoutX="547.0" layoutY="110.0" prefHeight="75.0" prefWidth="507.0">
+         <children>
+            <JFXButton fx:id="Left" layoutX="114.0" layoutY="11.0" onAction="#leftPressed" prefHeight="40.0" prefWidth="92.0" text="Left" />
+            <JFXButton fx:id="Right" layoutX="374.0" layoutY="11.0" onAction="#rightPressed" prefHeight="40.0" prefWidth="92.0" text="Right" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
