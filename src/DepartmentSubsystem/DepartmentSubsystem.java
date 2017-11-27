@@ -186,7 +186,7 @@ public class DepartmentSubsystem {
             }
         }
         ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person);
-        person.add
+        person.addRequest(request);
         temp.addRequest(RID, request);
         if(email){
             processEmailRequest(emailRecipient, request);
