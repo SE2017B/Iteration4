@@ -82,12 +82,15 @@ public class MainController implements ControllableScreen, Observer{
     @FXML
     private JFXButton stairsFilterButton;
 
+    private ArrayList<Circle> indicators;
+
 
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
         mapButtons = new MapViewer(this);
         mapButtons.setFloor(curerntFloor);
+        indicators = new ArrayList<>();
         kioskIndicator = new AnimatedCircle();
         kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
         kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapButtons.getScale());
@@ -105,6 +108,7 @@ public class MainController implements ControllableScreen, Observer{
         int size = mapPane.getChildren().size();
         mapPane.getChildren().remove(0, size);
         mapPane.getChildren().addAll(mapButtons.getMapImage(), kioskIndicator);
+        indicators.clear();
     }
 
     public void clearMousePressed(MouseEvent e){
@@ -120,10 +124,16 @@ public class MainController implements ControllableScreen, Observer{
         newIndicator.setFill(Color.rgb(153, 63, 62)); //not sure what color this should be
         newIndicator.setStroke(Color.rgb(60, 26, 26));
         newIndicator.setStrokeWidth(3);
+        indicators.add(newIndicator);
         newIndicator.getTimeline().stop();
         newIndicator.getTimeline().setCycleCount(5);
-        newIndicator.getTimeline().setOnFinished(e -> { newIndicator.setVisible(false); });
+        newIndicator.getTimeline().setOnFinished(e -> {
+            newIndicator.setVisible(false);
+            mapPane.getChildren().remove(newIndicator);
+            indicators.remove(newIndicator);
+        });
         newIndicator.getTimeline().play();
+
         return newIndicator;
     }
 
@@ -144,6 +154,7 @@ public class MainController implements ControllableScreen, Observer{
             //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
+
         }
     }
 
@@ -172,6 +183,7 @@ public class MainController implements ControllableScreen, Observer{
             //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
+
         }
     }
 
@@ -258,9 +270,14 @@ public class MainController implements ControllableScreen, Observer{
 
     //Pass in a value from 0-3. 0 is smallest, 3 is largest
     public void setZoom(double zoom){
+        double oldScale = mapButtons.getScale();
         mapButtons.setScale(4-zoom);
         kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
         kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapButtons.getScale());
+        for(Circle c : indicators){
+            c.setCenterX(c.getCenterX()*oldScale/mapButtons.getScale());
+            c.setCenterY(c.getCenterY()*oldScale/mapButtons.getScale());
+        }
     }
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
