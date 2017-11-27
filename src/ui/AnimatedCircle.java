@@ -10,8 +10,6 @@ import java.sql.Time;
 
 public class AnimatedCircle extends Circle {
 
-
-
     public AnimatedCircle(){
         Timeline timeline  = new Timeline(
                 new KeyFrame(Duration.ZERO,

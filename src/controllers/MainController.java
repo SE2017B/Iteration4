@@ -26,10 +26,8 @@ import ui.MapViewer;
 import java.util.Observable;
 import java.util.Observer;
 
-
 public class MainController implements ControllableScreen, Observer{
     private ScreenController parent;
-
 
     public void setParentController(ScreenController parent){
         this.parent = parent;
@@ -83,12 +81,10 @@ public class MainController implements ControllableScreen, Observer{
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
         buttonHolderPane.getChildren().add(mapButtons.getPane());
         mapPane.getChildren().addAll(mapButtons.getMapImage(),kioskIndicator);
-
     }
 
     //circle helper function for nodeTypePressed
     public void makeCircle(Node node){
-        //make a new AnimatedCircle + initialize it
         AnimatedCircle newIndicator = new AnimatedCircle();
         newIndicator.setCenterX(node.getX()/mapButtons.getScale());
         newIndicator.setCenterY(node.getY()/mapButtons.getScale());
@@ -99,7 +95,6 @@ public class MainController implements ControllableScreen, Observer{
     }
 
     //what if two buttons are pressed? Or if a button is pressed twice?
-    //nodeTypePressed
     public void nodeTypePressed(ActionEvent e, String type){
         System.out.println("Button Pressed: " + type);
         switch (type){
@@ -120,7 +115,7 @@ public class MainController implements ControllableScreen, Observer{
         }
     }
 
-    //bathroom type
+    //Bathroom type
     public void bathTypePressed(ActionEvent e){
         //find nearest node of given type
         Path path = map.findNearest(map.getKioskLocation(), "Bathroom");

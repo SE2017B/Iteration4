@@ -32,9 +32,7 @@ public class MapViewer extends Observable{
     private Pane spacerLeft;
     private Pane spacerRight;
 
-
     private proxyImagePane mapImage;
-
 
     public MapViewer(Observer o){
         super();
@@ -59,6 +57,64 @@ public class MapViewer extends Observable{
         addObserver(o);
     }
 
+    private void addFloor(FloorNumber floor){
+        JFXButton button = new JFXButton();
+        button.setText(floor.getDbMapping());
+        button.setMinSize(BUTTON_WIDTH,BUTTON_HEIGHT);
+        button.setOnAction(e -> floorButtonPressed(e));
+        buttonOrder.add(0,button.getText());
+        container.getChildren().add(1,button);
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
+        container.setPrefWidth(SCROLL_WIDTH);
+    }
+
+    public void floorButtonPressed(ActionEvent e){
+        FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
+        setFloor(floor);
+        setChanged();
+        notifyObservers(floor);
+    }
+
+    private void clearButtons(){
+        container.getChildren().clear();
+        buttonOrder.clear();
+        container.getChildren().addAll(spacerLeft,spacerRight);
+    }
+
+    //Getters
+    public FloorNumber getFloor(){
+        return currentFloor;
+    }
+    public ScrollPane getPane() {
+        return pane;
+    }
+    public proxyImagePane getMapImage(){
+        return mapImage;
+    }
+    public double getScale(){
+        return  mapImage.getScale();
+    }
+
+    //Setters
+    public void setFloor(FloorNumber floor){
+        mapImage.setImage(floor);
+        Timeline slideButtons = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(pane.hvalueProperty(), pane.getHvalue())),
+                new KeyFrame(new Duration(300),
+                        new KeyValue(pane.hvalueProperty(),buttonOrder.indexOf(floor.getDbMapping())/(buttonOrder.size()-1.0)))
+        );
+        slideButtons.play();
+    }
+
+    public void setSpacerWidth(int width){
+        SPACER_WIDTH = width;
+        spacerLeft.setPrefWidth(SPACER_WIDTH);
+        spacerRight.setPrefWidth(SPACER_WIDTH);
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
+        container.setPrefWidth(SCROLL_WIDTH);
+    }
+
     private void setContainer(){
         spacerLeft = new Pane();
         spacerRight = new Pane();
@@ -71,66 +127,8 @@ public class MapViewer extends Observable{
         container.getChildren().addAll(spacerLeft,spacerRight);
     }
 
-    private void addFloor(FloorNumber floor){
-        JFXButton button = new JFXButton();
-        button.setText(floor.getDbMapping());
-        button.setMinSize(BUTTON_WIDTH,BUTTON_HEIGHT);
-        button.setOnAction(e -> floorButtonPressed(e));
-        buttonOrder.add(0,button.getText());
-        container.getChildren().add(1,button);
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
-        container.setPrefWidth(SCROLL_WIDTH);
-    }
-    public void setSpacerWidth(int width){
-        SPACER_WIDTH = width;
-        spacerLeft.setPrefWidth(SPACER_WIDTH);
-        spacerRight.setPrefWidth(SPACER_WIDTH);
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
-        container.setPrefWidth(SCROLL_WIDTH);
-    }
-
-    public proxyImagePane getMapImage(){
-        return mapImage;
-    }
-
-    public double getScale(){
-        return  mapImage.getScale();
-    }
-
     public void setScale(double scale){
         mapImage.setScale(scale);
-    }
-
-    public void floorButtonPressed(ActionEvent e){
-        FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
-        setFloor(floor);
-        setChanged();
-        notifyObservers(floor);
-    }
-
-    public void setFloor(FloorNumber floor){
-        mapImage.setImage(floor);
-        Timeline slideButtons = new Timeline(
-                new KeyFrame(Duration.ZERO,
-                        new KeyValue(pane.hvalueProperty(), pane.getHvalue())),
-                new KeyFrame(new Duration(300),
-                        new KeyValue(pane.hvalueProperty(),buttonOrder.indexOf(floor.getDbMapping())/(buttonOrder.size()-1.0)))
-        );
-        slideButtons.play();
-    }
-
-    public FloorNumber getFloor(){
-        return currentFloor;
-    }
-
-    public ScrollPane getPane() {
-        return pane;
-    }
-
-    private void clearButtons(){
-        container.getChildren().clear();
-        buttonOrder.clear();
-        container.getChildren().addAll(spacerLeft,spacerRight);
     }
 
     public void setButtonsByFloor(List<FloorNumber> floors){
@@ -140,6 +138,4 @@ public class MapViewer extends Observable{
         }
         setFloor(floors.get(0));
     }
-
-
 }
