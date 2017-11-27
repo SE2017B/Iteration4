@@ -171,9 +171,17 @@ public class PathController implements ControllableScreen{
             if(positionVars.get(floor).get(1)<c.getCenterY()){
                 positionVars.get(floor).set(1,(int)c.getCenterY());
             }
+            if(positionVars.get(floor).get(2)>c.getCenterX()){
+                positionVars.get(floor).set(2,(int)c.getCenterX());
+            }
+            if(positionVars.get(floor).get(3)>c.getCenterY()){
+                positionVars.get(floor).set(3,(int)c.getCenterY());
+            }
         }
         else{
             ArrayList<Integer> temp = new ArrayList<Integer>();
+            temp.add((int)c.getCenterX());
+            temp.add((int)c.getCenterY());
             temp.add((int)c.getCenterX());
             temp.add((int)c.getCenterY());
             positionVars.put(floor,temp);
@@ -181,10 +189,34 @@ public class PathController implements ControllableScreen{
     }
     private void controlScroller(FloorNumber floor){
         if(positionVars.containsKey(floor)){
-            mapScrollPane.setHvalue(positionVars.get(floor).get(0)*mapImage.getScale()/5000);
-            mapScrollPane.setVvalue(positionVars.get(floor).get(1)*mapImage.getScale()/3500);
+            //find the average distance between min and max
+            double x = (positionVars.get(floor).get(0)+positionVars.get(floor).get(2))/2;
+            double y = (positionVars.get(floor).get(1)+positionVars.get(floor).get(3))/2;
+            /**
+             * //Todo: Resize map to fit path if needed
+            double sx = positionVars.get(floor).get(0)-positionVars.get(floor).get(2);
+            double sy = positionVars.get(floor).get(1)-positionVars.get(floor).get(3);
+            focustopath(sx,sy);//focus to path
+             **/
+            mapScrollPane.setHvalue(x*mapImage.getScale()/5000);
+            mapScrollPane.setVvalue(y*mapImage.getScale()/3500);
             System.out.println("Screen Adjusted");
         }
+    }
+    private void focustopath(double sx,double sy){
+        //resize map to fit path
+        double x =Math.abs(sx);
+        double y =Math.abs(sy);
+        if(y>2){
+            mapImage.setScale(4);
+            System.out.println("hahahaddhahaiofefjisejfonfo;wiefjw");
+        }
+        //if(y>x){
+            //mapImage.setScale(y/5000);
+        //}
+        //else{
+            //mapImage.setScale(x/3500);
+        //}
     }
 
     private void setLines(Path path){
@@ -212,14 +244,15 @@ public class PathController implements ControllableScreen{
                 points.add(newp);
                 newp.setFill(Color.RED);
                 //shapes.add(newp);
+                //DON'T TAKE THIS OUT
                 //add last point if it exists
-//                if(i>0){
-//                    Circle newp1 = getPoint(lastNode.getX(),lastNode.getY());
-//                    pathPoints.get(lastNode.getFloor()).add(newp1);
-//                    getVars(current, newp1);
-//                    mapPane.getChildren().add(newp1);
-//                    points.add(newp1);
-//                }
+              if(i>0){
+                    Circle newp1 = getPoint(lastNode.getX(),lastNode.getY());
+                    pathPoints.get(lastNode.getFloor()).add(newp1);
+                    getVars(current, newp1);
+                    mapPane.getChildren().add(newp1);
+                    points.add(newp1);
+                }
             }
             else if(path.getPath().get(i).getFloor()==current){
                 //create new floor and add it
