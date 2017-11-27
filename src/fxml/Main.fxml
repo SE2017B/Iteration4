@@ -49,7 +49,7 @@
                         </JFXButton>
                      </children>
                   </VBox>
-                  <TitledPane fx:id="dropDown" contentDisplay="RIGHT" layoutX="200.0" prefHeight="230.0" prefWidth="900.0" text="Filter" visible="false">
+                  <TitledPane fx:id="dropDown" contentDisplay="RIGHT" layoutX="200.0" prefHeight="230.0" prefWidth="900.0" text="Filter" visible="true">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="185.0" prefWidth="880.0">
                            <children>

@@ -93,7 +93,7 @@ public class MainController implements ControllableScreen, Observer{
         newIndicator.setStroke(Color.rgb(60, 26, 26));
         newIndicator.setStrokeWidth(3);
     }
-
+    @FXML
     //what if two buttons are pressed? Or if a button is pressed twice?
     public void nodeTypePressed(ActionEvent e, String type){
         System.out.println("Button Pressed: " + type);
@@ -119,6 +119,7 @@ public class MainController implements ControllableScreen, Observer{
     public void bathTypePressed(ActionEvent e){
         //find nearest node of given type
         Path path = map.findNearest(map.getKioskLocation(), "Bathroom");
+        System.out.println("" + path.toString());
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
         //make a new AnimatedCircle + initialize it
