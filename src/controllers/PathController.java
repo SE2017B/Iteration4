@@ -47,10 +47,10 @@ public class PathController implements ControllableScreen, Observer{
     private ArrayList<Node> path;
     private HospitalMap map;
     private ArrayList<Shape> shapes;
-    private String startType;
-    private String startFloor;
-    private String endType;
-    private String endFloor;
+    private String startType = "";
+    private String startFloor = "";
+    private String endType =  "";
+    private String endFloor = "";
 
 
     public void setParentController(ScreenController parent){
@@ -403,6 +403,7 @@ public class PathController implements ControllableScreen, Observer{
         calVars();
         //reposition map
         mapViewer.setScale(scale);
+        switchPath(currentFloor);
     }
 
     public void calVars(){
@@ -467,18 +468,12 @@ public class PathController implements ControllableScreen, Observer{
         System.out.println("Zoom In Pressed");
         slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
         setMapScale(4-slideBarZoom.getValue());
-        //redraw animation o ensure that it is well positioned
-        switchPath(currentFloor);
-        controlScroller(currentFloor);
     }
 
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
         slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
         setMapScale(4-slideBarZoom.getValue());
-        //redraw animation to ensure that it is well positioned
-        switchPath(currentFloor);
-        controlScroller(currentFloor);
     }
 
 
@@ -487,7 +482,7 @@ public class PathController implements ControllableScreen, Observer{
         startType = ((MenuItem)e.getSource()).getText();
         startTypeMenu.setText(startType);
         startFloorMenu.setDisable(false);
-        if(!startFloor.equals(null)){
+        if(!startFloor.equals("")){
             startChosen();
         }
     }
@@ -535,7 +530,7 @@ public class PathController implements ControllableScreen, Observer{
         endType = ((MenuItem)e.getSource()).getText();
         endTypeMenu.setText(startType);
         endFloorMenu.setDisable(false);
-        if(!endFloor.equals(null)){
+        if(!endFloor.equals("")){
             endChosen();
         }
     }
