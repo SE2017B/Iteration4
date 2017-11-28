@@ -64,7 +64,9 @@ public class staffDatabase {
                         "fullName VARCHAR(20)," +
                         "ID INTEGER," +
                         "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
-                        "CONSTRAINT hospitalStaff_U1 UNIQUE (username))");
+                        "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
+                        "CONSTRAINT jobTitle CHECK (jobTitle IN ('Translator', 'Janitor', 'Chef', 'Food Delivery', 'Transport Staff'))," +
+                        "CONSTRAINT ID_chk CHECK (ID > 0))");
 
                 int rsetCreate1 = stmtCreateStaffTable.executeUpdate(createStaffTable);
                 System.out.println("Create Staff table Successful!");

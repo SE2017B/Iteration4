@@ -65,7 +65,7 @@ public class edgeDatabase {
             //Add a new edge table
             Statement stmtCreate2 = conn.createStatement();
             String createEdgesTable = ("CREATE TABLE edges" +
-                    "(edgeID VARCHAR(22)," +
+                    "(edgeID VARCHAR(21)," +
                     "startNode VARCHAR(10)," +
                     "endNode VARCHAR(10)," +
                     "CONSTRAINT edges_PK PRIMARY KEY (edgeID)," +

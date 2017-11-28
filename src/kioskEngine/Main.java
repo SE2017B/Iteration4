@@ -61,7 +61,6 @@ public class Main extends Application {
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
-
         staffDatabase.createStaffTable();
 
         nodeDatabase.readNodeCSV("MapAnodes.csv");
@@ -74,7 +73,6 @@ public class Main extends Application {
         nodeDatabase.readNodeCSV("MapHnodes.csv");
         nodeDatabase.readNodeCSV("MapInodes.csv");
         nodeDatabase.readNodeCSV("MapWnodes.csv");
-
 
         edgeDatabase.readEdgesCSV("MapAedges.csv");
         edgeDatabase.readEdgesCSV("MapBedges.csv");
@@ -89,6 +87,7 @@ public class Main extends Application {
 
         nodeDatabase.insertNodesFromCSV();
         edgeDatabase.insertEdgesFromCSV();
+
         nodeDatabase.cntNodes();
 
         staffDatabase.readStaffCSV("staffMembers.csv");
