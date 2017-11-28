@@ -105,7 +105,7 @@ public class proxyImagePane extends StackPane {
         //now adjust all floors
         for(ImageView img: floors.values()){
             img.setFitWidth(5000/scale);
-            img.setFitHeight(3400/scale);
+            img.setFitHeight(3500/scale);
         }
     }
 

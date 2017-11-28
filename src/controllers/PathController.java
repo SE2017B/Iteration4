@@ -214,11 +214,22 @@ public class PathController implements ControllableScreen, Observer{
     private void controlScroller(Path p){
         ArrayList<Integer> dim = getEdgeDims(p);
         ArrayList<Integer> center = getCenter(p);
-        int x = center.get(0);
-        int y = center.get(1);
+        double x = center.get(0)/mapViewer.getScale();
+        double y = center.get(1)/mapViewer.getScale();
         System.out.println("Center X: " + x + " Center Y: " + y);
-        mapScrollPane.setHvalue((x*mapViewer.getScale()-640)/5000.0);
-        mapScrollPane.setVvalue((y*mapViewer.getScale()-300)/3500.0);
+        //height
+        double h = mapScrollPane.getContent().getBoundsInLocal().getHeight();
+        double v = mapScrollPane.getViewportBounds().getHeight();
+        //width
+        double w = mapScrollPane.getContent().getBoundsInLocal().getWidth();
+        double H = mapScrollPane.getViewportBounds().getWidth();
+        mapScrollPane.setVvalue(((y - 0.5 * v) / (h - v)));
+        mapScrollPane.setHvalue(((x - 0.5 * H) / (w - H)));
+
+        //mapScrollPane.setHvalue((x-w)/5000.0);
+        //mapScrollPane.setVvalue((y-h)/3500.0);
+        //mapScrollPane.setHvalue(0);
+        //mapScrollPane.setVvalue(0);
     }
 
 
@@ -335,8 +346,7 @@ public class PathController implements ControllableScreen, Observer{
         clearShapes();
         //set zoom level here
         System.out.println("The zoom is "+getZoom(path));
-        mapViewer.setScale(getZoom(path));
-        slideBarZoom.setValue(4 - mapViewer.getScale());
+        //slideBarZoom.setValue(4 - mapViewer.getScale());
         displayPath(path);
         currentFloor=pathtoFloor.get(path);
         controlScroller(path);//reposition map
@@ -438,6 +448,7 @@ public class PathController implements ControllableScreen, Observer{
             directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
             textDirectionsPane.setVisible(true);
             textDirectionsPane.setExpanded(false);
+            //mapViewer.setScale(getZoom(paths.get(0)));
             switchPath(paths.get(0));
             System.out.println("Enter Pressed");
 
@@ -475,8 +486,9 @@ public class PathController implements ControllableScreen, Observer{
         setMapScale(4-slideBarZoom.getValue());
 
         //redraw animation o ensure that it is well positioned
-        clearShapes();
-        displayPath(currentPath);
+        //clearShapes();
+        //displayPath(currentPath);
+        switchPath(currentPath);
         //controlScroller(currentFloor);
     }
 
@@ -485,8 +497,9 @@ public class PathController implements ControllableScreen, Observer{
         slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
         setMapScale(4-slideBarZoom.getValue());
         //redraw animation to ensure that it is well positioned
-        clearShapes();
-        displayPath(currentPath);
+        //clearShapes();
+        //displayPath(currentPath);
+        switchPath(currentPath);
         //controlScroller(currentFloor);
     }
 
