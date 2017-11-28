@@ -58,6 +58,7 @@ public class Main extends Application {
 
         edgeDatabase.deleteEdgeTable();
         nodeDatabase.deleteNodeTable();
+        staffDatabase.deleteStaffTable();
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();

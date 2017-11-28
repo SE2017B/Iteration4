@@ -34,7 +34,7 @@ public class nodeDatabase {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Create a table for the nodes
+    // Delete nodes table
     ///////////////////////////////////////////////////////////////////////////////
     public static void deleteNodeTable() throws SQLException {
 
@@ -55,9 +55,7 @@ public class nodeDatabase {
                 conn.commit();
                 stmtDelete1.close();
                 conn.close();
-
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();
