@@ -443,7 +443,8 @@ public class PathController implements ControllableScreen, Observer{
         }
          **/
         clearShapes();
-        //Todo: set zoom level here
+        //set zoom level here
+        mapViewer.setScale(getZoom(path));
         displayPath(path);
         currentFloor=pathtoFloor.get(path);
         controlScroller(path);//reposition map
@@ -556,6 +557,19 @@ public class PathController implements ControllableScreen, Observer{
         ans.add((Dim.get(0)+Dim.get(2))/2);
         ans.add((Dim.get(1)+Dim.get(3))/2);
         return ans;
+    }
+    private double getZoom(Path p){
+        ArrayList<Integer> Dim =getEdgeDims(p);
+        ArrayList<Integer> ans = new ArrayList<>();
+        int x = Math.abs(Dim.get(0)-Dim.get(2));
+        int y = Math.abs(Dim.get(1)-Dim.get(3));
+
+        double zx=(2-((x/5000)*2))+1;
+        double zy=(2-((y/3500)*2))+1;
+        if(zy>zx){
+            return zy;
+        }
+        return zx;
     }
 
 
