@@ -63,6 +63,7 @@ public class MapViewer extends Observable{
         button.setText(floor.getDbMapping());
         button.setMinSize(BUTTON_WIDTH,BUTTON_HEIGHT);
         button.setOnAction(e -> floorButtonPressed(e));
+        button.setId("-1");
         buttonOrder.add(0,button.getText());
         container.getChildren().add(1,button);
         SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
