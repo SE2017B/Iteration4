@@ -36,6 +36,37 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the nodes
     ///////////////////////////////////////////////////////////////////////////////
+    public static void deleteNodeTable() throws SQLException {
+
+        try {
+
+            conn = DriverManager.getConnection(JDBC_URL_MAP);
+            conn.setAutoCommit(false);
+
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet res = meta.getTables(null, null, "NODES", null);
+
+            Statement stmtDelete1 = conn.createStatement();
+            String deleteNodesTable = ("DROP TABLE nodes");
+
+            if (res.next()) {
+                int rsetDelete1 = stmtDelete1.executeUpdate(deleteNodesTable);
+                System.out.println("Drop Node Table Successful!");
+                conn.commit();
+                stmtDelete1.close();
+                conn.close();
+
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Create a table for the nodes
+    ///////////////////////////////////////////////////////////////////////////////
     public static void createNodeTable() {
 
         try {
@@ -45,11 +76,10 @@ public class nodeDatabase {
             DatabaseMetaData meta = conn.getMetaData();
             ResultSet res = meta.getTables(null, null, "NODES", null);
 
-            // Node table DNE just add a new node table
-            if (!res.next()) {
-                Statement stmtCreate1 = conn.createStatement();
-                String createNodesTable = ("CREATE TABLE nodes" +
-                        "(nodeID VARCHAR(50) PRIMARY KEY," +
+            //Add a new node table
+            Statement stmtCreate1 = conn.createStatement();
+            String createNodesTable = ("CREATE TABLE nodes" +
+                        "(nodeID VARCHAR(50)," +
                         "xCoord VARCHAR(50)," +
                         "yCoord VARCHAR(50)," +
                         "floor VARCHAR(50)," +
@@ -57,7 +87,8 @@ public class nodeDatabase {
                         "nodeType VARCHAR(50)," +
                         "longName VARCHAR(75)," +
                         "shortName VARCHAR(50)," +
-                        "teamAssigned VARCHAR(50))");
+                        "teamAssigned VARCHAR(50)," +
+                    "PRIMARY KEY (nodeID))");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
@@ -65,34 +96,6 @@ public class nodeDatabase {
                 conn.commit();
                 stmtCreate1.close();
                 conn.close();
-
-                // Node table already exists delete and re-add
-            } else {
-                Statement stmtDelete1 = conn.createStatement();
-                String deleteNodesTable = ("DROP TABLE nodes");
-                int rsetDelete1 = stmtDelete1.executeUpdate(deleteNodesTable);
-                System.out.println("Drop Node Table Successful!");
-                stmtDelete1.close();
-
-                Statement stmtCreate1 = conn.createStatement();
-                String createNodesTable = ("CREATE TABLE nodes" +
-                        "(nodeID VARCHAR(50) PRIMARY KEY," +
-                        "xCoord VARCHAR(50)," +
-                        "yCoord VARCHAR(50)," +
-                        "floor VARCHAR(50)," +
-                        "building VARCHAR(50)," +
-                        "nodeType VARCHAR(50)," +
-                        "longName VARCHAR(75)," +
-                        "shortName VARCHAR(50)," +
-                        "teamAssigned VARCHAR(50))");
-
-                int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
-                System.out.println("Create Nodes table Successful!");
-
-                conn.commit();
-                stmtCreate1.close();
-                conn.close();
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,7 +109,9 @@ public class nodeDatabase {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
-            conn.getMetaData();
+
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet res = meta.getTables(null, null, "NODES", null);
 
             PreparedStatement insertNode = conn.prepareStatement("INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 

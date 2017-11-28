@@ -16,7 +16,6 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -51,8 +50,12 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
+        edgeDatabase.deleteEdgeTable();
+        nodeDatabase.deleteNodeTable();
+
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
+
         staffDatabase.createStaffTable();
 
         nodeDatabase.readNodeCSV("MapAnodes.csv");
@@ -65,7 +68,7 @@ public class Main extends Application {
         nodeDatabase.readNodeCSV("MapHnodes.csv");
         nodeDatabase.readNodeCSV("MapInodes.csv");
         nodeDatabase.readNodeCSV("MapWnodes.csv");
-        nodeDatabase.insertNodesFromCSV();
+
 
         edgeDatabase.readEdgesCSV("MapAedges.csv");
         edgeDatabase.readEdgesCSV("MapBedges.csv");
@@ -77,6 +80,8 @@ public class Main extends Application {
         edgeDatabase.readEdgesCSV("MapHedges.csv");
         edgeDatabase.readEdgesCSV("MapIedges.csv");
         edgeDatabase.readEdgesCSV("MapWedges.csv");
+
+        nodeDatabase.insertNodesFromCSV();
         edgeDatabase.insertEdgesFromCSV();
 
         nodeDatabase.cntNodes();
