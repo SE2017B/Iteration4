@@ -152,6 +152,9 @@ public class Staff{
         this.department = department;
     }
     public LinkedList<ServiceRequest> getCurrentRequests() {
+        if(currentRequests.isEmpty()){
+           return null;
+        }
         return currentRequests;
     }
     public void setCurrentRequests(LinkedList<ServiceRequest> currentRequests) {

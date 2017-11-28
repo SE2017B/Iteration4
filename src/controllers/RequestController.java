@@ -20,6 +20,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -47,6 +48,7 @@ public class RequestController implements ControllableScreen{
     private ArrayList<String> deps;
     private ArrayList<Service> serv;
     private DepartmentSubsystem depSub;
+    private Service servSelect;
 
 
 
@@ -64,6 +66,15 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     private MenuButton menuButtonAl;
+
+    @FXML
+    private Label lblSelectedAdditionalInfo;
+
+    @FXML
+    private Label lblSelectedDT;
+
+    @FXML
+    private Label lblSelectedLocation;
 
     @FXML
     private JFXButton btncreate;
@@ -120,9 +131,6 @@ public class RequestController implements ControllableScreen{
         locationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
 
-        //todo populate request list with requests
-        //resolveServiceListView.getItems().add(depSub.getDepartment())
-
 
         //Display selected request on label
         resolveServiceListView.getSelectionModel().selectedItemProperty().addListener(
@@ -131,6 +139,9 @@ public class RequestController implements ControllableScreen{
                     public void changed(ObservableValue<? extends String> observable,
                                         String oldValue, String newValue) {
                         lblSelectedService.setText(newValue);
+                        lblSelectedAdditionalInfo.setText("Test");
+                        lblSelectedDT.setText("Placeholder");
+                        lblSelectedLocation.setText("Placeholder");
 
                     }
                 }
@@ -139,21 +150,27 @@ public class RequestController implements ControllableScreen{
 
     public void onShow(){
         //Dummy requests for testing
-                ServiceRequest test = new ServiceRequest(null,2,null,"123456","22/22/22", null);
-                ServiceRequest test2 = new ServiceRequest(null,3,null,"asdf","zxcv", null);
-                ServiceRequest test3 = new ServiceRequest(null,4,null,"qwer","zxcv", null);
-                resolveServiceListView.getItems().add(test.toString());
-                resolveServiceListView.getItems().add(test2.toString());
-                resolveServiceListView.getItems().add(test3.toString());
+//                ServiceRequest test = new ServiceRequest(null,2,null,"123456","22/22/22", null);
+//                ServiceRequest test2 = new ServiceRequest(null,3,null,"asdf","zxcv", null);
+//                ServiceRequest test3 = new ServiceRequest(null,4,null,"qwer","zxcv", null);
+//                resolveServiceListView.getItems().add(test.toString());
+//                resolveServiceListView.getItems().add(test2.toString());
+//                resolveServiceListView.getItems().add(test3.toString());
 
-        //todo Staff name on top of service window
-        //Staff name display
+
+        //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
+        if(depSub.getCurrentLoggedIn().getCurrentRequests() == null)
+        {
+            resolveServiceListView.getItems().clear();
+        }else{
+            resolveServiceListView.getItems().add(depSub.getCurrentLoggedIn().getCurrentRequests().toString());
+        }
 
         //Update the nodes in the map
         ArrayList<Node> nodes = map.getNodeMap();
 
-        //todo populate list of requests upon login
+
         //resolveServiceListView.getItems().add(Department.getBacklog().values());
         choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
@@ -164,8 +181,6 @@ public class RequestController implements ControllableScreen{
         kioskLocationChoice.setItems(FXCollections.observableList(map.getNodeMap()));
         kioskLocationChoice.setValue(map.getKioskLocation());
 
-        //update the items in the checklist
-        //locationChoiceBox.setItems(FXCollections.observableList(nodes));
 
     }
     @FXML
@@ -175,7 +190,6 @@ public class RequestController implements ControllableScreen{
         //todo test?
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
         System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
-
     }
 
     public void requestCreatePressed(ActionEvent e)
@@ -240,12 +254,26 @@ public class RequestController implements ControllableScreen{
         nameDept = newValue.toString();
         choiceBoxDept.setDisable(false);
         choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
+
     }
     public void servSelected(Service newValue)
     {
             nameService = newValue.toString();
             choiceBoxService.setDisable(false);
             choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
+            ;
+
+        //todo URL ??????????????????????????????????????????????????????????????\
+            String URLPLS = newValue.getURL();
+            try {
+                Pane servSelect = FXMLLoader.load(getClass().getResource(URLPLS));
+                servicePane1.getChildren().add(servSelect);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                System.out.println(URLPLS);
+            }
+
+
     }
     public void staffSelected(Staff newValue)
     {
