@@ -2,8 +2,7 @@
 
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -30,12 +29,7 @@
                   <Insets left="250.0" right="250.0" />
                </GridPane.margin>
             </JFXTextField>
-            <MenuButton fx:id="foodMenu" mnemonicParsing="false" prefHeight="46.0" prefWidth="153.0" text="Menu Options" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-              <items>
-                <MenuItem fx:id="hamburger" mnemonicParsing="false" onAction="#foodSelected" text="Hamburger" />
-                <MenuItem fx:id="cheburek" mnemonicParsing="false" onAction="#foodSelected" text="Cheburek" />
-              </items>
-            </MenuButton>
+            <ChoiceBox fx:id="foodChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </children>

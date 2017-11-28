@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -18,14 +17,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <SplitMenuButton fx:id="sanitationMenu" mnemonicParsing="false" onAction="#sanitationSelected" prefHeight="47.0" prefWidth="154.0" text="Sanitation Service" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-              <items>
-                <MenuItem fx:id="roomPrep" mnemonicParsing="false" onAction="#sanitationSelected" text="Room Preparation" />
-                <MenuItem fx:id="bathRestock" mnemonicParsing="false" onAction="#sanitationSelected" text="Bathroom Restock" />
-                  <MenuItem fx:id="roomClean" mnemonicParsing="false" onAction="#sanitationSelected" text="Room Cleaning" />
-                  <MenuItem fx:id="generalClean" mnemonicParsing="false" onAction="#sanitationSelected" text="General Cleaning" />
-              </items>
-            </SplitMenuButton>
+            <ChoiceBox fx:id="sanitationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </children>
