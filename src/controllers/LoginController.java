@@ -36,7 +36,7 @@ public class LoginController implements ControllableScreen{
 
     @Override
     public void init() {
-
+        depSub = DepartmentSubsystem.getSubsystem();
     }
 
     @Override
@@ -53,10 +53,14 @@ public class LoginController implements ControllableScreen{
 
     public void enterPressed(ActionEvent e){
         System.out.println("Enter Pressed");
-        parent.setScreen(ScreenController.RequestID,"UP");
-        boolean result = (depSub.login(usernameField.getText(),passwordField.getText()));
-        System.out.println(result);
-        if(result)
+        //parent.setScreen(ScreenController.RequestID,"UP");
+        System.out.println(usernameField.getText().toString());
+        System.out.println(passwordField.getText().toString());
+        //boolean result = (depSub.login(usernameField.getText().toString(),passwordField.getText().toString()));
+        //System.out.println(result);
+        String login = usernameField.getText();
+        String passWord = passwordField.getText();
+        if((depSub.login(login,passWord)))
         {
             parent.setScreen(ScreenController.RequestID,"UP");
         }else

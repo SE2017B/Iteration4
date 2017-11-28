@@ -42,25 +42,25 @@ public class DepartmentSubsystem {
         //TODO assign staff to departments and services
         Department translationDepartment = new Department("Translation Department");
         Service translation = new Translation(translationDepartment, "Translation service");
-        translation.setURL("/DepartmentSubsystem/Services/Displays/Translation.fxml");
+        translation.setURL("/fxml/Translation.fxml");
         translationDepartment.addService(translation);
         departments.add(translationDepartment);
 
         Department transportationDepartment = new Department("Transportation Department");
         Service transport = new Transport(transportationDepartment,  "Transport service");
-        transport.setURL("/DepartmentSubsystem/Services/Displays/Transport.fxml");
+        transport.setURL("/fxml/Transport.fxml");
         transportationDepartment.addService(transport);
         departments.add(transportationDepartment);
 
         Department facilities = new Department("Facilities");
         Service sanitation = new Sanitation(facilities, "Sanitation");
-        sanitation.setURL("/DepartmentSubsystem/Services/Displays/Sanitation.fxml");
+        sanitation.setURL("/fxml/Sanitation.fxml");
         facilities.addService(sanitation);
         departments.add(facilities);
 
         Department food = new Department("Food");
         Service foodDelivery = new FoodDelivery(food, "Food Delivery Service");
-        foodDelivery.setURL("/DepartmentSubsystem/Services/Displays/FoodDelivery.fxml");
+        foodDelivery.setURL("/fxml/FoodDelivery.fxml");
         food.addService(foodDelivery);
         departments.add(food);
 
@@ -109,11 +109,14 @@ public class DepartmentSubsystem {
     //login function for staff members
     public boolean login(String username, String password){
         //ArrayList<Staff> allStaff = new ArrayList<>();
+        System.out.println("we made it");
         ArrayList<Staff> allStaff = staffDatabase.getStaff();
         for(Staff member: allStaff){
+            System.out.println(member.getUsername() + " == "+ username );
             if(member.getUsername().equals(username)){
                 if(member.getPassword().equals(password)){
                     this.currentlyLoggedIn = member;
+                    System.out.println("setting the currnet logined member "+member);
                     return true;
                 }
                 else
