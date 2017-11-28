@@ -210,10 +210,7 @@ public class PathController implements ControllableScreen, Observer{
             EdgeNodes.put(floor,temp);
         }
     }
-    private double toScale(int v){
-        return v*mapViewer.getScale();
-
-    }
+    
     private void controlScroller(Path p){
         ArrayList<Integer> dim = getEdgeDims(p);
         ArrayList<Integer> center = getCenter(p);
@@ -225,53 +222,8 @@ public class PathController implements ControllableScreen, Observer{
         //mapScrollPane.setVvalue((dim.get(1)*mapViewer.getScale())/3500);
         System.out.println("Screen Adjusted");
     }
-    private void focustopath(double sx){
-        //resize map to fit path
-        double x =Math.abs(sx)*mapViewer.getScale();
-        //
-        double zoom = 3-(((x/3500)*2)+1);
-        setMapScale(zoom);
-    }
-
-    private void setPaths(Path path){
-        clearPaths();
-        Node node = null;
-        FloorNumber current=null; // pointer to the current node of the floor
-        ArrayList<Path> Paths = new ArrayList<>();
-        for(int i=0;i<path.getPath().size();i++){
-            //get first floor
-            node = path.getPath().get(i);
-            getVars(node.getFloor(),node);//check if the node is an edge node
-            if(node.getFloor()!=current){
-                Paths.add(new Path());//create new path for floor
-                //create a new path for floors
-                current = node.getFloor();//get new floor
-                System.out.println("New Current Floor "+current);
-                floors.add(current);
-                if(i==0){
-                    currentFloor=current;
-                }
-                //add to path
-                Paths.get(Paths.size()-1).addToPath(node);
-                //add point for current node
-            }
-            else if(path.getPath().get(i).getFloor()==current){
-                //add to path
-                Paths.get(Paths.size()-1).addToPath(node);
-
-            }
-        }
-        //now animate all paths and update coresponing hashmaps
-        int i=0;
-        for(Path p: Paths){
-            animateFloor(p.getPath().get(0).getFloor(),p);
-            floorindextoPath.put(i,p);
-            pathtoFloor.put(p,p.getPath().get(0).getFloor());
-            i++;
-        }
 
 
-    }
     private void testSetPaths(Path path){
         clearPaths();
         Node node = null;
@@ -302,7 +254,6 @@ public class PathController implements ControllableScreen, Observer{
         //set current Path
         System.out.println("The path size is "+ paths.size());
         if(paths.size()>0){
-            System.out.println("hahahahhahahahahahahahaahha");
             currentPath=paths.get(0);
             currentFloor=floors.get(0);
         }
@@ -475,53 +426,12 @@ public class PathController implements ControllableScreen, Observer{
         System.out.println("All entities cleared");
     }
 
-    public void hidePaths(ArrayList<Line> thislines){
-        for(Line line : thislines){
-            line.setVisible(false);
-            System.out.println("Line has been hidden");
-        }
-
-    }
-    public void hidePoints(ArrayList<Circle> thispoints){
-        for(Circle c: thispoints){
-            c.setVisible(false);
-            System.out.println("Point has been hidden");
-        }
-
-    }
-    public void hideShapes(ArrayList<Shape> thisshapes){
-        for(Shape s: thisshapes){
-            s.setVisible(false);
-        }
-        System.out.println("Shape has been hidden");
-
-    }
-    public void showPaths(ArrayList<Line> thislines){
-        for(Line line : thislines){
-            line.setVisible(true);
-            System.out.println("Line has been shown");
-        }
-    }
-    public void showPoints(ArrayList<Circle> thispoints){
-        for(Circle c: thispoints){
-            c.setVisible(true);
-            System.out.println("Point has been shown");
-        }
-    }
-    public void showShapes(ArrayList<Shape> thisshapes){
-        for(Shape s: thisshapes){
-            s.setVisible(true);
-        }
-        System.out.println("Shape has been shown");
-
-    }
 
     public void setMapScale(double scale){
         //reposition map
         mapViewer.setScale(scale);
         //switchPath(currentFloor);
     }
-
 
 
 
@@ -616,11 +526,6 @@ public class PathController implements ControllableScreen, Observer{
         System.out.println("Cancel Pressed");
         clearPaths();
         parent.setScreen(ScreenController.MainID,"RIGHT");
-    }
-
-    public void stairsPressed(ActionEvent e)
-    {
-        System.out.println("Checked off stairs");
     }
 
     public void update(Observable o, Object arg){
