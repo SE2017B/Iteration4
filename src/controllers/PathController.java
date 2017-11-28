@@ -214,21 +214,11 @@ public class PathController implements ControllableScreen, Observer{
         return v*mapViewer.getScale();
 
     }
-    private void controlScroller(FloorNumber floor){
-        if(EdgeNodes.containsKey(floor)){
-            //find the average distance between min and max
-            double x = (EdgeNodes.get(floor).get(0)+EdgeNodes.get(floor).get(2))/2;
-            double y = (EdgeNodes.get(floor).get(1)+EdgeNodes.get(floor).get(3))/2;
-            System.out.println("X is at "+x);
-            System.out.println("Y is at "+y);
-
-            double sx = EdgeNodes.get(floor).get(2)-EdgeNodes.get(floor).get(0);
-            double sy = EdgeNodes.get(floor).get(3)-EdgeNodes.get(floor).get(1);
-            //focustopath(sy);//focus to path
-            mapScrollPane.setHvalue((x/mapViewer.getScale())/5000);
-            mapScrollPane.setVvalue((y/mapViewer.getScale())/3500);
-            System.out.println("Screen Adjusted");
-        }
+    private void controlScroller(Path p){
+        ArrayList<Integer> center = getCenter(p);
+        mapScrollPane.setHvalue((center.get(0)/mapViewer.getScale())/5000);
+        mapScrollPane.setVvalue((center.get(1)/mapViewer.getScale())/3500);
+        System.out.println("Screen Adjusted");
     }
     private void focustopath(double sx){
         //resize map to fit path
@@ -457,6 +447,7 @@ public class PathController implements ControllableScreen, Observer{
         //Todo: set zoom level here
         displayPath(path);
         currentFloor=pathtoFloor.get(path);
+        controlScroller(path);//reposition map
     }
 
     public void clearPaths(){
@@ -559,6 +550,13 @@ public class PathController implements ControllableScreen, Observer{
         }
         return ans;
 
+    }
+    private ArrayList<Integer> getCenter(Path p){
+        ArrayList<Integer> Dim =getEdgeDims(p);
+        ArrayList<Integer> ans = new ArrayList<>();
+        ans.add((Dim.get(0)+Dim.get(2))/2);
+        ans.add((Dim.get(1)+Dim.get(3))/2);
+        return ans;
     }
 
 
