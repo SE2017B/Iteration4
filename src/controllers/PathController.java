@@ -320,11 +320,13 @@ public class PathController implements ControllableScreen, Observer{
         javafx.scene.shape.Path p = new javafx.scene.shape.Path();
         p.setStroke(Color.NAVY);
         p.setStrokeWidth(4);
+        shapes.add(p);
         //p.setVisible(false);//let animation move along our line
         mapPane.getChildren().addAll(p,arrow);
         arrow.setVisible(true);
+        //shapes.add(arrow);
         //add all shapes to shape
-        shapes.add(p);
+
         //to remove the red line, remove p ^
 
         //starting point defined by MoveTo
