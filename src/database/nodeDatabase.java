@@ -79,15 +79,15 @@ public class nodeDatabase {
             //Add a new node table
             Statement stmtCreate1 = conn.createStatement();
             String createNodesTable = ("CREATE TABLE nodes" +
-                        "(nodeID VARCHAR(50)," +
-                        "xCoord VARCHAR(50)," +
-                        "yCoord VARCHAR(50)," +
-                        "floor VARCHAR(50)," +
-                        "building VARCHAR(50)," +
-                        "nodeType VARCHAR(50)," +
-                        "longName VARCHAR(75)," +
-                        "shortName VARCHAR(50)," +
-                        "teamAssigned VARCHAR(50)," +
+                    "(nodeID VARCHAR(10)," +
+                    "xCoord VARCHAR(50)," +
+                    "yCoord VARCHAR(50)," +
+                    "floor VARCHAR(2)," +
+                    "building VARCHAR(10)," +
+                    "nodeType VARCHAR(4)," +
+                    "longName VARCHAR(75)," +
+                    "shortName VARCHAR(50)," +
+                    "teamAssigned VARCHAR(6)," +
                     "CONSTRAINT nodes_PK PRIMARY KEY (nodeID)," +
                     "CONSTRAINT floor_chk CHECK (floor IN ('L1', 'L2', 'G', '1', '2', '3'))," +
                     "CONSTRAINT building_chk CHECK (building IN ('BTM', 'Shapiro', 'Tower', '45 Francis', '15 Francis'))," +
