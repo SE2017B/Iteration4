@@ -1,4 +1,4 @@
-package controllers;
+package ui;
 
 import com.jfoenix.controls.JFXCheckBox;
 import map.Node;
@@ -12,15 +12,14 @@ public class NodeCheckBox extends JFXCheckBox {
         setNode(node,scale);
     }
 
+    public Node getNode() {
+        return node;
+    }
+
     public void setNode(Node node, double scale) {
         this.node = node;
         this.setLayoutX((node.getX()-18)/scale);
         this.setLayoutY((node.getY()-18)/scale);
         this.setAccessibleHelp(node.getLongName());
     }
-
-    public Node getNode() {
-        return node;
-    }
-
 }

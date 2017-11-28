@@ -11,15 +11,11 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXTextField;
 import exceptions.InvalidNodeException;
 import javafx.animation.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.MoveTo;
 import javafx.util.Duration;
 import map.FloorNumber;
@@ -35,12 +31,12 @@ import javafx.scene.shape.*;
 import javafx.animation.PathTransition;
 
 
-import DepartmentSubsystem.*;
+import ui.AnimatedCircle;
+import ui.proxyImagePane;
 
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class PathController implements ControllableScreen{
     private ScreenController parent;
@@ -148,7 +144,6 @@ public class PathController implements ControllableScreen{
         endNodeChoice.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
         mapImage.setImage(currentFloor);
-        mapImage.slideButtons(floorScrollPane,currentFloor);
         startNodeChoice.setValue(map.getKioskLocation());
         //remove any previous paths from the display
         clearPaths();
@@ -466,7 +461,6 @@ public class PathController implements ControllableScreen{
         //add background image
         System.out.println(thePath.getDirections());
         mapImage.setImage(currentFloor);
-        mapImage.slideButtons(floorScrollPane,currentFloor);
         directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
@@ -510,7 +504,6 @@ public class PathController implements ControllableScreen{
 
     public void floorButtonPressed(ActionEvent e){
         FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
-        mapImage.slideButtons(floorScrollPane,floor);
         mapImage.setImage(floor);
         currentFloor=floor;//update Current floor
         switchPath(floor);

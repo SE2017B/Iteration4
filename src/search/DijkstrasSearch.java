@@ -55,7 +55,7 @@ public class DijkstrasSearch implements SearchStrategy {
         while(!frontier.isEmpty()){
             frontier.sort((n1, n2) -> (greedy.get(n1) - greedy.get(n2)));
             Node currentNode = frontier.get(0);
-            if(currentNode.getType().equals(type)) return returnPath(cameFrom, currentNode);
+            if(currentNode.getType().equals(type) && currentNode.getFloor().equals(start.getFloor())) return returnPath(cameFrom, currentNode);
             frontier.remove(currentNode);
             explored.add(currentNode);
             for(Edge e : currentNode.getConnections()){
