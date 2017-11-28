@@ -320,65 +320,6 @@ public class PathController implements ControllableScreen, Observer{
 
     }
 
-    private void animateFloor(FloorNumber floor,Path path){
-        //create new hashMap element for floor if none existes
-        if(!pathShapes.containsKey(path)){
-            pathShapes.put(path,new ArrayList<Shape>());
-        }
-
-        //represent first and last nodes with animated circles
-        Circle newp = getPoint(path.getPath().get(0).getX(),path.getPath().get(0).getY());
-        newp.setFill(Color.RED);
-        pathShapes.get(path).add(newp);
-        //getVars(current, newp);
-        mapPane.getChildren().add(newp);
-        shapes.add(newp);
-        //add to last node
-        Circle lastp = getPoint(path.getPath().get(path.getPath().size()-1).getX(),path.getPath().get(path.getPath().size()-1).getY());
-        pathShapes.get(path).add(lastp);
-        //getVars(current, newp);
-        mapPane.getChildren().add(lastp);
-        shapes.add(lastp);
-
-
-        //indicator to follow the path
-        Rectangle rect = new Rectangle (0,0, 10, 10);
-        rect.setVisible(true);
-        rect.setFill(Color.DODGERBLUE);
-
-        //animation that moves the indicator
-        PathTransition pathTransition = new PathTransition();
-
-        //path to follow
-        javafx.scene.shape.Path p = new javafx.scene.shape.Path();
-        p.setStroke(Color.DARKBLUE);
-        p.setStrokeWidth(4);
-        //p.setVisible(false);//let animation move along our line
-        mapPane.getChildren().addAll(rect,p);
-        //add path and rect to shape hash map
-        pathShapes.get(path).add(rect);
-        pathShapes.get(path).add(p);
-        //add all shapes to shape
-        shapes.add(rect);
-        shapes.add(p);
-        //to remove the red line, remove p ^
-
-        //starting point defined by MoveTo
-        p.getElements().add(new MoveTo(path.getPath().get(0).getX()/mapViewer.getScale(), path.getPath().get(0).getY()/mapViewer.getScale()));
-
-        //line movements along drawn lines
-        for(int i=1;i<path.getPath().size();i++){
-            p.getElements().add(new LineTo(path.getPath().get(i).getX()/mapViewer.getScale(), path.getPath().get(i).getY()/mapViewer.getScale()));
-        }
-        //define the animation actions
-        pathTransition.setDuration(Duration.millis(path.getDistance()*800));//make speed constant
-        pathTransition.setNode(rect);
-        pathTransition.setPath(p);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(Transition.INDEFINITE);
-        pathTransition.play();
-
-    }
     //method to switch between paths when toggling between floors
     private void switchPath(Path path){
         /**
