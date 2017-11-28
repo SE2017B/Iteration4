@@ -677,6 +677,12 @@ public class PathController implements ControllableScreen, Observer{
         else if (startType.equals("Elevators")){
             filter = "ELEV";
         }
+        else if (startType.equals("Department")){
+            filter = "DEPT";
+        }
+        else if (startType.equals("Services")){
+            filter = "SERV";
+        }
         else {
             filter = "INFO";
         }
@@ -694,7 +700,7 @@ public class PathController implements ControllableScreen, Observer{
 
     public void endTypeSelected(ActionEvent e){
         endType = ((MenuItem)e.getSource()).getText();
-        endTypeMenu.setText(startType);
+        endTypeMenu.setText(endType);
         endFloorMenu.setDisable(false);
         if(!endFloor.equals("")){
             endChosen();
@@ -724,6 +730,12 @@ public class PathController implements ControllableScreen, Observer{
         }
         else if (endType.equals("Elevators")){
             filter = "ELEV";
+        }
+        else if (endType.equals("Department")){
+            filter = "DEPT";
+        }
+        else if (endType.equals("Services")){
+            filter = "SERV";
         }
         else {
             filter = "INFO";

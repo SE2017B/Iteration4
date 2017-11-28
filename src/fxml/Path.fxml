@@ -63,6 +63,8 @@
                               <MenuItem fx:id="startSTAI" mnemonicParsing="false" onAction="#startTypeSelected" text="Stairs" />
                               <MenuItem fx:id="startELEV" mnemonicParsing="false" onAction="#startTypeSelected" text="Elevators" />
                               <MenuItem fx:id="startINFO" mnemonicParsing="false" onAction="#startTypeSelected" text="Information" />
+                              <MenuItem fx:id="startDEPT" mnemonicParsing="false" onAction="#startTypeSelected" text="Department" />
+                              <MenuItem fx:id="startSERV" mnemonicParsing="false" onAction="#startTypeSelected" text="Services" />
                           </items>
                         </MenuButton>
                         <MenuButton fx:id="startFloorMenu" mnemonicParsing="false" prefHeight="44.0" prefWidth="101.0" text="Floor" GridPane.columnIndex="2" GridPane.halignment="CENTER">
@@ -84,6 +86,8 @@
                               <MenuItem fx:id="endSTAI" mnemonicParsing="false" onAction="#endTypeSelected" text="Stairs" />
                               <MenuItem fx:id="endELEV" mnemonicParsing="false" onAction="#endTypeSelected" text="Elevators" />
                               <MenuItem fx:id="endINFO" mnemonicParsing="false" onAction="#endTypeSelected" text="Information" />
+                              <MenuItem fx:id="endDEPT" mnemonicParsing="false" onAction="#endTypeSelected" text="Department" />
+                              <MenuItem fx:id="endSERV" mnemonicParsing="false" onAction="#endTypeSelected" text="Services" />
                            </items>
                         </MenuButton>
                         <MenuButton fx:id="endFloorMenu" mnemonicParsing="false" prefHeight="44.0" prefWidth="105.0" text="Floor" GridPane.columnIndex="5" GridPane.halignment="CENTER">
