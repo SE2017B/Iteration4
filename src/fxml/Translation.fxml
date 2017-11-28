@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="216.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Displays.Translation">
+<AnchorPane prefHeight="200.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Controllers.Translation">
    <children>
-      <MenuButton layoutX="117.0" layoutY="45.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="146.0" text="Language">
+      <MenuButton fx:id="languageDropDown" layoutX="117.0" layoutY="45.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="146.0" text="Language">
         <items>
-          <MenuItem mnemonicParsing="false" text="Spanish" />
-            <MenuItem mnemonicParsing="false" text="Czech" />
-            <MenuItem mnemonicParsing="false" text="Russian" />
-            <MenuItem mnemonicParsing="false" text="Hindi" />
+          <MenuItem fx:id="spanish" mnemonicParsing="false" onAction="#languagePicked" text="Spanish" />
+            <MenuItem fx:id="czech" mnemonicParsing="false" onAction="#languagePicked" text="Czech" />
+            <MenuItem fx:id="russian" mnemonicParsing="false" onAction="#languagePicked" text="Russian" />
+            <MenuItem fx:id="hindi" mnemonicParsing="false" onAction="#languagePicked" text="Hindi" />
         </items>
       </MenuButton>
-      <TextField layoutX="86.0" layoutY="121.0" prefHeight="52.0" prefWidth="213.0" promptText="Duration (minutes)" />
+      <JFXTextField fx:id="durationTextFiled" labelFloat="true" layoutX="74.0" layoutY="142.0" promptText="Duration (Min)">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXTextField>
    </children>
 </AnchorPane>

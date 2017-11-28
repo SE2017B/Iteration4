@@ -4,15 +4,14 @@
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="156.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Displays.Sanitation">
+<AnchorPane prefHeight="156.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Controllers.SanitationController">
    <children>
-      <SplitMenuButton layoutX="221.0" layoutY="28.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="154.0" text="Sanitation Service">
+      <SplitMenuButton fx:id="sanitationMenu" layoutX="223.0" layoutY="54.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="154.0" text="Sanitation Service">
         <items>
-          <MenuItem mnemonicParsing="false" text="Room Preparation" />
-          <MenuItem mnemonicParsing="false" text="Bathroom Restock" />
-            <MenuItem mnemonicParsing="false" text="Room Cleaning" />
-            <MenuItem mnemonicParsing="false" text="General Cleaning" />
+          <MenuItem fx:id="roomPrep" mnemonicParsing="false" onAction="#sanitationSelected" text="Room Preparation" />
+          <MenuItem fx:id="bathRestock" mnemonicParsing="false" onAction="#sanitationSelected" text="Bathroom Restock" />
+            <MenuItem fx:id="roomClean" mnemonicParsing="false" onAction="#sanitationSelected" text="Room Cleaning" />
+            <MenuItem fx:id="generalClean" mnemonicParsing="false" onAction="#sanitationSelected" text="General Cleaning" />
         </items>
       </SplitMenuButton>
    </children>

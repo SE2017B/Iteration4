@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Controllers.FoodDeliveryController">
+<AnchorPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Controllers.FoodDeliveryController">
    <children>
-      <MenuButton layoutX="79.0" layoutY="23.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="153.0" text="Menu Options">
+      <MenuButton fx:id="foodMenu" layoutX="79.0" layoutY="23.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="153.0" text="Menu Options">
         <items>
-          <MenuItem mnemonicParsing="false" text="Hamburger" />
-          <MenuItem mnemonicParsing="false" text="Cheburek" />
+          <MenuItem fx:id="hamburger" mnemonicParsing="false" onAction="#foodSelected" text="Hamburger" />
+          <MenuItem fx:id="cheburek" mnemonicParsing="false" onAction="#foodSelected" text="Cheburek" />
         </items>
       </MenuButton>
-      <TextField layoutX="38.0" layoutY="111.0" prefHeight="43.0" prefWidth="235.0" promptText="Possible Allergies" />
+      <JFXTextField fx:id="alergiesTextFiled" labelFloat="true" layoutX="28.0" layoutY="96.0" promptText="Allergies">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </JFXTextField>
    </children>
 </AnchorPane>

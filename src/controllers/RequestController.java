@@ -94,7 +94,7 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<Node> locationChoiceBox;
 
     @FXML
-    private Pane servicePane1;
+    private AnchorPane servicePane1;
 
     @FXML
     private ChoiceBox<Service> choiceBoxService;
@@ -270,7 +270,7 @@ public class RequestController implements ControllableScreen{
 
             //todo URL ??????????????????????????????????????????????????????????????\
             String URLPLS = newValue.getURL();
-            String testURL = "/fxml/Login.fxml";
+            String testURL = "/fxml/FoodDelivery.fxml";
             System.out.println(URLPLS);
             try {
                 //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(URLPLS));
