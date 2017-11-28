@@ -47,6 +47,10 @@ public class PathController implements ControllableScreen, Observer{
     private ArrayList<Node> path;
     private HospitalMap map;
     private ArrayList<Shape> shapes;
+    private String startType;
+    private String startFloor;
+    private String endType;
+    private String endFloor;
 
 
     public void setParentController(ScreenController parent){
@@ -84,6 +88,18 @@ public class PathController implements ControllableScreen, Observer{
 
     @FXML
     private AnchorPane buttonHolderPane;
+
+    @FXML
+    private MenuButton startTypeMenu;
+
+    @FXML
+    private MenuButton startFloorMenu;
+
+    @FXML
+    private MenuButton endTypeMenu;
+
+    @FXML
+    private MenuButton endFloorMenu;
 
 
 
@@ -132,7 +148,19 @@ public class PathController implements ControllableScreen, Observer{
         startNodeChoice.setValue(map.getKioskLocation());
         //remove any previous paths from the display
         clearPaths();
+
         //lines = new ArrayList<>();
+        startNodeChoice.setDisable(true);
+        startNodeChoice.setValue(null);
+        startFloorMenu.setDisable(true);
+        startFloorMenu.setText("Floor");
+        startTypeMenu.setText("Type");
+
+        endNodeChoice.setDisable(true);
+        endNodeChoice.setValue(null);
+        endFloorMenu.setDisable(true);
+        endFloorMenu.setText("Floor");
+        endTypeMenu.setText("Type");
     }
     private Circle getPoint(int x, int y){
         Circle c = new AnimatedCircle();
@@ -394,21 +422,22 @@ public class PathController implements ControllableScreen, Observer{
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
-        Path thePath = getPath();
+        if(!startNodeChoice.getValue().equals(null) && !endNodeChoice.getValue().equals(null)) {
+            Path thePath = getPath();
 
-        System.out.println(thePath.toString());
-        //setLines(thePath);
-        setPaths(thePath);
-        System.out.println(floors);
-        mapViewer.setButtonsByFloor(floors);
-        //add background image
-        System.out.println(thePath.getDirections());
-        directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
-        textDirectionsPane.setVisible(true);
-        textDirectionsPane.setExpanded(false);
-        switchPath(currentFloor);
-        System.out.println("Enter Pressed");
-
+            System.out.println(thePath.toString());
+            //setLines(thePath);
+            setPaths(thePath);
+            System.out.println(floors);
+            mapViewer.setButtonsByFloor(floors);
+            //add background image
+            System.out.println(thePath.getDirections());
+            directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
+            textDirectionsPane.setVisible(true);
+            textDirectionsPane.setExpanded(false);
+            switchPath(currentFloor);
+            System.out.println("Enter Pressed");
+        }
     }
 
 
@@ -451,30 +480,101 @@ public class PathController implements ControllableScreen, Observer{
         switchPath(currentFloor);
         controlScroller(currentFloor);
     }
-    //when left is pressed
-    public void rightPressed(ActionEvent e){
-        for(int i=0;i<floors.size();i++){
-            if(floors.get(i)==currentFloor){
-                if(i<floors.size()-1){
-                    switchPath(floors.get(i+1));
-                }
-                break;
-            }
-        }
 
-    }
-    //when right is pressed
-    public void leftPressed(ActionEvent e){
-        for(int i=0;i<floors.size();i++){
-            if(floors.get(i)==currentFloor){
-                if(i>0){
-                    switchPath(floors.get(i-1));
-                }
-                break;
-            }
+
+
+    public void startTypeSelected(ActionEvent e){
+        startType = ((MenuItem)e.getSource()).getText();
+        startTypeMenu.setText(startType);
+        startFloorMenu.setDisable(false);
+        if(!startFloor.equals(null)){
+            startChosen();
         }
     }
 
+    public void startFloorSelected(ActionEvent e){
+        startFloor = ((MenuItem)e.getSource()).getText();
+        startFloorMenu.setText(startFloor);
+        startChosen();
+    }
+
+    private void startChosen(){
+
+        String filter = "";
+        if(startType.equals("Restroom")){
+            filter = "REST";
+        }
+        else if (startType.equals("Retail")){
+            filter = "RETL";
+        }
+        else if (startType.equals("Exits")){
+            filter = "EXIT";
+        }
+        else if (startType.equals("Stairs")){
+            filter = "STAI";
+        }
+        else if (startType.equals("Elevators")){
+            filter = "ELEV";
+        }
+        else {
+            filter = "INFO";
+        }
+        final String f = filter.toString();
+        if(startFloor.equals("ALL")){
+            startNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f))));
+        }
+        else{
+            FloorNumber floor = FloorNumber.fromDbMapping(startFloor);
+            startNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f) && n.getFloor().equals(floor))));
+        }
+        startNodeChoice.setDisable(false);
+    }
 
 
+    public void endTypeSelected(ActionEvent e){
+        endType = ((MenuItem)e.getSource()).getText();
+        endTypeMenu.setText(startType);
+        endFloorMenu.setDisable(false);
+        if(!endFloor.equals(null)){
+            endChosen();
+        }
+    }
+
+    public void endFloorSelected(ActionEvent e){
+        endFloor = ((MenuItem)e.getSource()).getText();
+        endFloorMenu.setText(endFloor);
+        endChosen();
+    }
+
+    private void endChosen(){
+
+        String filter = "";
+        if(endType.equals("Restroom")){
+            filter = "REST";
+        }
+        else if (endType.equals("Retail")){
+            filter = "RETL";
+        }
+        else if (endType.equals("Exits")){
+            filter = "EXIT";
+        }
+        else if (endType.equals("Stairs")){
+            filter = "STAI";
+        }
+        else if (endType.equals("Elevators")){
+            filter = "ELEV";
+        }
+        else {
+            filter = "INFO";
+        }
+        final String f = filter.toString();
+        if(endFloor.equals("ALL")){
+            endNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f))));
+        }
+        else{
+            FloorNumber floor = FloorNumber.fromDbMapping(endFloor);
+            endNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f) && n.getFloor().equals(floor))));
+        }
+        endNodeChoice.setDisable(false);
+    }
 }
