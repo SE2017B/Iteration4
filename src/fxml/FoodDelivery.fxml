@@ -1,23 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Controllers.FoodDeliveryController">
+<AnchorPane prefHeight="150.0" prefWidth="1279.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DepartmentSubsystem.Services.Controllers.FoodDeliveryController">
    <children>
-      <MenuButton fx:id="foodMenu" layoutX="79.0" layoutY="23.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="153.0" text="Menu Options">
-        <items>
-          <MenuItem fx:id="hamburger" mnemonicParsing="false" onAction="#foodSelected" text="Hamburger" />
-          <MenuItem fx:id="cheburek" mnemonicParsing="false" onAction="#foodSelected" text="Cheburek" />
-        </items>
-      </MenuButton>
-      <JFXTextField fx:id="alergiesTextFiled" labelFloat="true" layoutX="28.0" layoutY="96.0" promptText="Allergies">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </JFXTextField>
+      <GridPane prefHeight="150.0" prefWidth="1279.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <JFXTextField fx:id="alergiesTextFiled" labelFloat="true" promptText="Allergies" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="250.0" right="250.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <MenuButton fx:id="foodMenu" mnemonicParsing="false" prefHeight="46.0" prefWidth="153.0" text="Menu Options" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+              <items>
+                <MenuItem fx:id="hamburger" mnemonicParsing="false" onAction="#foodSelected" text="Hamburger" />
+                <MenuItem fx:id="cheburek" mnemonicParsing="false" onAction="#foodSelected" text="Cheburek" />
+              </items>
+            </MenuButton>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

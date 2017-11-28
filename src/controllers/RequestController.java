@@ -270,11 +270,11 @@ public class RequestController implements ControllableScreen{
 
             //todo URL ??????????????????????????????????????????????????????????????\
             String URLPLS = newValue.getURL();
-            String testURL = "/fxml/FoodDelivery.fxml";
+            //String testURL = "/fxml/FoodDelivery.fxml";
             System.out.println(URLPLS);
             try {
-                //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(URLPLS));
-                AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
+                AnchorPane servicePane = FXMLLoader.load(getClass().getResource(URLPLS));
+                //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
                 servicePane1.getChildren().setAll(servicePane);
             }catch(Exception e){
                 System.out.println(e.getMessage());
