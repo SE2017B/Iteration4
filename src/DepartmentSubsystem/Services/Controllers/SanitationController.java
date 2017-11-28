@@ -30,7 +30,6 @@ public class SanitationController {
         sanSel = ((MenuItem) e.getSource()).getText();
         sanitationMenu.setText(sanSel);
         System.out.println("Language Selected " + sanSel);
-
     }
 
 }

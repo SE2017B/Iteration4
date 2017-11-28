@@ -185,14 +185,14 @@ public class DepartmentSubsystem {
     }
 
     //Assign a service request
-    public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID, boolean email, String emailRecipient){
+    public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID, boolean email, String emailRecipient, String extra1, String extra2){
         Department temp = new Department("TEMPORARY");
         for(Department dept: departments){
             if(dept.getServices().contains(service)){
                 temp = dept;
             }
         }
-        ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person);
+        ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person, extra1, extra2);
         person.addRequest(request);
         temp.addRequest(RID, request);
         if(email){

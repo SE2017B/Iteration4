@@ -23,7 +23,16 @@ public class FoodDeliveryController {
     @FXML
     private JFXTextField alergiesTextFiled;
 
+    public String getFoodSel() {
+        return foodSel;
+    }
+
+    public void setFoodSel(String foodSel) {
+        this.foodSel = foodSel;
+    }
+
     @FXML
+
     void foodSelected(ActionEvent e) {
 
         foodSel = ((MenuItem) e.getSource()).getText();

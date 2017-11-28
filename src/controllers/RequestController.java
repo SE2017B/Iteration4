@@ -53,7 +53,6 @@ public class RequestController implements ControllableScreen{
     private ServiceRequest reqServPls;
 
 
-
     private static int requestIDCount = 0;
 
     private ArrayList<Staff> staff;
@@ -203,11 +202,9 @@ public class RequestController implements ControllableScreen{
         requestIDCount++;
 
         //Submit request
-        depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL");
+        depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL", "Extra1", "Extra2");
 
-
-        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString(), choiceBoxStaff.getValue());
-
+        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString(), choiceBoxStaff.getValue(), "PlaceHolder extra1", "Placeholder Extra2");
 
         //Add new service to List
         System.out.println("request submitted");
