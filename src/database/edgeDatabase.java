@@ -76,6 +76,8 @@ public class edgeDatabase {
                 System.out.println("Create Edges table Successful!");
 
                 conn.commit();
+                System.out.println();
+
                 stmtCreate2.close();
                 conn.close();
 
@@ -104,10 +106,12 @@ public class edgeDatabase {
                 insertEdge.setString(3, allEdges.get(j).getNodeTwo().getID());
 
                 insertEdge.executeUpdate();
-                System.out.println((j + 1) + ": Insert Edge Successful!");
+                System.out.printf("%-5d: Insert Edge Successful!\n",(j+1));
             }
 
             conn.commit();
+            System.out.println();
+
             insertEdge.close();
             conn.close();
 
@@ -133,9 +137,11 @@ public class edgeDatabase {
             addAnyEdge.setString(3, anyEdge.getNodeTwo().getID());
 
             addAnyEdge.executeUpdate();
-            System.out.println("Insert Edge Successful for edgeID: " + anyEdge.getID());
+            System.out.printf("Insert Edge Successful for edgeID: %-21s\n", anyEdge.getID());
 
             conn.commit();
+            System.out.println();
+
             addAnyEdge.close();
             conn.close();
 
@@ -222,7 +228,7 @@ public class edgeDatabase {
             String strEndNode;
 
             System.out.println("");
-            System.out.printf("%-30s %-20s %-20s\n", "edgeID", "startNode", "endNode");
+            System.out.printf("%-21s %-10s %-10s\n", "edgeID", "startNode", "endNode");
 
             //Process the results
             while (rsetAllEdges.next()) {
@@ -230,10 +236,11 @@ public class edgeDatabase {
                 strStartNode = rsetAllEdges.getString("startNode");
                 strEndNode = rsetAllEdges.getString("endNode");
 
-                System.out.printf("%-30s %-20s %-20s\n", strEdgeID, strStartNode, strEndNode);
+                System.out.printf("%-21s %-10s %-10s\n", strEdgeID, strStartNode, strEndNode);
             } // End While
 
             conn.commit();
+            System.out.println();
 
             rsetAllEdges.close();
             selectAllEdges.close();
@@ -311,8 +318,10 @@ public class edgeDatabase {
                         allEdges.get(j).getNodeTwo().getID()
                 );
 
-                System.out.println(j + ": Edge Record Saved!");
+                System.out.printf("%-5d: Edge Record Saved!\n", j);
             }
+
+            System.out.println();
             pw2.flush();
             pw2.close();
         } catch (IOException e) {

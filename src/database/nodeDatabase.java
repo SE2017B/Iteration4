@@ -69,6 +69,8 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     public static void createNodeTable() {
 
+        System.out.println();
+
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
@@ -99,6 +101,8 @@ public class nodeDatabase {
                 System.out.println("Create Nodes table Successful!");
 
                 conn.commit();
+                System.out.println();
+
                 stmtCreate1.close();
                 conn.close();
 
@@ -134,10 +138,12 @@ public class nodeDatabase {
                 insertNode.setString(9, nodeDatabase.allNodes.get(j).getTeam());
 
                 insertNode.executeUpdate();
-                System.out.println((j + 1) + ": Insert Node Successful!");
+                System.out.printf("%-5d: Insert Node Successful!\n",(j+1));
             }
 
             conn.commit();
+            System.out.println();
+
             insertNode.close();
             conn.close();
 
@@ -169,9 +175,11 @@ public class nodeDatabase {
             addAnyNode.setString(9, anyNode.getTeam());
 
             addAnyNode.executeUpdate();
-            System.out.println("Insert Node Successful for nodeID: " + anyNode.getID());
+            System.out.printf("Insert Node Successful for nodeID: %-20s\n", anyNode.getID());
 
             conn.commit();
+            System.out.println();
+
             addAnyNode.close();
             conn.close();
 
@@ -292,6 +300,7 @@ public class nodeDatabase {
             } // End While
 
             conn.commit();
+            System.out.println();
 
             rsetAllNodes.close();
             selectAllNodes.close();
@@ -526,8 +535,9 @@ public class nodeDatabase {
                         nodeDatabase.allNodes.get(j).getShortName()+ "," +
                         nodeDatabase.allNodes.get(j).getTeam()
                 );
-                System.out.println(j + ": Node Record Saved!");
+                System.out.printf("%-5d: Node Record Saved!\n", j);
             }
+            System.out.println();
             pw1.flush();
             pw1.close();
 

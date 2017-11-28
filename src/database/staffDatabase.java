@@ -44,6 +44,8 @@ public class staffDatabase {
                 System.out.println("Create Staff table Successful!");
 
                 conn.commit();
+                System.out.println();
+
                 stmtCreateStaffTable.close();
                 conn.close();
             }
@@ -72,6 +74,8 @@ public class staffDatabase {
                 System.out.println("Create Staff table Successful!");
 
                 conn.commit();
+                System.out.println();
+
                 stmtCreateStaffTable.close();
                 conn.close();
             }
@@ -93,7 +97,7 @@ public class staffDatabase {
             PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
 
 
-            for (int j = 1; j < allStaff.size(); j++) {
+            for (int j = 0; j < allStaff.size(); j++) {
 
                 insertStaff.setString(1, allStaff.get(j).getUsername());
                 insertStaff.setString(2, allStaff.get(j).getPassword());
@@ -103,10 +107,12 @@ public class staffDatabase {
 
 
                 insertStaff.executeUpdate();
-                System.out.println(j + ": Insert Staff Successful!");
+                System.out.printf("%-5d: Insert Staff Successful!\n",(j+1));
             }
 
             conn.commit();
+            System.out.println();
+
             insertStaff.close();
             conn.close();
 
@@ -133,7 +139,8 @@ public class staffDatabase {
             addAnyStaff.setInt(5, anyStaff.getID());
 
             addAnyStaff.executeUpdate();
-            System.out.println("Insert Staff Successful for staffID: " + anyStaff.getID());
+            System.out.printf("Insert Staff Successful for staffID: %-5d\n", anyStaff.getID());
+            System.out.println();
 
             conn.commit();
             addAnyStaff.close();
@@ -247,6 +254,7 @@ public class staffDatabase {
             } // End While
 
             conn.commit();
+            System.out.println();
 
             rsetAllStaff.close();
             selectAllStaff.close();
@@ -303,8 +311,9 @@ public class staffDatabase {
                         staffDatabase.allStaff.get(j).getFullName() + "," +
                         staffDatabase.allStaff.get(j).getID()
                 );
-                System.out.println(j + ": Staff Record Saved!");
+                System.out.printf("%-5d: Staff Record Saved!\n", j);
             }
+            System.out.println();
             pw3.flush();
             pw3.close();
 
