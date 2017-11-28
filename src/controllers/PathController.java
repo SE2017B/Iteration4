@@ -46,8 +46,6 @@ public class PathController implements ControllableScreen, Observer{
     private ScreenController parent;
     private ArrayList<Node> path;
     private HospitalMap map;
-    private ArrayList<Line> lines;
-    private ArrayList<Circle> points;
     private ArrayList<Shape> shapes;
 
 
@@ -96,10 +94,6 @@ public class PathController implements ControllableScreen, Observer{
     private ArrayList<FloorNumber> floors; //list of floors available
 
 
-    private HashMap<FloorNumber,ArrayList<Line>> pathLines;
-
-    private HashMap<FloorNumber, ArrayList<Circle>> pathPoints;
-
     private HashMap<FloorNumber, ArrayList<Shape>> pathShapes;
 
     private HashMap<FloorNumber,ArrayList<Integer>> EdgeNodes;
@@ -111,12 +105,8 @@ public class PathController implements ControllableScreen, Observer{
     {
         map = HospitalMap.getMap();
         path = new ArrayList<Node>();
-        lines = new ArrayList<Line>();
-        points = new ArrayList<Circle>();
         shapes = new ArrayList<Shape>();
         pathShapes = new HashMap<FloorNumber,ArrayList<Shape>>();
-        pathLines = new HashMap<FloorNumber,ArrayList<Line>>(); //hash map to lines for each floor
-        pathPoints = new HashMap<FloorNumber, ArrayList<Circle>>();
         EdgeNodes= new HashMap<FloorNumber,ArrayList<Integer>>();
         currentFloor = FloorNumber.FLOOR_ONE;
         mapViewer = new MapViewer(this);
@@ -218,70 +208,6 @@ public class PathController implements ControllableScreen, Observer{
         //}
     }
 
-    private void setLines(Path path){
-        clearPaths();
-        Node node = null;
-        FloorNumber current=null; // pointer to the current node of the floor
-        for(int i=0;i<path.getPath().size();i++){
-            //get first floor
-            Node lastNode = node;
-            node = path.getPath().get(i);
-            if(node.getFloor()!=current){
-                current = node.getFloor();
-                floors.add(current);
-                //create new hashmap elements
-                pathLines.put(current,new ArrayList<Line>());
-                pathPoints.put(current,new ArrayList<Circle>());
-                if(i==0){
-                    currentFloor=current;
-                }
-                //add point for current node
-                Circle newp = getPoint(node.getX(),node.getY());
-                pathPoints.get(current).add(newp);
-                //getVars(current, newp);
-                mapPane.getChildren().add(newp);
-                points.add(newp);
-                newp.setFill(Color.RED);
-                //shapes.add(newp);
-                //DON'T TAKE THIS OUT
-                //add last point if it exists
-              if(i>0){
-                    Circle newp1 = getPoint(lastNode.getX(),lastNode.getY());
-                    pathPoints.get(lastNode.getFloor()).add(newp1);
-                    //getVars(current, newp1);
-                    mapPane.getChildren().add(newp1);
-                    points.add(newp1);
-                }
-            }
-            else if(path.getPath().get(i).getFloor()==current){
-                //create new floor and add it
-                Line line = new Line();
-                Node start = path.getPath().get(i-1);//the last node is the start node
-                Node end = path.getPath().get(i);
-                line.setLayoutX((start.getX())/mapViewer.getScale());
-                line.setLayoutY((start.getY())/mapViewer.getScale());
-
-                line.setEndX((end.getX() - start.getX())/mapViewer.getScale());
-                line.setEndY((end.getY() - start.getY())/mapViewer.getScale());
-
-                line.setVisible(true);
-                //line.setStroke();
-                line.setStrokeWidth(4/mapViewer.getScale());// make the line width vary with the scale
-                pathLines.get(current).add(line);
-                mapPane.getChildren().add(line);//add all lines to mapPane
-                lines.add(line);
-                //shapes.add(line);
-            }
-            if(i==path.getPath().size()-1 && i>0){
-                Circle newP2 = getPoint(path.getPath().get(i).getX(),path.getPath().get(i).getY());
-                pathPoints.get(current).add(newP2);
-                //getVars(current, newP2);
-                mapPane.getChildren().add(newP2);
-                points.add(newP2);
-            }
-            //Todo: add points at nodes with a steep change in direction
-        }
-    }
     private void setPaths(Path path){
         clearPaths();
         Node node = null;
@@ -378,17 +304,12 @@ public class PathController implements ControllableScreen, Observer{
     }
     //method to switch between paths when toggling between floors
     private void switchPath(FloorNumber floor){
-        hidePaths(lines);
-        hidePoints(points);
         hideShapes(shapes);
         if(pathShapes.containsKey(floor)){
             System.out.println("Switching to path " + floor);
             //add all in to mapPane
             System.out.println("Shapes are " + pathShapes.get(floor));
             showShapes(pathShapes.get(floor));
-            //showPaths(pathLines.get(floor));
-            //showPoints(pathPoints.get(floor));
-            //animatePath(floor,pathLines.get(floor));
             //adjust screen
             controlScroller(floor);
             //Update Current floor
@@ -397,26 +318,14 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void clearPaths(){
-        for(Line line : lines){
-            line.setVisible(false);
-            mapPane.getChildren().remove(line);
-        }
-        for(Circle c: points){
-            c.setVisible(false);
-            mapPane.getChildren().remove(c);
-        }
         for(Shape s: shapes){
             s.setVisible(false);
             mapPane.getChildren().remove(s);
         }
         //clear all lines and paths
         EdgeNodes = new HashMap<>();
-        pathLines = new HashMap<>();
-        pathPoints = new HashMap<>();
         pathShapes = new HashMap<>();
         floors= new ArrayList<>();
-        lines=new ArrayList<>();
-        points= new ArrayList<>();
         shapes=new ArrayList<>();
         System.out.println("All entities cleared");
     }
@@ -463,18 +372,6 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void setMapScale(double scale){
-        double oldScale = mapViewer.getScale();
-        for(Line l : lines){
-            l.setLayoutX((l.getLayoutX())*oldScale/scale);
-            l.setLayoutY((l.getLayoutY())*oldScale/scale);
-
-            l.setEndX(l.getEndX()*oldScale/scale);
-            l.setEndY(l.getEndY()*oldScale/scale);
-        }
-        for(Circle c : points){
-            c.setCenterX(c.getCenterX()*oldScale/scale);
-            c.setCenterY(c.getCenterY()*oldScale/scale);
-        }
         calVars();
         //reposition map
         mapViewer.setScale(scale);
@@ -483,13 +380,8 @@ public class PathController implements ControllableScreen, Observer{
     public void calVars(){
         //function to help reposition the screen on zoom
         for(FloorNumber f : floors){
-            for(Circle p: points){
-                if(EdgeNodes.get(f).contains(p)){
-                    //getVars(f,p);
-                }
-            }
+            //Todo: Recalculate variables if need be
         }
-
     }
 
 
@@ -497,51 +389,7 @@ public class PathController implements ControllableScreen, Observer{
     private Path getPath(){
         return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
     }
-
-    private void animatePath(FloorNumber floor,ArrayList<Line> ls){
-        //create new hashMap element for floor if none existes
-        if(!pathShapes.containsKey(floor)){
-            pathShapes.put(floor,new ArrayList<Shape>());
-        }
-
-        //indicator to follow the path
-        Rectangle rect = new Rectangle (0,0, 10, 10);
-        rect.setVisible(true);
-        rect.setFill(Color.DODGERBLUE);
-
-        //animation that moves the indicator
-        PathTransition pathTransition = new PathTransition();
-
-        //path to follow
-        javafx.scene.shape.Path p = new javafx.scene.shape.Path();
-        p.setStroke(Color.RED);
-        p.setVisible(false);//let animation move along our line
-        mapPane.getChildren().addAll(rect,p);
-        //add path and rect to shape hash map
-        pathShapes.get(floor).add(rect);
-        pathShapes.get(floor).add(p);
-        //add all shapes to shape
-        shapes.add(rect);
-        shapes.add(p);
-        //to remove the red line, remove p ^
-
-        //starting point defined by MoveTo
-        p.getElements().add(new MoveTo(ls.get(0).getLayoutX(), ls.get(0).getLayoutY()));
-
-        //line movements along drawn lines
-        for(Line l : ls){
-            //add to line end so that animation gets to the end
-            p.getElements().add(new LineTo(l.getLayoutX()+l.getEndX(),l.getLayoutY()+l.getEndY()));
-        }
-        //define the animation actions
-        pathTransition.setDuration(Duration.millis(8000));
-        pathTransition.setNode(rect);
-        pathTransition.setPath(p);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(Transition.INDEFINITE);
-        pathTransition.play();
-
-    }
+    
 
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException
