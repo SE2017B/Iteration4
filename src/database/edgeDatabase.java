@@ -43,8 +43,6 @@ public class edgeDatabase {
                 conn.close();
             }
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
