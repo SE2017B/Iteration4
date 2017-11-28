@@ -24,6 +24,7 @@ public class MapViewer extends Observable{
     private final int BUTTON_HEIGHT = 80;
     private final int BUTTON_WIDTH = 150;
 
+
     private ArrayList<String> buttonOrder;
     public FloorNumber currentFloor;
     private ScrollPane pane;
@@ -57,7 +58,7 @@ public class MapViewer extends Observable{
         addObserver(o);
     }
 
-    private void addFloor(FloorNumber floor){
+    private JFXButton addFloor(FloorNumber floor){
         JFXButton button = new JFXButton();
         button.setText(floor.getDbMapping());
         button.setMinSize(BUTTON_WIDTH,BUTTON_HEIGHT);
@@ -66,13 +67,21 @@ public class MapViewer extends Observable{
         container.getChildren().add(1,button);
         SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
         container.setPrefWidth(SCROLL_WIDTH);
+        return button;
+    }
+
+    private JFXButton addFloor(FloorNumber floor, int id){
+        JFXButton button = addFloor(floor);
+        button.setId(Integer.toString(id));
+        return button;
     }
 
     public void floorButtonPressed(ActionEvent e){
         FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
+        int id = Integer.parseInt((((JFXButton) e.getSource()).getId()));
         setFloor(floor);
         setChanged();
-        notifyObservers(floor);
+        notifyObservers(new PathID(floor, id));
     }
 
     private void clearButtons(){
@@ -134,7 +143,7 @@ public class MapViewer extends Observable{
     public void setButtonsByFloor(List<FloorNumber> floors){
         clearButtons();
         for (int i = floors.size()-1; i >= 0; i--) {
-            addFloor(floors.get(i));
+            addFloor(floors.get(i), i);
         }
         setFloor(floors.get(0));
     }

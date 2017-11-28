@@ -6,7 +6,7 @@ public class PathID {
     private FloorNumber floor;
     private int id;
 
-    public void PathID(FloorNumber floor, int id){
+    public PathID(FloorNumber floor, int id){
         this.floor = floor;
         this.id = id;
     }
