@@ -359,8 +359,7 @@ public class PathController implements ControllableScreen, Observer{
             p.getElements().add(new LineTo(path.getPath().get(i).getX()/mapViewer.getScale(), path.getPath().get(i).getY()/mapViewer.getScale()));
         }
         //define the animation actions
-        System.out.println("The set distance is "+ path.getDistance());
-        pathTransition.setDuration(Duration.millis(path.getDistance()/0.1));//make speed constant
+        pathTransition.setDuration(Duration.millis(p.getElements().size()*800));//make speed constant
         pathTransition.setNode(rect);
         pathTransition.setPath(p);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
