@@ -217,8 +217,8 @@ public class PathController implements ControllableScreen, Observer{
         int x = center.get(0);
         int y = center.get(1);
         System.out.println("Center X: " + x + " Center Y: " + y);
-        mapScrollPane.setHvalue(x/5000.0);
-        mapScrollPane.setVvalue(y/3500.0);
+        mapScrollPane.setHvalue((x*mapViewer.getScale()-640)/5000.0);
+        mapScrollPane.setVvalue((y*mapViewer.getScale()-300)/3500.0);
     }
 
 
