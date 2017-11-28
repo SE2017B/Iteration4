@@ -23,10 +23,7 @@ import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
-import ui.EdgeCheckBox;
-import ui.MapViewer;
-import ui.NodeCheckBox;
-import ui.proxyImagePane;
+import ui.*;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -293,8 +290,8 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     @Override
     public void update(Observable o, Object arg){
-        if(arg instanceof FloorNumber){
-            setFloor((FloorNumber) arg);
+        if(arg instanceof PathID){
+            setFloor(((PathID) arg).getFloor());
         }
     }
     ////////////////////////////////////////////////////////////

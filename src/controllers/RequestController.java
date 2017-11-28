@@ -13,13 +13,13 @@ import controllers.LoginController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
-//import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -94,7 +94,7 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<Node> locationChoiceBox;
 
     @FXML
-    private Pane servicePane1;
+    private AnchorPane servicePane1;
 
     @FXML
     private ChoiceBox<Service> choiceBoxService;
@@ -141,6 +141,7 @@ public class RequestController implements ControllableScreen{
                     @Override
                     public void changed(ObservableValue<? extends String> observable,
                                         String oldValue, String newValue) {
+
                         lblSelectedService.setText(choiceBoxService.getValue().toString());
                         lblSelectedAdditionalInfo.setText("Test");
                         lblSelectedDT.setText(timeMenu.getValue().toString() + " " + dateMenu.getValue().toString());
@@ -190,6 +191,7 @@ public class RequestController implements ControllableScreen{
 
     public void resolveServicePressed(ActionEvent e)
     {
+
         //todo test?
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
         System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
@@ -268,11 +270,11 @@ public class RequestController implements ControllableScreen{
 
             //todo URL ??????????????????????????????????????????????????????????????\
             String URLPLS = newValue.getURL();
-            String testURL = "/fxml/Login.fxml";
+            //String testURL = "/fxml/FoodDelivery.fxml";
             System.out.println(URLPLS);
             try {
-                //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(URLPLS));
-                AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
+                AnchorPane servicePane = FXMLLoader.load(getClass().getResource(URLPLS));
+                //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
                 servicePane1.getChildren().setAll(servicePane);
             }catch(Exception e){
                 System.out.println(e.getMessage());

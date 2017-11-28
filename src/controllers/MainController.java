@@ -23,6 +23,7 @@ import map.Node;
 import map.Path;
 import ui.AnimatedCircle;
 import ui.MapViewer;
+import ui.PathID;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -302,8 +303,8 @@ public class MainController implements ControllableScreen, Observer{
     }
 
     public void update(Observable o, Object arg) {
-        if(arg instanceof FloorNumber){
-            setFloor((FloorNumber) arg);
+        if(arg instanceof PathID){
+            setFloor(((PathID) arg).getFloor());
         }
     }
 }

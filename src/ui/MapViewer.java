@@ -24,6 +24,7 @@ public class MapViewer extends Observable{
     private final int BUTTON_HEIGHT = 80;
     private final int BUTTON_WIDTH = 150;
 
+
     private ArrayList<String> buttonOrder;
     public FloorNumber currentFloor;
     private ScrollPane pane;
@@ -40,45 +41,78 @@ public class MapViewer extends Observable{
         buttonOrder = new ArrayList<String>();
         setContainer();
         pane.setContent(container);
-        addFloor(FloorNumber.FLOOR_THREE);
-        addFloor(FloorNumber.FLOOR_TWO);
-        addFloor(FloorNumber.FLOOR_ONE);
-        addFloor(FloorNumber.FLOOR_GROUND);
-        addFloor(FloorNumber.FLOOR_LONE);
+
         addFloor(FloorNumber.FLOOR_LTWO);
+        addFloor(FloorNumber.FLOOR_LONE);
+        addFloor(FloorNumber.FLOOR_GROUND);
+        addFloor(FloorNumber.FLOOR_ONE);
+        addFloor(FloorNumber.FLOOR_TWO);
+        addFloor(FloorNumber.FLOOR_THREE);
+
+        container.getChildren().add(0,spacerLeft);
+        container.getChildren().add(spacerRight);
         mapImage = new proxyImagePane();
         pane.getStyleClass().add("pane");
         container.getStyleClass().add("pane");
         pane.setPannable(true);
         currentFloor = FloorNumber.FLOOR_ONE;
-        setFloor(currentFloor);
+        setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
         pane.setPrefWidth(PANE_WIDTH);
         pane.setPrefHeight(150);
         addObserver(o);
     }
 
-    private void addFloor(FloorNumber floor){
+    public void resetView(){
+        clearButtons();
+        addFloor(FloorNumber.FLOOR_LTWO);
+        addFloor(FloorNumber.FLOOR_LONE);
+        addFloor(FloorNumber.FLOOR_GROUND);
+        addFloor(FloorNumber.FLOOR_ONE);
+        addFloor(FloorNumber.FLOOR_TWO);
+        addFloor(FloorNumber.FLOOR_THREE);
+
+        container.getChildren().add(0,spacerLeft);
+        container.getChildren().add(spacerRight);
+        currentFloor = FloorNumber.FLOOR_ONE;
+        setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
+
+    }
+
+    private JFXButton addFloor(FloorNumber floor){
         JFXButton button = new JFXButton();
         button.setText(floor.getDbMapping());
         button.setMinSize(BUTTON_WIDTH,BUTTON_HEIGHT);
         button.setOnAction(e -> floorButtonPressed(e));
-        buttonOrder.add(0,button.getText());
-        container.getChildren().add(1,button);
+        button.setId("-1");
+        buttonOrder.add(button.getText());
+        container.getChildren().add(button);
         SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
         container.setPrefWidth(SCROLL_WIDTH);
+        return button;
+    }
+
+    private JFXButton addFloor(FloorNumber floor, int id){
+        JFXButton button = addFloor(floor);
+        button.setId(Integer.toString(id));
+        return button;
     }
 
     public void floorButtonPressed(ActionEvent e){
         FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
-        setFloor(floor);
+        int id = Integer.parseInt((((JFXButton) e.getSource()).getId()));
+        if(id == -1) {
+            setFloor(floor,buttonOrder.indexOf(floor.getDbMapping()));
+        }
+        else {
+            setFloor(floor,id);
+        }
         setChanged();
-        notifyObservers(floor);
+        notifyObservers(new PathID(floor, id));
     }
 
     private void clearButtons(){
         container.getChildren().clear();
         buttonOrder.clear();
-        container.getChildren().addAll(spacerLeft,spacerRight);
     }
 
     //Getters
@@ -96,15 +130,19 @@ public class MapViewer extends Observable{
     }
 
     //Setters
-    public void setFloor(FloorNumber floor){
+    private void setFloor(FloorNumber floor, int buttonPose){
         mapImage.setImage(floor);
         Timeline slideButtons = new Timeline(
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(pane.hvalueProperty(), pane.getHvalue())),
                 new KeyFrame(new Duration(300),
-                        new KeyValue(pane.hvalueProperty(),buttonOrder.indexOf(floor.getDbMapping())/(buttonOrder.size()-1.0)))
+                        new KeyValue(pane.hvalueProperty(),buttonPose/(buttonOrder.size()-1.0)))
         );
         slideButtons.play();
+    }
+
+    public void setFloor(FloorNumber floor){
+        setFloor(floor,buttonOrder.indexOf(floor.getDbMapping()));
     }
 
     public void setSpacerWidth(int width){
@@ -124,7 +162,6 @@ public class MapViewer extends Observable{
         container.setSpacing(SPACING);
         container.setPadding(new Insets(10,10,10,10));
         container.setAlignment(Pos.CENTER);
-        container.getChildren().addAll(spacerLeft,spacerRight);
     }
 
     public void setScale(double scale){
@@ -133,9 +170,11 @@ public class MapViewer extends Observable{
 
     public void setButtonsByFloor(List<FloorNumber> floors){
         clearButtons();
-        for (FloorNumber floor: floors) {
-            addFloor(floor);
+        for (int i = 0; i < floors.size(); i++) {
+            addFloor(floors.get(i), i);
         }
-        setFloor(floors.get(0));
+        container.getChildren().add(0,spacerLeft);
+        container.getChildren().add(spacerRight);
+        setFloor(floors.get(0),0);
     }
 }
