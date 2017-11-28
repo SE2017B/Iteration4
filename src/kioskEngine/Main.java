@@ -30,6 +30,12 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
         myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
+//
+//        //mini fxml files
+//        myScreenController.loadScreen(ScreenController.TranslationID, ScreenController.TranslationFile);
+//        myScreenController.loadScreen(ScreenController.TransportID, ScreenController.TransportFile);
+//        myScreenController.loadScreen(ScreenController.FoodDeliveryID, ScreenController.FoodDeliveryFile);
+//        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
 
         myScreenController.setScreen(ScreenController.MainID);
 

@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -47,13 +48,13 @@
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="103.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="168.0" minHeight="0.0" prefHeight="54.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="262.0" minHeight="10.0" prefHeight="232.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="72.00000228881837" minHeight="10.0" prefHeight="63.999996948242185" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="75.39999694824218" minHeight="10.0" prefHeight="61.60000305175781" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="70.60000610351562" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="103.0" minHeight="10.0" prefHeight="64.79998168945312" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="72.80000610351561" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="168.0" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="262.0" minHeight="10.0" prefHeight="144.7999877929688" vgrow="SOMETIMES" />
                                   <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
@@ -95,6 +96,7 @@
                                     </Label>
                                     <ChoiceBox fx:id="choiceBoxService" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <ChoiceBox fx:id="choiceBoxStaff" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <JFXTimePicker fx:id="timeMenu" defaultColor="#34f8e4" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                                  </children>
                               </GridPane>
                            </children>
