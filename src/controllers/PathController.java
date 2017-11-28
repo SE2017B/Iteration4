@@ -334,7 +334,7 @@ public class PathController implements ControllableScreen, Observer{
 
 
         //indicator to follow the path
-        Rectangle rect = new Rectangle (0,0, 10, 10);
+        Rectangle rect = new Rectangle (0,0, 20, 20);
         rect.setVisible(true);
         rect.setFill(Color.DODGERBLUE);
 
@@ -343,9 +343,10 @@ public class PathController implements ControllableScreen, Observer{
 
         //path to follow
         javafx.scene.shape.Path p = new javafx.scene.shape.Path();
-        p.setStroke(Color.RED);
+        p.setStroke(Color.NAVY);
+        p.setStrokeWidth(4);
         //p.setVisible(false);//let animation move along our line
-        mapPane.getChildren().addAll(rect,p);
+        mapPane.getChildren().addAll(p,rect);
         //add all shapes to shape
         shapes.add(rect);
         shapes.add(p);
@@ -367,6 +368,7 @@ public class PathController implements ControllableScreen, Observer{
         pathTransition.play();
 
     }
+
     private void animateFloor(FloorNumber floor,Path path){
         System.out.println("Animating floor "+path.toString());
         //create new hashMap element for floor if none existes
@@ -399,7 +401,8 @@ public class PathController implements ControllableScreen, Observer{
 
         //path to follow
         javafx.scene.shape.Path p = new javafx.scene.shape.Path();
-        p.setStroke(Color.RED);
+        p.setStroke(Color.DARKBLUE);
+        p.setStrokeWidth(4);
         //p.setVisible(false);//let animation move along our line
         mapPane.getChildren().addAll(rect,p);
         //add path and rect to shape hash map
@@ -419,7 +422,7 @@ public class PathController implements ControllableScreen, Observer{
         }
         //define the animation actions
         System.out.println("The set distance is "+ path.getDistance());
-        pathTransition.setDuration(Duration.millis(path.getDistance()/0.1));//make speed constant
+        pathTransition.setDuration(Duration.millis(path.getDistance()*800));//make speed constant
         pathTransition.setNode(rect);
         pathTransition.setPath(p);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
