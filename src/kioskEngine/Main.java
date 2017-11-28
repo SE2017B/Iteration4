@@ -16,7 +16,6 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -49,7 +48,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, InterruptedException {
         try {
             DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
 
@@ -57,8 +56,12 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
+        edgeDatabase.deleteEdgeTable();
+        nodeDatabase.deleteNodeTable();
+
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
+
         staffDatabase.createStaffTable();
 
         nodeDatabase.readNodeCSV("MapAnodes.csv");
@@ -71,7 +74,7 @@ public class Main extends Application {
         nodeDatabase.readNodeCSV("MapHnodes.csv");
         nodeDatabase.readNodeCSV("MapInodes.csv");
         nodeDatabase.readNodeCSV("MapWnodes.csv");
-        nodeDatabase.insertNodesFromCSV();
+
 
         edgeDatabase.readEdgesCSV("MapAedges.csv");
         edgeDatabase.readEdgesCSV("MapBedges.csv");
@@ -83,17 +86,13 @@ public class Main extends Application {
         edgeDatabase.readEdgesCSV("MapHedges.csv");
         edgeDatabase.readEdgesCSV("MapIedges.csv");
         edgeDatabase.readEdgesCSV("MapWedges.csv");
-        edgeDatabase.insertEdgesFromCSV();
 
+        nodeDatabase.insertNodesFromCSV();
+        edgeDatabase.insertEdgesFromCSV();
         nodeDatabase.cntNodes();
 
         staffDatabase.readStaffCSV("staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
-
-        //staffDatabase.addStaff(new Staff("bross", "1234", "Dope Artist", "Bob Ross", 1));
-        //staffDatabase.addStaff(new Staff("ncage", "password", "Lead in National Treasure", "Nick Cage", 2));
-        //staffDatabase.addStaff(new Staff("user1", "password", "Random User", "User Number One", 3));
-        //staffDatabase.addStaff(new Staff("user2", "password", "Random User", "User Number Two", 4));
 
         launch(args);
 
