@@ -15,6 +15,8 @@ import exceptions.InvalidNodeException;
 import javafx.animation.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
@@ -123,6 +125,8 @@ public class PathController implements ControllableScreen, Observer{
 
     private HashMap<Integer,Path> floorindextoPath;
 
+    private Pane arrow;
+
     @FXML
     private JFXListView<String> directionsList;
     //Methods start here
@@ -150,6 +154,16 @@ public class PathController implements ControllableScreen, Observer{
         mapPane.getChildren().add(mapViewer.getMapImage());
         buttonHolderPane.getChildren().add(mapViewer.getPane());
         mapViewer.setScale(2);
+
+        int arrowSize = 20;
+        arrow = new Pane();
+        arrow.setPrefSize(arrowSize,arrowSize);
+        Image arrowImage = new Image("images/arrow.png");
+        ImageView arrowView = new ImageView(arrowImage);
+        arrowView.setFitHeight(arrowSize);
+        arrowView.setFitWidth(arrowSize);
+        arrow.setVisible(true);
+        arrow.getChildren().add(arrowView);
     }
 
     public void onShow(){
@@ -261,6 +275,9 @@ public class PathController implements ControllableScreen, Observer{
             //shapes.remove(s);
             mapPane.getChildren().remove(s);
         }
+        arrow.setVisible(false);
+        mapPane.getChildren().remove(arrow);
+
     }
     private void displayPath(Path path){
         //clear path
@@ -283,10 +300,7 @@ public class PathController implements ControllableScreen, Observer{
         shapes.add(lastp);
 
 
-        //indicator to follow the path
-        Rectangle rect = new Rectangle (0,0, 20, 20);
-        rect.setVisible(true);
-        rect.setFill(Color.DODGERBLUE);
+
 
         //animation that moves the indicator
         PathTransition pathTransition = new PathTransition();
@@ -296,9 +310,9 @@ public class PathController implements ControllableScreen, Observer{
         p.setStroke(Color.NAVY);
         p.setStrokeWidth(4);
         //p.setVisible(false);//let animation move along our line
-        mapPane.getChildren().addAll(p,rect);
+        mapPane.getChildren().addAll(p,arrow);
+        arrow.setVisible(true);
         //add all shapes to shape
-        shapes.add(rect);
         shapes.add(p);
         //to remove the red line, remove p ^
 
@@ -311,7 +325,7 @@ public class PathController implements ControllableScreen, Observer{
         }
         //define the animation actions
         pathTransition.setDuration(Duration.millis(p.getElements().size()*800));//make speed constant
-        pathTransition.setNode(rect);
+        pathTransition.setNode(arrow);
         pathTransition.setPath(p);
         pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pathTransition.setCycleCount(Transition.INDEFINITE);
@@ -348,6 +362,8 @@ public class PathController implements ControllableScreen, Observer{
             s.setVisible(false);
             mapPane.getChildren().remove(s);
         }
+        arrow.setVisible(false);
+        mapPane.getChildren().remove(arrow);
         //clear all lines and paths
         EdgeNodes = new HashMap<>();
         pathShapes = new HashMap<>();
