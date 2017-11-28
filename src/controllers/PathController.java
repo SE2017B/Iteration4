@@ -488,9 +488,11 @@ public class PathController implements ControllableScreen, Observer{
         }
         if(arg instanceof PathID){
             PathID ID = (PathID) arg;
-            currentPath = paths.get(ID.getID());
-            currentFloor = ID.getFloor();
-            switchPath(currentPath);
+            if(ID != -1) {
+                currentPath = paths.get(ID.getID());
+                currentFloor = ID.getFloor();
+                switchPath(currentPath);
+            }
 
         }
     }
