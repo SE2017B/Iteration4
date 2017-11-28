@@ -215,9 +215,18 @@ public class PathController implements ControllableScreen, Observer{
 
     }
     private void controlScroller(Path p){
+        ArrayList<Integer> dim = getEdgeDims(p);
         ArrayList<Integer> center = getCenter(p);
-        mapScrollPane.setHvalue((center.get(0)/mapViewer.getScale())/5000);
-        mapScrollPane.setVvalue((center.get(1)/mapViewer.getScale())/3500);
+        Circle c =new Circle(center.get(0)/mapViewer.getScale(),center.get(1)/mapViewer.getScale(),7);
+        //Circle c =new Circle(2500,1750,7);
+        shapes.add(c);
+        mapPane.getChildren().add(c);
+        int x = center.get(0);
+        int y = center.get(1);
+        mapScrollPane.setHvalue(((center.get(0)-950)*mapViewer.getScale())/5000);
+        mapScrollPane.setVvalue(((center.get(1)-750)*mapViewer.getScale())/3500);
+        //mapScrollPane.setHvalue((dim.get(0)*mapViewer.getScale())/5000);
+        //mapScrollPane.setVvalue((dim.get(1)*mapViewer.getScale())/3500);
         System.out.println("Screen Adjusted");
     }
     private void focustopath(double sx){
@@ -445,7 +454,8 @@ public class PathController implements ControllableScreen, Observer{
          **/
         clearShapes();
         //set zoom level here
-        mapViewer.setScale(getZoom(path));
+        System.out.println("The zoom is "+getZoom(path));
+        //mapViewer.setScale(getZoom(path));
         displayPath(path);
         currentFloor=pathtoFloor.get(path);
         controlScroller(path);//reposition map
@@ -509,18 +519,11 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void setMapScale(double scale){
-        calVars();
         //reposition map
         mapViewer.setScale(scale);
         //switchPath(currentFloor);
     }
 
-    public void calVars(){
-        //function to help reposition the screen on zoom
-        for(FloorNumber f : floors){
-            //Todo: Recalculate variables if need be
-        }
-    }
 
 
 
@@ -565,9 +568,9 @@ public class PathController implements ControllableScreen, Observer{
         int x = Math.abs(Dim.get(0)-Dim.get(2));
         int y = Math.abs(Dim.get(1)-Dim.get(3));
 
-        double zx=(2-((x/5000)*2))+1;
-        double zy=(2-((y/3500)*2))+1;
-        if(zy>zx){
+        double zx=(((x/5000.0)*2.0))+1.0;
+        double zy=(((y/3500.0)*2.0))+1.0;
+        if(zy<zx){
             return zy;
         }
         return zx;
