@@ -43,6 +43,17 @@ public class ScreenController extends StackPane {
     public static String LoginID = "Login";
     public static String LoginFile = "/fxml/Login.fxml";
 
+//
+//    //
+//    public static String TransportID = "Transport";
+//    public static String TransportFile = "/fxml/Transport.fxml";
+//    public static String TranslationID = "Translation";
+//    public static String TranslationFile = "/fxml/Translation.fxml";
+//    public static String SanitationID = "Sanitation";
+//    public static String SanitationFile = "/fxml/Sanitation.fxml";
+//    public static String FoodDeliveryID = "FoodDelivery";
+//    public static String FoodDeliveryFile = "/fxml/FoodDelivery.fxml";
+
 
     private HashMap<String, Node> screens = new HashMap<String, Node>();
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
