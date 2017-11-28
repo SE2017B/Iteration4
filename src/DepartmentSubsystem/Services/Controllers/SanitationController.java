@@ -5,8 +5,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 
 import javafx.event.ActionEvent;
+import DepartmentSubsystem.Services.Sanitation;
 
 public class SanitationController {
+    private String sanSel;
 
     @FXML
     private SplitMenuButton sanitationMenu;
@@ -25,7 +27,9 @@ public class SanitationController {
 
     @FXML
     void sanitationSelected(ActionEvent e) {
-        System.out.println("Test");
+        sanSel = ((MenuItem) e.getSource()).getText();
+        sanitationMenu.setText(sanSel);
+        System.out.println("Language Selected " + sanSel);
 
     }
 

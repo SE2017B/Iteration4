@@ -4,10 +4,12 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import DepartmentSubsystem.Services.FoodDelivery;
 
 import javafx.event.ActionEvent;
 
 public class FoodDeliveryController {
+    private String foodSel;
 
     @FXML
     private MenuButton foodMenu;
@@ -23,8 +25,10 @@ public class FoodDeliveryController {
 
     @FXML
     void foodSelected(ActionEvent e) {
-        System.out.println("Test");
 
+        foodSel = ((MenuItem) e.getSource()).getText();
+        foodMenu.setText(foodSel);
+        System.out.println("Food Selected " + foodSel);
     }
 
 }
