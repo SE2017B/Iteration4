@@ -216,10 +216,9 @@ public class PathController implements ControllableScreen, Observer{
         ArrayList<Integer> center = getCenter(p);
         int x = center.get(0);
         int y = center.get(1);
-        mapScrollPane.setHvalue(((center.get(0))*mapViewer.getScale())/5000);
-        mapScrollPane.setVvalue(((center.get(1))*mapViewer.getScale())/3500);
-        //mapScrollPane.setHvalue((dim.get(0)*mapViewer.getScale())/5000);
-        //mapScrollPane.setVvalue((dim.get(1)*mapViewer.getScale())/3500);
+        System.out.println("Center X: " + x + " Center Y: " + y);
+        mapScrollPane.setHvalue(x/5000.0);
+        mapScrollPane.setVvalue(y/3500.0);
     }
 
 
@@ -418,8 +417,7 @@ public class PathController implements ControllableScreen, Observer{
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException
     {
-
-        if(!startNodeChoice.getValue().equals(null) && !endNodeChoice.getValue().equals(null)) {
+        if(startNodeChoice.getValue() instanceof Node && endNodeChoice.getValue() instanceof Node) {
             Path thePath = getPath();
             /**
 
