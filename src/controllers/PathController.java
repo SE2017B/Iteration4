@@ -217,10 +217,6 @@ public class PathController implements ControllableScreen, Observer{
     private void controlScroller(Path p){
         ArrayList<Integer> dim = getEdgeDims(p);
         ArrayList<Integer> center = getCenter(p);
-        Circle c =new Circle(center.get(0)/mapViewer.getScale(),center.get(1)/mapViewer.getScale(),7);
-        //Circle c =new Circle(2500,1750,7);
-        shapes.add(c);
-        mapPane.getChildren().add(c);
         int x = center.get(0);
         int y = center.get(1);
         mapScrollPane.setHvalue(((center.get(0)-950)*mapViewer.getScale())/5000);
