@@ -58,11 +58,13 @@ public class staffDatabase {
 
                 Statement stmtCreateStaffTable = conn.createStatement();
                 String createStaffTable = ("CREATE TABLE hospitalStaff" +
-                        "(username VARCHAR(20) PRIMARY KEY," +
+                        "(username VARCHAR(20)," +
                         "password VARCHAR(20)," +
                         "jobTitle VARCHAR(50)," +
                         "fullName VARCHAR(20)," +
-                        "ID INTEGER)");
+                        "ID INTEGER," +
+                        "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
+                        "CONSTRAINT hospitalStaff_U1 UNIQUE (username))");
 
                 int rsetCreate1 = stmtCreateStaffTable.executeUpdate(createStaffTable);
                 System.out.println("Create Staff table Successful!");
@@ -109,8 +111,6 @@ public class staffDatabase {
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////
