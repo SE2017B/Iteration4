@@ -42,7 +42,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, InterruptedException {
         try {
             DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
 
@@ -83,16 +83,10 @@ public class Main extends Application {
 
         nodeDatabase.insertNodesFromCSV();
         edgeDatabase.insertEdgesFromCSV();
-
         nodeDatabase.cntNodes();
 
         staffDatabase.readStaffCSV("staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
-
-        //staffDatabase.addStaff(new Staff("bross", "1234", "Dope Artist", "Bob Ross", 1));
-        //staffDatabase.addStaff(new Staff("ncage", "password", "Lead in National Treasure", "Nick Cage", 2));
-        //staffDatabase.addStaff(new Staff("user1", "password", "Random User", "User Number One", 3));
-        //staffDatabase.addStaff(new Staff("user2", "password", "Random User", "User Number Two", 4));
 
         launch(args);
 

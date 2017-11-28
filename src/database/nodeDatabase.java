@@ -88,7 +88,10 @@ public class nodeDatabase {
                         "longName VARCHAR(75)," +
                         "shortName VARCHAR(50)," +
                         "teamAssigned VARCHAR(50)," +
-                    "PRIMARY KEY (nodeID))");
+                    "CONSTRAINT nodes_PK PRIMARY KEY (nodeID)," +
+                    "CONSTRAINT floor_chk CHECK (floor IN ('L1', 'L2', 'G', '1', '2', '3'))," +
+                    "CONSTRAINT building_chk CHECK (building IN ('BTM', 'Shapiro', 'Tower', '45 Francis', '15 Francis'))," +
+                    "CONSTRAINT nodeType_chk CHECK (nodeType IN ('HALL', 'ELEV', 'REST', 'STAI', 'DEPT', 'LABS', 'INFO', 'CONF', 'EXIT', 'RETL', 'SERV')))");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
@@ -116,7 +119,7 @@ public class nodeDatabase {
             PreparedStatement insertNode = conn.prepareStatement("INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 
-            for (int j = 1; j < allNodes.size(); j++) {
+            for (int j = 0; j < allNodes.size(); j++) {
 
                 insertNode.setString(1, allNodes.get(j).getID());
                 insertNode.setString(2, Integer.toString(allNodes.get(j).getX()));
@@ -129,7 +132,7 @@ public class nodeDatabase {
                 insertNode.setString(9, nodeDatabase.allNodes.get(j).getTeam());
 
                 insertNode.executeUpdate();
-                System.out.println(j + ": Insert Node Successful!");
+                System.out.println((j + 1) + ": Insert Node Successful!");
             }
 
             conn.commit();
