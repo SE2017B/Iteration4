@@ -97,7 +97,6 @@ public class MapViewer extends Observable{
     private void clearButtons(){
         container.getChildren().clear();
         buttonOrder.clear();
-        container.getChildren().addAll(spacerLeft,spacerRight);
     }
 
     //Getters
@@ -158,6 +157,8 @@ public class MapViewer extends Observable{
         for (int i = 0; i < floors.size(); i++) {
             addFloor(floors.get(i), i);
         }
+        container.getChildren().add(0,spacerLeft);
+        container.getChildren().add(spacerRight);
         setFloor(floors.get(0),0);
     }
 }
