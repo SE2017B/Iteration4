@@ -200,11 +200,11 @@ public class RequestController implements ControllableScreen{
 
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
-        if(depSub.getCurrentLoggedIn().getCurrentRequests() == null)
+        if(depSub.getCurrentLoggedIn().getAllRequest() == null)
         {
             resolveServiceListView.getItems().clear();
         }else{
-            resolveServiceListView.getItems().add(depSub.getCurrentLoggedIn().getCurrentRequests().toString());
+            resolveServiceListView.getItems().add(depSub.getCurrentLoggedIn().getAllRequest().toString());
         }
 
         //Update the nodes in the map
@@ -229,6 +229,7 @@ public class RequestController implements ControllableScreen{
         //todo test?
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
         System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
+
     }
 
     public void requestCreatePressed(ActionEvent e)
@@ -239,7 +240,7 @@ public class RequestController implements ControllableScreen{
         //fillInServiceSpecificRecs();
 
         //Submit request
-        depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL");
+        //depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL");
 
         ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString(), choiceBoxStaff.getValue());
 
@@ -325,7 +326,7 @@ public class RequestController implements ControllableScreen{
     {
 
             choiceBoxService.setDisable(false);
-            choiceBoxStaff.setItems(FXCollections.observableList(newValue.getEligibleStaff()));
+            choiceBoxStaff.setItems(FXCollections.observableList(newValue.getStaff()));
 
             //todo URL ??????????????????????????????????????????????????????????????\
             String URLPLS = newValue.getURL();

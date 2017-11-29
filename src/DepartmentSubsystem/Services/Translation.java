@@ -19,8 +19,8 @@ public class Translation extends Service {
     private String requestedLanguage = "";
     private int duration; //Set in minutes
 
-    public Translation(Department department, String description) {
-        super(department, description);
+    public Translation(String description) {
+        super(description);
     }
 
     private ArrayList<String> populateLanguageTypes(){
@@ -34,7 +34,7 @@ public class Translation extends Service {
 
     private ArrayList<Staff> returnEligibleStaff(String language){
         ArrayList<Staff> returnList = new ArrayList<>();
-        for(Staff person: super.getEligibleStaff()){
+        for(Staff person: super.getStaff()){
             if(person.getLanguages().contains(language)){
                 returnList.add(person);
             }

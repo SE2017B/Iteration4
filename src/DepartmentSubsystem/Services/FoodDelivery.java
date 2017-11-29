@@ -17,8 +17,8 @@ public class FoodDelivery extends Service {
     //Set list of menu items available for the user to choose
     private ArrayList<String> menuItems = populateMenuItems(); //Cost and item associated with it
 
-    public FoodDelivery(Department department, String description) {
-        super(department, description);
+    public FoodDelivery(String description) {
+        super(description);
         menuItems = populateMenuItems();
         System.out.println("Hi" + menuItems);
     }

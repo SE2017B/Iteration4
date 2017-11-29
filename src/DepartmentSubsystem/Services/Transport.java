@@ -15,8 +15,8 @@ import map.Node;
 public class Transport extends Service {
     private Node endLocation;
 
-    public Transport(Department department, String description) {
-        super(department, description);
+    public Transport(String description) {
+        super(description);
     }
 
     public Node getEndLocation() {

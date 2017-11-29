@@ -20,10 +20,11 @@ import map.Node;
 import java.util.ArrayList;
 
 public class DepartmentSubsystem {
-    private boolean initRan = false;
+//    private boolean initRan = false;
     ArrayList<Department> departments = new ArrayList<Department>();
     private Staff currentlyLoggedIn = null;
-    private static int count = 0;
+//    private static int count = 0;
+
     /**
      * The order of method calls should be this for DSS:
      * Login - The user submits their credentials, and we check if they have a matching pair
@@ -41,25 +42,25 @@ public class DepartmentSubsystem {
 
         //TODO assign staff to departments and services
         Department translationDepartment = new Department("Translation Department");
-        Service translation = new Translation(translationDepartment, "Translation service");
+        Service translation = new Translation("Translation service");
         translation.setURL("/fxml/Translation.fxml");
         translationDepartment.addService(translation);
         departments.add(translationDepartment);
 
         Department transportationDepartment = new Department("Transportation Department");
-        Service transport = new Transport(transportationDepartment,  "Transport service");
+        Service transport = new Transport("Transport service");
         transport.setURL("/fxml/Transport.fxml");
         transportationDepartment.addService(transport);
         departments.add(transportationDepartment);
 
         Department facilities = new Department("Facilities");
-        Service sanitation = new Sanitation(facilities, "Sanitation");
+        Service sanitation = new Sanitation("Sanitation");
         sanitation.setURL("/fxml/Sanitation.fxml");
         facilities.addService(sanitation);
         departments.add(facilities);
 
         Department food = new Department("Food");
-        Service foodDelivery = new FoodDelivery(food, "Food Delivery Service");
+        Service foodDelivery = new FoodDelivery("Food Delivery Service");
         foodDelivery.setURL("/fxml/FoodDelivery.fxml");
         food.addService(foodDelivery);
         departments.add(food);
@@ -91,21 +92,15 @@ public class DepartmentSubsystem {
                     currentService.addEligibleStaff(person);
                 }
 
-//                else if (title.equalsIgnoreCase("TRANSLATOR" /* TRANSPORT STAFF?*/) && currentService.toString().equalsIgnoreCase("TRANSPORT SERVICE"))
-//                    currentService.addEligibleStaff(person);
             }
         }
     }
 
     //Singleton Stuff (init HAS to be run)
     public static DepartmentSubsystem getSubsystem(){
-        System.out.println("getSub" + count);
         if(singleton == null){
-            System.out.println("makeSub" + count);
             singleton =  new DepartmentSubsystem();
-            count++;
         }
-        System.out.println("passSub" + count);
         return singleton;
 
     }
@@ -175,14 +170,14 @@ public class DepartmentSubsystem {
         return departments;
     }
     public ArrayList<Staff> getStaff(Service service){
-        return service.getEligibleStaff();
+        return service.getStaff();
     }
 //    public ArrayList<Staff> getStaff(String service){
 //        for(Department dept: this.departments) {
 //            ArrayList<Service> temp = dept.getServices();
 //            for(Service ser: temp){
 //                if(ser.toString().equals(service)){
-//                    return ser.getEligibleStaff();
+//                    return ser.getStaff();
 //                }
 //            }
 //        }
@@ -190,47 +185,49 @@ public class DepartmentSubsystem {
 //    }
 
     //Assign a service request
-    public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID, boolean email, String emailRecipient){
-        Department temp = new Department("TEMPORARY");
-        for(Department dept: departments){
-            if(dept.getServices().contains(service)){
-                temp = dept;
-            }
-        }
-        ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person);
-        person.addRequest(request);
-        temp.addRequest(RID, request);
-        if(email){
-            processEmailRequest(emailRecipient, request);
-        }
-    }
-
-    private boolean processEmailRequest(String recipient, ServiceRequest request){
-//        //TODO make a gmail for the team so we can do this
-//        String username = "";
-//        String password = "";
-//        String message = request.toString();
-//        sendFromGMail(username, password, recipient, "HOSPITAL SERVICE REQUEST AUTOMATED MESSAGE", message);
-       return false;
-    }
+//    public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID, boolean email, String emailRecipient){
+//        Department temp = new Department("TEMPORARY");
+//        for(Department dept: departments){
+//            if(dept.getServices().contains(service)){
+//                temp = dept;
+//            }
+//        }
+//        ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person);
+//        person.addRequest(request);
+//        temp.addRequest(RID, request);
+//        if(email){
+//            processEmailRequest(emailRecipient, request);
+//        }
+//    }
+//
+//    private boolean processEmailRequest(String recipient, ServiceRequest request){
+////        //TODO make a gmail for the team so we can do this
+////        String username = "";
+////        String password = "";
+////        String message = request.toString();
+////        sendFromGMail(username, password, recipient, "HOSPITAL SERVICE REQUEST AUTOMATED MESSAGE", message);
+//       return false;
+//    }
 
     //Staff modifiers
-    public void addStaff(String username, String password, String jobTitle, String fullName, int id){
-
+    public void addStaff(Service ser,String username, String password, String jobTitle, String fullName, int id){
+        //staffDatabase.setStaffCounter(1);
         Staff newPerson = new Staff(username, password, jobTitle, fullName, id);
-        if(jobTitle.equals("Chef") || jobTitle.equals("Food Delivery")){
-            departments.get(3).addPersonel(newPerson);
-            departments.get(3).getServices().get(0).addEligibleStaff(newPerson);
-        }else if(jobTitle.equals("Translator")){
-            departments.get(0).addPersonel(newPerson);
-            departments.get(0).getServices().get(0).addEligibleStaff(newPerson);
-        }else if(jobTitle.equals("Transport Staff")){
-            departments.get(1).addPersonel(newPerson);
-            departments.get(1).getServices().get(0).addEligibleStaff(newPerson);
-        }else if(jobTitle.equals("Janitor")){
-            departments.get(2).addPersonel(newPerson);
-            departments.get(2).getServices().get(0).addEligibleStaff(newPerson);
-        }
+//        if(jobTitle.equals("Chef") || jobTitle.equals("Food Delivery")){
+//            departments.get(3).addPersonel(newPerson);
+//            departments.get(3).getServices().get(0).addEligibleStaff(newPerson);
+//        }else if(jobTitle.equals("Translator")){
+//            departments.get(0).addPersonel(newPerson);
+//            departments.get(0).getServices().get(0).addEligibleStaff(newPerson);
+//        }else if(jobTitle.equals("Transport Staff")){
+//            departments.get(1).addPersonel(newPerson);
+//            departments.get(1).getServices().get(0).addEligibleStaff(newPerson);
+//        }else if(jobTitle.equals("Janitor")){
+//            departments.get(2).addPersonel(newPerson);
+//            departments.get(2).getServices().get(0).addEligibleStaff(newPerson);
+//        }
+        //dep.addPersonel(newPerson);
+        ser.addEligibleStaff(newPerson);
         staffDatabase.addStaff(newPerson);
     }
 
@@ -239,21 +236,25 @@ public class DepartmentSubsystem {
         staffDatabase.modifyStaff(person);
     }
 
-    public void deleteStaff(String userName, String jobTile){
-        Staff person = new Staff(userName,null, jobTile,null, 0);
-        if(jobTile.equals("Chef") || jobTile.equals("Food Delivery")){
-            departments.get(3).removePersonel(person);
-            departments.get(3).getServices().get(0).removeEligibleStaff(person);
-        }else if(jobTile.equals("Translator")){
-            departments.get(0).removePersonel(person);
-            departments.get(0).getServices().get(0).removeEligibleStaff(person);
-        }else if(jobTile.equals("Transport Staff")){
-            departments.get(1).removePersonel(person);
-            departments.get(1).getServices().get(0).removeEligibleStaff(person);
-        }else if(jobTile.equals("Janitor")){
-            departments.get(2).removePersonel(person);
-            departments.get(2).getServices().get(0).removeEligibleStaff(person);
-        }
+    public void deleteStaff(Service ser, Staff person){
+//        Staff person = new Staff(userName,null, jobTile,null, 0);
+//        if(jobTile.equals("Chef") || jobTile.equals("Food Delivery")){
+//            departments.get(3).removePersonel(person);
+//            departments.get(3).getServices().get(0).removeEligibleStaff(person);
+//        }else if(jobTile.equals("Translator")){
+//            departments.get(0).removePersonel(person);
+//            departments.get(0).getServices().get(0).removeEligibleStaff(person);
+//        }else if(jobTile.equals("Transport Staff")){
+//            departments.get(1).removePersonel(person);
+//            departments.get(1).getServices().get(0).removeEligibleStaff(person);
+//        }else if(jobTile.equals("Janitor")){
+//            departments.get(2).removePersonel(person);
+//            departments.get(2).getServices().get(0).removeEligibleStaff(person);
+//        }
+
+        //dep.removePersonel(person);
+        ser.removeEligibleStaff(person);
+
         staffDatabase.deleteStaff(person);
     }
 }

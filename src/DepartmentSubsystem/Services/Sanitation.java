@@ -17,8 +17,8 @@ public class Sanitation extends Service {
     private ArrayList<String> serviceTypes = populateServiceTypes();
 
     //Constructor for the service - Should only be called during creation
-    public Sanitation(Department department, String description) {
-        super(department, description);
+    public Sanitation( String description) {
+        super(description);
     }
 
     private ArrayList<String> populateServiceTypes(){

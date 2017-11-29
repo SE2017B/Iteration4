@@ -30,7 +30,9 @@ public class ServiceRequest{
         this.assignedPersonnel = assignedPersonnel;
 //        this.extra1 = extra1;
 //        this.extra2 = extra2;
+
         this.inputData = "";
+        this.assignedPersonnel.addRequest(this);
     }
 
     //Getters and Setters
@@ -76,9 +78,9 @@ public class ServiceRequest{
         this.inputData = inputData;
     }
 
-    public void setAssignedPersonnel(Staff assignedPersonnel) {
-        this.assignedPersonnel = assignedPersonnel;
-    }
+//    public void setAssignedPersonnel(Staff assignedPersonnel) {
+//        this.assignedPersonnel = assignedPersonnel;
+//    }
 //    public void setExtra1(String extra1)
 //    {
 //        this.extra1 = extra1;

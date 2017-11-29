@@ -10,17 +10,15 @@ package DepartmentSubsystem;
 
 import exceptions.InvalidPasswordException;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Staff{
     //Only essential for logging in
     private String username;
     private String password;
     private boolean admin;
-
     //These are just details for display
+    private HashMap<Integer,ServiceRequest> workload;
     private String jobTitle;
     private String fullName;
     private int ID;
@@ -29,9 +27,9 @@ public class Staff{
     //Use this to determine if they can perform a service or not.
     private ArrayList<Service> capableServices;
 
-    //Keeps track of a certain staff members requests
-    private LinkedList<ServiceRequest> currentRequests;
-    private ArrayList<ServiceRequest> completedRequests;
+//    //Keeps track of a certain staff members requests
+//    private LinkedList<ServiceRequest> currentRequests;
+//    private ArrayList<ServiceRequest> completedRequests;
 
     //This only applies if someone can speak multiple languages. We set english as the only language by default
     private ArrayList<String> languages = new ArrayList<>();
@@ -45,23 +43,28 @@ public class Staff{
         this.ID = ID;
 
         //Setting stuff to blanks for now
+        workload = new HashMap<Integer, ServiceRequest>();
         this.department = new Department("FILLER DEPT");
         this.capableServices = new ArrayList<Service>();
-        this.currentRequests = new LinkedList<ServiceRequest>();
-        this.completedRequests = new ArrayList<ServiceRequest>();
+//        this.currentRequests = new LinkedList<ServiceRequest>();
+//        this.completedRequests = new ArrayList<ServiceRequest>();
 
         this.languages = new ArrayList<String>();
         this.languages.add("English");
     }
 
     //Gives the staff member a new request from the backlog, and if the backlog is empty, frees the staff member.
-    public void completeCurrentRequest() {
-        try {
-            completedRequests.add(currentRequests.pop());
-        }
-        catch (NoSuchElementException exception){
-         //   available = true;
-        }
+//    public void completeCurrentRequest() {
+//        try {
+//            completedRequests.add(currentRequests.pop());
+//        }
+//        catch (NoSuchElementException exception){
+//         //   available = true;
+//        }
+//    }
+
+    public void removeRequest(ServiceRequest request){
+        workload.remove(request.getRequestID());
     }
 
     //Takes in an old password and a new password, and changes the staff's current password to the new one.
@@ -107,10 +110,6 @@ public class Staff{
         //If its not known, then LET IT BE KNOWN!
         if(!this.languages.contains(language)){this.languages.add(language);}
     }
-    public void addRequest(ServiceRequest request){
-        this.currentRequests.add(request);
-    }
-
     //Other Getters and Setters
     public void setAdmin(boolean admin) {
         this.admin = admin;
@@ -151,21 +150,21 @@ public class Staff{
     public void setDepartment(Department department) {
         this.department = department;
     }
-    public LinkedList<ServiceRequest> getCurrentRequests() {
-        if(currentRequests.isEmpty()){
-           return null;
-        }
-        return currentRequests;
-    }
-    public void setCurrentRequests(LinkedList<ServiceRequest> currentRequests) {
-        this.currentRequests = currentRequests;
-    }
-    public ArrayList<ServiceRequest> getCompletedRequests() {
-        return completedRequests;
-    }
-    public void setCompletedRequests(ArrayList<ServiceRequest> completedRequests) {
-        this.completedRequests = completedRequests;
-    }
+//    public LinkedList<ServiceRequest> getCurrentRequests() {
+//        if(currentRequests.isEmpty()){
+//           return null;
+//        }
+//        return currentRequests;
+//    }
+//    public void setCurrentRequests(LinkedList<ServiceRequest> currentRequests) {
+//        this.currentRequests = currentRequests;
+//    }
+//    public ArrayList<ServiceRequest> getCompletedRequests() {
+//        return completedRequests;
+//    }
+//    public void setCompletedRequests(ArrayList<ServiceRequest> completedRequests) {
+//        this.completedRequests = completedRequests;
+//    }
 
     public String toString(){
         return fullName;
@@ -177,6 +176,13 @@ public class Staff{
         this.jobTitle = jobTitle;
         this.fullName = fullName;
         this.ID = id;
+    }
+
+    public void addRequest(ServiceRequest newRequest){
+        workload.put(newRequest.getRequestID(), newRequest);
+    }
+    public Collection<ServiceRequest> getAllRequest(){
+        return workload.values();
     }
 
     @Override
