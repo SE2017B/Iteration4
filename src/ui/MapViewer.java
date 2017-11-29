@@ -170,9 +170,16 @@ public class MapViewer extends Observable{
 
     public void setButtonsByFloor(List<FloorNumber> floors){
         clearButtons();
+        if(floors.size() == 1){
+            SPACER_WIDTH = 560;
+        }
+        else{
+            SPACER_WIDTH = 500;
+        }
         for (int i = 0; i < floors.size(); i++) {
             addFloor(floors.get(i), i);
         }
+
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         setFloor(floors.get(0),0);

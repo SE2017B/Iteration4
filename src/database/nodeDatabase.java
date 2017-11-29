@@ -9,6 +9,12 @@ import java.util.Scanner;
 
 public class nodeDatabase {
 
+    // Table Schema
+    //////////////////////////////////////////////////////////////////
+    // nodes (nodeID PK, xCoord, yCoord, floor, building, nodeType,
+    //        longName, shortName, teamAssigned)
+    //////////////////////////////////////////////////////////////////
+
     private static final String JDBC_URL_MAP="jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
 
@@ -36,7 +42,7 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Delete nodes table
     ///////////////////////////////////////////////////////////////////////////////
-    public static void deleteNodeTable() throws SQLException {
+    public static void deleteNodeTable() {
 
         try {
 
@@ -93,7 +99,8 @@ public class nodeDatabase {
                     "CONSTRAINT yCoord_chk CHECK ((0 <= yCoord) AND (yCoord <= 3400))," +
                     "CONSTRAINT floor_chk CHECK (floor IN ('L1', 'L2', 'G', '1', '2', '3'))," +
                     "CONSTRAINT building_chk CHECK (building IN ('BTM', 'Shapiro', 'Tower', '45 Francis', '15 Francis'))," +
-                    "CONSTRAINT nodeType_chk CHECK (nodeType IN ('HALL', 'ELEV', 'REST', 'STAI', 'DEPT', 'LABS', 'INFO', 'CONF', 'EXIT', 'RETL', 'SERV')))");
+                    "CONSTRAINT nodeType_chk CHECK (nodeType IN ('HALL', 'ELEV', 'REST', 'STAI', 'DEPT', 'LABS', 'INFO', 'CONF', 'EXIT', 'RETL', 'SERV'))," +
+                    "CONSTRAINT team_chk CHECK (teamAssigned IN ('Team A', 'Team B', 'Team C', 'Team D', 'Team E', 'Team F', 'Team G', 'Team H', 'Team I')))");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");

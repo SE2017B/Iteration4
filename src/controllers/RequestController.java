@@ -307,13 +307,7 @@ public class RequestController implements ControllableScreen{
                 AnchorPane servicePane = loader.load();
                 //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
                 servicePane1.getChildren().setAll(servicePane);
-<<<<<<< HEAD
-                currentServiceController = loader.getController();
-
-
-=======
                 this.currentServiceController = loader.getController();
->>>>>>> a72b22a1b717857cb745881aa7e24f474a491cab
 
             }catch(Exception e){
                 System.out.println(e.getMessage());

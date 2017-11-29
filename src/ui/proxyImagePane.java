@@ -93,7 +93,15 @@ public class proxyImagePane extends StackPane {
 
     //Setters
     public void setScale(double s){
-        scale=s;
+        if(s > 3){
+            scale = 3;
+        }
+        else if (s < 1){
+            s = 1;
+        }
+        else {
+            scale = s;
+        }
         //now adjust all floors
         for(ImageView img: floors.values()){
             img.setFitWidth(5000/scale);

@@ -16,6 +16,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -48,7 +49,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) throws SQLException, InterruptedException {
+    public static void main(String[] args) {
         try {
             DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
 
@@ -99,5 +100,6 @@ public class Main extends Application {
         nodeDatabase.outputNodesCSV();
         edgeDatabase.outputEdgesCSV();
         staffDatabase.outputStaffCSV();
+        staffDatabase.outputStaffEncCSV();
     }
 }
