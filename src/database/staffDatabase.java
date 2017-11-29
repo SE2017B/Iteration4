@@ -21,6 +21,9 @@ public class staffDatabase {
     private static final String JDBC_URL_STAFF="jdbc:derby:hospitalStaffDB;create=true";
     private static Connection conn;
 
+    // Staff Primary Key Counter
+    private static int staffCounter = 0;
+
     // All staff members from the staff table in hospitalStaffDB
     static ArrayList<Staff>allStaff=new ArrayList<>();
     static ArrayList<Staff>allStaffEnc = new ArrayList<>();
@@ -116,6 +119,8 @@ public class staffDatabase {
                 insertStaff.setInt(5, allStaffEnc.get(j).getID());
 
                 insertStaff.executeUpdate();
+
+                staffCounter++;
                 System.out.printf("%-5d: Insert Staff Successful!\n",(j+1));
             }
 
@@ -152,6 +157,7 @@ public class staffDatabase {
             addAnyStaff.setInt(5, anyStaff.getID());
 
             addAnyStaff.executeUpdate();
+
             System.out.printf("Insert Staff Successful for staffID: %-5d\n", anyStaff.getID());
             System.out.println();
 
@@ -380,5 +386,13 @@ public class staffDatabase {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getStaffCounter() {
+        return staffCounter;
+    }
+
+    public static void setStaffCounter(int i) {
+        staffCounter += i;
     }
 }
