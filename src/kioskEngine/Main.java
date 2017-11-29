@@ -16,6 +16,8 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.security.NoSuchAlgorithmException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -48,7 +50,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) throws SQLException, InterruptedException {
+    public static void main(String[] args) throws SQLException, InterruptedException, NoSuchAlgorithmException {
         try {
             DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
 
@@ -93,11 +95,13 @@ public class Main extends Application {
 
         staffDatabase.readStaffCSV("staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
+        staffDatabase.queryAllStaff();
 
         launch(args);
 
         nodeDatabase.outputNodesCSV();
         edgeDatabase.outputEdgesCSV();
         staffDatabase.outputStaffCSV();
+        staffDatabase.outputStaffEncCSV();
     }
 }

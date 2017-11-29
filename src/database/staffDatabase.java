@@ -3,8 +3,12 @@ package database;
 import DepartmentSubsystem.Staff;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Scanner;
 
 public class staffDatabase {
@@ -13,7 +17,8 @@ public class staffDatabase {
     private static Connection conn;
 
     // All staff members from the staff table in hospitalStaffDB
-    static ArrayList<Staff>allStaff=new ArrayList<Staff>();
+    static ArrayList<Staff>allStaff=new ArrayList<>();
+    static ArrayList<Staff>allStaffEnc = new ArrayList<>();
 
     // Getter for all staff array list
     public static ArrayList<Staff> getStaff(){ return allStaff; }
@@ -63,7 +68,7 @@ public class staffDatabase {
             Statement stmtCreateStaffTable = conn.createStatement();
             String createStaffTable = ("CREATE TABLE hospitalStaff" +
                     "(username VARCHAR(20)," +
-                    "password VARCHAR(20)," +
+                    "password VARCHAR(64)," +
                     "jobTitle VARCHAR(50)," +
                     "fullname VARCHAR(30)," +
                     "ID INTEGER," +
@@ -97,13 +102,13 @@ public class staffDatabase {
 
             PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
 
-            for (int j = 0; j < allStaff.size(); j++) {
+            for (int j = 0; j < allStaffEnc.size(); j++) {
 
-                insertStaff.setString(1, allStaff.get(j).getUsername());
-                insertStaff.setString(2, allStaff.get(j).getPassword());
-                insertStaff.setString(3, allStaff.get(j).getJobTitle());
-                insertStaff.setString(4, allStaff.get(j).getFullName());
-                insertStaff.setInt(5, allStaff.get(j).getID());
+                insertStaff.setString(1, allStaffEnc.get(j).getUsername());
+                insertStaff.setString(2, allStaffEnc.get(j).getPassword());
+                insertStaff.setString(3, allStaffEnc.get(j).getJobTitle());
+                insertStaff.setString(4, allStaffEnc.get(j).getFullName());
+                insertStaff.setInt(5, allStaffEnc.get(j).getID());
 
                 insertStaff.executeUpdate();
                 System.out.printf("%-5d: Insert Staff Successful!\n",(j+1));
@@ -129,10 +134,14 @@ public class staffDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            byte[] protect = messageDigest.digest(anyStaff.getPassword().getBytes(StandardCharsets.UTF_8));
+            String encoded = Base64.getEncoder().encodeToString(protect);
+
             PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
 
             addAnyStaff.setString(1, anyStaff.getUsername());
-            addAnyStaff.setString(2, anyStaff.getPassword());
+            addAnyStaff.setString(2, encoded);
             addAnyStaff.setString(3, anyStaff.getJobTitle());
             addAnyStaff.setString(4, anyStaff.getFullName());
             addAnyStaff.setInt(5, anyStaff.getID());
@@ -142,13 +151,16 @@ public class staffDatabase {
             System.out.println();
 
             conn.commit();
+
+            allStaffEnc.add(new Staff(anyStaff.getUsername(), encoded, anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID()));
+            allStaff.add(new Staff(anyStaff.getUsername(), anyStaff.getPassword(), anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID()));
+
             addAnyStaff.close();
             conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-        allStaff.add(new Staff(anyStaff.getUsername(), anyStaff.getPassword(), anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID()));
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -168,6 +180,11 @@ public class staffDatabase {
             modDelAnyStaff.executeUpdate();
 
             PreparedStatement modAddAnyStaff = conn.prepareStatement(strModAdd);
+
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            byte[] protect = messageDigest.digest(anyStaff.getPassword().getBytes(StandardCharsets.UTF_8));
+            String encoded = Base64.getEncoder().encodeToString(protect);
+
             modAddAnyStaff.setString(1, anyStaff.getUsername());
             modAddAnyStaff.setString(2, anyStaff.getPassword());
             modAddAnyStaff.setString(3, anyStaff.getJobTitle());
@@ -177,6 +194,9 @@ public class staffDatabase {
             System.out.println("Update Staff Member Successful!");
 
             conn.commit();
+
+            allStaffEnc.add(new Staff(anyStaff.getUsername(), encoded, anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID()));
+
             modAddAnyStaff.close();
             conn.close();
 
@@ -237,7 +257,7 @@ public class staffDatabase {
             Integer intStaffID;
 
             System.out.println("");
-            System.out.printf("%-20s %-20s %-20s %-30s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID");
+            System.out.printf("%-20s %-65s %-20s %-30s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID");
 
             //Process the results
             while (rsetAllStaff.next()) {
@@ -247,7 +267,7 @@ public class staffDatabase {
                 strFullname = rsetAllStaff.getString("fullName");
                 intStaffID = rsetAllStaff.getInt("ID");
 
-                System.out.printf("%-20s %-20s %-20s %-30s %-20d\n", strUsername, strPW, strTitle, strFullname, intStaffID);
+                System.out.printf("%-20s %-65s %-20s %-30s %-20d\n", strUsername, strPW, strTitle, strFullname, intStaffID);
             } // End While
 
             conn.commit();
@@ -266,7 +286,7 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Read from Staff CSV File and store columns in staff array lists
     ///////////////////////////////////////////////////////////////////////////////
-    public static void readStaffCSV (String fname) {
+    public static void readStaffCSV (String fname) throws NoSuchAlgorithmException {
 
         File staffFile = new File(fname);
 
@@ -278,6 +298,11 @@ public class staffDatabase {
                 String staffData = inputStreamStaff.nextLine();
                 String[] staffValues = staffData.split(",");
 
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+                byte[] protect = messageDigest.digest(staffValues[1].getBytes(StandardCharsets.UTF_8));
+                String encoded = Base64.getEncoder().encodeToString(protect);
+
+                staffDatabase.allStaffEnc.add(new Staff(staffValues[0], encoded, staffValues[2], staffValues[3], Integer.valueOf(staffValues[4])));
                 staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(staffValues[4])));
 
             }
@@ -289,7 +314,38 @@ public class staffDatabase {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Write to a output Staff csv file
+    // Write to a output Staff csv file (With Password Encryption)
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void outputStaffEncCSV() {
+        String outStaffFileName = "outputStaffEncrypted.csv";
+
+        try {
+            FileWriter fwEnc = new FileWriter(outStaffFileName, false);
+            BufferedWriter bwEnc = new BufferedWriter(fwEnc);
+            PrintWriter pwEnc = new PrintWriter(bwEnc);
+
+            pwEnc.println("username,password,jobTitle,fullName,ID");
+            for (int k = 0; k < staffDatabase.allStaffEnc.size(); k++) {
+
+                pwEnc.println(staffDatabase.allStaffEnc.get(k).getUsername() + "," +
+                        staffDatabase.allStaffEnc.get(k).getPassword() + "," +
+                        staffDatabase.allStaffEnc.get(k).getJobTitle() + "," +
+                        staffDatabase.allStaffEnc.get(k).getFullName() + "," +
+                        staffDatabase.allStaffEnc.get(k).getID()
+                );
+                System.out.printf("%-5d: Staff Record Saved!\n", k);
+            }
+            System.out.println();
+            pwEnc.flush();
+            pwEnc.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Write to a output Staff csv file (No Password Encryption)
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputStaffCSV() {
         String outStaffFileName = "outputStaff.csv";
