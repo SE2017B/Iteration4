@@ -372,7 +372,7 @@ public class PathController implements ControllableScreen, Observer{
         //slideBarZoom.setValue(4 - mapViewer.getScale());
         displayPath(path);
         currentFloor=pathtoFloor.get(path);
-//        controlScroller(path);//reposition map
+        controlScroller(path);//reposition map
     }
 
 
