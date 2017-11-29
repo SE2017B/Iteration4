@@ -61,13 +61,7 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     @FXML
-    private Button btnenter;
-
-    @FXML
     private Button ntncancel;
-
-    @FXML
-    private CheckBox chkstairs;
 
     @FXML
     private ChoiceBox<Node> startNodeChoice;

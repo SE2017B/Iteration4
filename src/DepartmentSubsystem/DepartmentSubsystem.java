@@ -139,27 +139,28 @@ public class DepartmentSubsystem {
         }
         return null;
     }
-    public ArrayList<Service> getServices(String department){
-        //This method should return new services every time, to make sure that the specific service is not reused
-        ArrayList<Service> returnList = new ArrayList<Service>();
-        for(Service service: getDepartment(department).getServices()){
-            //If its not used, we just add it to the list and move on
-            if(!service.isUsed()){
-                returnList.add(service);
-                continue;
-            }
-            if(service instanceof FoodDelivery)
-                returnList.add(new FoodDelivery(this.getDepartment("Food"), "Food Delivery Service"));
-            else if(service instanceof Sanitation)
-                returnList.add(new Sanitation(this.getDepartment("Facilities"), "Sanitation"));
-            else if(service instanceof Translation)
-                returnList.add(new Translation(this.getDepartment("Translation Department"), "Translation service"));
-            else if(service instanceof Transport)
-                returnList.add(new Transport(this.getDepartment("Transportation Department"), "Transport service"));
-        }
+//    public ArrayList<Service> getServices(String department){
+//        //This method should return new services every time, to make sure that the specific service is not reused
+//        ArrayList<Service> returnList = new ArrayList<Service>();
+//        for(Service service: getDepartment(department).getServices()){
+//            //If its not used, we just add it to the list and move on
+//            if(!service.isUsed()){
+//                returnList.add(service);
+//                continue;
+//            }
+//            if(service instanceof FoodDelivery)
+//                returnList.add(new FoodDelivery(this.getDepartment("Food"), "Food Delivery Service"));
+//            else if(service instanceof Sanitation)
+//                returnList.add(new Sanitation(this.getDepartment("Facilities"), "Sanitation"));
+//            else if(service instanceof Translation)
+//                returnList.add(new Translation(this.getDepartment("Translation Department"), "Translation service"));
+//            else if(service instanceof Transport)
+//                returnList.add(new Transport(this.getDepartment("Transportation Department"), "Transport service"));
+//        }
+//
+//        return returnList;
+//    }
 
-        return returnList;
-    }
     public Staff getCurrentLoggedIn(){
         return this.currentlyLoggedIn;
     }
@@ -176,17 +177,17 @@ public class DepartmentSubsystem {
     public ArrayList<Staff> getStaff(Service service){
         return service.getEligibleStaff();
     }
-    public ArrayList<Staff> getStaff(String service){
-        for(Department dept: this.departments) {
-            ArrayList<Service> temp = dept.getServices();
-            for(Service ser: temp){
-                if(ser.toString().equals(service)){
-                    return ser.getEligibleStaff();
-                }
-            }
-        }
-        return null;
-    }
+//    public ArrayList<Staff> getStaff(String service){
+//        for(Department dept: this.departments) {
+//            ArrayList<Service> temp = dept.getServices();
+//            for(Service ser: temp){
+//                if(ser.toString().equals(service)){
+//                    return ser.getEligibleStaff();
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     //Assign a service request
     public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID, boolean email, String emailRecipient){

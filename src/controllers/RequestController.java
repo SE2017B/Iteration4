@@ -50,10 +50,7 @@ public class RequestController implements ControllableScreen{
     private Staff staffMember;
     private String date;
     private String nameServiceFile;
-    private String nameDept;
-    private String nameService;
     private String nameStaff;
-    private String selectedAlg;
     private ArrayList<String> deps;
     private ArrayList<Service> serv;
     private DepartmentSubsystem depSub;
@@ -145,17 +142,13 @@ public class RequestController implements ControllableScreen{
 
         //Display selected request on label
         resolveServiceListView.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observable,
-                                        String oldValue, String newValue) {
+                (observable, oldValue, newValue) -> {
 
-                        lblSelectedService.setText(choiceBoxService.getValue().toString());
-                        lblSelectedAdditionalInfo.setText("Test");
-                        lblSelectedDT.setText(timeMenu.getValue().toString() + " " + dateMenu.getValue().toString());
-                        lblSelectedLocation.setText(locationChoiceBox.getValue().toString());
+                    lblSelectedService.setText(choiceBoxService.getValue().toString());
+                    lblSelectedAdditionalInfo.setText("Test");
+                    lblSelectedDT.setText(timeMenu.getValue().toString() + " " + dateMenu.getValue().toString());
+                    lblSelectedLocation.setText(locationChoiceBox.getValue().toString());
 
-                    }
                 }
         );
     }
@@ -281,23 +274,22 @@ public class RequestController implements ControllableScreen{
     public void selectAlgorithmPath(ActionEvent e)
     {
         System.out.println("Algorithm Selected");
-        selectedAlg = ((MenuItem)e.getSource()).getText();
+        String selectedAlg = ((MenuItem) e.getSource()).getText();
         menuButtonAl.setText(selectedAlg);
     }
 
     public void deptSelected(Department newValue)
     {
-        nameDept = newValue.toString();
+        String nameDept = newValue.toString();
         choiceBoxDept.setDisable(false);
-        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
+        choiceBoxService.setItems(FXCollections.observableList(newValue.getServices()));
 
     }
     public void servSelected(Service newValue)
     {
-            nameService = newValue.toString();
+        String nameService = newValue.toString();
             choiceBoxService.setDisable(false);
-            choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
-
+            choiceBoxStaff.setItems(FXCollections.observableList(newValue.getEligibleStaff()));
             //todo URL ??????????????????????????????????????????????????????????????\
             String URLPLS = newValue.getURL();
             //String testURL = "/fxml/FoodDelivery.fxml";
