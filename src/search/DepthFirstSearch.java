@@ -34,7 +34,6 @@ public class DepthFirstSearch implements SearchStrategy {
                 if(explored.contains(neighbor)) continue;
                 neighbors.add(neighbor);
             }
-            neighbors.sort((n1, n2) -> (int)(n1.getEuclidianDistance(end) - n2.getEuclidianDistance(end)));
             frontier.addAll(0, neighbors);
             for(Node n : neighbors) cameFrom.put(n, currentNode);
         }
