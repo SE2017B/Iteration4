@@ -12,6 +12,7 @@ import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 import DepartmentSubsystem.Services.FoodDelivery;
 import com.jfoenix.controls.*;
+import database.staffDatabase;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -218,6 +219,7 @@ public class RequestController implements ControllableScreen{
         kioskLocationChoice.setItems(FXCollections.observableList(map.getNodeMap()));
         kioskLocationChoice.setValue(map.getKioskLocation());
 
+        staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
     @FXML
 
@@ -370,6 +372,14 @@ public class RequestController implements ControllableScreen{
     @FXML
     void createStaffPressed(ActionEvent event) {
 
+        String tempUsername = usernameTxt.getText();
+        String tempPassword = passwordTxt.getText();
+        String tempJobTitle = jobTitletxt.getText();
+        String tempFullName = fullNametxt.getText();
+
+        depSub.addStaff(tempUsername, tempPassword, tempJobTitle, tempFullName, database.staffDatabase.getStaffCounter());
+
+        staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
 
 
@@ -380,7 +390,12 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void removeStaffPressed(ActionEvent event) {
+        String tempUsername = usernameDeleteTxt.getText();
+        String tempJobTitle = idDeleteTxt.getText();
 
+        depSub.deleteStaff(tempUsername, tempJobTitle);
+
+        staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
 
     @FXML

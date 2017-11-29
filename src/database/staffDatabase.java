@@ -22,7 +22,7 @@ public class staffDatabase {
     private static Connection conn;
 
     // Staff Primary Key Counter
-    private static int staffCounter = 0;
+    private static int staffCounter = 30;
 
     // All staff members from the staff table in hospitalStaffDB
     static ArrayList<Staff>allStaff=new ArrayList<>();
@@ -120,7 +120,7 @@ public class staffDatabase {
 
                 insertStaff.executeUpdate();
 
-                staffCounter++;
+                //staffCounter++;
                 System.out.printf("%-5d: Insert Staff Successful!\n",(j+1));
             }
 
@@ -139,6 +139,9 @@ public class staffDatabase {
     // Add a Staff member to Staff table Function
     ///////////////////////////////////////////////////////////////////////////////
     public static void addStaff(Staff anyStaff) {
+
+        staffCounter++;
+
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
             conn.setAutoCommit(false);
@@ -156,7 +159,10 @@ public class staffDatabase {
             addAnyStaff.setString(4, anyStaff.getFullName());
             addAnyStaff.setInt(5, anyStaff.getID());
 
+
+
             addAnyStaff.executeUpdate();
+
 
             System.out.printf("Insert Staff Successful for staffID: %-5d\n", anyStaff.getID());
             System.out.println();
@@ -390,9 +396,5 @@ public class staffDatabase {
 
     public static int getStaffCounter() {
         return staffCounter;
-    }
-
-    public static void setStaffCounter(int i) {
-        staffCounter += i;
     }
 }
