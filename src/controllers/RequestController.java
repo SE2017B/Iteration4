@@ -377,7 +377,8 @@ public class RequestController implements ControllableScreen{
         String tempJobTitle = jobTitletxt.getText();
         String tempFullName = fullNametxt.getText();
 
-        depSub.addStaff(tempUsername, tempPassword, tempJobTitle, tempFullName, database.staffDatabase.getStaffCounter());
+        staffDatabase.incStaffCounter();
+        depSub.addStaff(tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter());
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
