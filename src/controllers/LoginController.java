@@ -62,6 +62,7 @@ public class LoginController implements ControllableScreen{
         String passWord = passwordField.getText();
         if((depSub.login(login,passWord)))
         {
+
             parent.setScreen(ScreenController.RequestID,"UP");
         }else
         {
