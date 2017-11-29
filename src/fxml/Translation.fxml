@@ -29,7 +29,7 @@
                   <Insets left="250.0" right="250.0" />
                </GridPane.margin>
             </JFXTextField>
-            <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <ChoiceBox fx:id="languageChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </children>
