@@ -23,5 +23,7 @@ public class TransportController {
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
     }
 
-
+    public Node returnNode(){
+        return endLocationChoiceBox.getValue();
+    }
 }

@@ -33,4 +33,12 @@ public class Sanitation extends Service {
 
     //Set this to the service that is requested
     private String requestedService;
+
+    public ArrayList<String> getServiceTypes() {
+        return serviceTypes;
+    }
+
+    public void setRequestedService(String requestedService) {
+        this.requestedService = requestedService;
+    }
 }

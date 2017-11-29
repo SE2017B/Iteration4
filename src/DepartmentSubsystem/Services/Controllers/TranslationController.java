@@ -1,7 +1,10 @@
 package DepartmentSubsystem.Services.Controllers;
 
+import DepartmentSubsystem.DepartmentSubsystem;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 
@@ -9,32 +12,29 @@ import javafx.event.ActionEvent;
 import DepartmentSubsystem.Services.Translation;
 
 public class TranslationController {
+    DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
     private String languageSel;
 
-    @FXML
-    private MenuButton languageDropDown;
+    public void init(){
+        languageChoiceBox.setItems(FXCollections.observableList(((Translation)(DSS.getDepartment("Translation Department").getServices().get(0))).getLanguages()));
+    }
 
     @FXML
-    private MenuItem spanish;
-
-    @FXML
-    private MenuItem czech;
-
-    @FXML
-    private MenuItem russian;
-
-    @FXML
-    private MenuItem hindi;
+    private ChoiceBox<String> languageChoiceBox;
 
     @FXML
     private JFXTextField durationTextFiled;
 
     @FXML
     void languagePicked(ActionEvent e) {
-        languageSel = ((MenuItem) e.getSource()).getText();
-        languageDropDown.setText(languageSel);
-        System.out.println("Language Selected " + languageSel);
-
+        this.languageSel = languageChoiceBox.getValue();
     }
 
+    public String getLanguageSel() {
+        return languageSel;
+    }
+
+    public String getDuration(){
+        return durationTextFiled.getText();
+    }
 }

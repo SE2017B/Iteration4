@@ -1,6 +1,10 @@
 package DepartmentSubsystem.Services.Controllers;
 
+import DepartmentSubsystem.DepartmentSubsystem;
+import DepartmentSubsystem.Services.Translation;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 
@@ -9,27 +13,21 @@ import DepartmentSubsystem.Services.Sanitation;
 
 public class SanitationController {
     private String sanSel;
+    DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
+
+    public void init(){
+        sanitationMenu.setItems(FXCollections.observableList(((Sanitation)((DSS.getDepartment("Facilities").getServices().get(0)))).getServiceTypes()));
+    }
 
     @FXML
-    private SplitMenuButton sanitationMenu;
-
-    @FXML
-    private MenuItem roomPrep;
-
-    @FXML
-    private MenuItem bathRestock;
-
-    @FXML
-    private MenuItem roomClean;
-
-    @FXML
-    private MenuItem generalClean;
+    private ChoiceBox<String> sanitationMenu;
 
     @FXML
     void sanitationSelected(ActionEvent e) {
-        sanSel = ((MenuItem) e.getSource()).getText();
-        sanitationMenu.setText(sanSel);
-        System.out.println("Language Selected " + sanSel);
+        sanSel = sanitationMenu.getValue();
     }
 
+    public String getSanSel() {
+        return sanSel;
+    }
 }

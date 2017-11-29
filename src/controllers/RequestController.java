@@ -9,6 +9,14 @@
 package controllers;
 
 import DepartmentSubsystem.*;
+import DepartmentSubsystem.Services.Controllers.FoodDeliveryController;
+import DepartmentSubsystem.Services.Controllers.SanitationController;
+import DepartmentSubsystem.Services.Controllers.TranslationController;
+import DepartmentSubsystem.Services.Controllers.TransportController;
+import DepartmentSubsystem.Services.FoodDelivery;
+import DepartmentSubsystem.Services.Sanitation;
+import DepartmentSubsystem.Services.Translation;
+import DepartmentSubsystem.Services.Transport;
 import controllers.LoginController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -51,6 +59,7 @@ public class RequestController implements ControllableScreen{
     private DepartmentSubsystem depSub;
     private Service servSelect;
     private ServiceRequest reqServPls;
+    private ControllableScreen currentServiceController;
 
 
     private static int requestIDCount = 0;
@@ -201,6 +210,8 @@ public class RequestController implements ControllableScreen{
         //todo create the request
         requestIDCount++;
 
+        fillInServiceSpecificRecs();
+
         //Submit request
         depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL", "Extra1", "Extra2");
 
@@ -211,6 +222,28 @@ public class RequestController implements ControllableScreen{
         resolveServiceListView.getItems().add(nReq.toString());
 
     }
+
+    private void fillInServiceSpecificRecs() {
+        Service service = choiceBoxService.getValue();
+        if(service.toString().equalsIgnoreCase("Translation Service")){
+            //Sets the language to the service, form the controller
+            ((Translation)service).setRequestedLanguage(((TranslationController)this.currentServiceController).getLanguageSel());
+            //Sets the duration of the session to the service, form the controller
+            ((Translation)service).setDuration(Integer.parseInt(((TranslationController)this.currentServiceController).getDuration()));
+        }
+        else if(service.toString().equalsIgnoreCase("Transport Service")){
+            //Sets the end location to the service
+            ((Transport)service).setEndLocation(((TransportController)this.currentServiceController).returnNode());
+        }
+        else if(service.toString().equalsIgnoreCase("Sanitation")){
+            ((Sanitation)service).setRequestedService(((SanitationController)this.currentServiceController).getSanSel());
+        }
+        else if(service.toString().equalsIgnoreCase("Food Delivery Service")){
+            ((FoodDelivery)service).setSelectedFood(((FoodDeliveryController)this.currentServiceController).getFoodSelected());
+            ((FoodDelivery)service).setAllergies(((FoodDeliveryController)this.currentServiceController).getAllergy());
+        }
+    }
+
     public void cancelPressed(ActionEvent e)
     {
         //todo add clear for time
@@ -263,21 +296,23 @@ public class RequestController implements ControllableScreen{
             nameService = newValue.toString();
             choiceBoxService.setDisable(false);
             choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
-            ;
 
             //todo URL ??????????????????????????????????????????????????????????????\
             String URLPLS = newValue.getURL();
             //String testURL = "/fxml/FoodDelivery.fxml";
             System.out.println(URLPLS);
             try {
-                AnchorPane servicePane = FXMLLoader.load(getClass().getResource(URLPLS));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(URLPLS));
+                AnchorPane servicePane = loader.load();
                 //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
                 servicePane1.getChildren().setAll(servicePane);
+                this.currentServiceController = loader.getController();
+                if()
+
             }catch(Exception e){
                 System.out.println(e.getMessage());
                 System.out.println(URLPLS);
             }
-
 
     }
     public void staffSelected(Staff newValue)
@@ -296,7 +331,7 @@ public class RequestController implements ControllableScreen{
         date = ((JFXDatePicker)e.getSource()).getValue().toString();
     }
 
-//////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
     /////////           Settings Tab
     //////////////////////////////////////////////////////////
 
