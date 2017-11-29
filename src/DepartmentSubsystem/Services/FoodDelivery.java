@@ -11,32 +11,44 @@ package DepartmentSubsystem.Services;
 import DepartmentSubsystem.Department;
 import DepartmentSubsystem.Service;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.*;
+import java.util.ArrayList;
 
 public class FoodDelivery extends Service {
     //Set list of menu items available for the user to choose
-    private HashMap<String, String> menuItems = populateMenuItems(); //Cost and item associated with it
+    private ArrayList<String> menuItems = populateMenuItems(); //Cost and item associated with it
 
     public FoodDelivery(Department department, String description) {
         super(department, description);
+        menuItems = populateMenuItems();
+        System.out.println("Hi" + menuItems);
     }
 
-    private HashMap<String, String> populateMenuItems(){
-        HashMap<String, String> menuItem = new HashMap<>();
-        menuItem.put("Cheese Pizza","12 Cheese pizza");
-        menuItem.put("Cheeseburger","Two buttery buns, lettuce, cheese, tomato, beef, and onions");
-        menuItem.put("Sushi","Six California rolls served with Soy sauce and ginger");
-        menuItem.put("Lamb Vindaloo","Famous Indian dish");
-        menuItem.put("Duck","Three quack units");
-        menuItem.put("Turkey","Gobble Gobble");
-        menuItem.put("Sausage","One unit of sausage");
-        menuItem.put("Half a Pig","one half units of pig");
+    private ArrayList<String> populateMenuItems(){
+        ArrayList<String> menuItem = new ArrayList<>();
+        menuItem.add("Cheese Pizza");
+        menuItem.add("Cheeseburger");
+        menuItem.add("Sushi");
+        menuItem.add("Lamb Vindaloo");
+        menuItem.add("Duck");
+        menuItem.add("Turkey");
+        menuItem.add("Sausage");
+        menuItem.add("Half a Pig");
         return menuItem;
     }
 
     //These two fields contain the selected items and any allergies
-    private ArrayList<String> selectedFood;
+    private String selectedFood;
     private String allergies = ""; //allergy field
+
+    public void setSelectedFood(String selectedFood) {
+        this.selectedFood = selectedFood;
+    }
+
+    public void setAllergies(String allergies) {
+        this.allergies = allergies;
+    }
+
+    public ArrayList<String> getMenuItems() {
+        return menuItems;
+    }
 }

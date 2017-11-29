@@ -11,16 +11,11 @@ package controllers;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,6 +37,17 @@ public class ScreenController extends StackPane {
     public static String RequestFile = "/fxml/Request.fxml";
     public static String LoginID = "Login";
     public static String LoginFile = "/fxml/Login.fxml";
+
+//
+//    //
+//    public static String TransportID = "Transport";
+//    public static String TransportFile = "/fxml/Transport.fxml";
+//    public static String TranslationID = "Translation";
+//    public static String TranslationFile = "/fxml/Translation.fxml";
+//    public static String SanitationID = "Sanitation";
+//    public static String SanitationFile = "/fxml/Sanitation.fxml";
+//    public static String FoodDeliveryID = "FoodDelivery";
+//    public static String FoodDeliveryFile = "/fxml/FoodDelivery.fxml";
 
 
     private HashMap<String, Node> screens = new HashMap<String, Node>();
@@ -75,7 +81,7 @@ public class ScreenController extends StackPane {
     public boolean loadScreen (String name, String file) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(file));
-            Parent fxmlToLoad = (Parent) fxmlLoader.load();
+            Parent fxmlToLoad = fxmlLoader.load();
             ControllableScreen controllerToLoad = ((ControllableScreen) fxmlLoader.getController());
             controllerToLoad.setParentController(this);
             controllerToLoad.init();

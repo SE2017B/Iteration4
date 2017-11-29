@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TitledPane?>
@@ -25,31 +26,26 @@
                <children>
                   <GridPane prefHeight="770.0" prefWidth="1294.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="422.0" minWidth="10.0" prefWidth="258.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="568.0" minWidth="10.0" prefWidth="370.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="817.0" minWidth="10.0" prefWidth="366.60002441406255" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="162.5999755859375" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="300.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="422.0" minWidth="10.0" prefWidth="174.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="568.0" minWidth="10.0" prefWidth="126.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="568.0" minWidth="10.0" prefWidth="121.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="568.0" minWidth="10.0" prefWidth="226.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="817.0" minWidth="10.0" prefWidth="121.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="817.0" minWidth="10.0" prefWidth="127.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="817.0" minWidth="10.0" prefWidth="216.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" prefWidth="198.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints />
                      </rowConstraints>
                      <children>
-                        <JFXButton fx:id="btnEnter" onAction="#enterPressed" prefHeight="50.0" prefWidth="150.0" text="Go!" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                        <JFXButton fx:id="btnEnter" onAction="#enterPressed" prefHeight="50.0" prefWidth="150.0" text="Go!" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </JFXButton>
-                        <JFXCheckBox onAction="#stairsPressed" prefHeight="49.0" prefWidth="102.0" styleClass="text-on-dark" text="Stairs?" unCheckedColor="#09b5ff" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </JFXCheckBox>
-                        <JFXButton fx:id="ntncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Return" GridPane.halignment="CENTER" GridPane.rowSpan="2">
+                        <JFXButton fx:id="ntncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="140.0" text="Return" GridPane.halignment="CENTER" GridPane.rowSpan="2">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -57,8 +53,54 @@
                               <Insets />
                            </GridPane.margin>
                         </JFXButton>
-                        <ChoiceBox fx:id="startNodeChoice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                        <ChoiceBox fx:id="endNodeChoice" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <ChoiceBox fx:id="startNodeChoice" prefHeight="42.0" prefWidth="160.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                        <ChoiceBox fx:id="endNodeChoice" prefHeight="42.0" prefWidth="152.0" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
+                        <MenuButton fx:id="startTypeMenu" mnemonicParsing="false" prefHeight="44.0" prefWidth="103.0" text="Type" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                          <items>
+                            <MenuItem fx:id="startREST" mnemonicParsing="false" onAction="#startTypeSelected" text="Restroom" />
+                            <MenuItem fx:id="startRETL" mnemonicParsing="false" onAction="#startTypeSelected" text="Retail" />
+                              <MenuItem fx:id="startEXIT" mnemonicParsing="false" onAction="#startTypeSelected" text="Exits" />
+                              <MenuItem fx:id="startSTAI" mnemonicParsing="false" onAction="#startTypeSelected" text="Stairs" />
+                              <MenuItem fx:id="startELEV" mnemonicParsing="false" onAction="#startTypeSelected" text="Elevators" />
+                              <MenuItem fx:id="startINFO" mnemonicParsing="false" onAction="#startTypeSelected" text="Information" />
+                              <MenuItem fx:id="startDEPT" mnemonicParsing="false" onAction="#startTypeSelected" text="Department" />
+                              <MenuItem fx:id="startSERV" mnemonicParsing="false" onAction="#startTypeSelected" text="Services" />
+                          </items>
+                        </MenuButton>
+                        <MenuButton fx:id="startFloorMenu" mnemonicParsing="false" prefHeight="44.0" prefWidth="101.0" text="Floor" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="L2" />
+                              <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="L1" />
+                              <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="G" />
+                              <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="1" />
+                              <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="2" />
+                              <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="3" />
+                              <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="ALL" />
+                           </items>
+                        </MenuButton>
+                        <MenuButton fx:id="endTypeMenu" mnemonicParsing="false" prefHeight="44.0" prefWidth="107.0" text="Type" GridPane.columnIndex="4" GridPane.halignment="CENTER">
+                           <items>
+                              <MenuItem fx:id="endREST" mnemonicParsing="false" onAction="#endTypeSelected" text="Restroom" />
+                              <MenuItem fx:id="endRETL" mnemonicParsing="false" onAction="#endTypeSelected" text="Retail" />
+                              <MenuItem fx:id="endEXIT" mnemonicParsing="false" onAction="#endTypeSelected" text="Exits" />
+                              <MenuItem fx:id="endSTAI" mnemonicParsing="false" onAction="#endTypeSelected" text="Stairs" />
+                              <MenuItem fx:id="endELEV" mnemonicParsing="false" onAction="#endTypeSelected" text="Elevators" />
+                              <MenuItem fx:id="endINFO" mnemonicParsing="false" onAction="#endTypeSelected" text="Information" />
+                              <MenuItem fx:id="endDEPT" mnemonicParsing="false" onAction="#endTypeSelected" text="Department" />
+                              <MenuItem fx:id="endSERV" mnemonicParsing="false" onAction="#endTypeSelected" text="Services" />
+                           </items>
+                        </MenuButton>
+                        <MenuButton fx:id="endFloorMenu" mnemonicParsing="false" prefHeight="44.0" prefWidth="105.0" text="Floor" GridPane.columnIndex="5" GridPane.halignment="CENTER">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="L2" />
+                              <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="L1" />
+                              <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="G" />
+                              <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="1" />
+                              <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="2" />
+                              <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="3" />
+                              <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="ALL" />
+                           </items>
+                        </MenuButton>
                      </children>
                   </GridPane>
                </children>
@@ -91,40 +133,7 @@
                               </VBox>
                            </children>
                         </AnchorPane>
-                      <AnchorPane>
-                           <children>
-                              <ScrollPane fx:id="floorScrollPane" fitToHeight="true" hbarPolicy="ALWAYS" prefHeight="97.6" prefWidth="1278.4" styleClass="pane" vbarPolicy="NEVER">
-                                 <content>
-                                    <GridPane hgap="40.0" prefHeight="97.6" prefWidth="1800.0" styleClass="pane">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="120.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="100.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <JFXButton fx:id="floorL2Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="L2" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                                          <JFXButton fx:id="floorL1Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="L1" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-                                          <JFXButton fx:id="floorGButton" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="G" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                                          <JFXButton fx:id="floor2Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="2" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
-                                          <JFXButton fx:id="floor3Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="134.0" text="3" GridPane.columnIndex="7" GridPane.halignment="CENTER" />
-                                          <JFXButton fx:id="floor1Button" onAction="#floorButtonPressed" prefHeight="100.0" prefWidth="150.0" text="1" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </GridPane>
-                                 </content>
-                              </ScrollPane>
-                           </children>
-                        </AnchorPane>
+                      <AnchorPane fx:id="buttonHolderPane" />
                     </items>
                   </SplitPane>
                </children>

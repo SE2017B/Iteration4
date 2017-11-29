@@ -52,4 +52,12 @@ public class Department{
     public String toString(){
         return this.type;
     }
+
+    public void addPersonel(Staff person){
+        this.personel.add(person);
+    }
+
+    public void removePersonel(Staff person){
+        this.personel.remove(person);
+    }
 }

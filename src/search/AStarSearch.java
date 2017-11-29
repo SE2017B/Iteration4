@@ -8,6 +8,15 @@ import map.Path;
 import java.util.*;
 import java.util.function.DoubleToLongFunction;
 
+
+/*
+
+This class contains functions to find a path based on the AStar search method,
+returning paths based on the Astar search method,
+finding paths with pit stops,
+and a method that obtains the Euclidean distance between two nodes.
+
+ */
 public class AStarSearch implements SearchStrategy {
     public AStarSearch(){}
 

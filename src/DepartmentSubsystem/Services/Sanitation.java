@@ -11,10 +11,12 @@ package DepartmentSubsystem.Services;
 import DepartmentSubsystem.Department;
 import DepartmentSubsystem.Service;
 import java.util.ArrayList;
+
 public class Sanitation extends Service {
-    //This contains all the possible requests for a specific locaiton
+    //This contains all the possible requests for a specific location
     private ArrayList<String> serviceTypes = populateServiceTypes();
 
+    //Constructor for the service - Should only be called during creation
     public Sanitation(Department department, String description) {
         super(department, description);
     }
@@ -31,4 +33,12 @@ public class Sanitation extends Service {
 
     //Set this to the service that is requested
     private String requestedService;
+
+    public ArrayList<String> getServiceTypes() {
+        return serviceTypes;
+    }
+
+    public void setRequestedService(String requestedService) {
+        this.requestedService = requestedService;
+    }
 }

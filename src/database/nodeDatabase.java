@@ -9,6 +9,12 @@ import java.util.Scanner;
 
 public class nodeDatabase {
 
+    // Table Schema
+    //////////////////////////////////////////////////////////////////
+    // nodes (nodeID PK, xCoord, yCoord, floor, building, nodeType,
+    //        longName, shortName, teamAssigned)
+    //////////////////////////////////////////////////////////////////
+
     private static final String JDBC_URL_MAP="jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
 
@@ -34,9 +40,40 @@ public class nodeDatabase {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
+    // Delete nodes table
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void deleteNodeTable() {
+
+        try {
+
+            conn = DriverManager.getConnection(JDBC_URL_MAP);
+            conn.setAutoCommit(false);
+
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet res = meta.getTables(null, null, "NODES", null);
+
+            Statement stmtDelete1 = conn.createStatement();
+            String deleteNodesTable = ("DROP TABLE nodes");
+
+            if (res.next()) {
+                int rsetDelete1 = stmtDelete1.executeUpdate(deleteNodesTable);
+                System.out.println("Drop Node Table Successful!");
+                conn.commit();
+                stmtDelete1.close();
+                conn.close();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the nodes
     ///////////////////////////////////////////////////////////////////////////////
     public static void createNodeTable() {
+
+        System.out.println();
 
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
@@ -45,54 +82,34 @@ public class nodeDatabase {
             DatabaseMetaData meta = conn.getMetaData();
             ResultSet res = meta.getTables(null, null, "NODES", null);
 
-            // Node table DNE just add a new node table
-            if (!res.next()) {
-                Statement stmtCreate1 = conn.createStatement();
-                String createNodesTable = ("CREATE TABLE nodes" +
-                        "(nodeID VARCHAR(50) PRIMARY KEY," +
-                        "xCoord VARCHAR(50)," +
-                        "yCoord VARCHAR(50)," +
-                        "floor VARCHAR(50)," +
-                        "building VARCHAR(50)," +
-                        "nodeType VARCHAR(50)," +
-                        "longName VARCHAR(75)," +
-                        "shortName VARCHAR(50)," +
-                        "teamAssigned VARCHAR(50))");
+            //Add a new node table
+            Statement stmtCreate1 = conn.createStatement();
+            String createNodesTable = ("CREATE TABLE nodes" +
+                    "(nodeID VARCHAR(10)," +
+                    "xCoord INTEGER," +
+                    "yCoord INTEGER," +
+                    "floor VARCHAR(2)," +
+                    "building VARCHAR(10)," +
+                    "nodeType VARCHAR(4)," +
+                    "longName VARCHAR(75)," +
+                    "shortName VARCHAR(50)," +
+                    "teamAssigned VARCHAR(6)," +
+                    "CONSTRAINT nodes_PK PRIMARY KEY (nodeID)," +
+                    "CONSTRAINT xCoord_chk CHECK ((0 <= xCoord) AND (xCoord <= 5000))," +
+                    "CONSTRAINT yCoord_chk CHECK ((0 <= yCoord) AND (yCoord <= 3400))," +
+                    "CONSTRAINT floor_chk CHECK (floor IN ('L1', 'L2', 'G', '1', '2', '3'))," +
+                    "CONSTRAINT building_chk CHECK (building IN ('BTM', 'Shapiro', 'Tower', '45 Francis', '15 Francis'))," +
+                    "CONSTRAINT nodeType_chk CHECK (nodeType IN ('HALL', 'ELEV', 'REST', 'STAI', 'DEPT', 'LABS', 'INFO', 'CONF', 'EXIT', 'RETL', 'SERV'))," +
+                    "CONSTRAINT team_chk CHECK (teamAssigned IN ('Team A', 'Team B', 'Team C', 'Team D', 'Team E', 'Team F', 'Team G', 'Team H', 'Team I')))");
 
                 int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
                 System.out.println("Create Nodes table Successful!");
 
                 conn.commit();
+                System.out.println();
+
                 stmtCreate1.close();
                 conn.close();
-
-                // Node table already exists delete and re-add
-            } else {
-                Statement stmtDelete1 = conn.createStatement();
-                String deleteNodesTable = ("DROP TABLE nodes");
-                int rsetDelete1 = stmtDelete1.executeUpdate(deleteNodesTable);
-                System.out.println("Drop Node Table Successful!");
-                stmtDelete1.close();
-
-                Statement stmtCreate1 = conn.createStatement();
-                String createNodesTable = ("CREATE TABLE nodes" +
-                        "(nodeID VARCHAR(50) PRIMARY KEY," +
-                        "xCoord VARCHAR(50)," +
-                        "yCoord VARCHAR(50)," +
-                        "floor VARCHAR(50)," +
-                        "building VARCHAR(50)," +
-                        "nodeType VARCHAR(50)," +
-                        "longName VARCHAR(75)," +
-                        "shortName VARCHAR(50)," +
-                        "teamAssigned VARCHAR(50))");
-
-                int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
-                System.out.println("Create Nodes table Successful!");
-
-                conn.commit();
-                stmtCreate1.close();
-                conn.close();
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -106,16 +123,18 @@ public class nodeDatabase {
         try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
-            conn.getMetaData();
+
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet res = meta.getTables(null, null, "NODES", null);
 
             PreparedStatement insertNode = conn.prepareStatement("INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 
-            for (int j = 1; j < allNodes.size(); j++) {
+            for (int j = 0; j < allNodes.size(); j++) {
 
                 insertNode.setString(1, allNodes.get(j).getID());
-                insertNode.setString(2, Integer.toString(allNodes.get(j).getX()));
-                insertNode.setString(3, Integer.toString(allNodes.get(j).getY()));
+                insertNode.setInt(2, allNodes.get(j).getX());
+                insertNode.setInt(3, allNodes.get(j).getY());
                 insertNode.setString(4, nodeDatabase.allNodes.get(j).getFloor().getDbMapping());
                 insertNode.setString(5, nodeDatabase.allNodes.get(j).getBuilding());
                 insertNode.setString(6, nodeDatabase.allNodes.get(j).getType());
@@ -124,10 +143,12 @@ public class nodeDatabase {
                 insertNode.setString(9, nodeDatabase.allNodes.get(j).getTeam());
 
                 insertNode.executeUpdate();
-                System.out.println(j + ": Insert Node Successful!");
+                System.out.printf("%-5d: Insert Node Successful!\n",(j+1));
             }
 
             conn.commit();
+            System.out.println();
+
             insertNode.close();
             conn.close();
 
@@ -149,8 +170,8 @@ public class nodeDatabase {
             PreparedStatement addAnyNode = conn.prepareStatement("INSERT INTO nodes VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             addAnyNode.setString(1, anyNode.getID());
-            addAnyNode.setString(2, anyNode.getXString());
-            addAnyNode.setString(3, anyNode.getYString());
+            addAnyNode.setInt(2, anyNode.getX());
+            addAnyNode.setInt(3, anyNode.getY());
             addAnyNode.setString(4, anyNode.getFloor().getDbMapping());
             addAnyNode.setString(5, anyNode.getBuilding());
             addAnyNode.setString(6, anyNode.getType());
@@ -159,9 +180,11 @@ public class nodeDatabase {
             addAnyNode.setString(9, anyNode.getTeam());
 
             addAnyNode.executeUpdate();
-            System.out.println("Insert Node Successful for nodeID: " + anyNode.getID());
+            System.out.printf("Insert Node Successful for nodeID: %-20s\n", anyNode.getID());
 
             conn.commit();
+            System.out.println();
+
             addAnyNode.close();
             conn.close();
 
@@ -190,8 +213,8 @@ public class nodeDatabase {
 
             PreparedStatement modAddNode = conn.prepareStatement(strModAdd);
             modAddNode.setString(1, anyNode.getID());
-            modAddNode.setString(2, anyNode.getXString());
-            modAddNode.setString(3, anyNode.getYString());
+            modAddNode.setInt(2, anyNode.getX());
+            modAddNode.setInt(3, anyNode.getY());
             modAddNode.setString(4, anyNode.getFloor().getDbMapping());
             modAddNode.setString(5, anyNode.getBuilding());
             modAddNode.setString(6, anyNode.getType());
@@ -254,8 +277,8 @@ public class nodeDatabase {
             ResultSet rsetAllNodes = selectAllNodes.executeQuery(allNodes);
 
             String strNodeID;
-            String strXCoord;
-            String strYCoord;
+            int intXCoord = 0;
+            int intYCoord = 0;
             String strFloor;
             String strBuilding;
             String strNodeType;
@@ -269,8 +292,8 @@ public class nodeDatabase {
             //Process the results
             while (rsetAllNodes.next()) {
                 strNodeID = rsetAllNodes.getString("nodeID");
-                strXCoord = rsetAllNodes.getString("xcoord");
-                strYCoord = rsetAllNodes.getString("ycoord");
+                intXCoord = rsetAllNodes.getInt("xcoord");
+                intYCoord = rsetAllNodes.getInt("ycoord");
                 strFloor = rsetAllNodes.getString("floor");
                 strBuilding = rsetAllNodes.getString("building");
                 strNodeType = rsetAllNodes.getString("nodeType");
@@ -278,10 +301,11 @@ public class nodeDatabase {
                 strShortName = rsetAllNodes.getString("shortName");
                 strTeamAssigned = rsetAllNodes.getString("teamAssigned");
 
-                System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-50s %-30s %-20s\n", strNodeID, strXCoord, strYCoord, strFloor, strBuilding, strNodeType, strLongName, strShortName, strTeamAssigned);
+                System.out.printf("%-20s %-20d %-20d %-20s %-20s %-20s %-50s %-30s %-20s\n", strNodeID, intXCoord, intYCoord, strFloor, strBuilding, strNodeType, strLongName, strShortName, strTeamAssigned);
             } // End While
 
             conn.commit();
+            System.out.println();
 
             rsetAllNodes.close();
             selectAllNodes.close();
@@ -516,8 +540,9 @@ public class nodeDatabase {
                         nodeDatabase.allNodes.get(j).getShortName()+ "," +
                         nodeDatabase.allNodes.get(j).getTeam()
                 );
-                System.out.println(j + ": Node Record Saved!");
+                System.out.printf("%-5d: Node Record Saved!\n", j);
             }
+            System.out.println();
             pw1.flush();
             pw1.close();
 

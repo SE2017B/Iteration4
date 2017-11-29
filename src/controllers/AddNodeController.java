@@ -16,16 +16,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
+import ui.*;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class AddNodeController implements ControllableScreen {
+public class AddNodeController implements ControllableScreen, Observer {
     private ScreenController parent;
     private HospitalMap map;
     private  FloorNumber currentFloor;
@@ -71,23 +75,22 @@ public class AddNodeController implements ControllableScreen {
     private Circle nodeLocation;
 
     @FXML
-    private ScrollPane floorScrollPane;
+    private AnchorPane mapButtonHolder;
 
 
-    private proxyImagePane mapImage;
+    private MapViewer mapViewer ;
 
     public void init() {
         map = HospitalMap.getMap();
-        mapImage = new proxyImagePane();
-        mapImage.setImage(FloorNumber.FLOOR_GROUND);
-        mapPane.getChildren().add(mapImage);
+        mapViewer = new MapViewer(this);
+        mapViewer.setFloor(FloorNumber.FLOOR_GROUND);
+        mapViewer.setSpacerWidth(350);
+        mapViewer.getPane().setPrefWidth(950);
+        mapButtonHolder.getChildren().add(mapViewer.getPane());
+        mapPane.getChildren().add(mapViewer.getMapImage());
 
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
-
-
-
-
 
         nodeTab.setOnSelectionChanged(e -> showNodesandEdges());
         edgeTab.setOnSelectionChanged(e -> showNodesandEdges());
@@ -103,7 +106,7 @@ public class AddNodeController implements ControllableScreen {
 
     public void onShow() {
         currentFloor = FloorNumber.FLOOR_ONE;
-        mapImage.setImage(currentFloor);
+        mapViewer.setFloor(currentFloor);
         refreshNodesandEdges();
         nodeAddFloorDropDown.setText(currentFloor.getDbMapping());
         nodeEditFloorDropDown.setText(currentFloor.getDbMapping());
@@ -123,14 +126,10 @@ public class AddNodeController implements ControllableScreen {
         parent.setScreen(ScreenController.RequestID, "RIGHT");
     }
 
-    public void floorButtonPressed(ActionEvent e){
-        FloorNumber floor = FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
-        System.out.println("Floor Pressed: " + floor);
+    public void setFloor(FloorNumber floor){
         currentFloor = floor;
         nodeAddFloorDropDown.setText(floor.getDbMapping());
         nodeEditFloorDropDown.setText(floor.getDbMapping());
-        mapImage.setImage(floor);
-        mapImage.slideButtons(floorScrollPane,floor);
         refreshNodesandEdges();
 
     }
@@ -164,7 +163,7 @@ public class AddNodeController implements ControllableScreen {
 
     public void clearNodesandEdges(){
         mapPane.getChildren().clear();
-        mapPane.getChildren().add(mapImage);
+        mapPane.getChildren().add(mapViewer.getMapImage());
     }
 
 
@@ -201,7 +200,7 @@ public class AddNodeController implements ControllableScreen {
     public void refreshNodes(){
         nodeCheckBoxes.clear();
         for (Node node:map.getNodeMap()) {
-            NodeCheckBox cb = new NodeCheckBox(node, mapImage.getScale());
+            NodeCheckBox cb = new NodeCheckBox(node, mapViewer.getScale());
             nodeCheckBoxes.add(cb);
             cb.setOnAction(e -> nodeSelected(e));
         }
@@ -210,7 +209,7 @@ public class AddNodeController implements ControllableScreen {
     public void refreshEdges(){
         edgeCheckBoxes.clear();
         for (Edge edge:map.getEdgeMap()){
-            EdgeCheckBox cb = new EdgeCheckBox(edge, mapImage.getScale());
+            EdgeCheckBox cb = new EdgeCheckBox(edge, mapViewer.getScale());
             edgeCheckBoxes.add(cb);
             cb.setOnMousePressed(e -> edgeSelected(e));
         }
@@ -287,6 +286,13 @@ public class AddNodeController implements ControllableScreen {
             edgeRemoveList.getItems().remove(source.getEdge());
         }
 
+    }
+
+    @Override
+    public void update(Observable o, Object arg){
+        if(arg instanceof PathID){
+            setFloor(((PathID) arg).getFloor());
+        }
     }
     ////////////////////////////////////////////////////////////
     /////////////           Node ADD

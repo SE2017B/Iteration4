@@ -107,6 +107,9 @@ public class Staff{
         //If its not known, then LET IT BE KNOWN!
         if(!this.languages.contains(language)){this.languages.add(language);}
     }
+    public void addRequest(ServiceRequest request){
+        this.currentRequests.add(request);
+    }
 
     //Other Getters and Setters
     public void setAdmin(boolean admin) {
@@ -149,6 +152,9 @@ public class Staff{
         this.department = department;
     }
     public LinkedList<ServiceRequest> getCurrentRequests() {
+        if(currentRequests.isEmpty()){
+           return null;
+        }
         return currentRequests;
     }
     public void setCurrentRequests(LinkedList<ServiceRequest> currentRequests) {
@@ -164,4 +170,22 @@ public class Staff{
     public String toString(){
         return fullName;
     }
+
+    public void setNewVars(String username, String password, String jobTitle, String fullName, int id) {
+        this.username = username;
+        this.password = password;
+        this.jobTitle = jobTitle;
+        this.fullName = fullName;
+        this.ID = id;
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(!(obj instanceof Staff)) return false;
+        Staff other = (Staff)obj;
+        return this.getUsername().equals(other.getUsername());
+    }
+
 }

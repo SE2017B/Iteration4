@@ -7,38 +7,19 @@ import map.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+/*
 
+This class contains functions to find a path based on the Dijkstras search method,
+returning paths based on the Dijkstras search method,
+and also finding the path to a node of the specified type
+using Dijkstras search method.
+
+ */
 public class DijkstrasSearch implements SearchStrategy {
     public DijkstrasSearch(){}
 
     @Override
     public Path findPath(Node start, Node end) {
-//        ArrayList<Path> frontier = new ArrayList<>();
-//        Path first = new Path();
-//        first.addToPath(start);
-//        frontier.add(first);
-//
-//        while(frontier.size() != 0){
-//        Path currentPath = frontier.get(0);
-//        frontier.remove(currentPath);
-//
-//        if(currentPath.getPath().get(currentPath.getPath().size()-1) == end){
-//            return currentPath;
-//        }
-//
-//        ArrayList<Path> newPaths = new ArrayList<>();
-//        for(Edge e : currentPath.getPath().get(currentPath.getPath().size()-1).getConnections()){
-//            Node node = e.getOtherNode(currentPath.getPath().get(currentPath.getPath().size()-1));
-//            if(currentPath.getPath().contains(node)) continue;
-//
-//            Path add = new Path(currentPath);
-//            add.addToPath(node);
-//            newPaths.add(add);
-//        }
-//
-//        Collections.sort(newPaths);
-//        frontier.addAll(newPaths);
-//    }
         ArrayList<Node> frontier = new ArrayList<>();
         ArrayList<Node> explored = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
@@ -65,27 +46,6 @@ public class DijkstrasSearch implements SearchStrategy {
     }
 
     public Path findPathBy(Node start, String type){
-//        ArrayList<Path> frontier = new ArrayList<>();
-//        Path first = new Path();
-//        first.addToPath(start);
-//        frontier.add(first);
-//
-//        while(frontier.size() != 0){
-//            Path currentPath = frontier.get(0);
-//            Node currentNode = currentPath.getPath().get(currentPath.getPath().size()-1);
-//            frontier.remove(currentPath);
-//            if(currentNode.getType().equals(type)) return currentPath;
-//            ArrayList<Path> newPaths = new ArrayList<>();
-//            for(int i=0;i<currentNode.getConnections().size();i++){
-//                Node neighbor = currentNode.getConnections().get(i).getOtherNode(currentNode);
-//                if(currentPath.getPath().contains(neighbor)) continue;
-//                Path add = new Path(currentPath);
-//                add.addToPath(neighbor);
-//                newPaths.add(add);
-//            }
-//            Collections.sort(newPaths);
-//            frontier.addAll(newPaths);
-//        }
         ArrayList<Node> frontier = new ArrayList<>();
         ArrayList<Node> explored = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
@@ -95,7 +55,7 @@ public class DijkstrasSearch implements SearchStrategy {
         while(!frontier.isEmpty()){
             frontier.sort((n1, n2) -> (greedy.get(n1) - greedy.get(n2)));
             Node currentNode = frontier.get(0);
-            if(currentNode.getType().equals(type)) return returnPath(cameFrom, currentNode);
+            if(currentNode.getType().equals(type) && currentNode.getFloor().equals(start.getFloor())) return returnPath(cameFrom, currentNode);
             frontier.remove(currentNode);
             explored.add(currentNode);
             for(Edge e : currentNode.getConnections()){
