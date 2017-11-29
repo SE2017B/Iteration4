@@ -13,6 +13,11 @@ import java.util.Scanner;
 
 public class staffDatabase {
 
+    // Table Schema
+    //////////////////////////////////////////////////////////////////
+    // hospitalStaff (username U1, password, jobType, fullName, ID PK)
+    //////////////////////////////////////////////////////////////////
+
     private static final String JDBC_URL_STAFF="jdbc:derby:hospitalStaffDB;create=true";
     private static Connection conn;
 
@@ -26,7 +31,7 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Delete staff table
     ///////////////////////////////////////////////////////////////////////////////
-    public static void deleteStaffTable() throws SQLException {
+    public static void deleteStaffTable() {
 
         try {
 
@@ -286,7 +291,7 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Read from Staff CSV File and store columns in staff array lists
     ///////////////////////////////////////////////////////////////////////////////
-    public static void readStaffCSV (String fname) throws NoSuchAlgorithmException {
+    public static void readStaffCSV (String fname) {
 
         File staffFile = new File(fname);
 
@@ -309,6 +314,8 @@ public class staffDatabase {
             inputStreamStaff.close();
 
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }

@@ -10,6 +10,11 @@ import java.util.Scanner;
 
 public class edgeDatabase {
 
+    // Table Schema
+    //////////////////////////////////////////////////////////////////
+    // edges (edgeID PK, startNode FK nodes(nodeID), endNode FK nodes(nodeID))
+    //////////////////////////////////////////////////////////////////
+
     private static final String JDBC_URL_MAP = "jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
 
@@ -22,7 +27,7 @@ public class edgeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Delete edge table
     ///////////////////////////////////////////////////////////////////////////////
-    public static void deleteEdgeTable() throws SQLException {
+    public static void deleteEdgeTable() {
 
         try {
 

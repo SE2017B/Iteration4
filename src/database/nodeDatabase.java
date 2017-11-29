@@ -9,6 +9,12 @@ import java.util.Scanner;
 
 public class nodeDatabase {
 
+    // Table Schema
+    //////////////////////////////////////////////////////////////////
+    // nodes (nodeID PK, xCoord, yCoord, floor, building, nodeType,
+    //        longName, shortName, teamAssigned)
+    //////////////////////////////////////////////////////////////////
+
     private static final String JDBC_URL_MAP="jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
 
@@ -36,7 +42,7 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Delete nodes table
     ///////////////////////////////////////////////////////////////////////////////
-    public static void deleteNodeTable() throws SQLException {
+    public static void deleteNodeTable() {
 
         try {
 
