@@ -127,6 +127,8 @@ public class PathController implements ControllableScreen, Observer{
 
     private Pane arrow;
 
+    private PathTransition pathTransition;
+
     @FXML
     private JFXListView<String> directionsList;
     //Methods start here
@@ -164,6 +166,8 @@ public class PathController implements ControllableScreen, Observer{
         arrowView.setFitWidth(arrowSize);
         arrow.setVisible(true);
         arrow.getChildren().add(arrowView);
+
+        pathTransition = new PathTransition();
     }
 
     public void onShow(){
@@ -286,6 +290,7 @@ public class PathController implements ControllableScreen, Observer{
             //shapes.remove(s);
             mapPane.getChildren().remove(s);
         }
+        pathTransition.stop();
         arrow.setVisible(false);
         mapPane.getChildren().remove(arrow);
 
@@ -298,6 +303,7 @@ public class PathController implements ControllableScreen, Observer{
         }
     }
     private void animatePath(Path path){
+        System.out.println("Animating Path");
         //represent first and last nodes with animated circles
         Circle newp = getPoint(path.getPath().get(0).getX(),path.getPath().get(0).getY());
         newp.setFill(Color.RED);
@@ -312,37 +318,36 @@ public class PathController implements ControllableScreen, Observer{
 
 
 
+        if(path.getPath().size() > 1) {
+            //animation that moves the indicator
+            pathTransition = new PathTransition();
+            //path to follow
+            javafx.scene.shape.Path p = new javafx.scene.shape.Path();
+            p.setStroke(Color.NAVY);
+            p.setStrokeWidth(4);
+            shapes.add(p);
+            //p.setVisible(false);//let animation move along our line
+            mapPane.getChildren().addAll(p, arrow);
+            arrow.setVisible(true);
+            //add all shapes to shape
 
-        //animation that moves the indicator
-        PathTransition pathTransition = new PathTransition();
+            //to remove the red line, remove p ^
 
-        //path to follow
-        javafx.scene.shape.Path p = new javafx.scene.shape.Path();
-        p.setStroke(Color.NAVY);
-        p.setStrokeWidth(4);
-        shapes.add(p);
-        //p.setVisible(false);//let animation move along our line
-        mapPane.getChildren().addAll(p,arrow);
-        arrow.setVisible(true);
-        //shapes.add(arrow);
-        //add all shapes to shape
+            //starting point defined by MoveTo
+            p.getElements().add(new MoveTo(path.getPath().get(0).getX() / mapViewer.getScale(), path.getPath().get(0).getY() / mapViewer.getScale()));
 
-        //to remove the red line, remove p ^
-
-        //starting point defined by MoveTo
-        p.getElements().add(new MoveTo(path.getPath().get(0).getX()/mapViewer.getScale(), path.getPath().get(0).getY()/mapViewer.getScale()));
-
-        //line movements along drawn lines
-        for(int i=1;i<path.getPath().size();i++){
-            p.getElements().add(new LineTo(path.getPath().get(i).getX()/mapViewer.getScale(), path.getPath().get(i).getY()/mapViewer.getScale()));
+            //line movements along drawn lines
+            for (int i = 1; i < path.getPath().size(); i++) {
+                p.getElements().add(new LineTo(path.getPath().get(i).getX() / mapViewer.getScale(), path.getPath().get(i).getY() / mapViewer.getScale()));
+            }
+            //define the animation actions
+            pathTransition.setDuration(Duration.millis(p.getElements().size() * 800));//make speed constant
+            pathTransition.setNode(arrow);
+            pathTransition.setPath(p);
+            pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+            pathTransition.setCycleCount(Transition.INDEFINITE);
+            pathTransition.play();
         }
-        //define the animation actions
-        pathTransition.setDuration(Duration.millis(p.getElements().size()*800));//make speed constant
-        pathTransition.setNode(arrow);
-        pathTransition.setPath(p);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(Transition.INDEFINITE);
-        pathTransition.play();
 
     }
 
@@ -384,6 +389,9 @@ public class PathController implements ControllableScreen, Observer{
         pathtoFloor=new HashMap<>();
         floorindextoPath=new HashMap<>();
         paths=new ArrayList<>();
+        pathTransition.stop();
+        arrow.setVisible(false);
+        mapPane.getChildren().removeAll(arrow);
     }
 
 
@@ -490,7 +498,7 @@ public class PathController implements ControllableScreen, Observer{
         }
         if(arg instanceof PathID){
             PathID ID = (PathID) arg;
-            if(ID != -1) {
+            if(ID.getID() != -1) {
                 currentPath = paths.get(ID.getID());
                 currentFloor = ID.getFloor();
                 switchPath(currentPath);
