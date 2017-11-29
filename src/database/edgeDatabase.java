@@ -226,7 +226,7 @@ public class edgeDatabase {
             String strEndNode;
 
             System.out.println("");
-            System.out.printf("%-21s %-10s %-10s\n", "edgeID", "startNode", "endNode");
+            System.out.printf("%-30s %-20s %-20s\n", "edgeID", "startNode", "endNode");
 
             //Process the results
             while (rsetAllEdges.next()) {
@@ -234,7 +234,7 @@ public class edgeDatabase {
                 strStartNode = rsetAllEdges.getString("startNode");
                 strEndNode = rsetAllEdges.getString("endNode");
 
-                System.out.printf("%-21s %-10s %-10s\n", strEdgeID, strStartNode, strEndNode);
+                System.out.printf("%-30s %-20s %-20s\n", strEdgeID, strStartNode, strEndNode);
             } // End While
 
             conn.commit();

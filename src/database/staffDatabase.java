@@ -19,7 +19,7 @@ public class staffDatabase {
     public static ArrayList<Staff> getStaff(){ return allStaff; }
 
     ///////////////////////////////////////////////////////////////////////////////
-    // Delete nodes table
+    // Delete staff table
     ///////////////////////////////////////////////////////////////////////////////
     public static void deleteStaffTable() throws SQLException {
 
@@ -50,7 +50,6 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the Staff Members
     ///////////////////////////////////////////////////////////////////////////////
-
     public static void createStaffTable() {
 
         try {
@@ -66,7 +65,7 @@ public class staffDatabase {
                     "(username VARCHAR(20)," +
                     "password VARCHAR(20)," +
                     "jobTitle VARCHAR(50)," +
-                    "fullname VARCHAR(20)," +
+                    "fullname VARCHAR(30)," +
                     "ID INTEGER," +
                     "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
                     "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
@@ -87,71 +86,6 @@ public class staffDatabase {
         }
     }
 
-    /*
-    public static void createStaffTable() {
-
-        try {
-            conn = DriverManager.getConnection(JDBC_URL_STAFF);
-            conn.setAutoCommit(false);
-
-            DatabaseMetaData meta = conn.getMetaData();
-            ResultSet res = meta.getTables(null, null, "HOSPITALSTAFF", null);
-
-            // Staff table DNE just add
-            if (!res.next()) {
-                Statement stmtCreateStaffTable = conn.createStatement();
-                String createStaffTable = ("CREATE TABLE hospitalStaff" +
-                        "(username VARCHAR(20) PRIMARY KEY," +
-                        "password VARCHAR(20)," +
-                        "jobTitle VARCHAR(50)," +
-                        "fullname VARCHAR(20)," +
-                        "ID INTEGER)");
-
-                int rsetCreate3 = stmtCreateStaffTable.executeUpdate(createStaffTable);
-                System.out.println("Create Staff table Successful!");
-
-                conn.commit();
-                System.out.println();
-
-                stmtCreateStaffTable.close();
-                conn.close();
-            }
-            // Staff table already exists delete and re-add
-            else {
-                Statement stmtDeleteStaffTable = conn.createStatement();
-                String deleteStaffTable = ("DROP TABLE hospitalStaff");
-                System.out.println("Drop Staff Table Successful!");
-                int rsetDeleteStaffTable = stmtDeleteStaffTable.executeUpdate(deleteStaffTable);
-
-                stmtDeleteStaffTable.close();
-
-                Statement stmtCreateStaffTable = conn.createStatement();
-                String createStaffTable = ("CREATE TABLE hospitalStaff" +
-                        "(username VARCHAR(20)," +
-                        "password VARCHAR(20)," +
-                        "jobTitle VARCHAR(50)," +
-                        "fullName VARCHAR(20)," +
-                        "ID INTEGER," +
-                        "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
-                        "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
-                        "CONSTRAINT jobTitle CHECK (jobTitle IN ('Translator', 'Janitor', 'Chef', 'Food Delivery', 'Transport Staff'))," +
-                        "CONSTRAINT ID_chk CHECK (ID > 0))");
-
-                int rsetCreate1 = stmtCreateStaffTable.executeUpdate(createStaffTable);
-                System.out.println("Create Staff table Successful!");
-
-                conn.commit();
-                System.out.println();
-
-                stmtCreateStaffTable.close();
-                conn.close();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-*/
     ///////////////////////////////////////////////////////////////////////////////
     // Insert into staff table using a prepared statement from csv
     ///////////////////////////////////////////////////////////////////////////////
@@ -163,7 +97,6 @@ public class staffDatabase {
 
             PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
 
-
             for (int j = 0; j < allStaff.size(); j++) {
 
                 insertStaff.setString(1, allStaff.get(j).getUsername());
@@ -171,7 +104,6 @@ public class staffDatabase {
                 insertStaff.setString(3, allStaff.get(j).getJobTitle());
                 insertStaff.setString(4, allStaff.get(j).getFullName());
                 insertStaff.setInt(5, allStaff.get(j).getID());
-
 
                 insertStaff.executeUpdate();
                 System.out.printf("%-5d: Insert Staff Successful!\n",(j+1));
@@ -298,16 +230,14 @@ public class staffDatabase {
             String allStaff = "SELECT * FROM hospitalStaff";
             ResultSet rsetAllStaff = selectAllStaff.executeQuery(allStaff);
 
-
             String strUsername;
             String strPW;
             String strTitle;
             String strFullname;
             Integer intStaffID;
 
-
             System.out.println("");
-            System.out.printf("%-20s %-20s %-20s %-20s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID");
+            System.out.printf("%-20s %-20s %-20s %-30s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID");
 
             //Process the results
             while (rsetAllStaff.next()) {
@@ -317,7 +247,7 @@ public class staffDatabase {
                 strFullname = rsetAllStaff.getString("fullName");
                 intStaffID = rsetAllStaff.getInt("ID");
 
-                System.out.printf("%-20s %-20s %-20s %-20s %-20d\n", strUsername, strPW, strTitle, strFullname, intStaffID);
+                System.out.printf("%-20s %-20s %-20s %-30s %-20d\n", strUsername, strPW, strTitle, strFullname, intStaffID);
             } // End While
 
             conn.commit();
