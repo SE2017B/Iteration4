@@ -186,7 +186,7 @@ public class staffDatabase {
             String encoded = Base64.getEncoder().encodeToString(protect);
 
             modAddAnyStaff.setString(1, anyStaff.getUsername());
-            modAddAnyStaff.setString(2, anyStaff.getPassword());
+            modAddAnyStaff.setString(2, encoded);
             modAddAnyStaff.setString(3, anyStaff.getJobTitle());
             modAddAnyStaff.setString(4, anyStaff.getFullName());
             modAddAnyStaff.setInt(5, anyStaff.getID());
