@@ -236,8 +236,8 @@ public class DepartmentSubsystem {
         staffDatabase.modifyStaff(person);
     }
 
-    public void deleteStaff(Service ser, Staff person){
-//        Staff person = new Staff(userName,null, jobTile,null, 0);
+    public void deleteStaff(Service ser, String userName,String jobTile){
+        Staff person = new Staff(userName,null, jobTile,null, 0);
 //        if(jobTile.equals("Chef") || jobTile.equals("Food Delivery")){
 //            departments.get(3).removePersonel(person);
 //            departments.get(3).getServices().get(0).removeEligibleStaff(person);
