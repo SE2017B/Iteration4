@@ -50,7 +50,6 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the Staff Members
     ///////////////////////////////////////////////////////////////////////////////
-
     public static void createStaffTable() {
 
         try {
@@ -64,9 +63,9 @@ public class staffDatabase {
             Statement stmtCreateStaffTable = conn.createStatement();
             String createStaffTable = ("CREATE TABLE hospitalStaff" +
                     "(username VARCHAR(20)," +
-                    "password VARCHAR(20)," +
+                    "password VARCHAR(64)," +
                     "jobTitle VARCHAR(50)," +
-                    "fullname VARCHAR(20)," +
+                    "fullname VARCHAR(30)," +
                     "ID INTEGER," +
                     "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
                     "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +

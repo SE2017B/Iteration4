@@ -23,7 +23,7 @@ public class DepartmentSubsystem {
     private boolean initRan = false;
     ArrayList<Department> departments = new ArrayList<Department>();
     private Staff currentlyLoggedIn = null;
-
+    private static int count = 0;
     /**
      * The order of method calls should be this for DSS:
      * Login - The user submits their credentials, and we check if they have a matching pair
@@ -37,7 +37,7 @@ public class DepartmentSubsystem {
     private DepartmentSubsystem(){init();}
     private void init(){
         //If the init method was ran, then we dont do it again
-        if(initRan){ return; }
+        //if(initRan){ return; }
 
         //TODO assign staff to departments and services
         Department translationDepartment = new Department("Translation Department");
@@ -66,7 +66,7 @@ public class DepartmentSubsystem {
 
         //Comment this out if you want to use test
         staffPlacement();
-        initRan = true;
+        //initRan = true;
     }
 
     //Reads the DB, and puts the staff in their corresponding places
@@ -99,9 +99,13 @@ public class DepartmentSubsystem {
 
     //Singleton Stuff (init HAS to be run)
     public static DepartmentSubsystem getSubsystem(){
+        System.out.println("getSub" + count);
         if(singleton == null){
+            System.out.println("makeSub" + count);
             singleton =  new DepartmentSubsystem();
+            count++;
         }
+        System.out.println("passSub" + count);
         return singleton;
 
     }
@@ -185,14 +189,14 @@ public class DepartmentSubsystem {
     }
 
     //Assign a service request
-    public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID, boolean email, String emailRecipient, String extra1, String extra2){
+    public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID, boolean email, String emailRecipient){
         Department temp = new Department("TEMPORARY");
         for(Department dept: departments){
             if(dept.getServices().contains(service)){
                 temp = dept;
             }
         }
-        ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person, extra1, extra2);
+        ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person);
         person.addRequest(request);
         temp.addRequest(RID, request);
         if(email){

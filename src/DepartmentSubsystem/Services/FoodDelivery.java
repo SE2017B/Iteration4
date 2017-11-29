@@ -21,6 +21,8 @@ public class FoodDelivery extends Service {
 
     public FoodDelivery(Department department, String description) {
         super(department, description);
+        menuItems = populateMenuItems();
+        System.out.println("Hi" + menuItems);
     }
 
     private ArrayList<String> populateMenuItems(){

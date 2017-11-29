@@ -213,13 +213,14 @@ public class RequestController implements ControllableScreen{
         fillInServiceSpecificRecs();
 
         //Submit request
-        depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL", "Extra1", "Extra2");
+        depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL");
 
-        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString(), choiceBoxStaff.getValue(), "PlaceHolder extra1", "Placeholder Extra2");
+        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString(), choiceBoxStaff.getValue());
 
         //Add new service to List
         System.out.println("request submitted");
         resolveServiceListView.getItems().add(nReq.toString());
+        fillInServiceSpecificRecs();
 
     }
 
@@ -306,8 +307,13 @@ public class RequestController implements ControllableScreen{
                 AnchorPane servicePane = loader.load();
                 //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
                 servicePane1.getChildren().setAll(servicePane);
+<<<<<<< HEAD
+                currentServiceController = loader.getController();
+
+
+=======
                 this.currentServiceController = loader.getController();
-                if()
+>>>>>>> a72b22a1b717857cb745881aa7e24f474a491cab
 
             }catch(Exception e){
                 System.out.println(e.getMessage());

@@ -1,25 +1,35 @@
 package DepartmentSubsystem.Services.Controllers;
 
 import DepartmentSubsystem.DepartmentSubsystem;
-import DepartmentSubsystem.Services.Sanitation;
 import com.jfoenix.controls.JFXTextField;
+import controllers.ControllableScreen;
+import controllers.ScreenController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import DepartmentSubsystem.Services.FoodDelivery;
-
 import javafx.event.ActionEvent;
 
-import java.util.ArrayList;
-
-public class FoodDeliveryController {
+public class FoodDeliveryController implements ControllableScreen{
     private String foodSel;
-    DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
+    private DepartmentSubsystem DSS;
 
-    public void init(){
+    @Override
+    public void init() {
+       }
+
+    @Override
+    public void onShow(){
+        DSS = DepartmentSubsystem.getSubsystem();
+        System.out.println((DSS + "PLS"));
+
         foodChoiceBox.setItems(FXCollections.observableList(((FoodDelivery)((DSS.getDepartment("Food").getServices().get(0)))).getMenuItems()));
+        System.out.println((DSS));
+    }
+
+    @Override
+    public void setParentController(ScreenController parent) {
+
     }
 
     @FXML
