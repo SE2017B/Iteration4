@@ -170,4 +170,12 @@ public class Staff{
     public String toString(){
         return fullName;
     }
+
+    public void setNewVars(String username, String password, String jobTitle, String fullName, int id) {
+        this.username = username;
+        this.password = password;
+        this.jobTitle = jobTitle;
+        this.fullName = fullName;
+        this.ID = id;
+    }
 }

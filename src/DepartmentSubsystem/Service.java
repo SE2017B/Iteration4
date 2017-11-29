@@ -51,6 +51,9 @@ public abstract class Service{
             this.eligibleStaff.add(person);
         }
     }
+    public void removeEligibleStaff(Staff person){
+        eligibleStaff.remove(person);
+    }
     public String getURL() {
         return URL;
     }

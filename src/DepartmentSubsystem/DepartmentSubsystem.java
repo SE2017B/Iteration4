@@ -213,4 +213,21 @@ public class DepartmentSubsystem {
 //        sendFromGMail(username, password, recipient, "HOSPITAL SERVICE REQUEST AUTOMATED MESSAGE", message);
        return false;
     }
+
+    //Staff modifiers
+    public void addStaff(Department department, Service service, String username, String password, String jobTitle, String fullName, int ID){
+        Staff newPerson = new Staff(username, password, jobTitle, fullName, ID);
+        department.addPersonel(newPerson);
+        service.addEligibleStaff(newPerson);
+        staffDatabase.addStaff(newPerson);
+    }
+    public void modifyStaff(Staff person, String username, String password, String jobTitle, String fullName, int ID){
+        person.setNewVars(username, password, jobTitle, fullName, ID);
+        staffDatabase.modifyStaff(person);
+    }
+    public void deleteStaff(Department dept, Service service, Staff person){
+        dept.removePersonel(person);
+        service.removeEligibleStaff(person);
+        staffDatabase.deleteStaff(person);
+    }
 }
