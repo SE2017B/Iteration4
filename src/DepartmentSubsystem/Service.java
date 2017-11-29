@@ -11,9 +11,6 @@ package DepartmentSubsystem;
 import java.util.ArrayList;
 
 public abstract class Service{
-    public static String FoodDeliveryID = "FoodDelivery";
-    public static String FoodDeliveryPath = "/DepartmentSubsystem/Services/Displays/FoodDelivery.fxml";
-
     private Department department;
     private String description;
     private ArrayList<Staff> eligibleStaff;

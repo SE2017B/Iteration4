@@ -9,7 +9,6 @@
 package DepartmentSubsystem;
 
 import map.Node;
-import java.util.Date;
 
 public class ServiceRequest{
     private Service service;
@@ -18,6 +17,7 @@ public class ServiceRequest{
     private String time;
     private String date;
     private Staff assignedPersonnel;
+    private String inputData;
 //    private String extra1;
 //    private String extra2;
 
@@ -30,6 +30,7 @@ public class ServiceRequest{
         this.assignedPersonnel = assignedPersonnel;
 //        this.extra1 = extra1;
 //        this.extra2 = extra2;
+        this.inputData = "";
     }
 
     //Getters and Setters
@@ -66,6 +67,15 @@ public class ServiceRequest{
     public Staff getAssignedPersonnel() {
         return assignedPersonnel;
     }
+
+    public String getInputData() {
+        return inputData;
+    }
+
+    public void setInputData(String inputData) {
+        this.inputData = inputData;
+    }
+
     public void setAssignedPersonnel(Staff assignedPersonnel) {
         this.assignedPersonnel = assignedPersonnel;
     }
@@ -90,4 +100,6 @@ public class ServiceRequest{
         System.out.println(name);
         return name;
     }
+
+
 }
