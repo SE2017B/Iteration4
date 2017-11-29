@@ -178,4 +178,14 @@ public class Staff{
         this.fullName = fullName;
         this.ID = id;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj) return true;
+        if(obj == null) return false;
+        if(!(obj instanceof Staff)) return false;
+        Staff other = (Staff)obj;
+        return this.getUsername().equals(other.getUsername());
+    }
+
 }

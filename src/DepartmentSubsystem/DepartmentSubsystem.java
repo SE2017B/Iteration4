@@ -215,21 +215,45 @@ public class DepartmentSubsystem {
     }
 
     //Staff modifiers
-    public void addStaff(Department department, Service service, String username, String password, String jobTitle, String fullName){
+    public void addStaff(String username, String password, String jobTitle, String fullName){
         staffDatabase.setStaffCounter(1);
         Staff newPerson = new Staff(username, password, jobTitle, fullName, staffDatabase.getStaffCounter());
-
-        department.addPersonel(newPerson);
-        service.addEligibleStaff(newPerson);
-
+        if(jobTitle.equals("Chef") || jobTitle.equals("Food Delivery")){
+            departments.get(3).addPersonel(newPerson);
+            departments.get(3).getServices().get(0).addEligibleStaff(newPerson);
+        }else if(jobTitle.equals("Translator")){
+            departments.get(0).addPersonel(newPerson);
+            departments.get(0).getServices().get(0).addEligibleStaff(newPerson);
+        }else if(jobTitle.equals("Transport Staff")){
+            departments.get(1).addPersonel(newPerson);
+            departments.get(1).getServices().get(0).addEligibleStaff(newPerson);
+        }else if(jobTitle.equals("Janitor")){
+            departments.get(2).addPersonel(newPerson);
+            departments.get(2).getServices().get(0).addEligibleStaff(newPerson);
+        }
+        staffDatabase.addStaff(newPerson);
     }
+
     public void modifyStaff(Staff person, String username, String password, String jobTitle, String fullName, int ID){
         person.setNewVars(username, password, jobTitle, fullName, ID);
         staffDatabase.modifyStaff(person);
     }
-    public void deleteStaff(Department dept, Service service, Staff person){
-        dept.removePersonel(person);
-        service.removeEligibleStaff(person);
+
+    public void deleteStaff(String userName, String jobTile){
+        Staff person = new Staff(userName,null, jobTile,null, 0);
+        if(jobTile.equals("Chef") || jobTile.equals("Food Delivery")){
+            departments.get(3).removePersonel(person);
+            departments.get(3).getServices().get(0).removeEligibleStaff(person);
+        }else if(jobTile.equals("Translator")){
+            departments.get(0).removePersonel(person);
+            departments.get(0).getServices().get(0).removeEligibleStaff(person);
+        }else if(jobTile.equals("Transport Staff")){
+            departments.get(1).removePersonel(person);
+            departments.get(1).getServices().get(0).removeEligibleStaff(person);
+        }else if(jobTile.equals("Janitor")){
+            departments.get(2).removePersonel(person);
+            departments.get(2).getServices().get(0).removeEligibleStaff(person);
+        }
         staffDatabase.deleteStaff(person);
     }
 }
