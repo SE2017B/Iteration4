@@ -94,10 +94,6 @@ public class Main extends Application {
         staffDatabase.readStaffCSV("staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
 
-        nodeDatabase.queryAllNodes();
-        edgeDatabase.queryAllEdges();
-        staffDatabase.queryAllStaff();
-
         launch(args);
 
         nodeDatabase.outputNodesCSV();
