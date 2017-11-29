@@ -16,7 +16,6 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -31,6 +30,12 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
         myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
+//
+//        //mini fxml files
+//        myScreenController.loadScreen(ScreenController.TranslationID, ScreenController.TranslationFile);
+//        myScreenController.loadScreen(ScreenController.TransportID, ScreenController.TransportFile);
+//        myScreenController.loadScreen(ScreenController.FoodDeliveryID, ScreenController.FoodDeliveryFile);
+//        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
 
         myScreenController.setScreen(ScreenController.MainID);
 
@@ -43,13 +48,17 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, InterruptedException {
         try {
             DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        edgeDatabase.deleteEdgeTable();
+        nodeDatabase.deleteNodeTable();
+        staffDatabase.deleteStaffTable();
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
@@ -65,7 +74,6 @@ public class Main extends Application {
         nodeDatabase.readNodeCSV("MapHnodes.csv");
         nodeDatabase.readNodeCSV("MapInodes.csv");
         nodeDatabase.readNodeCSV("MapWnodes.csv");
-        nodeDatabase.insertNodesFromCSV();
 
         edgeDatabase.readEdgesCSV("MapAedges.csv");
         edgeDatabase.readEdgesCSV("MapBedges.csv");
@@ -77,17 +85,14 @@ public class Main extends Application {
         edgeDatabase.readEdgesCSV("MapHedges.csv");
         edgeDatabase.readEdgesCSV("MapIedges.csv");
         edgeDatabase.readEdgesCSV("MapWedges.csv");
+
+        nodeDatabase.insertNodesFromCSV();
         edgeDatabase.insertEdgesFromCSV();
 
         nodeDatabase.cntNodes();
 
         staffDatabase.readStaffCSV("staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
-
-        //staffDatabase.addStaff(new Staff("bross", "1234", "Dope Artist", "Bob Ross", 1));
-        //staffDatabase.addStaff(new Staff("ncage", "password", "Lead in National Treasure", "Nick Cage", 2));
-        //staffDatabase.addStaff(new Staff("user1", "password", "Random User", "User Number One", 3));
-        //staffDatabase.addStaff(new Staff("user2", "password", "Random User", "User Number Two", 4));
 
         launch(args);
 

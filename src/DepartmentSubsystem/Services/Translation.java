@@ -16,6 +16,7 @@ import java.util.*;
 
 public class Translation extends Service {
     private ArrayList<String> languages = populateLanguageTypes(); // available langiages for translation
+    private String requestedLanguage = "";
     private int duration; //Set in minutes
 
     public Translation(Department department, String description) {
@@ -39,5 +40,25 @@ public class Translation extends Service {
             }
         }
         return returnList;
+    }
+
+    public ArrayList<String> getLanguages() {
+        return languages;
+    }
+
+    public void setRequestedLanguage(String requestedLanguage) {
+        this.requestedLanguage = requestedLanguage;
+    }
+
+    public String getRequestedLanguage() {
+        return requestedLanguage;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

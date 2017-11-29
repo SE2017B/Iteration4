@@ -191,6 +191,8 @@ public class PathController implements ControllableScreen, Observer{
         endFloorMenu.setDisable(true);
         endFloorMenu.setText("Floor");
         endTypeMenu.setText("Type");
+
+        mapViewer.resetView();
     }
     private Circle getPoint(int x, int y){
         Circle c = new AnimatedCircle();
@@ -317,7 +319,6 @@ public class PathController implements ControllableScreen, Observer{
         shapes.add(lastp);
 
 
-
         if(path.getPath().size() > 1) {
             //animation that moves the indicator
             pathTransition = new PathTransition();
@@ -366,11 +367,12 @@ public class PathController implements ControllableScreen, Observer{
          **/
         clearShapes();
         //set zoom level here
+
         System.out.println("The zoom is "+getZoom(path));
         //slideBarZoom.setValue(4 - mapViewer.getScale());
         displayPath(path);
         currentFloor=pathtoFloor.get(path);
-        controlScroller(path);//reposition map
+//        controlScroller(path);//reposition map
     }
 
 
@@ -478,6 +480,9 @@ public class PathController implements ControllableScreen, Observer{
             switchPath(paths.get(0));
             System.out.println("Enter Pressed");
 
+            mapScrollPane.setHvalue(startNodeChoice.getValue().getX()/5000.0);
+            mapScrollPane.setVvalue(startNodeChoice.getValue().getY()/3500.0);
+
         }
     }
 
@@ -490,12 +495,6 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void update(Observable o, Object arg){
-        if(arg instanceof FloorNumber) {
-            FloorNumber floor = (FloorNumber) arg;
-            currentFloor = floor;//update Current floor
-
-            //switchPath(floor);
-        }
         if(arg instanceof PathID){
             PathID ID = (PathID) arg;
             if(ID.getID() != -1) {

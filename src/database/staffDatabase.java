@@ -19,8 +19,75 @@ public class staffDatabase {
     public static ArrayList<Staff> getStaff(){ return allStaff; }
 
     ///////////////////////////////////////////////////////////////////////////////
+    // Delete nodes table
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void deleteStaffTable() throws SQLException {
+
+        try {
+
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet res = meta.getTables(null, null, "HOSPITALSTAFF", null);
+
+            Statement stmtDelete3 = conn.createStatement();
+            String deleteStaffTable = ("DROP TABLE HOSPITALSTAFF");
+
+            if (res.next()) {
+                int rsetDelete1 = stmtDelete3.executeUpdate(deleteStaffTable);
+                System.out.println("Drop Staff Table Successful!");
+                conn.commit();
+                stmtDelete3.close();
+                conn.close();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the Staff Members
     ///////////////////////////////////////////////////////////////////////////////
+
+    public static void createStaffTable() {
+
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet res = meta.getTables(null, null, "HOSPITALSTAFF", null);
+
+            //Add a new node table
+            Statement stmtCreateStaffTable = conn.createStatement();
+            String createStaffTable = ("CREATE TABLE hospitalStaff" +
+                    "(username VARCHAR(20)," +
+                    "password VARCHAR(20)," +
+                    "jobTitle VARCHAR(50)," +
+                    "fullname VARCHAR(20)," +
+                    "ID INTEGER," +
+                    "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
+                    "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
+                    "CONSTRAINT jobTitle CHECK (jobTitle IN ('Translator', 'Janitor', 'Chef', 'Food Delivery', 'Transport Staff'))," +
+                    "CONSTRAINT ID_chk CHECK (ID > 0))");
+
+            int rsetCreate3 = stmtCreateStaffTable.executeUpdate(createStaffTable);
+            System.out.println("Create Staff table Successful!");
+
+            conn.commit();
+            System.out.println();
+
+            stmtCreateStaffTable.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
     public static void createStaffTable() {
 
         try {
@@ -44,6 +111,8 @@ public class staffDatabase {
                 System.out.println("Create Staff table Successful!");
 
                 conn.commit();
+                System.out.println();
+
                 stmtCreateStaffTable.close();
                 conn.close();
             }
@@ -58,16 +127,22 @@ public class staffDatabase {
 
                 Statement stmtCreateStaffTable = conn.createStatement();
                 String createStaffTable = ("CREATE TABLE hospitalStaff" +
-                        "(username VARCHAR(20) PRIMARY KEY," +
+                        "(username VARCHAR(20)," +
                         "password VARCHAR(20)," +
                         "jobTitle VARCHAR(50)," +
                         "fullName VARCHAR(20)," +
-                        "ID INTEGER)");
+                        "ID INTEGER," +
+                        "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
+                        "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
+                        "CONSTRAINT jobTitle CHECK (jobTitle IN ('Translator', 'Janitor', 'Chef', 'Food Delivery', 'Transport Staff'))," +
+                        "CONSTRAINT ID_chk CHECK (ID > 0))");
 
                 int rsetCreate1 = stmtCreateStaffTable.executeUpdate(createStaffTable);
                 System.out.println("Create Staff table Successful!");
 
                 conn.commit();
+                System.out.println();
+
                 stmtCreateStaffTable.close();
                 conn.close();
             }
@@ -76,7 +151,7 @@ public class staffDatabase {
             e.printStackTrace();
         }
     }
-
+*/
     ///////////////////////////////////////////////////////////////////////////////
     // Insert into staff table using a prepared statement from csv
     ///////////////////////////////////////////////////////////////////////////////
@@ -89,7 +164,7 @@ public class staffDatabase {
             PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
 
 
-            for (int j = 1; j < allStaff.size(); j++) {
+            for (int j = 0; j < allStaff.size(); j++) {
 
                 insertStaff.setString(1, allStaff.get(j).getUsername());
                 insertStaff.setString(2, allStaff.get(j).getPassword());
@@ -99,18 +174,18 @@ public class staffDatabase {
 
 
                 insertStaff.executeUpdate();
-                System.out.println(j + ": Insert Staff Successful!");
+                System.out.printf("%-5d: Insert Staff Successful!\n",(j+1));
             }
 
             conn.commit();
+            System.out.println();
+
             insertStaff.close();
             conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();// end try
         }
-
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -131,7 +206,8 @@ public class staffDatabase {
             addAnyStaff.setInt(5, anyStaff.getID());
 
             addAnyStaff.executeUpdate();
-            System.out.println("Insert Staff Successful for staffID: " + anyStaff.getID());
+            System.out.printf("Insert Staff Successful for staffID: %-5d\n", anyStaff.getID());
+            System.out.println();
 
             conn.commit();
             addAnyStaff.close();
@@ -245,6 +321,7 @@ public class staffDatabase {
             } // End While
 
             conn.commit();
+            System.out.println();
 
             rsetAllStaff.close();
             selectAllStaff.close();
@@ -301,8 +378,9 @@ public class staffDatabase {
                         staffDatabase.allStaff.get(j).getFullName() + "," +
                         staffDatabase.allStaff.get(j).getID()
                 );
-                System.out.println(j + ": Staff Record Saved!");
+                System.out.printf("%-5d: Staff Record Saved!\n", j);
             }
+            System.out.println();
             pw3.flush();
             pw3.close();
 

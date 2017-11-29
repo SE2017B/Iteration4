@@ -62,6 +62,22 @@ public class MapViewer extends Observable{
         addObserver(o);
     }
 
+    public void resetView(){
+        clearButtons();
+        addFloor(FloorNumber.FLOOR_LTWO);
+        addFloor(FloorNumber.FLOOR_LONE);
+        addFloor(FloorNumber.FLOOR_GROUND);
+        addFloor(FloorNumber.FLOOR_ONE);
+        addFloor(FloorNumber.FLOOR_TWO);
+        addFloor(FloorNumber.FLOOR_THREE);
+
+        container.getChildren().add(0,spacerLeft);
+        container.getChildren().add(spacerRight);
+        currentFloor = FloorNumber.FLOOR_ONE;
+        setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
+
+    }
+
     private JFXButton addFloor(FloorNumber floor){
         JFXButton button = new JFXButton();
         button.setText(floor.getDbMapping());
