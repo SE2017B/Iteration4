@@ -11,20 +11,14 @@ package controllers;
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 import DepartmentSubsystem.Services.FoodDelivery;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import map.HospitalMap;
 import map.Node;
@@ -59,6 +53,55 @@ public class RequestController implements ControllableScreen{
     public void setParentController(ScreenController parent){
         this.parent = parent;
     }
+
+
+
+
+    @FXML
+    private JFXTextField usernameTxt;
+
+    @FXML
+    private JFXTextField jobTitletxt;
+
+    @FXML
+    private JFXTextField passwordTxt;
+
+    @FXML
+    private JFXTextField fullNametxt;
+
+    @FXML
+    private JFXButton createStaffButton;
+
+    @FXML
+    private JFXButton cancelStaffButton;
+
+    @FXML
+    private JFXTextField usernameDeleteTxt;
+
+    @FXML
+    private JFXButton removeStaffBtn;
+
+    @FXML
+    private JFXTextField idDeleteTxt;
+
+    @FXML
+    private ListView<Staff> staffListView;
+
+    @FXML
+    private JFXTextField modifyUsername;
+
+    @FXML
+    private JFXTextField modifyID;
+
+    @FXML
+    private ChoiceBox<String> choiceboxModifyStaff;
+
+    @FXML
+    private JFXButton searchButton;
+
+    @FXML
+    private JFXButton makeEditsModify;
+
     @FXML
     private Label staffNameLabel;
 
@@ -118,6 +161,8 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     private JFXButton btnEditMap;
+
+
 
 
 
@@ -316,6 +361,32 @@ public class RequestController implements ControllableScreen{
         date = ((JFXDatePicker)e.getSource()).getValue().toString();
     }
 
+
+    @FXML
+    void cancelStaffPressed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void createStaffPressed(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void makeModify(ActionEvent event) {
+
+    }
+
+    @FXML
+    void removeStaffPressed(ActionEvent event) {
+
+    }
+
+    @FXML
+    void searchbuttonPressed(ActionEvent event) {
+
+    }
     //////////////////////////////////////////////////////////
     /////////           Settings Tab
     //////////////////////////////////////////////////////////

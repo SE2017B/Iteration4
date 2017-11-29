@@ -338,7 +338,7 @@
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
-                                                      <Label text="Find Staff to Modify" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                                                      <Label text="Find Staff To Modify" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                                          <font>
                                                             <Font size="24.0" />
                                                          </font>
