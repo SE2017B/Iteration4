@@ -215,9 +215,9 @@ public class DepartmentSubsystem {
     }
 
     //Staff modifiers
-    public void addStaff(String username, String password, String jobTitle, String fullName){
+    public void addStaff(String username, String password, String jobTitle, String fullName, int id){
         staffDatabase.setStaffCounter(1);
-        Staff newPerson = new Staff(username, password, jobTitle, fullName, staffDatabase.getStaffCounter());
+        Staff newPerson = new Staff(username, password, jobTitle, fullName, id);
         if(jobTitle.equals("Chef") || jobTitle.equals("Food Delivery")){
             departments.get(3).addPersonel(newPerson);
             departments.get(3).getServices().get(0).addEligibleStaff(newPerson);
