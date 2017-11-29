@@ -270,16 +270,15 @@ public class RequestController implements ControllableScreen{
 
     public void deptSelected(Department newValue)
     {
-        nameDept = newValue.toString();
         choiceBoxDept.setDisable(false);
-        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices(nameDept)));
+        choiceBoxService.setItems(FXCollections.observableList(newValue.getServices()));
 
     }
     public void servSelected(Service newValue)
     {
-            nameService = newValue.toString();
+
             choiceBoxService.setDisable(false);
-            choiceBoxStaff.setItems(FXCollections.observableList(depSub.getStaff(nameService)));
+            choiceBoxStaff.setItems(FXCollections.observableList(newValue.getEligibleStaff()));
 
             //todo URL ??????????????????????????????????????????????????????????????\
             String URLPLS = newValue.getURL();
