@@ -146,6 +146,9 @@ public class MainController implements ControllableScreen, Observer{
 
     //Bathroom type
     public void bathTypePressed(ActionEvent e){
+        //switch to kiosk floor
+        mapButtons.setFloor(map.getKioskLocation().getFloor());
+        kioskIndicator.setVisible(true);
         //find nearest node of given type
         Path path = map.findNearest(map.getKioskLocation(), "REST");
         int size = path.getPath().size();
@@ -161,6 +164,9 @@ public class MainController implements ControllableScreen, Observer{
 
     //Exit type
     public void exitTypePressed(ActionEvent e){
+        //switch to kiosk floor
+        mapButtons.setFloor(map.getKioskLocation().getFloor());
+        kioskIndicator.setVisible(true);
         //find nearest node of given type
         Path path = map.findNearest(map.getKioskLocation(), "EXIT");
         int size = path.getPath().size();
@@ -175,6 +181,9 @@ public class MainController implements ControllableScreen, Observer{
 
     //Elevator type
     public void elevTypePressed(ActionEvent e){
+        //switch to kiosk floor
+        mapButtons.setFloor(map.getKioskLocation().getFloor());
+        kioskIndicator.setVisible(true);
         //find nearest node of given type
         Path path = map.findNearest(map.getKioskLocation(), "ELEV");
         int size = path.getPath().size();
@@ -191,6 +200,9 @@ public class MainController implements ControllableScreen, Observer{
 
     //Retail type
     public void retailTypePressed(ActionEvent e){
+        //switch to kiosk floor
+        mapButtons.setFloor(map.getKioskLocation().getFloor());
+        kioskIndicator.setVisible(true);
         //find nearest node of given type
         Path path = map.findNearest(map.getKioskLocation(), "RETL");
         int size = path.getPath().size();
@@ -206,6 +218,9 @@ public class MainController implements ControllableScreen, Observer{
 
     //stairs type
     public void stairsTypePressed(ActionEvent e){
+        //switch to kiosk floor
+        mapButtons.setFloor(map.getKioskLocation().getFloor());
+        kioskIndicator.setVisible(true);
         //find nearest node of given type
         Path path = map.findNearest(map.getKioskLocation(), "STAI");
         int size = path.getPath().size();
