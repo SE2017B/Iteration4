@@ -13,11 +13,11 @@ import DepartmentSubsystem.Services.Sanitation;
 import DepartmentSubsystem.Services.Translation;
 import DepartmentSubsystem.Services.Transport;
 import database.staffDatabase;
-import map.Node;
+
+import java.util.ArrayList;
 
 //import java.mail.*;
 //import java.mail.internet.*;
-import java.util.ArrayList;
 
 public class DepartmentSubsystem {
 //    private boolean initRan = false;
@@ -247,8 +247,8 @@ public class DepartmentSubsystem {
         staffDatabase.modifyStaff(person);
     }
 
-    public void deleteStaff(Service ser, String userName,String jobTile){
-        Staff person = new Staff(userName,null, jobTile,null, 0);
+    public void deleteStaff(Service ser, String userName){
+        Staff person = new Staff(userName,null, null,null, 0);
 //        if(jobTile.equals("Chef") || jobTile.equals("Food Delivery")){
 //            departments.get(3).removePersonel(person);
 //            departments.get(3).getServices().get(0).removeEligibleStaff(person);

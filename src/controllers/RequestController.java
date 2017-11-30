@@ -384,7 +384,7 @@ public class RequestController implements ControllableScreen{
 
 
         staffDatabase.incStaffCounter();
-        depSub.addStaff(tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter());
+        depSub.addStaff(tempService, tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter());
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
@@ -398,9 +398,9 @@ public class RequestController implements ControllableScreen{
     @FXML
     void removeStaffPressed(ActionEvent event) {
         String tempUsername = usernameDeleteTxt.getText();
-        String tempJobType = staffJobTypeChoiceBox.getValue().toString();
+        Service tempService = staffJobTypeChoiceBox.getValue();
 
-        depSub.deleteStaff(tempUsername, tempJobType);
+        depSub.deleteStaff(tempService, tempUsername);
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
