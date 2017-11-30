@@ -150,7 +150,7 @@ public class RequestController implements ControllableScreen{
     private JFXButton btnserviceResCancel;
 
     @FXML
-    private JFXListView<String> resolveServiceListView;
+    private JFXListView<ServiceRequest> resolveServiceListView;
 
     @FXML
     private JFXButton btnLogOut;
@@ -179,15 +179,15 @@ public class RequestController implements ControllableScreen{
 
         //Display selected request on label
         resolveServiceListView.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<String>() {
+                new ChangeListener<ServiceRequest>() {
                     @Override
-                    public void changed(ObservableValue<? extends String> observable,
-                                        String oldValue, String newValue) {
+                    public void changed(ObservableValue<? extends ServiceRequest> observable,
+                                        ServiceRequest oldValue, ServiceRequest newValue) {
 
-                        lblSelectedService.setText(choiceBoxService.getValue().toString());
-                        lblSelectedAdditionalInfo.setText(currentServiceController.getInputData());
-                        lblSelectedDT.setText(timeMenu.getValue().toString() + " " + dateMenu.getValue().toString());
-                        lblSelectedLocation.setText(locationChoiceBox.getValue().toString());
+                        lblSelectedService.setText(newValue.getService().toString());
+                        lblSelectedAdditionalInfo.setText(newValue.getInputData());
+                        lblSelectedDT.setText(newValue.getTime());
+                        lblSelectedLocation.setText(newValue.getLocation().toString());
 
                     }
                 }
@@ -203,7 +203,7 @@ public class RequestController implements ControllableScreen{
         {
             resolveServiceListView.getItems().clear();
         }else{
-            resolveServiceListView.getItems().add(depSub.getCurrentLoggedIn().getAllRequest().toString());
+            resolveServiceListView.getItems().addAll(depSub.getCurrentLoggedIn().getAllRequest());
         }
 
         //Update the nodes in the map
@@ -253,7 +253,7 @@ public class RequestController implements ControllableScreen{
         //Add new service to List
         System.out.println("request submitted");
         nReq.setInputData(currentServiceController.getInputData());
-        resolveServiceListView.getItems().add(nReq.toString());
+        resolveServiceListView.getItems().add(nReq);
         //fillInServiceSpecificRecs();
 
     }

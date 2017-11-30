@@ -21,7 +21,7 @@ public class TranslationController extends CurrentServiceController {
     private JFXTextField durationTextFiled;
 
     public String getInputData() {
-        inputData = "Language:" + languageChoiceBox.getValue() + "\n Time(min):" + durationTextFiled.getText();
+        inputData = "Language:" + languageChoiceBox.getValue() + "\n\n Time(min):" + durationTextFiled.getText();
         return inputData;
     }
 }
