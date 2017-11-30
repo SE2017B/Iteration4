@@ -13,26 +13,13 @@ public class LoginController implements ControllableScreen{
     private Staff member;
     private DepartmentSubsystem depSub;
 
-
     public String staffLoggedIn;
 
     @FXML
     private JFXTextField usernameField;
-
-
     @FXML
     private JFXPasswordField passwordField;
-
     @FXML
-    private JFXButton enterButton;
-
-    @FXML
-    private JFXButton returnButton;
-
-    @Override
-    public void setParentController(ScreenController parent) {
-        this.parent = parent;
-    }
 
     @Override
     public void init() {
@@ -45,10 +32,14 @@ public class LoginController implements ControllableScreen{
         passwordField.setText("");
     }
 
+    @Override
+    public void setParentController(ScreenController parent) {
+        this.parent = parent;
+    }
+
     public void returnPressed(ActionEvent e){
         System.out.println("Return Pressed");
         parent.setScreen(ScreenController.MainID,"LEFT");
-
     }
 
     public void enterPressed(ActionEvent e){
@@ -62,10 +53,9 @@ public class LoginController implements ControllableScreen{
         String passWord = passwordField.getText();
         if((depSub.login(login,passWord)))
         {
-
             parent.setScreen(ScreenController.RequestID,"UP");
-        }else
-        {
+        }
+        else{
             System.out.println("Wrong Pass/Login");
         }
     }
