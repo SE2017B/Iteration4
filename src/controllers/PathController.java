@@ -121,20 +121,18 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void onShow(){
-        startNodeChoice.setItems(FXCollections.observableList(
-                map.getNodesBy(n -> !n.getType().equals("HALL"))));
+        startNodeChoice.setItems(FXCollections.observableArrayList(
+                map.getKioskLocation()));
         //set the default start location to be the kiosk
-        endNodeChoice.setItems(FXCollections.observableList(
-                map.getNodesBy(n -> !n.getType().equals("HALL"))));
         startNodeChoice.setValue(map.getKioskLocation());
         //remove any previous paths from the display
         clearPaths();
 
-        startNodeChoice.setDisable(false);
         startNodeChoice.setValue(map.getKioskLocation());
-        startFloorMenu.setDisable(false);
-        startFloorMenu.setText("1");
-        startTypeMenu.setText("Information");
+        startNodeChoice.setDisable(true);
+        startFloorMenu.setText(map.getKioskLocation().getFloor().getDbMapping());
+        startFloorMenu.setDisable(true);
+        startTypeMenu.setText("Type");
 
         endNodeChoice.setDisable(true);
         endNodeChoice.setValue(null);
