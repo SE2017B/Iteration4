@@ -10,7 +10,6 @@ package controllers;
 
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
-import DepartmentSubsystem.Services.FoodDelivery;
 import com.jfoenix.controls.*;
 import database.staffDatabase;
 import javafx.beans.value.ChangeListener;
@@ -45,7 +44,6 @@ public class RequestController implements ControllableScreen{
     private Service servSelect;
     private ServiceRequest reqServPls;
     private CurrentServiceController currentServiceController;
-    private FoodDelivery FD;
 
 
     private static int requestIDCount = 0;
@@ -163,8 +161,11 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXButton btnEditMap;
 
+    @FXML
+    private ChoiceBox<Service> staffJobTypeChoiceBox;
 
-
+    @FXML
+    private ChoiceBox<Service> addStaffServiceChoiceBox;
 
 
     public void init(){
@@ -209,7 +210,6 @@ public class RequestController implements ControllableScreen{
 
         //Update the nodes in the map
         ArrayList<Node> nodes = map.getNodeMap();
-
         //resolveServiceListView.getItems().add(Department.getBacklog().values());
         choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
@@ -220,6 +220,9 @@ public class RequestController implements ControllableScreen{
         kioskLocationChoice.setValue(map.getKioskLocation());
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+
+        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getAllServices()));
+        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getAllServices()));
     }
     @FXML
 
@@ -377,6 +380,8 @@ public class RequestController implements ControllableScreen{
         String tempPassword = passwordTxt.getText();
         String tempJobTitle = jobTitletxt.getText();
         String tempFullName = fullNametxt.getText();
+        Service tempService = addStaffServiceChoiceBox.getValue();
+
 
         staffDatabase.incStaffCounter();
         depSub.addStaff(tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter());
@@ -393,9 +398,9 @@ public class RequestController implements ControllableScreen{
     @FXML
     void removeStaffPressed(ActionEvent event) {
         String tempUsername = usernameDeleteTxt.getText();
-        String tempJobTitle = idDeleteTxt.getText();
+        String tempJobType = staffJobTypeChoiceBox.getValue().toString();
 
-        depSub.deleteStaff(tempUsername, tempJobTitle);
+        depSub.deleteStaff(tempUsername, tempJobType);
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
