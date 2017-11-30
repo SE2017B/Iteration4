@@ -10,6 +10,7 @@ public class Edge {
     private String dirOne;
     private String dirTwo;
 
+    //Constructors
     public Edge(String ID, Node nodeOne, Node nodeTwo){
         this.ID = ID;
         this.nodeOne = nodeOne;

@@ -1,8 +1,5 @@
 package ui;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import map.Edge;
@@ -43,7 +40,6 @@ public class EdgeCheckBox extends Line {
 
     public Edge getEdge(){
         return edge;
-
     }
 
     public void setSelected(boolean sel){

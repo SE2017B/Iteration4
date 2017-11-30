@@ -31,47 +31,18 @@ import java.util.Observer;
 
 public class MainController implements ControllableScreen, Observer{
     private ScreenController parent;
-
-    public void setParentController(ScreenController parent){
-        this.parent = parent;
-    }
+    private MapViewer mapButtons;
+    private AnimatedCircle kioskIndicator;
+    private FloorNumber curerntFloor;
+    private HospitalMap map;
+    private ArrayList<Circle> indicators;
 
     @FXML
     private Pane mapPane;
-
     @FXML
     private JFXSlider slideBarZoom;
-
-
-    private MapViewer mapButtons;
-
-    private AnimatedCircle kioskIndicator;
-
-    private FloorNumber curerntFloor;
-
     @FXML
     private AnchorPane buttonHolderPane;
-
-    private HospitalMap map;
-
-    @FXML
-    private JFXButton btnbath;
-
-    @FXML
-    private JFXButton btnexit;
-
-    @FXML
-    private JFXButton btnelev;
-
-    @FXML
-    private JFXButton btnretail;
-
-    @FXML
-    private JFXButton btnstairs;
-
-    @FXML
-    private JFXButton btnclear;
-
     @FXML
     private JFXButton bathFilterButton;
     @FXML
@@ -82,9 +53,6 @@ public class MainController implements ControllableScreen, Observer{
     private JFXButton retailFilterButton;
     @FXML
     private JFXButton stairsFilterButton;
-
-    private ArrayList<Circle> indicators;
-
 
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
@@ -104,16 +72,25 @@ public class MainController implements ControllableScreen, Observer{
         mapPane.getChildren().addAll(mapButtons.getMapImage(), kioskIndicator);
     }
 
-    //clear button
-    public void clearPressed(ActionEvent e){
-        int size = mapPane.getChildren().size();
-        mapPane.getChildren().remove(0, size);
-        mapPane.getChildren().addAll(mapButtons.getMapImage(), kioskIndicator);
-        indicators.clear();
+    public void onShow(){
+        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
+        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapButtons.getScale());
+        setFloor(curerntFloor);
     }
 
-    public void clearMousePressed(MouseEvent e){
+    //Setters
+    public void setParentController(ScreenController parent){
+        this.parent = parent;
+    }
+    private void setFloor(FloorNumber floor){
+        curerntFloor = floor;
         clearPressed(new ActionEvent());
+        if (curerntFloor.equals(map.getKioskLocation().getFloor())){
+            kioskIndicator.setVisible(true);
+        }
+        else{
+            kioskIndicator.setVisible(false);
+        }
     }
 
     //circle helper function for nodeTypePressed
@@ -144,7 +121,31 @@ public class MainController implements ControllableScreen, Observer{
         return newIndicator;
     }
 
-    //Bathroom type
+    public void update(Observable o, Object arg) {
+        if(arg instanceof PathID){
+            setFloor(((PathID) arg).getFloor());
+        }
+    }
+
+    //-----------------------HANDLE ACTIONS START--------------------------//
+    public void clearMousePressed(MouseEvent e){
+        clearPressed(new ActionEvent());
+    }
+
+    //adjusts map zoom through slider
+    public void sliderChanged(MouseEvent e){
+        mapButtons.setScale(4-slideBarZoom.getValue());
+    }
+
+    //-------------------findNearest Button Actions Start-----------------//
+    //clear button
+    public void clearPressed(ActionEvent e){
+        int size = mapPane.getChildren().size();
+        mapPane.getChildren().remove(0, size);
+        mapPane.getChildren().addAll(mapButtons.getMapImage(), kioskIndicator);
+        indicators.clear();
+    }
+
     public void bathTypePressed(ActionEvent e){
         //switch to kiosk floor
         mapButtons.setFloor(map.getKioskLocation().getFloor());
@@ -158,11 +159,9 @@ public class MainController implements ControllableScreen, Observer{
             //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
-
         }
     }
 
-    //Exit type
     public void exitTypePressed(ActionEvent e){
         //switch to kiosk floor
         mapButtons.setFloor(map.getKioskLocation().getFloor());
@@ -179,7 +178,6 @@ public class MainController implements ControllableScreen, Observer{
         }
     }
 
-    //Elevator type
     public void elevTypePressed(ActionEvent e){
         //switch to kiosk floor
         mapButtons.setFloor(map.getKioskLocation().getFloor());
@@ -193,12 +191,9 @@ public class MainController implements ControllableScreen, Observer{
             //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
-
         }
     }
 
-
-    //Retail type
     public void retailTypePressed(ActionEvent e){
         //switch to kiosk floor
         mapButtons.setFloor(map.getKioskLocation().getFloor());
@@ -215,8 +210,6 @@ public class MainController implements ControllableScreen, Observer{
         }
     }
 
-
-    //stairs type
     public void stairsTypePressed(ActionEvent e){
         //switch to kiosk floor
         mapButtons.setFloor(map.getKioskLocation().getFloor());
@@ -232,6 +225,7 @@ public class MainController implements ControllableScreen, Observer{
             mapPane.getChildren().add(c);
         }
     }
+    //-------------------findNearest Button Actions End-----------------//
 
     public void filterButtonPressed(ActionEvent e) {
         clearPressed(new ActionEvent());
@@ -256,23 +250,18 @@ public class MainController implements ControllableScreen, Observer{
         }
     }
 
-
-    public void onShow(){
-        kioskIndicator.setCenterX(map.getKioskLocation().getX()/mapButtons.getScale());
-        kioskIndicator.setCenterY(map.getKioskLocation().getY()/mapButtons.getScale());
-        setFloor(curerntFloor);
-    }
-
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         System.out.println("Login Pressed");
         parent.setScreen(ScreenController.LoginID,"RIGHT");
     }
+
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
         System.out.println("Direction Pressed");
         parent.setScreen(ScreenController.PathID,"LEFT");
     }
+
     //when search button is pressed go to search screen
     public void searchPressed(ActionEvent e){
         System.out.println("Search Pressed");
@@ -284,6 +273,13 @@ public class MainController implements ControllableScreen, Observer{
         setZoom(slideBarZoom.getValue());
     }
 
+    //when - button pressed zoom out map
+    public void zoutPressed(ActionEvent e){
+        slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
+        setZoom(slideBarZoom.getValue());
+    }
+    //-----------------------HANDLE ACTIONS END----------------------------//
+
     //Pass in a value from 0-3. 0 is smallest, 3 is largest
     public void setZoom(double zoom){
         double oldScale = mapButtons.getScale();
@@ -293,33 +289,6 @@ public class MainController implements ControllableScreen, Observer{
         for(Circle c : indicators){
             c.setCenterX(c.getCenterX()*oldScale/mapButtons.getScale());
             c.setCenterY(c.getCenterY()*oldScale/mapButtons.getScale());
-        }
-    }
-    //when - button pressed zoom out map
-    public void zoutPressed(ActionEvent e){
-        slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
-        setZoom(slideBarZoom.getValue());
-    }
-
-    //adjusts map zoom through slider
-    public void sliderChanged(MouseEvent e){
-        mapButtons.setScale(4-slideBarZoom.getValue());
-    }
-
-    private void setFloor(FloorNumber floor){
-        curerntFloor = floor;
-        clearPressed(new ActionEvent());
-        if (curerntFloor.equals(map.getKioskLocation().getFloor())){
-            kioskIndicator.setVisible(true);
-        }
-        else{
-            kioskIndicator.setVisible(false);
-        }
-    }
-
-    public void update(Observable o, Object arg) {
-        if(arg instanceof PathID){
-            setFloor(((PathID) arg).getFloor());
         }
     }
 }
