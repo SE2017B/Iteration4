@@ -140,7 +140,6 @@ public class HospitalMap{
         } catch (Exception e){
             throw new InvalidNodeException("the edge does not contain the old node");
         }
-        //edgeDatabase.modifyEdge(edge);
     }
 
     public Node findNode(String nodeID){
@@ -179,10 +178,12 @@ public class HospitalMap{
         }
         return output;
     }
+
     public SearchStrategy getSearchStrategy() {return search.getStrategy();}
     public ArrayList<SearchStrategy> getSearches() {
         return posSerchStrat;
     }
+
     public Node getKioskLocation(){
         return kioskLocation;
     }

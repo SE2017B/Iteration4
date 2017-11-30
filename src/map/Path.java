@@ -1,11 +1,7 @@
 package map;
 
-import exceptions.InvalidNodeException;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class Path implements Comparable<Path> {
     private ArrayList<Node> path = new ArrayList<>();
@@ -33,7 +29,6 @@ public class Path implements Comparable<Path> {
     public void addDistance(double distance) {
         this.distance += distance;
     }
-
 
     public ArrayList<String> findDirections(){
         int PVX = 0;
@@ -94,10 +89,12 @@ public class Path implements Comparable<Path> {
                     else if(angle >= 140) directions.add("Take a sharp right at this " + path.get(i).getShortName());
                     else directions.add("Take a right at this " + path.get(i).getShortName());
                 }
-            }else if (angle > -25 && angle < 25){
+            }
+            else if (angle > -25 && angle < 25){
                 if(prevElevator || prevStop) directions.add("Go straight from " + path.get(i).getShortName());
                 else directions.add("Go straight through " + path.get(i).getShortName());
-            } else {
+            }
+            else {
                 directions.add("Turn around from " + path.get(i).getShortName());
             }
             prevElevator = false;

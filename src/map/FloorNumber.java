@@ -15,14 +15,6 @@ public enum FloorNumber {
         this.nodeMapping = nodeMapping;
     }
 
-    public String getDbMapping() {
-        return dbMapping;
-    }
-
-    public int getNodeMapping() {
-        return nodeMapping;
-    }
-
     public static FloorNumber fromDbMapping(String dbMapping) {
         for (FloorNumber floorNumber : FloorNumber.values()) {
             if (floorNumber.dbMapping.equals(dbMapping)) {
@@ -30,5 +22,13 @@ public enum FloorNumber {
             }
         }
         return null;
+    }
+
+    //Getters
+    public String getDbMapping() {
+        return dbMapping;
+    }
+    public int getNodeMapping() {
+        return nodeMapping;
     }
 }
