@@ -212,7 +212,6 @@ public class RequestController implements ControllableScreen{
         choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
         searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
-        System.out.println(map.getSearchStrategy() + " ");
         searchStrategyChoice.setValue(map.getSearchStrategy());
         kioskLocationChoice.setItems(FXCollections.observableList(map.getNodeMap()));
         kioskLocationChoice.setValue(map.getKioskLocation());
@@ -284,12 +283,16 @@ public class RequestController implements ControllableScreen{
 
     public void cancelPressed(ActionEvent e)
     {
-        //todo add clear for time
         System.out.println("Cancel Pressed");
 
         //clear choiceboxes
-        choiceBoxStaff.getItems().clear();
-        choiceBoxService.getItems().clear();
+        choiceBoxStaff.setItems(FXCollections.observableList(new ArrayList<Staff>()));
+        choiceBoxStaff.setValue(null);
+        choiceBoxService.setItems(FXCollections.observableList(new ArrayList<Service>()));
+        choiceBoxService.setValue(null);
+        choiceBoxDept.setValue(null);
+        choiceBoxService.setDisable(true);
+        choiceBoxStaff.setDisable(true);
         //choiceBoxDept.getItems().clear();
 
         //clear time and date
@@ -297,7 +300,6 @@ public class RequestController implements ControllableScreen{
         dateMenu.getEditor().clear();
 
         //repopulate choiceboxes
-        choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
         //repopulate location choice box
         locationChoiceBox.setItems(FXCollections.observableList(
@@ -324,14 +326,16 @@ public class RequestController implements ControllableScreen{
 
     public void deptSelected(Department newValue)
     {
-        choiceBoxDept.setDisable(false);
-        choiceBoxService.setItems(FXCollections.observableList(newValue.getServices()));
+        if(newValue != null) {
+            choiceBoxService.setDisable(false);
+            choiceBoxService.setItems(FXCollections.observableList(newValue.getServices()));
+        }
 
     }
     public void servSelected(Service newValue)
     {
-
-            choiceBoxService.setDisable(false);
+        if(newValue != null) {
+            choiceBoxStaff.setDisable(false);
             choiceBoxStaff.setItems(FXCollections.observableList(newValue.getStaff()));
 
             //todo URL ??????????????????????????????????????????????????????????????\
@@ -348,15 +352,20 @@ public class RequestController implements ControllableScreen{
                 // Feeds data into respective service controller
                 this.currentServiceController.onShow();
 
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
                 System.out.println(URLPLS);
             }
+        }
+        else{
+            servicePane1.getChildren().clear();
+        }
 
     }
-    public void staffSelected(Staff newValue)
-    {
-        nameStaff = newValue.toString();
+    public void staffSelected(Staff newValue) {
+        if(newValue != null) {
+            nameStaff = newValue.toString();
+        }
     }
 
     public void timeSelected(ActionEvent e) {
@@ -426,6 +435,7 @@ public class RequestController implements ControllableScreen{
     public void saveSettingsPressed(ActionEvent e){
         if(searchStrategyChoice.getValue() != null){
             map.setSearchStrategy(searchStrategyChoice.getValue());
+            map.setKioskLocation(kioskLocationChoice.getValue());
         }
 
     }
