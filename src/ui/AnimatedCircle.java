@@ -9,7 +9,6 @@ import javafx.util.Duration;
 import java.sql.Time;
 
 public class AnimatedCircle extends Circle {
-
     private Timeline timeline;
 
     public AnimatedCircle(){
