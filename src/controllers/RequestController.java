@@ -53,9 +53,6 @@ public class RequestController implements ControllableScreen{
         this.parent = parent;
     }
 
-
-
-
     @FXML
     private JFXTextField usernameTxt;
 
@@ -201,7 +198,8 @@ public class RequestController implements ControllableScreen{
 
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
-        if(depSub.getCurrentLoggedIn().getAllRequest() == null)
+        System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
+        if(depSub.getCurrentLoggedIn().getAllRequest().isEmpty())
         {
             resolveServiceListView.getItems().clear();
         }else{
@@ -232,6 +230,11 @@ public class RequestController implements ControllableScreen{
         //todo test?
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
         System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
+
+        lblSelectedService.setText("Service");
+        lblSelectedAdditionalInfo.setText("Location");
+        lblSelectedDT.setText("Date & Time");
+        lblSelectedLocation.setText("Additional Info");
 
     }
 
