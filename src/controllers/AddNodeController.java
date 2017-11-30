@@ -211,15 +211,15 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
         else if (edgeTab.isSelected() && edgeAddTab.isSelected()){
-            if(edgeAddNode1 == null){
+            if(edgeAddNode1 == null && (edgeAddNode2 == null || !edgeAddNode2.equals(source.getNode()))){
                 edgeAddNode1 = source.getNode();
                 edgeAddID1Label.setText(source.getNode().getID());
             }
-            else if(edgeAddNode1.equals(source.getNode())){
+            else if(edgeAddNode1 != null && edgeAddNode1.equals(source.getNode())){
                 edgeAddNode1 = null;
                 edgeAddID1Label.setText("");
             }
-            else if(edgeAddNode2 == null){
+            else if(edgeAddNode2 == null ){
                 edgeAddNode2 = source.getNode();
                 edgeAddID2Label.setText(source.getNode().getID());
             }
