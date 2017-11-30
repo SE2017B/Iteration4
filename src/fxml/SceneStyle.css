@@ -1,4 +1,4 @@
-.button, .menu-button, .choice-box, .titled-pane .title{
+.button, .menu-button, .choice-box, .titled-pane .title {
     -fx-text-fill: white;
     -fx-background-color: rgb(40,40,60);
     -fx-border-color: whitesmoke;
@@ -11,6 +11,25 @@
     -fx-hbar-policy: never;
     -fx-vbar-policy: never;
 }
+
+.text-field {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: white;
+}
+
+.text-field .input-line {
+    -fx-background-color: darkorange;
+}
+
+.jfx-date-picker .input-line {
+    -fx-background-color: darkorange;
+}
+
+.jfx-time-picker .input-line {
+    -fx-background-color: darkorange;
+}
+
+
 
 
 .jfx-tab-pane .headers-region, .tab-pane {

@@ -13,11 +13,11 @@ import DepartmentSubsystem.Services.Sanitation;
 import DepartmentSubsystem.Services.Translation;
 import DepartmentSubsystem.Services.Transport;
 import database.staffDatabase;
-import map.Node;
+
+import java.util.ArrayList;
 
 //import java.mail.*;
 //import java.mail.internet.*;
-import java.util.ArrayList;
 
 public class DepartmentSubsystem {
 //    private boolean initRan = false;
@@ -25,6 +25,8 @@ public class DepartmentSubsystem {
     private Staff currentlyLoggedIn = null;
 //    private static int count = 0;
 
+    ArrayList<Service> services = new ArrayList<Service>();
+    private static int count = 0;
     /**
      * The order of method calls should be this for DSS:
      * Login - The user submits their credentials, and we check if they have a matching pair
@@ -44,24 +46,28 @@ public class DepartmentSubsystem {
         Department translationDepartment = new Department("Translation Department");
         Service translation = new Translation("Translation service");
         translation.setURL("/fxml/Translation.fxml");
+        services.add(translation);
         translationDepartment.addService(translation);
         departments.add(translationDepartment);
 
         Department transportationDepartment = new Department("Transportation Department");
         Service transport = new Transport("Transport service");
         transport.setURL("/fxml/Transport.fxml");
+        services.add(transport);
         transportationDepartment.addService(transport);
         departments.add(transportationDepartment);
 
         Department facilities = new Department("Facilities");
         Service sanitation = new Sanitation("Sanitation");
         sanitation.setURL("/fxml/Sanitation.fxml");
+        services.add(sanitation);
         facilities.addService(sanitation);
         departments.add(facilities);
 
         Department food = new Department("Food");
         Service foodDelivery = new FoodDelivery("Food Delivery Service");
         foodDelivery.setURL("/fxml/FoodDelivery.fxml");
+        services.add(foodDelivery);
         food.addService(foodDelivery);
         departments.add(food);
 
@@ -96,8 +102,13 @@ public class DepartmentSubsystem {
         }
     }
 
+    public ArrayList<Service> getServices() {
+        return services;
+    }
+
     //Singleton Stuff (init HAS to be run)
     public static DepartmentSubsystem getSubsystem(){
+        //System.out.println("getSub" + count);
         if(singleton == null){
             singleton =  new DepartmentSubsystem();
         }
@@ -236,8 +247,8 @@ public class DepartmentSubsystem {
         staffDatabase.modifyStaff(person);
     }
 
-    public void deleteStaff(Service ser, Staff person){
-//        Staff person = new Staff(userName,null, jobTile,null, 0);
+    public void deleteStaff(Service ser, String userName){
+        Staff person = new Staff(userName,null, null,null, 0);
 //        if(jobTile.equals("Chef") || jobTile.equals("Food Delivery")){
 //            departments.get(3).removePersonel(person);
 //            departments.get(3).getServices().get(0).removeEligibleStaff(person);
