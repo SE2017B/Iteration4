@@ -8,12 +8,8 @@
 
 package map;
 
-import exceptions.InvalidNodeException;
-
 import database.nodeDatabase;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Node{
     private String longName;    //shortName of node
@@ -27,6 +23,7 @@ public class Node{
     private int y;  //y-coordinate of node
     private String team;
 
+    //Constructors
     public Node(String ID, String x, String y, String floor, String building, String type, String longName, String shortName, String team){
         this.longName = longName;
         this.shortName = shortName;
@@ -68,16 +65,6 @@ public class Node{
         connections.remove(edge);
     }
 
-//    //This only deletes all the edges, but not the node itself. Should we create a deconstructor?
-//    public void deleteNode() {
-//        int size = connections.size();
-//        for(int i = 0; i < size; i++){
-//            //have to delete 0 index each time because array shrinks after each iteration
-//            connections.get(0).deleteConnection();
-//        }
-//        //nodeDatabase.deleteNode(this);
-//    }
-
     //Gets the Euclidian Distance from a start node to an end node
     public double getEuclidianDistance(Node otherNode){
         double xDeltaSquared = Math.pow((this.x - otherNode.getX()), 2);
@@ -88,30 +75,6 @@ public class Node{
         double distance = Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
         return distance;
     }
-
-    //Gets the cost from a node to a different node
-    /*public double getCostFromNode(Node node) throws InvalidNodeException{
-        for (int i = 0; i < connections.size(); i++) {
-            if (connections.get(i).getID().contains(node.getID())) {
-                return connections.get(i).getCost();
-            }
-        }
-        throw new InvalidNodeException("");
-    }*/
-
-//    //added for Chima
-//    public void addEdge(Edge edge){
-//        connections.add(edge);
-//    }
-//
-//    //takes a node and gets all nodes that it shares an edge with
-//    public ArrayList<Node> getSiblingNodes(){
-//        ArrayList<Node> ans = new ArrayList<Node>();
-//        for(Edge e: this.connections ){
-//            ans.add(e.getOtherNode(this));
-//        }
-//        return ans;
-//    }
 
     //Getters
     public String getLongName() {

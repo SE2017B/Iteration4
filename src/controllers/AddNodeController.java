@@ -33,26 +33,11 @@ public class AddNodeController implements ControllableScreen, Observer {
     private ScreenController parent;
     private HospitalMap map;
     private  FloorNumber currentFloor;
-
-
-    //node variables
-    private String name;
-    private String nodeID;
-    private String x;
-    private String y;
-    private String floor;
-    private String building;
-    private String nodeType;
+    private MapViewer mapViewer;
 
     //Nodes in the map
     private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
     private ArrayList<EdgeCheckBox> edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
-
-
-    //setter for parent
-    public void setParentController(ScreenController parent) {
-        this.parent = parent;
-    }
 
     @FXML
     private Pane mapPane;
@@ -70,15 +55,10 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Tab edgeAddTab;
     @FXML
     private Tab edgeRemoveTab;
-
     @FXML
     private Circle nodeLocation;
-
     @FXML
     private AnchorPane mapButtonHolder;
-
-
-    private MapViewer mapViewer ;
 
     public void init() {
         map = HospitalMap.getMap();
@@ -100,7 +80,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         edgeAddTab.setOnSelectionChanged(e -> showNodesandEdges());
         edgeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
 
-
         refreshNodesandEdges();
     }
 
@@ -110,6 +89,17 @@ public class AddNodeController implements ControllableScreen, Observer {
         refreshNodesandEdges();
         nodeAddFloorDropDown.setText(currentFloor.getDbMapping());
         nodeEditFloorDropDown.setText(currentFloor.getDbMapping());
+    }
+
+    //Setters
+    public void setParentController(ScreenController parent) {
+        this.parent = parent;
+    }
+    public void setFloor(FloorNumber floor){
+        currentFloor = floor;
+        nodeAddFloorDropDown.setText(floor.getDbMapping());
+        nodeEditFloorDropDown.setText(floor.getDbMapping());
+        refreshNodesandEdges();
     }
 
     //Action upon pressing enter
@@ -124,14 +114,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void returnPressed(ActionEvent e){
         System.out.println("Return Pressed");
         parent.setScreen(ScreenController.RequestID, "RIGHT");
-    }
-
-    public void setFloor(FloorNumber floor){
-        currentFloor = floor;
-        nodeAddFloorDropDown.setText(floor.getDbMapping());
-        nodeEditFloorDropDown.setText(floor.getDbMapping());
-        refreshNodesandEdges();
-
     }
 
     public void showNodesandEdges(){
@@ -152,7 +134,6 @@ public class AddNodeController implements ControllableScreen, Observer {
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
                 edgeAddID2Label.setText("");
-
             }
             else{
                 showEdgesbyFloor(currentFloor);
@@ -165,7 +146,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         mapPane.getChildren().clear();
         mapPane.getChildren().add(mapViewer.getMapImage());
     }
-
 
     public void showNodesandEdgesbyFloor(FloorNumber floor){
         showEdgesbyFloor(floor);
@@ -192,7 +172,6 @@ public class AddNodeController implements ControllableScreen, Observer {
                 cb.setSelected(false);
                 cb.setOnMousePressed(e -> edgeSelected(e));
                 children.add(cb);
-
             }
         }
     }
@@ -232,15 +211,15 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
         else if (edgeTab.isSelected() && edgeAddTab.isSelected()){
-            if(edgeAddNode1 == null){
+            if(edgeAddNode1 == null && (edgeAddNode2 == null || !edgeAddNode2.equals(source.getNode()))){
                 edgeAddNode1 = source.getNode();
                 edgeAddID1Label.setText(source.getNode().getID());
             }
-            else if(edgeAddNode1.equals(source.getNode())){
+            else if(edgeAddNode1 != null && edgeAddNode1.equals(source.getNode())){
                 edgeAddNode1 = null;
                 edgeAddID1Label.setText("");
             }
-            else if(edgeAddNode2 == null){
+            else if(edgeAddNode2 == null ){
                 edgeAddNode2 = source.getNode();
                 edgeAddID2Label.setText(source.getNode().getID());
             }
@@ -272,7 +251,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
     }
 
-
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
         source.select();
@@ -285,7 +263,6 @@ public class AddNodeController implements ControllableScreen, Observer {
             System.out.println("Edge Removed from List");
             edgeRemoveList.getItems().remove(source.getEdge());
         }
-
     }
 
     @Override
@@ -294,6 +271,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             setFloor(((PathID) arg).getFloor());
         }
     }
+
     ////////////////////////////////////////////////////////////
     /////////////           Node ADD
     ////////////////////////////////////////////////////////////
@@ -317,9 +295,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     private MenuButton nodeAddTypeDropDown;
     @FXML
     private Circle nodeAddIndicator;
-
-
-
 
     public void nodeAddXEntered(ActionEvent e){
         System.out.println("Node Add X Entered");
@@ -364,7 +339,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         String text = ((MenuItem)e.getSource()).getText();
         nodeAddTypeDropDown.setText(text);
     }
-
 
     public void nodeAddEnterPressed(ActionEvent e){
         System.out.println("Node Add Enter Pressed");
@@ -413,7 +387,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         refreshNodesandEdges();
         nodeRemoveSelectedList.getItems().clear();
-
     }
 
     public void nodeRemoveCancelPressed(ActionEvent e){
@@ -489,7 +462,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeEditTypeDropDown.setText(text);
     }
 
-
     public void nodeEditEnterPressed(ActionEvent e){
         System.out.println("Node Edit Enter Pressed");
         Node node = nodeEditSelectedNode;
@@ -513,7 +485,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         System.out.println("Node Edit Cancel Pressed");
         resetNodeEdit();
     }
-
 
     public void resetNodeEdit(){
         nodeEditSelectedNode = null;
@@ -542,7 +513,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Node edgeAddNode1;
 
     private Node edgeAddNode2;
-
 
     public void edgeAddEnterPressed(ActionEvent e){
         System.out.println("Edge Add Enter Pressed");

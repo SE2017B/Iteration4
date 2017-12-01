@@ -538,6 +538,7 @@ public class HospitalMapTest {
     }
     //------------------------END TEST findPath()------------------------//
 
+    //if using Djikstra's, it should pick A, B, D
     @Test
     public void testFindNearest(){
         assertEquals("[A, B, D]", easyMap.findNearest(A, "Desk").toString());

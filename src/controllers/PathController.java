@@ -8,7 +8,6 @@
 
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import exceptions.InvalidNodeException;
@@ -33,12 +32,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 import javafx.animation.PathTransition;
 
-
 import ui.AnimatedCircle;
 import ui.MapViewer;
 import ui.PathID;
-import ui.proxyImagePane;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,79 +51,45 @@ public class PathController implements ControllableScreen, Observer{
     private String endType =  "";
     private String endFloor = "";
 
-
-    public void setParentController(ScreenController parent){
-        this.parent = parent;
-    }
-
-    @FXML
-    private Button ntncancel;
-
-    @FXML
-    private ChoiceBox<Node> startNodeChoice;
-
-    @FXML
-    private ChoiceBox<Node> endNodeChoice;
-
-    @FXML
-    private Pane mapPane;
-
-    @FXML
-    private TitledPane textDirectionsPane;
-
-
-
-    @FXML
-    private ScrollPane mapScrollPane;
-
-    @FXML
-    private JFXSlider slideBarZoom;
-
-    @FXML
-    private AnchorPane buttonHolderPane;
-
-    @FXML
-    private MenuButton startTypeMenu;
-
-    @FXML
-    private MenuButton startFloorMenu;
-
-    @FXML
-    private MenuButton endTypeMenu;
-
-    @FXML
-    private MenuButton endFloorMenu;
-
-
-
     private MapViewer mapViewer;
-
     private FloorNumber currentFloor;// the current floor where the kiosk is.
-
     private Path currentPath;
-
     private ArrayList<FloorNumber> floors; //list of floors available
-
     private ArrayList<Path> paths;
-
-
     private HashMap<Path, ArrayList<Shape>> pathShapes;
-
     private HashMap<FloorNumber,ArrayList<Integer>> EdgeNodes;
-
     private HashMap<Path,FloorNumber> pathtoFloor;
-
     private HashMap<Integer,Path> floorindextoPath;
-
     private Pane arrow;
-
     private PathTransition pathTransition;
 
     @FXML
+    private ChoiceBox<Node> startNodeChoice;
+    @FXML
+    private ChoiceBox<Node> endNodeChoice;
+    @FXML
+    private Pane mapPane;
+    @FXML
+    private TitledPane textDirectionsPane;
+    @FXML
+    private ScrollPane mapScrollPane;
+    @FXML
+    private JFXSlider slideBarZoom;
+    @FXML
+    private AnchorPane buttonHolderPane;
+    @FXML
+    private MenuButton startTypeMenu;
+    @FXML
+    private MenuButton startFloorMenu;
+    @FXML
+    private MenuButton endTypeMenu;
+    @FXML
+    private MenuButton endFloorMenu;
+    @FXML
     private JFXListView<String> directionsList;
+
     //Methods start here
-    public void init()
-    {
+    public void init() {
         map = HospitalMap.getMap();
         path = new ArrayList<Node>();
         shapes = new ArrayList<Shape>();
@@ -140,12 +102,6 @@ public class PathController implements ControllableScreen, Observer{
         mapViewer = new MapViewer(this);
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
-        //floors.add(FloorNumber.fromDbMapping("1"));
-        //floors.add(FloorNumber.fromDbMapping("2"));
-        //add the test background image
-
-
-
 
         mapPane.getChildren().add(mapViewer.getMapImage());
         buttonHolderPane.getChildren().add(mapViewer.getPane());
@@ -165,19 +121,17 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void onShow(){
-        startNodeChoice.setItems(FXCollections.observableList(
-                map.getNodesBy(n -> !n.getType().equals("HALL"))));
-        endNodeChoice.setItems(FXCollections.observableList(
-                map.getNodesBy(n -> !n.getType().equals("HALL"))));
+        startNodeChoice.setItems(FXCollections.observableArrayList(
+                map.getKioskLocation()));
+        //set the default start location to be the kiosk
         startNodeChoice.setValue(map.getKioskLocation());
         //remove any previous paths from the display
         clearPaths();
 
-        //lines = new ArrayList<>();
+        startNodeChoice.setValue(map.getKioskLocation());
         startNodeChoice.setDisable(true);
-        startNodeChoice.setValue(null);
+        startFloorMenu.setText(map.getKioskLocation().getFloor().getDbMapping());
         startFloorMenu.setDisable(true);
-        startFloorMenu.setText("Floor");
         startTypeMenu.setText("Type");
 
         endNodeChoice.setDisable(true);
@@ -188,15 +142,16 @@ public class PathController implements ControllableScreen, Observer{
 
         mapViewer.resetView();
     }
-    private Circle getPoint(int x, int y){
-        Circle c = new AnimatedCircle();
-        c.setCenterX(x/mapViewer.getScale());
-        c.setCenterY(y/mapViewer.getScale());
-        c.setVisible(true);
-        c.setRadius(7/mapViewer.getScale());
-        return c;
+
+    public void setParentController(ScreenController parent){
+        this.parent = parent;
     }
-    private void getVars(FloorNumber floor,Node n){
+
+    private Path getPath(){
+        return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
+    }
+
+    private void getVars(FloorNumber floor, Node n){
         //get actual values
         int X = n.getX();
         int Y = n.getY();
@@ -239,13 +194,7 @@ public class PathController implements ControllableScreen, Observer{
         double H = mapScrollPane.getViewportBounds().getWidth();
         mapScrollPane.setVvalue(((y - 0.5 * v) / (h - v)));
         mapScrollPane.setHvalue(((x - 0.5 * H) / (w - H)));
-
-        //mapScrollPane.setHvalue((x-w)/5000.0);
-        //mapScrollPane.setVvalue((y-h)/3500.0);
-        //mapScrollPane.setHvalue(0);
-        //mapScrollPane.setVvalue(0);
     }
-
 
     private void testSetPaths(Path path){
         clearPaths();
@@ -277,20 +226,28 @@ public class PathController implements ControllableScreen, Observer{
             currentPath=paths.get(0);
             currentFloor=floors.get(0);
         }
-
-
     }
+
+    //-----------------------ANIMATIONS START--------------------------//
+    private Circle getPoint(int x, int y){
+        Circle c = new AnimatedCircle();
+        c.setCenterX(x/mapViewer.getScale());
+        c.setCenterY(y/mapViewer.getScale());
+        c.setVisible(true);
+        c.setRadius(7/mapViewer.getScale());
+        return c;
+    }
+
     private void clearShapes(){
         for(Shape s : shapes){
             s.setVisible(false);
-            //shapes.remove(s);
             mapPane.getChildren().remove(s);
         }
         pathTransition.stop();
         arrow.setVisible(false);
         mapPane.getChildren().remove(arrow);
-
     }
+
     private void displayPath(Path path){
         //clear path
         //display an entire path if available
@@ -298,20 +255,18 @@ public class PathController implements ControllableScreen, Observer{
             animatePath(path);
         }
     }
+
     private void animatePath(Path path){
         System.out.println("Animating Path");
         //represent first and last nodes with animated circles
         Circle newp = getPoint(path.getPath().get(0).getX(),path.getPath().get(0).getY());
         newp.setFill(Color.RED);
-        //getVars(current, newp);
         mapPane.getChildren().add(newp);
         shapes.add(newp);
         //add to last node
         Circle lastp = getPoint(path.getPath().get(path.getPath().size()-1).getX(),path.getPath().get(path.getPath().size()-1).getY());
-        //getVars(current, newp);
         mapPane.getChildren().add(lastp);
         shapes.add(lastp);
-
 
         if(path.getPath().size() > 1) {
             //animation that moves the indicator
@@ -321,7 +276,6 @@ public class PathController implements ControllableScreen, Observer{
             p.setStroke(Color.NAVY);
             p.setStrokeWidth(4);
             shapes.add(p);
-            //p.setVisible(false);//let animation move along our line
             mapPane.getChildren().addAll(p, arrow);
             arrow.setVisible(true);
             //add all shapes to shape
@@ -343,7 +297,6 @@ public class PathController implements ControllableScreen, Observer{
             pathTransition.setCycleCount(Transition.INDEFINITE);
             pathTransition.play();
         }
-
     }
 
     //method to switch between paths when toggling between floors
@@ -363,12 +316,10 @@ public class PathController implements ControllableScreen, Observer{
         //set zoom level here
 
         System.out.println("The zoom is "+getZoom(path));
-        //slideBarZoom.setValue(4 - mapViewer.getScale());
         displayPath(path);
         currentFloor=pathtoFloor.get(path);
         controlScroller(path);//reposition map
     }
-
 
     public void clearPaths(){
         for(Shape s: shapes){
@@ -389,20 +340,14 @@ public class PathController implements ControllableScreen, Observer{
         arrow.setVisible(false);
         mapPane.getChildren().removeAll(arrow);
     }
+    //-----------------------ANIMATIONS END--------------------------//
 
-
+    //-------------------------MAP SCALE START--------------------------//
     public void setMapScale(double scale){
         //reposition map
         mapViewer.setScale(scale);
-        //switchPath(currentFloor);
     }
 
-
-
-    private Path getPath(){
-        return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
-    }
-    //methods for adjusting screen
     private ArrayList<Integer> getEdgeDims(Path p){
         ArrayList<Integer> ans = new ArrayList<Integer>();
         ans.add(p.getPath().get(0).getX());
@@ -425,8 +370,8 @@ public class PathController implements ControllableScreen, Observer{
             }
         }
         return ans;
-
     }
+
     private ArrayList<Integer> getCenter(Path p){
         ArrayList<Integer> Dim =getEdgeDims(p);
         ArrayList<Integer> ans = new ArrayList<>();
@@ -434,6 +379,7 @@ public class PathController implements ControllableScreen, Observer{
         ans.add((Dim.get(1)+Dim.get(3))/2);
         return ans;
     }
+
     private double getZoom(Path p){
         ArrayList<Integer> Dim =getEdgeDims(p);
         int x = Math.abs(Dim.get(0)-Dim.get(2));
@@ -445,10 +391,25 @@ public class PathController implements ControllableScreen, Observer{
         return (Math.max(1.0,Math.min(3.0,output)));
     }
 
+    //when + button is pressed zoom in map
+    public void zinPressed(ActionEvent e){
+        System.out.println("Zoom In Pressed");
+        slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
+        setMapScale(4-slideBarZoom.getValue());
+        //redraw animation to ensure that it is well positioned
+        switchPath(currentPath);
+    }
 
+    //when - button pressed zoom out map
+    public void zoutPressed(ActionEvent e){
+        slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
+        setMapScale(4-slideBarZoom.getValue());
+        //redraw animation to ensure that it is well positioned
+        switchPath(currentPath);
+    }
+    //-------------------------MAP SCALE START--------------------------//
 
-    public void enterPressed(ActionEvent e) throws InvalidNodeException
-    {
+    public void enterPressed(ActionEvent e) throws InvalidNodeException {
         if(startNodeChoice.getValue() instanceof Node && endNodeChoice.getValue() instanceof Node) {
             Path thePath = getPath();
             /**
@@ -470,19 +431,15 @@ public class PathController implements ControllableScreen, Observer{
             directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
             textDirectionsPane.setVisible(true);
             textDirectionsPane.setExpanded(false);
-            //mapViewer.setScale(getZoom(paths.get(0)));
             switchPath(paths.get(0));
             System.out.println("Enter Pressed");
 
             mapScrollPane.setHvalue(startNodeChoice.getValue().getX()/5000.0);
             mapScrollPane.setVvalue(startNodeChoice.getValue().getY()/3500.0);
-
         }
     }
 
-
-    public void cancelPressed(ActionEvent e)
-    {
+    public void cancelPressed(ActionEvent e) {
         System.out.println("Cancel Pressed");
         clearPaths();
         parent.setScreen(ScreenController.MainID,"RIGHT");
@@ -496,34 +453,10 @@ public class PathController implements ControllableScreen, Observer{
                 currentFloor = ID.getFloor();
                 switchPath(currentPath);
             }
-
         }
     }
 
-    //when + button is pressed zoom in map
-    public void zinPressed(ActionEvent e){
-        System.out.println("Zoom In Pressed");
-        slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
-        setMapScale(4-slideBarZoom.getValue());
-
-        //redraw animation o ensure that it is well positioned
-        //clearShapes();
-        //displayPath(currentPath);
-        switchPath(currentPath);
-        //controlScroller(currentFloor);
-    }
-
-    //when - button pressed zoom out map
-    public void zoutPressed(ActionEvent e){
-        slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
-        setMapScale(4-slideBarZoom.getValue());
-        //redraw animation to ensure that it is well positioned
-        //clearShapes();
-        //displayPath(currentPath);
-        switchPath(currentPath);
-        //controlScroller(currentFloor);
-    }
-
+    //-----------------------NODE SELECT START--------------------------//
     public void startTypeSelected(ActionEvent e){
         startType = ((MenuItem)e.getSource()).getText();
         startTypeMenu.setText(startType);
@@ -540,7 +473,6 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private void startChosen(){
-
         String filter = "";
         if(startType.equals("Restroom")){
             filter = "REST";
@@ -577,7 +509,6 @@ public class PathController implements ControllableScreen, Observer{
         startNodeChoice.setDisable(false);
     }
 
-
     public void endTypeSelected(ActionEvent e){
         endType = ((MenuItem)e.getSource()).getText();
         endTypeMenu.setText(endType);
@@ -594,7 +525,6 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private void endChosen(){
-
         String filter = "";
         if(endType.equals("Restroom")){
             filter = "REST";
@@ -630,4 +560,5 @@ public class PathController implements ControllableScreen, Observer{
         }
         endNodeChoice.setDisable(false);
     }
+    //-----------------------NODE SELECT END--------------------------//
 }

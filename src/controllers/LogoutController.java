@@ -16,11 +16,8 @@ import javafx.util.Duration;
 public class LogoutController implements ControllableScreen {
     private ScreenController parent;
 
-    public void setParentController(ScreenController parent){
-        this.parent = parent;
-    }
-
     public void init(){}
+
     //display the logout confirmation screen
     public void onShow(){
         PauseTransition pause = new PauseTransition(Duration.millis(1200));
@@ -33,4 +30,7 @@ public class LogoutController implements ControllableScreen {
         pause.play();
     }
 
+    public void setParentController(ScreenController parent){
+        this.parent = parent;
+    }
 }

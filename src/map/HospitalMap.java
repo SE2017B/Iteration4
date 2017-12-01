@@ -140,7 +140,6 @@ public class HospitalMap{
         } catch (Exception e){
             throw new InvalidNodeException("the edge does not contain the old node");
         }
-        //edgeDatabase.modifyEdge(edge);
     }
 
     public Node findNode(String nodeID){
@@ -180,13 +179,7 @@ public class HospitalMap{
         return output;
     }
 
-    //Setters
-    public void setSearchStrategy(SearchStrategy searchStrategy){
-        search.setStrategy(searchStrategy);
-    }
-
     public SearchStrategy getSearchStrategy() {return search.getStrategy();}
-
     public ArrayList<SearchStrategy> getSearches() {
         return posSerchStrat;
     }
@@ -194,12 +187,15 @@ public class HospitalMap{
     public Node getKioskLocation(){
         return kioskLocation;
     }
-
-    public void setKioskLocation(Node node){
-        kioskLocation = node;
-    }
-
     public List<Node> getNodesBy(Function<Node, Boolean> function){
         return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
+    }
+
+    //Setters
+    public void setSearchStrategy(SearchStrategy searchStrategy){
+        search.setStrategy(searchStrategy);
+    }
+    public void setKioskLocation(Node node){
+        kioskLocation = node;
     }
 }

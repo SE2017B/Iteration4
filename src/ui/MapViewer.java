@@ -24,7 +24,6 @@ public class MapViewer extends Observable{
     private final int BUTTON_HEIGHT = 80;
     private final int BUTTON_WIDTH = 150;
 
-
     private ArrayList<String> buttonOrder;
     public FloorNumber currentFloor;
     private ScrollPane pane;
@@ -75,7 +74,6 @@ public class MapViewer extends Observable{
         container.getChildren().add(spacerRight);
         currentFloor = FloorNumber.FLOOR_ONE;
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
-
     }
 
     private JFXButton addFloor(FloorNumber floor){
