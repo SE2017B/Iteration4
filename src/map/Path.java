@@ -1,6 +1,7 @@
 package map;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Path implements Comparable<Path> {
@@ -131,6 +132,17 @@ public class Path implements Comparable<Path> {
             this.distance += this.path.get(i).getEdgeOf(this.path.get(i+1)).getCost();
         }
         return distance;
+    }
+
+    public Path getReverse(){
+        Path reverse = new Path(this);
+        reverse.reverseNodes();
+        return reverse;
+
+    }
+
+    private void reverseNodes(){
+        Collections.reverse(path);
     }
 
     @Override
