@@ -13,6 +13,8 @@ import exceptions.InvalidNodeException;
 import search.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -188,7 +190,9 @@ public class HospitalMap{
         return kioskLocation;
     }
     public List<Node> getNodesBy(Function<Node, Boolean> function){
-        return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
+        List<Node> nodes = this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
+        Collections.sort(nodes, Comparator.comparing(n -> n.getEuclidianDistance(this.kioskLocation)));
+        return nodes;
     }
 
     //Setters

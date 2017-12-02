@@ -593,5 +593,11 @@ public class HospitalMapTest {
         assertEquals(0, search.getEuclideanDistance(N5, N5), .01);
     }
     //------------------------END TEST getEuclideanDistance()------------------------//
+
+    @Test
+    public void testGetNodeBy(){
+        easyMap.setKioskLocation(A);
+        System.out.println(easyMap.getNodesBy(n1 -> n1.getType().equals("Desk")));
+    }
 }
 
