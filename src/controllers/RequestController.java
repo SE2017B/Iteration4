@@ -204,6 +204,7 @@ public class RequestController implements ControllableScreen{
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
 
+        //todo CHECK FOR ADMIN
         if(!depSub.getCurrentLoggedIn().isAdmin())
         {
             btnEditMap.setDisable(true);
