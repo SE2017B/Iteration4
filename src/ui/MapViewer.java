@@ -1,6 +1,9 @@
 package ui;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXDrawersStack;
+import controllers.ScreenController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -8,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -26,20 +30,32 @@ public class MapViewer extends Observable{
 
     private ArrayList<String> buttonOrder;
     public FloorNumber currentFloor;
-    private ScrollPane pane;
+    private ScrollPane buttonScrollPane;
+    private ScrollPane mapScrollPane;
 
+    private Pane mapPane;
+
+    public JFXDrawer buttonDrawer;
+    public JFXDrawersStack drawersStack;
     private HBox container;
     private Pane spacerLeft;
     private Pane spacerRight;
 
+    private AnchorPane mapViewerPane;
+
     private proxyImagePane mapImage;
 
-    public MapViewer(Observer o){
+    public MapViewer(Observer o, ScreenController parent){
         super();
-        pane = new ScrollPane();
+        buttonScrollPane = new ScrollPane();
+        mapScrollPane = new ScrollPane();
+        mapPane = new Pane();
         buttonOrder = new ArrayList<String>();
+        buttonDrawer = new JFXDrawer();
+        mapViewerPane = new AnchorPane();
+        drawersStack = new JFXDrawersStack();
         setContainer();
-        pane.setContent(container);
+        mapScrollPane.setContent(mapPane);
 
         addFloor(FloorNumber.FLOOR_LTWO);
         addFloor(FloorNumber.FLOOR_LONE);
@@ -50,15 +66,34 @@ public class MapViewer extends Observable{
 
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
+        container.getStyleClass().add("buttonScrollPane");
+
         mapImage = new proxyImagePane();
-        pane.getStyleClass().add("pane");
-        container.getStyleClass().add("pane");
-        pane.setPannable(true);
+        mapPane.getChildren().add(mapImage);
+
+        buttonScrollPane.getStyleClass().add("buttonScrollPane");
+        buttonScrollPane.setPannable(true);
+        buttonScrollPane.setPrefViewportHeight(100);
+        buttonScrollPane.setContent(container);
+
         currentFloor = FloorNumber.FLOOR_ONE;
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
-        pane.setPrefWidth(PANE_WIDTH);
-        pane.setPrefHeight(150);
+
         addObserver(o);
+
+        buttonScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
+        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty());
+        mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
+
+        mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
+        mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+
+        mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
+        mapViewerPane.setBottomAnchor(buttonScrollPane, 0.0);
+
+
+
     }
 
     public void resetView(){
@@ -117,8 +152,8 @@ public class MapViewer extends Observable{
     public FloorNumber getFloor(){
         return currentFloor;
     }
-    public ScrollPane getPane() {
-        return pane;
+    public ScrollPane getButtonScrollPane() {
+        return buttonScrollPane;
     }
     public proxyImagePane getMapImage(){
         return mapImage;
@@ -127,14 +162,20 @@ public class MapViewer extends Observable{
         return  mapImage.getScale();
     }
 
+    public Pane getMapPane() { return mapPane;}
+
+    public AnchorPane getMapViewerPane() {
+        return mapViewerPane;
+    }
+
     //Setters
     private void setFloor(FloorNumber floor, int buttonPose){
         mapImage.setImage(floor);
         Timeline slideButtons = new Timeline(
                 new KeyFrame(Duration.ZERO,
-                        new KeyValue(pane.hvalueProperty(), pane.getHvalue())),
+                        new KeyValue(buttonScrollPane.hvalueProperty(), buttonScrollPane.getHvalue())),
                 new KeyFrame(new Duration(300),
-                        new KeyValue(pane.hvalueProperty(),buttonPose/(buttonOrder.size()-1.0)))
+                        new KeyValue(buttonScrollPane.hvalueProperty(),buttonPose/(buttonOrder.size()-1.0)))
         );
         slideButtons.play();
     }
