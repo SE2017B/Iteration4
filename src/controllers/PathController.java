@@ -62,13 +62,15 @@ public class PathController implements ControllableScreen, Observer{
     private HashMap<Integer,Path> floorindextoPath;
     private Pane arrow;
     private PathTransition pathTransition;
+    private Pane mapPane;
 
     @FXML
     private ChoiceBox<Node> startNodeChoice;
     @FXML
     private ChoiceBox<Node> endNodeChoice;
+
     @FXML
-    private Pane mapPane;
+    private AnchorPane mainAnchorPane;
     @FXML
     private TitledPane textDirectionsPane;
     @FXML
@@ -99,13 +101,13 @@ public class PathController implements ControllableScreen, Observer{
         pathtoFloor=new HashMap<>();
         floorindextoPath= new HashMap<>();
         currentFloor = FloorNumber.FLOOR_ONE;
-        mapViewer = new MapViewer(this);
+        mapViewer = new MapViewer(this, parent);
+        mapPane = mapViewer.getMapPane();
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
-
-        mapPane.getChildren().add(mapViewer.getMapImage());
-        buttonHolderPane.getChildren().add(mapViewer.getPane());
         mapViewer.setScale(2);
+
+        mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
 
         int arrowSize = 20;
         arrow = new Pane();
