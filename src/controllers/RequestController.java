@@ -164,6 +164,11 @@ public class RequestController implements ControllableScreen{
     @FXML
     private ChoiceBox<Service> addStaffServiceChoiceBox;
 
+    @FXML
+    private Tab staffManagementTab;
+    @FXML
+    private Tab settingsTab;
+
 
     public void init(){
         map = HospitalMap.getMap();
@@ -198,6 +203,17 @@ public class RequestController implements ControllableScreen{
 
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
+
+        if(!depSub.getCurrentLoggedIn().isAdmin())
+        {
+            btnEditMap.setDisable(true);
+            btnEditMap.opacityProperty().setValue(0);
+            staffManagementTab.setDisable(true);
+            //staffManagementTab.opacityProperty().setValue(0);
+            settingsTab.setDisable(true);
+
+        }
+
         System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
         if(depSub.getCurrentLoggedIn().getAllRequest().isEmpty())
         {
