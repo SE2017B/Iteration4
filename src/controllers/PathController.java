@@ -401,18 +401,6 @@ public class PathController implements ControllableScreen, Observer{
     public void enterPressed(ActionEvent e) throws InvalidNodeException {
         if(startNodeChoice.getValue() instanceof Node && endNodeChoice.getValue() instanceof Node) {
             Path thePath = getPath();
-            /**
-
-             //setLines(thePath);
-             clearPaths();
-             setPaths(thePath);
-             mapViewer.setButtonsByFloor(floors);
-             //add background image
-             directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
-             textDirectionsPane.setVisible(true);
-             textDirectionsPane.setExpanded(false);
-             switchPath(paths.get(0));//switch to the first path
-             **/
 
             clearPaths();
             testSetPaths(thePath);
