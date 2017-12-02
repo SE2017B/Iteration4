@@ -138,7 +138,6 @@ public class Path implements Comparable<Path> {
         Path reverse = new Path(this);
         reverse.reverseNodes();
         return reverse;
-
     }
 
     private void reverseNodes(){
