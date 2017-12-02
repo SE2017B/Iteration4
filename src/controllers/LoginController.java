@@ -6,6 +6,9 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 
 public class LoginController implements ControllableScreen{
     public LoginController(){}
@@ -57,6 +60,21 @@ public class LoginController implements ControllableScreen{
         }
         else{
             System.out.println("Wrong Pass/Login");
+        }
+    }
+
+    @FXML
+    void enterKeyboardPress(KeyEvent e) {
+
+        if(e.getCode().toString().equals("ENTER"))
+        {
+            String login = usernameField.getText();
+            String passWord = passwordField.getText();
+            if ((depSub.login(login, passWord))) {
+                parent.setScreen(ScreenController.RequestID, "UP");
+            } else {
+                System.out.println("Wrong Pass/Login");
+            }
         }
     }
 }

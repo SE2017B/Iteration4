@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1280.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" styleClass="pane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
       <JFXButton fx:id="returnButton" layoutX="1036.0" layoutY="58.0" onAction="#returnPressed" text="Return">
          <font>
@@ -31,7 +31,7 @@
                   <Font size="23.0" />
                </font>
             </JFXTextField>
-            <JFXPasswordField fx:id="passwordField" focusColor="WHITE" promptText="Password" styleClass="text-on-dark" unFocusColor="#c9c9c9">
+            <JFXPasswordField fx:id="passwordField" focusColor="WHITE" onKeyPressed="#enterKeyboardPress" promptText="Password" styleClass="text-on-dark" unFocusColor="#c9c9c9">
                <font>
                   <Font size="23.0" />
                </font>
