@@ -46,7 +46,6 @@ public class PathController implements ControllableScreen, Observer{
     private ScreenController parent;
     //private ArrayList<Node> path;
     private HospitalMap map;
-    //private ArrayList<Shape> shapes;
     private String startType = "";
     private String startFloor = "";
     private String endType =  "";
@@ -136,6 +135,8 @@ public class PathController implements ControllableScreen, Observer{
         endFloorMenu.setText("Floor");
         endTypeMenu.setText("Type");
 
+        directionsList.setItems(null);
+
         mapViewer.resetView();
     }
 
@@ -163,7 +164,7 @@ public class PathController implements ControllableScreen, Observer{
         mapScrollPane.setHvalue(((x - 0.5 * H) / (w - H)));
     }
 
-    private void testSetPaths(Path path){
+    private void SetPaths(Path path){
         clearPaths();
         Node node = null;
         FloorNumber current=null; // pointer to the current node of the floor
@@ -344,7 +345,7 @@ public class PathController implements ControllableScreen, Observer{
             Path thePath = getPath();
 
             clearPaths();
-            testSetPaths(thePath);
+            SetPaths(thePath);
             mapViewer.setButtonsByFloor(floors);
             directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
             textDirectionsPane.setVisible(true);
