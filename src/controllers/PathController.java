@@ -56,9 +56,9 @@ public class PathController implements ControllableScreen, Observer{
     private FloorNumber currentFloor;// the current floor where the kiosk is.
     private PathViewer currentPath;
     private ArrayList<FloorNumber> floors; //list of floors available
-    //private ArrayList<Path> paths;
     private HashMap<Path, ArrayList<Shape>> pathShapes;
     private ArrayList<PathViewer> paths;
+    private ArrayList<Shape> shapes;
     private Pane arrow;
     private PathTransition pathTransition;
 
@@ -90,7 +90,7 @@ public class PathController implements ControllableScreen, Observer{
     //Methods start here
     public void init() {
         map = HospitalMap.getMap();
-        //shapes = new ArrayList<Shape>();
+        shapes = new ArrayList<Shape>();
         paths=new ArrayList<PathViewer>();
         pathShapes = new HashMap<Path,ArrayList<Shape>>();
         currentFloor = FloorNumber.FLOOR_ONE;
@@ -207,13 +207,15 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private void clearShapes(){
-        for(Shape s : currentPath.getShapes()){
+        for(Shape s : shapes){
             s.setVisible(false);
             mapPane.getChildren().remove(s);
         }
         pathTransition.stop();
         arrow.setVisible(false);
         mapPane.getChildren().remove(arrow);
+        shapes = new ArrayList<>();
+        System.out.println("Clearing away these shapes");
     }
 
     private void displayPath(PathViewer path){
@@ -231,10 +233,12 @@ public class PathController implements ControllableScreen, Observer{
         newp.setFill(Color.RED);
         mapPane.getChildren().add(newp);
         currentPath.addShape(newp);
+        shapes.add(newp);
         //add to last node
         Circle lastp = getPoint(path.getNodes().get(path.getNodes().size()-1).getX(),path.getNodes().get(path.getNodes().size()-1).getY());
         mapPane.getChildren().add(lastp);
         currentPath.addShape(lastp);
+        shapes.add(lastp);
 
         if(path.getNodes().size() > 1) {
             //animation that moves the indicator
@@ -243,12 +247,11 @@ public class PathController implements ControllableScreen, Observer{
             javafx.scene.shape.Path p = new javafx.scene.shape.Path();
             p.setStroke(Color.NAVY);
             p.setStrokeWidth(4);
+            //add shapes currentPath and shapes
             currentPath.addShape(p);
             mapPane.getChildren().addAll(p, arrow);
+            shapes.add(p);
             arrow.setVisible(true);
-            //add all shapes to shape
-
-            //to remove the red line, remove p ^
 
             //starting point defined by MoveTo
             p.getElements().add(new MoveTo(path.getNodes().get(0).getX() / mapViewer.getScale(), path.getNodes().get(0).getY() / mapViewer.getScale()));
@@ -279,7 +282,7 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void clearPaths(){
-        for(Shape s: currentPath.getShapes()){
+        for(Shape s: shapes){
             s.setVisible(false);
             mapPane.getChildren().remove(s);
         }
@@ -288,7 +291,7 @@ public class PathController implements ControllableScreen, Observer{
         //clear all lines and paths
         pathShapes = new HashMap<>();
         floors= new ArrayList<>();
-        //shapes=new ArrayList<>();
+        shapes=new ArrayList<>();
         paths=new ArrayList<>();
         pathTransition.stop();
         arrow.setVisible(false);

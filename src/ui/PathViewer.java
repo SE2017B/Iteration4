@@ -75,7 +75,7 @@ public class PathViewer {
         return this.scale;
     }
     public FloorNumber getFloor(){
-        return this.pathID.getFloor();
+        return this.path.getPath().get(0).getFloor();
     }
 
 }
