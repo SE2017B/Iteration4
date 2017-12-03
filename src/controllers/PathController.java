@@ -304,17 +304,6 @@ public class PathController implements ControllableScreen, Observer{
 
     //method to switch between paths when toggling between floors
     private void switchPath(Path path){
-        /**
-        hideShapes(shapes);
-        if(pathShapes.containsKey(path)){
-            //add all in to mapPane
-            showShapes(pathShapes.get(path));
-            //adjust screen
-            controlScroller(pathtoFloor.get(path));
-            //Update Current floor
-            currentFloor=pathtoFloor.get(path);
-        }
-         **/
         clearShapes();
         //set zoom level here
 
