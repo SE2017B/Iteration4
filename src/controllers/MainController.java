@@ -11,6 +11,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +25,7 @@ import map.Node;
 import map.Path;
 import ui.AnimatedCircle;
 import ui.MapViewer;
+import ui.Mouse;
 import ui.PathID;
 
 import java.util.ArrayList;
@@ -55,8 +57,6 @@ public class MainController implements ControllableScreen, Observer{
     @FXML
     private AnchorPane mainAnchorPane;
 
-
-
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
@@ -83,10 +83,7 @@ public class MainController implements ControllableScreen, Observer{
 
         System.out.println(mapViewer.getMapViewerPane().getChildren().toString());
         System.out.println(mainAnchorPane.getChildren().toString());
-
-
     }
-
 
     //Setters
     public void setParentController(ScreenController parent){
@@ -145,6 +142,29 @@ public class MainController implements ControllableScreen, Observer{
     //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){
         mapViewer.setScale(4-slideBarZoom.getValue());
+    }
+
+    Mouse mouse = new Mouse();
+
+    public void handlePanMap(MouseEvent e){
+    //probably use the mapScrollPane
+        //double sceneX, sceneY;
+        //double translateX, translateY;
+        mapPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mouse.setX(event.getX());
+                mouse.setY(event.getY());
+
+            }
+        });
+        mapPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                mapPane.getScene().getWindow().setX(event.getScreenX() - mouse.getX());
+                mapPane.getScene().getWindow().setX(event.getScreenY() - mouse.getY());
+            }
+        });
     }
 
     //-------------------findNearest Button Actions Start-----------------//
