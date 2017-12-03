@@ -73,7 +73,7 @@ public class PathController implements ControllableScreen, Observer{
     private AnchorPane mainAnchorPane;
     @FXML
     private TitledPane textDirectionsPane;
-    @FXML
+
     private ScrollPane mapScrollPane;
     @FXML
     private JFXSlider slideBarZoom;
@@ -103,6 +103,7 @@ public class PathController implements ControllableScreen, Observer{
         currentFloor = FloorNumber.FLOOR_ONE;
         mapViewer = new MapViewer(this, parent);
         mapPane = mapViewer.getMapPane();
+        mapScrollPane = mapViewer.getMapScrollPane();
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
         mapViewer.setScale(2);
@@ -303,17 +304,6 @@ public class PathController implements ControllableScreen, Observer{
 
     //method to switch between paths when toggling between floors
     private void switchPath(Path path){
-        /**
-        hideShapes(shapes);
-        if(pathShapes.containsKey(path)){
-            //add all in to mapPane
-            showShapes(pathShapes.get(path));
-            //adjust screen
-            controlScroller(pathtoFloor.get(path));
-            //Update Current floor
-            currentFloor=pathtoFloor.get(path);
-        }
-         **/
         clearShapes();
         //set zoom level here
 

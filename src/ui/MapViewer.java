@@ -21,7 +21,6 @@ import map.FloorNumber;
 import java.util.*;
 
 public class MapViewer extends Observable{
-    private int PANE_WIDTH = 1280;
     private int SCROLL_WIDTH = 2000;
     private int SPACER_WIDTH = 500;
     private final int SPACING = 10;
@@ -45,7 +44,7 @@ public class MapViewer extends Observable{
 
     private proxyImagePane mapImage;
 
-    public MapViewer(Observer o, ScreenController parent){
+    public MapViewer(Observer o, Pane parent){
         super();
         buttonScrollPane = new ScrollPane();
         mapScrollPane = new ScrollPane();
@@ -87,6 +86,8 @@ public class MapViewer extends Observable{
 
         mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
         mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+        mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue.intValue()));
 
 
         mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
@@ -130,6 +131,15 @@ public class MapViewer extends Observable{
         return button;
     }
 
+    private void resizeSpacers(int width){
+        SPACER_WIDTH = (width - 200) / 2;
+        spacerRight.setPrefWidth(SPACER_WIDTH);
+        spacerLeft.setPrefWidth(SPACER_WIDTH);
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING*2));
+        container.setPrefWidth(SCROLL_WIDTH);
+
+    }
+
     public void floorButtonPressed(ActionEvent e){
         FloorNumber floor =  FloorNumber.fromDbMapping(((JFXButton)e.getSource()).getText());
         int id = Integer.parseInt((((JFXButton) e.getSource()).getId()));
@@ -162,6 +172,10 @@ public class MapViewer extends Observable{
         return  mapImage.getScale();
     }
 
+    public ScrollPane getMapScrollPane() {
+        return mapScrollPane;
+    }
+
     public Pane getMapPane() { return mapPane;}
 
     public AnchorPane getMapViewerPane() {
@@ -184,13 +198,7 @@ public class MapViewer extends Observable{
         setFloor(floor,buttonOrder.indexOf(floor.getDbMapping()));
     }
 
-    public void setSpacerWidth(int width){
-        SPACER_WIDTH = width;
-        spacerLeft.setPrefWidth(SPACER_WIDTH);
-        spacerRight.setPrefWidth(SPACER_WIDTH);
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
-        container.setPrefWidth(SCROLL_WIDTH);
-    }
+
 
     private void setContainer(){
         spacerLeft = new Pane();
@@ -209,16 +217,12 @@ public class MapViewer extends Observable{
 
     public void setButtonsByFloor(List<FloorNumber> floors){
         clearButtons();
-        if(floors.size() == 1){
-            SPACER_WIDTH = 560;
-        }
-        else{
-            SPACER_WIDTH = 500;
-        }
+
         for (int i = 0; i < floors.size(); i++) {
             addFloor(floors.get(i), i);
         }
 
+        resizeSpacers((int)mapViewerPane.getWidth());
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         setFloor(floors.get(0),0);
