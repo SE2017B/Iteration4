@@ -11,9 +11,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -25,7 +23,6 @@ import map.Node;
 import map.Path;
 import ui.AnimatedCircle;
 import ui.MapViewer;
-import ui.Mouse;
 import ui.PathID;
 
 import java.util.ArrayList;

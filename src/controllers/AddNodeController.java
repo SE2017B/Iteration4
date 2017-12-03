@@ -56,9 +56,9 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Tab edgeRemoveTab;
     @FXML
     private Circle nodeLocation;
-
     @FXML
     private AnchorPane mainAnchorPane;
+
     public void init() {
         map = HospitalMap.getMap();
         mainAnchorPane.prefWidthProperty().bind(parent.prefWidthProperty().subtract(400));
@@ -68,6 +68,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         mainAnchorPane.getChildren().add(mapViewer.getMapViewerPane());
         mapViewer.setFloor(FloorNumber.FLOOR_GROUND);
         mapPane = mapViewer.getMapPane();
+        mapViewer.getMapScrollPane().setPannable(true);
 
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
