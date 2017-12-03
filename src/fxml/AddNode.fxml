@@ -451,6 +451,6 @@
           <AnchorPane fx:id="mainAnchorPane" minWidth="400.0" styleClass="pane" />
          </children>
       </HBox>
-      <JFXButton fx:id="btnReturn" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+      <JFXButton fx:id="btnReturn" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>

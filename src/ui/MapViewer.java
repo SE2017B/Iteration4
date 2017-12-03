@@ -87,7 +87,7 @@ public class MapViewer extends Observable{
         mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
         mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
 
-        mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue));
+        mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue.intValue()));
 
 
         mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
@@ -131,13 +131,11 @@ public class MapViewer extends Observable{
         return button;
     }
 
-    private void resizeSpacers(Number width){
-        int paneWidth = width.intValue();
-        SPACER_WIDTH = (paneWidth - 170) / 2;
+    private void resizeSpacers(int width){
+        SPACER_WIDTH = (width - 200) / 2;
         spacerRight.setPrefWidth(SPACER_WIDTH);
         spacerLeft.setPrefWidth(SPACER_WIDTH);
-
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING*2));
         container.setPrefWidth(SCROLL_WIDTH);
 
     }
@@ -172,6 +170,10 @@ public class MapViewer extends Observable{
     }
     public double getScale(){
         return  mapImage.getScale();
+    }
+
+    public ScrollPane getMapScrollPane() {
+        return mapScrollPane;
     }
 
     public Pane getMapPane() { return mapPane;}
@@ -215,16 +217,12 @@ public class MapViewer extends Observable{
 
     public void setButtonsByFloor(List<FloorNumber> floors){
         clearButtons();
-        if(floors.size() == 1){
-            SPACER_WIDTH = 560;
-        }
-        else{
-            SPACER_WIDTH = 500;
-        }
+
         for (int i = 0; i < floors.size(); i++) {
             addFloor(floors.get(i), i);
         }
 
+        resizeSpacers((int)mapViewerPane.getWidth());
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         setFloor(floors.get(0),0);
