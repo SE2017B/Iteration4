@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
@@ -57,8 +58,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Tab edgeRemoveTab;
 
 
-    private AnimatedCircle nodeLocation;
-
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -75,9 +74,10 @@ public class AddNodeController implements ControllableScreen, Observer {
 
         mapPane.setOnMouseClicked(e -> mapPaneClicked(e));
 
-        nodeLocation = new AnimatedCircle();
-        nodeLocation.setVisible(false);
-        nodeLocation.setFill(Color.DODGERBLUE);
+        nodeAddLocation = new AnimatedCircle();
+        nodeAllignedLines = new ArrayList<Line>();
+        nodeAddLocation.setVisible(false);
+        nodeAddLocation.setFill(Color.DODGERBLUE);
 
         mapViewer.getMapScrollPane().setPannable(true);
 
@@ -307,8 +307,12 @@ public class AddNodeController implements ControllableScreen, Observer {
     private MenuButton nodeAddBuildingDropDown;
     @FXML
     private MenuButton nodeAddTypeDropDown;
-    @FXML
-    private Circle nodeAddIndicator;
+
+
+    private AnimatedCircle nodeAddLocation;
+
+    private ArrayList<Line> nodeAllignedLines;
+
 
     public void nodeAddXEntered(ActionEvent e){
         System.out.println("Node Add X Entered");
@@ -319,9 +323,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         System.out.println("Node Add Y Entered");
         String text = nodeAddYField.getText();
         nodeAddYField.setText(text);
-        nodeAddIndicator.setCenterX((double)Integer.parseInt(nodeAddXField.getText()));
-        nodeAddIndicator.setCenterY((double)Integer.parseInt(nodeAddYField.getText()));
-        nodeAddIndicator.setRadius(10.0f);
     }
 
     public void nodeAddShortEntered(ActionEvent e){
@@ -382,34 +383,45 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void mapPaneClicked(MouseEvent e){
         if (e.getClickCount() == 2 && nodeAddTab.isSelected() && nodeTab.isSelected()){
-            setNewNodeLocation((int)e.getX(), (int)e.getY());
+            setNewNodeAddLocation((int)e.getX(), (int)e.getY());
         }
     }
 
-    private void setNewNodeLocation(int x, int y){
+    private void setNewNodeAddLocation(int x, int y){
         int x_alligned = x;
         int y_alligned = y;
 
-
+        mapPane.getChildren().removeAll(nodeAllignedLines);
+        nodeAllignedLines.clear();
         ArrayList<Node> h_neighbors = new ArrayList<>();
         h_neighbors.addAll(map.getNodesInHorizontal((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
         ArrayList<Node> v_neighbors = new ArrayList<>();
         v_neighbors.addAll(map.getNodesInVertical((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
 
         if(h_neighbors.size() != 0){
-            y_alligned = (int)(h_neighbors.get(0).getY()/mapViewer.getScale());
-            System.out.println("Horizontal Alligned");
+            Node node = h_neighbors.get(0);
+            y_alligned = (int)(node.getY()/mapViewer.getScale());
+            Line line = new Line();
+            line.setLayoutX(x);
+            line.setLayoutY(y_alligned);
+            line.setEndX((node.getX()/mapViewer.getScale()) - x);
+            line.setEndY(0);
+            line.setStroke(Color.BLACK);
+            line.setStrokeWidth(3);
+            line.setOpacity(0.5);
+            nodeAllignedLines.add(line);
+            mapPane.getChildren().add(line);
         }
         if(v_neighbors.size() != 0){
             x_alligned = (int)(v_neighbors.get(0).getX()/mapViewer.getScale());
             System.out.println("Vertical Alligned");
         }
 
-        nodeLocation.setCenterX(x_alligned);
-        nodeLocation.setCenterY(y_alligned);
-        if(!mapPane.getChildren().contains(nodeLocation))
-            mapPane.getChildren().add(nodeLocation);
-        nodeLocation.setVisible(true);
+        nodeAddLocation.setCenterX(x_alligned);
+        nodeAddLocation.setCenterY(y_alligned);
+        if(!mapPane.getChildren().contains(nodeAddLocation))
+            mapPane.getChildren().add(nodeAddLocation);
+        nodeAddLocation.setVisible(true);
         nodeAddXField.setText(Integer.toString((int)(x_alligned*mapViewer.getScale())));
         nodeAddYField.setText(Integer.toString((int)(y_alligned*mapViewer.getScale())));
     }
