@@ -104,6 +104,7 @@ public class PathController implements ControllableScreen, Observer{
         mapViewer = new MapViewer(this, parent);
         mapPane = mapViewer.getMapPane();
         mapScrollPane = mapViewer.getMapScrollPane();
+        mapScrollPane.setPannable(true);
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
         mapViewer.setScale(2);
@@ -448,7 +449,7 @@ public class PathController implements ControllableScreen, Observer{
         }
     }
 
-    //-----------------------NODE SELECT START--------------------------//
+    //-----------------------NODE SELECT END--------------------------//
     public void startTypeSelected(ActionEvent e){
         startType = ((MenuItem)e.getSource()).getText();
         startTypeMenu.setText(startType);

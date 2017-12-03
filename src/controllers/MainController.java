@@ -12,7 +12,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -55,8 +54,6 @@ public class MainController implements ControllableScreen, Observer{
     @FXML
     private AnchorPane mainAnchorPane;
 
-
-
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
@@ -74,6 +71,7 @@ public class MainController implements ControllableScreen, Observer{
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
         mapPane.getChildren().add(kioskIndicator);
         mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
+        mapViewer.getMapScrollPane().setPannable(true);
     }
 
     public void onShow(){
@@ -83,10 +81,7 @@ public class MainController implements ControllableScreen, Observer{
 
         System.out.println(mapViewer.getMapViewerPane().getChildren().toString());
         System.out.println(mainAnchorPane.getChildren().toString());
-
-
     }
-
 
     //Setters
     public void setParentController(ScreenController parent){
