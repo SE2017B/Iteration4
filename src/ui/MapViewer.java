@@ -21,7 +21,6 @@ import map.FloorNumber;
 import java.util.*;
 
 public class MapViewer extends Observable{
-    private int PANE_WIDTH = 1280;
     private int SCROLL_WIDTH = 2000;
     private int SPACER_WIDTH = 500;
     private final int SPACING = 10;
@@ -45,7 +44,7 @@ public class MapViewer extends Observable{
 
     private proxyImagePane mapImage;
 
-    public MapViewer(Observer o, ScreenController parent){
+    public MapViewer(Observer o, Pane parent){
         super();
         buttonScrollPane = new ScrollPane();
         mapScrollPane = new ScrollPane();
@@ -88,6 +87,8 @@ public class MapViewer extends Observable{
         mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
         mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
 
+        mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue));
+
 
         mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
         mapViewerPane.setBottomAnchor(buttonScrollPane, 0.0);
@@ -128,6 +129,17 @@ public class MapViewer extends Observable{
         JFXButton button = addFloor(floor);
         button.setId(Integer.toString(id));
         return button;
+    }
+
+    private void resizeSpacers(Number width){
+        int paneWidth = width.intValue();
+        SPACER_WIDTH = (paneWidth - 170) / 2;
+        spacerRight.setPrefWidth(SPACER_WIDTH);
+        spacerLeft.setPrefWidth(SPACER_WIDTH);
+
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
+        container.setPrefWidth(SCROLL_WIDTH);
+
     }
 
     public void floorButtonPressed(ActionEvent e){
@@ -184,13 +196,7 @@ public class MapViewer extends Observable{
         setFloor(floor,buttonOrder.indexOf(floor.getDbMapping()));
     }
 
-    public void setSpacerWidth(int width){
-        SPACER_WIDTH = width;
-        spacerLeft.setPrefWidth(SPACER_WIDTH);
-        spacerRight.setPrefWidth(SPACER_WIDTH);
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
-        container.setPrefWidth(SCROLL_WIDTH);
-    }
+
 
     private void setContainer(){
         spacerLeft = new Pane();
