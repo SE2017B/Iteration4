@@ -74,6 +74,7 @@ public class MainController implements ControllableScreen, Observer{
         System.out.println("Kiosk Location: " + kioskIndicator.getCenterX() + " " +  kioskIndicator.getCenterY());
         mapPane.getChildren().add(kioskIndicator);
         mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
+        mapViewer.getMapScrollPane().setPannable(true);
     }
 
     public void onShow(){
@@ -142,29 +143,6 @@ public class MainController implements ControllableScreen, Observer{
     //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){
         mapViewer.setScale(4-slideBarZoom.getValue());
-    }
-
-    Mouse mouse = new Mouse();
-
-    public void handlePanMap(MouseEvent e){
-    //probably use the mapScrollPane
-        //double sceneX, sceneY;
-        //double translateX, translateY;
-        mapPane.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mouse.setX(event.getX());
-                mouse.setY(event.getY());
-
-            }
-        });
-        mapPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mapPane.getScene().getWindow().setX(event.getScreenX() - mouse.getX());
-                mapPane.getScene().getWindow().setX(event.getScreenY() - mouse.getY());
-            }
-        });
     }
 
     //-------------------findNearest Button Actions Start-----------------//

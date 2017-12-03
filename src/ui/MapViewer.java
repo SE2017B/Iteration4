@@ -92,9 +92,6 @@ public class MapViewer extends Observable{
 
         mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
         mapViewerPane.setBottomAnchor(buttonScrollPane, 0.0);
-
-
-
     }
 
     public void resetView(){
