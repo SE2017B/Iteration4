@@ -375,14 +375,36 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void mapPaneClicked(MouseEvent e){
         if (e.getClickCount() == 2 && nodeAddTab.isSelected() && nodeTab.isSelected()){
-            nodeLocation.setCenterX(e.getX());
-            nodeLocation.setCenterY(e.getY());
-            if(!mapPane.getChildren().contains(nodeLocation))
-                mapPane.getChildren().add(nodeLocation);
-            nodeLocation.setVisible(true);
-            nodeAddXField.setText(Integer.toString((int)(e.getX()*mapViewer.getScale())));
-            nodeAddYField.setText(Integer.toString((int)(e.getY()*mapViewer.getScale())));
+            setNewNodeLocation((int)e.getX(), (int)e.getY());
         }
+    }
+
+    private void setNewNodeLocation(int x, int y){
+        int x_alligned = x;
+        int y_alligned = y;
+
+
+        ArrayList<Node> h_neighbors = new ArrayList<>();
+        h_neighbors.addAll(map.getNodesInHorizontal((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
+        ArrayList<Node> v_neighbors = new ArrayList<>();
+        v_neighbors.addAll(map.getNodesInVertical((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
+
+        if(h_neighbors.size() != 0){
+            y_alligned = (int)(h_neighbors.get(0).getY()/mapViewer.getScale());
+            System.out.println("Horizontal Alligned");
+        }
+        if(v_neighbors.size() != 0){
+            x_alligned = (int)(v_neighbors.get(0).getX()/mapViewer.getScale());
+            System.out.println("Vertical Alligned");
+        }
+
+        nodeLocation.setCenterX(x_alligned);
+        nodeLocation.setCenterY(y_alligned);
+        if(!mapPane.getChildren().contains(nodeLocation))
+            mapPane.getChildren().add(nodeLocation);
+        nodeLocation.setVisible(true);
+        nodeAddXField.setText(Integer.toString((int)(x_alligned*mapViewer.getScale())));
+        nodeAddYField.setText(Integer.toString((int)(y_alligned*mapViewer.getScale())));
     }
 
     ////////////////////////////////////////////////////////////
