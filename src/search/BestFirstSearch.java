@@ -30,7 +30,7 @@ public class BestFirstSearch implements SearchStrategy {
                 neighbors.add(neighbor);
             }
             for(Node n : neighbors) cameFrom.put(n, currentNode);
-            neighbors.sort(Comparator.comparing(n1 -> returnPath(cameFrom, n1).getDistance()));
+            neighbors.sort(Comparator.comparing(n1 -> n1.getEuclidianDistance(end)));
             frontier.addAll(neighbors);
         }
         return new Path();

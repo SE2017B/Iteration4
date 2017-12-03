@@ -230,7 +230,7 @@ public class BestFirstSearchTest {
     public void testMap2(){
         String answer = search.findPath(N1, N18_2).toString();
         System.out.println(answer);
-        assertEquals("[Short1, Short2, Short3, Short9, Short9_2, Short15_2, Short14_2, Short18_2]", answer);
+        assertEquals("[Short1, Short6, Short7, Short8, Short9, Short9_2, Short15_2, Short14_2, Short18_2]", answer);
     }
     @Test
     public void testMap2Reverse(){
@@ -275,6 +275,6 @@ public class BestFirstSearchTest {
     public void testMap5Reverse(){
         String answer = search.findPath(N1_2, N23).toString();
         System.out.println(answer);
-        assertEquals("[Short1_2, Short2_2, Short3_2, Short9_2, Short9, Short15, Short14, Short18, Short21, Short23]", answer);
+        assertEquals("[Short1_2, Short6_2, Short7_2, Short8_2, Short9_2, Short9, Short15, Short14, Short18, Short21, Short23]", answer);
     }
 }
