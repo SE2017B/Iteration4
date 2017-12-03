@@ -373,7 +373,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         //todo cancel node add
     }
 
-    public void mapPaneClicked(MouseEvent e){g
+    public void mapPaneClicked(MouseEvent e){
         if (e.getClickCount() == 2 && nodeAddTab.isSelected() && nodeTab.isSelected()){
             nodeLocation.setCenterX(e.getX());
             nodeLocation.setCenterY(e.getY());
