@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import map.Edge;
 import map.FloorNumber;
@@ -54,8 +55,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Tab edgeAddTab;
     @FXML
     private Tab edgeRemoveTab;
-    @FXML
-    private Circle nodeLocation;
+
+    private AnimatedCircle nodeLocation;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -68,6 +69,11 @@ public class AddNodeController implements ControllableScreen, Observer {
         mainAnchorPane.getChildren().add(mapViewer.getMapViewerPane());
         mapViewer.setFloor(FloorNumber.FLOOR_GROUND);
         mapPane = mapViewer.getMapPane();
+        mapPane.setOnMouseClicked(e -> mapPaneClicked(e));
+
+        nodeLocation = new AnimatedCircle();
+        nodeLocation.setVisible(false);
+        nodeLocation.setFill(Color.DODGERBLUE);
 
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
@@ -79,6 +85,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
         edgeAddTab.setOnSelectionChanged(e -> showNodesandEdges());
         edgeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
+
 
         refreshNodesandEdges();
     }
@@ -364,6 +371,18 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void nodeAddCancelPressed(ActionEvent e){
         System.out.println("Node Add Cancel Pressed");
         //todo cancel node add
+    }
+
+    public void mapPaneClicked(MouseEvent e){g
+        if (e.getClickCount() == 2 && nodeAddTab.isSelected() && nodeTab.isSelected()){
+            nodeLocation.setCenterX(e.getX());
+            nodeLocation.setCenterY(e.getY());
+            if(!mapPane.getChildren().contains(nodeLocation))
+                mapPane.getChildren().add(nodeLocation);
+            nodeLocation.setVisible(true);
+            nodeAddXField.setText(Integer.toString((int)(e.getX()*mapViewer.getScale())));
+            nodeAddYField.setText(Integer.toString((int)(e.getY()*mapViewer.getScale())));
+        }
     }
 
     ////////////////////////////////////////////////////////////
