@@ -22,9 +22,46 @@ public class BeamSearch extends BeamBestFirstSearchTemplate implements SearchStr
     }
 
     @Override
-    public void addToFrontier(ArrayList<Node> frontier) {
-
+    public void initialize(Node start, ArrayList<Node> frontier) {
+        frontier.add(start);
     }
+
+    @Override
+    public Path formThePath(Node start, Node end, ArrayList<Node> frontier, ArrayList<Node> explored, HashMap<Node, Node> cameFrom){
+        Path path = new Path();
+        while(!frontier.isEmpty()){
+            Node currentNode = frontier.get(0);
+            frontier.remove(currentNode);
+            explored.add(currentNode);
+            if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
+            ArrayList<Node> neighbors = new ArrayList<>();
+            for(Edge e : currentNode.getConnections()){
+                Node neighbor = e.getOtherNode(currentNode);
+                if(explored.contains(neighbor)) continue;
+                neighbors.add(neighbor);
+            }
+            neighbors.sort(Comparator.comparing(n1 -> n1.getEuclidianDistance(end)));
+            if(neighbors.size() < beam){
+                frontier.addAll(neighbors);
+                for (Node neighbor : neighbors) {
+                    cameFrom.put(neighbor, currentNode);
+                }
+            }
+            else{
+                frontier.addAll(neighbors.subList(0, beam));
+                for(int i=0;i<beam;i++){
+                    cameFrom.put(neighbors.get(i), currentNode);
+                }
+            }
+        }
+        return path;
+    }
+
+    @Override
+    public Path pathComplete(Path path){
+        return path;
+    }
+
 
     //    @Override
 //    public Path findPath(Node start, Node end) {
