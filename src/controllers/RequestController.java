@@ -125,8 +125,6 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXDatePicker dateMenu;
 
-    @FXML
-    private JFXTimePicker timeMenu;
 
     @FXML
     private ChoiceBox<Node> locationChoiceBox;
@@ -247,7 +245,7 @@ public class RequestController implements ControllableScreen{
         //Submit request
         //depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL");
 
-        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString(), choiceBoxStaff.getValue());
+        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), "", dateMenu.getValue().toString(), choiceBoxStaff.getValue());
 
         //Add new service to List
         System.out.println("request submitted");
@@ -296,7 +294,7 @@ public class RequestController implements ControllableScreen{
         //choiceBoxDept.getItems().clear();
 
         //clear time and date
-        timeMenu.getEditor().clear();
+        //timeMenu.getEditor().clear();
         dateMenu.getEditor().clear();
 
         //repopulate choiceboxes
