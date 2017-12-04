@@ -11,39 +11,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class BestFirstSearch extends BeamBestFirstSearchTemplate implements SearchStrategy {
-
     @Override
-    public void initialize(Node start, ArrayList<Node> frontier) {
-        frontier.add(start);
-    }
-
-    @Override
-    public Path formThePath(Node start, Node end, ArrayList<Node> frontier, ArrayList<Node> explored, HashMap<Node, Node> cameFrom){
-        Path path = new Path();
-        while(!frontier.isEmpty()){
-            Node currentNode = frontier.get(0);
-            frontier.remove(currentNode);
-            explored.add(currentNode);
-            if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
-            ArrayList<Node> neighbors = new ArrayList<>();
-            for(Edge e : currentNode.getConnections()){
-                Node neighbor = e.getOtherNode(currentNode);
-                if(explored.contains(neighbor)) continue;
-                neighbors.add(neighbor);
-            }
+    public void addNeighbors(ArrayList<Node> neighbors, ArrayList<Node> frontier, HashMap<Node, Node> cameFrom, Node currentNode, Node end) {
             for(Node n : neighbors) cameFrom.put(n, currentNode);
             neighbors.sort(Comparator.comparing(n1 -> n1.getEuclidianDistance(end)));
             frontier.addAll(neighbors);
-        }
-        return path;
     }
-
-    @Override
-    public Path pathComplete(Path path){
-        return path;
-    }
-
-
     //    @Override
 //    public Path findPath(Node start, Node end) {
 //        ArrayList<Node> frontier = new ArrayList<>();
