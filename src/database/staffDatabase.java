@@ -32,8 +32,6 @@ public class staffDatabase {
     static ArrayList<Staff>allStaff=new ArrayList<>();
     static ArrayList<Staff>allStaffEnc = new ArrayList<>();
 
-    static ArrayList<String>languages=new ArrayList<>();
-
     // Getter for all staff array list
     public static ArrayList<Staff> getStaff(){ return allStaff; }
 
@@ -86,7 +84,6 @@ public class staffDatabase {
                     "jobTitle VARCHAR(50)," +
                     "fullname VARCHAR(64)," +
                     "ID INTEGER," +
-                    "isAdmin INTEGER," +
                     "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
                     "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
                     "CONSTRAINT jobTitle CHECK (jobTitle IN ('Translator', 'Janitor', 'Chef', 'Food Delivery', 'Transport Staff'))," +
@@ -115,7 +112,7 @@ public class staffDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
 
             for (int j = 0; j < allStaffEnc.size(); j++) {
 
@@ -124,7 +121,6 @@ public class staffDatabase {
                 insertStaff.setString(3, allStaffEnc.get(j).getJobTitle());
                 insertStaff.setString(4, allStaffEnc.get(j).getFullName());
                 insertStaff.setInt(5, allStaffEnc.get(j).getID());
-                insertStaff.setInt(6, allStaffEnc.get(j).getIsAdmin());
 
                 insertStaff.executeUpdate();
 
@@ -159,14 +155,13 @@ public class staffDatabase {
             String encPass = encStaffData(anyStaff.getPassword());
             String encName = encStaffData(anyStaff.getUsername());
 
-            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?)");
+            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
 
             addAnyStaff.setString(1, encUser);
             addAnyStaff.setString(2, encPass);
             addAnyStaff.setString(3, anyStaff.getJobTitle());
             addAnyStaff.setString(4, encName);
             addAnyStaff.setInt(5, anyStaff.getID());
-            addAnyStaff.setInt(6, anyStaff.getIsAdmin());
 
             addAnyStaff.executeUpdate();
 
@@ -175,8 +170,8 @@ public class staffDatabase {
 
             conn.commit();
 
-            allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID(), anyStaff.getIsAdmin()));
-            allStaff.add(new Staff(anyStaff.getUsername(), anyStaff.getPassword(), anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID(), anyStaff.getIsAdmin()));
+            allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID()));
+            allStaff.add(new Staff(anyStaff.getUsername(), anyStaff.getPassword(), anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID()));
 
             addAnyStaff.close();
             conn.close();
@@ -213,13 +208,12 @@ public class staffDatabase {
             modAddAnyStaff.setString(3, anyStaff.getJobTitle());
             modAddAnyStaff.setString(4, encName);
             modAddAnyStaff.setInt(5, anyStaff.getID());
-            modAddAnyStaff.setInt(6, anyStaff.getIsAdmin());
 
             System.out.println("Update Staff Member Successful!");
 
             conn.commit();
 
-            allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID(), anyStaff.getIsAdmin()));
+            allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID()));
 
             modAddAnyStaff.close();
             conn.close();
@@ -280,10 +274,9 @@ public class staffDatabase {
             String strTitle;
             String strFullname;
             Integer intStaffID;
-            Integer intStaffAdmin
 
             System.out.println("");
-            System.out.printf("%-65s %-65s %-30s %-65s %-20s %-10s\n", "staffID", "password", "jobTitle", "fullName", "ID", "isAdmin");
+            System.out.printf("%-65s %-65s %-30s %-65s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID");
 
             //Process the results
             while (rsetAllStaff.next()) {
@@ -292,9 +285,8 @@ public class staffDatabase {
                 strTitle = rsetAllStaff.getString("jobTitle");
                 strFullname = rsetAllStaff.getString("fullName");
                 intStaffID = rsetAllStaff.getInt("ID");
-                intStaffAdmin = rsetAllStaff.getInt("isAdmin");
 
-                System.out.printf("%-65s %-65s %-30s %-65s %-20d %-10d\n", strUsername, strPW, strTitle, strFullname, intStaffID, intStaffAdmin);
+                System.out.printf("%-65s %-65s %-30s %-65s %-20d\n", strUsername, strPW, strTitle, strFullname, intStaffID);
             } // End While
 
             conn.commit();
@@ -329,8 +321,8 @@ public class staffDatabase {
                 String encPass = encStaffData(staffValues[1]);
                 String encName = encStaffData(staffValues[3]);
 
-                staffDatabase.allStaffEnc.add(new Staff(encUser, encPass, staffValues[2], encName, Integer.valueOf(staffValues[4]), staffValues[5]));
-                staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(staffValues[4]), staffValues[5]));
+                staffDatabase.allStaffEnc.add(new Staff(encUser, encPass, staffValues[2], encName, Integer.valueOf(staffValues[4])));
+                staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(staffValues[4])));
 
             }
             inputStreamStaff.close();
@@ -351,15 +343,14 @@ public class staffDatabase {
             BufferedWriter bwEnc = new BufferedWriter(fwEnc);
             PrintWriter pwEnc = new PrintWriter(bwEnc);
 
-            pwEnc.println("username,password,jobTitle,fullName,ID,isAdmin");
+            pwEnc.println("username,password,jobTitle,fullName,ID");
             for (int k = 0; k < staffDatabase.allStaffEnc.size(); k++) {
 
                 pwEnc.println(staffDatabase.allStaffEnc.get(k).getUsername() + "," +
                         staffDatabase.allStaffEnc.get(k).getPassword() + "," +
                         staffDatabase.allStaffEnc.get(k).getJobTitle() + "," +
                         staffDatabase.allStaffEnc.get(k).getFullName() + "," +
-                        staffDatabase.allStaffEnc.get(k).getID() + "," +
-                        staffDatabase.allStaffEnc.get(k).getIsAdmin()
+                        staffDatabase.allStaffEnc.get(k).getID()
                 );
                 System.out.printf("%-5d: Staff Record Saved!\n", k);
             }
@@ -383,15 +374,14 @@ public class staffDatabase {
             BufferedWriter bw3 = new BufferedWriter(fw3);
             PrintWriter pw3 = new PrintWriter(bw3);
 
-            pw3.println("username,password,jobTitle,fullName,ID,isAdmin");
+            pw3.println("username,password,jobTitle,fullName,ID");
             for (int j = 0; j < staffDatabase.allStaff.size(); j++) {
 
                 pw3.println(staffDatabase.allStaff.get(j).getUsername() + "," +
                         staffDatabase.allStaff.get(j).getPassword() + "," +
                         staffDatabase.allStaff.get(j).getJobTitle() + "," +
                         staffDatabase.allStaff.get(j).getFullName() + "," +
-                        staffDatabase.allStaff.get(j).getID() + "," +
-                        staffDatabase.allStaff.get(j).getIsAdmin()
+                        staffDatabase.allStaff.get(j).getID()
                 );
                 System.out.printf("%-5d: Staff Record Saved!\n", j);
             }
