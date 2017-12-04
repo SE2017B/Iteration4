@@ -56,16 +56,19 @@ public class PathController implements ControllableScreen, Observer{
     private Pane arrow;
     private PathTransition pathTransition;
     private NodeSearcher searcher;
+    private Pane mapPane;
+
 
     @FXML
     private ChoiceBox<Node> startNodeChoice;
     @FXML
     private ChoiceBox<Node> endNodeChoice;
+
     @FXML
-    private Pane mapPane;
+    private AnchorPane mainAnchorPane;
     @FXML
     private TitledPane textDirectionsPane;
-    @FXML
+
     private ScrollPane mapScrollPane;
     @FXML
     private JFXSlider slideBarZoom;
@@ -89,13 +92,15 @@ public class PathController implements ControllableScreen, Observer{
         paths=new ArrayList<PathViewer>();
         currentFloor = FloorNumber.FLOOR_ONE;
         currentPath= new PathViewer(new Path());
-        mapViewer = new MapViewer(this);
+        mapViewer = new MapViewer(this, parent);
+        mapPane = mapViewer.getMapPane();
+        mapScrollPane = mapViewer.getMapScrollPane();
+        mapScrollPane.setPannable(true);
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
-
-        mapPane.getChildren().add(mapViewer.getMapImage());
-        buttonHolderPane.getChildren().add(mapViewer.getPane());
         mapViewer.setScale(2);
+
+        mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
 
         int arrowSize = 20;
         arrow = new Pane();
@@ -370,7 +375,7 @@ public class PathController implements ControllableScreen, Observer{
         }
     }
 
-    //-----------------------NODE SELECT START--------------------------//
+    //-----------------------NODE SELECT END--------------------------//
     public void startTypeSelected(ActionEvent e){
         startType = ((MenuItem)e.getSource()).getText();
         startTypeMenu.setText(startType);

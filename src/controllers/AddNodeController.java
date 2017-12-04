@@ -18,6 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import map.Edge;
 import map.FloorNumber;
@@ -39,7 +40,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
     private ArrayList<EdgeCheckBox> edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
 
-    @FXML
     private Pane mapPane;
     @FXML
     private Tab nodeTab;
@@ -55,19 +55,32 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Tab edgeAddTab;
     @FXML
     private Tab edgeRemoveTab;
+
+
+    private AnimatedCircle nodeLocation;
+
+
     @FXML
-    private Circle nodeLocation;
-    @FXML
-    private AnchorPane mapButtonHolder;
+    private AnchorPane mainAnchorPane;
 
     public void init() {
         map = HospitalMap.getMap();
-        mapViewer = new MapViewer(this);
+        mainAnchorPane.prefWidthProperty().bind(parent.prefWidthProperty().subtract(400));
+        mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+        mapViewer = new MapViewer(this, mainAnchorPane);
+        mainAnchorPane.getChildren().add(mapViewer.getMapViewerPane());
         mapViewer.setFloor(FloorNumber.FLOOR_GROUND);
-        mapViewer.setSpacerWidth(350);
-        mapViewer.getPane().setPrefWidth(950);
-        mapButtonHolder.getChildren().add(mapViewer.getPane());
-        mapPane.getChildren().add(mapViewer.getMapImage());
+        mapPane = mapViewer.getMapPane();
+
+        mapPane.setOnMouseClicked(e -> mapPaneClicked(e));
+
+        nodeLocation = new AnimatedCircle();
+        nodeLocation.setVisible(false);
+        nodeLocation.setFill(Color.DODGERBLUE);
+
+        mapViewer.getMapScrollPane().setPannable(true);
+
 
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
@@ -79,6 +92,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
         edgeAddTab.setOnSelectionChanged(e -> showNodesandEdges());
         edgeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
+
 
         refreshNodesandEdges();
     }
@@ -364,6 +378,40 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void nodeAddCancelPressed(ActionEvent e){
         System.out.println("Node Add Cancel Pressed");
         //todo cancel node add
+    }
+
+    public void mapPaneClicked(MouseEvent e){
+        if (e.getClickCount() == 2 && nodeAddTab.isSelected() && nodeTab.isSelected()){
+            setNewNodeLocation((int)e.getX(), (int)e.getY());
+        }
+    }
+
+    private void setNewNodeLocation(int x, int y){
+        int x_alligned = x;
+        int y_alligned = y;
+
+
+        ArrayList<Node> h_neighbors = new ArrayList<>();
+        h_neighbors.addAll(map.getNodesInHorizontal((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
+        ArrayList<Node> v_neighbors = new ArrayList<>();
+        v_neighbors.addAll(map.getNodesInVertical((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
+
+        if(h_neighbors.size() != 0){
+            y_alligned = (int)(h_neighbors.get(0).getY()/mapViewer.getScale());
+            System.out.println("Horizontal Alligned");
+        }
+        if(v_neighbors.size() != 0){
+            x_alligned = (int)(v_neighbors.get(0).getX()/mapViewer.getScale());
+            System.out.println("Vertical Alligned");
+        }
+
+        nodeLocation.setCenterX(x_alligned);
+        nodeLocation.setCenterY(y_alligned);
+        if(!mapPane.getChildren().contains(nodeLocation))
+            mapPane.getChildren().add(nodeLocation);
+        nodeLocation.setVisible(true);
+        nodeAddXField.setText(Integer.toString((int)(x_alligned*mapViewer.getScale())));
+        nodeAddYField.setText(Integer.toString((int)(y_alligned*mapViewer.getScale())));
     }
 
     ////////////////////////////////////////////////////////////

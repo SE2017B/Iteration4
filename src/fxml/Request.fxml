@@ -19,24 +19,27 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
    <children>
-      <GridPane layoutX="456.0" layoutY="303.0" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane layoutX="456.0" layoutY="303.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="158.39999999999998" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="996.7999755859377" minWidth="10.0" prefWidth="949.6000244140627" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="949.6000244140627" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="169.9999755859376" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="60.60000228881836" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="656.8000244140625" minHeight="10.0" prefHeight="656.8000244140625" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="73.79997558593755" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+          <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
         </rowConstraints>
          <children>
             <Label fx:id="staffNameLabel" text="Staff Name" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </GridPane.margin>
             </Label>
             <JFXTabPane prefHeight="267.0" prefWidth="495.0" side="BOTTOM" tabMinHeight="60.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
                <tabs>
@@ -46,59 +49,67 @@
                            <children>
                               <GridPane layoutX="352.0" layoutY="209.0" prefHeight="528.0" prefWidth="755.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.3999877929688" minWidth="10.0" prefWidth="645.3999877929688" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="633.4000122070314" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                    <RowConstraints maxHeight="72.00000228881837" minHeight="10.0" prefHeight="63.999996948242185" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="75.39999694824218" minHeight="10.0" prefHeight="61.60000305175781" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="70.60000610351562" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="103.0" minHeight="10.0" prefHeight="64.79998168945312" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="124.0" minHeight="10.0" prefHeight="72.80000610351561" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="168.0" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="262.0" minHeight="10.0" prefHeight="144.7999877929688" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="63.999996948242185" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="61.60000305175781" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="64.79998168945312" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="72.80000610351561" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="144.7999877929688" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Service" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <Label text="Service" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Staff Member" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                    <Label text="Staff Member" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Date" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                    <Label text="Date" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Time" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                    <Label text="Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <ChoiceBox fx:id="choiceBoxDept" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                    <Label text="Location" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                    <ChoiceBox fx:id="choiceBoxDept" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                    <Label text="Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                    <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                    <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" style="-fx: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                    <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                    <Label text="Department " GridPane.halignment="CENTER">
+                                    <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                       <GridPane.margin>
+                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+                                       </GridPane.margin></JFXButton>
+                                    <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                       <GridPane.margin>
+                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+                                       </GridPane.margin></JFXButton>
+                                    <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" style="-fx: #ffffff;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                    <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                    <Label text="Department " GridPane.columnIndex="1" GridPane.halignment="CENTER">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <ChoiceBox fx:id="choiceBoxService" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <ChoiceBox fx:id="choiceBoxStaff" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="choiceBoxService" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="choiceBoxStaff" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
 
-                                    <AnchorPane fx:id="servicePane1" prefHeight="150.0" prefWidth="1279.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                    <AnchorPane fx:id="servicePane1" prefHeight="150.0" prefWidth="1279.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
                                  </children>
                               </GridPane>
                            </children>
@@ -113,13 +124,13 @@
                                 <items>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
                                        <children>
-                                          <GridPane layoutX="11.0" layoutY="197.0" prefHeight="526.0" prefWidth="221.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <GridPane layoutX="11.0" layoutY="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -176,33 +187,37 @@
                            <children>
                               <GridPane layoutX="292.0" layoutY="188.0" prefHeight="622.4" prefWidth="950.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="300.0" />
+                                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="300.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+                                  <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+                                  <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Select Algorithm for Path " GridPane.halignment="CENTER">
+                                    <Label text="Select Algorithm for Path " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <ChoiceBox fx:id="searchStrategyChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                    <JFXButton fx:id="saveSettingsButton" onAction="#saveSettingsPressed" text="Save" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                    <ChoiceBox fx:id="searchStrategyChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <JFXButton fx:id="saveSettingsButton" onAction="#saveSettingsPressed" text="Save" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
 
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </JFXButton>
-                                    <Label text="Select Kiosk Location" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                    <Label text="Select Kiosk Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <ChoiceBox fx:id="kioskLocationChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="kioskLocationChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
