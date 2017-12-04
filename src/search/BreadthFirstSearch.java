@@ -12,11 +12,12 @@ This class contains functions to find a path based on the Breadth First search m
 returning paths based on the Breadth First search method.
 
  */
-public class BreadthFirstSearch extends SearchTemplate {
+public class BreadthFirstSearch implements SearchStrategy {
     public BreadthFirstSearch(){}
 
     @Override
-    public Path findAndReturn(Node start, Node end, ArrayList<Node> frontier){
+    public Path findPath(Node start, Node end){
+        ArrayList<Node> frontier = new ArrayList<>();
         ArrayList<Node> explored = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
         while(!frontier.isEmpty()){

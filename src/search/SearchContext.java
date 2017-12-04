@@ -7,17 +7,17 @@ import map.Path;
 import java.util.ArrayList;
 
 public class SearchContext {
-    private SearchTemplate strategy;
+    private SearchStrategy strategy;
 
-    public SearchContext(SearchTemplate strategy){
+    public SearchContext(SearchStrategy strategy){
         this.strategy = strategy;
     }
 
-    public void setStrategy(SearchTemplate strategy) {
+    public void setStrategy(SearchStrategy strategy) {
         this.strategy = strategy;
     }
 
-    public SearchTemplate getStrategy(){ return strategy;}
+    public SearchStrategy getStrategy(){ return strategy;}
 
     public Path findPath(Node start, Node end){
         try {

@@ -22,7 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import map.HospitalMap;
 import map.Node;
-import search.SearchTemplate;
+import search.SearchStrategy;
 
 import java.util.ArrayList;
 
@@ -426,7 +426,7 @@ public class RequestController implements ControllableScreen{
     //////////////////////////////////////////////////////////
 
     @FXML
-    private ChoiceBox<SearchTemplate> searchStrategyChoice;
+    private ChoiceBox<SearchStrategy> searchStrategyChoice;
     @FXML
     private JFXButton saveSettingsButton;
     @FXML

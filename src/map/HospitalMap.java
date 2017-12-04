@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class HospitalMap{
     private ArrayList<Node> nodeMap;
     private ArrayList<Edge> edgeMap;
-    private ArrayList<SearchTemplate> posSerchStrat;
+    private ArrayList<SearchStrategy> posSerchStrat;
     private SearchContext search;
     private static HospitalMap map;
     private Node kioskLocation;
@@ -179,8 +179,8 @@ public class HospitalMap{
         return output;
     }
 
-    public SearchTemplate getSearchStrategy() {return search.getStrategy();}
-    public ArrayList<SearchTemplate> getSearches() {
+    public SearchStrategy getSearchStrategy() {return search.getStrategy();}
+    public ArrayList<SearchStrategy> getSearches() {
         return posSerchStrat;
     }
 
@@ -192,7 +192,7 @@ public class HospitalMap{
     }
 
     //Setters
-    public void setSearchStrategy(SearchTemplate searchStrategy){
+    public void setSearchStrategy(SearchStrategy searchStrategy){
         search.setStrategy(searchStrategy);
     }
     public void setKioskLocation(Node node){
