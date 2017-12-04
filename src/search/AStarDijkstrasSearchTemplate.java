@@ -7,17 +7,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class AStarDijkstrasSearchTemplate {
-    public abstract void initialize(ArrayList<Node> frontier, ArrayList<Node> explored, HashMap<Node, Node> cameFrom, HashMap<Node, Integer> greedy, HashMap<Node, Integer> fSCore);
-    public abstract void sortFrontier(ArrayList<Node> frontier);
-    public abstract void assignMapValues(HashMap<Node, Integer> fScore);
+    public abstract void initialize(ArrayList<Node> frontier, ArrayList<Node> explored, HashMap<Node, Node> cameFrom,
+                                    HashMap<Node, Integer> greedy, HashMap<Node, Double> fSCore, Node start, Node end);
+    public abstract Path sortFrontier(ArrayList<Node> frontier, ArrayList<Node> explored, HashMap<Node, Node> cameFrom,
+                                      HashMap<Node, Integer> greedy, HashMap<Node, Double> fScore, Node start, Node end, Path path);
+    public abstract Path returnThePath(Path path);
 
     public final Path findPath(Node start, Node end){
-        //Declare all data structures here and initalize appropriate ones in initialize overriden functions
-        initialize(frontier, explored, cameFrom, greedy, fScore);
-        // Loop stuff here and appropriate sorting function in sortFrontier overriden functions
-        frontier = sortFrontier(frontier);
-        // Only AStar needs stuff to be put into fScore HashMap so Dijkstras assignMapValues should be empty
-        assignMapValues(fScore);
-        return new Path();
+        ArrayList<Node> frontier = new ArrayList<>();
+        ArrayList<Node> explored = new ArrayList<>();
+        HashMap<Node, Node> cameFrom = new HashMap<>();
+        HashMap<Node, Integer> greedy = new HashMap<>();
+        HashMap<Node, Double> fScore = new HashMap<>();
+        Path path = new Path();
+
+        //Initialize the variables and populate as needed
+        initialize(frontier, explored, cameFrom, greedy, fScore, start, end);
+        //Sort the frontier list and form the path accordingly
+        path = sortFrontier(frontier, explored, cameFrom, greedy, fScore, start, end, path);
+        //Return the proper path
+        return returnThePath(path);
+
     }
 }
