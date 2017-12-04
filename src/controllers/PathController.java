@@ -8,6 +8,7 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
@@ -55,6 +56,7 @@ public class PathController implements ControllableScreen, Observer{
     private PathTransition pathTransition;
     private NodeSearcher searcher;
     private Pane mapPane;
+    private Path thePath;
 
 
     @FXML
@@ -86,6 +88,8 @@ public class PathController implements ControllableScreen, Observer{
     private JFXComboBox<Node> startTextSearch;
     @FXML
     private JFXComboBox<Node> endTextSearch;
+    @FXML
+    private JFXButton btnReverse;
 
     //Methods start here
     public void init() {
@@ -180,6 +184,12 @@ public class PathController implements ControllableScreen, Observer{
         directionsList.setItems(null); //function implementation
 
         mapViewer.resetView();
+        btnReverse.setVisible(false);//hide button because there is no path
+        //reset search boxes
+        startTextSearch.setValue(null);
+        endTextSearch.setValue(null);
+        startTextSearch.hide();
+        endTextSearch.hide();
     }
 
     public void setParentController(ScreenController parent){
@@ -388,24 +398,33 @@ public class PathController implements ControllableScreen, Observer{
         switchPath(currentPath);
     }
     //-------------------------MAP SCALE START--------------------------//
+    private void displayPath(Path thePath){
+        SetPaths(thePath);
+        mapViewer.setButtonsByFloor(floors);
+        directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
+        textDirectionsPane.setVisible(true);
+        textDirectionsPane.setExpanded(false);
+        switchPath(paths.get(0));
+    }
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException {
         if((startNodeChoice.getValue() instanceof Node || startTextSearch.getValue() instanceof Node) &&
                 (endNodeChoice.getValue() instanceof Node || endTextSearch.getValue() instanceof Node)) {
-            Path thePath = getPath();
+            btnReverse.setVisible(true);//make reverse button visible
+            thePath = getPath();
 
-            clearPaths();
-            SetPaths(thePath);
-            mapViewer.setButtonsByFloor(floors);
-            directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
-            textDirectionsPane.setVisible(true);
-            textDirectionsPane.setExpanded(false);
-            switchPath(paths.get(0));
+            displayPath(thePath);
             System.out.println("Enter Pressed");
 
-            //mapScrollPane.setHvalue(startNodeChoice.getValue().getX()/5000.0);
-            //mapScrollPane.setVvalue(startNodeChoice.getValue().getY()/3500.0);
         }
+    }
+
+    public void reversePressed(ActionEvent e){
+        if(thePath!=null){
+            displayPath(thePath.getReverse());
+        }
+        System.out.println("Reverse Pressed");
+
     }
 
     public void cancelPressed(ActionEvent e) {
