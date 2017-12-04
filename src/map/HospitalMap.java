@@ -106,6 +106,13 @@ public class HospitalMap{
         nodeDatabase.modifyNode(node);
     }
 
+    public List<Node> getNodesByText(String text){
+        return this.nodeMap.stream().filter(n1 -> (n1.getShortName().contains(text)
+                || n1.getLongName().contains(text)
+                || n1.getID().contains(text)
+                || n1.getType().contains(text))).collect(Collectors.toList());
+    }
+
     public void removeNode(Node node){
         //get all connections and remove from edgeMap
         int size = node.getConnections().size();

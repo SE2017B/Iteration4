@@ -23,26 +23,6 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
-    <AnchorPane maxHeight="100.0" minHeight="100.0" minWidth="800.0" prefHeight="100.0" styleClass="pane" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <GridPane alignment="CENTER" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <columnConstraints>
-                  <ColumnConstraints maxWidth="422.0" minWidth="10.0" />
-                  <ColumnConstraints hgrow="NEVER" maxWidth="568.0" minWidth="10.0" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
-                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-                  <ColumnConstraints minWidth="10.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints />
-               </rowConstraints>
-            </GridPane>
-         </children>
-      </AnchorPane>
       <AnchorPane maxHeight="100.0" minHeight="100.0" minWidth="800.0" prefHeight="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <GridPane alignment="CENTER" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -70,7 +50,7 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <JFXComboBox editable="true" minHeight="40.0" minWidth="150.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                          <JFXComboBox fx:id="startTextSearch" editable="true" minHeight="40.0" minWidth="150.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -141,7 +121,7 @@
                                  <children>
                                     <GridPane prefHeight="71.0" prefWidth="405.0">
                                        <children>
-                                          <JFXComboBox editable="true" minHeight="40.0" minWidth="150.0" GridPane.halignment="CENTER" />
+                                          <JFXComboBox fx:id="endTextSearch" editable="true" minHeight="40.0" minWidth="150.0" GridPane.halignment="CENTER" />
                                        </children>
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

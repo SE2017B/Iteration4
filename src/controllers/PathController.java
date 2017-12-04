@@ -8,6 +8,7 @@
 
 package controllers;
 
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import exceptions.InvalidNodeException;
@@ -84,6 +85,10 @@ public class PathController implements ControllableScreen, Observer{
     private MenuButton endFloorMenu;
     @FXML
     private JFXListView<String> directionsList;
+    @FXML
+    private JFXComboBox<Node> startTextSearch;
+    @FXML
+    private JFXComboBox<Node> endTextSearch;
 
     //Methods start here
     public void init() {
@@ -114,6 +119,7 @@ public class PathController implements ControllableScreen, Observer{
 
         pathTransition = new PathTransition();
         searcher = new NodeSearcher(map.getNodeMap());
+
     }
 
     public void onShow(){
