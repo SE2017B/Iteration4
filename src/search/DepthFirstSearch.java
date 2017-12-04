@@ -14,15 +14,13 @@ This class contains functions to find a path based on the Depth First search met
 returning paths based on the Depth First search method.
 
  */
-public class DepthFirstSearch implements SearchStrategy {
+public class DepthFirstSearch extends SearchTemplate {
     public DepthFirstSearch(){}
 
     @Override
-    public Path findPath(Node start, Node end) {
-        ArrayList<Node> frontier = new ArrayList<>();
+    public Path findAndReturn(Node start, Node end, ArrayList<Node> frontier) {
         ArrayList<Node> explored = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
-        frontier.add(start);
         while(!frontier.isEmpty()){
             Node currentNode = frontier.get(0);
             frontier.remove(currentNode);
