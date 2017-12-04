@@ -35,10 +35,7 @@ import javafx.animation.PathTransition;
 
 import ui.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class PathController implements ControllableScreen, Observer{
     private ScreenController parent;
@@ -120,6 +117,44 @@ public class PathController implements ControllableScreen, Observer{
         pathTransition = new PathTransition();
         searcher = new NodeSearcher(map.getNodeMap());
 
+        //add listeners
+        startTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> {
+            startTextSearch.getItems().clear();//remove all previous items
+            List<Node> ans = map.getNodesByText(newText);
+            if(ans.size()==1){
+                startTextSearch.setValue(ans.get(0));//set that to the answer if their is one possible value
+                //startTextSearch.hide();//hide the options
+            }
+            else if(ans.size()>1){
+                startTextSearch.getItems().addAll(ans);
+                startTextSearch.show();
+            }
+            else{
+                //startTextSearch.hide();
+            }
+
+            System.out.println("Current value is "+startTextSearch.getValue());
+        });
+        //do the same thing for end node
+        endTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> {
+            endTextSearch.getItems().clear();//remove all previous items
+            List<Node> ans = map.getNodesByText(newText);
+            if(ans.size()==1){
+                endTextSearch.setValue(ans.get(0));//set that to the answer if their is one possible value
+                //endTextSearch.hide();//hide the options
+            }
+            else if(ans.size()>1){
+                int nos =0; //to remove annoying error message
+                endTextSearch.getItems().addAll(ans);
+                endTextSearch.show();
+            }
+            else{
+                //endTextSearch.hide();
+            }
+
+            System.out.println("Current value is "+startTextSearch.getValue());
+        });
+
     }
 
     public void onShow(){
@@ -152,7 +187,15 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private Path getPath(){
-        return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
+        Node s= startTextSearch.getValue();
+        Node e = endTextSearch.getValue();
+        if(s==null){
+            s=startNodeChoice.getValue();
+        }
+        if(e==null){
+            endNodeChoice.getValue();
+        }
+        return map.findPath(s,e);
     }
 
 
@@ -347,7 +390,8 @@ public class PathController implements ControllableScreen, Observer{
     //-------------------------MAP SCALE START--------------------------//
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException {
-        if(startNodeChoice.getValue() instanceof Node && endNodeChoice.getValue() instanceof Node) {
+        if((startNodeChoice.getValue() instanceof Node || startTextSearch.getValue() instanceof Node) &&
+                (endNodeChoice.getValue() instanceof Node || endTextSearch.getValue() instanceof Node)) {
             Path thePath = getPath();
 
             clearPaths();
@@ -359,8 +403,8 @@ public class PathController implements ControllableScreen, Observer{
             switchPath(paths.get(0));
             System.out.println("Enter Pressed");
 
-            mapScrollPane.setHvalue(startNodeChoice.getValue().getX()/5000.0);
-            mapScrollPane.setVvalue(startNodeChoice.getValue().getY()/3500.0);
+            //mapScrollPane.setHvalue(startNodeChoice.getValue().getX()/5000.0);
+            //mapScrollPane.setVvalue(startNodeChoice.getValue().getY()/3500.0);
         }
     }
 
