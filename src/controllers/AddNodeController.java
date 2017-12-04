@@ -399,22 +399,30 @@ public class AddNodeController implements ControllableScreen, Observer {
         v_neighbors.addAll(map.getNodesInVertical((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
 
         if(h_neighbors.size() != 0){
-            Node node = h_neighbors.get(0);
-            y_alligned = (int)(node.getY()/mapViewer.getScale());
-            Line line = new Line();
-            line.setLayoutX(x);
-            line.setLayoutY(y_alligned);
-            line.setEndX((node.getX()/mapViewer.getScale()) - x);
-            line.setEndY(0);
-            line.setStroke(Color.BLACK);
-            line.setStrokeWidth(3);
-            line.setOpacity(0.5);
-            nodeAllignedLines.add(line);
-            mapPane.getChildren().add(line);
+            y_alligned = (int)(h_neighbors.get(0).getY()/mapViewer.getScale());
         }
         if(v_neighbors.size() != 0){
             x_alligned = (int)(v_neighbors.get(0).getX()/mapViewer.getScale());
-            System.out.println("Vertical Alligned");
+
+        }
+        if(x != x_alligned){
+            Line line = newAllignLine();
+            line.setLayoutX(x_alligned);
+            line.setLayoutY(y_alligned);
+            line.setEndX((h_neighbors.get(0).getX()/mapViewer.getScale()) - x_alligned);
+            line.setEndY(0);
+            nodeAllignedLines.add(line);
+            mapPane.getChildren().add(line);
+
+        }
+        if(y != y_alligned){
+            Line line = newAllignLine();
+            line.setLayoutX(x_alligned);
+            line.setLayoutY(y_alligned);
+            line.setEndX(0);
+            line.setEndY((v_neighbors.get(0).getY()/mapViewer.getScale()) - y_alligned);
+            nodeAllignedLines.add(line);
+            mapPane.getChildren().add(line);
         }
 
         nodeAddLocation.setCenterX(x_alligned);
@@ -424,6 +432,14 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeAddLocation.setVisible(true);
         nodeAddXField.setText(Integer.toString((int)(x_alligned*mapViewer.getScale())));
         nodeAddYField.setText(Integer.toString((int)(y_alligned*mapViewer.getScale())));
+    }
+
+    private Line newAllignLine(){
+        Line line = new Line();
+        line.setStroke(Color.BLACK);
+        line.setStrokeWidth(3);
+        line.setOpacity(0.5);
+        return line;
     }
 
     ////////////////////////////////////////////////////////////
