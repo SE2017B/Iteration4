@@ -423,25 +423,25 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         catch (Exception ex){
             System.out.println("Add failed");
-            //System.out.println(nodeAddXField.getText());
             System.out.println(nodeAddBuildingDropDown.getText());
-            //this is not null or X-Coordinate even when I don't touch it...
-            if(nodeAddXField.getText() == null){
-                System.out.println("X Field empty");
+            if(!nodeAddXField.getText().matches("[0-9]+")){
+                System.out.println("X Field is empty or contains letters");
                 //shake
                 shakeTextField(nodeAddXField);
             }
-            if(nodeAddYField.getText() == null){
-                System.out.println("Y Field empty");
+            if(!nodeAddYField.getText().matches("[0-9]+")){
+                System.out.println("Y Field is empty or contains letters");
                 //shake
                 shakeTextField(nodeAddYField);
             }
             if(nodeAddFloorDropDown.getText() == "1"){
                 System.out.println("Floor Dropdown Failed");
                 //shake
-                shakeDropdown(nodeAddFloorDropDown);
+                shakeDropdown(nodeAddFloorDropDown); //commenting this out doesn't make the next ones work
             }
+            System.out.println("Exited Floor if statement");
             //for some reason it's not reaching more than the first one
+            //only thing I can think of is that "Building" and "NodeType" aren't options from the dropdown, and "1" is
             if(nodeAddBuildingDropDown.getText() == "Building"){
                 System.out.println("Building Dropdown Failed");
                 //shake
@@ -452,7 +452,8 @@ public class AddNodeController implements ControllableScreen, Observer {
                 //shake
                 shakeDropdown(nodeAddTypeDropDown);
             }
-            if(nodeAddShortField.getText() == null){
+            //don't think I can use regex for these because there are spaces and numbers and letters
+            if(nodeAddShortField.getText() == null){ //what's the deal with these? Capitals and numbers?
                 System.out.println("Short Field empty");
                 //shake
                 shakeTextField(nodeAddShortField);
@@ -475,8 +476,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void shakeTextField(TextField m){
-        TranslateTransition t = new TranslateTransition(Duration.millis(1000), m);
-        t.setByX(100f);
+        TranslateTransition t = new TranslateTransition(Duration.millis(500), m);
+        t.setByX(50f);
         t.setCycleCount(4);
         t.setAutoReverse(true);
         t.playFromStart();
