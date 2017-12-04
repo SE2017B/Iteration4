@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -73,13 +74,13 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
 
-        nodeTab.setOnSelectionChanged(e -> showNodesandEdges());
-        edgeTab.setOnSelectionChanged(e -> showNodesandEdges());
-        nodeAddTab.setOnSelectionChanged(e -> showNodesandEdges());
-        nodeEditTab.setOnSelectionChanged(e -> showNodesandEdges());
-        nodeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
-        edgeAddTab.setOnSelectionChanged(e -> showNodesandEdges());
-        edgeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
+        nodeTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        edgeTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        nodeAddTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        nodeEditTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        nodeRemoveTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        edgeAddTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        edgeRemoveTab.setOnSelectionChanged(e -> refreshNodesandEdges());
 
         refreshNodesandEdges();
     }
@@ -183,6 +184,10 @@ public class AddNodeController implements ControllableScreen, Observer {
             NodeCheckBox cb = new NodeCheckBox(node, mapViewer.getScale());
             nodeCheckBoxes.add(cb);
             cb.setOnAction(e -> nodeSelected(e));
+            if(nodeTab.isSelected() && nodeEditTab.isSelected()) {
+                cb.setOnMousePressed(boxOnMousePressedHandler);
+                cb.setOnMouseDragged(boxOnMouseDraggedHandler);
+            }
         }
     }
 
@@ -200,6 +205,9 @@ public class AddNodeController implements ControllableScreen, Observer {
         refreshEdges();
         showNodesandEdges();
     }
+
+    double orgSceneX, orgSceneY;
+    double orgTranslateX, orgTranslateY;
 
     public void nodeSelected(ActionEvent e){
         NodeCheckBox source = (NodeCheckBox)e.getSource();
@@ -251,6 +259,34 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
     }
+
+    EventHandler<MouseEvent> boxOnMousePressedHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            NodeCheckBox source = (NodeCheckBox)event.getSource();
+            orgSceneX = event.getSceneX();
+            orgSceneY = event.getSceneY();
+            orgTranslateX = source.getTranslateX();
+            orgTranslateY = source.getTranslateY();
+        }
+    };
+
+    EventHandler<MouseEvent> boxOnMouseDraggedHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            NodeCheckBox source = (NodeCheckBox)event.getSource();
+            double offsetX = event.getSceneX() - orgSceneX;
+            double offsetY = event.getSceneY() - orgSceneY;
+            double newTranslateX = orgTranslateX + offsetX;
+            double newTranslateY = orgTranslateY + offsetY;
+
+            source.setTranslateX(newTranslateX);
+            source.setTranslateY(newTranslateY);
+
+            //nodeEditXField.setText("" + (event.getSceneX()*mapViewer.getScale()));
+            //nodeEditYField.setText("" + (event.getSceneY()*mapViewer.getScale()));
+        }
+    };
 
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
@@ -485,6 +521,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void nodeEditCancelPressed(ActionEvent e){
         System.out.println("Node Edit Cancel Pressed");
         resetNodeEdit();
+        refreshNodesandEdges();
     }
 
     public void resetNodeEdit(){
