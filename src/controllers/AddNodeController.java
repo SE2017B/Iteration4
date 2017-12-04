@@ -76,8 +76,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         mapPane.setOnMouseClicked(e -> mapPaneClicked(e));
 
         nodeAddLocation = new AnimatedCircle();
-        nodeAllignedLines = new ArrayList<Line>();
-        nodeAddLocation.setVisible(false);
+        nodeAlignedLines = new ArrayList<Line>();
         nodeAddLocation.setFill(Color.DODGERBLUE);
 
         mapViewer.getMapScrollPane().setPannable(true);
@@ -254,17 +253,8 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
         else if (nodeTab.isSelected() && nodeEditTab.isSelected()) {
-            if (nodeEditSelectedNode == null) {
-                Node n = source.getNode();
-                nodeEditSelectedNode = n;
-                nodeEditNameField.setText(n.getLongName());
-                nodeEditShortField.setText(n.getShortName());
-                nodeEditBuildingDropDown.setText(n.getBuilding());
-                nodeEditFloorDropDown.setText(n.getFloor().getDbMapping());
-                nodeEditTypeDropDown.setText(n.getType());
-                nodeEditXField.setText(Integer.toString(n.getX()));
-                nodeEditYField.setText(Integer.toString(n.getY()));
-                nodeEditIDLabel.setText(n.getID());
+            if(nodeEditSelectedNode == null){
+                nodeEditSelectedNode = source.getNode();
             } else if (nodeEditSelectedNode.equals(source.getNode())) {
                 resetNodeEdit();
             } else{
@@ -276,30 +266,53 @@ public class AddNodeController implements ControllableScreen, Observer {
     EventHandler<MouseEvent> boxOnMousePressedHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            NodeCheckBox source = (NodeCheckBox)event.getSource();
+
+            javafx.scene.Node source = (javafx.scene.Node) event.getSource();
             orgSceneX = event.getSceneX();
             orgSceneY = event.getSceneY();
-            orgTranslateX = source.getTranslateX();
-            orgTranslateY = source.getTranslateY();
+            orgTranslateX = source.getLayoutX();
+            orgTranslateY = source.getLayoutY();
+
+            NodeCheckBox cb =((NodeCheckBox)event.getSource());
+            Node n = cb.getNode();
+            nodeEditNameField.setText(n.getLongName());
+            nodeEditShortField.setText(n.getShortName());
+            nodeEditBuildingDropDown.setText(n.getBuilding());
+            nodeEditFloorDropDown.setText(n.getFloor().getDbMapping());
+            nodeEditTypeDropDown.setText(n.getType());
+            nodeEditXField.setText(Integer.toString((int)(cb.getLayoutX()*mapViewer.getScale())));
+            nodeEditYField.setText(Integer.toString((int)(cb.getLayoutY()*mapViewer.getScale())));
+            nodeEditIDLabel.setText(n.getID());
+
+
         }
     };
 
     EventHandler<MouseEvent> boxOnMouseDraggedHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            NodeCheckBox source = (NodeCheckBox)event.getSource();
+            javafx.scene.Node source = (javafx.scene.Node) event.getSource();
             double offsetX = event.getSceneX() - orgSceneX;
             double offsetY = event.getSceneY() - orgSceneY;
             double newTranslateX = orgTranslateX + offsetX;
             double newTranslateY = orgTranslateY + offsetY;
 
-            source.setTranslateX(newTranslateX);
-            source.setTranslateY(newTranslateY);
+            source.setLayoutX(newTranslateX);
+            source.setLayoutY(newTranslateY);
 
-            //nodeEditXField.setText("" + (event.getSceneX()*mapViewer.getScale()));
-            //nodeEditYField.setText("" + (event.getSceneY()*mapViewer.getScale()));
+
+            nodeEditXField.setText(Integer.toString((int)((source.getLayoutX()+9)*mapViewer.getScale())));
+            nodeEditYField.setText(Integer.toString((int)((source.getLayoutY()+9)*mapViewer.getScale())));
+
+            if(((NodeCheckBox)source).isSelected()){
+                ((NodeCheckBox)source).setSelected(false);
+                nodeEditSelectedNode = null;
+            }
+
         }
     };
+
+
 
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
@@ -347,7 +360,7 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     private AnimatedCircle nodeAddLocation;
 
-    private ArrayList<Line> nodeAllignedLines;
+    private ArrayList<Line> nodeAlignedLines;
 
 
     public void nodeAddXEntered(ActionEvent e){
@@ -419,55 +432,62 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void mapPaneClicked(MouseEvent e){
         if (e.getClickCount() == 2 && nodeAddTab.isSelected() && nodeTab.isSelected()){
-            setNewNodeAddLocation((int)e.getX(), (int)e.getY());
+            setNewLocation((int)e.getX(), (int)e.getY(), nodeAddLocation, nodeAddXField, nodeAddYField);
         }
     }
 
-    private void setNewNodeAddLocation(int x, int y){
-        int x_alligned = x;
-        int y_alligned = y;
+    private void setNewLocation(int x, int y, javafx.scene.Node moved, JFXTextField x_text, JFXTextField y_text ){
+        int x_aligned = x;
+        int y_aligned = y;
 
-        mapPane.getChildren().removeAll(nodeAllignedLines);
-        nodeAllignedLines.clear();
+        mapPane.getChildren().removeAll(nodeAlignedLines);
+        nodeAlignedLines.clear();
         ArrayList<Node> h_neighbors = new ArrayList<>();
         h_neighbors.addAll(map.getNodesInHorizontal((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
         ArrayList<Node> v_neighbors = new ArrayList<>();
         v_neighbors.addAll(map.getNodesInVertical((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
 
         if(h_neighbors.size() != 0){
-            y_alligned = (int)(h_neighbors.get(0).getY()/mapViewer.getScale());
+            y_aligned = (int)(h_neighbors.get(0).getY()/mapViewer.getScale());
         }
         if(v_neighbors.size() != 0){
-            x_alligned = (int)(v_neighbors.get(0).getX()/mapViewer.getScale());
+            x_aligned = (int)(v_neighbors.get(0).getX()/mapViewer.getScale());
 
         }
-        if(x != x_alligned){
+        if(x != x_aligned){
             Line line = newAllignLine();
-            line.setLayoutX(x_alligned);
-            line.setLayoutY(y_alligned);
-            line.setEndX((h_neighbors.get(0).getX()/mapViewer.getScale()) - x_alligned);
-            line.setEndY(0);
-            nodeAllignedLines.add(line);
-            mapPane.getChildren().add(line);
-
-        }
-        if(y != y_alligned){
-            Line line = newAllignLine();
-            line.setLayoutX(x_alligned);
-            line.setLayoutY(y_alligned);
+            line.setLayoutX(x_aligned);
+            line.setLayoutY(y_aligned);
             line.setEndX(0);
-            line.setEndY((v_neighbors.get(0).getY()/mapViewer.getScale()) - y_alligned);
-            nodeAllignedLines.add(line);
+            line.setEndY((v_neighbors.get(0).getY()/mapViewer.getScale()) - y_aligned);
+            nodeAlignedLines.add(line);
+            mapPane.getChildren().add(line);
+
+        }
+        if(y != y_aligned){
+            Line line = newAllignLine();
+            line.setLayoutX(x_aligned);
+            line.setLayoutY(y_aligned);
+            line.setEndX((h_neighbors.get(0).getX()/mapViewer.getScale()) - x_aligned);
+            line.setEndY(0);
+            nodeAlignedLines.add(line);
             mapPane.getChildren().add(line);
         }
+        if(moved instanceof AnimatedCircle){
+            AnimatedCircle movedCircle = (AnimatedCircle) moved;
+            movedCircle.setCenterX(x_aligned);
+            movedCircle.setCenterY(y_aligned);
+        }
+        else{
+            moved.setLayoutX(x_aligned);
+            moved.setLayoutY(y_aligned);
+        }
 
-        nodeAddLocation.setCenterX(x_alligned);
-        nodeAddLocation.setCenterY(y_alligned);
-        if(!mapPane.getChildren().contains(nodeAddLocation))
-            mapPane.getChildren().add(nodeAddLocation);
-        nodeAddLocation.setVisible(true);
-        nodeAddXField.setText(Integer.toString((int)(x_alligned*mapViewer.getScale())));
-        nodeAddYField.setText(Integer.toString((int)(y_alligned*mapViewer.getScale())));
+
+        if(!mapPane.getChildren().contains(moved))
+            mapPane.getChildren().add(moved);
+        x_text.setText(Integer.toString((int)(x_aligned*mapViewer.getScale())));
+        y_text.setText(Integer.toString((int)(y_aligned*mapViewer.getScale())));
     }
 
     private Line newAllignLine(){
