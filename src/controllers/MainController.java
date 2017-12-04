@@ -50,6 +50,8 @@ public class MainController implements ControllableScreen, Observer{
     private JFXButton retailFilterButton;
     @FXML
     private JFXButton stairsFilterButton;
+    @FXML
+    private JFXButton ebtn;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -181,6 +183,10 @@ public class MainController implements ControllableScreen, Observer{
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
+    }
+
+    public void emergencyButtonPressed(ActionEvent e){
+        //same as exitTypePressed, but show an animated path to exit
     }
 
     public void elevTypePressed(ActionEvent e){

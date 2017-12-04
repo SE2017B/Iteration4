@@ -147,7 +147,7 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private Path getPath(){
-        return map.findPath(startNodeChoice.getValue(),endNodeChoice.getValue());
+        return map.findPath(startNodeChoice.getValue(), endNodeChoice.getValue());
     }
 
 
