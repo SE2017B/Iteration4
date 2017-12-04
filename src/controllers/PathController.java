@@ -32,10 +32,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.*;
 import javafx.animation.PathTransition;
 
-import ui.AnimatedCircle;
-import ui.MapViewer;
-import ui.PathID;
-import ui.PathViewer;
+import ui.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +41,6 @@ import java.util.Observer;
 
 public class PathController implements ControllableScreen, Observer{
     private ScreenController parent;
-    //private ArrayList<Node> path;
     private HospitalMap map;
     private String startType = "";
     private String startFloor = "";
@@ -55,11 +51,11 @@ public class PathController implements ControllableScreen, Observer{
     private FloorNumber currentFloor;// the current floor where the kiosk is.
     private PathViewer currentPath;
     private ArrayList<FloorNumber> floors; //list of floors available
-    private HashMap<Path, ArrayList<Shape>> pathShapes;
     private ArrayList<PathViewer> paths;
     private ArrayList<Shape> shapes;
     private Pane arrow;
     private PathTransition pathTransition;
+    private NodeSearcher searcher;
 
     @FXML
     private ChoiceBox<Node> startNodeChoice;
@@ -91,7 +87,6 @@ public class PathController implements ControllableScreen, Observer{
         map = HospitalMap.getMap();
         shapes = new ArrayList<Shape>();
         paths=new ArrayList<PathViewer>();
-        pathShapes = new HashMap<Path,ArrayList<Shape>>();
         currentFloor = FloorNumber.FLOOR_ONE;
         currentPath= new PathViewer(new Path());
         mapViewer = new MapViewer(this);
@@ -113,6 +108,7 @@ public class PathController implements ControllableScreen, Observer{
         arrow.getChildren().add(arrowView);
 
         pathTransition = new PathTransition();
+        searcher = new NodeSearcher(map.getNodeMap());
     }
 
     public void onShow(){
@@ -135,7 +131,7 @@ public class PathController implements ControllableScreen, Observer{
         endFloorMenu.setText("Floor");
         endTypeMenu.setText("Type");
 
-        directionsList.setItems(null);
+        directionsList.setItems(null); //function implementation
 
         mapViewer.resetView();
     }
@@ -290,7 +286,6 @@ public class PathController implements ControllableScreen, Observer{
         arrow.setVisible(false);
         mapPane.getChildren().remove(arrow);
         //clear all lines and paths
-        pathShapes = new HashMap<>();
         floors= new ArrayList<>();
         shapes=new ArrayList<>();
         paths=new ArrayList<>();

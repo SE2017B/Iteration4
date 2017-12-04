@@ -22,11 +22,24 @@ public class NodeSearcher {
      */
     public ArrayList<Node> Search(String text){
         ArrayList<Node> ans = new ArrayList<Node>();
-
+        //Naive implementation
+        for(Node n : this.nodes){
+            if(check(n,text)){
+                ans.add(n);
+            }
+        }
         return ans;
     }
 
     private boolean contains(String text,String name){
+        return name.contains(text);
+    }
+    private boolean check(Node n, String text){
+        if(searchby=="NodeID"){
+            if(n.getID().contains(text)){
+                return true;
+            }
+        }
         return false;
     }
 }
