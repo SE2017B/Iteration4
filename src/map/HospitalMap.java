@@ -198,4 +198,18 @@ public class HospitalMap{
     public void setKioskLocation(Node node){
         kioskLocation = node;
     }
+
+
+    private int AREA_SIZE = 120;
+    private int AREA_WINDOW = 25;
+    public List<Node> getNodesInHorizontal(int x, int y, FloorNumber floor){
+        return getNodesBy( n -> n.getFloor().equals(floor) && (n.getX() > (x-AREA_SIZE)) && (n.getX() < (x+AREA_SIZE))
+                                && (n.getY() > (y - AREA_WINDOW))  && (n.getY() < (y + AREA_WINDOW)));
+    }
+
+    public List<Node> getNodesInVertical(int x, int y, FloorNumber floor){
+        return getNodesBy(n -> n.getFloor().equals(floor) && (n.getX() > (x-AREA_WINDOW)) && (n.getX() < (x+AREA_WINDOW))
+                                && (n.getY() > (y - AREA_SIZE))  && (n.getY() < (y + AREA_SIZE)));
+    }
+
 }
