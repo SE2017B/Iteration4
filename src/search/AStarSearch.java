@@ -21,40 +21,20 @@ public class AStarSearch extends AStarDijkstrasSearchTemplate implements SearchS
     public AStarSearch(){}
 
     @Override
-    public void initialize(ArrayList<Node> frontier, ArrayList<Node> explored, HashMap<Node, Node> cameFrom,
-                           HashMap<Node, Integer> greedy, HashMap<Node, Double> fScore, Node start, Node end) {
-
-        greedy.put(start, 0);
-        fScore.put(start, getEuclideanDistance(start, end));
-        frontier.add(start);
+    public void initialize(HashMap<Node, Integer> fScore, Node start, Node end) {
+        fScore.put(start, (int)getEuclideanDistance(start, end));
     }
 
     @Override
-    public Path sortFrontier(ArrayList<Node> frontier, ArrayList<Node> explored, HashMap<Node, Node> cameFrom,
-                             HashMap<Node, Integer> greedy, HashMap<Node, Double> fScore, Node start, Node end, Path path) {
-        while(!frontier.isEmpty()){
-        frontier.sort((n1, n2) -> (int) (fScore.get(n1) - fScore.get(n2)));
-        Node currentNode = frontier.get(0);
-        if (currentNode.equals(end)) { path = returnPath(cameFrom, currentNode, path); }
-        frontier.remove(currentNode);
-        explored.add(currentNode);
-        for (Edge e : currentNode.getConnections()) {
-            Node neighbor = e.getOtherNode(currentNode);
-            if (explored.contains(neighbor)) continue;
-            if (!frontier.contains(neighbor)) frontier.add(neighbor);
-            int newGreedy = greedy.get(currentNode) + (int) e.getCost();
-            if (greedy.containsKey(neighbor) && newGreedy >= greedy.get(neighbor)) continue;
-            cameFrom.put(neighbor, currentNode);
-            greedy.put(neighbor, newGreedy);
-            fScore.put(neighbor, greedy.get(neighbor) + getEuclideanDistance(neighbor, end));
-        }}
-        return path;
+    public void sortFrontier(ArrayList<Node> frontier, HashMap<Node, Integer> fScore, HashMap<Node, Integer> greedy) {
+        frontier.sort(Comparator.comparingInt(fScore::get));
     }
 
     @Override
-    public Path returnThePath(Path path) {
-        return path;
+    public void putMapValues(HashMap<Node, Integer> fScore, HashMap<Node, Integer> greedy, Node neighbor, Node end) {
+        fScore.put(neighbor, greedy.get(neighbor) + (int)neighbor.getEuclidianDistance(end));
     }
+
     //    @Override
 //    public Path findPath(Node start, Node end){
 //        ArrayList<Node> frontier = new ArrayList<>();

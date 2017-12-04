@@ -22,6 +22,7 @@ public class DepthFirstSearch implements SearchStrategy {
         ArrayList<Node> frontier = new ArrayList<>();
         ArrayList<Node> explored = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
+        frontier.add(start);
         while(!frontier.isEmpty()){
             Node currentNode = frontier.get(0);
             frontier.remove(currentNode);

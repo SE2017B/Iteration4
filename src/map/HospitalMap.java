@@ -191,6 +191,13 @@ public class HospitalMap{
         return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
     }
 
+    public List<Node> getNodesByText(String text){
+        return this.nodeMap.stream().filter(n1 -> (n1.getShortName().contains(text)
+                                                || n1.getLongName().contains(text)
+                                                || n1.getID().contains(text)
+                                                || n1.getType().contains(text))).collect(Collectors.toList());
+    }
+
     //Setters
     public void setSearchStrategy(SearchStrategy searchStrategy){
         search.setStrategy(searchStrategy);
