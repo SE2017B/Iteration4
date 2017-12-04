@@ -15,35 +15,49 @@ and also finding the path to a node of the specified type
 using Dijkstras search method.
 
  */
-public class DijkstrasSearch implements SearchStrategy {
+public class DijkstrasSearch extends AStarDijkstrasSearchTemplate implements SearchStrategy {
     public DijkstrasSearch(){}
 
     @Override
-    public Path findPath(Node start, Node end) {
-        ArrayList<Node> frontier = new ArrayList<>();
-        ArrayList<Node> explored = new ArrayList<>();
-        HashMap<Node, Node> cameFrom = new HashMap<>();
-        HashMap<Node, Integer> greedy = new HashMap<>();
-        frontier.add(start);
-        greedy.put(start, 0);
-        while(!frontier.isEmpty()){
-            frontier.sort((n1, n2) -> (greedy.get(n1) - greedy.get(n2)));
-            Node currentNode = frontier.get(0);
-            if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
-            frontier.remove(currentNode);
-            explored.add(currentNode);
-            for(Edge e : currentNode.getConnections()){
-                Node neighbor = e.getOtherNode(currentNode);
-                if(explored.contains(neighbor)) continue;
-                if(!frontier.contains(neighbor)) frontier.add(neighbor);
-                int newGreedy = greedy.get(currentNode) + (int)e.getCost();
-                if(greedy.containsKey(neighbor) && newGreedy >= greedy.get(neighbor)) continue;
-                cameFrom.put(neighbor, currentNode);
-                greedy.put(neighbor, newGreedy);
-            }
-        }
-        return new Path();
+    public void initialize(ArrayList<Node> frontier, ArrayList<Node> explored, HashMap<Node, Node> cameFrom, HashMap<Node, Integer> greedy, HashMap<Node, Integer> fSCore) {
+
     }
+
+    @Override
+    public void sortFrontier(ArrayList<Node> frontier) {
+
+    }
+
+    @Override
+    public void assignMapValues(HashMap<Node, Integer> fScore) {
+
+    }
+    //    @Override
+//    public Path findPath(Node start, Node end) {
+//        ArrayList<Node> frontier = new ArrayList<>();
+//        ArrayList<Node> explored = new ArrayList<>();
+//        HashMap<Node, Node> cameFrom = new HashMap<>();
+//        HashMap<Node, Integer> greedy = new HashMap<>();
+//        frontier.add(start);
+//        greedy.put(start, 0);
+//        while(!frontier.isEmpty()){
+//            frontier.sort((n1, n2) -> (greedy.get(n1) - greedy.get(n2)));
+//            Node currentNode = frontier.get(0);
+//            if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
+//            frontier.remove(currentNode);
+//            explored.add(currentNode);
+//            for(Edge e : currentNode.getConnections()){
+//                Node neighbor = e.getOtherNode(currentNode);
+//                if(explored.contains(neighbor)) continue;
+//                if(!frontier.contains(neighbor)) frontier.add(neighbor);
+//                int newGreedy = greedy.get(currentNode) + (int)e.getCost();
+//                if(greedy.containsKey(neighbor) && newGreedy >= greedy.get(neighbor)) continue;
+//                cameFrom.put(neighbor, currentNode);
+//                greedy.put(neighbor, newGreedy);
+//            }
+//        }
+//        return new Path();
+//    }
 
     public Path findPathBy(Node start, String type){
         ArrayList<Node> frontier = new ArrayList<>();
