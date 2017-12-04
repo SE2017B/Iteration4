@@ -15,18 +15,16 @@ This class contains functions to find a path based on the Beam search method,
 returning paths based on the Beam search method.
 
  */
-public class BeamSearch implements SearchStrategy{
+public class BeamSearch extends SearchTemplate{
     private int beam;
     public BeamSearch(int beam){
         this.beam = beam;
     }
 
     @Override
-    public Path findPath(Node start, Node end) {
-        ArrayList<Node> frontier = new ArrayList<>();
+    public Path findAndReturn(Node start, Node end, ArrayList<Node> frontier) {
         ArrayList<Node> explored = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
-        frontier.add(start);
         while(!frontier.isEmpty()){
             Node currentNode = frontier.get(0);
             frontier.remove(currentNode);

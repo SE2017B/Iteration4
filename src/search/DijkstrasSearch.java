@@ -15,16 +15,14 @@ and also finding the path to a node of the specified type
 using Dijkstras search method.
 
  */
-public class DijkstrasSearch implements SearchStrategy {
+public class DijkstrasSearch extends SearchTemplate {
     public DijkstrasSearch(){}
 
     @Override
-    public Path findPath(Node start, Node end) {
-        ArrayList<Node> frontier = new ArrayList<>();
+    public Path findAndReturn(Node start, Node end, ArrayList<Node> frontier) {
         ArrayList<Node> explored = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
         HashMap<Node, Integer> greedy = new HashMap<>();
-        frontier.add(start);
         greedy.put(start, 0);
         while(!frontier.isEmpty()){
             frontier.sort((n1, n2) -> (greedy.get(n1) - greedy.get(n2)));

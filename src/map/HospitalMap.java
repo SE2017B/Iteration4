@@ -13,8 +13,6 @@ import exceptions.InvalidNodeException;
 import search.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -22,7 +20,7 @@ import java.util.stream.Collectors;
 public class HospitalMap{
     private ArrayList<Node> nodeMap;
     private ArrayList<Edge> edgeMap;
-    private ArrayList<SearchStrategy> posSerchStrat;
+    private ArrayList<SearchTemplate> posSerchStrat;
     private SearchContext search;
     private static HospitalMap map;
     private Node kioskLocation;
@@ -48,7 +46,7 @@ public class HospitalMap{
         catch (IndexOutOfBoundsException e){
             if (!nodeMap.isEmpty()){
                 //add a some an arbitrary node from the map if that one doesn't exist
-               kioskLocation = nodeMap.get(0);
+                kioskLocation = nodeMap.get(0);
             }
             else{
                 System.out.println("No nodes found for kiosk location");
@@ -181,8 +179,8 @@ public class HospitalMap{
         return output;
     }
 
-    public SearchStrategy getSearchStrategy() {return search.getStrategy();}
-    public ArrayList<SearchStrategy> getSearches() {
+    public SearchTemplate getSearchStrategy() {return search.getStrategy();}
+    public ArrayList<SearchTemplate> getSearches() {
         return posSerchStrat;
     }
 
@@ -190,13 +188,11 @@ public class HospitalMap{
         return kioskLocation;
     }
     public List<Node> getNodesBy(Function<Node, Boolean> function){
-        List<Node> nodes = this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
-        Collections.sort(nodes, Comparator.comparing(n -> n.getEuclidianDistance(this.kioskLocation)));
-        return nodes;
+        return this.nodeMap.stream().filter(function::apply).collect(Collectors.toList());
     }
 
     //Setters
-    public void setSearchStrategy(SearchStrategy searchStrategy){
+    public void setSearchStrategy(SearchTemplate searchStrategy){
         search.setStrategy(searchStrategy);
     }
     public void setKioskLocation(Node node){

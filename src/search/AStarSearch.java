@@ -17,12 +17,11 @@ finding paths with pit stops,
 and a method that obtains the Euclidean distance between two nodes.
 
  */
-public class AStarSearch implements SearchStrategy {
+public class AStarSearch extends SearchTemplate {
     public AStarSearch(){}
 
     @Override
-    public Path findPath(Node start, Node end){
-        ArrayList<Node> frontier = new ArrayList<>();
+    public Path findAndReturn(Node start, Node end, ArrayList<Node> frontier){
         ArrayList<Node> explored = new ArrayList<>();
         HashMap<Node, Node> cameFrom = new HashMap<>();
         HashMap<Node, Integer> greedy = new HashMap<>();
@@ -30,8 +29,6 @@ public class AStarSearch implements SearchStrategy {
 
         greedy.put(start, 0);
         fScore.put(start, getEuclideanDistance(start, end));
-        frontier.add(start);
-
         while(!frontier.isEmpty()){
             frontier.sort((n1, n2) -> (int)(fScore.get(n1) - fScore.get(n2)));
             Node currentNode = frontier.get(0);
@@ -62,7 +59,7 @@ public class AStarSearch implements SearchStrategy {
         return path;
     }
 
-    public Path findPathPitStop(ArrayList<Node> stops) {
+    public Path findPathPitStop(ArrayList<Node> stops) throws InvalidNodeException {
         Path path = new Path();
         for(int i=0;i<stops.size()-1;i++){
             path.addToPath(this.findPath(stops.get(i), stops.get(i+1)));
