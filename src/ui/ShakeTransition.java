@@ -7,9 +7,7 @@ import javafx.util.Duration;
 public class ShakeTransition {
     private TranslateTransition t;
 
-    public ShakeTransition(){
-
-    }
+    public ShakeTransition(){}
 
     public void shake(Control c){
         t = new TranslateTransition(Duration.millis(100), c);

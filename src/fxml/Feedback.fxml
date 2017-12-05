@@ -3,10 +3,10 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
     <children>
       <GridPane>
         <columnConstraints>
@@ -66,15 +66,20 @@
                                                   <Insets bottom="40.0" />
                                               </padding>
                                           </Label>
-                                    <JFXSlider fx:id="starSlider" majorTickUnit="1.0" max="5.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                                          <JFXTextField fx:id="commentField" alignment="CENTER" focusColor="WHITE" promptText="Additional Comments" styleClass="text-on-dark" unFocusColor="#c9c9c9">
-                                              <font>
-                                                  <Font size="15.0" />
-                                              </font>
-                                              <VBox.margin>
-                                                  <Insets bottom="20.0" top="20.0" />
-                                              </VBox.margin>
-                                          </JFXTextField>
+                                    <JFXSlider fx:id="starSlider" majorTickUnit="1.0" max="5.0" minorTickCount="0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                    <Label text="Additional Comments">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextArea prefHeight="200.0" prefWidth="400.0">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </TextArea>
                                           <JFXButton fx:id="enterButton" alignment="CENTER" onAction="#enterPressed" text="Enter">
                                               <font>
                                                   <Font size="33.0" />
