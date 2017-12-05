@@ -26,7 +26,7 @@ public class proxyImagePane extends StackPane {
     private String floor3 = "images/03_thethirdfloor.png";
 
     private HashMap<FloorNumber,ImageView> floors = new HashMap<FloorNumber,ImageView>();
-    private double scale = 2.0;
+    private double scale = .5;
 
     public proxyImagePane(){
         super();
