@@ -11,18 +11,15 @@ public class PathViewer {
     //attributes
     private Path path;
     private PathID pathID;
-    private double scale;
     private ArrayList<Shape> shapes;
+    private ArrayList<Integer> dimensions;
 
     public PathViewer(Path path){
         this.path=path;
         this.shapes=new ArrayList<Shape>();
-        this.scale=0;//for now
-        setScale();//control the length of the scale for the path used
+        dimensions = getEdgeDims();
     }
-    public void setScale(){
 
-    }
     private ArrayList<Integer> getEdgeDims(){
         ArrayList<Integer> ans = new ArrayList<Integer>();
         ans.add(this.path.getPath().get(0).getX());
@@ -71,11 +68,21 @@ public class PathViewer {
     public ArrayList<Node> getNodes(){
         return this.path.getPath();
     }
-    public double getScale(){
-        return this.scale;
-    }
     public FloorNumber getFloor(){
         return this.path.getPath().get(0).getFloor();
+    }
+
+    public int getWidth(){
+        ArrayList<Integer> dimensions = getEdgeDims();
+        return dimensions.get(2) - dimensions.get(0);
+    }
+
+    public int getHeight(){
+        return dimensions.get(3) - dimensions.get(1);
+    }
+
+    public double getScale(){
+        return Math.min(Math.pow((5000-getWidth())/5000.0,2.0), Math.pow((3400-getHeight())/3400.0,2)) ;
     }
 
 }
