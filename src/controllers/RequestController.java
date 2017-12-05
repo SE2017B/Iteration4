@@ -25,6 +25,7 @@ import javafx.util.Duration;
 import map.HospitalMap;
 import map.Node;
 import search.SearchStrategy;
+import ui.ShakeTransition;
 
 import java.util.ArrayList;
 
@@ -385,6 +386,8 @@ public class RequestController implements ControllableScreen{
 
     }
 
+    ShakeTransition s = new ShakeTransition();
+
     @FXML
     void createStaffPressed(ActionEvent event) {
         try {
@@ -406,40 +409,30 @@ public class RequestController implements ControllableScreen{
             if(usernameTxt.getText().equals("")){
                 System.out.println("Username is empty");
                 //shake
-                shakeTextField(usernameTxt);
+                s.shake(usernameTxt);
             }
             if(passwordTxt.getText().equals("")){
                 System.out.println("Password is empty");
                 //shake
-                shakeTextField(passwordTxt);
+                s.shake(passwordTxt);
             }
             if(jobTitletxt.getText().equals("")){
                 System.out.println("Job Title is empty");
                 //shake
-                shakeTextField(jobTitletxt);
+                s.shake(jobTitletxt);
             }
             if(fullNametxt.getText().equals("")){
                 System.out.println("Full Name is empty");
                 //shake
-                shakeTextField(fullNametxt);
+                s.shake(fullNametxt);
             }
             if(addStaffServiceChoiceBox.getValue() == null){
                 System.out.println("Service is empty");
                 //shake
-                shakeDropdown(addStaffServiceChoiceBox);
+                s.shake(addStaffServiceChoiceBox);
             }
         }
     }
-
-    public void shakeTextField(TextField m){
-        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
-        t.setByX(25f);
-        t.setCycleCount(4);
-        t.setAutoReverse(true);
-        t.setDelay(Duration.millis(350));
-        t.playFromStart();
-    }
-
 
     @FXML
     void makeModify(ActionEvent event) {
@@ -479,18 +472,8 @@ public class RequestController implements ControllableScreen{
         }
         else{
             System.out.println("Strategy DropDown Empty");
-            shakeDropdown(searchStrategyChoice);
+            s.shake(searchStrategyChoice);
         }
 
     }
-
-    public void shakeDropdown(ChoiceBox m){
-        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
-        t.setByX(25f);
-        t.setCycleCount(4);
-        t.setAutoReverse(true);
-        t.setDelay(Duration.millis(350));
-        t.playFromStart();
-    }
-
 }
