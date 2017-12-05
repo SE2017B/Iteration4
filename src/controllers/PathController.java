@@ -122,6 +122,7 @@ public class PathController implements ControllableScreen, Observer{
         searcher = new NodeSearcher(map.getNodeMap());
 
         //add listeners
+
         startTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> {
             startTextSearch.getItems().clear();//remove all previous items
             List<Node> ans = map.getNodesByText(newText);
