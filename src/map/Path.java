@@ -31,6 +31,7 @@ public class Path implements Comparable<Path> {
         this.distance += distance;
     }
 
+    //Using the short names from the databse for names of the nodes to do things at
     public ArrayList<String> findDirections(){
         int PVX = 0;
         int PVY = 0;
@@ -101,9 +102,9 @@ public class Path implements Comparable<Path> {
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
                 else if(prevStop) directions.add("Turn left from " + path.get(i).getShortName());
                 else {
-                    if(angle >= -40) directions.add("Take a slight left at this " + path.get(i).getShortName());
-                    else if(angle <= -140) directions.add("Take a sharp left at this " + path.get(i).getShortName());
-                    else directions.add("Take a left at this " + path.get(i).getShortName());
+                    if(angle >= -40) directions.add("Take a slight left at " + path.get(i).getShortName());
+                    else if(angle <= -140) directions.add("Take a sharp left at " + path.get(i).getShortName());
+                    else directions.add("Take a left at " + path.get(i).getShortName());
                 }
             }
             else if(angle >= 25 && angle <= 155){
@@ -111,9 +112,9 @@ public class Path implements Comparable<Path> {
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
                 else if(prevStop) directions.add("Turn right from " + path.get(i).getShortName());
                 else {
-                    if(angle <= 40) directions.add("Take a slight right at this " + path.get(i).getShortName());
-                    else if(angle >= 140) directions.add("Take a sharp right at this " + path.get(i).getShortName());
-                    else directions.add("Take a right at this " + path.get(i).getShortName());
+                    if(angle <= 40) directions.add("Take a slight right at " + path.get(i).getShortName());
+                    else if(angle >= 140) directions.add("Take a sharp right at " + path.get(i).getShortName());
+                    else directions.add("Take a right at " + path.get(i).getShortName());
                 }
             }
             else if (angle > -25 && angle < 25){
@@ -132,6 +133,14 @@ public class Path implements Comparable<Path> {
             straight = false;
         }
         directions.add("Stop at " + path.get(path.size()-1).getShortName());
+
+        //Eliminates multiple "go straights" in a row
+        for(int i = 1; i<directions.size(); i++) {
+            if(directions.get(i).contains("straight") && directions.get(i-1).contains("straight")) {
+                directions.remove(i);
+                i--;
+            }
+        }
         return directions;
     }
 
