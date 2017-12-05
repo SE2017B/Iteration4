@@ -122,12 +122,11 @@ public class PathController implements ControllableScreen, Observer{
         pathTransition = new PathTransition();
 
         //add listeners
-        startTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
-        endTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
+        startTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
+        endTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
     }
 
         private void searchText(ComboBox<Node> textSearch, String text){
-        System.out.println("Hahahhahah hallaoolololol");
         textSearch.getItems().clear();//remove all previous items
         List<Node> ans = map.getNodesByText(text);
         if(ans.size()==1){
