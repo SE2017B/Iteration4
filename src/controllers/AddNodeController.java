@@ -10,6 +10,7 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
@@ -765,6 +766,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     private JFXButton edgeRemoveCancelButton;
     @FXML
     private JFXListView<Edge> edgeRemoveList;
+    @FXML
+    private JFXSlider slideBarZoom;
 
     public void edgeRemoveEnterPressed(ActionEvent e){
         System.out.println("Edge Remove Enter Pressed");
@@ -780,5 +783,21 @@ public class AddNodeController implements ControllableScreen, Observer {
         System.out.println("Edge Remove Cancel Pressed");
         edgeRemoveList.getItems().clear();
         refreshNodesandEdges();
+    }
+
+    //-----------------ZOOM-------------------------//
+    //when + button is pressed zoom in map
+    public void zinPressed(ActionEvent e){
+        setZoom(slideBarZoom.getValue()+0.2);
+    }
+
+    //when - button pressed zoom out map
+    public void zoutPressed(ActionEvent e){
+        setZoom(slideBarZoom.getValue()-0.2);
+    }
+
+    public void setZoom(double zoom){
+        slideBarZoom.setValue(zoom);
+        mapViewer.setScale(zoom);
     }
 }
