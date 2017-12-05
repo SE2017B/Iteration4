@@ -25,7 +25,7 @@ public class proxyImagePane extends StackPane {
     private String floor2 = "images/02_thesecondfloor.png";
     private String floor3 = "images/03_thethirdfloor.png";
 
-    private HashMap<FloorNumber,ImageView> floors = new HashMap<>();
+    private HashMap<FloorNumber,ImageView> floors = new HashMap<FloorNumber,ImageView>();
     private double scale = 2.0;
 
     public proxyImagePane(){
@@ -37,6 +37,21 @@ public class proxyImagePane extends StackPane {
             imgView.setVisible(true);
             floors.put(floor,imgView);//add new image view to hash map floors
         }
+    }
+
+    public boolean addImage(FloorNumber floor){
+        //create new image view
+        if(floor!=null){
+            String name = this.getImage(floor);//get image name for floor
+            Image img = new Image(name); //create new image
+            ImageView imgView = new ImageView(img); //create new image view pane
+            imgView.setFitWidth(5000/scale);
+            imgView.setFitHeight(3400/scale);
+            imgView.setVisible(true);
+            floors.put(floor,imgView);//add new image view to hash map floors
+            return true;
+        }
+        return false;
     }
 
     public void changeScale(double ds){
