@@ -12,10 +12,13 @@ import database.nodeDatabase;
 import exceptions.InvalidNodeException;
 import search.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static sun.swing.MenuItemLayoutHelper.max;
 
 public class HospitalMap{
     private ArrayList<Node> nodeMap;
@@ -192,10 +195,9 @@ public class HospitalMap{
     }
 
     public List<Node> getNodesByText(String text){
-        return this.nodeMap.stream().filter(n1 -> (n1.getShortName().contains(text)
-                                                || n1.getLongName().contains(text)
-                                                || n1.getID().contains(text)
-                                                || n1.getType().contains(text))).collect(Collectors.toList());
+        HashMap<Node, Integer> distances = new HashMap<>();
+        for(Node n : nodeMap) distances.put(n, DLDistance(text, n));
+        return this.nodeMap.stream().filter(n1 -> DLDistance(text, n1) != 0).sorted(Comparator.comparing(n1 -> distances.get(n1))).collect(Collectors.toList());
     }
 
     //Setters
@@ -204,5 +206,31 @@ public class HospitalMap{
     }
     public void setKioskLocation(Node node){
         kioskLocation = node;
+    }
+
+    //Fuzzy Search Algorithm
+
+    public int DLDistance(String text, Node node) {
+        String newText = text.toLowerCase();
+        int runningMax = 10000000;
+        ArrayList<String> strings = new ArrayList<>(Arrays.asList(node.getID(), node.getLongName(), node.getShortName(), node.getBuilding(), node.getType()));
+        for(String string : strings) {
+            if (text.length() == 0) return runningMax;
+            String newString = string.toLowerCase();
+            int[][] distance = new int[text.length() + 1][string.length() + 1];
+            int maxLength = text.length() + string.length();
+            for(int i=0;i<=newText.length();i++) distance[i][0] = i;
+            for(int i=0;i<=newString.length();i++) distance[0][i] = i;
+            for(int i=1;i<=newText.length();i++){
+                for(int j=1;j<=newString.length();j++){
+                    int cost;
+                    if(newText.charAt(i-1) == newString.charAt(j-1)) cost = 0;
+                    else cost = 1;
+                    distance[i][j] = Math.min(Math.min(distance[i-1][j]+1, distance[i][j-1]+1), distance[i-1][j-1] + cost);
+                }
+            }
+            runningMax = Math.min(runningMax, distance[text.length()][string.length()]);
+        }
+        return runningMax;
     }
 }

@@ -599,5 +599,10 @@ public class HospitalMapTest {
         easyMap.setKioskLocation(A);
         System.out.println(easyMap.getNodesBy(n1 -> n1.getType().equals("Desk")));
     }
+
+    @Test
+    public void testDLDistance1(){
+        System.out.println(easyMap.DLDistance(N1.getID(), N1));
+    }
 }
 
