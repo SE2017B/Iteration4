@@ -225,7 +225,7 @@ public class MapViewer extends Observable{
     }
 
     public void setScale(double scale){
-        double min_scale = Math.max((mapScrollPane.getWidth()/5000),(mapScrollPane.getHeight()/3400));
+        double min_scale = Math.max((mapScrollPane.getBoundsInLocal().getWidth()/5000),(mapScrollPane.getHeight()/3400));
         if(scale < min_scale){
             scale = min_scale;
         }
@@ -249,7 +249,7 @@ public class MapViewer extends Observable{
             addFloor(floors.get(i), i);
         }
 
-        resizeSpacers((int)mapViewerPane.getWidth());
+        resizeSpacers((int)mapViewerPane.getBoundsInLocal().getWidth());
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         setFloor(floors.get(0),0);
