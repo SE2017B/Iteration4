@@ -96,7 +96,6 @@ public class PathController implements ControllableScreen, Observer{
 
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
-        mapViewer.setScale(1.0);
 
         mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
 
@@ -136,7 +135,6 @@ public class PathController implements ControllableScreen, Observer{
 
         directionsList.setItems(FXCollections.observableArrayList()); //function implementation
 
-        mapViewer.resetView();
     }
 
     public void setParentController(ScreenController parent){
