@@ -52,6 +52,8 @@ public class MainController implements ControllableScreen, Observer{
     private JFXButton stairsFilterButton;
     @FXML
     private JFXButton ebtn;
+    @FXML
+    private JFXButton aboutButton;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -142,6 +144,11 @@ public class MainController implements ControllableScreen, Observer{
         clearPressed(new ActionEvent());
     }
 
+    public void aboutButtonPressed(ActionEvent e){
+        System.out.println("About Pressed");
+        parent.setScreen(ScreenController.AboutID, "RIGHT");
+    }
+
     //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){
         mapViewer.setScale(slideBarZoom.getValue());
@@ -190,6 +197,7 @@ public class MainController implements ControllableScreen, Observer{
 
     public void emergencyButtonPressed(ActionEvent e){
         //same as exitTypePressed, but show an animated path to exit
+
     }
 
     public void elevTypePressed(ActionEvent e){

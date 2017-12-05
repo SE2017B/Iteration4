@@ -165,6 +165,11 @@
                   </TitledPane>
                </children>
             </HBox>
+            <JFXButton fx:id="aboutButton" onAction="#aboutButtonPressed" text="About" textFill="WHITE" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="20.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
          </children></AnchorPane>
    </children>
 </Pane>
