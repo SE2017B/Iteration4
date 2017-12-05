@@ -62,6 +62,10 @@ public class ScreenController extends StackPane {
             pause.stop();
             pause.play();
         });
+        setOnKeyPressed( e -> {
+            pause.stop();
+            pause.play();
+        });
 
     }
 
