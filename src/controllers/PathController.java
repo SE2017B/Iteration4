@@ -135,6 +135,7 @@ public class PathController implements ControllableScreen, Observer{
             }
             else{
                 //startTextSearch.hide();
+                startTextSearch.setValue(null);
             }
 
             System.out.println("Current value is "+startTextSearch.getValue());
@@ -154,6 +155,7 @@ public class PathController implements ControllableScreen, Observer{
             }
             else{
                 //endTextSearch.hide();
+                endTextSearch.setValue(null);
             }
 
             System.out.println("Current value is "+startTextSearch.getValue());
@@ -213,15 +215,23 @@ public class PathController implements ControllableScreen, Observer{
 
         double x = p.getCenter().get(0)/mapViewer.getScale();
         double y = p.getCenter().get(1)/mapViewer.getScale();
-        System.out.println("Center X: " + x + " Center Y: " + y);
+
         //height
         double h = mapScrollPane.getContent().getBoundsInLocal().getHeight();
         double v = mapScrollPane.getViewportBounds().getHeight();
+
         //width
         double w = mapScrollPane.getContent().getBoundsInLocal().getWidth();
         double H = mapScrollPane.getViewportBounds().getWidth();
-        mapScrollPane.setVvalue(((y - 0.5 * v) / (h - v)));
-        mapScrollPane.setHvalue(((x - 0.5 * H) / (w - H)));
+        //System.out.println("Center X: " + w + " Center Y: " + H);
+        System.out.println("Before " + (mapScrollPane.getVvalue()));
+        double old = mapScrollPane.getVvalue();
+        double Vvalue = ((y - 0.5 * v) / (h - v));
+        double Hvalue = ((x - 0.5 * H) / (w - H));
+        mapScrollPane.setVvalue(Vvalue);
+        mapScrollPane.setHvalue(Hvalue);
+        mapViewer.setScroller(Vvalue,Hvalue);
+        System.out.println("After " + (mapScrollPane.getVvalue()));
     }
 
     private void SetPaths(Path path){
@@ -333,13 +343,14 @@ public class PathController implements ControllableScreen, Observer{
 
     //method to switch between paths when toggling between floors
     private void switchPath(PathViewer path){
+        //mapViewer.setScale(1);//test set scale to 1
         clearShapes();
         //set zoom level here
-
         System.out.println("The zoom is "+path.getScale());
         displayPath(path);
         currentFloor=path.getFloor();
         controlScroller(path);//reposition map
+        //controlScroller(path);
     }
 
     public void clearPaths(){
@@ -398,13 +409,15 @@ public class PathController implements ControllableScreen, Observer{
         switchPath(currentPath);
     }
     //-------------------------MAP SCALE START--------------------------//
-    private void displayPath(Path thePath){
+    private void displayPaths(Path thePath){
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
         directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
+        currentFloor=paths.get(0).getFloor();//set the current floor
         switchPath(paths.get(0));
+        System.out.println("Intermediate  " + (mapScrollPane.getVvalue()));
     }
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException {
@@ -413,7 +426,7 @@ public class PathController implements ControllableScreen, Observer{
             btnReverse.setVisible(true);//make reverse button visible
             thePath = getPath();
 
-            displayPath(thePath);
+            displayPaths(thePath);
             System.out.println("Enter Pressed");
 
         }
@@ -421,7 +434,7 @@ public class PathController implements ControllableScreen, Observer{
 
     public void reversePressed(ActionEvent e){
         if(thePath!=null){
-            displayPath(thePath.getReverse());
+            displayPaths(thePath.getReverse());
         }
         System.out.println("Reverse Pressed");
 
@@ -443,7 +456,6 @@ public class PathController implements ControllableScreen, Observer{
             }
         }
     }
-
     //-----------------------NODE SELECT END--------------------------//
     public void startTypeSelected(ActionEvent e){
         startType = ((MenuItem)e.getSource()).getText();

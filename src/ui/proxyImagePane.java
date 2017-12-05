@@ -97,7 +97,7 @@ public class proxyImagePane extends StackPane {
             scale = 3;
         }
         else if (s < 1){
-            s = 1;
+            scale = 1;
         }
         else {
             scale = s;
