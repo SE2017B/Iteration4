@@ -56,7 +56,10 @@ public class PathController implements ControllableScreen, Observer{
     private PathTransition pathTransition;
     private Pane mapPane;
     private Path thePath;
+    //animation variables
     private ArrayList<Integer> Center;
+    private boolean isAnimating;
+    private int animationCount;
 
     @FXML
     private ChoiceBox<Node> startNodeChoice;
@@ -110,6 +113,7 @@ public class PathController implements ControllableScreen, Observer{
         floors = new ArrayList<FloorNumber>();
 
         mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
+        animationCount=0;
 
         int arrowSize = 20;
         arrow = new Pane();
@@ -135,8 +139,11 @@ public class PathController implements ControllableScreen, Observer{
         new AnimationTimer(){
             @Override
             public void handle(long now) {
-                mapViewer.centerView(Center.get(0),Center.get(1));
-                //System.out.println(now);
+                if(animationCount>0) {
+                    mapViewer.centerView(Center.get(0), Center.get(1));
+                    animationCount--;
+
+                }
             }
         }.start();
     }
@@ -223,6 +230,7 @@ public class PathController implements ControllableScreen, Observer{
         Center.set(0,(int)x);
         Center.set(1,(int)y);
         mapViewer.centerView((int)x,(int)y);
+        animationCount=5; //center a bunch of times to make sure it actually centers
     }
 
     private void SetPaths(Path path){
