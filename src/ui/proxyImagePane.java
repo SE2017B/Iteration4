@@ -90,14 +90,6 @@ public class proxyImagePane extends StackPane {
     }
 
     //Setters
-    public void setScale(double s){
-        scale = s;
-        //now adjust all floors
-        for(ImageView img: floors.values()){
-            img.setScaleX(s);
-            img.setScaleY(s);
-        }
-    }
 
     public boolean setImage(FloorNumber floor){
         //remove existing image

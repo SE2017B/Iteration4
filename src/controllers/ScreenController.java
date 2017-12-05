@@ -10,12 +10,16 @@ package controllers;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import ui.ScreenMomento;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,6 +30,9 @@ public class ScreenController extends StackPane {
     private Duration transitionDelay = new Duration(200);
     private HashMap<String, Node> screens = new HashMap<String, Node>();
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
+    private String state;
+    private ScreenMomento screenMomento;
+    PauseTransition pause;
 
     public static String AddNodeID = "AddNode";
     public static String AddNodeFile = "/fxml/AddNode.fxml";
@@ -41,9 +48,31 @@ public class ScreenController extends StackPane {
     public static String LoginFile = "/fxml/Login.fxml";
     public static String AboutID = "About";
     public static String AboutFile = "/fxml/About.fxml";
+    public static String FeedbackID = "Feedback";
+    public static String FeedbackFile = "/fxml/Feedback.fxml";
 
     public ScreenController(){
         super();
+        pause = new PauseTransition(Duration.millis(30000));
+        pause.setOnFinished(e -> {
+            if(state != screenMomento.getState())
+                setScreen(screenMomento.getState());
+            pause.play();
+        });
+        pause.play();
+        setOnMouseClicked(e -> {
+            pause.stop();
+            pause.play();
+        });
+        setOnKeyPressed( e -> {
+            pause.stop();
+            pause.play();
+        });
+        setOnMouseMoved( e ->{
+            pause.stop();
+            pause.play();
+        });
+
     }
 
     //add a new screen to the screens HashMap
@@ -146,7 +175,8 @@ public class ScreenController extends StackPane {
     }
 
     public boolean setScreen(String name, String transition){
-        if(screens.containsKey(name)){
+        if(screens.containsKey(name) && !getChildren().contains(screens.get(name))){
+            state = name;
             if(!getChildren().isEmpty()){
                 getChildren().add(0,screens.get(name));
                 controllers.get(name).onShow();
@@ -184,4 +214,9 @@ public class ScreenController extends StackPane {
         screens.remove(name);
         return true;
     }
+
+    public void saveState(){
+        screenMomento = new ScreenMomento(state);
+    }
+
 }

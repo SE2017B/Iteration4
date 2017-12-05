@@ -8,15 +8,17 @@
 
 package controllers;
 
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.*;
 import exceptions.InvalidNodeException;
+import javafx.animation.AnimationTimer;
 import javafx.animation.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.util.Duration;
@@ -34,10 +36,7 @@ import javafx.animation.PathTransition;
 
 import ui.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class PathController implements ControllableScreen, Observer{
     private ScreenController parent;
@@ -56,7 +55,11 @@ public class PathController implements ControllableScreen, Observer{
     private Pane arrow;
     private PathTransition pathTransition;
     private Pane mapPane;
-    private NodeSearcher searcher;
+    private Path thePath;
+    //animation variables
+    private ArrayList<Integer> Center;
+    private boolean isAnimating;
+    private int animationCount;
 
     @FXML
     private ChoiceBox<Node> startNodeChoice;
@@ -83,26 +86,38 @@ public class PathController implements ControllableScreen, Observer{
     private MenuButton endFloorMenu;
     @FXML
     private JFXListView<String> directionsList;
+    @FXML
+    private JFXComboBox<Node> startTextSearch;
+    @FXML
+    private JFXComboBox<Node> endTextSearch;
+    @FXML
+    private JFXButton btnReverse;
+    @FXML
+    private JFXTabPane startTabPane;
+    @FXML
+    private JFXTabPane endTabPane;
+
 
     //Methods start here
     public void init() {
         map = HospitalMap.getMap();
         shapes = new ArrayList<Shape>();
-        paths=new ArrayList<PathViewer>();
+        paths = new ArrayList<PathViewer>();
         currentFloor = FloorNumber.FLOOR_ONE;
 
         mapViewer = new MapViewer(this, parent);
         mapPane = mapViewer.getMapPane();
-
+        mapScrollPane = mapViewer.getMapScrollPane();
+        mapScrollPane.setPannable(true);
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
-        mapViewer.setScale(1.0);
 
-        mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
+        mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
+        animationCount=0;
 
         int arrowSize = 20;
         arrow = new Pane();
-        arrow.setPrefSize(arrowSize,arrowSize);
+        arrow.setPrefSize(arrowSize, arrowSize);
         Image arrowImage = new Image("images/arrow.png");
         ImageView arrowView = new ImageView(arrowImage);
         arrowView.setFitHeight(arrowSize);
@@ -111,8 +126,46 @@ public class PathController implements ControllableScreen, Observer{
         arrow.getChildren().add(arrowView);
 
         pathTransition = new PathTransition();
-        searcher = new NodeSearcher(map.getNodeMap());
+
+        //add listeners
+        startTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
+        endTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
+
+        //position map
+        Center= new ArrayList<>();
+        Center.add(1500);
+        Center.add(850);
+        //using animation to update position
+        new AnimationTimer(){
+            @Override
+            public void handle(long now) {
+                if(animationCount>0) {
+                    mapViewer.centerView(Center.get(0), Center.get(1));
+                    animationCount--;
+
+                }
+            }
+        }.start();
     }
+
+        private void searchText(ComboBox<Node> textSearch, String text){
+        textSearch.getItems().clear();//remove all previous items
+        List<Node> ans = map.getNodesByText(text);
+        if(ans.size()==1){
+            textSearch.setValue(ans.get(0));//set that to the answer if their is one possible value
+            //endTextSearch.hide();//hide the options
+        }
+        else if(ans.size()>1){
+            int nos =0; //to remove annoying error message
+            textSearch.getItems().addAll(ans);
+            textSearch.show();
+        }
+        else{
+            //endTextSearch.hide();
+        }
+
+    }
+
 
     public void onShow(){
         startNodeChoice.setItems(FXCollections.observableArrayList(
@@ -136,7 +189,14 @@ public class PathController implements ControllableScreen, Observer{
 
         directionsList.setItems(FXCollections.observableArrayList()); //function implementation
 
+
         mapViewer.resetView();
+        btnReverse.setVisible(false);//hide button because there is no path
+        //reset search boxes
+        startTextSearch.setValue(null);
+        endTextSearch.setValue(null);
+        startTextSearch.hide();
+        endTextSearch.hide();
     }
 
     public void setParentController(ScreenController parent){
@@ -144,16 +204,33 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private Path getPath(){
-        return map.findPath(startNodeChoice.getValue(), endNodeChoice.getValue());
+        Node s;
+        Node e;
+        if(startTabPane.getSelectionModel().getSelectedIndex()==0){
+            s= startTextSearch.getValue();
+        }
+        else{
+            s=startNodeChoice.getValue();
+        }
+        if(endTabPane.getSelectionModel().getSelectedIndex()==0){
+            e= endTextSearch.getValue();
+        }
+        else{
+            e=endNodeChoice.getValue();
+        }
+        return map.findPath(s,e);
     }
 
 
     private void controlScroller(PathViewer p){
-
         double x = p.getCenter().get(0);
         double y = p.getCenter().get(1);
+        System.out.println("X is "+x+" Y is "+y);
         //height
+        Center.set(0,(int)x);
+        Center.set(1,(int)y);
         mapViewer.centerView((int)x,(int)y);
+        animationCount=5; //center a bunch of times to make sure it actually centers
     }
 
     private void SetPaths(Path path){
@@ -268,13 +345,14 @@ public class PathController implements ControllableScreen, Observer{
 
     //method to switch between paths when toggling between floors
     private void switchPath(PathViewer path){
+        //mapViewer.setScale(1);//test set scale to 1
         clearShapes();
         currentFloor=path.getFloor();
         setScale(path);
         //set zoom level here
+
         displayPath(path);
         controlScroller(path);//reposition map
-
 
     }
 
@@ -316,25 +394,34 @@ public class PathController implements ControllableScreen, Observer{
         mapViewer.setScale(slideBarZoom.getValue());
     }
     //-------------------------MAP SCALE START--------------------------//
+    private void displayPaths(Path thePath){
+        SetPaths(thePath);
+        mapViewer.setButtonsByFloor(floors);
+        directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
+        textDirectionsPane.setVisible(true);
+        textDirectionsPane.setExpanded(false);
+        currentFloor=paths.get(0).getFloor();//set the current floor
+        switchPath(paths.get(0));
+        System.out.println("Intermediate  " + (mapScrollPane.getVvalue()));
+    }
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException {
-        if(startNodeChoice.getValue() instanceof Node && endNodeChoice.getValue() instanceof Node) {
-            Path thePath = getPath();
 
-            clearPaths();
-            SetPaths(thePath);
-            mapViewer.setButtonsByFloor(floors);
-            directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
-            textDirectionsPane.setVisible(true);
-            textDirectionsPane.setExpanded(false);
-
-            currentPath = paths.get(0);
-            currentFloor = currentPath.getFloor();
-            switchPath(paths.get(0));
-
+        if((startNodeChoice.getValue() instanceof Node || startTextSearch.getValue() instanceof Node) &&
+                (endNodeChoice.getValue() instanceof Node || endTextSearch.getValue() instanceof Node)) {
+            btnReverse.setVisible(true);//make reverse button visible
+            thePath = getPath();
+            displayPaths(thePath);
             System.out.println("Enter Pressed");
-
         }
+    }
+
+    public void reversePressed(ActionEvent e){
+        if(thePath!=null){
+            displayPaths(thePath.getReverse());
+        }
+        System.out.println("Reverse Pressed");
+
     }
 
     public void cancelPressed(ActionEvent e) {
@@ -352,8 +439,9 @@ public class PathController implements ControllableScreen, Observer{
                 switchPath(currentPath);
             }
         }
+        //System.out.println("Updating");
+        //mapViewer.centerView(Center.get(0),Center.get(1));
     }
-
     //-----------------------NODE SELECT END--------------------------//
     public void startTypeSelected(ActionEvent e){
         startType = ((MenuItem)e.getSource()).getText();

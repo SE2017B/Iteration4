@@ -44,6 +44,7 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
         //currently fails on Parent fxmlToLoad = fxmlLoader.load(); in ScreenController
         //myScreenController.loadScreen(ScreenController.AboutID, ScreenController.AboutFile);
+        myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
 //
 //        //mini fxml files
 //        myScreenController.loadScreen(ScreenController.TranslationID, ScreenController.TranslationFile);
@@ -52,6 +53,7 @@ public class Main extends Application {
 //        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
 
         myScreenController.setScreen(ScreenController.MainID);
+        myScreenController.saveState();
         String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
         scene.getStylesheets().add(style);
         primaryStage.setScene(scene);
@@ -106,6 +108,8 @@ public class Main extends Application {
 
         staffDatabase.readStaffCSV("src/csv/staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
+
+        staffDatabase.queryAllStaff();
 
         launch(args);
 

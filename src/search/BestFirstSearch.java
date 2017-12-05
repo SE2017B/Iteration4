@@ -1,5 +1,6 @@
 package search;
 
+import exceptions.InvalidNodeException;
 import map.Edge;
 import map.Node;
 import map.Path;
@@ -9,35 +10,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-/*
-
-This class contains functions to find a path based on the Beam search method,
-returning paths based on the Beam search method.
-
- */
-public class BeamSearch extends BeamBestFirstSearchTemplate implements SearchStrategy{
-    private int beam;
-    public BeamSearch(int beam){
-        this.beam = beam;
-    }
-
+public class BestFirstSearch extends BeamBestFirstSearchTemplate implements SearchStrategy {
     @Override
     public void addNeighbors(ArrayList<Node> neighbors, ArrayList<Node> frontier, HashMap<Node, Node> cameFrom, Node currentNode, Node end) {
-        neighbors.sort(Comparator.comparing(n1 -> n1.getEuclidianDistance(end)));
-            if(neighbors.size() < beam){
-                frontier.addAll(neighbors);
-                for (Node neighbor : neighbors) {
-                    cameFrom.put(neighbor, currentNode);
-                }
-            }
-            else{
-                frontier.addAll(neighbors.subList(0, beam));
-                for(int i=0;i<beam;i++){
-                    cameFrom.put(neighbors.get(i), currentNode);
-                }
-            }
+            for(Node n : neighbors) cameFrom.put(n, currentNode);
+            neighbors.sort(Comparator.comparing(n1 -> n1.getEuclidianDistance(end)));
+            frontier.addAll(neighbors);
     }
-
     //    @Override
 //    public Path findPath(Node start, Node end) {
 //        ArrayList<Node> frontier = new ArrayList<>();
@@ -55,26 +34,25 @@ public class BeamSearch extends BeamBestFirstSearchTemplate implements SearchStr
 //                if(explored.contains(neighbor)) continue;
 //                neighbors.add(neighbor);
 //            }
+//            for(Node n : neighbors) cameFrom.put(n, currentNode);
 //            neighbors.sort(Comparator.comparing(n1 -> n1.getEuclidianDistance(end)));
-//            if(neighbors.size() < beam){
-//                frontier.addAll(neighbors);
-//                for (Node neighbor : neighbors) {
-//                    cameFrom.put(neighbor, currentNode);
-//                }
-//            }
-//            else{
-//                frontier.addAll(neighbors.subList(0, beam));
-//                for(int i=0;i<beam;i++){
-//                    cameFrom.put(neighbors.get(i), currentNode);
-//                }
-//            }
+//            frontier.addAll(neighbors);
 //        }
 //        return new Path();
-//    }
+//    }Path
 
+    private Path returnPath(HashMap<Node, Node> cameFrom, Node currentNode){
+        Path path = new Path();
+        path.addToPath(currentNode);
+        while(cameFrom.containsKey(currentNode)){
+            currentNode = cameFrom.get(currentNode);
+            path.addToPath(currentNode, 0);
+        }
+        return path;
+    }
 
     @Override
     public String toString(){
-        return "Beam Search";
+        return "Best-First Search";
     }
 }
