@@ -50,6 +50,7 @@ public class Main extends Application {
 //        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
 
         myScreenController.setScreen(ScreenController.MainID);
+        myScreenController.saveState();
         String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
         scene.getStylesheets().add(style);
         primaryStage.setScene(scene);

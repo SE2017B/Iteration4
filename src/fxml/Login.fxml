@@ -14,11 +14,6 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
-      <JFXButton fx:id="returnButton" onAction="#returnPressed" text="Return" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="60.0">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </JFXButton>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
@@ -69,5 +64,10 @@
             </VBox>
          </children>
       </GridPane>
+      <JFXButton fx:id="returnButton" onAction="#returnPressed" text="Return" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="60.0">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
