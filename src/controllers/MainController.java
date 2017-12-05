@@ -12,6 +12,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -36,6 +38,8 @@ public class MainController implements ControllableScreen, Observer{
     private FloorNumber curerntFloor;
     private HospitalMap map;
     private ArrayList<Circle> indicators;
+    private Pane question;
+
 
     private Pane mapPane;
     @FXML
@@ -77,6 +81,16 @@ public class MainController implements ControllableScreen, Observer{
 
 
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
+
+        int questionSize = 100;
+        question = new Pane();
+        question.setPrefSize(questionSize,questionSize);
+        Image questionImage = new Image("images/arrow.png");
+        ImageView questionView = new ImageView(questionImage);
+        questionView.setFitHeight(questionSize);
+        questionView.setFitWidth(questionSize);
+        question.setVisible(true);
+        question.getChildren().add(questionView);
     }
 
     public void onShow(){
@@ -274,6 +288,11 @@ public class MainController implements ControllableScreen, Observer{
     public void directionPressed(ActionEvent e){
         System.out.println("Direction Pressed");
         parent.setScreen(ScreenController.PathID,"LEFT");
+    }
+
+    public void questionPressed(ActionEvent e) {
+        System.out.println("Question Pressed");
+        parent.setScreen(ScreenController.FeedbackID, "RIGHT");
     }
 
     //when search button is pressed go to search screen
