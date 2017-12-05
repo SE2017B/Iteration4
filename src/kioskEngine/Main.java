@@ -24,7 +24,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Group root = new Group();
+        Scene scene = new Scene(root);
+        root.minWidth(800);
+        root.minHeight(400);
+
+
         ScreenController myScreenController = new ScreenController();
+        root.getChildren().addAll(myScreenController);
+        myScreenController.prefHeightProperty().bind(scene.heightProperty());
+        myScreenController.prefWidthProperty().bind(scene.widthProperty());
+
+
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
         myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
         myScreenController.loadScreen(ScreenController.MainID, ScreenController.MainFile);
@@ -39,18 +50,14 @@ public class Main extends Application {
 //        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
 
         myScreenController.setScreen(ScreenController.MainID);
-
-        Group root = new Group();
-        root.getChildren().addAll(myScreenController);
-        Scene scene = new Scene(root, 1280,800);
-        root.minWidth(800);
-        root.minHeight(400);
-        myScreenController.prefHeightProperty().bind(scene.heightProperty());
-        myScreenController.prefWidthProperty().bind(scene.widthProperty());
+        myScreenController.saveState();
         String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
         scene.getStylesheets().add(style);
         primaryStage.setScene(scene);
+        primaryStage.setWidth(1280);
+        primaryStage.setHeight(800);
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {
