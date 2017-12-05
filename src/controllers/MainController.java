@@ -157,11 +157,12 @@ public class MainController implements ControllableScreen, Observer{
     public void clearMousePressed(MouseEvent e){
         clearPressed(new ActionEvent());
     }
-
+/*
     public void aboutButtonPressed(ActionEvent e){
         System.out.println("About Pressed");
         parent.setScreen(ScreenController.AboutID, "RIGHT");
     }
+*/
 
     //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){

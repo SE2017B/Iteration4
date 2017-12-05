@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<Pane minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
       <AnchorPane fx:id="mainAnchorPane" layoutX="-5.0" minHeight="400.0" minWidth="800.0" styleClass="pane">
          <children>
@@ -175,11 +175,6 @@
                   </TitledPane>
                </children>
             </HBox>
-            <JFXButton fx:id="aboutButton" onAction="#aboutButtonPressed" text="About" textFill="WHITE" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="20.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </JFXButton>
          </children></AnchorPane>
    </children>
 </Pane>

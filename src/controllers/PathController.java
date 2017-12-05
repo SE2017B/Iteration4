@@ -128,8 +128,9 @@ public class PathController implements ControllableScreen, Observer{
         pathTransition = new PathTransition();
 
         //add listeners
-        startTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
-        endTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
+
+        startTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
+        endTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
 
         //position map
         Center= new ArrayList<>();

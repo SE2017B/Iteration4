@@ -46,8 +46,8 @@ public class ScreenController extends StackPane {
     public static String RequestFile = "/fxml/Request.fxml";
     public static String LoginID = "Login";
     public static String LoginFile = "/fxml/Login.fxml";
-    public static String AboutID = "About";
-    public static String AboutFile = "/fxml/About.fxml";
+    //public static String AboutID = "About";
+    //public static String AboutFile = "/fxml/About.fxml";
     public static String FeedbackID = "Feedback";
     public static String FeedbackFile = "/fxml/Feedback.fxml";
 
