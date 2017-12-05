@@ -35,7 +35,7 @@ public class proxyImagePane extends StackPane {
         for(FloorNumber floor : realImagePane.getFloors().keySet()){
             ImageView imgView = new ImageView(realImagePane.getFloors().get(floor));
             imgView.setVisible(true);
-            floors.put(floor, imgView);
+            floors.put(floor,imgView);//add new image view to hash map floors
         }
     }
 
@@ -51,6 +51,10 @@ public class proxyImagePane extends StackPane {
     //Getters
     public double getScale(){
         return this.scale;
+    }
+
+    public String currentImage(){
+        return this.getChildren().get(0).toString();
     }
 
     private String getImage(FloorNumber floor){
