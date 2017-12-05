@@ -10,15 +10,21 @@ package controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.util.Duration;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
@@ -39,7 +45,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
     private ArrayList<EdgeCheckBox> edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
 
-    @FXML
     private Pane mapPane;
     @FXML
     private Tab nodeTab;
@@ -55,30 +60,42 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Tab edgeAddTab;
     @FXML
     private Tab edgeRemoveTab;
+
+
+
     @FXML
-    private Circle nodeLocation;
-    @FXML
-    private AnchorPane mapButtonHolder;
+    private AnchorPane mainAnchorPane;
 
     public void init() {
         map = HospitalMap.getMap();
-        mapViewer = new MapViewer(this);
+        mainAnchorPane.prefWidthProperty().bind(parent.prefWidthProperty().subtract(400));
+        mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+        mapViewer = new MapViewer(this, mainAnchorPane);
+        mainAnchorPane.getChildren().add(mapViewer.getMapViewerPane());
         mapViewer.setFloor(FloorNumber.FLOOR_GROUND);
-        mapViewer.setSpacerWidth(350);
-        mapViewer.getPane().setPrefWidth(950);
-        mapButtonHolder.getChildren().add(mapViewer.getPane());
-        mapPane.getChildren().add(mapViewer.getMapImage());
+        mapPane = mapViewer.getMapPane();
+
+        mapPane.setOnMouseClicked(e -> mapPaneClicked(e));
+
+        nodeAddLocation = new AnimatedCircle();
+        nodeAlignedLines = new ArrayList<Line>();
+        nodeAddLocation.setFill(Color.DODGERBLUE);
+
+        mapViewer.getMapScrollPane().setPannable(true);
+
 
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
 
-        nodeTab.setOnSelectionChanged(e -> showNodesandEdges());
-        edgeTab.setOnSelectionChanged(e -> showNodesandEdges());
-        nodeAddTab.setOnSelectionChanged(e -> showNodesandEdges());
-        nodeEditTab.setOnSelectionChanged(e -> showNodesandEdges());
-        nodeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
-        edgeAddTab.setOnSelectionChanged(e -> showNodesandEdges());
-        edgeRemoveTab.setOnSelectionChanged(e -> showNodesandEdges());
+        nodeTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        edgeTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        nodeAddTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        nodeEditTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        nodeRemoveTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        edgeAddTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+        edgeRemoveTab.setOnSelectionChanged(e -> refreshNodesandEdges());
+
 
         refreshNodesandEdges();
     }
@@ -179,16 +196,20 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void refreshNodes(){
         nodeCheckBoxes.clear();
         for (Node node:map.getNodeMap()) {
-            NodeCheckBox cb = new NodeCheckBox(node, mapViewer.getScale());
+            NodeCheckBox cb = new NodeCheckBox(node);
             nodeCheckBoxes.add(cb);
             cb.setOnAction(e -> nodeSelected(e));
+            if(nodeTab.isSelected() && nodeEditTab.isSelected()) {
+                cb.setOnMousePressed(boxOnMousePressedHandler);
+                cb.setOnMouseDragged(boxOnMouseDraggedHandler);
+            }
         }
     }
 
     public void refreshEdges(){
         edgeCheckBoxes.clear();
         for (Edge edge:map.getEdgeMap()){
-            EdgeCheckBox cb = new EdgeCheckBox(edge, mapViewer.getScale());
+            EdgeCheckBox cb = new EdgeCheckBox(edge);
             edgeCheckBoxes.add(cb);
             cb.setOnMousePressed(e -> edgeSelected(e));
         }
@@ -199,6 +220,9 @@ public class AddNodeController implements ControllableScreen, Observer {
         refreshEdges();
         showNodesandEdges();
     }
+
+    double orgSceneX, orgSceneY;
+    double orgTranslateX, orgTranslateY;
 
     public void nodeSelected(ActionEvent e){
         NodeCheckBox source = (NodeCheckBox)e.getSource();
@@ -232,17 +256,8 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
         else if (nodeTab.isSelected() && nodeEditTab.isSelected()) {
-            if (nodeEditSelectedNode == null) {
-                Node n = source.getNode();
-                nodeEditSelectedNode = n;
-                nodeEditNameField.setText(n.getLongName());
-                nodeEditShortField.setText(n.getShortName());
-                nodeEditBuildingDropDown.setText(n.getBuilding());
-                nodeEditFloorDropDown.setText(n.getFloor().getDbMapping());
-                nodeEditTypeDropDown.setText(n.getType());
-                nodeEditXField.setText(Integer.toString(n.getX()));
-                nodeEditYField.setText(Integer.toString(n.getY()));
-                nodeEditIDLabel.setText(n.getID());
+            if(nodeEditSelectedNode == null){
+                nodeEditSelectedNode = source.getNode();
             } else if (nodeEditSelectedNode.equals(source.getNode())) {
                 resetNodeEdit();
             } else{
@@ -250,6 +265,57 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
     }
+
+    EventHandler<MouseEvent> boxOnMousePressedHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+
+            javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+            orgSceneX = event.getSceneX();
+            orgSceneY = event.getSceneY();
+            orgTranslateX = source.getLayoutX();
+            orgTranslateY = source.getLayoutY();
+
+            NodeCheckBox cb =((NodeCheckBox)event.getSource());
+            Node n = cb.getNode();
+            nodeEditNameField.setText(n.getLongName());
+            nodeEditShortField.setText(n.getShortName());
+            nodeEditBuildingDropDown.setText(n.getBuilding());
+            nodeEditFloorDropDown.setText(n.getFloor().getDbMapping());
+            nodeEditTypeDropDown.setText(n.getType());
+            nodeEditXField.setText(Integer.toString((int)(cb.getLayoutX())));
+            nodeEditYField.setText(Integer.toString((int)(cb.getLayoutY())));
+            nodeEditIDLabel.setText(n.getID());
+
+
+        }
+    };
+
+    EventHandler<MouseEvent> boxOnMouseDraggedHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+            double offsetX = event.getSceneX() - orgSceneX;
+            double offsetY = event.getSceneY() - orgSceneY;
+            double newTranslateX = orgTranslateX + offsetX;
+            double newTranslateY = orgTranslateY + offsetY;
+
+            source.setLayoutX(newTranslateX);
+            source.setLayoutY(newTranslateY);
+
+
+            nodeEditXField.setText(Integer.toString((int)((source.getLayoutX()+9))));
+            nodeEditYField.setText(Integer.toString((int)((source.getLayoutY()+9))));
+
+            if(((NodeCheckBox)source).isSelected()){
+                ((NodeCheckBox)source).setSelected(false);
+                nodeEditSelectedNode = null;
+            }
+
+        }
+    };
+
+
 
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
@@ -293,8 +359,12 @@ public class AddNodeController implements ControllableScreen, Observer {
     private MenuButton nodeAddBuildingDropDown;
     @FXML
     private MenuButton nodeAddTypeDropDown;
-    @FXML
-    private Circle nodeAddIndicator;
+
+
+    private AnimatedCircle nodeAddLocation;
+
+    private ArrayList<Line> nodeAlignedLines;
+
 
     public void nodeAddXEntered(ActionEvent e){
         System.out.println("Node Add X Entered");
@@ -305,9 +375,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         System.out.println("Node Add Y Entered");
         String text = nodeAddYField.getText();
         nodeAddYField.setText(text);
-        nodeAddIndicator.setCenterX((double)Integer.parseInt(nodeAddXField.getText()));
-        nodeAddIndicator.setCenterY((double)Integer.parseInt(nodeAddYField.getText()));
-        nodeAddIndicator.setRadius(10.0f);
     }
 
     public void nodeAddShortEntered(ActionEvent e){
@@ -357,13 +424,131 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         catch (Exception ex){
             System.out.println("Add failed");
+            System.out.println(nodeAddBuildingDropDown.getText());
+            if(!nodeAddXField.getText().matches("[0-9]+")){
+                System.out.println("X Field is empty or contains letters");
+                //shake
+                shakeTextField(nodeAddXField);
+            }
+            if(!nodeAddYField.getText().matches("[0-9]+")){
+                System.out.println("Y Field is empty or contains letters");
+                //shake
+                shakeTextField(nodeAddYField);
+            }
+            System.out.println("Exited Floor if statement");
+            if(nodeAddBuildingDropDown.getText().equals("Building")){
+                System.out.println("Building Dropdown Failed");
+                //shake
+                shakeDropdown(nodeAddBuildingDropDown);
+            }
+            if(nodeAddTypeDropDown.getText().equals("NodeType")){
+                System.out.println("Type Dropdown Failed");
+                //shake
+                shakeDropdown(nodeAddTypeDropDown);
+            }
+            if(nodeAddShortField.getText().equals("")){
+                System.out.println("Short Field empty");
+                //shake
+                shakeTextField(nodeAddShortField);
+            }
+            if(nodeAddNameField.getText().equals("")){
+                System.out.println("Name Field empty");
+                //shake
+                shakeTextField(nodeAddNameField);
+            }
         }
         refreshNodesandEdges();
+    }
+
+    public void shakeDropdown(MenuButton m){
+        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
+        t.setByX(25f);
+        t.setCycleCount(4);
+        t.setAutoReverse(true);
+        t.setDelay(Duration.millis(350));
+        t.playFromStart();
+    }
+
+    public void shakeTextField(TextField m){
+        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
+        t.setByX(25f);
+        t.setCycleCount(4);
+        t.setAutoReverse(true);
+        t.setDelay(Duration.millis(350));
+        t.playFromStart();
     }
 
     public void nodeAddCancelPressed(ActionEvent e){
         System.out.println("Node Add Cancel Pressed");
         //todo cancel node add
+    }
+
+    public void mapPaneClicked(MouseEvent e){
+        if (e.getClickCount() == 2 && nodeAddTab.isSelected() && nodeTab.isSelected()){
+            setNewLocation((int)e.getX(), (int)e.getY(), nodeAddLocation, nodeAddXField, nodeAddYField);
+        }
+    }
+
+    private void setNewLocation(int x, int y, javafx.scene.Node moved, JFXTextField x_text, JFXTextField y_text ){
+        int x_aligned = x;
+        int y_aligned = y;
+
+        mapPane.getChildren().removeAll(nodeAlignedLines);
+        nodeAlignedLines.clear();
+        ArrayList<Node> h_neighbors = new ArrayList<>();
+        h_neighbors.addAll(map.getNodesInHorizontal(x,y,currentFloor));
+        ArrayList<Node> v_neighbors = new ArrayList<>();
+        v_neighbors.addAll(map.getNodesInVertical(x,y,currentFloor));
+
+        if(h_neighbors.size() != 0){
+            y_aligned = (h_neighbors.get(0).getY());
+        }
+        if(v_neighbors.size() != 0){
+            x_aligned = (v_neighbors.get(0).getX());
+
+        }
+        if(x != x_aligned){
+            Line line = newAllignLine();
+            line.setLayoutX(x_aligned);
+            line.setLayoutY(y_aligned);
+            line.setEndX(0);
+            line.setEndY((v_neighbors.get(0).getY()) - y_aligned);
+            nodeAlignedLines.add(line);
+            mapPane.getChildren().add(line);
+
+        }
+        if(y != y_aligned){
+            Line line = newAllignLine();
+            line.setLayoutX(x_aligned);
+            line.setLayoutY(y_aligned);
+            line.setEndX((h_neighbors.get(0).getX()) - x_aligned);
+            line.setEndY(0);
+            nodeAlignedLines.add(line);
+            mapPane.getChildren().add(line);
+        }
+        if(moved instanceof AnimatedCircle){
+            AnimatedCircle movedCircle = (AnimatedCircle) moved;
+            movedCircle.setCenterX(x_aligned);
+            movedCircle.setCenterY(y_aligned);
+        }
+        else{
+            moved.setLayoutX(x_aligned);
+            moved.setLayoutY(y_aligned);
+        }
+
+
+        if(!mapPane.getChildren().contains(moved))
+            mapPane.getChildren().add(moved);
+        x_text.setText(Integer.toString(x_aligned));
+        y_text.setText(Integer.toString(y_aligned));
+    }
+
+    private Line newAllignLine(){
+        Line line = new Line();
+        line.setStroke(Color.BLACK);
+        line.setStrokeWidth(3);
+        line.setOpacity(0.5);
+        return line;
     }
 
     ////////////////////////////////////////////////////////////
@@ -470,6 +655,44 @@ public class AddNodeController implements ControllableScreen, Observer {
             System.out.println("Warning: No nodes selected.");
             return;
         }
+        if(nodeEditXField.getText().equals("") || nodeEditYField.getText().equals("") || nodeEditFloorDropDown.getText().equals("")
+                || nodeEditBuildingDropDown.getText().equals("") || nodeEditTypeDropDown.getText().equals("")
+                || nodeEditNameField.getText().equals("") || nodeEditShortField.getText().equals("")){
+            System.out.println("Edit failed");
+            if(!nodeEditXField.getText().matches("[0-9]+")){
+                System.out.println("X Field is empty or contains letters");
+                //shake
+                shakeTextField(nodeEditXField);
+            }
+            if(!nodeEditYField.getText().matches("[0-9]+")){
+                System.out.println("Y Field is empty or contains letters");
+                //shake
+                shakeTextField(nodeEditYField);
+            }
+            System.out.println("Exited Floor if statement");
+            if(nodeEditBuildingDropDown.getText().equals("Building")){
+                System.out.println("Building Dropdown Failed");
+                //shake
+                shakeDropdown(nodeEditBuildingDropDown);
+            }
+            if(nodeEditTypeDropDown.getText().equals("NodeType")){
+                System.out.println("Type Dropdown Failed");
+                //shake
+                shakeDropdown(nodeEditTypeDropDown);
+            }
+            if(nodeEditShortField.getText().equals("")){
+                System.out.println("Short Field empty");
+                //shake
+                shakeTextField(nodeEditShortField);
+            }
+            if(nodeEditNameField.getText().equals("")){
+                System.out.println("Name Field empty");
+                //shake
+                shakeTextField(nodeEditNameField);
+            }
+            return;
+        }
+        //this is causing a database error
         map.editNode(node,
                 nodeEditXField.getText(),
                 nodeEditYField.getText(),
@@ -484,6 +707,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void nodeEditCancelPressed(ActionEvent e){
         System.out.println("Node Edit Cancel Pressed");
         resetNodeEdit();
+        refreshNodesandEdges();
     }
 
     public void resetNodeEdit(){
@@ -542,6 +766,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     private JFXButton edgeRemoveCancelButton;
     @FXML
     private JFXListView<Edge> edgeRemoveList;
+    @FXML
+    private JFXSlider slideBarZoom;
 
     public void edgeRemoveEnterPressed(ActionEvent e){
         System.out.println("Edge Remove Enter Pressed");
@@ -557,5 +783,21 @@ public class AddNodeController implements ControllableScreen, Observer {
         System.out.println("Edge Remove Cancel Pressed");
         edgeRemoveList.getItems().clear();
         refreshNodesandEdges();
+    }
+
+    //-----------------ZOOM-------------------------//
+    //when + button is pressed zoom in map
+    public void zinPressed(ActionEvent e){
+        setZoom(slideBarZoom.getValue()+0.2);
+    }
+
+    //when - button pressed zoom out map
+    public void zoutPressed(ActionEvent e){
+        setZoom(slideBarZoom.getValue()-0.2);
+    }
+
+    public void setZoom(double zoom){
+        slideBarZoom.setValue(zoom);
+        mapViewer.setScale(zoom);
     }
 }
