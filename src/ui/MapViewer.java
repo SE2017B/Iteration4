@@ -268,6 +268,21 @@ public class MapViewer extends Observable{
         mapScrollPane.setVvalue(((y - 0.5 * v) / (h - v)));
         mapScrollPane.setHvalue(((x - 0.5 * H) / (w - H)));
     }
+    public ArrayList<Integer> getCenter(){
+        ArrayList<Integer> ans = new ArrayList<>();
+        //height
+        double h = mapScrollPane.getContent().getBoundsInLocal().getHeight();
+        double v = mapScrollPane.getViewportBounds().getHeight();
+        //width
+        double w = mapScrollPane.getContent().getBoundsInLocal().getWidth();
+        double H = mapScrollPane.getViewportBounds().getWidth();
+
+        double y = (mapScrollPane.getVvalue()*(h-v)) + (0.5*v);
+        double x = (mapScrollPane.getHvalue()*(w - H)) + (0.5*H);
+        ans.add((int)x);
+        ans.add((int)y);
+        return ans;
+    }
 
     public void setScroller(double v, double h){
         mapScrollPane.setVvalue(v);

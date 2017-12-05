@@ -140,10 +140,21 @@ public class PathController implements ControllableScreen, Observer{
         new AnimationTimer(){
             @Override
             public void handle(long now) {
+                /**
                 if(animationCount>0) {
                     mapViewer.centerView(Center.get(0), Center.get(1));
                     animationCount--;
 
+                }
+                 **/
+                if(currentPath!=null){
+                  if(currentPath.isAnimating){
+                      System.out.println("Current position "+ mapViewer.getCenter());
+                      ArrayList<Integer> pos = currentPath.getPos(mapViewer.getCenter().get(0),mapViewer.getCenter().get(1));
+                      System.out.println("New Position "+ pos);
+                      mapViewer.centerView(pos.get(0), pos.get(1));
+                      //System.out.println("Animating path");
+                  }
                 }
             }
         }.start();
@@ -230,7 +241,8 @@ public class PathController implements ControllableScreen, Observer{
         //height
         Center.set(0,(int)x);
         Center.set(1,(int)y);
-        mapViewer.centerView((int)x,(int)y);
+        p.initAnimation(mapViewer.getCenter().get(0),mapViewer.getCenter().get(1),(int)x,(int)y);
+        //mapViewer.centerView((int)x,(int)y);
         animationCount=5; //center a bunch of times to make sure it actually centers
     }
 
