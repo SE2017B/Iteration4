@@ -11,6 +11,7 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.util.Duration;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
@@ -421,8 +423,64 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         catch (Exception ex){
             System.out.println("Add failed");
+            System.out.println(nodeAddBuildingDropDown.getText());
+            if(!nodeAddXField.getText().matches("[0-9]+")){
+                System.out.println("X Field is empty or contains letters");
+                //shake
+                shakeTextField(nodeAddXField);
+            }
+            if(!nodeAddYField.getText().matches("[0-9]+")){
+                System.out.println("Y Field is empty or contains letters");
+                //shake
+                shakeTextField(nodeAddYField);
+            }
+            if(nodeAddFloorDropDown.getText() == "1"){
+                System.out.println("Floor Dropdown Failed");
+                //shake
+                shakeDropdown(nodeAddFloorDropDown); //commenting this out doesn't make the next ones work
+            }
+            System.out.println("Exited Floor if statement");
+            //for some reason it's not reaching more than the first one
+            //only thing I can think of is that "Building" and "NodeType" aren't options from the dropdown, and "1" is
+            if(nodeAddBuildingDropDown.getText() == "Building"){
+                System.out.println("Building Dropdown Failed");
+                //shake
+                shakeDropdown(nodeAddBuildingDropDown);
+            }
+            if(nodeAddTypeDropDown.getText() == "NodeType"){
+                System.out.println("Type Dropdown Failed");
+                //shake
+                shakeDropdown(nodeAddTypeDropDown);
+            }
+            //don't think I can use regex for these because there are spaces and numbers and letters
+            if(nodeAddShortField.getText() == null){ //what's the deal with these? Capitals and numbers?
+                System.out.println("Short Field empty");
+                //shake
+                shakeTextField(nodeAddShortField);
+            }
+            if(nodeAddNameField.getText() == null){
+                System.out.println("Name Field empty");
+                //shake
+                shakeTextField(nodeAddNameField);
+            }
         }
         refreshNodesandEdges();
+    }
+
+    public void shakeDropdown(MenuButton m){
+        TranslateTransition t = new TranslateTransition(Duration.millis(500), m);
+        t.setByX(50f);
+        t.setCycleCount(4);
+        t.setAutoReverse(true);
+        t.playFromStart();
+    }
+
+    public void shakeTextField(TextField m){
+        TranslateTransition t = new TranslateTransition(Duration.millis(500), m);
+        t.setByX(50f);
+        t.setCycleCount(4);
+        t.setAutoReverse(true);
+        t.playFromStart();
     }
 
     public void nodeAddCancelPressed(ActionEvent e){
