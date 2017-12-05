@@ -31,6 +31,7 @@ public class MapViewer extends Observable{
     public FloorNumber currentFloor;
     private ScrollPane buttonScrollPane;
     private ScrollPane mapScrollPane;
+    private Pane mapHolderPane;
 
     private Pane mapPane;
 
@@ -52,9 +53,11 @@ public class MapViewer extends Observable{
         buttonOrder = new ArrayList<String>();
         buttonDrawer = new JFXDrawer();
         mapViewerPane = new AnchorPane();
-        drawersStack = new JFXDrawersStack();
+        mapHolderPane = new Pane();
+
+        mapHolderPane.getChildren().add(mapPane);
         setContainer();
-        mapScrollPane.setContent(mapPane);
+        mapScrollPane.setContent(mapHolderPane);
 
         addFloor(FloorNumber.FLOOR_LTWO);
         addFloor(FloorNumber.FLOOR_LONE);
@@ -67,8 +70,10 @@ public class MapViewer extends Observable{
         container.getChildren().add(spacerRight);
         container.getStyleClass().add("buttonScrollPane");
 
+
         mapImage = new proxyImagePane();
         mapPane.getChildren().add(mapImage);
+
 
         buttonScrollPane.getStyleClass().add("buttonScrollPane");
         buttonScrollPane.setPannable(true);
@@ -81,17 +86,24 @@ public class MapViewer extends Observable{
         addObserver(o);
 
         buttonScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
-        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty());
-        mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
+        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty().subtract(98));
+        mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());;
 
         mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
         mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
 
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue.intValue()));
 
+        mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
+        mapViewerPane.prefHeightProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
+
 
         mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
         mapViewerPane.setBottomAnchor(buttonScrollPane, 0.0);
+
+        System.out.println("Map Display box:" + mapHolderPane.getWidth());
+
+
     }
 
     public void resetView(){
@@ -166,7 +178,7 @@ public class MapViewer extends Observable{
         return mapImage;
     }
     public double getScale(){
-        return  mapImage.getScale();
+        return  mapPane.getScaleX();
     }
 
     public ScrollPane getMapScrollPane() {
@@ -209,7 +221,21 @@ public class MapViewer extends Observable{
     }
 
     public void setScale(double scale){
-        mapImage.setScale(scale);
+        double min_scale = Math.max((mapScrollPane.getWidth()/5000),(mapScrollPane.getHeight()/3400));
+        if(scale < min_scale){
+            scale = min_scale;
+        }
+        else if (scale > 2){
+            scale = 2;
+        }
+
+        mapPane.setScaleX(scale);
+        mapPane.setScaleY(scale);
+
+        mapPane.setTranslateX((scale - 1)/2 * 5000);
+        mapPane.setTranslateY((scale - 1)/2 * 3400);
+
+        mapHolderPane.setPrefSize(mapPane.getWidth() * scale, mapPane.getHeight() * scale);
     }
 
     public void setButtonsByFloor(List<FloorNumber> floors){
@@ -223,5 +249,22 @@ public class MapViewer extends Observable{
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         setFloor(floors.get(0),0);
+    }
+
+    public void centerView(int x, int y){
+
+        x = (int)(x * mapPane.getScaleX());
+        y = (int) (y * mapPane.getScaleY());
+
+        //height
+        double h = mapScrollPane.getContent().getBoundsInLocal().getHeight();
+        double v = mapScrollPane.getViewportBounds().getHeight();
+        //width
+        double w = mapScrollPane.getContent().getBoundsInLocal().getWidth();
+        double H = mapScrollPane.getViewportBounds().getWidth();
+
+        mapScrollPane.setVvalue(((y - 0.5 * v) / (h - v)));
+        mapScrollPane.setHvalue(((x - 0.5 * H) / (w - H)));
+
     }
 }

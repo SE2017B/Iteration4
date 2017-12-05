@@ -41,7 +41,6 @@ public class ScreenController extends StackPane {
     public static String LoginFile = "/fxml/Login.fxml";
 
     public ScreenController(){
-
         super();
     }
 

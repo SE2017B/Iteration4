@@ -195,7 +195,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void refreshNodes(){
         nodeCheckBoxes.clear();
         for (Node node:map.getNodeMap()) {
-            NodeCheckBox cb = new NodeCheckBox(node, mapViewer.getScale());
+            NodeCheckBox cb = new NodeCheckBox(node);
             nodeCheckBoxes.add(cb);
             cb.setOnAction(e -> nodeSelected(e));
             if(nodeTab.isSelected() && nodeEditTab.isSelected()) {
@@ -208,7 +208,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void refreshEdges(){
         edgeCheckBoxes.clear();
         for (Edge edge:map.getEdgeMap()){
-            EdgeCheckBox cb = new EdgeCheckBox(edge, mapViewer.getScale());
+            EdgeCheckBox cb = new EdgeCheckBox(edge);
             edgeCheckBoxes.add(cb);
             cb.setOnMousePressed(e -> edgeSelected(e));
         }
@@ -282,8 +282,8 @@ public class AddNodeController implements ControllableScreen, Observer {
             nodeEditBuildingDropDown.setText(n.getBuilding());
             nodeEditFloorDropDown.setText(n.getFloor().getDbMapping());
             nodeEditTypeDropDown.setText(n.getType());
-            nodeEditXField.setText(Integer.toString((int)(cb.getLayoutX()*mapViewer.getScale())));
-            nodeEditYField.setText(Integer.toString((int)(cb.getLayoutY()*mapViewer.getScale())));
+            nodeEditXField.setText(Integer.toString((int)(cb.getLayoutX())));
+            nodeEditYField.setText(Integer.toString((int)(cb.getLayoutY())));
             nodeEditIDLabel.setText(n.getID());
 
 
@@ -303,8 +303,8 @@ public class AddNodeController implements ControllableScreen, Observer {
             source.setLayoutY(newTranslateY);
 
 
-            nodeEditXField.setText(Integer.toString((int)((source.getLayoutX()+9)*mapViewer.getScale())));
-            nodeEditYField.setText(Integer.toString((int)((source.getLayoutY()+9)*mapViewer.getScale())));
+            nodeEditXField.setText(Integer.toString((int)((source.getLayoutX()+9))));
+            nodeEditYField.setText(Integer.toString((int)((source.getLayoutY()+9))));
 
             if(((NodeCheckBox)source).isSelected()){
                 ((NodeCheckBox)source).setSelected(false);
@@ -495,15 +495,15 @@ public class AddNodeController implements ControllableScreen, Observer {
         mapPane.getChildren().removeAll(nodeAlignedLines);
         nodeAlignedLines.clear();
         ArrayList<Node> h_neighbors = new ArrayList<>();
-        h_neighbors.addAll(map.getNodesInHorizontal((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
+        h_neighbors.addAll(map.getNodesInHorizontal(x,y,currentFloor));
         ArrayList<Node> v_neighbors = new ArrayList<>();
-        v_neighbors.addAll(map.getNodesInVertical((int)(x*mapViewer.getScale()),(int)(y*mapViewer.getScale()),currentFloor));
+        v_neighbors.addAll(map.getNodesInVertical(x,y,currentFloor));
 
         if(h_neighbors.size() != 0){
-            y_aligned = (int)(h_neighbors.get(0).getY()/mapViewer.getScale());
+            y_aligned = (h_neighbors.get(0).getY());
         }
         if(v_neighbors.size() != 0){
-            x_aligned = (int)(v_neighbors.get(0).getX()/mapViewer.getScale());
+            x_aligned = (v_neighbors.get(0).getX());
 
         }
         if(x != x_aligned){
@@ -511,7 +511,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             line.setLayoutX(x_aligned);
             line.setLayoutY(y_aligned);
             line.setEndX(0);
-            line.setEndY((v_neighbors.get(0).getY()/mapViewer.getScale()) - y_aligned);
+            line.setEndY((v_neighbors.get(0).getY()) - y_aligned);
             nodeAlignedLines.add(line);
             mapPane.getChildren().add(line);
 
@@ -520,7 +520,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             Line line = newAllignLine();
             line.setLayoutX(x_aligned);
             line.setLayoutY(y_aligned);
-            line.setEndX((h_neighbors.get(0).getX()/mapViewer.getScale()) - x_aligned);
+            line.setEndX((h_neighbors.get(0).getX()) - x_aligned);
             line.setEndY(0);
             nodeAlignedLines.add(line);
             mapPane.getChildren().add(line);
@@ -538,8 +538,8 @@ public class AddNodeController implements ControllableScreen, Observer {
 
         if(!mapPane.getChildren().contains(moved))
             mapPane.getChildren().add(moved);
-        x_text.setText(Integer.toString((int)(x_aligned*mapViewer.getScale())));
-        y_text.setText(Integer.toString((int)(y_aligned*mapViewer.getScale())));
+        x_text.setText(Integer.toString(x_aligned));
+        y_text.setText(Integer.toString(y_aligned));
     }
 
     private Line newAllignLine(){

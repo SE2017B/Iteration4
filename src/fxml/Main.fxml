@@ -39,7 +39,7 @@
                         <Font size="24.0" />
                      </font>
                   </JFXButton>
-                  <JFXSlider fx:id="slideBarZoom" disable="true" max="3.0" min="1.0" orientation="VERTICAL" prefWidth="50.0" value="2.0" />
+                  <JFXSlider fx:id="slideBarZoom" blockIncrement="0.0" disable="true" max="1.8" min="0.2" orientation="VERTICAL" prefWidth="50.0" value="1.0" />
                   <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="50.0" prefWidth="50.0" text="-">
                      <font>
                         <Font size="24.0" />

@@ -8,18 +8,18 @@ public class EdgeCheckBox extends Line {
     private Edge edge;
     private boolean selected;
 
-    public EdgeCheckBox(Edge edge, double scale) {
+    public EdgeCheckBox(Edge edge) {
         super();
         this.edge = edge;
         selected = false;
         int startX = edge.getNodeOne().getX();
         int startY = edge.getNodeOne().getY();
-        this.setLayoutX(startX/scale);
-        this.setLayoutY(startY/scale);
+        this.setLayoutX(startX);
+        this.setLayoutY(startY);
         this.setStartX(0);
         this.setStartY(0);
-        this.setEndX((edge.getNodeTwo().getX() - startX)/scale);
-        this.setEndY((edge.getNodeTwo().getY() - startY)/scale);
+        this.setEndX((edge.getNodeTwo().getX() - startX));
+        this.setEndY((edge.getNodeTwo().getY() - startY));
         this.setStrokeWidth(8);
         this.setVisible(false);
     }
