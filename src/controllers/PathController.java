@@ -8,10 +8,7 @@
 
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.*;
 import exceptions.InvalidNodeException;
 import javafx.animation.Transition;
 import javafx.scene.control.Button;
@@ -90,6 +87,11 @@ public class PathController implements ControllableScreen, Observer{
     private JFXComboBox<Node> endTextSearch;
     @FXML
     private JFXButton btnReverse;
+    @FXML
+    private JFXTabPane startTabPane;
+    @FXML
+    private JFXTabPane endTabPane;
+
 
     //Methods start here
     public void init() {
@@ -120,11 +122,12 @@ public class PathController implements ControllableScreen, Observer{
         pathTransition = new PathTransition();
 
         //add listeners
-        startTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
-        endTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
+        startTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
+        endTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
     }
 
         private void searchText(ComboBox<Node> textSearch, String text){
+        System.out.println("Hahahhahah hallaoolololol");
         textSearch.getItems().clear();//remove all previous items
         List<Node> ans = map.getNodesByText(text);
         if(ans.size()==1){
@@ -180,14 +183,19 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private Path getPath(){
-
-        Node s= startTextSearch.getValue();
-        Node e = endTextSearch.getValue();
-        if(s==null){
+        Node s;
+        Node e;
+        if(startTabPane.getSelectionModel().getSelectedIndex()==0){
+            s= startTextSearch.getValue();
+        }
+        else{
             s=startNodeChoice.getValue();
         }
-        if(e==null){
-            endNodeChoice.getValue();
+        if(endTabPane.getSelectionModel().getSelectedIndex()==0){
+            e= endTextSearch.getValue();
+        }
+        else{
+            e=endNodeChoice.getValue();
         }
         return map.findPath(s,e);
     }

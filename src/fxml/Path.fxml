@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
@@ -18,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
       <TitledPane fx:id="textDirectionsPane" animated="false" layoutY="110.0" prefHeight="220.0" prefWidth="273.0" text="Text Directions" visible="false" AnchorPane.topAnchor="100.0">
          <content>
@@ -70,7 +76,7 @@
                   <RowConstraints />
               </rowConstraints>
                <children>
-                  <JFXTabPane prefHeight="48.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                  <JFXTabPane fx:id="startTabPane" prefHeight="48.0" prefWidth="371.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
                      <tabs>
                         <Tab text="Search by Text">
                            <content>
@@ -78,7 +84,7 @@
                                  <children>
                                     <GridPane alignment="CENTER" layoutX="36.0" layoutY="1.0" prefHeight="71.0" prefWidth="405.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="-36.0" AnchorPane.topAnchor="1.0">
                                        <children>
-                                          <JFXComboBox fx:id="startTextSearch" editable="true" labelFloat="true" minHeight="40.0" minWidth="200.0" promptText="Start Node" styleClass="text-field" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                          <JFXComboBox fx:id="startTextSearch" editable="true" minHeight="40.0" minWidth="200.0" promptText="Start Node" styleClass="text-field" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                        </children>
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -147,7 +153,7 @@
                         </Tab>
                      </tabs>
                   </JFXTabPane>
-                  <JFXTabPane GridPane.columnIndex="2" GridPane.hgrow="ALWAYS">
+                  <JFXTabPane fx:id="endTabPane" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS">
                      <tabs>
                         <Tab text="Search by Text">
                            <content>
@@ -155,7 +161,7 @@
                                  <children>
                                     <GridPane prefHeight="71.0" prefWidth="405.0">
                                        <children>
-                                          <JFXComboBox fx:id="endTextSearch" editable="true" labelFloat="true" minHeight="40.0" minWidth="200.0" promptText="End Node" styleClass="text-field" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
+                                          <JFXComboBox fx:id="endTextSearch" editable="true" minHeight="40.0" minWidth="200.0" promptText="End Node" styleClass="text-field" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin></JFXComboBox>
