@@ -51,7 +51,6 @@ public class ScreenController extends StackPane {
         super();
         pause = new PauseTransition(Duration.millis(30000));
         pause.setOnFinished(e -> {
-            System.out.println("Momento Triggered");
             if(state != screenMomento.getState())
                 setScreen(screenMomento.getState());
             pause.play();
