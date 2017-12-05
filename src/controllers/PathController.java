@@ -19,6 +19,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.util.Duration;
@@ -93,10 +95,9 @@ public class PathController implements ControllableScreen, Observer{
     public void init() {
         map = HospitalMap.getMap();
         shapes = new ArrayList<Shape>();
-        paths=new ArrayList<PathViewer>();
+        paths = new ArrayList<PathViewer>();
         currentFloor = FloorNumber.FLOOR_ONE;
 
-        currentPath= new PathViewer(new Path());
         mapViewer = new MapViewer(this, parent);
         mapPane = mapViewer.getMapPane();
         mapScrollPane = mapViewer.getMapScrollPane();
@@ -104,11 +105,11 @@ public class PathController implements ControllableScreen, Observer{
         //set up floor variables
         floors = new ArrayList<FloorNumber>();
 
-        mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
+        mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
 
         int arrowSize = 20;
         arrow = new Pane();
-        arrow.setPrefSize(arrowSize,arrowSize);
+        arrow.setPrefSize(arrowSize, arrowSize);
         Image arrowImage = new Image("images/arrow.png");
         ImageView arrowView = new ImageView(arrowImage);
         arrowView.setFitHeight(arrowSize);
@@ -119,46 +120,28 @@ public class PathController implements ControllableScreen, Observer{
         pathTransition = new PathTransition();
 
         //add listeners
-        startTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> {
-            startTextSearch.getItems().clear();//remove all previous items
-            List<Node> ans = map.getNodesByText(newText);
-            if(ans.size()==1){
-                startTextSearch.setValue(ans.get(0));//set that to the answer if their is one possible value
-                //startTextSearch.hide();//hide the options
-            }
-            else if(ans.size()>1){
-                startTextSearch.getItems().addAll(ans);
-                startTextSearch.show();
-            }
-            else{
-                //startTextSearch.hide();
-                startTextSearch.setValue(null);
-            }
+        startTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
+        endTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
+    }
 
-            System.out.println("Current value is "+startTextSearch.getValue());
-        });
-        //do the same thing for end node
-        endTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> {
-            endTextSearch.getItems().clear();//remove all previous items
-            List<Node> ans = map.getNodesByText(newText);
-            if(ans.size()==1){
-                endTextSearch.setValue(ans.get(0));//set that to the answer if their is one possible value
-                //endTextSearch.hide();//hide the options
-            }
-            else if(ans.size()>1){
-                int nos =0; //to remove annoying error message
-                endTextSearch.getItems().addAll(ans);
-                endTextSearch.show();
-            }
-            else{
-                //endTextSearch.hide();
-                endTextSearch.setValue(null);
-            }
-
-            System.out.println("Current value is "+startTextSearch.getValue());
-        });
+        private void searchText(ComboBox<Node> textSearch, String text){
+        textSearch.getItems().clear();//remove all previous items
+        List<Node> ans = map.getNodesByText(text);
+        if(ans.size()==1){
+            textSearch.setValue(ans.get(0));//set that to the answer if their is one possible value
+            //endTextSearch.hide();//hide the options
+        }
+        else if(ans.size()>1){
+            int nos =0; //to remove annoying error message
+            textSearch.getItems().addAll(ans);
+            textSearch.show();
+        }
+        else{
+            //endTextSearch.hide();
+        }
 
     }
+
 
     public void onShow(){
         startNodeChoice.setItems(FXCollections.observableArrayList(
