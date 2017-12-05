@@ -12,6 +12,7 @@ import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 import com.jfoenix.controls.*;
 import database.staffDatabase;
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import map.HospitalMap;
 import map.Node;
 import search.SearchStrategy;
@@ -385,18 +387,57 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void createStaffPressed(ActionEvent event) {
+        try {
+            String tempUsername = usernameTxt.getText();
+            String tempPassword = passwordTxt.getText();
+            String tempJobTitle = jobTitletxt.getText();
+            String tempFullName = fullNametxt.getText();
+            Service tempService = addStaffServiceChoiceBox.getValue();
 
-        String tempUsername = usernameTxt.getText();
-        String tempPassword = passwordTxt.getText();
-        String tempJobTitle = jobTitletxt.getText();
-        String tempFullName = fullNametxt.getText();
-        Service tempService = addStaffServiceChoiceBox.getValue();
+
+            staffDatabase.incStaffCounter();
+            depSub.addStaff(tempService, tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter());
 
 
-        staffDatabase.incStaffCounter();
-        depSub.addStaff(tempService, tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter());
+            staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+        }
+        catch (Exception ex){
+            System.out.println("Add Staff Failed");
+            if(usernameTxt.getText().equals("")){
+                System.out.println("Username is empty");
+                //shake
+                shakeTextField(usernameTxt);
+            }
+            if(passwordTxt.getText().equals("")){
+                System.out.println("Password is empty");
+                //shake
+                shakeTextField(passwordTxt);
+            }
+            if(jobTitletxt.getText().equals("")){
+                System.out.println("Job Title is empty");
+                //shake
+                shakeTextField(jobTitletxt);
+            }
+            if(fullNametxt.getText().equals("")){
+                System.out.println("Full Name is empty");
+                //shake
+                shakeTextField(fullNametxt);
+            }
+            if(addStaffServiceChoiceBox.getValue() == null){
+                System.out.println("Service is empty");
+                //shake
+                shakeDropdown(addStaffServiceChoiceBox);
+            }
+        }
+    }
 
-        staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+    public void shakeTextField(TextField m){
+        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
+        t.setByX(25f);
+        t.setCycleCount(4);
+        t.setAutoReverse(true);
+        t.setDelay(Duration.millis(350));
+        t.playFromStart();
     }
 
 
@@ -432,12 +473,24 @@ public class RequestController implements ControllableScreen{
 
     public void saveSettingsPressed(ActionEvent e){
         if(searchStrategyChoice.getValue() != null){
+            System.out.println(searchStrategyChoice.getValue());
             map.setSearchStrategy(searchStrategyChoice.getValue());
             map.setKioskLocation(kioskLocationChoice.getValue());
+        }
+        else{
+            System.out.println("Strategy DropDown Empty");
+            shakeDropdown(searchStrategyChoice);
         }
 
     }
 
-
+    public void shakeDropdown(ChoiceBox m){
+        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
+        t.setByX(25f);
+        t.setCycleCount(4);
+        t.setAutoReverse(true);
+        t.setDelay(Duration.millis(350));
+        t.playFromStart();
+    }
 
 }
