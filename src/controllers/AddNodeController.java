@@ -654,20 +654,10 @@ public class AddNodeController implements ControllableScreen, Observer {
             System.out.println("Warning: No nodes selected.");
             return;
         }
-        try {
-            map.editNode(node,
-                    nodeEditXField.getText(),
-                    nodeEditYField.getText(),
-                    nodeEditFloorDropDown.getText(),
-                    nodeEditBuildingDropDown.getText(),
-                    nodeEditTypeDropDown.getText(),
-                    nodeEditNameField.getText(),
-                    nodeEditShortField.getText());
-        }
-        catch (Exception ex){
-
+        if(nodeEditXField.getText().equals("") || nodeEditYField.getText().equals("") || nodeEditFloorDropDown.getText().equals("")
+                || nodeEditBuildingDropDown.getText().equals("") || nodeEditTypeDropDown.getText().equals("")
+                || nodeEditNameField.getText().equals("") || nodeEditShortField.getText().equals("")){
             System.out.println("Edit failed");
-            System.out.println(nodeEditBuildingDropDown.getText());
             if(!nodeEditXField.getText().matches("[0-9]+")){
                 System.out.println("X Field is empty or contains letters");
                 //shake
@@ -699,7 +689,17 @@ public class AddNodeController implements ControllableScreen, Observer {
                 //shake
                 shakeTextField(nodeEditNameField);
             }
+            return;
         }
+        //this is causing a database error
+        map.editNode(node,
+                nodeEditXField.getText(),
+                nodeEditYField.getText(),
+                nodeEditFloorDropDown.getText(),
+                nodeEditBuildingDropDown.getText(),
+                nodeEditTypeDropDown.getText(),
+                nodeEditNameField.getText(),
+                nodeEditShortField.getText());
         refreshNodesandEdges();
     }
 
