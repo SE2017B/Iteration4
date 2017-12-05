@@ -64,7 +64,11 @@ public class ScreenController extends StackPane {
             pause.stop();
             pause.play();
         });
-
+        setOnMouseMoved( e ->{
+            pause.stop();
+            pause.play();
+        });
+        
     }
 
 
