@@ -17,45 +17,59 @@ finding paths with pit stops,
 and a method that obtains the Euclidean distance between two nodes.
 
  */
-public class AStarSearch implements SearchStrategy {
+public class AStarSearch extends AStarDijkstrasSearchTemplate implements SearchStrategy {
     public AStarSearch(){}
 
     @Override
-    public Path findPath(Node start, Node end){
-        ArrayList<Node> frontier = new ArrayList<>();
-        ArrayList<Node> explored = new ArrayList<>();
-        HashMap<Node, Node> cameFrom = new HashMap<>();
-        HashMap<Node, Integer> greedy = new HashMap<>();
-        HashMap<Node, Double> fScore = new HashMap<>();
-
-        greedy.put(start, 0);
-        fScore.put(start, getEuclideanDistance(start, end));
-        frontier.add(start);
-
-        while(!frontier.isEmpty()){
-            frontier.sort((n1, n2) -> (int)(fScore.get(n1) - fScore.get(n2)));
-            Node currentNode = frontier.get(0);
-            if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
-            frontier.remove(currentNode);
-            explored.add(currentNode);
-            for(Edge e : currentNode.getConnections()){
-                Node neighbor = e.getOtherNode(currentNode);
-                if(explored.contains(neighbor)) continue;
-                if(!frontier.contains(neighbor)) frontier.add(neighbor);
-                int newGreedy = greedy.get(currentNode) + (int)e.getCost();
-                if(greedy.containsKey(neighbor) && newGreedy >= greedy.get(neighbor)) continue;
-                cameFrom.put(neighbor, currentNode);
-                greedy.put(neighbor, newGreedy);
-                fScore.put(neighbor, greedy.get(neighbor) + getEuclideanDistance(neighbor, end));
-            }
-        }
-        return new Path();
+    public void initialize(HashMap<Node, Integer> fScore, Node start, Node end) {
+        fScore.put(start, (int)getEuclideanDistance(start, end));
     }
 
-    private Path returnPath(HashMap<Node, Node> cameFrom, Node currentNode){
-        Path path = new Path();
+    @Override
+    public void sortFrontier(ArrayList<Node> frontier, HashMap<Node, Integer> fScore, HashMap<Node, Integer> greedy) {
+        frontier.sort(Comparator.comparingInt(fScore::get));
+    }
+
+    @Override
+    public void putMapValues(HashMap<Node, Integer> fScore, HashMap<Node, Integer> greedy, Node neighbor, Node end) {
+        fScore.put(neighbor, greedy.get(neighbor) + (int)neighbor.getEuclidianDistance(end));
+    }
+
+    //    @Override
+//    public Path findPath(Node start, Node end){
+//        ArrayList<Node> frontier = new ArrayList<>();
+//        ArrayList<Node> explored = new ArrayList<>();
+//        HashMap<Node, Node> cameFrom = new HashMap<>();
+//        HashMap<Node, Integer> greedy = new HashMap<>();
+//        HashMap<Node, Double> fScore = new HashMap<>();
+//
+//        greedy.put(start, 0);
+//        fScore.put(start, getEuclideanDistance(start, end));
+//        frontier.add(start);
+//
+//        while(!frontier.isEmpty()){
+//            frontier.sort((n1, n2) -> (int)(fScore.get(n1) - fScore.get(n2)));
+//            Node currentNode = frontier.get(0);
+//            if(currentNode.equals(end)) return returnPath(cameFrom, currentNode);
+//            frontier.remove(currentNode);
+//            explored.add(currentNode);
+//            for(Edge e : currentNode.getConnections()){
+//                Node neighbor = e.getOtherNode(currentNode);
+//                if(explored.contains(neighbor)) continue;
+//                if(!frontier.contains(neighbor)) frontier.add(neighbor);
+//                int newGreedy = greedy.get(currentNode) + (int)e.getCost();
+//                if(greedy.containsKey(neighbor) && newGreedy >= greedy.get(neighbor)) continue;
+//                cameFrom.put(neighbor, currentNode);
+//                greedy.put(neighbor, newGreedy);
+//                fScore.put(neighbor, greedy.get(neighbor) + getEuclideanDistance(neighbor, end));
+//            }
+//        }
+//        return new Path();
+//    }
+//
+    private Path returnPath(HashMap<Node, Node> cameFrom, Node currentNode, Path path){
         path.addToPath(currentNode);
-        while(cameFrom.containsKey(currentNode)){
+        while(cameFrom.containsKey(currentNode)) {
             currentNode = cameFrom.get(currentNode);
             path.addToPath(currentNode, 0);
         }
