@@ -105,9 +105,7 @@ public class MapViewer extends Observable{
         mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
         mapViewerPane.setBottomAnchor(buttonScrollPane, 0.0);
 
-
-
-
+        mapScrollPane.setPannable(true);
     }
 
     public void resetView(){
@@ -255,9 +253,9 @@ public class MapViewer extends Observable{
         setFloor(floors.get(0),0);
     }
 
-    public void centerView(int x, int y){
+    public void centerView(int x, int y) {
 
-        x = (int)(x * mapPane.getScaleX());
+        x = (int) (x * mapPane.getScaleX());
         y = (int) (y * mapPane.getScaleY());
 
         //height
@@ -269,6 +267,10 @@ public class MapViewer extends Observable{
 
         mapScrollPane.setVvalue(((y - 0.5 * v) / (h - v)));
         mapScrollPane.setHvalue(((x - 0.5 * H) / (w - H)));
+    }
 
+    public void setScroller(double v, double h){
+        mapScrollPane.setVvalue(v);
+        mapScrollPane.setHvalue(h);
     }
 }
