@@ -434,31 +434,23 @@ public class AddNodeController implements ControllableScreen, Observer {
                 //shake
                 shakeTextField(nodeAddYField);
             }
-            if(nodeAddFloorDropDown.getText() == "1"){
-                System.out.println("Floor Dropdown Failed");
-                //shake
-                shakeDropdown(nodeAddFloorDropDown); //commenting this out doesn't make the next ones work
-            }
             System.out.println("Exited Floor if statement");
-            //for some reason it's not reaching more than the first one
-            //only thing I can think of is that "Building" and "NodeType" aren't options from the dropdown, and "1" is
-            if(nodeAddBuildingDropDown.getText() == "Building"){
+            if(nodeAddBuildingDropDown.getText().equals("Building")){
                 System.out.println("Building Dropdown Failed");
                 //shake
                 shakeDropdown(nodeAddBuildingDropDown);
             }
-            if(nodeAddTypeDropDown.getText() == "NodeType"){
+            if(nodeAddTypeDropDown.getText().equals("NodeType")){
                 System.out.println("Type Dropdown Failed");
                 //shake
                 shakeDropdown(nodeAddTypeDropDown);
             }
-            //don't think I can use regex for these because there are spaces and numbers and letters
-            if(nodeAddShortField.getText() == null){ //what's the deal with these? Capitals and numbers?
+            if(nodeAddShortField.getText().equals("")){
                 System.out.println("Short Field empty");
                 //shake
                 shakeTextField(nodeAddShortField);
             }
-            if(nodeAddNameField.getText() == null){
+            if(nodeAddNameField.getText().equals("")){
                 System.out.println("Name Field empty");
                 //shake
                 shakeTextField(nodeAddNameField);
@@ -468,18 +460,20 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void shakeDropdown(MenuButton m){
-        TranslateTransition t = new TranslateTransition(Duration.millis(500), m);
-        t.setByX(50f);
+        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
+        t.setByX(25f);
         t.setCycleCount(4);
         t.setAutoReverse(true);
+        t.setDelay(Duration.millis(350));
         t.playFromStart();
     }
 
     public void shakeTextField(TextField m){
-        TranslateTransition t = new TranslateTransition(Duration.millis(500), m);
-        t.setByX(50f);
+        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
+        t.setByX(25f);
         t.setCycleCount(4);
         t.setAutoReverse(true);
+        t.setDelay(Duration.millis(350));
         t.playFromStart();
     }
 
@@ -660,14 +654,52 @@ public class AddNodeController implements ControllableScreen, Observer {
             System.out.println("Warning: No nodes selected.");
             return;
         }
-        map.editNode(node,
-                nodeEditXField.getText(),
-                nodeEditYField.getText(),
-                nodeEditFloorDropDown.getText(),
-                nodeEditBuildingDropDown.getText(),
-                nodeEditTypeDropDown.getText(),
-                nodeEditNameField.getText(),
-                nodeEditShortField.getText());
+        try {
+            map.editNode(node,
+                    nodeEditXField.getText(),
+                    nodeEditYField.getText(),
+                    nodeEditFloorDropDown.getText(),
+                    nodeEditBuildingDropDown.getText(),
+                    nodeEditTypeDropDown.getText(),
+                    nodeEditNameField.getText(),
+                    nodeEditShortField.getText());
+        }
+        catch (Exception ex){
+
+            System.out.println("Edit failed");
+            System.out.println(nodeEditBuildingDropDown.getText());
+            if(!nodeEditXField.getText().matches("[0-9]+")){
+                System.out.println("X Field is empty or contains letters");
+                //shake
+                shakeTextField(nodeEditXField);
+            }
+            if(!nodeEditYField.getText().matches("[0-9]+")){
+                System.out.println("Y Field is empty or contains letters");
+                //shake
+                shakeTextField(nodeEditYField);
+            }
+            System.out.println("Exited Floor if statement");
+            if(nodeEditBuildingDropDown.getText().equals("Building")){
+                System.out.println("Building Dropdown Failed");
+                //shake
+                shakeDropdown(nodeEditBuildingDropDown);
+            }
+            if(nodeEditTypeDropDown.getText().equals("NodeType")){
+                System.out.println("Type Dropdown Failed");
+                //shake
+                shakeDropdown(nodeEditTypeDropDown);
+            }
+            if(nodeEditShortField.getText().equals("")){
+                System.out.println("Short Field empty");
+                //shake
+                shakeTextField(nodeEditShortField);
+            }
+            if(nodeEditNameField.getText().equals("")){
+                System.out.println("Name Field empty");
+                //shake
+                shakeTextField(nodeEditNameField);
+            }
+        }
         refreshNodesandEdges();
     }
 
