@@ -65,22 +65,30 @@ public class Path implements Comparable<Path> {
             double angle = Math.toDegrees(Math.atan2(det, dot));
 
             System.out.println(angle);
+            System.out.println(prevElevator);
             System.out.println("Node 1: " + path.get(i-1).getShortName());
             System.out.println("Node 2: " + path.get(i).getShortName());
             System.out.println("Node 3: " + path.get(i+1).getShortName() + "\n");
 
             if(Vector2_3Z != 0) {
-                if (Vector1_2Z > Vector2_3Z && !prevElevator) {
+                if (path.get(i-1).getFloor().getNodeMapping() > path.get(i+1).getFloor().getNodeMapping() && !prevElevator) {
                     directions.add("Go down " + path.get(i).getShortName());
                     prevElevator = true;
                     continue;
-                } else if (Vector1_2Z < Vector2_3Z && !prevElevator) {
+                } else if (path.get(i-1).getFloor().getNodeMapping() < path.get(i+1).getFloor().getNodeMapping() && !prevElevator) {
                     directions.add("Go up " + path.get(i).getShortName());
                     prevElevator = true;
                     continue;
                 }
             } else {
-                directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(i).getFloor().getDbMapping()));
+                if(path.get(i-1).getFloor().getNodeMapping() > path.get(i).getFloor().getNodeMapping() ||
+                    path.get(i-1).getFloor().getNodeMapping() < path.get(i).getFloor().getNodeMapping()){
+                    if(!prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(i).getFloor().getDbMapping()));
+                    else directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
+                    directions.add("Exit " + path.get(i).getShortName() + " and continue towards " + path.get(i+1).getShortName());
+                    prevElevator = false;
+                    continue;
+                }
             }
 
             if(path.get(i).equals(path.get(i-1))){
@@ -91,7 +99,7 @@ public class Path implements Comparable<Path> {
             if(angle >= -155 && angle <= -25){
                 if(straight) directions.add("Continue straight until " + path.get(i).getShortName());
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
-                else if(prevElevator || prevStop) directions.add("Turn left from " + path.get(i).getShortName());
+                else if(prevStop) directions.add("Turn left from " + path.get(i).getShortName());
                 else {
                     if(angle >= -40) directions.add("Take a slight left at this " + path.get(i).getShortName());
                     else if(angle <= -140) directions.add("Take a sharp left at this " + path.get(i).getShortName());
@@ -101,7 +109,7 @@ public class Path implements Comparable<Path> {
             else if(angle >= 25 && angle <= 155){
                 if(straight) directions.add("Continue straight until " + path.get(i).getShortName());
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
-                else if(prevElevator || prevStop) directions.add("Turn right from " + path.get(i).getShortName());
+                else if(prevStop) directions.add("Turn right from " + path.get(i).getShortName());
                 else {
                     if(angle <= 40) directions.add("Take a slight right at this " + path.get(i).getShortName());
                     else if(angle >= 140) directions.add("Take a sharp right at this " + path.get(i).getShortName());
