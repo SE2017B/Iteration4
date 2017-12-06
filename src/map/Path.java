@@ -101,7 +101,7 @@ public class Path implements Comparable<Path> {
             }
 
             if(angle >= -155 && angle <= -25){
-                if(straight) directions.add("Continue straight for " + (int)(path.get(lastStraight).getEuclidianDistance(path.get(i))) * pixelsToMeters + "m and take a left");
+                if(straight) directions.add("Continue straight for " + (int)(path.get(lastStraight).getEuclidianDistance(path.get(i)) * pixelsToMeters) + "m and take a left");
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
                 else if(prevStop) directions.add("Turn left from " + getBetterName(path.get(i)));
                 else {
@@ -149,19 +149,13 @@ public class Path implements Comparable<Path> {
             straight = false;
         }
 
+        if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(path.size()-1).getFloor().getDbMapping()));
         if(path.get(path.size()-2).getFloor().getNodeMapping() > path.get(path.size()-1).getFloor().getNodeMapping() ||
                 path.get(path.size()-2).getFloor().getNodeMapping() < path.get(path.size()-1).getFloor().getNodeMapping()){
             directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(path.size()-1).getFloor().getDbMapping()));
         }
         directions.add("Stop at " + getFullType(path.get(path.size()-1)));
 
-        //Eliminates multiple "go straights" in a row
-//        for(int i = 1; i<directions.size(); i++) {
-//            if(directions.get(i).contains("straight") && directions.get(i-1).contains("straight")) {
-//                directions.remove(i);
-//                i--;
-//            }
-//        }
         return directions;
     }
 
@@ -195,6 +189,9 @@ public class Path implements Comparable<Path> {
                 break;
             case "CONF":
                 string = node.getShortName();
+                break;
+            case "SERV":
+                string = "the " + node.getLongName();
                 break;
             default: string = "";
         }
