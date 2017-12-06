@@ -101,7 +101,7 @@ public class Path implements Comparable<Path> {
             }
 
             if(angle >= -155 && angle <= -25){
-                if(straight) directions.add("Continue straight for " + path.get(lastStraight).getEuclidianDistance(path.get(i)) * pixelsToMeters + "m and take a left");
+                if(straight) directions.add("Continue straight for " + (int)(path.get(lastStraight).getEuclidianDistance(path.get(i)) * pixelsToMeters) + "m and take a left");
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
                 else if(prevStop) directions.add("Turn left from " + path.get(i).getShortName());
                 else {

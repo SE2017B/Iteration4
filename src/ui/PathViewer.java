@@ -48,8 +48,7 @@ public class PathViewer {
     }
     public void initAnimation(double startx, double starty, double endx, double endy){
         //set up speed
-        System.out.println("The speed is"+speed);
-        animationCount=150;
+        animationCount=80;
         speed.set(0,((endx-startx)/animationCount));
         speed.set(1,(endy-starty)/animationCount);
         goal.set(0,endx);
@@ -64,15 +63,11 @@ public class PathViewer {
         return Math.sqrt(length);
     }
     public void initScaling(double start, double end){
-        scaleCount=80;
+        scaleCount=50;
         scaleSpeed=(end-start)/scaleCount;
         scaleGoal=end;
         scale=start;
         isScaling = true;
-        System.out.println("Animating scaling");
-        System.out.println("The scale goal is "+ scaleGoal);
-        System.out.println("Speed is "+ scaleSpeed);
-        System.out.println("Scale start is "+ start);
     }
     public ArrayList<Double> getPos(){
         //update position
@@ -92,7 +87,6 @@ public class PathViewer {
             isScaling=false;
         }
         scaleCount--;
-        System.out.println("Scaling stuff hahahaha");
         return scale;
     }
     public double getscaleGoal(){

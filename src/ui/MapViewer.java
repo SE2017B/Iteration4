@@ -129,7 +129,7 @@ public class MapViewer extends Observable{
         mapViewerPane.prefHeightProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
 
 
-        mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane, prevFloor, nextFloor);
+        mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
         mapViewerPane.setBottomAnchor(buttonScrollPane, 0.0);
 
         mapScrollPane.setPannable(true);
@@ -196,6 +196,7 @@ public class MapViewer extends Observable{
     private void clearButtons(){
         container.getChildren().clear();
         buttonOrder.clear();
+        mapViewerPane.getChildren().removeAll(prevFloor, nextFloor);
         prevFloor.setVisible(false);
         nextFloor.setVisible(false);
     }
@@ -234,6 +235,15 @@ public class MapViewer extends Observable{
                         new KeyValue(buttonScrollPane.hvalueProperty(),buttonPose/(buttonOrder.size()-1.0)))
         );
         slideButtons.play();
+        prevFloor.setVisible(true);
+        nextFloor.setVisible(true);
+        if(buttonPose == 0){
+            prevFloor.setVisible(false);
+        }
+        if(buttonPose == buttonOrder.size()-1){
+            nextFloor.setVisible(false);
+        }
+
     }
 
     public void setFloor(FloorNumber floor){
@@ -292,8 +302,7 @@ public class MapViewer extends Observable{
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         setFloor(floors.get(0),0);
-        prevFloor.setVisible(true);
-        nextFloor.setVisible(true);
+        mapViewerPane.getChildren().addAll(prevFloor, nextFloor);
     }
 
     public void centerView(double x, double y) {

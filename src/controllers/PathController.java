@@ -8,6 +8,8 @@
 
 package controllers;
 
+import QRCode.NonValidQRCodeMessageException;
+import QRCode.QRCodeGenerator;
 import com.jfoenix.controls.*;
 import exceptions.InvalidNodeException;
 import javafx.animation.AnimationTimer;
@@ -50,6 +52,8 @@ public class PathController implements ControllableScreen, Observer{
     private String startFloor = "";
     private String endType =  "";
     private String endFloor = "";
+
+    private QRCodeGenerator qr;
 
     private final double LINE_STROKE = 4;
     private final double ARROW_SIZE = 30;
@@ -116,6 +120,8 @@ public class PathController implements ControllableScreen, Observer{
     private Tab startTypeTab;
     @FXML
     private Tab endTypeTab;
+    @FXML
+    private ImageView qrImageView;
 
     Node startNode;
     Node endNode;
@@ -129,6 +135,7 @@ public class PathController implements ControllableScreen, Observer{
         paths = new ArrayList<PathViewer>();
         currentFloor = FloorNumber.FLOOR_ONE;
 
+
         mapViewer = new MapViewer(this, parent);
         mapPane = mapViewer.getMapPane();
         mapScrollPane = mapViewer.getMapScrollPane();
@@ -137,9 +144,7 @@ public class PathController implements ControllableScreen, Observer{
         floors = new ArrayList<FloorNumber>();
 
         mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
-        mainAnchorPane.setTopAnchor(mapViewer.getMapViewerPane(), 100.0);
 
-        mapViewer.getMapViewerPane().prefHeightProperty().bind(mainAnchorPane.prefHeightProperty().subtract(200));
         animationCount=0;
 
         arrow = new Pane();
@@ -171,6 +176,10 @@ public class PathController implements ControllableScreen, Observer{
             endNode = null;
             endTextField.setText("");
         });
+
+        qr = new QRCodeGenerator();
+
+
 
         //position map
         Center= new ArrayList<>();
@@ -311,6 +320,11 @@ public class PathController implements ControllableScreen, Observer{
 
         startNodeChoice.setValue(map.getKioskLocation()); //redundant
         startNodeChoice.setDisable(false);
+
+        startNode = map.getKioskLocation();
+        startTextField.setText(startNode.toString());
+
+        textDirectionsPane.setVisible(false);
     }
 
     public void setParentController(ScreenController parent){
@@ -533,9 +547,18 @@ public class PathController implements ControllableScreen, Observer{
     private void displayPaths(Path thePath){
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
-        directionsList.setItems(FXCollections.observableList(thePath.findDirections()));
+        ArrayList<String> directions = thePath.findDirections();
+        directionsList.setItems(FXCollections.observableList(directions));
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
+        try {
+            qr.writeQRList(directions, "src/images/qr");
+            System.out.println("QR Success");
+            qrImageView.setImage(new Image("/images/qr.jpg"));
+        }
+        catch (NonValidQRCodeMessageException e){
+            System.out.println("QR too long");
+        }
         currentFloor=paths.get(0).getFloor();//set the current floor
         switchPath(paths.get(0));
         System.out.println("Intermediate  " + (mapScrollPane.getVvalue()));
@@ -543,12 +566,27 @@ public class PathController implements ControllableScreen, Observer{
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException {
 
-        if((startNodeChoice.getValue()!= null || startNode != null ) &&
-                (endNodeChoice.getValue() != null || endNode != null )) {
+        if(((startNodeChoice.getValue()!= null && startTypeTab.isSelected()) || (startNode != null && startTextTab.isSelected()) ) &&
+                ((endNodeChoice.getValue() != null && endTypeTab.isSelected()) || (endNode != null && endTextTab.isSelected()) )) {
             btnReverse.setVisible(true);//make reverse button visible
             thePath = getPath();
             displayPaths(thePath);
             System.out.println("Enter Pressed");
+        }
+        else{
+            ShakeTransition shake = new ShakeTransition();
+            if(startNodeChoice.getValue() == null){
+                shake.shake(startNodeChoice);
+            }
+            if(startNode == null){
+                shake.shake(startTextField);
+            }
+            if(endNodeChoice.getValue() == null){
+                shake.shake(endNodeChoice);
+            }
+            if(endNode == null){
+                shake.shake(endTextField);
+            }
         }
     }
 
