@@ -89,7 +89,7 @@ public class Path implements Comparable<Path> {
                     path.get(i-1).getFloor().getNodeMapping() < path.get(i).getFloor().getNodeMapping()){
                     if(!prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(i).getFloor().getDbMapping()));
                     else directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
-                    directions.add("Exit " + getBetterName(path.get(i)) + " and continue towards " + getBetterName(path.get(i)));
+                    directions.add("Exit " + getBetterName(path.get(i)) + " and continue towards " + getBetterName(path.get(i+1)));
                     prevElevator = false;
                     continue;
                 }
@@ -101,7 +101,7 @@ public class Path implements Comparable<Path> {
             }
 
             if(angle >= -155 && angle <= -25){
-                if(straight) directions.add("Continue straight for " + path.get(lastStraight).getEuclidianDistance(path.get(i)) * pixelsToMeters + "m and take a left");
+                if(straight) directions.add("Continue straight for " + (int)(path.get(lastStraight).getEuclidianDistance(path.get(i))) * pixelsToMeters + "m and take a left");
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
                 else if(prevStop) directions.add("Turn left from " + getBetterName(path.get(i)));
                 else {
@@ -110,9 +110,9 @@ public class Path implements Comparable<Path> {
                         else if (angle <= -140) directions.add("Take a sharp left at " + getBetterName(path.get(i)));
                         else directions.add("Take a left at " + getBetterName(path.get(i)));
                     } else {
-                        if (angle >= -40) directions.add("Take a slight left in the " + getBetterName(path.get(i)));
-                        else if (angle <= -140) directions.add("Take a sharp left in the " + getBetterName(path.get(i)));
-                        else directions.add("Take a left in the " + getBetterName(path.get(i)));
+                        if (angle >= -40) directions.add("Take a slight left in " + getBetterName(path.get(i)));
+                        else if (angle <= -140) directions.add("Take a sharp left in " + getBetterName(path.get(i)));
+                        else directions.add("Take a left in " + getBetterName(path.get(i)));
                     }
                 }
             }
@@ -126,9 +126,9 @@ public class Path implements Comparable<Path> {
                         else if (angle >= 140) directions.add("Take a sharp right at " + getBetterName(path.get(i)));
                         else directions.add("Take a right at " + getBetterName(path.get(i)));
                     } else {
-                        if (angle >= 40) directions.add("Take a slight right in the " + getBetterName(path.get(i)));
-                        else if (angle <= 140) directions.add("Take a sharp right in the " + getBetterName(path.get(i)));
-                        else directions.add("Take a right in the " + getBetterName(path.get(i)));
+                        if (angle <= 40) directions.add("Take a slight right in " + getBetterName(path.get(i)));
+                        else if (angle >= 140) directions.add("Take a sharp right in " + getBetterName(path.get(i)));
+                        else directions.add("Take a right in " + getBetterName(path.get(i)));
                     }
                 }
             }
@@ -203,7 +203,7 @@ public class Path implements Comparable<Path> {
 
     private String getBetterName(Node node){
         String string;
-        if(node.getType().equals("HALL")) string = "Hallway";
+        if(node.getType().equals("HALL")) string = "the Hallway";
         else string = node.getShortName();
         return string;
     }
