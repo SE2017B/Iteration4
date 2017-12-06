@@ -5,7 +5,7 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
-
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -19,8 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<?import com.jfoenix.controls.JFXTimePicker?>
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
    <children>
       <GridPane layoutX="456.0" layoutY="303.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -86,7 +85,6 @@
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <ChoiceBox fx:id="choiceBoxDept" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                                     <Label text="Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                        <font>
                                           <Font size="24.0" />
@@ -102,11 +100,6 @@
                                        </GridPane.margin></JFXButton>
                                     <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" style="-fx: #ffffff;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                     <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                    <Label text="Department " GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
                                     <ChoiceBox fx:id="choiceBoxService" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                     <ChoiceBox fx:id="choiceBoxStaff" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                     <JFXTimePicker fx:id="timeMenu" defaultColor="#34f8e4" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />

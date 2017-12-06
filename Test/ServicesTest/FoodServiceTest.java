@@ -1,4 +1,6 @@
+/*
 package ServicesTest;
+*/
 /*
 import a_star.Node;
 import org.junit.*;
@@ -78,4 +80,4 @@ public class FoodServiceTest {
         assertEquals(John.getCurrentRequest(), foodRequest);
     }
 }
-*/
+*/*/

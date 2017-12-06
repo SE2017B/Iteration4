@@ -1,14 +1,13 @@
 /*
-* Software Engineering 3733, Worcester Polytechnic Institute
-* Team H
-* Code produced for Iteration 2
-* Original author(s): Nicholas Fajardo, Meghana Bhatia
-* The following code
-*/
+ * Software Engineering 3733, Worcester Polytechnic Institute
+ * Team H
+ * Code produced for Iteration 2
+ * Original author(s): Nicholas Fajardo, Meghana Bhatia
+ * The following code
+ */
 
 package DepartmentSubsystem.Services;
 
-import DepartmentSubsystem.Department;
 import DepartmentSubsystem.Service;
 import map.Node;
 
