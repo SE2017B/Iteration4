@@ -18,6 +18,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import map.FloorNumber;
@@ -65,6 +67,7 @@ public class MapViewer extends Observable{
         nextFloor = new Label();
 
         prevFloor.setText("Previous Floor");
+        prevFloor.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
         prevFloor.setAlignment(Pos.CENTER);
         prevFloor.setPrefWidth(150);
         prevFloor.getStyleClass().add("text-on-white");
@@ -72,6 +75,7 @@ public class MapViewer extends Observable{
         mapViewerPane.setBottomAnchor(prevFloor, 80.0);
 
         nextFloor.setText("Next Floor");
+        nextFloor.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
         nextFloor.setAlignment(Pos.CENTER);
         nextFloor.setPrefWidth(150);
         nextFloor.getStyleClass().add("text-on-white");

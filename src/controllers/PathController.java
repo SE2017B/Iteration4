@@ -12,16 +12,20 @@ import com.jfoenix.controls.*;
 import exceptions.InvalidNodeException;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Transition;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.util.Duration;
+import javafx.util.StringConverter;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
@@ -87,15 +91,23 @@ public class PathController implements ControllableScreen, Observer{
     @FXML
     private JFXListView<String> directionsList;
     @FXML
-    private JFXComboBox<Node> startTextSearch;
+    private JFXTextField startTextField;
     @FXML
-    private JFXComboBox<Node> endTextSearch;
+    private JFXTextField endTextField;
+    @FXML
+    private JFXListView<Node> startNodeOptionList;
+    @FXML
+    private JFXListView<Node> endNodeOptionList;
     @FXML
     private JFXButton btnReverse;
     @FXML
     private JFXTabPane startTabPane;
     @FXML
     private JFXTabPane endTabPane;
+
+    Node startNode;
+    Node endNode;
+
 
 
     //Methods start here
@@ -128,9 +140,20 @@ public class PathController implements ControllableScreen, Observer{
         pathTransition = new PathTransition();
 
         //add listeners
+        startTextField.setOnKeyPressed( e -> searchText(e, startTextField, startNodeOptionList));
+        endTextField.setOnKeyPressed(e -> searchText(e, endTextField, endNodeOptionList));
 
-        startTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
-        endTextSearch.getJFXEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
+
+        startNodeOptionList.prefWidthProperty().bind(startTextField.widthProperty());
+        endNodeOptionList.prefWidthProperty().bind(endTextField.widthProperty());
+
+        startNodeOptionList.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> suggestionPressed(newValue, startTextField, startNodeOptionList)));
+
+        endNodeOptionList.getSelectionModel().selectedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> suggestionPressed(newValue, endTextField, endNodeOptionList)));
+
+
 
         //position map
         Center= new ArrayList<>();
@@ -168,22 +191,46 @@ public class PathController implements ControllableScreen, Observer{
         zoomPath.start();
     }
 
-        private void searchText(ComboBox<Node> textSearch, String text){
-        textSearch.getItems().clear();//remove all previous items
-        List<Node> ans = map.getNodesByText(text);
-        if(ans.size()==1){
-            textSearch.setValue(ans.get(0));//set that to the answer if their is one possible value
-            //endTextSearch.hide();//hide the options
-        }
-        else if(ans.size()>1){
-            int nos =0; //to remove annoying error message
-            textSearch.getItems().addAll(ans);
-            textSearch.show();
-        }
-        else{
-            //endTextSearch.hide();
-        }
+    private void searchText(KeyEvent keyEvent, JFXTextField textField, JFXListView<Node> listView){
+            if(keyEvent.getCode().equals(KeyCode.ENTER)) {
+                Node node = listView.getItems().get(0);
+                if(textField.equals(startTextField)){
+                    startNode = node;
+                }
+                else{
+                    endNode = node;
+                }
+                    textField.setText(node.toString());
+                    listView.setVisible(false);
+                }
+            else if(keyEvent.getCode().isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
+                String text = ((JFXTextField) keyEvent.getSource()).getText();
+                List<Node> ans = map.getNodesByText(text);
+                if (ans.size() > 10) {
+                    listView.getItems().setAll(ans.subList(0, 5));
+                    listView.setVisible(true);
+                }
+                if(textField.equals(startTextField)){
+                    startNode = null;
+                }
+                else{
+                    endNode = null;
+                }
+            }
 
+    }
+
+    private void suggestionPressed(Node selected, JFXTextField textField, JFXListView<Node> listView) {
+        if (selected != null) {
+            Node node = listView.getSelectionModel().getSelectedItem();
+            if (textField.equals(startTextField)) {
+                startNode = node;
+            } else {
+                endNode = node;
+            }
+            textField.setText(selected.toString());
+            listView.setVisible(false);
+        }
     }
 
 
@@ -212,11 +259,9 @@ public class PathController implements ControllableScreen, Observer{
 
         mapViewer.resetView();
         btnReverse.setVisible(false);//hide button because there is no path
+        startNodeOptionList.setVisible(false);
+        endNodeOptionList.setVisible(false);
         //reset search boxes
-        startTextSearch.setValue(null);
-        endTextSearch.setValue(null);
-        startTextSearch.hide();
-        endTextSearch.hide();
 
         startNodeChoice.setValue(map.getKioskLocation()); //redundant
         startNodeChoice.setDisable(false);
@@ -230,13 +275,13 @@ public class PathController implements ControllableScreen, Observer{
         Node s;
         Node e;
         if(startTabPane.getSelectionModel().getSelectedIndex()==0){
-            s= startTextSearch.getValue();
+            s= startNode;
         }
         else{
             s=startNodeChoice.getValue();
         }
         if(endTabPane.getSelectionModel().getSelectedIndex()==0){
-            e= endTextSearch.getValue();
+            e= endNode;
         }
         else{
             e=endNodeChoice.getValue();
@@ -450,8 +495,8 @@ public class PathController implements ControllableScreen, Observer{
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException {
 
-        if((startNodeChoice.getValue() instanceof Node || startTextSearch.getValue() instanceof Node) &&
-                (endNodeChoice.getValue() instanceof Node || endTextSearch.getValue() instanceof Node)) {
+        if((startNodeChoice.getValue()!= null || startNode != null ) &&
+                (endNodeChoice.getValue() != null || endNode != null )) {
             btnReverse.setVisible(true);//make reverse button visible
             thePath = getPath();
             displayPaths(thePath);

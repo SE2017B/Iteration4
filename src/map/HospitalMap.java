@@ -92,8 +92,8 @@ public class HospitalMap{
                                 String shortName, String team, ArrayList<Node> attachedNodes){
         Node temp = new Node(x, y, floor, building, type, longName, shortName, team);
         nodeMap.add(temp);
-        for(int i = 0; i < attachedNodes.size(); i++){
-            addEdge(temp,attachedNodes.get(i));
+        for (Node attachedNode : attachedNodes) {
+            addEdge(temp, attachedNode);
         }
         nodeDatabase.addNode(new Node(x,y,floor,building,type,longName,shortName, team));
     }
@@ -174,9 +174,9 @@ public class HospitalMap{
     }
     public ArrayList<Node> getNodesByFloor(int floor){
         ArrayList<Node> output = new ArrayList<>();
-        for(int i = 0; i < nodeMap.size(); i++){
-            if(nodeMap.get(i).getFloor().getNodeMapping() == floor){
-                output.add(nodeMap.get(i));
+        for (Node aNodeMap : nodeMap) {
+            if (aNodeMap.getFloor().getNodeMapping() == floor) {
+                output.add(aNodeMap);
             }
         }
         return output;
@@ -197,7 +197,7 @@ public class HospitalMap{
     public List<Node> getNodesByText(String text){
         HashMap<Node, Integer> distances = new HashMap<>();
         for(Node n : nodeMap) distances.put(n, DLDistance(text, n));
-        return this.nodeMap.stream().filter(n1 -> DLDistance(text, n1) != 0).sorted(Comparator.comparing(n1 -> distances.get(n1))).collect(Collectors.toList());
+        return this.nodeMap.stream().filter(n1 -> DLDistance(text, n1) != 0).filter(n1 -> !n1.getLongName().toLowerCase().contains("hall")).sorted(Comparator.comparing(distances::get)).collect(Collectors.toList());
     }
 
     //Setters
