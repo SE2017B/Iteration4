@@ -187,11 +187,11 @@ public class PathController implements ControllableScreen, Observer{
         //remove any previous paths from the display
         clearPaths();
 
-        startNodeChoice.setValue(map.getKioskLocation());
-        startNodeChoice.setDisable(true);
-        startFloorMenu.setText(map.getKioskLocation().getFloor().getDbMapping());
-        startFloorMenu.setDisable(true);
-        startTypeMenu.setText("Type");
+        startType = "Information";
+        startTypeMenu.setText(startType);
+        startFloor = map.getKioskLocation().getFloor().getDbMapping();
+        startFloorMenu.setText(startFloor);
+        startFloorMenu.setDisable(false); //make this false
 
         endNodeChoice.setDisable(true);
         endNodeChoice.setValue(null);
@@ -209,6 +209,9 @@ public class PathController implements ControllableScreen, Observer{
         endTextSearch.setValue(null);
         startTextSearch.hide();
         endTextSearch.hide();
+
+        startNodeChoice.setValue(map.getKioskLocation()); //redundant
+        startNodeChoice.setDisable(false);
     }
 
     public void setParentController(ScreenController parent){
