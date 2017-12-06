@@ -519,27 +519,17 @@ public class RequestController implements ControllableScreen{
     @FXML
     private ChoiceBox<Node> kioskLocationChoice;
 
-    public void saveSettingsPressed(ActionEvent e){
-        if(searchStrategyChoice.getValue() != null){
+    public void saveSettingsPressed(ActionEvent e) {
+        if (searchStrategyChoice.getValue() != null) {
             System.out.println(searchStrategyChoice.getValue());
             map.setSearchStrategy(searchStrategyChoice.getValue());
             map.setKioskLocation(kioskLocationChoice.getValue());
-        }
-        else{
+        } else {
             System.out.println("Strategy DropDown Empty");
-            //s.shake(searchStrategyChoice);
-            shakeDropdown(searchStrategyChoice);
+            s.shake(searchStrategyChoice);
+            //shakeDropdown(searchStrategyChoice);
         }
-
-    public void shakeDropdown(ChoiceBox m){
-        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
-        t.setByX(25f);
-        t.setCycleCount(4);
-        t.setAutoReverse(true);
-        t.setDelay(Duration.millis(350));
-        t.playFromStart();
     }
-
 
 
 }
