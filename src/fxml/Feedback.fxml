@@ -5,8 +5,10 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
     <children>
       <GridPane>
         <columnConstraints>
@@ -103,41 +105,37 @@
                  <content>
                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="400.0">
                          <children>
-                             <GridPane layoutY="-38.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                             <GridPane prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columnConstraints>
                                      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                                      <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
                                      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                                  </columnConstraints>
                                  <rowConstraints>
-                                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
-                                     <RowConstraints vgrow="NEVER" />
-                                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+                                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="25.0" vgrow="ALWAYS" />
+                                     <RowConstraints minHeight="157.0" vgrow="NEVER" />
+                                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="25.0" vgrow="ALWAYS" />
                                  </rowConstraints>
                                  <children>
-                                     <VBox alignment="CENTER" prefHeight="1000.0" prefWidth="1000.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <JFXButton fx:id="Previous" mnemonicParsing="false" onAction="#pressPrevious" text="Previous" GridPane.columnIndex="1" />
+                              <JFXButton fx:id="Next" mnemonicParsing="false" onAction="#pressNext" text="Next" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                                     <VBox alignment="CENTER" prefHeight="817.0" prefWidth="1000.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                          <children>
-                                             <Label alignment="CENTER" prefHeight="15.0" prefWidth="103.0" text="Help" textFill="#e4e4e4">
+                                             <Label fx:id="HelpTitle" text="Title" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                 <VBox.margin>
+                                                     <Insets right="500.0" />
+                                                 </VBox.margin>
                                                  <font>
-                                                     <Font size="18.0" />
+                                                     <Font size="39.0" />
+                                                 </font></Label>
+                                             <ImageView fx:id="ImageViewer" fitHeight="470.0" fitWidth="957.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                             <ScrollPane>
+                                             <Label fx:id="HelpDescription" contentDisplay="CENTER" style="-fx-text-fill: #000000;" text="Desc" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                                                 <font>
+                                                     <Font size="20.0" />
                                                  </font>
-                                                 <padding>
-                                                     <Insets bottom="40.0" />
-                                                 </padding>
-                                       <VBox.margin>
-                                          <Insets bottom="100.0" top="-0.0" />
-                                       </VBox.margin>
                                              </Label>
-                                    <JFXButton mnemonicParsing="false" text="Next">
-                                       <VBox.margin>
-                                          <Insets left="500.0" />
-                                       </VBox.margin>
-                                    </JFXButton>
-                                    <JFXButton mnemonicParsing="false" text="Previous">
-                                       <VBox.margin>
-                                          <Insets left="500.0" top="50.0" />
-                                       </VBox.margin>
-                                    </JFXButton>
+                                             </ScrollPane>
                                          </children>
                                          <padding>
                                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

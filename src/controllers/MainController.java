@@ -83,16 +83,6 @@ public class MainController implements ControllableScreen, Observer{
 
 
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
-
-        int questionSize = 100;
-        question = new Pane();
-        question.setPrefSize(questionSize,questionSize);
-        Image questionImage = new Image("images/arrow.png");
-        ImageView questionView = new ImageView(questionImage);
-        questionView.setFitHeight(questionSize);
-        questionView.setFitWidth(questionSize);
-        question.setVisible(true);
-        question.getChildren().add(questionView);
     }
 
     public void onShow(){
