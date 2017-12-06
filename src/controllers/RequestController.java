@@ -266,14 +266,17 @@ public class RequestController implements ControllableScreen{
 
     public void createPressedApi(ActionEvent e)
     {
-        runAPI();
+        Node desNode = apiLocationChoiceBox.getSelectionModel().getSelectedItem();
+        if(desNode != null) {
+            runAPI(desNode);
+        }
     }
 
-    public void runAPI(){
+    public void runAPI(Node desNode){
         Stage primaryStage = new Stage();
         SanitationService api = SanitationService.newInstance(primaryStage);
         //SampleService api = new SampleService();
-        api.run(100, 100, 500, 500, null, "BINFO00102", null);
+        api.run(100, 100, 500, 500, null, desNode.getID(), null);
     }
 
     public void cancelPressedAPI(ActionEvent e)
