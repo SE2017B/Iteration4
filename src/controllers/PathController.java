@@ -137,7 +137,7 @@ public class PathController implements ControllableScreen, Observer{
         floors = new ArrayList<FloorNumber>();
 
         mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
-        mainAnchorPane.setTopAnchor(mapViewer.getMapViewerPane(), 100.0);
+        mainAnchorPane.setTopAnchor(mapViewer.getMapViewerPane(), 50.0);
 
         mapViewer.getMapViewerPane().prefHeightProperty().bind(mainAnchorPane.prefHeightProperty().subtract(200));
         animationCount=0;

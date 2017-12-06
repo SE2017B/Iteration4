@@ -49,7 +49,7 @@ public class PathViewer {
     public void initAnimation(double startx, double starty, double endx, double endy){
         //set up speed
         System.out.println("The speed is"+speed);
-        animationCount=150;
+        animationCount=90;
         speed.set(0,((endx-startx)/animationCount));
         speed.set(1,(endy-starty)/animationCount);
         goal.set(0,endx);
@@ -64,7 +64,7 @@ public class PathViewer {
         return Math.sqrt(length);
     }
     public void initScaling(double start, double end){
-        scaleCount=80;
+        scaleCount=50;
         scaleSpeed=(end-start)/scaleCount;
         scaleGoal=end;
         scale=start;
@@ -161,7 +161,7 @@ public class PathViewer {
     }
 
     public double getScale(){
-        return Math.min(Math.pow((5000-getWidth())/5000.0,1.5), Math.pow((3400-getHeight())/3400.0,1.5));
+        return Math.min(Math.pow((5000-getWidth())/5000.0,2.1), Math.pow((3400-getHeight())/3400.0,2.1));
     }
 
 }
