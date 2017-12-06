@@ -145,6 +145,7 @@ public class PathController implements ControllableScreen, Observer{
 
         mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
 
+
         animationCount=0;
 
         arrow = new Pane();
