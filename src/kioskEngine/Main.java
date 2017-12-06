@@ -13,8 +13,12 @@ import database.edgeDatabase;
 import database.nodeDatabase;
 import database.staffDatabase;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.InputEvent;
 import javafx.stage.Stage;
 
 import java.sql.DriverManager;
@@ -57,8 +61,16 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setWidth(1280);
         primaryStage.setHeight(800);
-        primaryStage.show();
 
+        EventHandler reset = new EventHandler<InputEvent>() {
+            @Override
+            public void handle(InputEvent event){
+                myScreenController.resetTimeout();
+            }};
+        scene.addEventFilter(MouseEvent.MOUSE_MOVED, reset);
+        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, reset);
+        scene.addEventFilter(KeyEvent.KEY_TYPED, reset);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
