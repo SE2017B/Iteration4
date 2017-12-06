@@ -10,6 +10,10 @@ package controllers;
 
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
+import api.SanitationService;
+
++
+import api.SanitationService;
 import com.jfoenix.controls.*;
 import database.staffDatabase;
 import javafx.animation.TranslateTransition;
@@ -21,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import map.HospitalMap;
 import map.Node;
@@ -262,7 +267,14 @@ public class RequestController implements ControllableScreen{
 
     public void createPressedApi(ActionEvent e)
     {
+        runAPI();
+    }
 
+    public void runAPI(){
+        Stage primaryStage = new Stage();
+        SanitationService api = SanitationService.newInstance(primaryStage);
+        //SampleService api = new SampleService();
+        api.run(100, 100, 500, 500, null, "BINFO00102", null);
     }
 
     public void cancelPressedAPI(ActionEvent e)
@@ -527,5 +539,7 @@ public class RequestController implements ControllableScreen{
         t.setDelay(Duration.millis(350));
         t.playFromStart();
     }
+
+
 
 }
