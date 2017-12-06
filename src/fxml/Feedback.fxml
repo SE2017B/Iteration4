@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
     <children>
       <GridPane>
         <columnConstraints>
@@ -94,11 +94,56 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab text="Help">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" />
-              </content>
-            </Tab>
+             <Tab text="Help">
+                 <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="400.0">
+                         <children>
+                             <GridPane layoutY="-38.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columnConstraints>
+                                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                     <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
+                                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+                                     <RowConstraints vgrow="NEVER" />
+                                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+                                 </rowConstraints>
+                                 <children>
+                                     <VBox alignment="CENTER" prefHeight="1000.0" prefWidth="1000.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                         <children>
+                                             <Label alignment="CENTER" prefHeight="15.0" prefWidth="103.0" text="Help" textFill="#e4e4e4">
+                                                 <font>
+                                                     <Font size="18.0" />
+                                                 </font>
+                                                 <padding>
+                                                     <Insets bottom="40.0" />
+                                                 </padding>
+                                       <VBox.margin>
+                                          <Insets bottom="100.0" top="-0.0" />
+                                       </VBox.margin>
+                                             </Label>
+                                    <JFXButton mnemonicParsing="false" text="Next">
+                                       <VBox.margin>
+                                          <Insets left="500.0" />
+                                       </VBox.margin>
+                                    </JFXButton>
+                                    <JFXButton mnemonicParsing="false" text="Previous">
+                                       <VBox.margin>
+                                          <Insets left="500.0" top="50.0" />
+                                       </VBox.margin>
+                                    </JFXButton>
+                                         </children>
+                                         <padding>
+                                             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                         </padding>
+                                     </VBox>
+                                 </children>
+                             </GridPane>
+                         </children>
+                     </AnchorPane>
+                 </content>
+             </Tab>
             <Tab text="About">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
