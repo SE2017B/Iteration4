@@ -12,10 +12,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<Pane minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
       <AnchorPane fx:id="mainAnchorPane" layoutX="-5.0" minHeight="400.0" minWidth="800.0" styleClass="pane">
          <children>
@@ -24,14 +25,16 @@
                   <Font size="24.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="questionButton" layoutX="45.0" layoutY="89.0" mnemonicParsing="false" onAction="#questionPressed" prefHeight="76.0" prefWidth="100.0" visible="true">
-               <graphic>
-                  <ImageView fitHeight="59.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true">
+            <StackPane AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="90.0">
+               <children>
+                  <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/question.png" />
                      </image>
                   </ImageView>
-               </graphic></JFXButton>
+                  <JFXButton fx:id="questionButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#questionPressed" prefHeight="65.0" prefWidth="65.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" visible="true" />
+               </children>
+            </StackPane>
             <JFXButton fx:id="btndirection" buttonType="RAISED" onAction="#directionPressed" prefHeight="50.0" prefWidth="150.0" text="Directions" textFill="WHITE" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
                <font>
                   <Font size="24.0" />

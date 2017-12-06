@@ -29,6 +29,11 @@
     -fx-background-color: darkorange;
 }
 
+.jfx-slider{
+    -fx-progress-color-color: darkorange;
+    -fx-prompt-text-fill: white;
+}
+
 
 
 
