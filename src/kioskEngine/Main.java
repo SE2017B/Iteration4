@@ -106,7 +106,7 @@ public class Main extends Application {
 
         staffDatabase.readStaffCSV("/csv/staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
-        
+
         launch(args);
 
         nodeDatabase.outputNodesCSV();
