@@ -16,6 +16,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import map.FloorNumber;
@@ -63,14 +65,14 @@ public class MapViewer extends Observable{
         nextFloor = new Label();
 
         prevFloor.setText("Previous Floor");
-        prevFloor.setTextAlignment(TextAlignment.CENTER);
+        prevFloor.setAlignment(Pos.CENTER);
         prevFloor.setPrefWidth(150);
         prevFloor.getStyleClass().add("text-on-white");
         prevFloor.setVisible(false);
         mapViewerPane.setBottomAnchor(prevFloor, 80.0);
 
         nextFloor.setText("Next Floor");
-        nextFloor.setTextAlignment(TextAlignment.CENTER);
+        nextFloor.setAlignment(Pos.CENTER);
         nextFloor.setPrefWidth(150);
         nextFloor.getStyleClass().add("text-on-white");
         nextFloor.setVisible(false);
@@ -93,6 +95,7 @@ public class MapViewer extends Observable{
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         container.getStyleClass().add("buttonScrollPane");
+        container.setPadding(new Insets(20, 0, 0, 0));
 
 
 
@@ -168,9 +171,9 @@ public class MapViewer extends Observable{
         spacerLeft.setPrefWidth(SPACER_WIDTH);
         SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING*2));
         container.setPrefWidth(SCROLL_WIDTH);
-        double w = buttonScrollPane.getBoundsInLocal().getWidth();
-        prevFloor.setLayoutX((w/2) - 235);
-        nextFloor.setLayoutX((w/2) + 235);
+        double w = mapViewerPane.getWidth();
+        prevFloor.setLayoutX((w/2) - 227);
+        nextFloor.setLayoutX((w/2) + 77);
     }
 
     public void floorButtonPressed(ActionEvent e){
