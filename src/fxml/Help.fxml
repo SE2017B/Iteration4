@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxml.Help">
+   <children>
+      <GridPane prefHeight="500.0" prefWidth="900.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="444.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="820.0" minWidth="10.0" prefWidth="727.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="444.0" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="334.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="395.0" minHeight="0.0" prefHeight="326.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="Exit" mnemonicParsing="false" text="X" textFill="RED" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="Previous" mnemonicParsing="false" text="Previous" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets top="40.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="Next" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Next" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets top="-40.0" />
+               </GridPane.margin>
+            </Button>
+            <Label fx:id="HelpDescription" prefHeight="73.0" prefWidth="704.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ImageView fx:id="ImageViewer" fitHeight="311.0" fitWidth="701.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label fx:id="HelpTitle" prefHeight="42.0" prefWidth="686.0" text="Title" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -81,8 +81,12 @@ public class MainController implements ControllableScreen, Observer{
         mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
         mapViewer.getMapScrollPane().setPannable(true);
 
-
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
+
+        mainAnchorPane.prefWidthProperty().bind(parent.prefWidthProperty());
+        mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+
     }
 
     public void onShow(){
@@ -91,6 +95,7 @@ public class MainController implements ControllableScreen, Observer{
         setFloor(curerntFloor);
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
         setZoom(0.8);
+
     }
 
     //Setters
