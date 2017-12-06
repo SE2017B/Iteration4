@@ -65,8 +65,8 @@ public class Path implements Comparable<Path> {
             double det = Vector1_2X * Vector2_3Y - Vector2_3X * Vector1_2Y;
             double angle = Math.toDegrees(Math.atan2(det, dot));
 
-            System.out.println(angle);
-            System.out.println(prevElevator);
+//            System.out.println(angle);
+//            System.out.println(prevElevator);
             System.out.println("Node 1: " + path.get(i-1).getShortName());
             System.out.println("Node 2: " + path.get(i).getShortName());
             System.out.println("Node 3: " + path.get(i+1).getShortName() + "\n");
@@ -132,6 +132,11 @@ public class Path implements Comparable<Path> {
             prevStop = false;
             straight = false;
         }
+
+        if(path.get(path.size()-2).getFloor().getNodeMapping() > path.get(path.size()-1).getFloor().getNodeMapping() ||
+                path.get(path.size()-2).getFloor().getNodeMapping() < path.get(path.size()-1).getFloor().getNodeMapping()){
+            directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(path.size()-1).getFloor().getDbMapping()));
+        }
         directions.add("Stop at " + path.get(path.size()-1).getShortName());
 
         //Eliminates multiple "go straights" in a row
@@ -165,7 +170,7 @@ public class Path implements Comparable<Path> {
     public ArrayList<String> getDirections(){
         return this.directions;
     }
-    public double getDistance(){
+    private double getDistance(){
         for(int i=0;i<this.path.size()-1;i++){
             this.distance += this.path.get(i).getEdgeOf(this.path.get(i+1)).getCost();
         }
