@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+import ui.ShakeTransition;
 
 public class LoginController implements ControllableScreen{
     public LoginController(){}
@@ -45,6 +46,8 @@ public class LoginController implements ControllableScreen{
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
+    ShakeTransition s = new ShakeTransition();
+
     public void enterPressed(ActionEvent e){
         System.out.println("Enter Pressed");
         //parent.setScreen(ScreenController.RequestID,"UP");
@@ -58,12 +61,12 @@ public class LoginController implements ControllableScreen{
             if(login.equals("")){
                 System.out.print("Login is empty");
                 //shake
-                shakeTextField(usernameField);
+                s.shake(usernameField);
             }
             if(passWord.equals("")){
                 System.out.println("Password is empty");
                 //shake
-                shakeTextField(passwordField);
+                s.shake(passwordField);
             }
             return;
         }
@@ -74,14 +77,5 @@ public class LoginController implements ControllableScreen{
         else{
             System.out.println("Wrong Pass/Login");
         }
-    }
-
-    public void shakeTextField(TextField m){
-        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
-        t.setByX(25f);
-        t.setCycleCount(4);
-        t.setAutoReverse(true);
-        t.setDelay(Duration.millis(350));
-        t.playFromStart();
     }
 }

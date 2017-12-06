@@ -407,6 +407,8 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeAddTypeDropDown.setText(text);
     }
 
+    ShakeTransition s = new ShakeTransition();
+
     public void nodeAddEnterPressed(ActionEvent e){
         System.out.println("Node Add Enter Pressed");
         ArrayList<Node> connections = new ArrayList<>();
@@ -428,38 +430,38 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(!nodeAddXField.getText().matches("[0-9]+")){
                 System.out.println("X Field is empty or contains letters");
                 //shake
-                shakeTextField(nodeAddXField);
+                s.shake(nodeAddXField);
             }
             if(!nodeAddYField.getText().matches("[0-9]+")){
                 System.out.println("Y Field is empty or contains letters");
                 //shake
-                shakeTextField(nodeAddYField);
+                s.shake(nodeAddYField);
             }
             System.out.println("Exited Floor if statement");
             if(nodeAddBuildingDropDown.getText().equals("Building")){
                 System.out.println("Building Dropdown Failed");
                 //shake
-                shakeDropdown(nodeAddBuildingDropDown);
+                s.shake(nodeAddBuildingDropDown);
             }
             if(nodeAddTypeDropDown.getText().equals("NodeType")){
                 System.out.println("Type Dropdown Failed");
                 //shake
-                shakeDropdown(nodeAddTypeDropDown);
+                s.shake(nodeAddTypeDropDown);
             }
             if(nodeAddShortField.getText().equals("")){
                 System.out.println("Short Field empty");
                 //shake
-                shakeTextField(nodeAddShortField);
+                s.shake(nodeAddShortField);
             }
             if(nodeAddNameField.getText().equals("")){
                 System.out.println("Name Field empty");
                 //shake
-                shakeTextField(nodeAddNameField);
+                s.shake(nodeAddNameField);
             }
         }
         refreshNodesandEdges();
     }
-
+/*
     public void shakeDropdown(MenuButton m){
         TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
         t.setByX(25f);
@@ -477,6 +479,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         t.setDelay(Duration.millis(350));
         t.playFromStart();
     }
+    */
 
     public void nodeAddCancelPressed(ActionEvent e){
         System.out.println("Node Add Cancel Pressed");
@@ -662,33 +665,33 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(!nodeEditXField.getText().matches("[0-9]+")){
                 System.out.println("X Field is empty or contains letters");
                 //shake
-                shakeTextField(nodeEditXField);
+                s.shake(nodeEditXField);
             }
             if(!nodeEditYField.getText().matches("[0-9]+")){
                 System.out.println("Y Field is empty or contains letters");
                 //shake
-                shakeTextField(nodeEditYField);
+                s.shake(nodeEditYField);
             }
             System.out.println("Exited Floor if statement");
             if(nodeEditBuildingDropDown.getText().equals("Building")){
                 System.out.println("Building Dropdown Failed");
                 //shake
-                shakeDropdown(nodeEditBuildingDropDown);
+                s.shake(nodeEditBuildingDropDown);
             }
             if(nodeEditTypeDropDown.getText().equals("NodeType")){
                 System.out.println("Type Dropdown Failed");
                 //shake
-                shakeDropdown(nodeEditTypeDropDown);
+                s.shake(nodeEditTypeDropDown);
             }
             if(nodeEditShortField.getText().equals("")){
                 System.out.println("Short Field empty");
                 //shake
-                shakeTextField(nodeEditShortField);
+                s.shake(nodeEditShortField);
             }
             if(nodeEditNameField.getText().equals("")){
                 System.out.println("Name Field empty");
                 //shake
-                shakeTextField(nodeEditNameField);
+                s.shake(nodeEditNameField);
             }
             return;
         }

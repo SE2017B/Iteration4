@@ -8,11 +8,9 @@
 
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXSlider;
+import com.jfoenix.controls.*;
 import exceptions.InvalidNodeException;
+import javafx.animation.AnimationTimer;
 import javafx.animation.Transition;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -58,6 +56,10 @@ public class PathController implements ControllableScreen, Observer{
     private PathTransition pathTransition;
     private Pane mapPane;
     private Path thePath;
+    //animation variables
+    private ArrayList<Integer> Center;
+    private boolean isAnimating;
+    private int animationCount;
 
     @FXML
     private ChoiceBox<Node> startNodeChoice;
@@ -90,6 +92,11 @@ public class PathController implements ControllableScreen, Observer{
     private JFXComboBox<Node> endTextSearch;
     @FXML
     private JFXButton btnReverse;
+    @FXML
+    private JFXTabPane startTabPane;
+    @FXML
+    private JFXTabPane endTabPane;
+
 
     //Methods start here
     public void init() {
@@ -106,6 +113,7 @@ public class PathController implements ControllableScreen, Observer{
         floors = new ArrayList<FloorNumber>();
 
         mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
+        animationCount=0;
 
         int arrowSize = 20;
         arrow = new Pane();
@@ -120,8 +128,36 @@ public class PathController implements ControllableScreen, Observer{
         pathTransition = new PathTransition();
 
         //add listeners
+
         startTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(startTextSearch, newText));
         endTextSearch.getEditor().textProperty().addListener((obs, oldText, newText) -> searchText(endTextSearch, newText));
+
+        //position map
+        Center= new ArrayList<>();
+        Center.add(1500);
+        Center.add(850);
+        //using animation to update position
+        new AnimationTimer(){
+            @Override
+            public void handle(long now) {
+                /**
+                if(animationCount>0) {
+                    mapViewer.centerView(Center.get(0), Center.get(1));
+                    animationCount--;
+
+                }
+                 **/
+                if(currentPath!=null){
+                  if(currentPath.isAnimating){
+                      System.out.println("Current position "+ mapViewer.getCenter());
+                      ArrayList<Integer> pos = currentPath.getPos(mapViewer.getCenter().get(0),mapViewer.getCenter().get(1));
+                      System.out.println("New Position "+ pos);
+                      mapViewer.centerView(pos.get(0), pos.get(1));
+                      //System.out.println("Animating path");
+                  }
+                }
+            }
+        }.start();
     }
 
         private void searchText(ComboBox<Node> textSearch, String text){
@@ -180,14 +216,19 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private Path getPath(){
-
-        Node s= startTextSearch.getValue();
-        Node e = endTextSearch.getValue();
-        if(s==null){
+        Node s;
+        Node e;
+        if(startTabPane.getSelectionModel().getSelectedIndex()==0){
+            s= startTextSearch.getValue();
+        }
+        else{
             s=startNodeChoice.getValue();
         }
-        if(e==null){
-            endNodeChoice.getValue();
+        if(endTabPane.getSelectionModel().getSelectedIndex()==0){
+            e= endTextSearch.getValue();
+        }
+        else{
+            e=endNodeChoice.getValue();
         }
         return map.findPath(s,e);
     }
@@ -196,9 +237,13 @@ public class PathController implements ControllableScreen, Observer{
     private void controlScroller(PathViewer p){
         double x = p.getCenter().get(0);
         double y = p.getCenter().get(1);
+        System.out.println("X is "+x+" Y is "+y);
         //height
-        mapViewer.centerView((int)x,(int)y);
-
+        Center.set(0,(int)x);
+        Center.set(1,(int)y);
+        p.initAnimation(mapViewer.getCenter().get(0),mapViewer.getCenter().get(1),(int)x,(int)y);
+        //mapViewer.centerView((int)x,(int)y);
+        animationCount=5; //center a bunch of times to make sure it actually centers
     }
 
     private void SetPaths(Path path){
@@ -407,6 +452,8 @@ public class PathController implements ControllableScreen, Observer{
                 switchPath(currentPath);
             }
         }
+        //System.out.println("Updating");
+        //mapViewer.centerView(Center.get(0),Center.get(1));
     }
     //-----------------------NODE SELECT END--------------------------//
     public void startTypeSelected(ActionEvent e){

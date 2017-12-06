@@ -155,7 +155,7 @@ public class Node{
     //Override to turn int into a string
     @Override
     public String toString(){
-        return this.shortName;
+        return this.longName;
     }
 
     //Keep this method in mind for when we are having HashTable issues

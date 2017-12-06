@@ -1,24 +1,13 @@
-/*
-* Software Engineering 3733, Worcester Polytechnic Institute
-* Team H
-* Code produced for Iteration2
-* Original author(s): Erika Snow
-* The following code
-*/
+package TestSearch;
 
-package TestMap;
-
-import exceptions.InvalidNodeException;
-import map.*;
+import map.Node;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
+import search.BestFirstSearch;
 
 import static org.junit.Assert.assertEquals;
 
-public class PathTest {
-    public PathTest(){}
+public class BestFirstSearchTest {
     private Node N1 = new Node("A1", "0", "0", "L1", "Tower", "Bathroom", "Long1", "Short1", "H");
     private Node N2 = new Node("A2", "0", "200", "L1", "Tower", "Desk", "Long2", "Short2", "H");
     private Node N3 = new Node("A3", "0", "400", "L1", "Tower", "Desk", "Long3", "Short3", "H");
@@ -67,11 +56,10 @@ public class PathTest {
     private Node N22_2 = new Node("A22_2", "700", "400", "L2", "Tower", "Desk", "Long22_2", "Short22_2", "H");
     private Node N23_2 = new Node("A23_2", "800", "400", "L2", "Tower", "Desk", "Long23_2", "Short23_2", "H");
 
-
-
+    private BestFirstSearch search = new BestFirstSearch();
 
     @Before
-    public void initialize(){
+    public void initialize() {
         //Creating nodes for the map
 
         //Add connections for nodeOne
@@ -222,71 +210,71 @@ public class PathTest {
 
         //Add connections for nodeTwentyTwo_2
 
-        //Add connections for nodeTwentyThree_2
-
-    }
-
-    //---------------------------BEGIN TEST PATH PARAMS-------------------------------------------//
-    @Test
-    public void testGetPath(){
-
+        //Add connections for nodeTwentyThree_2\
     }
 
     @Test
-    public void testGetDirections(){
-
+    public void testMap1(){
+        String answer = search.findPath(N1, N9).toString();
+        System.out.println(answer);
+        assertEquals("[Short1, Short2, Short3, Short9]", answer);
+    }
+    @Test
+    public void testMap1Reverse(){
+        String answer = search.findPath(N9, N1).toString();
+        System.out.println(answer);
+        assertEquals("[Short9, Short8, Short7, Short6, Short1]", answer);
     }
 
     @Test
-    public void testGetDistance(){
-
+    public void testMap2(){
+        String answer = search.findPath(N1, N18_2).toString();
+        System.out.println(answer);
+        assertEquals("[Short1, Short6, Short7, Short8, Short9, Short9_2, Short15_2, Short14_2, Short18_2]", answer);
     }
-    //----------------------------END TEST EDGE PARAMS--------------------------------------------//
-
-    //test addToPath(Node node)
     @Test
-    public void testAddToPath(){
-
-    }
-
-    //test addToPath(Node node, int position)
-    @Test
-    public void testAddToPath2(){
-
-    }
-
-    //test addToPath(Path path)
-    @Test
-    public void testAddToPath3(){
-
+    public void testMap2Reverse(){
+        String answer = search.findPath(N18_2, N1).toString();
+        System.out.println(answer);
+        assertEquals("[Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short8, Short7, Short6, Short1]", answer);
     }
 
     @Test
-    public void testAddDirections(){
-
+    public void testMap3(){
+        String answer = search.findPath(N5, N23_2).toString();
+        System.out.println(answer);
+        assertEquals("[Short5, Short8, Short9, Short9_2, Short15_2, Short14_2, Short18_2, Short21_2, Short23_2]", answer);
+    }
+    @Test
+    public void testMap3Reverse(){
+        String answer = search.findPath(N23_2, N5).toString();
+        System.out.println(answer);
+        assertEquals("[Short23_2, Short21_2, Short18_2, Short14_2, Short15_2, Short9_2, Short9, Short8, Short5]", answer);
     }
 
     @Test
-    public void testAddDistance(){
-
+    public void testMap4(){
+        String answer = search.findPath(N20, N4).toString();
+        System.out.println(answer);
+        assertEquals("[Short20, Short21, Short18, Short14, Short11, Short10, Short7, Short4]", answer);
     }
-
-    //---------------------------BEGIN TEST findDirections()-------------------------------------------//
     @Test
-    public void testFindDirections(){
-
+    public void testMap4Reverse(){
+        String answer =search.findPath(N4, N20).toString();
+        System.out.println(answer);
+        assertEquals("[Short4, Short7, Short10, Short11, Short14, Short13, Short17, Short20]", answer);
     }
-    //---------------------------END TEST findDirections()-------------------------------------------//
 
-    //---------------------------BEGIN TEST getReverse()-------------------------------------------//
     @Test
-    public void testGetReverse1(){
-        Path path = new Path();
-        path.addToPath(N1);
-        path.addToPath(N2);
-        path.addToPath(N3);
-        path.addToPath(N9);
-        assertEquals("[Short9, Short3, Short2, Short1]", path.getReverse().toString());
+    public void testMap5(){
+        String answer = search.findPath(N23, N1_2).toString();
+        System.out.println(answer);
+        assertEquals("[Short23, Short21, Short18, Short14, Short15, Short9, Short9_2, Short8_2, Short7_2, Short6_2, Short1_2]", answer);
     }
-    //---------------------------END TEST getReverse()-------------------------------------------//
+    @Test
+    public void testMap5Reverse(){
+        String answer = search.findPath(N1_2, N23).toString();
+        System.out.println(answer);
+        assertEquals("[Short1_2, Short6_2, Short7_2, Short8_2, Short9_2, Short9, Short15, Short14, Short18, Short21, Short23]", answer);
+    }
 }

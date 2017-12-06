@@ -13,11 +13,55 @@ public class PathViewer {
     private PathID pathID;
     private ArrayList<Shape> shapes;
     private ArrayList<Integer> dimensions;
+    //animation variables
+    private ArrayList<Integer> goal;
+    private ArrayList<Integer> speed;
+    private ArrayList<Integer> pos;
+    public boolean isAnimating;
+    private int animationCount;
 
     public PathViewer(Path path){
         this.path=path;
         this.shapes=new ArrayList<Shape>();
         dimensions = getEdgeDims();
+        //set up animations
+        goal= new ArrayList<>();
+        speed = new ArrayList<>();
+        pos = new ArrayList<>();
+        animationCount=0;
+        goal.add(0);//x
+        goal.add(0);//y
+        speed.add(0);
+        speed.add(0);
+        pos.add(0);
+        pos.add(0);
+        isAnimating=false;
+    }
+    public void initAnimation(int startx, int starty, int endx, int endy){
+        double length = Math.pow((Math.pow((startx-starty),2)+Math.pow((endx-endy),2)),0.5);
+
+        //set up speed
+        System.out.println("The speed is"+speed);
+        animationCount=50;
+        speed.set(0,((endx-startx)/animationCount));
+        speed.set(1,(endy-starty)/animationCount);
+        goal.set(0,endx);
+        goal.set(1,endy);
+        pos.set(0,startx);
+        pos.set(1,starty);
+        isAnimating=true;
+
+    }
+    public ArrayList<Integer> getPos(int x,int y){
+        //update position
+        pos.set(0,pos.get(0)+speed.get(0));
+        pos.set(1,pos.get(1)+speed.get(1));
+        if((Math.abs((pos.get(0))-goal.get(0))<10) || animationCount<=0){
+            isAnimating=false;
+            return goal;
+        }
+        animationCount--;
+        return pos;
     }
 
     private ArrayList<Integer> getEdgeDims(){
