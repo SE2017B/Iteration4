@@ -292,10 +292,10 @@ public class MapViewer extends Observable{
         nextFloor.setVisible(true);
     }
 
-    public void centerView(int x, int y) {
+    public void centerView(double x, double y) {
 
-        x = (int) (x * mapPane.getScaleX());
-        y = (int) (y * mapPane.getScaleY());
+        x =  (x * mapPane.getScaleX());
+        y =  (y * mapPane.getScaleY());
 
         //height
         double h = mapScrollPane.getContent().getBoundsInLocal().getHeight();
@@ -336,8 +336,8 @@ public class MapViewer extends Observable{
 
     }
 
-    public ArrayList<Integer> getCenter(){
-        ArrayList<Integer> ans = new ArrayList<>();
+    public ArrayList<Double> getCenter(){
+        ArrayList<Double> ans = new ArrayList<>();
         //height
         double h = mapScrollPane.getContent().getBoundsInLocal().getHeight();
         double v = mapScrollPane.getViewportBounds().getHeight();
@@ -347,8 +347,15 @@ public class MapViewer extends Observable{
 
         double y = (mapScrollPane.getVvalue()*(h-v)) + (0.5*v);
         double x = (mapScrollPane.getHvalue()*(w - H)) + (0.5*H);
-        ans.add((int)x);
-        ans.add((int)y);
+        ans.add(x);
+        ans.add(y);
+        return ans;
+    }
+    public ArrayList<Double> getCenterAt(double scale){
+        double cScale = getScale();
+        setScale(scale);//set temporary scale
+        ArrayList<Double> ans = getCenter();
+        setScale(cScale);//revert back to normal scale
         return ans;
     }
 

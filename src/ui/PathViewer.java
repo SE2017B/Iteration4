@@ -14,10 +14,11 @@ public class PathViewer {
     private ArrayList<Shape> shapes;
     private ArrayList<Integer> dimensions;
     //animation variables
-    private ArrayList<Integer> goal;
-    private ArrayList<Integer> speed;
-    private ArrayList<Integer> pos;
+    private ArrayList<Double> goal;
+    private ArrayList<Double> speed;
+    private ArrayList<Double> pos;
     public boolean isAnimating;
+    public boolean hasAnimated;
     private int animationCount;
     //size animation
     private double scaleGoal;
@@ -35,19 +36,20 @@ public class PathViewer {
         speed = new ArrayList<>();
         pos = new ArrayList<>();
         animationCount=0;
-        goal.add(0);//x
-        goal.add(0);//y
-        speed.add(0);
-        speed.add(0);
-        pos.add(0);
-        pos.add(0);
+        goal.add(0.0);//x
+        goal.add(0.0);//y
+        speed.add(0.0);
+        speed.add(0.0);
+        pos.add(0.0);
+        pos.add(0.0);
         isAnimating=false;
+        hasAnimated=false;
 
     }
-    public void initAnimation(int startx, int starty, int endx, int endy){
+    public void initAnimation(double startx, double starty, double endx, double endy){
         //set up speed
         System.out.println("The speed is"+speed);
-        animationCount=50;
+        animationCount=200;
         speed.set(0,((endx-startx)/animationCount));
         speed.set(1,(endy-starty)/animationCount);
         goal.set(0,endx);
@@ -68,12 +70,13 @@ public class PathViewer {
         System.out.println("Speed is "+ scaleSpeed);
         System.out.println("Scale start is "+ start);
     }
-    public ArrayList<Integer> getPos(){
+    public ArrayList<Double> getPos(){
         //update position
         pos.set(0,pos.get(0)+speed.get(0));
         pos.set(1,pos.get(1)+speed.get(1));
         if(( animationCount<=0)){
             isAnimating=false;
+            hasAnimated=true;
         }
         animationCount--;
         return pos;
@@ -87,6 +90,9 @@ public class PathViewer {
         scaleCount--;
         System.out.println("Scaling stuff hahahaha");
         return scale;
+    }
+    public double getscaleGoal(){
+        return scaleGoal;
     }
 
     private ArrayList<Integer> getEdgeDims(){
