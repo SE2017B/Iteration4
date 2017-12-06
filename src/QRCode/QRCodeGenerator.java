@@ -19,6 +19,8 @@ public class QRCodeGenerator {
     private final int black;
     private final int lineBound;
 
+    private boolean isComplete;
+
     public QRCodeGenerator(){
         this.width = 256;
         this.height = 256;
@@ -42,6 +44,7 @@ public class QRCodeGenerator {
     //This will generate one QR code, and throws an expression if the lines are over the limit
     public void writeQRList(ArrayList<String> list, String filename) throws NonValidQRCodeMessageException {
         String path = "";
+        isComplete = false;
         for(String direction: list){
             String endString = ".";
             if(!((list.indexOf(direction) + 1) == list.size()))
@@ -49,6 +52,7 @@ public class QRCodeGenerator {
             path += direction + endString;
         }
         writeQRCode(path, filename);
+        isComplete = true;
     }
 
     //This writes a QR code from a string. Call this if you want to print something basic.
@@ -77,6 +81,9 @@ public class QRCodeGenerator {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    public boolean isComplete(){
+        return this.isComplete;
     }
 
     public static void main(String[] args){

@@ -43,6 +43,7 @@ import javafx.animation.PathTransition;
 
 import ui.*;
 
+import java.io.File;
 import java.util.*;
 
 public class PathController implements ControllableScreen, Observer{
@@ -555,7 +556,14 @@ public class PathController implements ControllableScreen, Observer{
         try {
             qr.writeQRList(directions, "src/images/qr");
             System.out.println("QR Success");
-            qrImageView.setImage(new Image("/images/qr.jpg"));
+            while(!qr.isComplete()){
+                System.out.println("Waiting on qr");
+            }
+
+            File f = new File("/image/qr/jpg");
+            System.out.println("File" + f.getParent() + ", " + f.getParentFile() );
+
+            qrImageView.setImage(new Image("file:src/images/qr.jpg"));
         }
         catch (NonValidQRCodeMessageException e){
             System.out.println("QR too long");
