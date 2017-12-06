@@ -8,10 +8,7 @@
 
 package controllers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -59,19 +56,8 @@ public class ScreenController extends StackPane {
                 setScreen(screenMomento.getState());
             pause.play();
         });
+        pause.setCycleCount(Animation.INDEFINITE);
         pause.play();
-        setOnMouseClicked(e -> {
-            pause.stop();
-            pause.play();
-        });
-        setOnKeyPressed( e -> {
-            pause.stop();
-            pause.play();
-        });
-        setOnMouseMoved( e ->{
-            pause.stop();
-            pause.play();
-        });
 
     }
 
@@ -213,6 +199,14 @@ public class ScreenController extends StackPane {
     public boolean unloadScreen(String name) {
         screens.remove(name);
         return true;
+    }
+
+    public void resetTimeout(){
+        pause.stop();
+        pause.play();
+    }
+    public void pauseTimeout(){
+        pause.pause();
     }
 
     public void saveState(){
