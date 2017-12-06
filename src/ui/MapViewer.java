@@ -10,11 +10,15 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import map.FloorNumber;
 
@@ -24,7 +28,7 @@ public class MapViewer extends Observable{
     private int SCROLL_WIDTH = 2000;
     private int SPACER_WIDTH = 500;
     private final int SPACING = 10;
-    private final int BUTTON_HEIGHT = 80;
+    private final int BUTTON_HEIGHT = 50;
     private final int BUTTON_WIDTH = 150;
 
     private ArrayList<String> buttonOrder;
@@ -45,6 +49,9 @@ public class MapViewer extends Observable{
 
     private proxyImagePane mapImage;
 
+    private Label prevFloor;
+    private Label nextFloor;
+
     public MapViewer(Observer o, Pane parent){
         super();
         buttonScrollPane = new ScrollPane();
@@ -54,7 +61,22 @@ public class MapViewer extends Observable{
         buttonDrawer = new JFXDrawer();
         mapViewerPane = new AnchorPane();
         mapHolderPane = new Pane();
+        prevFloor = new Label();
+        nextFloor = new Label();
 
+        prevFloor.setText("Previous Floor");
+        prevFloor.setAlignment(Pos.CENTER);
+        prevFloor.setPrefWidth(150);
+        prevFloor.getStyleClass().add("text-on-white");
+        prevFloor.setVisible(false);
+        mapViewerPane.setBottomAnchor(prevFloor, 80.0);
+
+        nextFloor.setText("Next Floor");
+        nextFloor.setAlignment(Pos.CENTER);
+        nextFloor.setPrefWidth(150);
+        nextFloor.getStyleClass().add("text-on-white");
+        nextFloor.setVisible(false);
+        mapViewerPane.setBottomAnchor(nextFloor, 80.0);
 
         mapImage = new proxyImagePane();
         mapPane.getChildren().add(mapImage);
@@ -73,6 +95,7 @@ public class MapViewer extends Observable{
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         container.getStyleClass().add("buttonScrollPane");
+        container.setPadding(new Insets(20, 0, 0, 0));
 
 
 
@@ -102,7 +125,7 @@ public class MapViewer extends Observable{
         mapViewerPane.prefHeightProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
 
 
-        mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
+        mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane, prevFloor, nextFloor);
         mapViewerPane.setBottomAnchor(buttonScrollPane, 0.0);
 
         mapScrollPane.setPannable(true);
@@ -148,7 +171,9 @@ public class MapViewer extends Observable{
         spacerLeft.setPrefWidth(SPACER_WIDTH);
         SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING*2));
         container.setPrefWidth(SCROLL_WIDTH);
-
+        double w = mapViewerPane.getWidth();
+        prevFloor.setLayoutX((w/2) - 227);
+        nextFloor.setLayoutX((w/2) + 77);
     }
 
     public void floorButtonPressed(ActionEvent e){
@@ -167,6 +192,8 @@ public class MapViewer extends Observable{
     private void clearButtons(){
         container.getChildren().clear();
         buttonOrder.clear();
+        prevFloor.setVisible(false);
+        nextFloor.setVisible(false);
     }
 
     //Getters
@@ -261,6 +288,8 @@ public class MapViewer extends Observable{
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         setFloor(floors.get(0),0);
+        prevFloor.setVisible(true);
+        nextFloor.setVisible(true);
     }
 
     public void centerView(int x, int y) {
@@ -306,6 +335,7 @@ public class MapViewer extends Observable{
 
 
     }
+
     public ArrayList<Integer> getCenter(){
         ArrayList<Integer> ans = new ArrayList<>();
         //height

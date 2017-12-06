@@ -3,10 +3,10 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
     <children>
       <GridPane>
         <columnConstraints>
@@ -66,15 +66,20 @@
                                                   <Insets bottom="40.0" />
                                               </padding>
                                           </Label>
-                                    <JFXSlider fx:id="starSlider" majorTickUnit="1.0" max="5.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-                                          <JFXTextField fx:id="commentField" alignment="CENTER" focusColor="WHITE" promptText="Additional Comments" styleClass="text-on-dark" unFocusColor="#c9c9c9">
-                                              <font>
-                                                  <Font size="15.0" />
-                                              </font>
-                                              <VBox.margin>
-                                                  <Insets bottom="20.0" top="20.0" />
-                                              </VBox.margin>
-                                          </JFXTextField>
+                                    <JFXSlider fx:id="starSlider" majorTickUnit="1.0" max="5.0" minorTickCount="0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+                                    <Label text="Additional Comments">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="30.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextArea prefHeight="200.0" prefWidth="400.0">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </TextArea>
                                           <JFXButton fx:id="enterButton" alignment="CENTER" onAction="#enterPressed" text="Enter">
                                               <font>
                                                   <Font size="33.0" />
@@ -102,6 +107,51 @@
             <Tab text="About">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <GridPane prefHeight="180.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <columnConstraints>
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                      <children>
+                          <Label alignment="CENTER" prefHeight="19.0" prefWidth="59.0" text="Credits" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                              <font>
+                                  <Font size="18.0" />
+                              </font>
+                          </Label>
+                          <Label alignment="CENTER" layoutX="381.0" layoutY="9.0" prefHeight="19.0" prefWidth="196.0" text="WPI Computer Science Department" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                          <Label alignment="CENTER" layoutX="312.0" layoutY="38.0" prefHeight="19.0" prefWidth="196.0" text="CS 3733 Software Engineering " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                          <Label alignment="CENTER" layoutX="312.0" layoutY="63.0" prefHeight="19.0" prefWidth="196.0" text="Professor Wilson Wong" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                          <Label alignment="CENTER" layoutX="312.0" layoutY="81.0" prefHeight="19.0" prefWidth="227.0" text="Meghana Bhatia : Documentation Analyst" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                          <Label alignment="CENTER" layoutX="312.0" layoutY="104.0" prefHeight="19.0" prefWidth="196.0" text="Leo Grande : Project Manager" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                          <Label alignment="CENTER" layoutX="312.0" layoutY="122.0" prefHeight="19.0" prefWidth="206.0" text="Nick Fajardo : Assistant Lead Engineer" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                          <Label alignment="CENTER" prefHeight="19.0" prefWidth="268.0" text="William Mosby (Vojta) : Lead Developer Engineer " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                          <Label alignment="CENTER" layoutX="276.0" layoutY="166.0" prefHeight="19.0" prefWidth="204.0" text="Travis Norris : Assitant Lead Engineer " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                          <Label alignment="CENTER" layoutX="308.0" layoutY="188.0" prefHeight="19.0" prefWidth="200.0" text="Jack Palmstrom : Database Engineer " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="12" />
+                          <Label alignment="CENTER" layoutX="310.0" layoutY="210.0" prefHeight="19.0" prefWidth="179.0" text="Andrey Yuzvik : Product Owner" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="15" />
+                          <Label alignment="CENTER" layoutX="321.0" layoutY="232.0" prefHeight="19.0" prefWidth="229.0" text="Oluchukwu Okafor (Chima) : Test Engineer " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
+                          <Label alignment="CENTER" layoutX="296.0" layoutY="254.0" prefHeight="19.0" prefWidth="174.0" text="Erika Snow : Software Engineer " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="14" />
+                          <Label alignment="CENTER" layoutX="323.0" layoutY="276.0" prefHeight="19.0" prefWidth="207.0" text="Tyrone Patterson : Software Engineer " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="13" />
+                      </children>
+                  </GridPane>
               </content>
             </Tab>
          </tabs>
