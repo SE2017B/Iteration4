@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -107,6 +108,14 @@ public class PathController implements ControllableScreen, Observer{
     private JFXTabPane startTabPane;
     @FXML
     private JFXTabPane endTabPane;
+    @FXML
+    private Tab startTextTab;
+    @FXML
+    private Tab endTextTab;
+    @FXML
+    private Tab startTypeTab;
+    @FXML
+    private Tab endTypeTab;
 
     Node startNode;
     Node endNode;
@@ -148,12 +157,20 @@ public class PathController implements ControllableScreen, Observer{
         endTextField.setOnKeyPressed(e -> searchText(e, endTextField, endNodeOptionList));
         startNodeOptionList.prefWidthProperty().bind(startTextField.widthProperty());
         endNodeOptionList.prefWidthProperty().bind(endTextField.widthProperty());
-        startNodeOptionList.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> suggestionPressed(newValue, startTextField, startNodeOptionList)));
-        endNodeOptionList.getSelectionModel().selectedItemProperty().addListener(
-                ((observable, oldValue, newValue) -> suggestionPressed(newValue, endTextField, endNodeOptionList)));
+        startNodeOptionList.setOnMouseClicked( e -> suggestionPressed(e, startTextField, startNodeOptionList));
+        endNodeOptionList.setOnMouseClicked( e -> suggestionPressed(e, endTextField, endNodeOptionList));
 
 
+        startTextTab.setOnSelectionChanged(e -> {
+            startNodeOptionList.setVisible(false);
+            startNode = null;
+            startTextField.setText("");
+        });
+        endTextTab.setOnSelectionChanged(e -> {
+            endNodeOptionList.setVisible(false);
+            endNode = null;
+            endTextField.setText("");
+        });
 
         //position map
         Center= new ArrayList<>();
@@ -190,8 +207,15 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private void searchText(KeyEvent keyEvent, JFXTextField textField, JFXListView<Node> listView){
-            if(keyEvent.getCode().equals(KeyCode.ENTER)) {
-                Node node = listView.getItems().get(0);
+            KeyCode code = keyEvent.getCode();
+            if(code.equals(KeyCode.ENTER)) {
+                Node node;
+                if(listView.getSelectionModel().selectedItemProperty().isNull().get()){
+                    node = listView.getItems().get(0);
+                }
+                else{
+                    node = listView.getSelectionModel().getSelectedItem();
+                }
                 if(textField.equals(startTextField)){
                     startNode = node;
                 }
@@ -201,24 +225,48 @@ public class PathController implements ControllableScreen, Observer{
                     textField.setText(node.toString());
                     listView.setVisible(false);
                 }
-            else if(keyEvent.getCode().isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
+            else if(code.equals(KeyCode.DOWN)){
+                System.out.println("Down: " + listView.getSelectionModel().getSelectedIndex() );
+                if(listView.getSelectionModel().getSelectedIndex() == -1) {
+                    listView.getSelectionModel().select(0);
+                }
+                else if(listView.getSelectionModel().getSelectedIndex() <= listView.getItems().size()-1){
+                    listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex() + 1);
+                }
+                textField.setText(listView.getSelectionModel().getSelectedItem().toString());
+            }
+            else if(code.equals(KeyCode.UP)){
+                if(listView.getSelectionModel().getSelectedIndex() == -1) {
+                    listView.getSelectionModel().select(0);
+                }
+                else if(listView.getSelectionModel().getSelectedIndex() >= 0){
+                    listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex() - 1);
+                }
+                textField.setText(listView.getSelectionModel().getSelectedItem().toString());
+            }
+            else if(code.isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
                 String text = ((JFXTextField) keyEvent.getSource()).getText();
-                List<Node> ans = map.getNodesByText(text);
-                if (ans.size() > 10) {
-                    listView.getItems().setAll(ans.subList(0, 5));
-                    listView.setVisible(true);
+                if(text.equals("")){
+                    listView.setVisible(false);
                 }
-                if(textField.equals(startTextField)){
-                    startNode = null;
-                }
-                else{
-                    endNode = null;
+                else {
+                    List<Node> ans = map.getNodesByText(text);
+                    if (ans.size() > 10) {
+                        listView.getItems().setAll(ans.subList(0, 5));
+                        listView.setVisible(true);
+                    }
+                    if (textField.equals(startTextField)) {
+                        startNode = null;
+                    } else {
+                        endNode = null;
+                    }
                 }
             }
 
     }
 
-    private void suggestionPressed(Node selected, JFXTextField textField, JFXListView<Node> listView) {
+    private void suggestionPressed(MouseEvent e, JFXTextField textField, JFXListView<Node> listView) {
+        Node selected = listView.getSelectionModel().getSelectedItem();
         if (selected != null) {
             Node node = listView.getSelectionModel().getSelectedItem();
             if (textField.equals(startTextField)) {
