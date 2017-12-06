@@ -8,10 +8,7 @@
 
 package controllers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +43,8 @@ public class ScreenController extends StackPane {
     public static String RequestFile = "/fxml/Request.fxml";
     public static String LoginID = "Login";
     public static String LoginFile = "/fxml/Login.fxml";
+    //public static String AboutID = "About";
+    //public static String AboutFile = "/fxml/About.fxml";
     public static String FeedbackID = "Feedback";
     public static String FeedbackFile = "/fxml/Feedback.fxml";
 
@@ -57,22 +56,10 @@ public class ScreenController extends StackPane {
                 setScreen(screenMomento.getState());
             pause.play();
         });
+        pause.setCycleCount(Animation.INDEFINITE);
         pause.play();
-        setOnMouseClicked(e -> {
-            pause.stop();
-            pause.play();
-        });
-        setOnKeyPressed( e -> {
-            pause.stop();
-            pause.play();
-        });
-        setOnMouseMoved( e ->{
-            pause.stop();
-            pause.play();
-        });
-        
-    }
 
+    }
 
     //add a new screen to the screens HashMap
     public void addScreen(String name, Node screen, ControllableScreen controller){
@@ -212,6 +199,14 @@ public class ScreenController extends StackPane {
     public boolean unloadScreen(String name) {
         screens.remove(name);
         return true;
+    }
+
+    public void resetTimeout(){
+        pause.stop();
+        pause.play();
+    }
+    public void pauseTimeout(){
+        pause.pause();
     }
 
     public void saveState(){

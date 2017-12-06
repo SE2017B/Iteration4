@@ -56,6 +56,8 @@ public class MainController implements ControllableScreen, Observer{
     private JFXButton stairsFilterButton;
     @FXML
     private JFXButton ebtn;
+    @FXML
+    private JFXButton aboutButton;
 
     @FXML
     private AnchorPane mainAnchorPane;
@@ -79,18 +81,12 @@ public class MainController implements ControllableScreen, Observer{
         mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
         mapViewer.getMapScrollPane().setPannable(true);
 
-
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
 
-        int questionSize = 100;
-        question = new Pane();
-        question.setPrefSize(questionSize,questionSize);
-        Image questionImage = new Image("images/arrow.png");
-        ImageView questionView = new ImageView(questionImage);
-        questionView.setFitHeight(questionSize);
-        questionView.setFitWidth(questionSize);
-        question.setVisible(true);
-        question.getChildren().add(questionView);
+        mainAnchorPane.prefWidthProperty().bind(parent.prefWidthProperty());
+        mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+
     }
 
     public void onShow(){
@@ -99,6 +95,7 @@ public class MainController implements ControllableScreen, Observer{
         setFloor(curerntFloor);
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
         setZoom(0.8);
+
     }
 
     //Setters
@@ -155,6 +152,12 @@ public class MainController implements ControllableScreen, Observer{
     public void clearMousePressed(MouseEvent e){
         clearPressed(new ActionEvent());
     }
+/*
+    public void aboutButtonPressed(ActionEvent e){
+        System.out.println("About Pressed");
+        parent.setScreen(ScreenController.AboutID, "RIGHT");
+    }
+*/
 
     //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){
@@ -204,6 +207,7 @@ public class MainController implements ControllableScreen, Observer{
 
     public void emergencyButtonPressed(ActionEvent e){
         //same as exitTypePressed, but show an animated path to exit
+
     }
 
     public void elevTypePressed(ActionEvent e){

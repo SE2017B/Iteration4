@@ -29,6 +29,11 @@
     -fx-background-color: darkorange;
 }
 
+.jfx-slider{
+    -fx-progress-color-color: darkorange;
+    -fx-prompt-text-fill: white;
+}
+
 
 
 
@@ -69,6 +74,10 @@
 .text-on-dark, .titled-pane{
     -fx-text-fill: white;
     -fx-prompt-text-fill: white;
+}
+
+.text-on-white{
+    -fx-text-fill: rgb(40,40,60);
 }
 
 .list-view:focused .list-cell:filled:focused:selected {
