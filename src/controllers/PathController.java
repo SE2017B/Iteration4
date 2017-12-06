@@ -155,9 +155,6 @@ public class PathController implements ControllableScreen, Observer{
 
 
 
-
-
-
         //position map
         Center= new ArrayList<>();
         Center.add(1500);
@@ -177,8 +174,7 @@ public class PathController implements ControllableScreen, Observer{
 
                 if(currentPath!=null){
                   if(currentPath.isAnimating){
-                      System.out.println("Current position "+ mapViewer.getCenter());
-                      ArrayList<Integer> pos = currentPath.getPos();
+                      ArrayList<Double> pos = currentPath.getPos();
                       mapViewer.centerView(pos.get(0), pos.get(1));
                       //System.out.println("Animating path");
                   }
@@ -297,11 +293,25 @@ public class PathController implements ControllableScreen, Observer{
     private void controlScroller(PathViewer p){
         double x = p.getCenter().get(0);
         double y = p.getCenter().get(1);
+        double cx =mapViewer.getCenter().get(0);
+        double cy = mapViewer.getCenter().get(1);
+        if(currentPath.hasAnimated){
+            cx=x;
+            cy=y;
+            System.out.println("getting values");
+        }
+        /**
+        if(currentPath.isScaling){
+            double s = currentPath.getScale();
+            cx=mapViewer.getCenterAt(s).get(0);
+            cy=mapViewer.getCenterAt(s).get(1);
+        }
+         **/
         System.out.println("X is "+x+" Y is "+y);
         //height
         Center.set(0,(int)x);
         Center.set(1,(int)y);
-        p.initAnimation(mapViewer.getCenter().get(0),mapViewer.getCenter().get(1),(int)x,(int)y);
+        p.initAnimation(cx,cy,x,y);
         //mapViewer.centerView((int)x,(int)y);
         //animationCount=5; //center a bunch of times to make sure it actually centers
         //mapViewer.animateCenter((int)x,(int)y);
@@ -462,12 +472,14 @@ public class PathController implements ControllableScreen, Observer{
         System.out.println("Zoom In Pressed");
         slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
         mapViewer.setScale(slideBarZoom.getValue());
+        currentPath.hasAnimated=false;
     }
 
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
         slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
         mapViewer.setScale(slideBarZoom.getValue());
+        currentPath.hasAnimated=false;
     }
     //-------------------------MAP SCALE START--------------------------//
     private void displayPaths(Path thePath){
@@ -509,8 +521,12 @@ public class PathController implements ControllableScreen, Observer{
     public void update(Observable o, Object arg){
         if(arg instanceof PathID){
             PathID ID = (PathID) arg;
-            if(ID.getID() != -1) {;
+            if(ID.getID() != -1) {
+                if(paths.get(ID.getID())!=currentPath){//if the path is changes
+                    currentPath.hasAnimated=false; //it is probably not well positioned
+                }
                 currentPath = paths.get(ID.getID());
+                
                 currentFloor = currentPath.getFloor();
                 switchPath(currentPath);
             }
