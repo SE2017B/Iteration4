@@ -431,12 +431,12 @@
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <JFXButton fx:id="btncreate2" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                    <JFXButton fx:id="createAPIbtn" onAction="#createPressedApi" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                        </GridPane.margin>
                                     </JFXButton>
-                                    <JFXButton fx:id="btncancel1" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                    <JFXButton fx:id="cancelAPIbtn" onAction="#cancelPressedAPI" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                        <GridPane.margin>
                                           <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                        </GridPane.margin>

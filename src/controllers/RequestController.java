@@ -46,6 +46,7 @@ public class RequestController implements ControllableScreen{
     private Service servSelect;
     private ServiceRequest reqServPls;
     private CurrentServiceController currentServiceController;
+    private ArrayList<String> apiServ;
 
 
     private static int requestIDCount = 0;
@@ -66,6 +67,18 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     private JFXTextField fullNametxt;
+
+    @FXML
+    private JFXButton createPressedApi;
+
+    @FXML
+    private JFXButton cancelPressedAPI;
+
+    @FXML
+    private ChoiceBox<Node> apiLocationChoiceBox;
+
+    @FXML
+    private ChoiceBox<String> apiServiceChoiceBox;
 
     @FXML
     private JFXButton createStaffButton;
@@ -168,6 +181,16 @@ public class RequestController implements ControllableScreen{
     public void init(){
         map = HospitalMap.getMap();
 
+
+        apiServ = new ArrayList<>();
+//        apiServ.add("Translation");
+        apiServ.add("Sanitation");
+//        apiServ.add("Food");
+
+        apiLocationChoiceBox.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> !n.getType().equals("HALL"))));
+
+        apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
         choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
@@ -235,6 +258,18 @@ public class RequestController implements ControllableScreen{
         lblSelectedDT.setText("Date & Time");
         lblSelectedLocation.setText("Additional Info");
 
+    }
+
+    public void createPressedApi(ActionEvent e)
+    {
+
+    }
+
+    public void cancelPressedAPI(ActionEvent e)
+    {
+        apiLocationChoiceBox.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> !n.getType().equals("HALL"))));
+        apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
     }
 
     public void requestCreatePressed(ActionEvent e)
