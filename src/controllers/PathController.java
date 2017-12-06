@@ -176,7 +176,6 @@ public class PathController implements ControllableScreen, Observer{
                   if(currentPath.isAnimating){
                       ArrayList<Double> pos = currentPath.getPos();
                       mapViewer.centerView(pos.get(0), pos.get(1));
-                      //System.out.println("Animating path");
                   }
 
                   if(currentPath.isScaling){
@@ -297,16 +296,8 @@ public class PathController implements ControllableScreen, Observer{
         if(currentPath.hasAnimated){
             cx=x;
             cy=y;
-            System.out.println("getting values");
         }
-        /**
-        if(currentPath.isScaling){
-            double s = currentPath.getScale();
-            cx=mapViewer.getCenterAt(s).get(0);
-            cy=mapViewer.getCenterAt(s).get(1);
-        }
-         **/
-        System.out.println("X is "+x+" Y is "+y);
+
         //height
         Center.set(0,(int)x);
         Center.set(1,(int)y);
@@ -457,7 +448,6 @@ public class PathController implements ControllableScreen, Observer{
     public void setScale(PathViewer path){
         double scale = path.getScale();
         scale = mapViewer.checkScale(scale);
-        //System.out.println("Scale: "+scale);
         path.initScaling(mapViewer.getScale(),scale); //animate the scaling process
     }
 
