@@ -239,6 +239,16 @@ public class MapViewer extends Observable{
 
         mapHolderPane.setPrefSize(mapPane.getBoundsInLocal().getWidth() * scale, mapPane.getBoundsInLocal().getHeight() * scale);
     }
+    public double checkScale(double scale){
+        double min_scale = Math.max((mapScrollPane.getBoundsInLocal().getWidth()/5000),(mapScrollPane.getHeight()/3400));
+        if(scale < min_scale){
+            scale = min_scale;
+        }
+        else if (scale > 2){
+            scale = 2;
+        }
+        return scale;
+    }
 
     public void setButtonsByFloor(List<FloorNumber> floors){
         clearButtons();
@@ -267,6 +277,34 @@ public class MapViewer extends Observable{
 
         mapScrollPane.setVvalue(((y - 0.5 * v) / (h - v)));
         mapScrollPane.setHvalue(((x - 0.5 * H) / (w - H)));
+    }
+    public void animateCenter(int x, int y){
+        x = (int) (x * mapPane.getScaleX());
+        y = (int) (y * mapPane.getScaleY());
+
+        //height
+        double h = mapScrollPane.getContent().getBoundsInLocal().getHeight();
+        double v = mapScrollPane.getViewportBounds().getHeight();
+        //width
+        double w = mapScrollPane.getContent().getBoundsInLocal().getWidth();
+        double H = mapScrollPane.getViewportBounds().getWidth();
+
+        double vValue = ((y - 0.5 * v) / (h - v));
+        double hValue = ((x - 0.5 * H) / (w - H));
+
+        Timeline zoomPath = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(mapScrollPane.hvalueProperty(), mapScrollPane.getHvalue())),
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(mapScrollPane.vvalueProperty(), mapScrollPane.getVvalue())),
+                new KeyFrame(new Duration(1000),
+                        new KeyValue(mapScrollPane.hvalueProperty(),hValue)),
+                new KeyFrame(new Duration(1000),
+                        new KeyValue(mapScrollPane.vvalueProperty(),vValue))
+        );
+        zoomPath.play();
+
+
     }
     public ArrayList<Integer> getCenter(){
         ArrayList<Integer> ans = new ArrayList<>();

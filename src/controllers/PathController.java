@@ -136,7 +136,8 @@ public class PathController implements ControllableScreen, Observer{
         Center.add(1500);
         Center.add(850);
         //using animation to update position
-        new AnimationTimer(){
+
+        AnimationTimer zoomPath= new AnimationTimer(){
             @Override
             public void handle(long now) {
                 /**
@@ -146,17 +147,25 @@ public class PathController implements ControllableScreen, Observer{
 
                 }
                  **/
+
                 if(currentPath!=null){
                   if(currentPath.isAnimating){
                       System.out.println("Current position "+ mapViewer.getCenter());
-                      ArrayList<Integer> pos = currentPath.getPos(mapViewer.getCenter().get(0),mapViewer.getCenter().get(1));
-                      System.out.println("New Position "+ pos);
+                      ArrayList<Integer> pos = currentPath.getPos();
                       mapViewer.centerView(pos.get(0), pos.get(1));
                       //System.out.println("Animating path");
                   }
+
+                  if(currentPath.isScaling){
+                      double scale =currentPath.getAnimatedScale();
+                      mapViewer.setScale(scale);
+                      slideBarZoom.setValue(scale);
+                  }
+
                 }
             }
-        }.start();
+        };
+        zoomPath.start();
     }
 
         private void searchText(ComboBox<Node> textSearch, String text){
@@ -242,7 +251,8 @@ public class PathController implements ControllableScreen, Observer{
         Center.set(1,(int)y);
         p.initAnimation(mapViewer.getCenter().get(0),mapViewer.getCenter().get(1),(int)x,(int)y);
         //mapViewer.centerView((int)x,(int)y);
-        animationCount=5; //center a bunch of times to make sure it actually centers
+        //animationCount=5; //center a bunch of times to make sure it actually centers
+        //mapViewer.animateCenter((int)x,(int)y);
     }
 
     private void SetPaths(Path path){
@@ -386,9 +396,11 @@ public class PathController implements ControllableScreen, Observer{
     //-----------------------ANIMATIONS END--------------------------//
     public void setScale(PathViewer path){
         double scale = path.getScale();
-        System.out.println("Scale: "+scale);
-        mapViewer.setScale(scale);
-        slideBarZoom.setValue(scale);
+        scale = mapViewer.checkScale(scale);
+        //System.out.println("Scale: "+scale);
+        //mapViewer.setScale(scale);
+        //slideBarZoom.setValue(scale);
+        path.initScaling(mapViewer.getScale(),scale); //animate the scaling process
     }
 
 
