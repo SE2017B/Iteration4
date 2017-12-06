@@ -305,29 +305,30 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Read from Staff CSV File and store columns in staff array lists
     ///////////////////////////////////////////////////////////////////////////////
-    public static void readStaffCSV (String fname) {
-
-        File staffFile = new File(fname);
+    public void readStaffCSV(String fname) {
+        int count = 0;
+        InputStream in = getClass().getResourceAsStream(fname);
+        if(in == null){
+            System.out.println("\n\n\nhelp\n\n\n");
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
         try {
-            Scanner inputStreamStaff = new Scanner(staffFile);
-            inputStreamStaff.nextLine();
-            while (inputStreamStaff.hasNext()) {
 
-                String staffData = inputStreamStaff.nextLine();
-                String[] staffValues = staffData.split(",");
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 
-                String encUser = encStaffData(staffValues[0]);
-                String encPass = encStaffData(staffValues[1]);
-                String encName = encStaffData(staffValues[3]);
+                String[] staffValues = line.split(",");
+                String tempStr = staffValues[4];
 
-                staffDatabase.allStaffEnc.add(new Staff(encUser, encPass, staffValues[2], encName, Integer.valueOf(staffValues[4])));
-                staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(staffValues[4])));
-
+                if (count != 0) {
+                    staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(tempStr)));
+                }
+                count++;
             }
-            inputStreamStaff.close();
+            reader.close();
+            in.close();
 
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -493,24 +493,30 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Read from Nodes CSV File and store columns in array lists
     ///////////////////////////////////////////////////////////////////////////////
-    public static void readNodeCSV (String fname) {
-
-        File nodefile = new File(fname);
+    public void readNodeCSV(String fname) {
+        int count = 0;
+        InputStream in = getClass().getResourceAsStream(fname);
+        if(in == null){
+            System.out.println("\n\n\nNode help\n\n\n");
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
         try {
-            Scanner inputStreamNodes = new Scanner(nodefile);
-            inputStreamNodes.nextLine();
-            while (inputStreamNodes.hasNext()) {
 
-                String nodeData = inputStreamNodes.nextLine();
-                String[] nodeValues = nodeData.split(",");
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 
-                nodeDatabase.allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
+                String[] nodeValues = line.split(",");
 
+                if (count != 0) {
+                    nodeDatabase.allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
+
+                }
+                count++;
             }
-            inputStreamNodes.close();
+            reader.close();
+            in.close();
 
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
