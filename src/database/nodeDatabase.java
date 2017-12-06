@@ -493,50 +493,51 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Read from Nodes CSV File and store columns in array lists
     ///////////////////////////////////////////////////////////////////////////////
-    public void readNodeCSV(String fname) {
-        int count = 0;
-        InputStream in = getClass().getResourceAsStream(fname);
-        if(in == null){
-            System.out.println("\n\n\nNode help\n\n\n");
-        }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+    public static void readNodeCSV(String fname) {
 
-        try {
-
-            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-
-                String[] nodeValues = line.split(",");
-
-                if (count != 0) {
-                    nodeDatabase.allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
-
-                }
-                count++;
+            int count = 0;
+            InputStream in = Class.class.getResourceAsStream(fname);
+            if (in == null) {
+                System.out.println("Error");
             }
-            reader.close();
-            in.close();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            try {
+
+                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+
+                    String[] nodeValues = line.split(",");
+
+                    if (count != 0) {
+                        nodeDatabase.allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
+
+                    }
+                    count++;
+                }
+                reader.close();
+                in.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Write to a output Nodes csv file
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputNodesCSV() {
-        String outNodesFileName = "outputNodes.csv";
+        String outEdgesFileName = "outputNodes.csv";
 
         try {
-            FileWriter fw1 = new FileWriter(outNodesFileName, false);
-            BufferedWriter bw1 = new BufferedWriter(fw1);
-            PrintWriter pw1 = new PrintWriter(bw1);
+            FileWriter fw2 = new FileWriter(outEdgesFileName, false);
+            BufferedWriter bw2 = new BufferedWriter(fw2);
+            PrintWriter pw2 = new PrintWriter(bw2);
 
-            pw1.println("nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName,teamAssigned");
+            pw2.println("nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName,teamAssigned");
             for (int j = 0; j < nodeDatabase.allNodes.size(); j++) {
 
 
-                pw1.println(nodeDatabase.allNodes.get(j).getID() + "," +
+                pw2.println(nodeDatabase.allNodes.get(j).getID() + "," +
                         nodeDatabase.allNodes.get(j).getX()+ "," +
                         nodeDatabase.allNodes.get(j).getY() + "," +
                         nodeDatabase.allNodes.get(j).getFloor().getDbMapping() + "," +
@@ -549,8 +550,8 @@ public class nodeDatabase {
                 System.out.printf("%-5d: Node Record Saved!\n", j);
             }
             System.out.println();
-            pw1.flush();
-            pw1.close();
+            pw2.flush();
+            pw2.close();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -305,37 +305,69 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Read from Staff CSV File and store columns in staff array lists
     ///////////////////////////////////////////////////////////////////////////////
-    public void readStaffCSV(String fname) {
-        int count = 0;
-        InputStream in = getClass().getResourceAsStream(fname);
-        if(in == null){
-            System.out.println("\n\n\nhelp\n\n\n");
-        }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+    public static void readStaffCSV(String fname) {
 
-        try {
-
-            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-
-                String[] staffValues = line.split(",");
-                String tempStr = staffValues[4];
-
-                if (count != 0) {
-                    staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(tempStr)));
-                }
-                count++;
+        File tempStaff = new File("src/csv/outputStaff.csv");
+        if (tempStaff.exists()) {
+            int count1 = 0;
+            InputStream in = Class.class.getResourceAsStream("/csv/outputStaff.csv");
+            if (in == null) {
+                System.out.println("\n\n\nhelp\n\n\n");
             }
-            reader.close();
-            in.close();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+
+                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+
+                    String[] staffValues = line.split(",");
+                    String tempStr = staffValues[4];
+
+                    if (count1 != 0) {
+                        System.out.println("");
+                        staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(tempStr)));
+                    }
+                    count1++;
+                }
+                reader.close();
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            int count = 0;
+            InputStream in = Class.class.getResourceAsStream(fname);
+            if (in == null) {
+                System.out.println("Error");
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+            try {
+
+                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+
+                    String[] staffValues = line.split(",");
+                    String tempStr = staffValues[4];
+
+                    if (count != 0) {
+                        staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(tempStr)));
+                    }
+                    count++;
+                }
+                reader.close();
+                in.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Write to a output Staff csv file (With Password Encryption)
     ///////////////////////////////////////////////////////////////////////////////
+    /*
     public static void outputStaffEncCSV() {
         String outStaffFileName = "outputStaffEncrypted.csv";
 
@@ -363,12 +395,12 @@ public class staffDatabase {
             e.printStackTrace();
         }
     }
-
+*/
     ///////////////////////////////////////////////////////////////////////////////
     // Write to a output Staff csv file (No Password Encryption)
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputStaffCSV() {
-        String outStaffFileName = "outputStaff.csv";
+        String outStaffFileName = "src/csv/outputStaff.csv";
 
         try {
             FileWriter fw3 = new FileWriter(outStaffFileName, false);
