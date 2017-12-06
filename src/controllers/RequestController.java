@@ -10,6 +10,8 @@ package controllers;
 
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
+import api.SanitationService;
+import api.SanitationService;
 import com.jfoenix.controls.*;
 import database.staffDatabase;
 import javafx.animation.TranslateTransition;
@@ -21,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import map.HospitalMap;
 import map.Node;
@@ -47,6 +50,7 @@ public class RequestController implements ControllableScreen{
     private Service servSelect;
     private ServiceRequest reqServPls;
     private CurrentServiceController currentServiceController;
+    private ArrayList<String> apiServ;
 
 
     private static int requestIDCount = 0;
@@ -67,6 +71,18 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     private JFXTextField fullNametxt;
+
+    @FXML
+    private JFXButton createPressedApi;
+
+    @FXML
+    private JFXButton cancelPressedAPI;
+
+    @FXML
+    private ChoiceBox<Node> apiLocationChoiceBox;
+
+    @FXML
+    private ChoiceBox<String> apiServiceChoiceBox;
 
     @FXML
     private JFXButton createStaffButton;
@@ -169,6 +185,16 @@ public class RequestController implements ControllableScreen{
     public void init(){
         map = HospitalMap.getMap();
 
+
+        apiServ = new ArrayList<>();
+//        apiServ.add("Translation");
+        apiServ.add("Sanitation");
+//        apiServ.add("Food");
+
+        apiLocationChoiceBox.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> !n.getType().equals("HALL"))));
+
+        apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
         choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
@@ -236,6 +262,25 @@ public class RequestController implements ControllableScreen{
         lblSelectedDT.setText("Date & Time");
         lblSelectedLocation.setText("Additional Info");
 
+    }
+
+    public void createPressedApi(ActionEvent e)
+    {
+        runAPI();
+    }
+
+    public void runAPI(){
+        Stage primaryStage = new Stage();
+        SanitationService api = SanitationService.newInstance(primaryStage);
+        //SampleService api = new SampleService();
+        api.run(100, 100, 500, 500, null, "BINFO00102", null);
+    }
+
+    public void cancelPressedAPI(ActionEvent e)
+    {
+        apiLocationChoiceBox.setItems(FXCollections.observableList(
+                map.getNodesBy(n -> !n.getType().equals("HALL"))));
+        apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
     }
 
     public void requestCreatePressed(ActionEvent e)
@@ -434,6 +479,16 @@ public class RequestController implements ControllableScreen{
         }
     }
 
+    public void shakeTextField(TextField m){
+        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
+        t.setByX(25f);
+        t.setCycleCount(4);
+        t.setAutoReverse(true);
+        t.setDelay(Duration.millis(350));
+        t.playFromStart();
+    }
+
+
     @FXML
     void makeModify(ActionEvent event) {
 
@@ -472,8 +527,19 @@ public class RequestController implements ControllableScreen{
         }
         else{
             System.out.println("Strategy DropDown Empty");
-            s.shake(searchStrategyChoice);
+            //s.shake(searchStrategyChoice);
+            shakeDropdown(searchStrategyChoice);
         }
 
+    public void shakeDropdown(ChoiceBox m){
+        TranslateTransition t = new TranslateTransition(Duration.millis(250), m);
+        t.setByX(25f);
+        t.setCycleCount(4);
+        t.setAutoReverse(true);
+        t.setDelay(Duration.millis(350));
+        t.playFromStart();
     }
+
+
+
 }
