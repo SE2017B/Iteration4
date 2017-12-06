@@ -50,6 +50,9 @@ public class PathController implements ControllableScreen, Observer{
     private String endType =  "";
     private String endFloor = "";
 
+    private final double LINE_STROKE = 4;
+    private final double ARROW_SIZE = 30;
+
     private MapViewer mapViewer;
     private FloorNumber currentFloor;// the current floor where the kiosk is.
     private PathViewer currentPath;
@@ -125,15 +128,16 @@ public class PathController implements ControllableScreen, Observer{
         floors = new ArrayList<FloorNumber>();
 
         mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
+        mainAnchorPane.setTopAnchor(mapViewer.getMapViewerPane(), 100.0);
+
+        mapViewer.getMapViewerPane().prefHeightProperty().bind(mainAnchorPane.prefHeightProperty().subtract(200));
         animationCount=0;
 
-        int arrowSize = 20;
         arrow = new Pane();
-        arrow.setPrefSize(arrowSize, arrowSize);
         Image arrowImage = new Image("images/arrow.png");
         ImageView arrowView = new ImageView(arrowImage);
-        arrowView.setFitHeight(arrowSize);
-        arrowView.setFitWidth(arrowSize);
+        arrowView.setFitHeight(ARROW_SIZE);
+        arrowView.setFitWidth(ARROW_SIZE);
         arrow.setVisible(true);
         arrow.getChildren().add(arrowView);
 
@@ -142,14 +146,10 @@ public class PathController implements ControllableScreen, Observer{
         //add listeners
         startTextField.setOnKeyPressed( e -> searchText(e, startTextField, startNodeOptionList));
         endTextField.setOnKeyPressed(e -> searchText(e, endTextField, endNodeOptionList));
-
-
         startNodeOptionList.prefWidthProperty().bind(startTextField.widthProperty());
         endNodeOptionList.prefWidthProperty().bind(endTextField.widthProperty());
-
         startNodeOptionList.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> suggestionPressed(newValue, startTextField, startNodeOptionList)));
-
         endNodeOptionList.getSelectionModel().selectedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> suggestionPressed(newValue, endTextField, endNodeOptionList)));
 
@@ -181,8 +181,7 @@ public class PathController implements ControllableScreen, Observer{
 
                   if(currentPath.isScaling){
                       double scale =currentPath.getAnimatedScale();
-                      mapViewer.setScale(scale);
-                      slideBarZoom.setValue(scale);
+                      scaleMap(scale);
                   }
 
                 }
@@ -403,7 +402,7 @@ public class PathController implements ControllableScreen, Observer{
             //path to follow
             javafx.scene.shape.Path p = new javafx.scene.shape.Path();
             p.setStroke(Color.NAVY);
-            p.setStrokeWidth(4);
+            p.setStrokeWidth(LINE_STROKE);
             //add shapes currentPath and shapes
             path.addShape(p);
             mapPane.getChildren().addAll(p, arrow);
@@ -429,7 +428,6 @@ public class PathController implements ControllableScreen, Observer{
 
     //method to switch between paths when toggling between floors
     private void switchPath(PathViewer path){
-        //mapViewer.setScale(1);//test set scale to 1
         clearShapes();
         currentFloor=path.getFloor();
         setScale(path);
@@ -460,9 +458,22 @@ public class PathController implements ControllableScreen, Observer{
         double scale = path.getScale();
         scale = mapViewer.checkScale(scale);
         //System.out.println("Scale: "+scale);
-        //mapViewer.setScale(scale);
-        //slideBarZoom.setValue(scale);
         path.initScaling(mapViewer.getScale(),scale); //animate the scaling process
+    }
+
+    public void scaleMap(double scale){
+        mapViewer.setScale(scale);
+        slideBarZoom.setValue(scale);
+        for(Shape s : shapes){
+            s.setStrokeWidth(LINE_STROKE/scale);
+            if(s instanceof AnimatedCircle){
+                s.setScaleX(1/scale);
+                s.setScaleY(1/scale);
+            }
+        }
+        arrow.setScaleX(1/scale);
+        arrow.setScaleY(1/scale);
+
     }
 
 
@@ -470,15 +481,14 @@ public class PathController implements ControllableScreen, Observer{
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
         System.out.println("Zoom In Pressed");
-        slideBarZoom.setValue(slideBarZoom.getValue()+0.2);
-        mapViewer.setScale(slideBarZoom.getValue());
+        scaleMap(slideBarZoom.getValue()+0.2);
         currentPath.hasAnimated=false;
     }
 
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
-        slideBarZoom.setValue(slideBarZoom.getValue()-0.2);
-        mapViewer.setScale(slideBarZoom.getValue());
+        scaleMap(slideBarZoom.getValue()-0.2);
+
         currentPath.hasAnimated=false;
     }
     //-------------------------MAP SCALE START--------------------------//

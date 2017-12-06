@@ -157,7 +157,7 @@ public class PathViewer {
     }
 
     public double getScale(){
-        return Math.min(Math.pow((5000-getWidth())/5000.0,2.0), Math.pow((3400-getHeight())/3400.0,2)) ;
+        return Math.min(Math.pow((5000-getWidth())/5000.0,1.5), Math.pow((3400-getHeight())/3400.0,1.5));
     }
 
 }
