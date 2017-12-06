@@ -42,8 +42,6 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
         myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
-        //currently fails on Parent fxmlToLoad = fxmlLoader.load(); in ScreenController
-        //myScreenController.loadScreen(ScreenController.AboutID, ScreenController.AboutFile);
         myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
 //
 //        //mini fxml files

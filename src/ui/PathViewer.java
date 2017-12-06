@@ -19,6 +19,12 @@ public class PathViewer {
     private ArrayList<Integer> pos;
     public boolean isAnimating;
     private int animationCount;
+    //size animation
+    private double scaleGoal;
+    private double scaleSpeed;
+    private double scale;
+    public boolean isScaling;
+    private int scaleCount;
 
     public PathViewer(Path path){
         this.path=path;
@@ -36,10 +42,9 @@ public class PathViewer {
         pos.add(0);
         pos.add(0);
         isAnimating=false;
+
     }
     public void initAnimation(int startx, int starty, int endx, int endy){
-        double length = Math.pow((Math.pow((startx-starty),2)+Math.pow((endx-endy),2)),0.5);
-
         //set up speed
         System.out.println("The speed is"+speed);
         animationCount=50;
@@ -52,16 +57,36 @@ public class PathViewer {
         isAnimating=true;
 
     }
-    public ArrayList<Integer> getPos(int x,int y){
+    public void initScaling(double start, double end){
+        scaleCount=50;
+        scaleSpeed=(end-start)/scaleCount;
+        scaleGoal=end;
+        scale=start;
+        isScaling = true;
+        System.out.println("Animating scaling");
+        System.out.println("The scale goal is "+ scaleGoal);
+        System.out.println("Speed is "+ scaleSpeed);
+        System.out.println("Scale start is "+ start);
+    }
+    public ArrayList<Integer> getPos(){
         //update position
         pos.set(0,pos.get(0)+speed.get(0));
         pos.set(1,pos.get(1)+speed.get(1));
-        if((Math.abs((pos.get(0))-goal.get(0))<10) || animationCount<=0){
+        if(( animationCount<=0)){
             isAnimating=false;
-            return goal;
         }
         animationCount--;
         return pos;
+    }
+    public double getAnimatedScale(){
+        //update scale
+        scale+=scaleSpeed;
+        if(scaleCount<=0){
+            isScaling=false;
+        }
+        scaleCount--;
+        System.out.println("Scaling stuff hahahaha");
+        return scale;
     }
 
     private ArrayList<Integer> getEdgeDims(){
