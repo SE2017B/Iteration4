@@ -99,7 +99,6 @@ public class ServiceRequest{
     @Override
     public String toString(){
         String name = String.valueOf(requestID) + " " + service + " " + location + " " + time + " " + date;
-        System.out.println(name);
         return name;
     }
 

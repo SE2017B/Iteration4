@@ -33,12 +33,10 @@ public class Main extends Application {
         root.minWidth(800);
         root.minHeight(400);
 
-
         ScreenController myScreenController = new ScreenController();
         root.getChildren().addAll(myScreenController);
         myScreenController.prefHeightProperty().bind(scene.heightProperty());
         myScreenController.prefWidthProperty().bind(scene.widthProperty());
-
 
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
         myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);

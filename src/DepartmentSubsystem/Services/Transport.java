@@ -8,7 +8,6 @@
 
 package DepartmentSubsystem.Services;
 
-import DepartmentSubsystem.Department;
 import DepartmentSubsystem.Service;
 import map.Node;
 

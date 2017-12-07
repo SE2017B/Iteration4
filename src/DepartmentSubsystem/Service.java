@@ -36,7 +36,6 @@ public abstract class Service{
 //        this.description = description;
 //    }
     public ArrayList<Staff> getStaff() {
-        System.out.println("get Staff");
         return staff;
     }
 

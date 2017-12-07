@@ -7,6 +7,7 @@
 */
 
 package map;
+
 import database.edgeDatabase;
 import database.nodeDatabase;
 import exceptions.InvalidNodeException;
@@ -56,7 +57,6 @@ public class HospitalMap{
                 kioskLocation = null;
             }
         }
-
     }
 
     public static HospitalMap getMap() {
@@ -208,7 +208,6 @@ public class HospitalMap{
         kioskLocation = node;
     }
 
-
     private int AREA_SIZE = 120;
     private int AREA_WINDOW = 25;
     public List<Node> getNodesInHorizontal(int x, int y, FloorNumber floor){
@@ -220,7 +219,6 @@ public class HospitalMap{
         return getNodesBy(n -> n.getFloor().equals(floor) && (n.getX() > (x-AREA_WINDOW)) && (n.getX() < (x+AREA_WINDOW))
                                 && (n.getY() > (y - AREA_SIZE))  && (n.getY() < (y + AREA_SIZE)));
     }
-
 
     //Fuzzy Search Algorithm
 

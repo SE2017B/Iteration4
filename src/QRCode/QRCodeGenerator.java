@@ -24,7 +24,7 @@ public class QRCodeGenerator {
     public QRCodeGenerator(){
         this.width = 256;
         this.height = 256;
-        //The << operator shits bit pattern to the left
+        //The << operator shifts bit pattern to the left
         this.white = 255 << 16 | 255 << 8 | 255;
         this.black = 0;
         this.lineBound = 20;
@@ -69,19 +69,18 @@ public class QRCodeGenerator {
                     image.setRGB(i, j, bitMatrix.get(i, j) ? this.black : this.white); // set pixel one by one
                 }
             }
-
             try {
                 ImageIO.write(image, "jpg", new File(filename + ".jpg")); // save QR image to disk
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
         } catch (WriterException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
+
     public boolean isComplete(){
         return this.isComplete;
     }

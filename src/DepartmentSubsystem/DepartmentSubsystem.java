@@ -108,7 +108,6 @@ public class DepartmentSubsystem {
 
     //Singleton Stuff (init HAS to be run)
     public static DepartmentSubsystem getSubsystem(){
-        //System.out.println("getSub" + count);
         if(singleton == null){
             singleton =  new DepartmentSubsystem();
         }
@@ -118,15 +117,12 @@ public class DepartmentSubsystem {
 
     //login function for staff members
     public boolean login(String username, String password){
-        //ArrayList<Staff> allStaff = new ArrayList<>();
-        System.out.println("we made it");
         ArrayList<Staff> allStaff = staffDatabase.getStaff();
         for(Staff member: allStaff){
             System.out.println(member.getUsername() + " == "+ username );
             if(member.getUsername().equals(username)){
                 if(member.getPassword().equals(password)){
                     this.currentlyLoggedIn = member;
-                    System.out.println("setting the currnet logined member "+member);
                     return true;
                 }
                 else

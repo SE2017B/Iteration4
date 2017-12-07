@@ -15,7 +15,6 @@ public class FoodDeliveryController extends CurrentServiceController {
 
     @FXML
     private ChoiceBox<String> foodChoiceBox;
-
     @FXML
     private JFXTextField alergiesTextFiled;
 

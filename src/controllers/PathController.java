@@ -230,7 +230,6 @@ public class PathController implements ControllableScreen, Observer{
 
         directionsList.setItems(FXCollections.observableArrayList()); //function implementation
 
-
         mapViewer.resetView();
         btnReverse.setVisible(false);//hide button because there is no path
         startNodeOptionList.setVisible(false);
@@ -474,7 +473,6 @@ public class PathController implements ControllableScreen, Observer{
         setScale(path);
         displayPath(path);
         controlScroller(path);//reposition map
-
     }
 
     public void clearPaths(){
@@ -482,6 +480,7 @@ public class PathController implements ControllableScreen, Observer{
             s.setVisible(false);
             mapPane.getChildren().remove(s);
         }
+
         arrow.setVisible(false);
         mapPane.getChildren().remove(arrow);
 

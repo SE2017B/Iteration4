@@ -17,6 +17,7 @@ public class Staff{
     private String username;
     private String password;
     private boolean admin;
+
     //These are just details for display
     private HashMap<Integer,ServiceRequest> workload;
     private String jobTitle;
@@ -193,5 +194,4 @@ public class Staff{
         Staff other = (Staff)obj;
         return this.getUsername().equals(other.getUsername());
     }
-
 }

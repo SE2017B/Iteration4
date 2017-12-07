@@ -10,7 +10,6 @@ public class Path implements Comparable<Path> {
     private double distance;
     private double pixelsToMeters = .1;
 
-
     //Constructors
     public Path(){
         distance = 0;
@@ -68,8 +67,6 @@ public class Path implements Comparable<Path> {
             double det = Vector1_2X * Vector2_3Y - Vector2_3X * Vector1_2Y;
             double angle = Math.toDegrees(Math.atan2(det, dot));
 
-//            System.out.println(angle);
-//            System.out.println(prevElevator);
             System.out.println("Node 1: " + path.get(i-1).getShortName());
             System.out.println("Node 2: " + path.get(i).getShortName());
             System.out.println("Node 3: " + path.get(i+1).getShortName() + "\n");
