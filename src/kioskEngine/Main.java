@@ -91,9 +91,9 @@ public class Main extends Application {
         nodeDatabase.readNodeCSV("/csv/MapBnodes.csv");
         nodeDatabase.readNodeCSV("/csv/MapCnodes.csv");
         nodeDatabase.readNodeCSV("/csv/MapDnodes.csv");
-        nodeDatabase.readNodeCSV("/csv/MapEnodes.csv");
-        nodeDatabase.readNodeCSV("/csv/MapFnodes.csv");
-        nodeDatabase.readNodeCSV("/csv/MapGnodes.csv");
+        nodeDatabase.readNodeCSV("/csv/MapENodes.csv");
+        nodeDatabase.readNodeCSV("/csv/MapFNodes.csv");
+        nodeDatabase.readNodeCSV("/csv/MapGNodes.csv");
         nodeDatabase.readNodeCSV("/csv/MapHnodes.csv");
         nodeDatabase.readNodeCSV("/csv/MapInodes.csv");
         nodeDatabase.readNodeCSV("/csv/MapWnodes.csv");
@@ -102,9 +102,9 @@ public class Main extends Application {
         edgeDatabase.readEdgesCSV("/csv/MapBedges.csv");
         edgeDatabase.readEdgesCSV("/csv/MapCedges.csv");
         edgeDatabase.readEdgesCSV("/csv/MapDedges.csv");
-        edgeDatabase.readEdgesCSV("/csv/MapEedges.csv");
-        edgeDatabase.readEdgesCSV("/csv/MapFedges.csv");
-        edgeDatabase.readEdgesCSV("/csv/MapGedges.csv");
+        edgeDatabase.readEdgesCSV("/csv/MapEEdges.csv");
+        edgeDatabase.readEdgesCSV("/csv/MapFEdges.csv");
+        edgeDatabase.readEdgesCSV("/csv/MapGEdges.csv");
         edgeDatabase.readEdgesCSV("/csv/MapHedges.csv");
         edgeDatabase.readEdgesCSV("/csv/MapIedges.csv");
         edgeDatabase.readEdgesCSV("/csv/MapWedges.csv");
