@@ -85,6 +85,7 @@ public class staffDatabase {
                     "fullname VARCHAR(64)," +
                     "ID INTEGER," +
                     "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
+                    "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
                     "CONSTRAINT jobTitle CHECK (jobTitle IN ('Translator', 'Janitor', 'Chef', 'Food Delivery', 'Transport Staff'))," +
                     "CONSTRAINT ID_chk CHECK (ID > 0))");
 
@@ -305,41 +306,6 @@ public class staffDatabase {
     // Read from Staff CSV File and store columns in staff array lists
     ///////////////////////////////////////////////////////////////////////////////
     public static void readStaffCSV(String fname) {
-
-        // Find if outputStaff.csv exists if so read from it
-        File tempStaff = new File("src/csv/outputStaff.csv");
-        if (tempStaff.exists()) {
-            int count1 = 0;
-            InputStream in = Class.class.getResourceAsStream("/csv/outputStaff.csv");
-            if (in == null) {
-                System.out.println("\n\n\nhelp\n\n\n");
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-            try {
-
-                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
-
-                    String[] staffValues = line.split(",");
-
-                    String encUser = encStaffData(staffValues[0]);
-                    String encPass = encStaffData(staffValues[1]);
-                    String encName = encStaffData(staffValues[3]);
-                    String tempStr = staffValues[4];
-
-                    if (count1 != 0) {
-                        staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(tempStr)));
-                        staffDatabase.allStaffEnc.add(new Staff(encUser, encPass, staffValues[2], encName, Integer.valueOf(tempStr)));
-                    }
-                    count1++;
-                }
-                reader.close();
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
             int count = 0;
             InputStream in = Class.class.getResourceAsStream(fname);
             if (in == null) {
@@ -352,13 +318,9 @@ public class staffDatabase {
                 for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 
                     String[] staffValues = line.split(",");
-                    String encUser = encStaffData(staffValues[0]);
-                    String encPass = encStaffData(staffValues[1]);
-                    String encName = encStaffData(staffValues[3]);
                     String tempStr = staffValues[4];
 
                     if (count != 0) {
-                        staffDatabase.allStaffEnc.add(new Staff(encUser, encPass, staffValues[2], encName, Integer.valueOf(tempStr)));
                         staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(tempStr)));
                     }
                     count++;
@@ -370,7 +332,40 @@ public class staffDatabase {
                 e.printStackTrace();
             }
         }
+
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Write to a output Staff csv file (With Password Encryption)
+    ///////////////////////////////////////////////////////////////////////////////
+    /*
+    public static void outputStaffEncCSV() {
+        String outStaffFileName = "outputStaffEncrypted.csv";
+
+        try {
+            FileWriter fwEnc = new FileWriter(outStaffFileName, false);
+            BufferedWriter bwEnc = new BufferedWriter(fwEnc);
+            PrintWriter pwEnc = new PrintWriter(bwEnc);
+
+            pwEnc.println("username,password,jobTitle,fullName,ID");
+            for (int k = 0; k < staffDatabase.allStaffEnc.size(); k++) {
+
+                pwEnc.println(staffDatabase.allStaffEnc.get(k).getUsername() + "," +
+                        staffDatabase.allStaffEnc.get(k).getPassword() + "," +
+                        staffDatabase.allStaffEnc.get(k).getJobTitle() + "," +
+                        staffDatabase.allStaffEnc.get(k).getFullName() + "," +
+                        staffDatabase.allStaffEnc.get(k).getID()
+                );
+                System.out.printf("%-5d: Staff Record Saved!\n", k);
+            }
+            System.out.println();
+            pwEnc.flush();
+            pwEnc.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+*/
     ///////////////////////////////////////////////////////////////////////////////
     // Write to a output Staff csv file (No Password Encryption)
     ///////////////////////////////////////////////////////////////////////////////
@@ -392,35 +387,6 @@ public class staffDatabase {
                         staffDatabase.allStaff.get(j).getID()
                 );
                 System.out.printf("%-5d: Staff Record Saved!\n", j);
-            }
-            pw3.flush();
-            pw3.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////
-    // Write to a output Staff csv file (Encryption)
-    ///////////////////////////////////////////////////////////////////////////////
-    public static void outputStaffCSVEnc() {
-        String outStaffFileName = "src/csv/outputStaffEnc.csv";
-
-        try {
-            FileWriter fw3 = new FileWriter(outStaffFileName, false);
-            BufferedWriter bw3 = new BufferedWriter(fw3);
-            PrintWriter pw3 = new PrintWriter(bw3);
-
-            pw3.println("username,password,jobTitle,fullName,ID");
-            for (int j = 0; j < staffDatabase.allStaffEnc.size(); j++) {
-
-                pw3.println(staffDatabase.allStaffEnc.get(j).getUsername() + "," +
-                        staffDatabase.allStaffEnc.get(j).getPassword() + "," +
-                        staffDatabase.allStaffEnc.get(j).getJobTitle() + "," +
-                        staffDatabase.allStaffEnc.get(j).getFullName() + "," +
-                        staffDatabase.allStaffEnc.get(j).getID()
-                );
             }
             System.out.println();
             pw3.flush();
