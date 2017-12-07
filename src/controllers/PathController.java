@@ -53,7 +53,6 @@ public class PathController implements ControllableScreen, Observer{
     private String startFloor = "";
     private String endType =  "";
     private String endFloor = "";
-
     private QRCodeGenerator qr;
 
     private final double LINE_STROKE = 4;
@@ -69,21 +68,24 @@ public class PathController implements ControllableScreen, Observer{
     private PathTransition pathTransition;
     private Pane mapPane;
     private Path thePath;
+
     //animation variables
     private ArrayList<Integer> Center;
     private boolean isAnimating;
     private int animationCount;
 
+    Node startNode;
+    Node endNode;
+
     @FXML
     private ChoiceBox<Node> startNodeChoice;
     @FXML
     private ChoiceBox<Node> endNodeChoice;
-
     @FXML
     private AnchorPane mainAnchorPane;
     @FXML
     private TitledPane textDirectionsPane;
-
+    @FXML
     private ScrollPane mapScrollPane;
     @FXML
     private JFXSlider slideBarZoom;
@@ -124,18 +126,12 @@ public class PathController implements ControllableScreen, Observer{
     @FXML
     private ImageView qrImageView;
 
-    Node startNode;
-    Node endNode;
-
-
-
     //Methods start here
     public void init() {
         map = HospitalMap.getMap();
         shapes = new ArrayList<Shape>();
         paths = new ArrayList<PathViewer>();
         currentFloor = FloorNumber.FLOOR_ONE;
-
 
         mapViewer = new MapViewer(this, parent);
         mapPane = mapViewer.getMapPane();
@@ -145,7 +141,6 @@ public class PathController implements ControllableScreen, Observer{
         floors = new ArrayList<FloorNumber>();
 
         mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
-
 
         animationCount=0;
 
@@ -167,7 +162,6 @@ public class PathController implements ControllableScreen, Observer{
         startNodeOptionList.setOnMouseClicked( e -> suggestionPressed(e, startTextField, startNodeOptionList));
         endNodeOptionList.setOnMouseClicked( e -> suggestionPressed(e, endTextField, endNodeOptionList));
 
-
         startTextTab.setOnSelectionChanged(e -> {
             startNodeOptionList.setVisible(false);
             startNode = null;
@@ -181,14 +175,12 @@ public class PathController implements ControllableScreen, Observer{
 
         qr = new QRCodeGenerator();
 
-
-
         //position map
         Center= new ArrayList<>();
         Center.add(1500);
         Center.add(850);
-        //using animation to update position
 
+        //using animation to update position
         AnimationTimer zoomPath= new AnimationTimer(){
             @Override
             public void handle(long now) {
@@ -196,7 +188,6 @@ public class PathController implements ControllableScreen, Observer{
                 if(animationCount>0) {
                     mapViewer.centerView(Center.get(0), Center.get(1));
                     animationCount--;
-
                 }
                  **/
 
@@ -216,80 +207,6 @@ public class PathController implements ControllableScreen, Observer{
         };
         zoomPath.start();
     }
-
-    private void searchText(KeyEvent keyEvent, JFXTextField textField, JFXListView<Node> listView){
-            KeyCode code = keyEvent.getCode();
-            if(code.equals(KeyCode.ENTER)) {
-                Node node;
-                if(listView.getSelectionModel().selectedItemProperty().isNull().get()){
-                    node = listView.getItems().get(0);
-                }
-                else{
-                    node = listView.getSelectionModel().getSelectedItem();
-                }
-                if(textField.equals(startTextField)){
-                    startNode = node;
-                }
-                else{
-                    endNode = node;
-                }
-                    textField.setText(node.toString());
-                    listView.setVisible(false);
-                }
-            else if(code.equals(KeyCode.DOWN)){
-                System.out.println("Down: " + listView.getSelectionModel().getSelectedIndex() );
-                if(listView.getSelectionModel().getSelectedIndex() == -1) {
-                    listView.getSelectionModel().select(0);
-                }
-                else if(listView.getSelectionModel().getSelectedIndex() <= listView.getItems().size()-1){
-                    listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex() + 1);
-                }
-                textField.setText(listView.getSelectionModel().getSelectedItem().toString());
-            }
-            else if(code.equals(KeyCode.UP)){
-                if(listView.getSelectionModel().getSelectedIndex() == -1) {
-                    listView.getSelectionModel().select(0);
-                }
-                else if(listView.getSelectionModel().getSelectedIndex() >= 0){
-                    listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex() - 1);
-                }
-                textField.setText(listView.getSelectionModel().getSelectedItem().toString());
-            }
-            else if(code.isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
-                String text = ((JFXTextField) keyEvent.getSource()).getText();
-                if(text.equals("")){
-                    listView.setVisible(false);
-                }
-                else {
-                    List<Node> ans = map.getNodesByText(text);
-                    if (ans.size() > 10) {
-                        listView.getItems().setAll(ans.subList(0, 5));
-                        listView.setVisible(true);
-                    }
-                    if (textField.equals(startTextField)) {
-                        startNode = null;
-                    } else {
-                        endNode = null;
-                    }
-                }
-            }
-
-    }
-
-    private void suggestionPressed(MouseEvent e, JFXTextField textField, JFXListView<Node> listView) {
-        Node selected = listView.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            Node node = listView.getSelectionModel().getSelectedItem();
-            if (textField.equals(startTextField)) {
-                startNode = node;
-            } else {
-                endNode = node;
-            }
-            textField.setText(selected.toString());
-            listView.setVisible(false);
-        }
-    }
-
 
     public void onShow(){
         startNodeChoice.setItems(FXCollections.observableArrayList(
@@ -333,6 +250,77 @@ public class PathController implements ControllableScreen, Observer{
         this.parent = parent;
     }
 
+    private void searchText(KeyEvent keyEvent, JFXTextField textField, JFXListView<Node> listView){
+            KeyCode code = keyEvent.getCode();
+            if(code.equals(KeyCode.ENTER)) {
+                Node node;
+                if(listView.getSelectionModel().selectedItemProperty().isNull().get()){
+                    node = listView.getItems().get(0);
+                }
+                else{
+                    node = listView.getSelectionModel().getSelectedItem();
+                }
+                if(textField.equals(startTextField)){
+                    startNode = node;
+                }
+                else{
+                    endNode = node;
+                }
+                    textField.setText(node.toString());
+                    listView.setVisible(false);
+                }
+            else if(code.equals(KeyCode.DOWN)){
+                if(listView.getSelectionModel().getSelectedIndex() == -1) {
+                    listView.getSelectionModel().select(0);
+                }
+                else if(listView.getSelectionModel().getSelectedIndex() <= listView.getItems().size()-1){
+                    listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex() + 1);
+                }
+                textField.setText(listView.getSelectionModel().getSelectedItem().toString());
+            }
+            else if(code.equals(KeyCode.UP)){
+                if(listView.getSelectionModel().getSelectedIndex() == -1) {
+                    listView.getSelectionModel().select(0);
+                }
+                else if(listView.getSelectionModel().getSelectedIndex() >= 0){
+                    listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex() - 1);
+                }
+                textField.setText(listView.getSelectionModel().getSelectedItem().toString());
+            }
+            else if(code.isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
+                String text = ((JFXTextField) keyEvent.getSource()).getText();
+                if(text.equals("")){
+                    listView.setVisible(false);
+                }
+                else {
+                    List<Node> ans = map.getNodesByText(text);
+                    if (ans.size() > 10) {
+                        listView.getItems().setAll(ans.subList(0, 5));
+                        listView.setVisible(true);
+                    }
+                    if (textField.equals(startTextField)) {
+                        startNode = null;
+                    } else {
+                        endNode = null;
+                    }
+                }
+            }
+    }
+
+    private void suggestionPressed(MouseEvent e, JFXTextField textField, JFXListView<Node> listView) {
+        Node selected = listView.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            Node node = listView.getSelectionModel().getSelectedItem();
+            if (textField.equals(startTextField)) {
+                startNode = node;
+            } else {
+                endNode = node;
+            }
+            textField.setText(selected.toString());
+            listView.setVisible(false);
+        }
+    }
+
     private Path getPath(){
         Node s;
         Node e;
@@ -351,7 +339,6 @@ public class PathController implements ControllableScreen, Observer{
         return map.findPath(s,e);
     }
 
-
     private void controlScroller(PathViewer p){
         double x = p.getCenter().get(0);
         double y = p.getCenter().get(1);
@@ -366,9 +353,6 @@ public class PathController implements ControllableScreen, Observer{
         Center.set(0,(int)x);
         Center.set(1,(int)y);
         p.initAnimation(cx,cy,x,y);
-        //mapViewer.centerView((int)x,(int)y);
-        //animationCount=5; //center a bunch of times to make sure it actually centers
-        //mapViewer.animateCenter((int)x,(int)y);
     }
 
     private void SetPaths(Path path){
@@ -380,7 +364,6 @@ public class PathController implements ControllableScreen, Observer{
             //get first floor
             node = path.getPath().get(i);
             if(node.getFloor()!=current){
-                //savePaths.add(new Path());//create new path for floor
                 //create a new path for floors
                 current = node.getFloor();//get new floor
                 floors.add(current);
@@ -398,7 +381,6 @@ public class PathController implements ControllableScreen, Observer{
             else{
                 //add to path
                 pathToAdd.addToPath(node);
-
             }
         }
         paths.add(new PathViewer(pathToAdd));
@@ -445,6 +427,7 @@ public class PathController implements ControllableScreen, Observer{
         mapPane.getChildren().add(newp);
         path.addShape(newp);
         shapes.add(newp);
+
         //add to last node
         Circle lastp = getPoint(path.getNodes().get(path.getNodes().size()-1).getX(),path.getNodes().get(path.getNodes().size()-1).getY());
         mapPane.getChildren().add(lastp);
@@ -454,10 +437,12 @@ public class PathController implements ControllableScreen, Observer{
         if(path.getNodes().size() > 1) {
             //animation that moves the indicator
             pathTransition = new PathTransition();
+
             //path to follow
             javafx.scene.shape.Path p = new javafx.scene.shape.Path();
             p.setStroke(Color.NAVY);
             p.setStrokeWidth(LINE_STROKE);
+
             //add shapes currentPath and shapes
             path.addShape(p);
             mapPane.getChildren().addAll(p, arrow);
@@ -471,6 +456,7 @@ public class PathController implements ControllableScreen, Observer{
             for (int i = 1; i < path.getNodes().size(); i++) {
                 p.getElements().add(new LineTo(path.getNodes().get(i).getX(), path.getNodes().get(i).getY()));
             }
+
             //define the animation actions
             pathTransition.setDuration(Duration.millis(p.getElements().size() * 800));//make speed constant
             pathTransition.setNode(arrow);
@@ -486,8 +472,6 @@ public class PathController implements ControllableScreen, Observer{
         clearShapes();
         currentFloor=path.getFloor();
         setScale(path);
-        //set zoom level here
-
         displayPath(path);
         controlScroller(path);//reposition map
 
@@ -500,6 +484,7 @@ public class PathController implements ControllableScreen, Observer{
         }
         arrow.setVisible(false);
         mapPane.getChildren().remove(arrow);
+
         //clear all lines and paths
         floors= new ArrayList<>();
         shapes=new ArrayList<>();
@@ -509,6 +494,7 @@ public class PathController implements ControllableScreen, Observer{
         mapPane.getChildren().removeAll(arrow);
     }
     //-----------------------ANIMATIONS END--------------------------//
+
     public void setScale(PathViewer path){
         double scale = path.getScale();
         scale = mapViewer.checkScale(scale);
@@ -527,14 +513,10 @@ public class PathController implements ControllableScreen, Observer{
         }
         arrow.setScaleX(1/scale);
         arrow.setScaleY(1/scale);
-
     }
-
-
 
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
-        System.out.println("Zoom In Pressed");
         scaleMap(slideBarZoom.getValue()+0.2);
         currentPath.hasAnimated=false;
     }
@@ -542,9 +524,9 @@ public class PathController implements ControllableScreen, Observer{
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
         scaleMap(slideBarZoom.getValue()-0.2);
-
         currentPath.hasAnimated=false;
     }
+
     //-------------------------MAP SCALE START--------------------------//
     private void displayPaths(Path thePath){
         SetPaths(thePath);
@@ -555,14 +537,10 @@ public class PathController implements ControllableScreen, Observer{
         textDirectionsPane.setExpanded(false);
         try {
             qr.writeQRList(directions, "src/images/qr");
-            System.out.println("QR Success");
             while(!qr.isComplete()){
                 System.out.println("Waiting on qr");
             }
-
             File f = new File("/image/qr/jpg");
-            System.out.println("File" + f.getParent() + ", " + f.getParentFile() );
-
             qrImageView.setImage(new Image("file:src/images/qr.jpg"));
         }
         catch (NonValidQRCodeMessageException e){
@@ -570,17 +548,14 @@ public class PathController implements ControllableScreen, Observer{
         }
         currentFloor=paths.get(0).getFloor();//set the current floor
         switchPath(paths.get(0));
-        System.out.println("Intermediate  " + (mapScrollPane.getVvalue()));
     }
 
     public void enterPressed(ActionEvent e) throws InvalidNodeException {
-
         if(((startNodeChoice.getValue()!= null && startTypeTab.isSelected()) || (startNode != null && startTextTab.isSelected()) ) &&
                 ((endNodeChoice.getValue() != null && endTypeTab.isSelected()) || (endNode != null && endTextTab.isSelected()) )) {
             btnReverse.setVisible(true);//make reverse button visible
             thePath = getPath();
             displayPaths(thePath);
-            System.out.println("Enter Pressed");
         }
         else{
             ShakeTransition shake = new ShakeTransition();
@@ -603,12 +578,9 @@ public class PathController implements ControllableScreen, Observer{
         if(thePath!=null){
             displayPaths(thePath.getReverse());
         }
-        System.out.println("Reverse Pressed");
-
     }
 
     public void cancelPressed(ActionEvent e) {
-        System.out.println("Cancel Pressed");
         clearPaths();
         parent.setScreen(ScreenController.MainID,"RIGHT");
     }
@@ -626,10 +598,9 @@ public class PathController implements ControllableScreen, Observer{
                 switchPath(currentPath);
             }
         }
-        //System.out.println("Updating");
-        //mapViewer.centerView(Center.get(0),Center.get(1));
     }
     //-----------------------NODE SELECT END--------------------------//
+
     public void startTypeSelected(ActionEvent e){
         startType = ((MenuItem)e.getSource()).getText();
         startTypeMenu.setText(startType);

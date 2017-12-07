@@ -43,8 +43,6 @@ public class ScreenController extends StackPane {
     public static String RequestFile = "/fxml/Request.fxml";
     public static String LoginID = "Login";
     public static String LoginFile = "/fxml/Login.fxml";
-    //public static String AboutID = "About";
-    //public static String AboutFile = "/fxml/About.fxml";
     public static String FeedbackID = "Feedback";
     public static String FeedbackFile = "/fxml/Feedback.fxml";
 
@@ -58,7 +56,6 @@ public class ScreenController extends StackPane {
         });
         pause.setCycleCount(Animation.INDEFINITE);
         pause.play();
-
     }
 
     //add a new screen to the screens HashMap
@@ -191,7 +188,6 @@ public class ScreenController extends StackPane {
             }
             return true;
         }
-        System.out.println("Set Screen Failed");
         return false;
     }
 
@@ -212,5 +208,4 @@ public class ScreenController extends StackPane {
     public void saveState(){
         screenMomento = new ScreenMomento(state);
     }
-
 }

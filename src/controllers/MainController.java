@@ -39,9 +39,8 @@ public class MainController implements ControllableScreen, Observer{
     private HospitalMap map;
     private ArrayList<Circle> indicators;
     private Pane question;
-
-
     private Pane mapPane;
+
     @FXML
     private JFXSlider slideBarZoom;
     @FXML
@@ -54,11 +53,6 @@ public class MainController implements ControllableScreen, Observer{
     private JFXButton retailFilterButton;
     @FXML
     private JFXButton stairsFilterButton;
-    @FXML
-    private JFXButton ebtn;
-    @FXML
-    private JFXButton aboutButton;
-
     @FXML
     private AnchorPane mainAnchorPane;
 
@@ -85,8 +79,6 @@ public class MainController implements ControllableScreen, Observer{
 
         mainAnchorPane.prefWidthProperty().bind(parent.prefWidthProperty());
         mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
-
-
     }
 
     public void onShow(){
@@ -95,7 +87,6 @@ public class MainController implements ControllableScreen, Observer{
         setFloor(curerntFloor);
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
         setZoom(0.8);
-
     }
 
     //Setters
@@ -131,6 +122,7 @@ public class MainController implements ControllableScreen, Observer{
             mapPane.getChildren().remove(newIndicator);
             indicators.remove(newIndicator);
         });
+
         newIndicator.getTimeline().play();
 
         return newIndicator;
@@ -152,20 +144,15 @@ public class MainController implements ControllableScreen, Observer{
     public void clearMousePressed(MouseEvent e){
         clearPressed(new ActionEvent());
     }
-/*
-    public void aboutButtonPressed(ActionEvent e){
-        System.out.println("About Pressed");
-        parent.setScreen(ScreenController.AboutID, "RIGHT");
-    }
-*/
 
     //adjusts map zoom through slider
     public void sliderChanged(MouseEvent e){
         mapViewer.setScale(slideBarZoom.getValue());
     }
 
-    //-------------------findNearest Button Actions Start-----------------//
-    //clear button
+    ////////////////////////////////////////////////////////////
+    /////////////           Find Nearest
+    ////////////////////////////////////////////////////////////
     public void clearPressed(ActionEvent e){
         int size = mapPane.getChildren().size();
         mapPane.getChildren().remove(0, size);
@@ -183,7 +170,6 @@ public class MainController implements ControllableScreen, Observer{
         Node node = path.getPath().get(size - 1);
         //if nearest node is on same floor as kiosk, make a circle
         if(node.getFloor() == map.getKioskLocation().getFloor()){
-            //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
@@ -199,15 +185,9 @@ public class MainController implements ControllableScreen, Observer{
         Node node = path.getPath().get(size - 1);
         //if nearest node is on same floor as kiosk, make a circle
         if(node.getFloor() == map.getKioskLocation().getFloor()){
-            //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
-    }
-
-    public void emergencyButtonPressed(ActionEvent e){
-        //same as exitTypePressed, but show an animated path to exit
-
     }
 
     public void elevTypePressed(ActionEvent e){
@@ -220,7 +200,6 @@ public class MainController implements ControllableScreen, Observer{
         Node node = path.getPath().get(size - 1);
         //if nearest node is on same floor as kiosk, make a circle
         if(node.getFloor() == map.getKioskLocation().getFloor()){
-            //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
@@ -236,7 +215,6 @@ public class MainController implements ControllableScreen, Observer{
         Node node = path.getPath().get(size - 1);
         //if nearest node is on same floor as kiosk, make a circle
         if(node.getFloor() == map.getKioskLocation().getFloor()){
-            //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
@@ -252,16 +230,16 @@ public class MainController implements ControllableScreen, Observer{
         Node node = path.getPath().get(size - 1);
         //if nearest node is on same floor as kiosk, make a circle
         if(node.getFloor() == map.getKioskLocation().getFloor()){
-            //make a new AnimatedCircle + initialize it
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
     }
-    //-------------------findNearest Button Actions End-----------------//
 
+    ////////////////////////////////////////////////////////////
+    /////////////           Filter
+    ////////////////////////////////////////////////////////////
     public void filterButtonPressed(ActionEvent e) {
         clearPressed(new ActionEvent());
-        System.out.println("Filter Pressed");
         JFXButton pressed = (JFXButton) e.getSource();
         ArrayList<Node> filteredNodes = new ArrayList<Node>();
         if (pressed.equals(bathFilterButton)) {
@@ -284,24 +262,16 @@ public class MainController implements ControllableScreen, Observer{
 
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
-        System.out.println("Login Pressed");
         parent.setScreen(ScreenController.LoginID,"RIGHT");
     }
 
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
-        System.out.println("Direction Pressed");
         parent.setScreen(ScreenController.PathID,"LEFT");
     }
 
     public void questionPressed(ActionEvent e) {
-        System.out.println("Question Pressed");
         parent.setScreen(ScreenController.FeedbackID, "RIGHT");
-    }
-
-    //when search button is pressed go to search screen
-    public void searchPressed(ActionEvent e){
-        System.out.println("Search Pressed");
     }
 
     //when + button is pressed zoom in map

@@ -1,3 +1,11 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration3
+* Original author(s): Travis Norris, Erika Snow, Nick Fajardo, Leo Grande
+* The following code
+*/
+
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
@@ -19,6 +27,7 @@ public class FeedbackController implements ControllableScreen{
         this.ImageMap = new ArrayList<>();
         this.descriptions = new ArrayList<>();
     }
+
     private ScreenController parent;
     private int status;
     private ArrayList<String> ImageMap;
@@ -26,19 +35,14 @@ public class FeedbackController implements ControllableScreen{
 
     @FXML
     private JFXSlider starSlider;
-
     @FXML
     private JFXTextArea HelpDescription;
-
     @FXML
     private Label HelpTitle;
-
     @FXML
     private ImageView ImageViewer;
-
     @FXML
     private JFXButton Next;
-
     @FXML
     private JFXButton Previous;
 
@@ -71,23 +75,24 @@ public class FeedbackController implements ControllableScreen{
         this.parent = parent;
     }
 
+
     public void returnPressed(ActionEvent e){
-        System.out.println("Return Pressed");
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
-    public void enterPressed(ActionEvent e) {
-        System.out.println("Enter Pressed");
-    }
+    public void enterPressed(ActionEvent e) {}
 
+    //---------------------FEEDBACK TAB--------------------//
     public void pressNext(){
         setImageFromList(true);
         setLables();
     }
+
     public void pressPrevious(){
         setImageFromList(false);
         setLables();
     }
+
     //////////////////////////
     // HELPER METHODS BELOW //
     //////////////////////////
@@ -110,11 +115,13 @@ public class FeedbackController implements ControllableScreen{
         String imageURL = this.ImageMap.get(this.status);
         this.ImageViewer.setImage(new Image(imageURL));
     }
+
     private void setLables() {
         CustomPair currentLables = this.descriptions.get(this.status);
         this.HelpDescription.setText(currentLables.getDescription());
         this.HelpTitle.setText(currentLables.getTitle());
     }
+
     private void populateLists(){
         CustomPair main = new CustomPair("Main Menu", "Here is the main screen for Brigham and Women's Hospital kiosk application that " +
                 "includes several features. Along the top are buttons that access staff login (login), " +
@@ -175,6 +182,7 @@ public class FeedbackController implements ControllableScreen{
         this.descriptions.add(NodeToNode);
         this.ImageMap.add("images/DirectionsPicture.png");
     }
+
     class CustomPair{
         private String title;
         private String description;

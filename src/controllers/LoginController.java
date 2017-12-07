@@ -14,10 +14,9 @@ import ui.ShakeTransition;
 public class LoginController implements ControllableScreen{
     public LoginController(){}
     ScreenController parent;
-    private Staff member;
     private DepartmentSubsystem depSub;
 
-    public String staffLoggedIn;
+    ShakeTransition s = new ShakeTransition();
 
     @FXML
     private JFXTextField usernameField;
@@ -42,30 +41,17 @@ public class LoginController implements ControllableScreen{
     }
 
     public void returnPressed(ActionEvent e){
-        System.out.println("Return Pressed");
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
-    ShakeTransition s = new ShakeTransition();
-
     public void enterPressed(ActionEvent e){
-        System.out.println("Enter Pressed");
-        //parent.setScreen(ScreenController.RequestID,"UP");
-        System.out.println(usernameField.getText().toString());
-        System.out.println(passwordField.getText().toString());
-        //boolean result = (depSub.login(usernameField.getText().toString(),passwordField.getText().toString()));
-        //System.out.println(result);
         String login = usernameField.getText();
         String passWord = passwordField.getText();
         if(login.equals("") || passWord.equals("")){
             if(login.equals("")){
-                System.out.print("Login is empty");
-                //shake
                 s.shake(usernameField);
             }
             if(passWord.equals("")){
-                System.out.println("Password is empty");
-                //shake
                 s.shake(passwordField);
             }
             return;
