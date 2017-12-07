@@ -54,7 +54,6 @@ public class ScreenController extends StackPane {
                 setScreen(screenMomento.getState());
             pause.play();
         });
-        pause.setCycleCount(Animation.INDEFINITE);
         pause.play();
     }
 

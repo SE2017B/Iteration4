@@ -576,7 +576,8 @@ public class PathController implements ControllableScreen, Observer{
 
     public void reversePressed(ActionEvent e){
         if(thePath!=null){
-            displayPaths(thePath.getReverse());
+            thePath = thePath.getReverse();
+            displayPaths(thePath);
         }
     }
 
