@@ -192,8 +192,6 @@ public class staffDatabase {
             addAnyStaff.setInt(1, anyAdmin.getAdminID());
             addAnyStaff.setString(2, anyAdmin.getUsername());
 
-            allAdmins.add(new Admin(anyAdmin.getAdminID(), anyAdmin.getUsername()));
-
             addAnyStaff.executeUpdate();
 
             System.out.printf("Insert Admin Successful\n");

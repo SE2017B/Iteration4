@@ -5,11 +5,10 @@ public class Admin {
     private int adminID;
     private String username;
 
-    public Admin(int adminID, String username) {
+    public Admin(int adminID, Staff staff) {
         this.adminID = adminID;
-        this.username = username;
+        this.username = staff.getUsername();
     }
-
 
     public int getAdminID() {
         return adminID;
