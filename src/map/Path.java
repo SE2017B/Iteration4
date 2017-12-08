@@ -1,12 +1,11 @@
 package map;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class Path implements Comparable<Path> {
     private ArrayList<Node> path = new ArrayList<>();
     private ArrayList<String> directions = new ArrayList<>();
+    private ArrayList<ArrayList<String>> directionsByFloor = new ArrayList<>();
     private double distance;
     private double pixelsToMeters = .1;
 
@@ -40,6 +39,7 @@ public class Path implements Comparable<Path> {
         int NVY = 0;
         int VX = 0;
         int VY = 0;
+        int currentDirectionIndex = 0;
         boolean prevElevator = false;
         boolean prevStop = false;
         boolean straight = false;
@@ -67,9 +67,9 @@ public class Path implements Comparable<Path> {
             double det = Vector1_2X * Vector2_3Y - Vector2_3X * Vector1_2Y;
             double angle = Math.toDegrees(Math.atan2(det, dot));
 
-            System.out.println("Node 1: " + path.get(i-1).getShortName());
-            System.out.println("Node 2: " + path.get(i).getShortName());
-            System.out.println("Node 3: " + path.get(i+1).getShortName() + "\n");
+//            System.out.println("Node 1: " + path.get(i-1).getShortName());
+//            System.out.println("Node 2: " + path.get(i).getShortName());
+//            System.out.println("Node 3: " + path.get(i+1).getShortName() + "\n");
 
             if(Vector2_3Z != 0) {
                 if (path.get(i-1).getFloor().getNodeMapping() > path.get(i+1).getFloor().getNodeMapping() && !prevElevator) {
@@ -152,8 +152,27 @@ public class Path implements Comparable<Path> {
             directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(path.size()-1).getFloor().getDbMapping()));
         }
         directions.add("Stop at " + getFullType(path.get(path.size()-1)));
-
         return directions;
+    }
+
+    public ArrayList<ArrayList<String>> getDirectionsByFloor(){
+        int currentDirectionIndex = 0;
+        for(String string : directions){
+            if(string.contains("Exit")){
+                    ArrayList<String> newDirections = new ArrayList<>();
+                    newDirections.addAll(directions.subList(currentDirectionIndex, directions.indexOf(string)));
+                    directionsByFloor.add(new ArrayList<>());
+                    directionsByFloor.set(directionsByFloor.size()-1, newDirections);
+                    currentDirectionIndex = directions.indexOf(string);
+            }
+        }
+        if(currentDirectionIndex != directions.size()){
+            ArrayList<String> newDirections = new ArrayList<>();
+            newDirections.addAll(directions.subList(currentDirectionIndex, directions.size()));
+            directionsByFloor.add(new ArrayList<>());
+            directionsByFloor.set(directionsByFloor.size()-1, newDirections);
+        }
+        return directionsByFloor;
     }
 
     private String getFullType(Node node){
@@ -190,7 +209,7 @@ public class Path implements Comparable<Path> {
             case "SERV":
                 string = "the " + node.getLongName();
                 break;
-            default: string = "";
+            default: string = node.getShortName();
         }
         return string;
     }
