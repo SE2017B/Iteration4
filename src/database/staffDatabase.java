@@ -18,6 +18,10 @@ public class staffDatabase {
     // hospitalStaff (username U1, password, jobType, fullName, ID PK)
     //////////////////////////////////////////////////////////////////
 
+    //////////////////////////////////////////////////////////////////
+    // hospitalAdmins (username U1, password, jobType, fullName, ID PK)
+    //////////////////////////////////////////////////////////////////
+
     private static final String JDBC_URL_STAFF="jdbc:derby:hospitalStaffDB;create=true";
     private static Connection conn;
 
@@ -96,6 +100,42 @@ public class staffDatabase {
             System.out.println();
 
             stmtCreateStaffTable.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Create a table for the Admin Staff Members
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void createAdminTable() {
+
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet res = meta.getTables(null, null, "HOSPITALADMINS", null);
+
+            //Add a new node table
+            Statement stmtCreateAdminsTable = conn.createStatement();
+            String createAdminTable = ("CREATE TABLE hospitalAdmins" +
+                    "(username VARCHAR(64)," +
+                    "password VARCHAR(64)," +
+                    "jobTitle VARCHAR(50)," +
+                    "fullname VARCHAR(64)," +
+                    "ID INTEGER," +
+                    "CONSTRAINT hospitalAdmins_PK PRIMARY KEY (username))");
+
+            int rsetCreateAdmins = stmtCreateAdminsTable.executeUpdate(createAdminTable);
+            System.out.println("Create Admin table Successful!");
+
+            conn.commit();
+            System.out.println();
+
+            stmtCreateAdminsTable.close();
             conn.close();
 
         } catch (SQLException e) {
