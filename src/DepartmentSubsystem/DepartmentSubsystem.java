@@ -35,13 +35,15 @@ public class DepartmentSubsystem {
     private static DepartmentSubsystem singleton;
     private DepartmentSubsystem(){init();}
     private void init(){
+        this.services = new ArrayList<>();
+        System.out.println("Making the staff");
         this.allStaff = staffDatabase.getStaff();
-
         populateLoginCheck(this.allStaff);
+        System.out.println("Staff has been made");
 
         Service translation = new Translation("Translation");
         translation.setURL("/fxml/Translation.fxml");
-        services.add(translation);
+        services.add((Service)translation);
 
         Service transport = new Transport("Transport");
         transport.setURL("/fxml/Transport.fxml");

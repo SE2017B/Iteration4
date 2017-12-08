@@ -1,6 +1,8 @@
 package controllers;
 
 import DepartmentSubsystem.*;
+import DepartmentSubsystem.Exceptions.PasswordException;
+import DepartmentSubsystem.Exceptions.UsernameException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -44,7 +46,7 @@ public class LoginController implements ControllableScreen{
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
-    public void enterPressed(ActionEvent e){
+    public void enterPressed(ActionEvent e) throws UsernameException, PasswordException {
         String login = usernameField.getText();
         String passWord = passwordField.getText();
         if(login.equals("") || passWord.equals("")){
@@ -56,12 +58,17 @@ public class LoginController implements ControllableScreen{
             }
             return;
         }
-        if((depSub.login(login, passWord)))
-        {
+        try{
+            Staff person = depSub.login(login, passWord);
             parent.setScreen(ScreenController.RequestID,"UP");
         }
-        else{
-            System.out.println("Wrong Pass/Login");
+        catch (UsernameException ex){
+
         }
+        catch (PasswordException ex){
+
+        }
+
+
     }
 }

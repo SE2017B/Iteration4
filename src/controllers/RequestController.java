@@ -10,7 +10,7 @@ package controllers;
 
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
-import api.SanitationService;
+//import api.SanitationService;
 import com.jfoenix.controls.*;
 import database.staffDatabase;
 import javafx.animation.TranslateTransition;
@@ -98,8 +98,6 @@ public class RequestController implements ControllableScreen{
     @FXML
     private Label staffNameLabel;
     @FXML
-    private ChoiceBox<Department> choiceBoxDept;
-    @FXML
     private MenuButton menuButtonAl;
     @FXML
     private Label lblSelectedAdditionalInfo;
@@ -139,18 +137,20 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<Service> addStaffServiceChoiceBox;
 
     public void init(){
+        depSub = DepartmentSubsystem.getSubsystem();
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + depSub.getServices());
+        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices()));
 
         apiLocationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
 
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
-        choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
-        depSub = DepartmentSubsystem.getSubsystem();
+
 
         //location set up
         locationChoiceBox.setItems(FXCollections.observableList(
@@ -185,7 +185,6 @@ public class RequestController implements ControllableScreen{
 
         //Update the nodes in the map
         ArrayList<Node> nodes = map.getNodeMap();
-        choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
         searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
         searchStrategyChoice.setValue(map.getSearchStrategy());
@@ -194,8 +193,8 @@ public class RequestController implements ControllableScreen{
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
 
-        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getAllServices()));
-        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getAllServices()));
+        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
+        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
     }
 
     public void setParentController(ScreenController parent){
@@ -221,9 +220,9 @@ public class RequestController implements ControllableScreen{
     }
 
     public void runAPI(Node desNode){
-        Stage primaryStage = new Stage();
-        SanitationService api = SanitationService.newInstance(primaryStage);
-        api.run(100, 100, 500, 500, null, desNode.getID(), null);
+//        Stage primaryStage = new Stage();
+//        SanitationService api = SanitationService.newInstance(primaryStage);
+//        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
 
     public void cancelPressedAPI(ActionEvent e){
@@ -250,16 +249,39 @@ public class RequestController implements ControllableScreen{
         //fillInServiceSpecificRecs();
     }
 
+//    private String fillInServiceSpecificRecs() {
+//        Service service = choiceBoxService.getValue();
+//
+//        return currentServiceController.getInputData();
+//
+//        if(service.toString().equalsIgnoreCase("Translation Service")){
+//            //Sets the language to the service, form the controller
+//            ((Translation)service).setRequestedLanguage(((TranslationController)this.currentServiceController).getLanguageSel());
+//            //Sets the duration of the session to the service, form the controller
+//            ((Translation)service).setDuration(Integer.parseInt(((TranslationController)this.currentServiceController).getDuration()));
+//        }
+//        else if(service.toString().equalsIgnoreCase("Transport Service")){
+//            //Sets the end location to the service
+//            ((Transport)service).setEndLocation(((TransportController)this.currentServiceController).returnNode());
+//        }
+//        else if(service.toString().equalsIgnoreCase("Sanitation")){
+//            ((Sanitation)service).setRequestedService(((SanitationController)this.currentServiceController).getSanSel());
+//        }
+//        else if(service.toString().equalsIgnoreCase("Food Delivery Service")){
+//            ((FoodDelivery)service).setSelectedFood(((FoodDeliveryController)this.currentServiceController).getFoodSelected());
+//            ((FoodDelivery)service).setAllergies(((FoodDeliveryController)this.currentServiceController).getAllergy());
+//        }
+//    }
+
     public void cancelPressed(ActionEvent e){
         //clear choiceboxes
         choiceBoxStaff.setItems(FXCollections.observableList(new ArrayList<Staff>()));
         choiceBoxStaff.setValue(null);
         choiceBoxService.setItems(FXCollections.observableList(new ArrayList<Service>()));
         choiceBoxService.setValue(null);
-        choiceBoxDept.setValue(null);
         choiceBoxService.setDisable(true);
         choiceBoxStaff.setDisable(true);
-        //choiceBoxDept.getItems().clear();
+
 
         //clear time and date
         //timeMenu.getEditor().clear();
@@ -285,12 +307,12 @@ public class RequestController implements ControllableScreen{
         menuButtonAl.setText(selectedAlg);
     }
 
-    public void deptSelected(Department newValue){
-        if(newValue != null) {
-            choiceBoxService.setDisable(false);
-            choiceBoxService.setItems(FXCollections.observableList(newValue.getServices()));
-        }
-    }
+//    public void deptSelected(Department newValue){
+//        if(newValue != null) {
+//            choiceBoxService.setDisable(false);
+//            choiceBoxService.setItems(FXCollections.observableList(newValue.getServices()));
+//        }
+//    }
 
     public void servSelected(Service newValue){
         if(newValue != null) {
@@ -349,7 +371,7 @@ public class RequestController implements ControllableScreen{
             Service tempService = addStaffServiceChoiceBox.getValue();
 
             staffDatabase.incStaffCounter();
-            depSub.addStaff(tempService, tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter());
+            depSub.addStaff(tempService, tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter(), 0);
 
             staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
         }

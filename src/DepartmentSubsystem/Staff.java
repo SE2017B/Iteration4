@@ -43,6 +43,18 @@ public class Staff{
         workload = new HashMap<Integer, ServiceRequest>();
     }
 
+    public Staff(String username, String password, String jobTitle, String fullName, int ID){
+        this.username = username;
+        this.password = password;
+        this.jobTitle = jobTitle;
+        this.fullName = fullName;
+        this.ID = ID;
+        this.admin = false;
+
+        //Setting stuff to blanks for now
+        workload = new HashMap<Integer, ServiceRequest>();
+    }
+
     public void removeRequest(ServiceRequest request){
         workload.remove(request.getRequestID());
     }
