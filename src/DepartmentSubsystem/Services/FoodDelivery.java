@@ -9,6 +9,7 @@
 package DepartmentSubsystem.Services;
 
 import DepartmentSubsystem.Service;
+
 import java.util.ArrayList;
 
 public class FoodDelivery extends Service {
@@ -18,6 +19,7 @@ public class FoodDelivery extends Service {
     public FoodDelivery(String description) {
         super(description);
         menuItems = populateMenuItems();
+        System.out.println("Hi" + menuItems);
     }
 
     private ArrayList<String> populateMenuItems(){

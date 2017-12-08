@@ -6,8 +6,10 @@
 * The following code
 */
 
+
 package DepartmentSubsystem;
 
+import database.staffDatabase;
 import exceptions.InvalidPasswordException;
 
 import java.util.*;
@@ -17,52 +19,29 @@ public class Staff{
     private String username;
     private String password;
     private boolean admin;
-
     //These are just details for display
     private HashMap<Integer,ServiceRequest> workload;
     private String jobTitle;
     private String fullName;
     private int ID;
-    private Department department;
-
-    //Use this to determine if they can perform a service or not.
-    private ArrayList<Service> capableServices;
-
-//    //Keeps track of a certain staff members requests
-//    private LinkedList<ServiceRequest> currentRequests;
-//    private ArrayList<ServiceRequest> completedRequests;
-
-    //This only applies if someone can speak multiple languages. We set english as the only language by default
-    private ArrayList<String> languages = new ArrayList<>();
 
     //Constructor DB uses
-    public Staff(String username, String password, String jobTitle, String fullName, int ID){
+    public Staff(String username, String password, String jobTitle, String fullName, int ID, int admin){
         this.username = username;
         this.password = password;
         this.jobTitle = jobTitle;
         this.fullName = fullName;
         this.ID = ID;
+        if(admin == 1){
+            this.admin = false;
+        }
+        else{
+            this.admin = true;
+        }
 
         //Setting stuff to blanks for now
         workload = new HashMap<Integer, ServiceRequest>();
-        this.department = new Department("FILLER DEPT");
-        this.capableServices = new ArrayList<Service>();
-//        this.currentRequests = new LinkedList<ServiceRequest>();
-//        this.completedRequests = new ArrayList<ServiceRequest>();
-
-        this.languages = new ArrayList<String>();
-        this.languages.add("English");
     }
-
-    //Gives the staff member a new request from the backlog, and if the backlog is empty, frees the staff member.
-//    public void completeCurrentRequest() {
-//        try {
-//            completedRequests.add(currentRequests.pop());
-//        }
-//        catch (NoSuchElementException exception){
-//         //   available = true;
-//        }
-//    }
 
     public void removeRequest(ServiceRequest request){
         workload.remove(request.getRequestID());
@@ -81,36 +60,16 @@ public class Staff{
         }
     }
 
-    //Updates Database with the current staff object
+    //Update
     public void uptadeDB(){
-        //mainDatabase.modifyStaff(this);
+        staffDatabase.modifyStaff(this);
     }
 
     //Important Getters and Setters
     public boolean isAdmin() {
         return admin;
     }
-    public ArrayList<Service> getCapableServices() {
-        return capableServices;
-    }
-    public void addCapableService(Service capableService) {
-        this.capableServices.add(capableService);
-    }
-    public ArrayList<String> getLanguages() {
-        return languages;
-    }
-    public void addLanguages(ArrayList<String> languages) {
-        //Verifies that all languages added are not already inside the list of known languages
-        for(String language: languages){
-            if(!this.languages.contains(language)){
-                this.languages.add(language);
-            }
-        }
-    }
-    public void addLanguage(String language){
-        //If its not known, then LET IT BE KNOWN!
-        if(!this.languages.contains(language)){this.languages.add(language);}
-    }
+
     //Other Getters and Setters
     public void setAdmin(boolean admin) {
         this.admin = admin;
@@ -145,33 +104,12 @@ public class Staff{
     public void setID(int ID) {
         this.ID = ID;
     }
-    public Department getDepartment() {
-        return department;
-    }
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-//    public LinkedList<ServiceRequest> getCurrentRequests() {
-//        if(currentRequests.isEmpty()){
-//           return null;
-//        }
-//        return currentRequests;
-//    }
-//    public void setCurrentRequests(LinkedList<ServiceRequest> currentRequests) {
-//        this.currentRequests = currentRequests;
-//    }
-//    public ArrayList<ServiceRequest> getCompletedRequests() {
-//        return completedRequests;
-//    }
-//    public void setCompletedRequests(ArrayList<ServiceRequest> completedRequests) {
-//        this.completedRequests = completedRequests;
-//    }
 
     public String toString(){
         return fullName;
     }
 
-    public void setNewVars(String username, String password, String jobTitle, String fullName, int id) {
+    public void updateCredidentials(String username, String password, String jobTitle, String fullName, int id) {
         this.username = username;
         this.password = password;
         this.jobTitle = jobTitle;

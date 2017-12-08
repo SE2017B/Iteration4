@@ -6,6 +6,7 @@ import javafx.scene.control.ChoiceBox;
 import map.HospitalMap;
 import map.Node;
 
+
 public class TransportController extends CurrentServiceController {
     private HospitalMap map;
 
@@ -18,6 +19,7 @@ public class TransportController extends CurrentServiceController {
         map = HospitalMap.getMap();
         endLocationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
+
     }
 
     public String getInputData(){

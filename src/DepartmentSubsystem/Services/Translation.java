@@ -8,47 +8,48 @@
 
 package DepartmentSubsystem.Services;
 
+import DepartmentSubsystem.DepartmentSubsystem;
 import DepartmentSubsystem.Service;
 import DepartmentSubsystem.Staff;
 
 import java.util.*;
 
 public class Translation extends Service {
-    private ArrayList<String> languages = populateLanguageTypes(); // available langiages for translation
     private String requestedLanguage = "";
-    private int duration; //Set in minutes
+    private int duration;
+    private HashMap<String, ArrayList<Staff>> languageMap = new HashMap<>();
+    DepartmentSubsystem DSS = DepartmentSubsystem.getSubsystem();
 
     public Translation(String description) {
         super(description);
     }
 
-    private ArrayList<String> populateLanguageTypes(){
-        ArrayList<String> returnVal = new ArrayList<>();
-        returnVal.add("Czech");
-        returnVal.add("Spanish");
-        returnVal.add("Hindi");
-        returnVal.add("Russian");
-        return returnVal;
+    public ArrayList<Staff> returnEligibleStaff(String language){
+        //We already know the language they are going to feed us is going to be good.
+        return languageMap.get(language);
     }
 
-    private ArrayList<Staff> returnEligibleStaff(String language){
-        ArrayList<Staff> returnList = new ArrayList<>();
-        for(Staff person: super.getStaff()){
-            if(person.getLanguages().contains(language)){
-                returnList.add(person);
+    public void addStaff(ArrayList<String> spokenLanguages, Staff person){
+        //for each language that the person can speak, we add it to the list of languages we can offer
+        for(String language: spokenLanguages){
+            if(languageMap.containsKey(language)){
+                languageMap.get(language).add(person);
+            }
+            else{
+                ArrayList<Staff> temporaryArrayList = new ArrayList<>();
+                temporaryArrayList.add(person);
+                languageMap.put(language, temporaryArrayList);
             }
         }
-        return returnList;
     }
 
     public ArrayList<String> getLanguages() {
-        return languages;
+        return new ArrayList<>(languageMap.keySet());
     }
 
     public void setRequestedLanguage(String requestedLanguage) {
         this.requestedLanguage = requestedLanguage;
     }
-
     public String getRequestedLanguage() {
         return requestedLanguage;
     }
@@ -56,7 +57,6 @@ public class Translation extends Service {
     public int getDuration() {
         return duration;
     }
-
     public void setDuration(int duration) {
         this.duration = duration;
     }

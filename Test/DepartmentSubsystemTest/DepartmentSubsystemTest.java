@@ -1,7 +1,6 @@
 package DepartmentSubsystemTest;
 
 import DepartmentSubsystem.DepartmentSubsystem;
-import DepartmentSubsystem.Department;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

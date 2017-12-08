@@ -250,30 +250,6 @@ public class RequestController implements ControllableScreen{
         //fillInServiceSpecificRecs();
     }
 
-//    private String fillInServiceSpecificRecs() {
-//        Service service = choiceBoxService.getValue();
-//
-//        return currentServiceController.getInputData();
-//
-//        if(service.toString().equalsIgnoreCase("Translation Service")){
-//            //Sets the language to the service, form the controller
-//            ((Translation)service).setRequestedLanguage(((TranslationController)this.currentServiceController).getLanguageSel());
-//            //Sets the duration of the session to the service, form the controller
-//            ((Translation)service).setDuration(Integer.parseInt(((TranslationController)this.currentServiceController).getDuration()));
-//        }
-//        else if(service.toString().equalsIgnoreCase("Transport Service")){
-//            //Sets the end location to the service
-//            ((Transport)service).setEndLocation(((TransportController)this.currentServiceController).returnNode());
-//        }
-//        else if(service.toString().equalsIgnoreCase("Sanitation")){
-//            ((Sanitation)service).setRequestedService(((SanitationController)this.currentServiceController).getSanSel());
-//        }
-//        else if(service.toString().equalsIgnoreCase("Food Delivery Service")){
-//            ((FoodDelivery)service).setSelectedFood(((FoodDeliveryController)this.currentServiceController).getFoodSelected());
-//            ((FoodDelivery)service).setAllergies(((FoodDeliveryController)this.currentServiceController).getAllergy());
-//        }
-//    }
-
     public void cancelPressed(ActionEvent e){
         //clear choiceboxes
         choiceBoxStaff.setItems(FXCollections.observableList(new ArrayList<Staff>()));
