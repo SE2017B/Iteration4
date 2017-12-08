@@ -1,5 +1,6 @@
 package database;
 
+import DepartmentSubsystem.Admin;
 import DepartmentSubsystem.Staff;
 
 import java.io.*;
@@ -19,7 +20,7 @@ public class staffDatabase {
     //////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////
-    // hospitalAdmins (username U1, password, jobType, fullName, ID PK)
+    // hospitalAdmins (adminID PK, username U1)
     //////////////////////////////////////////////////////////////////
 
     private static final String JDBC_URL_STAFF="jdbc:derby:hospitalStaffDB;create=true";
@@ -38,6 +39,11 @@ public class staffDatabase {
 
     // Getter for all staff array list
     public static ArrayList<Staff> getStaff(){ return allStaff; }
+
+    static ArrayList<Admin>allAdmins = new ArrayList<>();
+
+    // Getter for all staff array list
+    public static ArrayList<Admin> getAllAdmins(){ return allAdmins; }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Delete staff table
@@ -106,6 +112,35 @@ public class staffDatabase {
             e.printStackTrace();
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////
+    // Delete staff table
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void deleteAdminTable() {
+
+        try {
+
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+
+            DatabaseMetaData meta = conn.getMetaData();
+            ResultSet res = meta.getTables(null, null, "HOSPITALADMINS", null);
+
+            Statement stmtDeleteAdmin = conn.createStatement();
+            String deleteAdminTable = ("DROP TABLE HOSPITALADMINS");
+
+            if (res.next()) {
+                int rsetDelete = stmtDeleteAdmin.executeUpdate(deleteAdminTable);
+                System.out.println("Drop Staff Table Successful!");
+                conn.commit();
+
+            }
+            stmtDeleteAdmin.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Create a table for the Admin Staff Members
@@ -122,12 +157,9 @@ public class staffDatabase {
             //Add a new node table
             Statement stmtCreateAdminsTable = conn.createStatement();
             String createAdminTable = ("CREATE TABLE hospitalAdmins" +
-                    "(username VARCHAR(64)," +
-                    "password VARCHAR(64)," +
-                    "jobTitle VARCHAR(50)," +
-                    "fullname VARCHAR(64)," +
-                    "ID INTEGER," +
-                    "CONSTRAINT hospitalAdmins_PK PRIMARY KEY (username))");
+                    "(adminID INTEGER," +
+                    "username VARCHAR(64)," +
+                    "CONSTRAINT hospitalAdmins_PK PRIMARY KEY (adminID))");
 
             int rsetCreateAdmins = stmtCreateAdminsTable.executeUpdate(createAdminTable);
             System.out.println("Create Admin table Successful!");
@@ -139,6 +171,108 @@ public class staffDatabase {
             conn.close();
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Add an Admin member to Admin table Function
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void addAdmin(Admin anyAdmin) {
+
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalAdmins VALUES (?, ?)");
+
+            anyAdmin.incAdminID();
+
+            addAnyStaff.setInt(1, anyAdmin.getAdminID());
+            addAnyStaff.setString(2, anyAdmin.getUsername());
+
+            allAdmins.add(new Admin(anyAdmin.getAdminID(), anyAdmin.getUsername()));
+
+            addAnyStaff.executeUpdate();
+
+            System.out.printf("Insert Admin Successful\n");
+
+            conn.commit();
+
+            addAnyStaff.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();// end try
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Delete an admin from the admin table
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void deleteAdmin(Admin anyAdmin){
+
+        try  {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            PreparedStatement deleteAnyAdmin = conn.prepareStatement("DELETE FROM hospitalAdmins WHERE adminID = ?");
+
+            // set the corresponding param
+            deleteAnyAdmin.setInt(1, anyAdmin.getAdminID());
+            // execute the delete statement
+            deleteAnyAdmin.executeUpdate();
+
+            System.out.println("Delete Admin Successful!");
+
+            conn.commit();
+            deleteAnyAdmin.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        int indexOf = allAdmins.indexOf(anyAdmin);
+        allAdmins.remove(indexOf);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Query all admins from the admin table
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void queryAllAdmins() {
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            Statement selectAllAdmins = conn.createStatement();
+            String allAdmins = "SELECT * FROM hospitalAdmins";
+            ResultSet rsetAllAdmins = selectAllAdmins.executeQuery(allAdmins);
+
+            Integer intAdminID;
+            String strUsername;
+
+            System.out.printf("%-20s %-65s\n", "adminID", "username");
+
+            //Process the results
+            while (rsetAllAdmins.next()) {
+                intAdminID = rsetAllAdmins.getInt("adminID");
+                strUsername = rsetAllAdmins.getString("username");
+
+                System.out.printf("%-20d %-65s\n", intAdminID, strUsername);
+            } // End While
+
+            conn.commit();
+            System.out.println();
+
+            rsetAllAdmins.close();
+            selectAllAdmins.close();
+            conn.close();
+
+        } // end try
+        catch (SQLException e) {
             e.printStackTrace();
         }
     }
