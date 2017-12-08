@@ -223,7 +223,7 @@ public class RequestController implements ControllableScreen{
     public void runAPI(Node desNode){
         Stage primaryStage = new Stage();
         SanitationService api = SanitationService.newInstance(primaryStage);
-        api.run(100, 100, 500, 500, null, desNode.getID(), null);
+        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
 
     public void cancelPressedAPI(ActionEvent e){
