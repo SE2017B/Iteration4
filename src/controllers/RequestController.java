@@ -141,7 +141,6 @@ public class RequestController implements ControllableScreen{
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + depSub.getServices());
         choiceBoxService.setItems(FXCollections.observableList(depSub.getServices()));
 
         apiLocationChoiceBox.setItems(FXCollections.observableList(
@@ -316,12 +315,11 @@ public class RequestController implements ControllableScreen{
 
     public void servSelected(Service newValue){
         if(newValue != null) {
+            System.out.println("Services was selected and listener triggered");
             choiceBoxStaff.setDisable(false);
             choiceBoxStaff.setItems(FXCollections.observableList(newValue.getStaff()));
-
-            //todo URL ??????????????????????????????????????????????????????????????\
+            System.out.println("This is newValue.getStaff() " + newValue.getStaff());
             String URLPLS = newValue.getURL();
-            //String testURL = "/fxml/FoodDelivery.fxml";
             System.out.println(URLPLS);
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(URLPLS));
