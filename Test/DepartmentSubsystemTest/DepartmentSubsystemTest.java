@@ -14,14 +14,14 @@ public class DepartmentSubsystemTest {
 
     @Test
     public void testInit(){
-        Assert.assertEquals("[Translation Department, Transportation Department, Facilities, Food]", this.DSS.getDepartments().toString());
+        Assert.assertEquals("[Translation, Transport, Sanitation, Food Delivery]", this.DSS.getServices().toString());
     }
 
     @Test
     public void testServices(){
-        Assert.assertEquals("[translation service]", this.DSS.getDepartments().get(0).getServices().toString());
-        Assert.assertEquals("[Transport service]", this.DSS.getDepartments().get(1).getServices().toString());
-        Assert.assertEquals("[Sanitation]", this.DSS.getDepartments().get(2).getServices().toString());
-        Assert.assertEquals("[Food Delivery Service]", this.DSS.getDepartments().get(3).getServices().toString());
+        Assert.assertEquals("Translation", this.DSS.getServices().get(0).toString());
+        Assert.assertEquals("Transport", this.DSS.getServices().get(1).toString());
+        Assert.assertEquals("Sanitation", this.DSS.getServices().get(2).toString());
+        Assert.assertEquals("Food Delivery", this.DSS.getServices().get(3).toString());
     }
 }
