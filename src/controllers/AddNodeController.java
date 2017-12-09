@@ -451,12 +451,17 @@ public class AddNodeController implements ControllableScreen, Observer {
     private JFXButton nodeRemoveCancelButton;
     @FXML
     private JFXListView<Node> nodeRemoveSelectedList;
+    @FXML
+    private Label nodeRemoveLabel;
 
     public void nodeRemoveAddToList(NodeCheckBox node){
         nodeRemoveSelectedList.getItems().add(node.getNode());
     }
 
     public void nodeRemoveEnterPressed(ActionEvent e){
+        if(nodeRemoveSelectedList.getItems().isEmpty()){
+            s.shake(nodeRemoveLabel);
+        }
         for(NodeCheckBox n : nodeCheckBoxes){
             if(n.isSelected()) map.removeNode(n.getNode());
         }
@@ -579,24 +584,29 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void nodeEditEnterPressed(ActionEvent e){
         Node node = nodeEditSelectedNode;
-        
+        /*
         if(node == null){
             System.out.println("Warning: No nodes selected.");
             return;
         }
+        */
         if(nodeEditXField.getText().equals("") || nodeEditYField.getText().equals("") || nodeEditFloorDropDown.getText().equals("")
-                || nodeEditBuildingDropDown.getText().equals("") || nodeEditTypeDropDown.getText().equals("")
-                || nodeEditNameField.getText().equals("") || nodeEditShortField.getText().equals("")){
+                || nodeEditFloorDropDown.getText().equals("Floor") || nodeEditBuildingDropDown.getText().equals("Building")
+                || nodeEditTypeDropDown.getText().equals("NodeType") || nodeEditNameField.getText().equals("")
+                || nodeEditShortField.getText().equals("")){
             if(!nodeEditXField.getText().matches("[0-9]+")){
                 s.shake(nodeEditXField);
             }
             if(!nodeEditYField.getText().matches("[0-9]+")){
                 s.shake(nodeEditYField);
             }
+            if(nodeEditFloorDropDown.getText().equals("Floor")){
+                s.shake(nodeEditFloorDropDown);
+            }
             if(nodeEditBuildingDropDown.getText().equals("Building")){
                 s.shake(nodeEditBuildingDropDown);
             }
-            if(nodeEditTypeDropDown.getText().equals("NodeType")){
+            if(nodeEditTypeDropDown.getText().equals("Type")){
                 s.shake(nodeEditTypeDropDown);
             }
             if(nodeEditShortField.getText().equals("")){
@@ -625,13 +635,13 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void resetNodeEdit(){
         nodeEditSelectedNode = null;
-        nodeEditNameField.setText("Name");
-        nodeEditShortField.setText("Short Name");
+        nodeEditNameField.setText("");
+        nodeEditShortField.setText("");
         nodeEditBuildingDropDown.setText("Building");
         nodeEditFloorDropDown.setText("Floor");
         nodeEditTypeDropDown.setText("Type");
-        nodeEditXField.setText("X Coordinate");
-        nodeEditYField.setText("Y Coordinate");
+        nodeEditXField.setText("");
+        nodeEditYField.setText("");
         nodeEditIDLabel.setText("Node ID");
     }
     //-----------------------NODE TAB END---------------------//
