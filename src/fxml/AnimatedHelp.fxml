@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="mainPane" minHeight="400.0" minWidth="800.0" opacity="0.32" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AnimatedHelpController">
+   <children>
+      <GridPane layoutX="23.0" layoutY="58.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="30.0" />
+          <ColumnConstraints hgrow="NEVER" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="30.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="30.0" vgrow="ALWAYS" />
+          <RowConstraints vgrow="NEVER" />
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="400.0" prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <JFXButton fx:id="nextButton" layoutX="489.0" layoutY="308.0" onAction="#nextPressed" prefHeight="50.0" prefWidth="150.0" text="Next" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="50.0" />
+                  <JFXButton fx:id="previousButton" layoutX="48.0" layoutY="308.0" onAction="#previousPressed" prefHeight="50.0" prefWidth="150.0" text="Previous" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" />
+                  <Label fx:id="helpTextLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="359.0" layoutY="180.0" text="Label" textAlignment="CENTER">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="returnButton" layoutX="692.0" layoutY="31.0" onAction="#returnPressed" text="Return" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                  <JFXProgressBar fx:id="helpProgress" layoutX="236.0" layoutY="323.0" prefHeight="5.0" prefWidth="329.0" progress="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
