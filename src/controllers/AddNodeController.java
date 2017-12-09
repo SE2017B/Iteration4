@@ -656,7 +656,11 @@ public class AddNodeController implements ControllableScreen, Observer {
     @FXML
     private JFXButton edgeAddCancelButton;
     @FXML
+    private Label edgeAddNodeOne;
+    @FXML
     private Label edgeAddID1Label;
+    @FXML
+    private Label edgeAddNodeTwo;
     @FXML
     private Label edgeAddID2Label;
 
@@ -670,12 +674,10 @@ public class AddNodeController implements ControllableScreen, Observer {
         if(nodeOne == null || nodeTwo == null){
             System.out.println("Warning: Less than two nodes selected.");
             if(nodeOne == null){
-                s.shake(edgeAddID1Label);
-                //label is a control, and should therefore shake when this is called, but it doesn't
+                s.shake(edgeAddNodeOne);
             }
             if(nodeTwo == null){
-                s.shake(edgeAddID2Label);
-                //label is a control, and should therefore shake when this is called, but it doesn't
+                s.shake(edgeAddNodeTwo);
             }
         }
         else {
@@ -700,9 +702,12 @@ public class AddNodeController implements ControllableScreen, Observer {
     @FXML
     private JFXSlider slideBarZoom;
     @FXML
-    private Label removeEdgeLabel;
+    private Label edgeRemoveLabel;
 
     public void edgeRemoveEnterPressed(ActionEvent e){
+        if(edgeRemoveList.getItems().isEmpty()){
+            s.shake(edgeRemoveLabel);
+        }
         for(Edge edge : edgeRemoveList.getItems()){
             map.removeEdge(edge);
         }
