@@ -8,10 +8,12 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -88,6 +90,7 @@ public class MapViewer extends Observable{
         setContainer();
         mapScrollPane.setContent(mapHolderPane);
         mapScrollPane.setPannable(true);
+
 
         addFloor(FloorNumber.FLOOR_LTWO);
         addFloor(FloorNumber.FLOOR_LONE);

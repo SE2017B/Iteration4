@@ -73,6 +73,7 @@ public class PathController implements ControllableScreen, Observer{
     private ArrayList<Integer> Center;
     private boolean isAnimating;
     private int animationCount;
+    //path search booleans
 
     Node startNode;
     Node endNode;
@@ -206,6 +207,23 @@ public class PathController implements ControllableScreen, Observer{
             }
         };
         zoomPath.start();
+        //getting node position on mouse click
+        mapPane.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent event) {
+                double sX = mapViewer.getCenter().get(0) + ((event.getSceneX()/mapViewer.getScale())-mapViewer.getCenter().get(0));
+                double sY = mapViewer.getCenter().get(1) + ((event.getSceneY()/mapViewer.getScale())-mapViewer.getCenter().get(1));
+                System.out.println("X is: "+sX+" Y is: "+sY);
+                if(currentFloor!=null){
+                    List<Node> v = map.getNodesInArea((int)sX,(int)sY,currentFloor);
+                    if(v.size()>0){
+                        mapPane.getChildren().add(getPoint(v.get(0).getX(),v.get(1).getY()));
+                    }
+                }
+            }
+        });
+
     }
 
     public void onShow(){
