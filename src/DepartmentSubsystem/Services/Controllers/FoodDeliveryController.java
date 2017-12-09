@@ -10,11 +10,12 @@ public class FoodDeliveryController extends CurrentServiceController {
 
     @Override
     public void onShow(){
-        foodChoiceBox.setItems(FXCollections.observableList(((FoodDelivery)((DSS.getDepartment("Food").getServices().get(0)))).getMenuItems()));
+        foodChoiceBox.setItems(FXCollections.observableList(((FoodDelivery)((DSS.getServices().get(3)))).getMenuItems()));
     }
 
     @FXML
     private ChoiceBox<String> foodChoiceBox;
+
     @FXML
     private JFXTextField alergiesTextFiled;
 
