@@ -10,7 +10,7 @@ package controllers;
 
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
-import api.SanitationService;
+//import api.SanitationService;
 import com.jfoenix.controls.*;
 import database.staffDatabase;
 import javafx.animation.TranslateTransition;
@@ -222,8 +222,8 @@ public class RequestController implements ControllableScreen{
 
     public void runAPI(Node desNode){
         Stage primaryStage = new Stage();
-        SanitationService api = SanitationService.newInstance(primaryStage);
-        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+        //SanitationService api = SanitationService.newInstance(primaryStage);
+        //api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
 
     public void cancelPressedAPI(ActionEvent e){
