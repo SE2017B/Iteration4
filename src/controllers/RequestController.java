@@ -114,6 +114,8 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXDatePicker dateMenu;
     @FXML
+    private JFXTimePicker timeMenu;
+    @FXML
     private ChoiceBox<Node> locationChoiceBox;
     @FXML
     private AnchorPane servicePane1;
@@ -233,21 +235,62 @@ public class RequestController implements ControllableScreen{
     }
 
     public void requestCreatePressed(ActionEvent e){
-        //todo create the request
-        requestIDCount++;
 
-        //fillInServiceSpecificRecs();
+        if(choiceBoxDept.getValue() != null && choiceBoxService.getValue() != null &&
+                choiceBoxStaff.getValue() != null && timeMenu.getValue() != null &&
+                dateMenu.getValue() != null && locationChoiceBox.getValue() != null){
+            //todo create the request
+            requestIDCount++;
 
-        //Submit request
-        //depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL");
+            //fillInServiceSpecificRecs();
 
-        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), "", dateMenu.getValue().toString(), choiceBoxStaff.getValue());
+            //Submit request
+            //depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL");
 
-        //Add new service to List
-        System.out.println("request submitted");
-        nReq.setInputData(currentServiceController.getInputData());
-        resolveServiceListView.getItems().add(nReq);
-        //fillInServiceSpecificRecs();
+            ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), "", dateMenu.getValue().toString(), choiceBoxStaff.getValue());
+
+            //Add new service to List
+            System.out.println("request submitted");
+            nReq.setInputData(currentServiceController.getInputData());
+            resolveServiceListView.getItems().add(nReq);
+            //fillInServiceSpecificRecs();
+        }
+        else{ //make them jiggle
+            ShakeTransition s = new ShakeTransition();
+            if(choiceBoxDept.getValue() == null){
+                s.shake(choiceBoxDept);
+            }
+            if(choiceBoxService.getValue() == null){
+                s.shake(choiceBoxService);
+            }
+            //how do I get these values when they're part of a different fxml?
+            if(choiceBoxService.getValue().toString().equals("Translation service")){
+                //if the language choice box is empty, shake
+                //if the duration text field is empty, shake
+            }
+            if(choiceBoxService.getValue().toString().equals("Transportation service")){
+                //if the end location choice box is empty, shake
+            }
+            if(choiceBoxService.getValue().toString().equals("Sanitation")){
+                //if the task choice box is empty, shake
+            }
+            if(choiceBoxService.getValue().toString().equals("Food Delivery Service")){
+                //if the entree choice box is empty, shake
+                //if the allergies text field is empty, shake
+            }
+            if(choiceBoxStaff.getValue() == null){
+                s.shake(choiceBoxStaff);
+            }
+            if(dateMenu.getValue() == null){
+                s.shake(dateMenu);
+            }
+            if(timeMenu.getValue() == null){
+                s.shake(timeMenu);
+            }
+            if(locationChoiceBox.getValue() == null){
+                s.shake(locationChoiceBox);
+            }
+        }
     }
 
 //    private String fillInServiceSpecificRecs() {
@@ -411,7 +454,9 @@ public class RequestController implements ControllableScreen{
     }
 
     @FXML
-    void searchbuttonPressed(ActionEvent event) {}
+    void searchbuttonPressed(ActionEvent event) {
+        //make sure to add shake transition when field is empty
+    }
 
     //////////////////////////////////////////////////////////
     /////////           Settings Tab

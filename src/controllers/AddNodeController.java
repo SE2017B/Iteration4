@@ -659,7 +659,16 @@ public class AddNodeController implements ControllableScreen, Observer {
 
         if(nodeOne == null || nodeTwo == null){
             System.out.println("Warning: Less than two nodes selected.");
-        } else {
+            if(nodeOne == null){
+                s.shake(edgeAddID1Label);
+                //label is a control, and should therefore shake when this is called, but it doesn't
+            }
+            if(nodeTwo == null){
+                s.shake(edgeAddID2Label);
+                //label is a control, and should therefore shake when this is called, but it doesn't
+            }
+        }
+        else {
             map.addEdge(new Edge(nodeOne, nodeTwo));
         }
         refreshNodesandEdges();
@@ -680,6 +689,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     private JFXListView<Edge> edgeRemoveList;
     @FXML
     private JFXSlider slideBarZoom;
+    @FXML
+    private Label removeEdgeLabel;
 
     public void edgeRemoveEnterPressed(ActionEvent e){
         for(Edge edge : edgeRemoveList.getItems()){
