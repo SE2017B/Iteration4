@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 
 public class NodeCheckBox extends JFXCheckBox {
     private Node node;
+    private double orgX;
+    private double orgY;
 
     public NodeCheckBox(Node node){
         super();
@@ -21,5 +23,21 @@ public class NodeCheckBox extends JFXCheckBox {
         this.setLayoutX((node.getX()-9));
         this.setLayoutY((node.getY()-9));
         this.setAccessibleHelp(node.getLongName());
+    }
+
+    public void setOrgX(double x){
+        orgX = x;
+    }
+
+    public double getOrgX() {
+        return orgX;
+    }
+
+    public void setOrgY(double orgY) {
+        this.orgY = orgY;
+    }
+
+    public double getOrgY() {
+        return orgY;
     }
 }

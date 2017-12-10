@@ -2,6 +2,7 @@ package ui;
 
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.util.Duration;
 
 public class ShakeTransition {

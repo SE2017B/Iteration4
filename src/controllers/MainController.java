@@ -277,7 +277,7 @@ public class MainController implements ControllableScreen, Observer{
     }
 
     public void questionPressed(ActionEvent e) {
-        parent.setScreen(ScreenController.FeedbackID, "RIGHT");
+        parent.setScreen(ScreenController.HelpID, "HELP_IN");
     }
 
     //when + button is pressed zoom in map

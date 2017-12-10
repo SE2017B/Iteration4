@@ -641,6 +641,12 @@ public class PathController implements ControllableScreen, Observer{
             if(startNode == null){
                 shake.shake(startTextField);
             }
+            if(endFloorMenu.getText().equals("Floor")){
+                shake.shake(endFloorMenu);
+            }
+            if(endTypeMenu.getText().equals("Type")){
+                shake.shake(endTypeMenu);
+            }
             if(endNodeChoice.getValue() == null){
                 shake.shake(endNodeChoice);
             }

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -26,13 +26,13 @@
                <children>
                   <JFXTabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="400.0" tabMinHeight="50.0" tabMinWidth="194.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
-                        <Tab fx:id="nodeTab" text="Node">
+                        <Tab fx:id="nodeTab" onClosed="#clearInputs" text="Node">
                           <content>
                             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="400.0">
                                  <children>
                                     <JFXTabPane layoutY="-2.0" tabMinWidth="129.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <tabs>
-                                          <Tab fx:id="nodeAddTab" text="Add">
+                                          <Tab fx:id="nodeAddTab" onClosed="#clearInputs" text="Add">
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="321.0">
                                                    <children>
@@ -152,7 +152,7 @@
                                                 </AnchorPane>
                                             </content>
                                           </Tab>
-                                          <Tab fx:id="nodeRemoveTab" text="Remove">
+                                          <Tab fx:id="nodeRemoveTab" onClosed="#clearInputs" text="Remove">
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="400.0">
                                                    <children>
@@ -188,7 +188,7 @@
                                                                   <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                                                </GridPane.margin>
                                                             </JFXButton>
-                                                            <Label text="Select Nodes to Remove" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                                                            <Label fx:id="nodeRemoveLabel" text="Select Nodes to Remove" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -202,7 +202,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </Tab>
-                                          <Tab fx:id="nodeEditTab" text="Edit">
+                                          <Tab fx:id="nodeEditTab" onClosed="#clearInputs" text="Edit">
                                             <content>
                                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="400.0">
                                                    <children>
@@ -331,13 +331,13 @@
                               </AnchorPane>
                           </content>
                         </Tab>
-                        <Tab fx:id="edgeTab" text="Edge">
+                        <Tab fx:id="edgeTab" onSelectionChanged="#clearInputs" text="Edge">
                           <content>
                             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="400.0">
                                  <children>
                                     <JFXTabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabMinWidth="129.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <tabs>
-                                          <Tab fx:id="edgeAddTab" text="Add">
+                                          <Tab fx:id="edgeAddTab" onClosed="#clearInputs" text="Add">
                                              <content>
                                                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <children>
@@ -354,12 +354,12 @@
                                                           <RowConstraints minHeight="90.0" prefHeight="30.0" vgrow="NEVER" />
                                                         </rowConstraints>
                                                          <children>
-                                                            <Label text="Select First Node" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                                                            <Label fx:id="edgeAddNodeOne" text="Select First Node" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                                                                <font>
                                                                   <Font size="25.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label text="Select Second Node" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                            <Label fx:id="edgeAddNodeTwo" text="Select Second Node" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                                                <font>
                                                                   <Font size="25.0" />
                                                                </font>
@@ -390,7 +390,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </Tab>
-                                          <Tab fx:id="edgeRemoveTab" text="Remove">
+                                          <Tab fx:id="edgeRemoveTab" onClosed="#clearInputs" text="Remove">
                                             <content>
                                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
                                                    <children>
@@ -405,7 +405,7 @@
                                                           <RowConstraints minHeight="90.0" prefHeight="30.0" vgrow="NEVER" />
                                                         </rowConstraints>
                                                          <children>
-                                                            <Label text="Select Edges to Remove" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                                                            <Label fx:id="edgeRemoveLabel" text="Select Edges to Remove" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                                                                <font>
                                                                   <Font size="24.0" />
                                                                </font>
@@ -454,6 +454,8 @@
          </children>
       </HBox>
       <JFXButton fx:id="btnReturn" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
+      <JFXButton fx:id="undoButton" contentDisplay="GRAPHIC_ONLY" onAction="#undoPressed" prefHeight="40.0" prefWidth="40.0" text="Undo" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="20.0" />
+      <JFXButton fx:id="redoButton" contentDisplay="GRAPHIC_ONLY" onAction="#redoPressed" prefHeight="40.0" prefWidth="40.0" text="Redo" AnchorPane.leftAnchor="490.0" AnchorPane.topAnchor="20.0" />
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="280.0">
          <children>
             <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
@@ -469,5 +471,7 @@
             </JFXButton>
          </children>
       </VBox>
+      <JFXButton fx:id="alignHButton" layoutX="10.0" layoutY="10.0" onAction="#alignHPressed" prefHeight="40.0" prefWidth="100.0" text="Align H" visible="false" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="80.0" />
+      <JFXButton fx:id="alignVButton" contentDisplay="CENTER" layoutX="20.0" layoutY="20.0" onAction="#alignVPressed" prefHeight="40.0" prefWidth="100.0" text="Align V" visible="false" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="140.0" />
    </children>
 </AnchorPane>
