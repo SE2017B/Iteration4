@@ -813,26 +813,20 @@ public class AddNodeController implements ControllableScreen, Observer {
     //-------------------------ZOOM-----------------------//
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
-        for(NodeCheckBox cb : nodeCheckBoxes){
-            //how do we set the checkbox to stay the same size?
-            cb.setScaleX(slideBarZoom.getValue()-0.2);
-            cb.setScaleY(slideBarZoom.getValue()-0.2);
-        }
         setZoom(slideBarZoom.getValue()+0.2);
     }
 
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
-        for(NodeCheckBox cb : nodeCheckBoxes){
-            //how do we set the checkbox to stay the same size?
-            cb.setScaleX(slideBarZoom.getValue()+0.2);
-            cb.setScaleY(slideBarZoom.getValue()+0.2);
-        }
         setZoom(slideBarZoom.getValue()-0.2);
     }
 
     public void setZoom(double zoom){
         slideBarZoom.setValue(zoom);
         mapViewer.setScale(zoom);
+        for(NodeCheckBox cb : nodeCheckBoxes){
+            cb.setScaleX(1/zoom);
+            cb.setScaleY(1/zoom);
+        }
     }
 }
