@@ -197,7 +197,10 @@ public class HospitalMap{
     public List<Node> getNodesByText(String text){
         HashMap<Node, Integer> distances = new HashMap<>();
         for(Node n : nodeMap) distances.put(n, DLDistance(text, n));
-        return this.nodeMap.stream().filter(n1 -> DLDistance(text, n1) != 0).filter(n1 -> !n1.getLongName().toLowerCase().contains("hall")).sorted(Comparator.comparing(distances::get)).collect(Collectors.toList());
+        System.out.println(distances.keySet().stream().sorted(Comparator.comparing(distances::get)).collect(Collectors.toList()));
+        List<Integer> numbers = distances.values().stream().sorted().collect(Collectors.toList());
+        System.out.println(numbers);
+        return this.nodeMap.stream().filter(n1 -> !n1.getLongName().toLowerCase().contains("hall")).sorted(Comparator.comparing(distances::get)).collect(Collectors.toList());
     }
 
     //Setters
@@ -225,12 +228,11 @@ public class HospitalMap{
     public int DLDistance(String text, Node node) {
         String newText = text.toLowerCase();
         int runningMax = 10000000;
-        ArrayList<String> strings = new ArrayList<>(Arrays.asList(node.getID(), node.getLongName(), node.getShortName(), node.getBuilding(), node.getType()));
+        ArrayList<String> strings = new ArrayList<>(Arrays.asList(node.getID(), node.getLongName(), node.getShortName(), node.getBuilding()));
         for(String string : strings) {
             if (text.length() == 0) return runningMax;
             String newString = string.toLowerCase();
             int[][] distance = new int[text.length() + 1][string.length() + 1];
-            int maxLength = text.length() + string.length();
             for(int i=0;i<=newText.length();i++) distance[i][0] = i;
             for(int i=0;i<=newString.length();i++) distance[0][i] = i;
             for(int i=1;i<=newText.length();i++){

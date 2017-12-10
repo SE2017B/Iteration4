@@ -288,7 +288,9 @@ public class PathController implements ControllableScreen, Observer{
             }
             else if(code.isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
                 String text = ((JFXTextField) keyEvent.getSource()).getText();
+                text = (code.isLetterKey()) ? text + keyEvent.getText() : text.substring(0, text.length()-1);
                 if(text.equals("")){
+                    System.out.println("empty");
                     listView.setVisible(false);
                 }
                 else {
