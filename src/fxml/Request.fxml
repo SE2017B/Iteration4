@@ -49,10 +49,10 @@
                            <children>
                               <GridPane layoutX="352.0" layoutY="209.0" prefHeight="528.0" prefWidth="755.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
-                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="633.4000122070314" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                                  <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="10.0" prefWidth="500.0" />
+                                  <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="10.0" prefWidth="500.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="61.60000305175781" vgrow="SOMETIMES" />
@@ -69,7 +69,7 @@
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Staff Member" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                    <Label text="Staff Members" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
