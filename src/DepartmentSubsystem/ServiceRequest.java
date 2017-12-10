@@ -1,7 +1,7 @@
 /*
 * Software Engineering 3733, Worcester Polytechnic Institute
 * Team H
-* Code produced for Iteration 2
+* Code produced for Iteration 4
 * Original author(s): Nicholas Fajardo, Meghana Bhatia
 * The following code
 */
@@ -11,14 +11,15 @@ package DepartmentSubsystem;
 import map.Node;
 
 public class ServiceRequest{
-    private Service service;
-    private int requestID;
-    private Node location;
-    private String time;
-    private String date;
-    private Staff assignedPersonnel;
-    private String inputData;
+    private Service service;    //service type
+    private int requestID;  //id for request
+    private Node location;  //location node for service
+    private String time;    //time of service
+    private String date;    //date of service
+    private Staff assignedPersonnel;    //assigned person to perform the service
+    private String inputData;   //desciprtive info of eervice
 
+    //contructor for service request
     public ServiceRequest(Service service, int requestID, Node location, String time, String date, Staff assignedPersonnel) {
         this.service = service;
         service.use();

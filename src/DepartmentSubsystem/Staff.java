@@ -1,7 +1,7 @@
 /*
 * Software Engineering 3733, Worcester Polytechnic Institute
 * Team H
-* Code produced for Iteration 2
+* Code produced for Iteration 4
 * Original author(s): Nicholas Fajardo, Meghana Bhatia
 * The following code
 */
@@ -17,15 +17,15 @@ import java.util.*;
 
 public class Staff{
     //Only essential for logging in
-    private String username;
-    private String password;
-    private boolean admin;
+    private String username;    //username for a staff member
+    private String password;    //password for a staff member
+    private boolean admin;  //check if a staff member is an admin
     //These are just details for display
-    private ArrayList<ServiceRequest> workload;
-    private ArrayList<String> languages;
-    private String jobTitle;
-    private String fullName;
-    private int ID;
+    private ArrayList<ServiceRequest> workload; //list of tasks for eac staff member
+    private ArrayList<String> languages; //list of languages a staff member can speak
+    private String jobTitle; //one job title per staff member
+    private String fullName; //full name of a staff member
+    private int ID; //personal ID a staff member
 
     //Constructor DB uses
     public Staff(String username, String password, String jobTitle, String fullName, int ID, int admin, ArrayList<String> languages){
@@ -78,7 +78,7 @@ public class Staff{
         }
     }
 
-    //Update
+    //Update the BD with the modififed staff
     public void uptadeDB(){
         staffDatabase.modifyStaff(this);
     }

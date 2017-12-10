@@ -1,7 +1,7 @@
 /*
 * Software Engineering 3733, Worcester Polytechnic Institute
 * Team H
-* Code produced for Iteration 2
+* Code produced for Iteration 4
 * Original author(s): Nicholas Fajardo, Meghana Bhatia
 * The following code
 */
@@ -24,15 +24,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DepartmentSubsystem {
-    private Staff currentlyLoggedIn = null;
+    private Staff currentlyLoggedIn = null;     //get currently logged in user
     ArrayList<Service> services;
     //Admins cannot perform a service, so they are stored outside of the services
     ArrayList<Staff> admin;
-    private ArrayList<Staff> allStaff;
-    private HashMap<String, String> loginCheck;
-    private EmailServer emailServer = EmailServer.getEmailServer();
+    private ArrayList<Staff> allStaff;  //array of staff
+    private HashMap<String, String> loginCheck; //check login
+    private EmailServer emailServer = EmailServer.getEmailServer(); //get email server
 
-    //Singleton Stuff
+    //Singleton class of DepartmentSubsystem
     private static DepartmentSubsystem singleton;
     private DepartmentSubsystem(){init();}
     private void init(){
@@ -65,10 +65,11 @@ public class DepartmentSubsystem {
         populateLanguages();
     }
 
+    //populate array of lanuguage
     private void populateLanguages() {
 
     }
-
+    //get subsystem
     public static DepartmentSubsystem getSubsystem(){
         if(singleton == null){
             singleton =  new DepartmentSubsystem();
@@ -76,6 +77,7 @@ public class DepartmentSubsystem {
         return singleton;
 
     }
+    //hashmap for login info
     private void populateLoginCheck(ArrayList<Staff> members){
         this.loginCheck = new HashMap<>();
         for(Staff person: members){
@@ -107,7 +109,7 @@ public class DepartmentSubsystem {
             }
         }
     }
-
+    //getter for list of services
     public ArrayList<Service> getServices() {
         replaceUsedService();
         return this.services;
@@ -130,6 +132,7 @@ public class DepartmentSubsystem {
         //TODO Change this to an actual exception to be thrown
         return null;
     }
+    //get the staff member who is currently logged in
     public Staff getCurrentLoggedIn(){
         return this.currentlyLoggedIn;
     }
@@ -141,18 +144,18 @@ public class DepartmentSubsystem {
         ser.addEligibleStaff(newPerson);
         staffDatabase.addStaff(newPerson);
     }
-
+    //modify staff
     public void modifyStaff(Staff person, String username, String password, String jobTitle, String fullName, int ID, int admin, ArrayList<String> languages) throws InvalidPasswordException {
         person.updateCredentials(username, password, jobTitle, fullName, ID, admin, languages);
         staffDatabase.modifyStaff(person);
     }
-
+    //delete staff from DB
     public void deleteStaff(Service ser, String userName){
         Staff person = findPerson(userName);
         ser.removeEligibleStaff(person);
         staffDatabase.deleteStaff(person);
     }
-
+    //localate a specific username for a staff
     private Staff findPerson(String username) {
         for(Staff person: this.allStaff){
             if(username.equalsIgnoreCase(person.getUsername())){
@@ -161,7 +164,7 @@ public class DepartmentSubsystem {
         }
         return null;
     }
-
+    //submitting service requests
     public void submitServiceRequest(ServiceRequest sr){
         //TODO do something with SR...
     }
