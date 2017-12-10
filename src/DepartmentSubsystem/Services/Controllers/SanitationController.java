@@ -10,7 +10,7 @@ public class SanitationController extends CurrentServiceController {
 
     @Override
     public void onShow(){
-        sanitationChoiceBox.setItems(FXCollections.observableList(((Sanitation)((DSS.getDepartment("Facilities").getServices().get(0)))).getServiceTypes()));
+        sanitationChoiceBox.setItems(FXCollections.observableList(((Sanitation)((DSS.getServices().get(2)))).getServiceTypes()));
     }
 
     @FXML

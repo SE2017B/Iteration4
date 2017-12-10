@@ -1,16 +1,17 @@
 /*
 * Software Engineering 3733, Worcester Polytechnic Institute
 * Team H
-* Code produced for Iteration 2
+* Code produced for Iteration 4
 * Original author(s): Nicholas Fajardo, Meghana Bhatia
 * The following code
 */
+
 
 package DepartmentSubsystem.Services;
 
 import DepartmentSubsystem.Service;
 import java.util.ArrayList;
-
+//sanitation is a service type
 public class Sanitation extends Service {
     //This contains all the possible requests for a specific location
     private ArrayList<String> serviceTypes = populateServiceTypes();
@@ -19,14 +20,13 @@ public class Sanitation extends Service {
     public Sanitation( String description) {
         super(description);
     }
-
+    //diplay the different types of sanitation services
     private ArrayList<String> populateServiceTypes(){
         ArrayList<String> returnVal = new ArrayList<>();
         returnVal.add("Spill Cleaning");
         returnVal.add("Room Preparation"); //Preparing a conference room
         returnVal.add("Room Restocking"); //Bathrooms and Rooms
         returnVal.add("Room Cleaning"); //Cleaning a patients room or bathroom
-
         return returnVal;
     }
 

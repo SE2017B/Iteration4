@@ -11,6 +11,7 @@ package kioskEngine;
 import controllers.ScreenController;
 import database.edgeDatabase;
 import database.nodeDatabase;
+import database.serviceDatabase;
 import database.staffDatabase;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -44,7 +45,7 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
         myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
-        myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
+        //myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
 //
 //        //mini fxml files
 //        myScreenController.loadScreen(ScreenController.TranslationID, ScreenController.TranslationFile);
@@ -81,11 +82,15 @@ public class Main extends Application {
 
         edgeDatabase.deleteEdgeTable();
         nodeDatabase.deleteNodeTable();
+        staffDatabase.deleteAdminTable();
         staffDatabase.deleteStaffTable();
+        serviceDatabase.deleteFeedbackTable();
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
         staffDatabase.createStaffTable();
+        staffDatabase.createAdminTable();
+        serviceDatabase.createFeedbackTable();
 
         nodeDatabase.readNodeCSV("/csv/MapAnodes.csv");
         nodeDatabase.readNodeCSV("/csv/MapBnodes.csv");
