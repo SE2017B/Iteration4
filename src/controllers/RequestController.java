@@ -179,13 +179,13 @@ public class RequestController implements ControllableScreen{
     public void onShow(){
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
-//        if(!depSub.getCurrentLoggedIn().isAdmin())
-//        {
-//            btnEditMap.setDisable(true);
-//            btnEditMap.setOpacity(0);
-//            staffManagementTab.setDisable(true);
-//            settingsTab.setDisable(true);
-//        }
+        if(!depSub.getCurrentLoggedIn().isAdmin())
+        {
+            btnEditMap.setDisable(true);
+            btnEditMap.setOpacity(0);
+            staffManagementTab.setDisable(true);
+            settingsTab.setDisable(true);
+        }
         System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
         if(depSub.getCurrentLoggedIn().getAllRequest().isEmpty()){
             resolveServiceListView.getItems().clear();
