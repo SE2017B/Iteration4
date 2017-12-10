@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class AddNodeController implements ControllableScreen, Observer {
     private ScreenController parent;
@@ -135,8 +136,8 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         else{
             if(edgeAddTab.isSelected()){
-                showEdgesbyFloor(currentFloor);
                 showNodesbyFloor(currentFloor);
+                showEdgesbyFloor(currentFloor);
                 edgeAddNode1 = null;
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
@@ -609,6 +610,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             return;
         }
         saveStateToMemento();
+        System.out.println("X: " + node.getX() + "\nY: " + node.getY());
         map.editNode(node,
                 nodeEditXField.getText(),
                 nodeEditYField.getText(),
@@ -694,7 +696,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void edgeRemoveCancelPressed(ActionEvent e){
-        edgeRemoveList.getItems().clear();
+//        edgeRemoveList.getItems().clear();
+        undo();
         refreshNodesandEdges();
     }
     //---------------------EDGE TAB END-------------------//
@@ -726,8 +729,8 @@ public class AddNodeController implements ControllableScreen, Observer {
         mapEditorMementos.push(new MapEditorMemento(mapNodeState, mapEdgeState));
     }
     public void setMemento(MapEditorMemento memento){
-        map.setNodeMap(memento.getSavedNodeState());
         map.setEdgeMap(memento.getSavedEdgeState());
+        map.setNodeMap(memento.getSavedNodeState());
         refreshNodesandEdges();
     }
     public void undo(){
