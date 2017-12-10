@@ -118,6 +118,9 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void clearInputs(){
         //todo clear all the text and options from UI inputs
+        resetNodeAdd();
+        //nodeRemoveSelectedList.getItems().clear();
+        resetNodeEdit();
     }
 
     public void returnPressed(ActionEvent e){
@@ -359,6 +362,9 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(nodeAddBuildingDropDown.getText().equals("Building")){
                 s.shake(nodeAddBuildingDropDown);
             }
+            if(nodeAddFloorDropDown.getText().equals("Floor")){
+                s.shake(nodeAddFloorDropDown);
+            }
             if(nodeAddTypeDropDown.getText().equals("NodeType")){
                 s.shake(nodeAddTypeDropDown);
             }
@@ -373,7 +379,18 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void nodeAddCancelPressed(ActionEvent e){
-        //todo cancel node add
+        resetNodeAdd();
+        refreshNodesandEdges();
+    }
+
+    public void resetNodeAdd(){
+        nodeAddXField.setText("");
+        nodeAddYField.setText("");
+        nodeAddBuildingDropDown.setText("Building");
+        nodeAddFloorDropDown.setText("Floor");
+        nodeAddTypeDropDown.setText("NodeType");
+        nodeAddNameField.setText("");
+        nodeAddShortField.setText("");
     }
 
     public void mapPaneClicked(MouseEvent e){
@@ -635,7 +652,7 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void resetNodeEdit(){
         nodeEditSelectedNode = null;
-        nodeEditNameField.setText("");
+        nodeEditNameField.clear();
         nodeEditShortField.setText("");
         nodeEditBuildingDropDown.setText("Building");
         nodeEditFloorDropDown.setText("Floor");
