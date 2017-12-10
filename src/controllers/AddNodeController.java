@@ -154,6 +154,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void clearNodesandEdges(){
         mapPane.getChildren().clear();
         mapPane.getChildren().add(mapViewer.getMapImage());
+        alignHButton.setVisible(false);
+        alignVButton.setVisible(false);
     }
 
     public void showNodesandEdgesbyFloor(FloorNumber floor){
@@ -265,6 +267,16 @@ public class AddNodeController implements ControllableScreen, Observer {
                 nodeEditSelectedNodes.add(0,source);
                 setEditForNode(source);
             }
+
+            if(nodeEditSelectedNodes.size() > 1){
+                alignHButton.setVisible(true);
+                alignVButton.setVisible(true);
+            }
+            else{
+                alignHButton.setVisible(false);
+                alignVButton.setVisible(false);
+            }
+
         }
     }
 
@@ -285,6 +297,14 @@ public class AddNodeController implements ControllableScreen, Observer {
         if(arg instanceof PathID){
             setFloor(((PathID) arg).getFloor());
         }
+    }
+
+    public void undoPressed(ActionEvent e ){
+        //todo
+    }
+
+    public void redoPressed(ActionEvent e ){
+        //todo
     }
 
     //----------------------NODE TAB START--------------------//
@@ -510,11 +530,15 @@ public class AddNodeController implements ControllableScreen, Observer {
     private MenuButton nodeEditBuildingDropDown;
     @FXML
     private MenuButton nodeEditTypeDropDown;
+    @FXML
+    private JFXButton alignHButton;
+    @FXML
+    private JFXButton alignVButton;
 
     private ArrayList<NodeCheckBox> nodeEditSelectedNodes;
 
+
     double orgSceneX, orgSceneY;
-    double orgTranslateX, orgTranslateY;
 
     EventHandler<MouseEvent> boxOnMousePressedHandler = new EventHandler<MouseEvent>() {
         @Override
@@ -598,7 +622,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeEditAlignHorizontal();
     }
     public void alignVPressed(ActionEvent e){
-        nodeEditAlignHorizontal();
+        nodeEditAlignVertical();
     }
 
     public void nodeEditYEntered(ActionEvent e){
@@ -702,6 +726,8 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeEditXField.setText("");
         nodeEditYField.setText("");
         nodeEditIDLabel.setText("Node ID");
+        alignVButton.setVisible(false);
+        alignHButton.setVisible(false);
     }
     //-----------------------NODE TAB END---------------------//
 
