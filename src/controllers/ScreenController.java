@@ -22,8 +22,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ScreenController extends StackPane {
-    private Duration transitionTime = new Duration(800);
-    private Duration shortTransistionTime = new Duration(400);
+    private Duration transitionTime = new Duration(500);
+    private Duration shortTransistionTime = new Duration(250);
     private Duration transitionDelay = new Duration(0);
     private HashMap<String, Node> screens = new HashMap<String, Node>();
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
@@ -53,6 +53,9 @@ public class ScreenController extends StackPane {
         pause = new PauseTransition(Duration.millis(30000));
         pause.setOnFinished(e -> {
             if(state != screenMomento.getState())
+                while(getChildren().size() > 1){
+                    getChildren().remove(0);
+                }
                 setScreen(screenMomento.getState());
             pause.play();
         });
@@ -180,6 +183,7 @@ public class ScreenController extends StackPane {
 
     public boolean setScreen(String name, String transition){
         if(screens.containsKey(name) && !getChildren().contains(screens.get(name))) {
+            state = name;
             if (transition.equals("HELP_IN")) {
                 HelpTransitionIn(name);
             }
@@ -187,7 +191,6 @@ public class ScreenController extends StackPane {
                 slideVerticalTransition(name, "UP");
             }
             else {
-                state = name;
                 if (!getChildren().isEmpty()) {
                     getChildren().add(0, screens.get(name));
                     controllers.get(name).onShow();
