@@ -8,105 +8,67 @@
 
 package DepartmentSubsystem;
 
+import DepartmentSubsystem.Exceptions.PasswordException;
+import DepartmentSubsystem.Exceptions.UsernameException;
 import DepartmentSubsystem.Services.FoodDelivery;
+import DepartmentSubsystem.Services.Transport;
 import DepartmentSubsystem.Services.Sanitation;
 import DepartmentSubsystem.Services.Translation;
-import DepartmentSubsystem.Services.Transport;
+import Email.EmailServer;
 import database.staffDatabase;
+import exceptions.InvalidPasswordException;
+
+import javax.mail.*;
 
 import java.util.ArrayList;
-
-//import java.mail.*;
-//import java.mail.internet.*;
+import java.util.HashMap;
 
 public class DepartmentSubsystem {
-//    private boolean initRan = false;
-    ArrayList<Department> departments = new ArrayList<Department>();
     private Staff currentlyLoggedIn = null;
-//    private static int count = 0;
+    ArrayList<Service> services;
+    //Admins cannot perform a service, so they are stored outside of the services
+    ArrayList<Staff> admin;
+    private ArrayList<Staff> allStaff;
+    private HashMap<String, String> loginCheck;
+    private EmailServer emailServer = EmailServer.getEmailServer();
 
-    ArrayList<Service> services = new ArrayList<Service>();
-    private static int count = 0;
-    /**
-     * The order of method calls should be this for DSS:
-     * Login - The user submits their credentials, and we check if they have a matching pair
-     * GetDepartments - The user selects the department to see what services they hold
-     * GetServices - The user selects a specific service they want
-     * FROM SERVICE: GetURL - This is for UI, so the specific Service field can have its specific attributes
-     * submitRequest - The user submits the request, and we process it
-     */
-
+    //Singleton Stuff
     private static DepartmentSubsystem singleton;
     private DepartmentSubsystem(){init();}
     private void init(){
-        //If the init method was ran, then we dont do it again
-        //if(initRan){ return; }
+        this.services = new ArrayList<>();
+        System.out.println("Making the staff");
+        this.allStaff = staffDatabase.getStaff();
+        populateLoginCheck(this.allStaff);
+        System.out.println("Staff has been made");
 
-        //TODO assign staff to departments and services
-        Department translationDepartment = new Department("Translation Department");
-        Service translation = new Translation("Translation service");
+        Service translation = new Translation("Translation");
         translation.setURL("/fxml/Translation.fxml");
-        services.add(translation);
-        translationDepartment.addService(translation);
-        departments.add(translationDepartment);
+        services.add((Service)translation);
 
-        Department transportationDepartment = new Department("Transportation Department");
-        Service transport = new Transport("Transport service");
+        Service transport = new Transport("Transport");
         transport.setURL("/fxml/Transport.fxml");
         services.add(transport);
-        transportationDepartment.addService(transport);
-        departments.add(transportationDepartment);
 
-        Department facilities = new Department("Facilities");
         Service sanitation = new Sanitation("Sanitation");
         sanitation.setURL("/fxml/Sanitation.fxml");
         services.add(sanitation);
-        facilities.addService(sanitation);
-        departments.add(facilities);
 
-        Department food = new Department("Food");
-        Service foodDelivery = new FoodDelivery("Food Delivery Service");
+        Service foodDelivery = new FoodDelivery("Food Delivery");
         foodDelivery.setURL("/fxml/FoodDelivery.fxml");
         services.add(foodDelivery);
-        food.addService(foodDelivery);
-        departments.add(food);
 
-        //Comment this out if you want to use test
+        //Place each staff member in a service
         staffPlacement();
-        //initRan = true;
+
+        //Language Stuff goes here
+        populateLanguages();
     }
 
-    //Reads the DB, and puts the staff in their corresponding places
-    private void staffPlacement(){
-        ArrayList<Staff> allStaff = staffDatabase.getStaff();
+    private void populateLanguages() {
 
-        for(Staff person: allStaff){
-            String title = person.getJobTitle();
-
-            for(Service currentService: this.getAllServices()) {
-
-                if (title.equalsIgnoreCase("TRANSLATOR") && currentService.toString().equalsIgnoreCase("TRANSLATION SERVICE")) {
-                    currentService.addEligibleStaff(person);
-                }
-                else if (title.equalsIgnoreCase("JANITOR") && currentService.toString().equalsIgnoreCase("SANITATION")) {
-                    currentService.addEligibleStaff(person);
-                }
-                else if ((title.equalsIgnoreCase("CHEF") || title.equalsIgnoreCase("FOOD DELIVERY")) && currentService.toString().equalsIgnoreCase("FOOD DELIVERY SERVICE")) {
-                    currentService.addEligibleStaff(person);
-                }
-                else if (title.equalsIgnoreCase("TRANSPORT STAFF") && currentService.toString().equalsIgnoreCase("TRANSPORT SERVICE")) {
-                    currentService.addEligibleStaff(person);
-                }
-
-            }
-        }
     }
 
-    public ArrayList<Service> getServices() {
-        return services;
-    }
-
-    //Singleton Stuff (init HAS to be run)
     public static DepartmentSubsystem getSubsystem(){
         if(singleton == null){
             singleton =  new DepartmentSubsystem();
@@ -114,154 +76,132 @@ public class DepartmentSubsystem {
         return singleton;
 
     }
+    private void populateLoginCheck(ArrayList<Staff> members){
+        this.loginCheck = new HashMap<>();
+        for(Staff person: members){
+            loginCheck.put(person.getUsername(), person.getPassword());
+            if(person.isAdmin()){
+                this.admin.add(person);
+            }
+        }
+
+    }
+
+    //Reads the DB, and puts the staff in their corresponding places
+    private void staffPlacement(){
+        for(Staff person: this.allStaff){
+            String title = person.getJobTitle();
+            for(Service currentService: this.services) {
+                if (title.equalsIgnoreCase("TRANSLATOR") && currentService.toString().equalsIgnoreCase("TRANSLATION")) {
+                    currentService.addEligibleStaff(person);
+                }
+                else if (title.equalsIgnoreCase("JANITOR") && currentService.toString().equalsIgnoreCase("SANITATION")) {
+                    currentService.addEligibleStaff(person);
+                }
+                else if ((title.equalsIgnoreCase("CHEF") || title.equalsIgnoreCase("FOOD DELIVERY")) && currentService.toString().equalsIgnoreCase("FOOD DELIVERY")) {
+                    currentService.addEligibleStaff(person);
+                }
+                else if (title.equalsIgnoreCase("TRANSPORT STAFF") && currentService.toString().equalsIgnoreCase("TRANSPORT")) {
+                    currentService.addEligibleStaff(person);
+                }
+            }
+        }
+    }
+
+    public ArrayList<Service> getServices() {
+        replaceUsedService();
+        return this.services;
+    }
 
     //login function for staff members
-    public boolean login(String username, String password){
-        ArrayList<Staff> allStaff = staffDatabase.getStaff();
-        for(Staff member: allStaff){
-            System.out.println(member.getUsername() + " == "+ username );
-            if(member.getUsername().equals(username)){
-                if(member.getPassword().equals(password)){
-                    this.currentlyLoggedIn = member;
-                    return true;
-                }
-                else
-                    break;
+    public Staff login(String username, String password) throws UsernameException,  PasswordException {
+        if(!this.loginCheck.containsKey(username)){
+            throw new UsernameException();
+        }
+        if(!this.loginCheck.get(username).equals(password)){
+            throw new PasswordException();
+        }
+        for(Staff person: this.allStaff){
+            if(username.equalsIgnoreCase(person.getUsername())){
+                this.currentlyLoggedIn = person;
+                return person;
             }
         }
-        return false;
-    }
-
-    //Getters
-    public Department getDepartment(String departmentName){
-        for(Department d: this.departments){
-            if(d.toString().equals(departmentName)){
-                return d;
-            }
-        }
+        //TODO Change this to an actual exception to be thrown
         return null;
     }
-//    public ArrayList<Service> getServices(String department){
-//        //This method should return new services every time, to make sure that the specific service is not reused
-//        ArrayList<Service> returnList = new ArrayList<Service>();
-//        for(Service service: getDepartment(department).getServices()){
-//            //If its not used, we just add it to the list and move on
-//            if(!service.isUsed()){
-//                returnList.add(service);
-//                continue;
-//            }
-//            if(service instanceof FoodDelivery)
-//                returnList.add(new FoodDelivery(this.getDepartment("Food"), "Food Delivery Service"));
-//            else if(service instanceof Sanitation)
-//                returnList.add(new Sanitation(this.getDepartment("Facilities"), "Sanitation"));
-//            else if(service instanceof Translation)
-//                returnList.add(new Translation(this.getDepartment("Translation Department"), "Translation service"));
-//            else if(service instanceof Transport)
-//                returnList.add(new Transport(this.getDepartment("Transportation Department"), "Transport service"));
-//        }
-//
-//        return returnList;
-//    }
-
     public Staff getCurrentLoggedIn(){
         return this.currentlyLoggedIn;
     }
-    public ArrayList<Service> getAllServices(){
-        ArrayList<Service> allServices = new ArrayList<Service>();
-        for(Department dept: this.getDepartments()){
-            allServices.addAll(dept.getServices());
-        }
-        return allServices;
-    }
-    public ArrayList<Department> getDepartments() {
-        return departments;
-    }
-    public ArrayList<Staff> getStaff(Service service){
-        return service.getStaff();
-    }
-//    public ArrayList<Staff> getStaff(String service){
-//        for(Department dept: this.departments) {
-//            ArrayList<Service> temp = dept.getServices();
-//            for(Service ser: temp){
-//                if(ser.toString().equals(service)){
-//                    return ser.getStaff();
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
-    //Assign a service request
-//    public void submitRequest(Service service, String time, String date, Node location, Staff person, int RID, boolean email, String emailRecipient){
-//        Department temp = new Department("TEMPORARY");
-//        for(Department dept: departments){
-//            if(dept.getServices().contains(service)){
-//                temp = dept;
-//            }
-//        }
-//        ServiceRequest request = new ServiceRequest(service, RID, location, time, date, person);
-//        person.addRequest(request);
-//        temp.addRequest(RID, request);
-//        if(email){
-//            processEmailRequest(emailRecipient, request);
-//        }
-//    }
-//
-//    private boolean processEmailRequest(String recipient, ServiceRequest request){
-////        //TODO make a gmail for the team so we can do this
-////        String username = "";
-////        String password = "";
-////        String message = request.toString();
-////        sendFromGMail(username, password, recipient, "HOSPITAL SERVICE REQUEST AUTOMATED MESSAGE", message);
-//       return false;
-//    }
 
     //Staff modifiers
-    public void addStaff(Service ser,String username, String password, String jobTitle, String fullName, int id){
+    public void addStaff(Service ser,String username, String password, String jobTitle, String fullName, int id, int admin, ArrayList<String> languages){
         //staffDatabase.setStaffCounter(1);
-        Staff newPerson = new Staff(username, password, jobTitle, fullName, id);
-//        if(jobTitle.equals("Chef") || jobTitle.equals("Food Delivery")){
-//            departments.get(3).addPersonel(newPerson);
-//            departments.get(3).getServices().get(0).addEligibleStaff(newPerson);
-//        }else if(jobTitle.equals("Translator")){
-//            departments.get(0).addPersonel(newPerson);
-//            departments.get(0).getServices().get(0).addEligibleStaff(newPerson);
-//        }else if(jobTitle.equals("Transport Staff")){
-//            departments.get(1).addPersonel(newPerson);
-//            departments.get(1).getServices().get(0).addEligibleStaff(newPerson);
-//        }else if(jobTitle.equals("Janitor")){
-//            departments.get(2).addPersonel(newPerson);
-//            departments.get(2).getServices().get(0).addEligibleStaff(newPerson);
-//        }
-        //dep.addPersonel(newPerson);
+        Staff newPerson = new Staff(username, password, jobTitle, fullName, id, admin, languages);
         ser.addEligibleStaff(newPerson);
         staffDatabase.addStaff(newPerson);
     }
 
-    public void modifyStaff(Staff person, String username, String password, String jobTitle, String fullName, int ID){
-        person.setNewVars(username, password, jobTitle, fullName, ID);
+    public void modifyStaff(Staff person, String username, String password, String jobTitle, String fullName, int ID, int admin, ArrayList<String> languages) throws InvalidPasswordException {
+        person.updateCredentials(username, password, jobTitle, fullName, ID, admin, languages);
         staffDatabase.modifyStaff(person);
     }
 
     public void deleteStaff(Service ser, String userName){
-        Staff person = new Staff(userName,null, null,null, 0);
-//        if(jobTile.equals("Chef") || jobTile.equals("Food Delivery")){
-//            departments.get(3).removePersonel(person);
-//            departments.get(3).getServices().get(0).removeEligibleStaff(person);
-//        }else if(jobTile.equals("Translator")){
-//            departments.get(0).removePersonel(person);
-//            departments.get(0).getServices().get(0).removeEligibleStaff(person);
-//        }else if(jobTile.equals("Transport Staff")){
-//            departments.get(1).removePersonel(person);
-//            departments.get(1).getServices().get(0).removeEligibleStaff(person);
-//        }else if(jobTile.equals("Janitor")){
-//            departments.get(2).removePersonel(person);
-//            departments.get(2).getServices().get(0).removeEligibleStaff(person);
-//        }
-
-        //dep.removePersonel(person);
+        Staff person = findPerson(userName);
         ser.removeEligibleStaff(person);
-
         staffDatabase.deleteStaff(person);
+    }
+
+    private Staff findPerson(String username) {
+        for(Staff person: this.allStaff){
+            if(username.equalsIgnoreCase(person.getUsername())){
+                return person;
+            }
+        }
+        return null;
+    }
+
+    public void submitServiceRequest(ServiceRequest sr){
+        //TODO do something with SR...
+    }
+    public void submitServiceRequest(ServiceRequest sr, String email) throws Email.EmailFormatException, MessagingException {
+        //TODO do something with SR...probably email it to someone at some point in time
+        emailServer.sendEmail(email, sr.toString());
+    }
+
+    //////////////////////
+    //  Helper Methods  //
+    //////////////////////
+    private void replaceUsedService() {
+        for(Service service: this.services){
+            if(service.isUsed()){
+                ArrayList<Staff> tempList = service.getStaff();
+                if(service.getName().equals("Translation")){
+                    Service translation = new Translation("Translation");
+                    translation.setURL("/fxml/Translation.fxml");
+                    translation.setStaff(tempList);
+                    service = translation;
+                }
+                else if(service.getName().equals("Transport")){
+                    Service transport = new Transport("Transport");
+                    transport.setURL("/fxml/Transport.fxml");
+                    transport.setStaff(tempList);
+                    service = transport;
+                }
+                else if(service.getName().equals("Sanitation")){
+                    Service sanitation = new Sanitation("Sanitation");
+                    sanitation.setURL("/fxml/Sanitation.fxml");
+                    sanitation.setStaff(tempList);
+                    service = sanitation;
+                }
+                else if(service.getName().equals("Food Delivery")){
+                    Service foodDelivery = new FoodDelivery("Food Delivery");
+                    foodDelivery.setURL("/fxml/FoodDelivery.fxml");
+                    foodDelivery.setStaff(tempList);
+                    service = foodDelivery;
+                }
+            }
+        }
     }
 }
