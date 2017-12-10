@@ -166,10 +166,12 @@ public class RequestController implements ControllableScreen{
                     public void changed(ObservableValue<? extends ServiceRequest> observable,
                                         ServiceRequest oldValue, ServiceRequest newValue) {
 
-                        lblSelectedService.setText(newValue.getService().toString());
-                        lblSelectedAdditionalInfo.setText(newValue.getInputData());
-                        lblSelectedDT.setText(newValue.getTime());
-                        lblSelectedLocation.setText(newValue.getLocation().toString());
+                        if(newValue != null) {
+                            lblSelectedService.setText(newValue.getService().toString());
+                            lblSelectedLocation.setText(newValue.getLocation().toString());
+                            lblSelectedDT.setText(newValue.getTime() + newValue.getDate());
+                            lblSelectedAdditionalInfo.setText(newValue.getInputData());
+                        }
 
                     }
                 }
@@ -179,13 +181,15 @@ public class RequestController implements ControllableScreen{
     public void onShow(){
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
-        if(!depSub.getCurrentLoggedIn().isAdmin())
-        {
-            btnEditMap.setDisable(true);
-            btnEditMap.setOpacity(0);
-            staffManagementTab.setDisable(true);
-            settingsTab.setDisable(true);
-        }
+
+        //todo uncomment!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//        if(!depSub.getCurrentLoggedIn().isAdmin())
+//        {
+//            btnEditMap.setDisable(true);
+//            btnEditMap.setOpacity(0);
+//            staffManagementTab.setDisable(true);
+//            settingsTab.setDisable(true);
+//        }
         System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
         if(depSub.getCurrentLoggedIn().getAllRequest().isEmpty()){
             resolveServiceListView.getItems().clear();
@@ -213,13 +217,15 @@ public class RequestController implements ControllableScreen{
 
     public void resolveServicePressed(ActionEvent e){
         //todo test?
-        resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
-        System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
 
-        lblSelectedService.setText("Service");
-        lblSelectedAdditionalInfo.setText("Location");
-        lblSelectedDT.setText("Date & Time");
-        lblSelectedLocation.setText("Additional Info");
+            resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
+            System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
+
+            lblSelectedService.setText("Service");
+            lblSelectedAdditionalInfo.setText("Aditional Info");
+            lblSelectedDT.setText("Date & Time");
+            lblSelectedLocation.setText("Location");
+
     }
 
     public void createPressedApi(ActionEvent e){
@@ -259,29 +265,6 @@ public class RequestController implements ControllableScreen{
         //fillInServiceSpecificRecs();
     }
 
-//    private String fillInServiceSpecificRecs() {
-//        Service service = choiceBoxService.getValue();
-//
-//        return currentServiceController.getInputData();
-//
-//        if(service.toString().equalsIgnoreCase("Translation Service")){
-//            //Sets the language to the service, form the controller
-//            ((Translation)service).setRequestedLanguage(((TranslationController)this.currentServiceController).getLanguageSel());
-//            //Sets the duration of the session to the service, form the controller
-//            ((Translation)service).setDuration(Integer.parseInt(((TranslationController)this.currentServiceController).getDuration()));
-//        }
-//        else if(service.toString().equalsIgnoreCase("Transport Service")){
-//            //Sets the end location to the service
-//            ((Transport)service).setEndLocation(((TransportController)this.currentServiceController).returnNode());
-//        }
-//        else if(service.toString().equalsIgnoreCase("Sanitation")){
-//            ((Sanitation)service).setRequestedService(((SanitationController)this.currentServiceController).getSanSel());
-//        }
-//        else if(service.toString().equalsIgnoreCase("Food Delivery Service")){
-//            ((FoodDelivery)service).setSelectedFood(((FoodDeliveryController)this.currentServiceController).getFoodSelected());
-//            ((FoodDelivery)service).setAllergies(((FoodDeliveryController)this.currentServiceController).getAllergy());
-//        }
-//    }
 
     public void cancelPressed(ActionEvent e){
         //clear choiceboxes

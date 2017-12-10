@@ -76,7 +76,7 @@ public class ServiceRequest{
 
     @Override
     public String toString(){
-        String name = String.valueOf(requestID) + " " + service + " " + location + " " + time + " " + date;
+        String name = String.valueOf(requestID) + " " + service + " " + location + " " + time + " " + date + " " + inputData;
         System.out.println(name);
         return name;
     }

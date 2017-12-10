@@ -238,6 +238,7 @@
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
                                                    <children>
@@ -261,8 +262,8 @@
                                                             <Font size="24.0" />
                                                          </font>
                                                       </JFXTextField>
-                                                      <JFXButton fx:id="createStaffButton" onAction="#createStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                                      <JFXButton fx:id="cancelStaffButton" onAction="#cancelStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                      <JFXButton fx:id="createStaffButton" onAction="#createStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                      <JFXButton fx:id="cancelStaffButton" onAction="#cancelStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                                       <ChoiceBox fx:id="addStaffServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                          <GridPane.margin>
                                                             <Insets top="25.0" />
