@@ -135,6 +135,10 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<Service> staffJobTypeChoiceBox;
     @FXML
     private ChoiceBox<Service> addStaffServiceChoiceBox;
+    @FXML
+    private Tab staffManagementTab;
+    @FXML
+    private Tab settingsTab;
 
     public void init(){
         depSub = DepartmentSubsystem.getSubsystem();
@@ -175,6 +179,13 @@ public class RequestController implements ControllableScreen{
     public void onShow(){
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
+//        if(!depSub.getCurrentLoggedIn().isAdmin())
+//        {
+//            btnEditMap.setDisable(true);
+//            btnEditMap.setOpacity(0);
+//            staffManagementTab.setDisable(true);
+//            settingsTab.setDisable(true);
+//        }
         System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
         if(depSub.getCurrentLoggedIn().getAllRequest().isEmpty()){
             resolveServiceListView.getItems().clear();
