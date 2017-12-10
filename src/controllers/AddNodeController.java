@@ -85,6 +85,7 @@ public class AddNodeController implements ControllableScreen, Observer {
 
         nodeCheckBoxes = new ArrayList<NodeCheckBox>();
         edgeCheckBoxes = new ArrayList<EdgeCheckBox>();
+        nodeEditSelectedNodes = new ArrayList<NodeCheckBox>();
 
         nodeTab.setOnSelectionChanged(e -> refreshNodesandEdges());
         edgeTab.setOnSelectionChanged(e -> refreshNodesandEdges());
@@ -244,12 +245,25 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
         else if (nodeTab.isSelected() && nodeEditTab.isSelected()) {
-            if(nodeEditSelectedNode == null){
-                nodeEditSelectedNode = source.getNode();
-            } else if (nodeEditSelectedNode.equals(source.getNode())) {
-                resetNodeEdit();
-            } else{
-                source.setSelected(false);
+            if (nodeEditSelectedNodes.size() == 0){
+                nodeEditSelectedNodes.add(0,source);
+                setEditForNode(source);
+            }
+            else if (nodeEditSelectedNodes.get(0).equals(source)) {
+                nodeEditSelectedNodes.remove(source);
+                if(nodeEditSelectedNodes.size() == 0){
+                    resetNodeEdit();
+                }
+                else{
+                    setEditForNode(nodeEditSelectedNodes.get(0));
+                }
+            }
+            else if(nodeEditSelectedNodes.contains(source)){
+                nodeEditSelectedNodes.remove(source);
+            }
+            else{
+                nodeEditSelectedNodes.add(0,source);
+                setEditForNode(source);
             }
         }
     }
@@ -349,7 +363,6 @@ public class AddNodeController implements ControllableScreen, Observer {
                     nodeAddShortField.getText(), "H", connections);
         }
         catch (Exception ex){
-            System.out.println("Add failed");
             if(!nodeAddXField.getText().matches("[0-9]+")){
                 s.shake(nodeAddXField);
             }
@@ -401,7 +414,7 @@ public class AddNodeController implements ControllableScreen, Observer {
 
         }
         if(x != x_aligned){
-            Line line = newAllignLine();
+            Line line = newAlignLine();
             line.setLayoutX(x_aligned);
             line.setLayoutY(y_aligned);
             line.setEndX(0);
@@ -411,7 +424,7 @@ public class AddNodeController implements ControllableScreen, Observer {
 
         }
         if(y != y_aligned){
-            Line line = newAllignLine();
+            Line line = newAlignLine();
             line.setLayoutX(x_aligned);
             line.setLayoutY(y_aligned);
             line.setEndX((h_neighbors.get(0).getX()) - x_aligned);
@@ -434,7 +447,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         y_text.setText(Integer.toString(y_aligned));
     }
 
-    private Line newAllignLine(){
+    private Line newAlignLine(){
         Line line = new Line();
         line.setStroke(Color.BLACK);
         line.setStrokeWidth(3);
@@ -498,7 +511,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     @FXML
     private MenuButton nodeEditTypeDropDown;
 
-    private Node nodeEditSelectedNode;
+    private ArrayList<NodeCheckBox> nodeEditSelectedNodes;
 
     double orgSceneX, orgSceneY;
     double orgTranslateX, orgTranslateY;
@@ -506,50 +519,86 @@ public class AddNodeController implements ControllableScreen, Observer {
     EventHandler<MouseEvent> boxOnMousePressedHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            javafx.scene.Node source = (javafx.scene.Node) event.getSource();
+            NodeCheckBox source = (NodeCheckBox) event.getSource();
             orgSceneX = event.getSceneX();
             orgSceneY = event.getSceneY();
-            orgTranslateX = source.getLayoutX();
-            orgTranslateY = source.getLayoutY();
+            source.setOrgX(source.getLayoutX());
+            source.setOrgY(source.getLayoutY());
 
-            NodeCheckBox cb =((NodeCheckBox)event.getSource());
-            Node n = cb.getNode();
-            nodeEditNameField.setText(n.getLongName());
-            nodeEditShortField.setText(n.getShortName());
-            nodeEditBuildingDropDown.setText(n.getBuilding());
-            nodeEditFloorDropDown.setText(n.getFloor().getDbMapping());
-            nodeEditTypeDropDown.setText(n.getType());
-            nodeEditXField.setText(Integer.toString((int)(cb.getLayoutX())));
-            nodeEditYField.setText(Integer.toString((int)(cb.getLayoutY())));
-            nodeEditIDLabel.setText(n.getID());
-        }
-    };
-
-    EventHandler<MouseEvent> boxOnMouseDraggedHandler = new EventHandler<MouseEvent>() {
-        @Override
-        public void handle(MouseEvent event) {
-            javafx.scene.Node source = (javafx.scene.Node) event.getSource();
-            double offsetX = event.getSceneX() - orgSceneX;
-            double offsetY = event.getSceneY() - orgSceneY;
-            double newTranslateX = orgTranslateX + offsetX;
-            double newTranslateY = orgTranslateY + offsetY;
-
-            source.setLayoutX(newTranslateX);
-            source.setLayoutY(newTranslateY);
-
-            nodeEditXField.setText(Integer.toString((int)((source.getLayoutX()+9))));
-            nodeEditYField.setText(Integer.toString((int)((source.getLayoutY()+9))));
-
-            if(((NodeCheckBox)source).isSelected()){
-                ((NodeCheckBox)source).setSelected(false);
-                nodeEditSelectedNode = null;
+            for(NodeCheckBox cb : nodeEditSelectedNodes){
+                cb.setOrgX(cb.getLayoutX());
+                cb.setOrgY(cb.getLayoutY());
             }
         }
     };
 
+
+
+    EventHandler<MouseEvent> boxOnMouseDraggedHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            NodeCheckBox source = (NodeCheckBox) event.getSource();
+            double offsetX = event.getSceneX() - orgSceneX;
+            double offsetY = event.getSceneY() - orgSceneY;
+
+            source.setLayoutX(source.getOrgX() + offsetX);
+            source.setLayoutY(source.getOrgY() + offsetY);
+
+
+            for(NodeCheckBox cb : nodeEditSelectedNodes){
+                    cb.setLayoutX(cb.getOrgX() + offsetX);
+                    cb.setLayoutY(cb.getOrgY() + offsetY);
+
+            }
+
+            nodeEditXField.setText(Integer.toString((int)((source.getLayoutX()+9))));
+            nodeEditYField.setText(Integer.toString((int)((source.getLayoutY()+9))));
+
+            if(source.isSelected()){
+                source.setSelected(false);
+                nodeEditSelectedNodes.remove(source);
+            }
+        }
+    };
+
+    private void setEditForNode(NodeCheckBox source){
+        Node n = source.getNode();
+        nodeEditNameField.setText(n.getLongName());
+        nodeEditShortField.setText(n.getShortName());
+        nodeEditBuildingDropDown.setText(n.getBuilding());
+        nodeEditFloorDropDown.setText(n.getFloor().getDbMapping());
+        nodeEditTypeDropDown.setText(n.getType());
+        nodeEditXField.setText(Integer.toString((int)(source.getLayoutX())));
+        nodeEditYField.setText(Integer.toString((int)(source.getLayoutY())));
+        nodeEditIDLabel.setText(n.getID());
+    }
+
+    private void nodeEditAlignVertical(){
+        double x = nodeEditSelectedNodes.get(0).getLayoutX();
+        for(NodeCheckBox cb : nodeEditSelectedNodes){
+            cb.setLayoutX(x);
+            cb.setOrgX(x);
+        }
+    }
+
+    private void nodeEditAlignHorizontal(){
+        double y = nodeEditSelectedNodes.get(0).getLayoutY();
+        for(NodeCheckBox cb : nodeEditSelectedNodes){
+            cb.setLayoutY(y);
+            cb.setOrgY(y);
+        }
+    }
+
     public void nodeEditXEntered(ActionEvent e){
         String text = nodeEditXField.getText();
         nodeEditXField.setText(text);
+    }
+
+    public void alignHPressed(ActionEvent e){
+        nodeEditAlignHorizontal();
+    }
+    public void alignVPressed(ActionEvent e){
+        nodeEditAlignHorizontal();
     }
 
     public void nodeEditYEntered(ActionEvent e){
@@ -582,50 +631,60 @@ public class AddNodeController implements ControllableScreen, Observer {
         nodeEditTypeDropDown.setText(text);
     }
 
-    public void nodeEditEnterPressed(ActionEvent e){
-        Node node = nodeEditSelectedNode;
-        /*
-        if(node == null){
-            System.out.println("Warning: No nodes selected.");
-            return;
+    public void nodeEditEnterPressed(ActionEvent e) {
+        if (nodeEditSelectedNodes.size() > 0) {
+            Node node = nodeEditSelectedNodes.get(0).getNode();
+
+            if (nodeEditXField.getText().equals("") || nodeEditYField.getText().equals("") || nodeEditFloorDropDown.getText().equals("")
+                    || nodeEditFloorDropDown.getText().equals("Floor") || nodeEditBuildingDropDown.getText().equals("Building")
+                    || nodeEditTypeDropDown.getText().equals("NodeType") || nodeEditNameField.getText().equals("")
+                    || nodeEditShortField.getText().equals("")) {
+                if (!nodeEditXField.getText().matches("[0-9]+")) {
+                    s.shake(nodeEditXField);
+                }
+                if (!nodeEditYField.getText().matches("[0-9]+")) {
+                    s.shake(nodeEditYField);
+                }
+                if (nodeEditFloorDropDown.getText().equals("Floor")) {
+                    s.shake(nodeEditFloorDropDown);
+                }
+                if (nodeEditBuildingDropDown.getText().equals("Building")) {
+                    s.shake(nodeEditBuildingDropDown);
+                }
+                if (nodeEditTypeDropDown.getText().equals("Type")) {
+                    s.shake(nodeEditTypeDropDown);
+                }
+                if (nodeEditShortField.getText().equals("")) {
+                    s.shake(nodeEditShortField);
+                }
+                if (nodeEditNameField.getText().equals("")) {
+                    s.shake(nodeEditNameField);
+                }
+                return;
+            }
+            map.editNode(node,
+                    nodeEditXField.getText(),
+                    nodeEditYField.getText(),
+                    nodeEditFloorDropDown.getText(),
+                    nodeEditBuildingDropDown.getText(),
+                    nodeEditTypeDropDown.getText(),
+                    nodeEditNameField.getText(),
+                    nodeEditShortField.getText());
+
+            for(NodeCheckBox cb : nodeEditSelectedNodes){
+                Node n = cb.getNode();
+
+                map.editNode(n,
+                        Integer.toString((int)cb.getLayoutX()),
+                        Integer.toString((int)cb.getLayoutX()),
+                        n.getFloor().getDbMapping(),
+                        n.getBuilding(),
+                        n.getType(),
+                        n.getLongName(),
+                        n.getShortName());
+            }
+            refreshNodesandEdges();
         }
-        */
-        if(nodeEditXField.getText().equals("") || nodeEditYField.getText().equals("") || nodeEditFloorDropDown.getText().equals("")
-                || nodeEditFloorDropDown.getText().equals("Floor") || nodeEditBuildingDropDown.getText().equals("Building")
-                || nodeEditTypeDropDown.getText().equals("NodeType") || nodeEditNameField.getText().equals("")
-                || nodeEditShortField.getText().equals("")){
-            if(!nodeEditXField.getText().matches("[0-9]+")){
-                s.shake(nodeEditXField);
-            }
-            if(!nodeEditYField.getText().matches("[0-9]+")){
-                s.shake(nodeEditYField);
-            }
-            if(nodeEditFloorDropDown.getText().equals("Floor")){
-                s.shake(nodeEditFloorDropDown);
-            }
-            if(nodeEditBuildingDropDown.getText().equals("Building")){
-                s.shake(nodeEditBuildingDropDown);
-            }
-            if(nodeEditTypeDropDown.getText().equals("Type")){
-                s.shake(nodeEditTypeDropDown);
-            }
-            if(nodeEditShortField.getText().equals("")){
-                s.shake(nodeEditShortField);
-            }
-            if(nodeEditNameField.getText().equals("")){
-                s.shake(nodeEditNameField);
-            }
-            return;
-        }
-        map.editNode(node,
-                nodeEditXField.getText(),
-                nodeEditYField.getText(),
-                nodeEditFloorDropDown.getText(),
-                nodeEditBuildingDropDown.getText(),
-                nodeEditTypeDropDown.getText(),
-                nodeEditNameField.getText(),
-                nodeEditShortField.getText());
-        refreshNodesandEdges();
     }
 
     public void nodeEditCancelPressed(ActionEvent e){
@@ -634,7 +693,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void resetNodeEdit(){
-        nodeEditSelectedNode = null;
+        nodeEditSelectedNodes.clear();
         nodeEditNameField.setText("");
         nodeEditShortField.setText("");
         nodeEditBuildingDropDown.setText("Building");
@@ -672,7 +731,6 @@ public class AddNodeController implements ControllableScreen, Observer {
         Node nodeTwo = edgeAddNode2;
 
         if(nodeOne == null || nodeTwo == null){
-            System.out.println("Warning: Less than two nodes selected.");
             if(nodeOne == null){
                 s.shake(edgeAddNodeOne);
             }
