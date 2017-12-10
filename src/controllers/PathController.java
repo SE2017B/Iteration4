@@ -78,6 +78,7 @@ public class PathController implements ControllableScreen, Observer{
     private boolean isSearching;
     private boolean startSearching;
     private boolean endSearching;
+    private int searchCount=0;
 
     Node startNode;
     Node endNode;
@@ -208,6 +209,13 @@ public class PathController implements ControllableScreen, Observer{
                   }
 
                 }
+                //search things
+                if(searchCount>0){
+                    if(searchCount==1){
+                        endSearching=true;
+                    }
+                    searchCount--;
+                }
             }
         };
         zoomPath.start();
@@ -231,10 +239,12 @@ public class PathController implements ControllableScreen, Observer{
                             startNode = v.get(0);
                             startTextField.setText(startNode.toString());
                             startSearching=false;
-                            endSearching=true;
+                            //endSearching=true;
+                            searchCount=5;
                             //add shape representing
                             Circle newp = getPoint(selected.getX(),selected.getY());
                             newp.setFill(Color.RED);
+                            shapes.add(newp);
                             mapPane.getChildren().add(newp);
                         }
                         if(endSearching){
@@ -245,6 +255,7 @@ public class PathController implements ControllableScreen, Observer{
                             isSearching=false;
                             //do the same thing
                             Circle newp = getPoint(selected.getX(),selected.getY());
+                            shapes.add(newp);
                             mapPane.getChildren().add(newp);
                         }
 
