@@ -219,6 +219,11 @@ public class HospitalMap{
         return getNodesBy(n -> n.getFloor().equals(floor) && (n.getX() > (x-AREA_WINDOW)) && (n.getX() < (x+AREA_WINDOW))
                                 && (n.getY() > (y - AREA_SIZE))  && (n.getY() < (y + AREA_SIZE)));
     }
+    private int CLICK_SIZE = 95;
+    public List<Node> getNodesInArea(int x, int y, FloorNumber floor){
+        return getNodesBy(n -> n.getFloor().equals(floor) && (n.getX() > (x-CLICK_SIZE)) && (n.getX() < (x+CLICK_SIZE))
+                && (n.getY() > (y - CLICK_SIZE))  && (n.getY() < (y + CLICK_SIZE)));
+    }
 
     //Fuzzy Search Algorithm
 

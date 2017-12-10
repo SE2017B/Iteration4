@@ -73,7 +73,11 @@ public class PathController implements ControllableScreen, Observer{
     private ArrayList<Integer> Center;
     private boolean isAnimating;
     private int animationCount;
+
     //path search booleans
+    private boolean isSearching;
+    private boolean startSearching;
+    private boolean endSearching;
 
     Node startNode;
     Node endNode;
@@ -208,17 +212,42 @@ public class PathController implements ControllableScreen, Observer{
         };
         zoomPath.start();
         //getting node position on mouse click
+        initSearch();
         mapPane.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent event) {
-                double sX = mapViewer.getCenter().get(0) + ((event.getSceneX()/mapViewer.getScale())-mapViewer.getCenter().get(0));
-                double sY = mapViewer.getCenter().get(1) + ((event.getSceneY()/mapViewer.getScale())-mapViewer.getCenter().get(1));
+                double sX=event.getX();
+                double sY=event.getY();
                 System.out.println("X is: "+sX+" Y is: "+sY);
-                if(currentFloor!=null){
+                if(currentFloor!=null && isSearching){
                     List<Node> v = map.getNodesInArea((int)sX,(int)sY,currentFloor);
                     if(v.size()>0){
-                        mapPane.getChildren().add(getPoint(v.get(0).getX(),v.get(1).getY()));
+                        //mapPane.getChildren().add(getPoint(v.get(0).getX(),v.get(1).getY()));
+                        //set up search up searching things
+                        Node selected = v.get(0);
+                        if(startSearching){
+                            startTabPane.getSelectionModel().select(0);
+                            startNode = v.get(0);
+                            startTextField.setText(startNode.toString());
+                            startSearching=false;
+                            endSearching=true;
+                            //add shape representing
+                            Circle newp = getPoint(selected.getX(),selected.getY());
+                            newp.setFill(Color.RED);
+                            mapPane.getChildren().add(newp);
+                        }
+                        if(endSearching){
+                            startTabPane.getSelectionModel().select(0);
+                            endNode = v.get(0);
+                            endTextField.setText(endNode.toString());
+                            endSearching=false;
+                            isSearching=false;
+                            //do the same thing
+                            Circle newp = getPoint(selected.getX(),selected.getY());
+                            mapPane.getChildren().add(newp);
+                        }
+
                     }
                 }
             }
@@ -227,6 +256,7 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void onShow(){
+        mapViewer.setScale(1);
         startNodeChoice.setItems(FXCollections.observableArrayList(
                 map.getKioskLocation()));
         //set the default start location to be the kiosk
@@ -261,10 +291,21 @@ public class PathController implements ControllableScreen, Observer{
         startTextField.setText(startNode.toString());
 
         textDirectionsPane.setVisible(false);
+        initSearch();
     }
 
     public void setParentController(ScreenController parent){
         this.parent = parent;
+    }
+
+    private void initSearch(){
+        //setup search variables
+        isSearching=true;
+        startSearching=true;
+        endSearching=false;
+        //move tab to search by text
+        startTabPane.getSelectionModel().select(0);
+
     }
 
     private void searchText(KeyEvent keyEvent, JFXTextField textField, JFXListView<Node> listView){
