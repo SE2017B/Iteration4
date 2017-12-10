@@ -73,6 +73,8 @@ public class PathController implements ControllableScreen, Observer{
     private ArrayList<Integer> Center;
     private boolean isAnimating;
     private int animationCount;
+    private AnimatedCircle startIndicator;
+    private AnimatedCircle endIndicator;
 
     Node startNode;
     Node endNode;
@@ -142,6 +144,25 @@ public class PathController implements ControllableScreen, Observer{
 
         mainAnchorPane.getChildren().add(0, mapViewer.getMapViewerPane());
 
+        startIndicator = new AnimatedCircle();
+        startIndicator.setCenterX(map.getKioskLocation().getX()*mapViewer.getScale());
+        startIndicator.setCenterY(map.getKioskLocation().getY()*mapViewer.getScale());
+        startIndicator.setVisible(true);
+        startIndicator.setFill(Color.rgb(0,84,153));
+        startIndicator.setStroke(Color.rgb(40,40,60));
+        startIndicator.setStrokeWidth(3);
+
+        endIndicator = new AnimatedCircle();
+        endIndicator.setVisible(false);
+        endIndicator.setFill(Color.rgb(153, 63, 62));
+        endIndicator.setStroke(Color.rgb(60, 26, 26));
+        endIndicator.setStrokeWidth(3);
+
+        mapPane.getChildren().add(startIndicator);
+        mapPane.getChildren().add(endIndicator);
+
+        mapViewer.centerView((int)startIndicator.getCenterX(), (int)startIndicator.getCenterY());
+
         animationCount=0;
 
         arrow = new Pane();
@@ -209,6 +230,11 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void onShow(){
+        startIndicator.setCenterX(map.getKioskLocation().getX());
+        startIndicator.setCenterY(map.getKioskLocation().getY());
+
+        mapViewer.centerView((int)startIndicator.getCenterX(), (int)startIndicator.getCenterY());
+
         startNodeChoice.setItems(FXCollections.observableArrayList(
                 map.getKioskLocation()));
         //set the default start location to be the kiosk
@@ -335,6 +361,12 @@ public class PathController implements ControllableScreen, Observer{
         else{
             e=endNodeChoice.getValue();
         }
+        /*
+        startIndicator.setCenterX(s.getX());
+        startIndicator.setCenterY(s.getY());
+        endIndicator.setCenterX(e.getX());
+        endIndicator.setCenterY(e.getY());
+        */
         return map.findPath(s,e);
     }
 
@@ -470,6 +502,14 @@ public class PathController implements ControllableScreen, Observer{
     private void switchPath(PathViewer path){
         clearShapes();
         currentFloor=path.getFloor();
+        /*
+        if(currentFloor == startNodeChoice.getValue().getFloor()){
+            startIndicator.setVisible(true);
+        }
+        if(currentFloor == endNodeChoice.getValue().getFloor()){
+            endIndicator.setVisible(true);
+        }
+        */
         setScale(path);
         displayPath(path);
         controlScroller(path);//reposition map
@@ -494,6 +534,7 @@ public class PathController implements ControllableScreen, Observer{
     }
     //-----------------------ANIMATIONS END--------------------------//
 
+    //-------------------------MAP SCALE START--------------------------//
     public void setScale(PathViewer path){
         double scale = path.getScale();
         scale = mapViewer.checkScale(scale);
@@ -525,8 +566,8 @@ public class PathController implements ControllableScreen, Observer{
         scaleMap(slideBarZoom.getValue()-0.2);
         currentPath.hasAnimated=false;
     }
+    //-------------------------MAP SCALE END--------------------------//
 
-    //-------------------------MAP SCALE START--------------------------//
     private void displayPaths(Path thePath){
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
