@@ -2,7 +2,7 @@ package map;
 
 import exceptions.InvalidNodeException;
 
-public class Edge {
+public class Edge{
     private Node nodeOne;
     private Node nodeTwo;
     private String ID;
@@ -33,6 +33,10 @@ public class Edge {
         this.cost = this.nodeOne.getEuclidianDistance(this.nodeTwo);
         this.nodeOne.addConnection(this);
         this.nodeTwo.addConnection(this);
+    }
+
+    public Edge getCopy(){
+        return new Edge(this.ID, this.nodeOne, this.nodeTwo);
     }
 
     public void replaceNode(Node oldNode, Node newNode) throws InvalidNodeException {

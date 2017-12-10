@@ -9,6 +9,7 @@
 package map;
 
 import database.nodeDatabase;
+
 import java.util.ArrayList;
 
 public class Node{
@@ -50,6 +51,10 @@ public class Node{
         this.ID = "H" + this.type + this.floor.getDbMapping() +  nodeDatabase.getNodeID(this.type);
     }
 
+    public Node getCopy(){
+        return new Node(this.ID, Integer.toString(this.x), Integer.toString(this.y), this.floor.getDbMapping(), this.building, this.type, this.longName, this.shortName, this.team);
+    }
+
     //Adds existing edge between
     public void addConnection(Edge edge){
         connections.add(edge);
@@ -71,8 +76,7 @@ public class Node{
         //scale factor weights the z component so that the path wants to be on the right floor, and it doesn't want to leave it
         //(may need to increase this value)
         double zDeltaSquared =  Math.pow((this.floor.getNodeMapping() - otherNode.getFloor().getNodeMapping()), 2) * 10000;
-        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
-        return distance;
+        return Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
     }
 
     //Getters

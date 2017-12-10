@@ -165,6 +165,14 @@ public class HospitalMap{
         return search.findPathPitStop(stops);
     }
 
+    public void setNodeMap(ArrayList<Node> nodes){
+        this.nodeMap = nodes;
+    }
+
+    public void setEdgeMap(ArrayList<Edge> edges){
+        this.edgeMap = edges;
+    }
+
     //Getters
     public ArrayList<Node> getNodeMap() {
         return nodeMap;

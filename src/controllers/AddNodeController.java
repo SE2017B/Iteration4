@@ -12,7 +12,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
-import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,9 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.util.Duration;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
@@ -34,12 +31,14 @@ import ui.*;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Stack;
 
 public class AddNodeController implements ControllableScreen, Observer {
     private ScreenController parent;
     private HospitalMap map;
     private FloorNumber currentFloor;
     private MapViewer mapViewer;
+    private Stack<MapEditorMemento> mapEditorMementos = new Stack<>();
 
     //Nodes in the map
     private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
@@ -340,6 +339,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(n.isSelected()) connections.add(n.getNode());
         }
         try {
+            saveStateToMemento();
             map.addNodeandEdges(nodeAddXField.getText(),
                     nodeAddYField.getText(),
                     nodeAddFloorDropDown.getText(),
@@ -457,6 +457,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void nodeRemoveEnterPressed(ActionEvent e){
+        saveStateToMemento();
         for(NodeCheckBox n : nodeCheckBoxes){
             if(n.isSelected()) map.removeNode(n.getNode());
         }
@@ -607,6 +608,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
             return;
         }
+        saveStateToMemento();
         map.editNode(node,
                 nodeEditXField.getText(),
                 nodeEditYField.getText(),
@@ -660,6 +662,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         if(nodeOne == null || nodeTwo == null){
             System.out.println("Warning: Less than two nodes selected.");
         } else {
+            saveStateToMemento();
             map.addEdge(new Edge(nodeOne, nodeTwo));
         }
         refreshNodesandEdges();
@@ -682,6 +685,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     private JFXSlider slideBarZoom;
 
     public void edgeRemoveEnterPressed(ActionEvent e){
+        saveStateToMemento();
         for(Edge edge : edgeRemoveList.getItems()){
             map.removeEdge(edge);
         }
@@ -709,5 +713,28 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void setZoom(double zoom){
         slideBarZoom.setValue(zoom);
         mapViewer.setScale(zoom);
+    }
+
+    // Memento Stuff
+    public void saveStateToMemento(){
+        ArrayList<Node> oldNodes = new ArrayList<>();
+        ArrayList<Edge> oldEdges = new ArrayList<>();
+        for(Node node : map.getNodeMap()) oldNodes.add(node.getCopy());
+        for(Edge edge : map.getEdgeMap()) oldEdges.add(edge.getCopy());
+        ArrayList<Node> mapNodeState = new ArrayList<>(oldNodes);
+        ArrayList<Edge> mapEdgeState = new ArrayList<>(oldEdges);
+        mapEditorMementos.push(new MapEditorMemento(mapNodeState, mapEdgeState));
+    }
+    public void setMemento(MapEditorMemento memento){
+        map.setNodeMap(memento.getSavedNodeState());
+        map.setEdgeMap(memento.getSavedEdgeState());
+        refreshNodesandEdges();
+    }
+    public void undo(){
+        System.out.println("Undoing");
+        System.out.println("Stack size: " + mapEditorMementos.size());
+        if(mapEditorMementos.size() > 0){
+            setMemento(mapEditorMementos.pop());
+        }
     }
 }
