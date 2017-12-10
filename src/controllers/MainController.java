@@ -188,6 +188,12 @@ public class MainController implements ControllableScreen, Observer{
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
+        //draw path to exit in directions screen
+        map.searchNodes=new ArrayList<>();
+        map.searchNodes.add(map.getKioskLocation());
+        map.searchNodes.add(node);
+        parent.setScreen(ScreenController.PathID,"LEFT");
+
     }
 
     public void elevTypePressed(ActionEvent e){

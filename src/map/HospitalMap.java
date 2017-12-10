@@ -29,6 +29,9 @@ public class HospitalMap{
     private static HospitalMap map;
     private Node kioskLocation;
 
+    //variable to help with emergency exit
+    public ArrayList<Node> searchNodes;
+
     //Constructors
     private HospitalMap() {
         nodeMap = new ArrayList<>();
@@ -42,6 +45,8 @@ public class HospitalMap{
         posSerchStrat.add(new DijkstrasSearch());
         nodeMap.addAll(nodeDatabase.getNodes());
         edgeMap.addAll(edgeDatabase.getEdges());
+        //set up emergency exit
+        searchNodes= new ArrayList<>();
 
         try {
             // place the kiosk at the main info desk

@@ -231,7 +231,6 @@ public class PathController implements ControllableScreen, Observer{
                 if(currentFloor!=null && isSearching){
                     List<Node> v = map.getNodesInArea((int)sX,(int)sY,currentFloor);
                     if(v.size()>0){
-                        //mapPane.getChildren().add(getPoint(v.get(0).getX(),v.get(1).getY()));
                         //set up search up searching things
                         Node selected = v.get(0);
                         if(startSearching){
@@ -303,6 +302,14 @@ public class PathController implements ControllableScreen, Observer{
 
         textDirectionsPane.setVisible(false);
         initSearch();
+        //handle emergencies
+        if(map.searchNodes.size()>1){
+            startNode=map.searchNodes.get(0);
+            endNode=map.searchNodes.get(1);
+            thePath=getPath();
+            displayPaths(thePath);
+            map.searchNodes=new ArrayList<>();//clear search nodes
+        }
     }
 
     public void setParentController(ScreenController parent){
@@ -666,6 +673,10 @@ public class PathController implements ControllableScreen, Observer{
                 
                 currentFloor = currentPath.getFloor();
                 switchPath(currentPath);
+            }
+            //change current floor tho.
+            else{
+                currentFloor=ID.getFloor();
             }
         }
     }
