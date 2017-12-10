@@ -45,6 +45,7 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
         myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
         myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
+        myScreenController.loadScreen(ScreenController.HelpID, ScreenController.HelpFile);
 //
 //        //mini fxml files
 //        myScreenController.loadScreen(ScreenController.TranslationID, ScreenController.TranslationFile);
