@@ -3,6 +3,7 @@ package database;
 import map.Node;
 
 import java.io.*;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class nodeDatabase {
     //        longName, shortName, teamAssigned)
     //////////////////////////////////////////////////////////////////
 
-    private static final String JDBC_URL_MAP="jdbc:derby:hospitalMapDB;create=true";
+    private static final String JDBC_URL_MAP = "jdbc:derby:hospitalMapDB;create=true";
     private static Connection conn;
 
     // Counters for # total count on each nodeType
@@ -32,10 +33,10 @@ public class nodeDatabase {
     private static int servCounter;
 
     // All nodes from the node table in hospitalMapDB
-    static ArrayList<Node> allNodes=new ArrayList<>();
+    static ArrayList<Node> allNodes = new ArrayList<>();
 
     // Getter for Arraylist of all nodes
-    public static ArrayList<Node> getNodes(){
+    public static ArrayList<Node> getNodes() {
         return allNodes;
     }
 
@@ -101,14 +102,12 @@ public class nodeDatabase {
                     "CONSTRAINT building_chk CHECK (building IN ('BTM', 'Shapiro', 'Tower', '45 Francis', '15 Francis'))," +
                     "CONSTRAINT nodeType_chk CHECK (nodeType IN ('HALL', 'ELEV', 'REST', 'STAI', 'DEPT', 'LABS', 'INFO', 'CONF', 'EXIT', 'RETL', 'SERV')))");
 
-                int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
-                System.out.println("Create Nodes table Successful!");
+            int rsetCreate1 = stmtCreate1.executeUpdate(createNodesTable);
+            System.out.println("Create Nodes table Successful!");
 
-                conn.commit();
-                System.out.println();
-
-                stmtCreate1.close();
-                conn.close();
+            conn.commit();
+            stmtCreate1.close();
+            conn.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -142,12 +141,10 @@ public class nodeDatabase {
                 insertNode.setString(9, nodeDatabase.allNodes.get(j).getTeam());
 
                 insertNode.executeUpdate();
-                System.out.printf("%-5d: Insert Node Successful!\n",(j+1));
+                System.out.printf("%-5d: Insert Node Successful!\n", (j + 1));
             }
 
             conn.commit();
-            System.out.println();
-
             insertNode.close();
             conn.close();
 
@@ -182,8 +179,6 @@ public class nodeDatabase {
             System.out.printf("Insert Node Successful for nodeID: %-20s\n", anyNode.getID());
 
             conn.commit();
-            System.out.println();
-
             addAnyNode.close();
             conn.close();
 
@@ -223,7 +218,6 @@ public class nodeDatabase {
             modAddNode.executeUpdate();
 
             conn.commit();
-            System.out.println("Update Node Successful!");
             modAddNode.close();
             conn.close();
 
@@ -235,11 +229,11 @@ public class nodeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Delete a node from the node table
     ///////////////////////////////////////////////////////////////////////////////
-    public static void deleteNode(Node anyNode){
+    public static void deleteNode(Node anyNode) {
 
         String anyNodeID = anyNode.getID();
 
-        try  {
+        try {
             conn = DriverManager.getConnection(JDBC_URL_MAP);
             conn.setAutoCommit(false);
             conn.getMetaData();
@@ -251,8 +245,6 @@ public class nodeDatabase {
             // execute the delete statement
             deleteAnyNode.executeUpdate();
 
-            System.out.println("Delete Node Successful!");
-
             conn.commit();
             deleteAnyNode.close();
             conn.close();
@@ -260,6 +252,7 @@ public class nodeDatabase {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -285,7 +278,6 @@ public class nodeDatabase {
             String strShortName;
             String strTeamAssigned;
 
-            System.out.println("");
             System.out.printf("%-20s %-20s %-20s %-20s %-20s %-20s %-50s %-30s %-20s\n", "nodeID", "xcoord", "ycoord", "floor", "building", "nodeType", "longName", "shortName", "teamAssigned");
 
             //Process the results
@@ -304,7 +296,6 @@ public class nodeDatabase {
             } // End While
 
             conn.commit();
-            System.out.println();
 
             rsetAllNodes.close();
             selectAllNodes.close();
@@ -493,42 +484,42 @@ public class nodeDatabase {
     // Read from Nodes CSV File and store columns in array lists
     ///////////////////////////////////////////////////////////////////////////////
     public static void readNodeCSV(String fname) {
+        int count = 0;
 
-            int count = 0;
-            InputStream in = Class.class.getResourceAsStream(fname);
-            if (in == null) {
-                System.out.println("Error");
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        InputStream in = Class.class.getResourceAsStream(fname);
+        if (in == null) {
+            System.out.println("Error: Could not find the file: " + fname);
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-            try {
+        try {
 
-                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 
-                    String[] nodeValues = line.split(",");
+                String[] nodeValues = line.split(",");
 
-                    if (count != 0) {
-                        nodeDatabase.allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
+                if (count != 0) {
+                    nodeDatabase.allNodes.add(new Node(nodeValues[0], nodeValues[1], nodeValues[2], nodeValues[3], nodeValues[4], nodeValues[5], nodeValues[6], nodeValues[7], nodeValues[8]));
 
-                    }
-                    count++;
                 }
-                reader.close();
-                in.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
+                count++;
             }
+            reader.close();
+            in.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Write to a output Nodes csv file
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputNodesCSV() {
-        String outEdgesFileName = "outputNodes.csv";
+        String outNodesFileName = "src/csv/outputNodes.csv";
 
         try {
-            FileWriter fw2 = new FileWriter(outEdgesFileName, false);
+            FileWriter fw2 = new FileWriter(outNodesFileName, false);
             BufferedWriter bw2 = new BufferedWriter(fw2);
             PrintWriter pw2 = new PrintWriter(bw2);
 
@@ -537,20 +528,21 @@ public class nodeDatabase {
 
 
                 pw2.println(nodeDatabase.allNodes.get(j).getID() + "," +
-                        nodeDatabase.allNodes.get(j).getX()+ "," +
+                        nodeDatabase.allNodes.get(j).getX() + "," +
                         nodeDatabase.allNodes.get(j).getY() + "," +
                         nodeDatabase.allNodes.get(j).getFloor().getDbMapping() + "," +
                         nodeDatabase.allNodes.get(j).getBuilding() + "," +
                         nodeDatabase.allNodes.get(j).getType() + "," +
                         nodeDatabase.allNodes.get(j).getLongName() + "," +
-                        nodeDatabase.allNodes.get(j).getShortName()+ "," +
+                        nodeDatabase.allNodes.get(j).getShortName() + "," +
                         nodeDatabase.allNodes.get(j).getTeam()
                 );
-                System.out.printf("%-5d: Node Record Saved!\n", j);
             }
-            System.out.println();
+
             pw2.flush();
             pw2.close();
+            bw2.close();
+            fw2.close();
 
         } catch (IOException e) {
             e.printStackTrace();

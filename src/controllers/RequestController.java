@@ -10,7 +10,7 @@ package controllers;
 
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
-//import api.SanitationService;
+import api.SanitationService;
 import com.jfoenix.controls.*;
 import database.staffDatabase;
 import javafx.animation.TranslateTransition;
@@ -98,6 +98,8 @@ public class RequestController implements ControllableScreen{
     @FXML
     private Label staffNameLabel;
     @FXML
+    private ChoiceBox<Department> choiceBoxDept;
+    @FXML
     private MenuButton menuButtonAl;
     @FXML
     private Label lblSelectedAdditionalInfo;
@@ -137,19 +139,18 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<Service> addStaffServiceChoiceBox;
 
     public void init(){
-        depSub = DepartmentSubsystem.getSubsystem();
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
-        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices()));
 
         apiLocationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
 
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
+        choiceBoxDept.valueProperty().addListener( (v, oldValue, newValue) -> deptSelected(newValue));
         choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
         choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
-
+        depSub = DepartmentSubsystem.getSubsystem();
 
         //location set up
         locationChoiceBox.setItems(FXCollections.observableList(
@@ -184,6 +185,7 @@ public class RequestController implements ControllableScreen{
 
         //Update the nodes in the map
         ArrayList<Node> nodes = map.getNodeMap();
+        choiceBoxDept.setItems(FXCollections.observableList(depSub.getDepartments()));
 
         searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
         searchStrategyChoice.setValue(map.getSearchStrategy());
@@ -192,8 +194,8 @@ public class RequestController implements ControllableScreen{
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
 
-        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
-        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
+        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getAllServices()));
+        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getAllServices()));
     }
 
     public void setParentController(ScreenController parent){
@@ -201,10 +203,9 @@ public class RequestController implements ControllableScreen{
     }
 
     public void resolveServicePressed(ActionEvent e){
-        System.out.println(resolveServiceListView.getSelectionModel().getSelectedItems());
-        depSub.getCurrentLoggedIn().removeRequests(resolveServiceListView.getSelectionModel().getSelectedItems());
+        //todo test?
         resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
-        //System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
+        System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
 
         lblSelectedService.setText("Service");
         lblSelectedAdditionalInfo.setText("Location");
@@ -220,9 +221,9 @@ public class RequestController implements ControllableScreen{
     }
 
     public void runAPI(Node desNode){
-//        Stage primaryStage = new Stage();
-//        SanitationService api = SanitationService.newInstance(primaryStage);
-//        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+        Stage primaryStage = new Stage();
+        SanitationService api = SanitationService.newInstance(primaryStage);
+        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
 
     public void cancelPressedAPI(ActionEvent e){
@@ -231,19 +232,47 @@ public class RequestController implements ControllableScreen{
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
     }
 
-    //creates a service request, and then sends it to the staff member
     public void requestCreatePressed(ActionEvent e){
+        //todo create the request
         requestIDCount++;
+
+        //fillInServiceSpecificRecs();
+
+        //Submit request
+        //depSub.submitRequest(choiceBoxService.getValue(), timeMenu.getValue().toString(), dateMenu.getValue().toString() , locationChoiceBox.getValue(), choiceBoxStaff.getValue(),requestIDCount, false, "EMAIL");
+
         ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), "", dateMenu.getValue().toString(), choiceBoxStaff.getValue());
+
+        //Add new service to List
         System.out.println("request submitted");
         nReq.setInputData(currentServiceController.getInputData());
-        //choiceBoxStaff.getValue().addRequest(nReq);
-
-        resolveServiceListView.getItems().clear();
-        resolveServiceListView.getItems().addAll(FXCollections.observableList(depSub.getCurrentLoggedIn().getAllRequest()));
-        //resolveServiceListView.getItems().add(nReq);
+        resolveServiceListView.getItems().add(nReq);
         //fillInServiceSpecificRecs();
     }
+
+//    private String fillInServiceSpecificRecs() {
+//        Service service = choiceBoxService.getValue();
+//
+//        return currentServiceController.getInputData();
+//
+//        if(service.toString().equalsIgnoreCase("Translation Service")){
+//            //Sets the language to the service, form the controller
+//            ((Translation)service).setRequestedLanguage(((TranslationController)this.currentServiceController).getLanguageSel());
+//            //Sets the duration of the session to the service, form the controller
+//            ((Translation)service).setDuration(Integer.parseInt(((TranslationController)this.currentServiceController).getDuration()));
+//        }
+//        else if(service.toString().equalsIgnoreCase("Transport Service")){
+//            //Sets the end location to the service
+//            ((Transport)service).setEndLocation(((TransportController)this.currentServiceController).returnNode());
+//        }
+//        else if(service.toString().equalsIgnoreCase("Sanitation")){
+//            ((Sanitation)service).setRequestedService(((SanitationController)this.currentServiceController).getSanSel());
+//        }
+//        else if(service.toString().equalsIgnoreCase("Food Delivery Service")){
+//            ((FoodDelivery)service).setSelectedFood(((FoodDeliveryController)this.currentServiceController).getFoodSelected());
+//            ((FoodDelivery)service).setAllergies(((FoodDeliveryController)this.currentServiceController).getAllergy());
+//        }
+//    }
 
     public void cancelPressed(ActionEvent e){
         //clear choiceboxes
@@ -251,13 +280,16 @@ public class RequestController implements ControllableScreen{
         choiceBoxStaff.setValue(null);
         choiceBoxService.setItems(FXCollections.observableList(new ArrayList<Service>()));
         choiceBoxService.setValue(null);
+        choiceBoxDept.setValue(null);
         choiceBoxService.setDisable(true);
         choiceBoxStaff.setDisable(true);
-
+        //choiceBoxDept.getItems().clear();
 
         //clear time and date
         //timeMenu.getEditor().clear();
         dateMenu.getEditor().clear();
+
+        //repopulate choiceboxes
 
         //repopulate location choice box
         locationChoiceBox.setItems(FXCollections.observableList(
@@ -277,13 +309,21 @@ public class RequestController implements ControllableScreen{
         menuButtonAl.setText(selectedAlg);
     }
 
+    public void deptSelected(Department newValue){
+        if(newValue != null) {
+            choiceBoxService.setDisable(false);
+            choiceBoxService.setItems(FXCollections.observableList(newValue.getServices()));
+        }
+    }
+
     public void servSelected(Service newValue){
         if(newValue != null) {
-            System.out.println("Services was selected and listener triggered");
             choiceBoxStaff.setDisable(false);
             choiceBoxStaff.setItems(FXCollections.observableList(newValue.getStaff()));
-            System.out.println("This is newValue.getStaff() " + newValue.getStaff());
+
+            //todo URL ??????????????????????????????????????????????????????????????\
             String URLPLS = newValue.getURL();
+            //String testURL = "/fxml/FoodDelivery.fxml";
             System.out.println(URLPLS);
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(URLPLS));
@@ -312,7 +352,8 @@ public class RequestController implements ControllableScreen{
     }
 
     public void timeSelected(ActionEvent e) {
-        time = ((JFXTimePicker)e.getSource()).getValue().toString();
+        //todo undo comments
+        //time = ((JFXTimePicker)e.getSource()).getValue().toString();
     }
 
     public void dateSelected(ActionEvent e){
@@ -332,8 +373,7 @@ public class RequestController implements ControllableScreen{
             Service tempService = addStaffServiceChoiceBox.getValue();
 
             staffDatabase.incStaffCounter();
-            //TODO change into actual language selection
-            depSub.addStaff(tempService, tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter(), 0, new ArrayList<>());
+            depSub.addStaff(tempService, tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter());
 
             staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
         }
@@ -374,7 +414,7 @@ public class RequestController implements ControllableScreen{
     void searchbuttonPressed(ActionEvent event) {}
 
     //////////////////////////////////////////////////////////
-    /////////           Settings Tab                 /////////
+    /////////           Settings Tab
     //////////////////////////////////////////////////////////
 
     @FXML
