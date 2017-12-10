@@ -62,7 +62,8 @@ public class AnimatedHelpController implements ControllableScreen{
 
     @FXML
     void returnPressed(ActionEvent event) {
-
+        boolean test = parent.setScreen(ScreenController.LoginID, "HELP_OUT");
+        System.out.println("Return Pressed " + test );
     }
 
 }
