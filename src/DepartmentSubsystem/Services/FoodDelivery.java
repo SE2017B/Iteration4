@@ -1,17 +1,18 @@
 /*
 * Software Engineering 3733, Worcester Polytechnic Institute
 * Team H
-* Code produced for Iteration 2
+* Code produced for Iteration 4
 * Original author(s): Nicholas Fajardo, Meghana Bhatia
 * The following code
 */
+
 
 package DepartmentSubsystem.Services;
 
 import DepartmentSubsystem.Service;
 
 import java.util.ArrayList;
-
+//food delivery is part of a service
 public class FoodDelivery extends Service {
     //Set list of menu items available for the user to choose
     private ArrayList<String> menuItems = populateMenuItems(); //Cost and item associated with it
@@ -21,7 +22,7 @@ public class FoodDelivery extends Service {
         menuItems = populateMenuItems();
         System.out.println("Hi" + menuItems);
     }
-
+    //add food to menu list to display
     private ArrayList<String> populateMenuItems(){
         ArrayList<String> menuItem = new ArrayList<>();
         menuItem.add("Cheese Pizza");

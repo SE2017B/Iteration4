@@ -1,7 +1,7 @@
 /*
 * Software Engineering 3733, Worcester Polytechnic Institute
 * Team H
-* Code produced for Iteration 2
+* Code produced for Iteration 4
 * Original author(s): Nicholas Fajardo, Meghana Bhatia
 * The following code
 */
@@ -22,12 +22,12 @@ public class Translation extends Service {
     public Translation(String description) {
         super(description);
     }
-
+    //see wwho can speak the language requested
     public ArrayList<Staff> returnEligibleStaff(String language){
         //We already know the language they are going to feed us is going to be good.
         return languageMap.get(language);
     }
-
+    //add staff to each language that can be spoken
     public void addStaff(ArrayList<String> spokenLanguages, Staff person){
         //for each language that the person can speak, we add it to the list of languages we can offer
         for(String language: spokenLanguages){
@@ -41,7 +41,7 @@ public class Translation extends Service {
             }
         }
     }
-
+    //get a list of languages
     public ArrayList<String> getLanguages() {
         return new ArrayList<>(languageMap.keySet());
     }
@@ -52,7 +52,7 @@ public class Translation extends Service {
     public String getRequestedLanguage() {
         return requestedLanguage;
     }
-
+    //how long you need the translator for
     public int getDuration() {
         return duration;
     }
