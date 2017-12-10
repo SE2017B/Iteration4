@@ -12,7 +12,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
-import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,7 +23,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.util.Duration;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
@@ -118,7 +116,16 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void clearInputs(){
-        //todo clear all the text and options from UI inputs
+        resetNodeAdd();
+        if(nodeRemoveTab != null) {
+            nodeRemoveSelectedList.getItems().clear();
+        }
+        resetNodeEdit();
+        resetEdgeAdd();
+        if(edgeRemoveTab != null) {
+            edgeRemoveList.getItems().clear();
+        }
+        refreshNodesandEdges();
     }
 
     public void returnPressed(ActionEvent e){
@@ -392,6 +399,9 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(nodeAddBuildingDropDown.getText().equals("Building")){
                 s.shake(nodeAddBuildingDropDown);
             }
+            if(nodeAddFloorDropDown.getText().equals("Floor")){
+                s.shake(nodeAddFloorDropDown);
+            }
             if(nodeAddTypeDropDown.getText().equals("NodeType")){
                 s.shake(nodeAddTypeDropDown);
             }
@@ -406,7 +416,20 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void nodeAddCancelPressed(ActionEvent e){
-        //todo cancel node add
+        resetNodeAdd();
+        refreshNodesandEdges();
+    }
+
+    public void resetNodeAdd(){
+        if(nodeAddTab != null) {
+            nodeAddXField.setText("");
+            nodeAddYField.setText("");
+            nodeAddBuildingDropDown.setText("Building");
+            nodeAddFloorDropDown.setText("Floor");
+            nodeAddTypeDropDown.setText("NodeType");
+            nodeAddNameField.setText("");
+            nodeAddShortField.setText("");
+        }
     }
 
     public void mapPaneClicked(MouseEvent e){
@@ -555,8 +578,6 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
     };
-
-
 
     EventHandler<MouseEvent> boxOnMouseDraggedHandler = new EventHandler<MouseEvent>() {
         @Override
@@ -717,17 +738,20 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void resetNodeEdit(){
-        nodeEditSelectedNodes.clear();
-        nodeEditNameField.setText("");
-        nodeEditShortField.setText("");
-        nodeEditBuildingDropDown.setText("Building");
-        nodeEditFloorDropDown.setText("Floor");
-        nodeEditTypeDropDown.setText("Type");
-        nodeEditXField.setText("");
-        nodeEditYField.setText("");
-        nodeEditIDLabel.setText("Node ID");
-        alignVButton.setVisible(false);
-        alignHButton.setVisible(false);
+        if(nodeEditTab != null) {
+            nodeEditSelectedNodes.clear();
+            nodeEditNameField.clear();
+            nodeEditShortField.setText("");
+            nodeEditBuildingDropDown.setText("Building");
+            nodeEditFloorDropDown.setText("Floor");
+            nodeEditTypeDropDown.setText("Type");
+            nodeEditXField.setText("");
+            nodeEditYField.setText("");
+            nodeEditIDLabel.setText("Node ID");
+            alignVButton.setVisible(false);
+            alignHButton.setVisible(false);
+        }
+
     }
     //-----------------------NODE TAB END---------------------//
 
@@ -771,7 +795,15 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void edgeAddCancelPressed(ActionEvent e){
+        resetEdgeAdd();
         refreshNodesandEdges();
+    }
+
+    public void resetEdgeAdd(){
+        if(edgeAddTab != null){
+            edgeAddID1Label.setText("");
+            edgeAddID2Label.setText("");
+        }
     }
 
     ////////////////////////////////////////////////////////////
@@ -808,11 +840,21 @@ public class AddNodeController implements ControllableScreen, Observer {
     //-------------------------ZOOM-----------------------//
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
+        for(NodeCheckBox cb : nodeCheckBoxes){
+            //how do we set the checkbox to stay the same size?
+            cb.setScaleX(slideBarZoom.getValue()-0.2);
+            cb.setScaleY(slideBarZoom.getValue()-0.2);
+        }
         setZoom(slideBarZoom.getValue()+0.2);
     }
 
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
+        for(NodeCheckBox cb : nodeCheckBoxes){
+            //how do we set the checkbox to stay the same size?
+            cb.setScaleX(slideBarZoom.getValue()+0.2);
+            cb.setScaleY(slideBarZoom.getValue()+0.2);
+        }
         setZoom(slideBarZoom.getValue()-0.2);
     }
 
