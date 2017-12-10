@@ -12,7 +12,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
-import javafx.animation.TranslateTransition;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,7 +23,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.util.Duration;
 import map.Edge;
 import map.FloorNumber;
 import map.HospitalMap;
@@ -815,11 +813,21 @@ public class AddNodeController implements ControllableScreen, Observer {
     //-------------------------ZOOM-----------------------//
     //when + button is pressed zoom in map
     public void zinPressed(ActionEvent e){
+        for(NodeCheckBox cb : nodeCheckBoxes){
+            //how do we set the checkbox to stay the same size?
+            cb.setScaleX(slideBarZoom.getValue()-0.2);
+            cb.setScaleY(slideBarZoom.getValue()-0.2);
+        }
         setZoom(slideBarZoom.getValue()+0.2);
     }
 
     //when - button pressed zoom out map
     public void zoutPressed(ActionEvent e){
+        for(NodeCheckBox cb : nodeCheckBoxes){
+            //how do we set the checkbox to stay the same size?
+            cb.setScaleX(slideBarZoom.getValue()+0.2);
+            cb.setScaleY(slideBarZoom.getValue()+0.2);
+        }
         setZoom(slideBarZoom.getValue()-0.2);
     }
 
