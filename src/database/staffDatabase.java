@@ -4,6 +4,7 @@ import DepartmentSubsystem.Admin;
 import DepartmentSubsystem.Staff;
 
 import java.io.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -36,6 +37,10 @@ public class staffDatabase {
     // All staff members from the staff table in hospitalStaffDB
     static ArrayList<Staff>allStaff=new ArrayList<>();
     static ArrayList<Staff>allStaffEnc = new ArrayList<>();
+
+    // All languages that staff members can speak
+    public static ArrayList<String> allLanguages = new ArrayList<>();
+
 
     // Getter for all staff array list
     public static ArrayList<Staff> getStaff(){ return allStaff; }
@@ -94,6 +99,8 @@ public class staffDatabase {
                     "jobTitle VARCHAR(50)," +
                     "fullname VARCHAR(64)," +
                     "ID INTEGER," +
+                    //"isAdmin INTEGER," +
+                    //"languages VARCHAR(70)," +
                     "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
                     "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
                     "CONSTRAINT jobTitle CHECK (jobTitle IN ('Translator', 'Janitor', 'Chef', 'Food Delivery', 'Transport Staff'))," +
@@ -113,7 +120,7 @@ public class staffDatabase {
         }
     }
     ///////////////////////////////////////////////////////////////////////////////
-    // Delete staff table
+    // Delete Admin table
     ///////////////////////////////////////////////////////////////////////////////
     public static void deleteAdminTable() {
 
@@ -130,12 +137,12 @@ public class staffDatabase {
 
             if (res.next()) {
                 int rsetDelete = stmtDeleteAdmin.executeUpdate(deleteAdminTable);
-                System.out.println("Drop Staff Table Successful!");
+                System.out.println("Drop Admin Table Successful!");
                 conn.commit();
-
+                stmtDeleteAdmin.close();
+                conn.close();
             }
-            stmtDeleteAdmin.close();
-            conn.close();
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,7 +172,6 @@ public class staffDatabase {
             System.out.println("Create Admin table Successful!");
 
             conn.commit();
-            System.out.println();
 
             stmtCreateAdminsTable.close();
             conn.close();
@@ -194,8 +200,6 @@ public class staffDatabase {
 
             addAnyStaff.executeUpdate();
 
-            System.out.printf("Insert Admin Successful\n");
-
             conn.commit();
 
             addAnyStaff.close();
@@ -222,8 +226,6 @@ public class staffDatabase {
             deleteAnyAdmin.setInt(1, anyAdmin.getAdminID());
             // execute the delete statement
             deleteAnyAdmin.executeUpdate();
-
-            System.out.println("Delete Admin Successful!");
 
             conn.commit();
             deleteAnyAdmin.close();
@@ -263,7 +265,6 @@ public class staffDatabase {
             } // End While
 
             conn.commit();
-            System.out.println();
 
             rsetAllAdmins.close();
             selectAllAdmins.close();
@@ -296,12 +297,10 @@ public class staffDatabase {
 
                 insertStaff.executeUpdate();
 
-                staffCounter++;
-                System.out.printf("%-5d: Insert Staff Successful!\n",(j+1));
+                setStaffCounter(j);
             }
 
             conn.commit();
-            System.out.println();
 
             insertStaff.close();
             conn.close();
@@ -336,9 +335,6 @@ public class staffDatabase {
             addAnyStaff.setInt(5, anyStaff.getID());
 
             addAnyStaff.executeUpdate();
-
-            System.out.printf("Insert Staff Successful for staffID: %-5d\n", anyStaff.getID());
-            System.out.println();
 
             conn.commit();
 
@@ -381,8 +377,6 @@ public class staffDatabase {
             modAddAnyStaff.setString(4, encName);
             modAddAnyStaff.setInt(5, anyStaff.getID());
 
-            System.out.println("Update Staff Member Successful!");
-
             conn.commit();
 
             allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID()));
@@ -414,8 +408,6 @@ public class staffDatabase {
             // execute the delete statement
             deleteAnyStaff.executeUpdate();
 
-            System.out.println("Delete Staff Member Successful!");
-
             conn.commit();
             deleteAnyStaff.close();
             conn.close();
@@ -425,7 +417,7 @@ public class staffDatabase {
         }
         int indexOf = allStaff.indexOf(anyStaff);
         allStaff.remove(indexOf);
-        allStaffEnc.remove(indexOf);
+        //allStaffEnc.remove(indexOf);
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -447,7 +439,6 @@ public class staffDatabase {
             String strFullname;
             Integer intStaffID;
 
-            System.out.println("");
             System.out.printf("%-65s %-65s %-30s %-65s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID");
 
             //Process the results
@@ -462,7 +453,6 @@ public class staffDatabase {
             } // End While
 
             conn.commit();
-            System.out.println();
 
             rsetAllStaff.close();
             selectAllStaff.close();
@@ -478,10 +468,12 @@ public class staffDatabase {
     // Read from Staff CSV File and store columns in staff array lists
     ///////////////////////////////////////////////////////////////////////////////
     public static void readStaffCSV(String fname) {
-            int count = 0;
-            InputStream in = Class.class.getResourceAsStream(fname);
-            if (in == null) {
-                System.out.println("Error");
+        int count = 0;
+
+        InputStream in = Class.class.getResourceAsStream(fname);
+
+        if (in == null) {
+            System.out.println("Error: Could not find the file: " + fname);
             }
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
@@ -529,7 +521,6 @@ public class staffDatabase {
                 );
                 System.out.printf("%-5d: Staff Record Saved!\n", k);
             }
-            System.out.println();
             pwEnc.flush();
             pwEnc.close();
 
@@ -545,24 +536,25 @@ public class staffDatabase {
         String outStaffFileName = "src/csv/outputStaff.csv";
 
         try {
-            FileWriter fw3 = new FileWriter(outStaffFileName, false);
-            BufferedWriter bw3 = new BufferedWriter(fw3);
-            PrintWriter pw3 = new PrintWriter(bw3);
+            FileWriter fw2 = new FileWriter(outStaffFileName, false);
+            BufferedWriter bw2 = new BufferedWriter(fw2);
+            PrintWriter pw2 = new PrintWriter(bw2);
 
-            pw3.println("username,password,jobTitle,fullName,ID");
+            pw2.println("username,password,jobTitle,fullName,ID");
             for (int j = 0; j < staffDatabase.allStaff.size(); j++) {
 
-                pw3.println(staffDatabase.allStaff.get(j).getUsername() + "," +
+                pw2.println(staffDatabase.allStaff.get(j).getUsername() + "," +
                         staffDatabase.allStaff.get(j).getPassword() + "," +
                         staffDatabase.allStaff.get(j).getJobTitle() + "," +
                         staffDatabase.allStaff.get(j).getFullName() + "," +
                         staffDatabase.allStaff.get(j).getID()
                 );
-                System.out.printf("%-5d: Staff Record Saved!\n", j);
             }
-            System.out.println();
-            pw3.flush();
-            pw3.close();
+
+            pw2.flush();
+            pw2.close();
+            bw2.close();
+            fw2.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -571,6 +563,9 @@ public class staffDatabase {
 
     public static int getStaffCounter() {
         return staffCounter;
+    }
+    public static void setStaffCounter(int aCount) {
+        staffCounter = aCount;
     }
 
     public static String encStaffData(String anyString) {
