@@ -26,13 +26,13 @@
                <children>
                   <JFXTabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="400.0" tabMinHeight="50.0" tabMinWidth="194.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <tabs>
-                        <Tab fx:id="nodeTab" onSelectionChanged="#clearInputs" text="Node">
+                        <Tab fx:id="nodeTab" onClosed="#clearInputs" text="Node">
                           <content>
                             <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="400.0">
                                  <children>
                                     <JFXTabPane layoutY="-2.0" tabMinWidth="129.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <tabs>
-                                          <Tab fx:id="nodeAddTab" onSelectionChanged="#clearInputs" text="Add">
+                                          <Tab fx:id="nodeAddTab" onClosed="#clearInputs" text="Add">
                                             <content>
                                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="321.0">
                                                    <children>
@@ -337,7 +337,7 @@
                                  <children>
                                     <JFXTabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabMinWidth="129.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <tabs>
-                                          <Tab fx:id="edgeAddTab" onSelectionChanged="#clearInputs" text="Add">
+                                          <Tab fx:id="edgeAddTab" onClosed="#clearInputs" text="Add">
                                              <content>
                                                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <children>
@@ -390,7 +390,7 @@
                                                 </AnchorPane>
                                              </content>
                                           </Tab>
-                                          <Tab fx:id="edgeRemoveTab" onSelectionChanged="#clearInputs" text="Remove">
+                                          <Tab fx:id="edgeRemoveTab" onClosed="#clearInputs" text="Remove">
                                             <content>
                                               <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
                                                    <children>

@@ -117,10 +117,16 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void clearInputs(){
-        //todo clear all the text and options from UI inputs
         resetNodeAdd();
-        //nodeRemoveSelectedList.getItems().clear();
+        if(nodeRemoveTab != null) {
+            nodeRemoveSelectedList.getItems().clear();
+        }
         resetNodeEdit();
+        resetEdgeAdd();
+        if(edgeRemoveTab != null) {
+            edgeRemoveList.getItems().clear();
+        }
+        refreshNodesandEdges();
     }
 
     public void returnPressed(ActionEvent e){
@@ -384,13 +390,15 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void resetNodeAdd(){
-        nodeAddXField.setText("");
-        nodeAddYField.setText("");
-        nodeAddBuildingDropDown.setText("Building");
-        nodeAddFloorDropDown.setText("Floor");
-        nodeAddTypeDropDown.setText("NodeType");
-        nodeAddNameField.setText("");
-        nodeAddShortField.setText("");
+        if(nodeAddTab != null) {
+            nodeAddXField.setText("");
+            nodeAddYField.setText("");
+            nodeAddBuildingDropDown.setText("Building");
+            nodeAddFloorDropDown.setText("Floor");
+            nodeAddTypeDropDown.setText("NodeType");
+            nodeAddNameField.setText("");
+            nodeAddShortField.setText("");
+        }
     }
 
     public void mapPaneClicked(MouseEvent e){
@@ -651,15 +659,17 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void resetNodeEdit(){
-        nodeEditSelectedNode = null;
-        nodeEditNameField.clear();
-        nodeEditShortField.setText("");
-        nodeEditBuildingDropDown.setText("Building");
-        nodeEditFloorDropDown.setText("Floor");
-        nodeEditTypeDropDown.setText("Type");
-        nodeEditXField.setText("");
-        nodeEditYField.setText("");
-        nodeEditIDLabel.setText("Node ID");
+        if(nodeEditTab != null) {
+            nodeEditSelectedNode = null;
+            nodeEditNameField.clear();
+            nodeEditShortField.setText("");
+            nodeEditBuildingDropDown.setText("Building");
+            nodeEditFloorDropDown.setText("Floor");
+            nodeEditTypeDropDown.setText("Type");
+            nodeEditXField.setText("");
+            nodeEditYField.setText("");
+            nodeEditIDLabel.setText("Node ID");
+        }
     }
     //-----------------------NODE TAB END---------------------//
 
@@ -704,7 +714,15 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void edgeAddCancelPressed(ActionEvent e){
+        resetEdgeAdd();
         refreshNodesandEdges();
+    }
+
+    public void resetEdgeAdd(){
+        if(edgeAddTab != null){
+            edgeAddID1Label.setText("");
+            edgeAddID2Label.setText("");
+        }
     }
 
     ////////////////////////////////////////////////////////////
