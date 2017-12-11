@@ -36,7 +36,7 @@ public class ScreenController extends StackPane {
     public static String LogoutID = "LogoutID";
     public static String LogoutFile = "/fxml/Logout.fxml";
     public static String MainID = "Main";
-    public static String MainFile = "/fxml/mainAlt.fxml";
+    public static String MainFile = "/fxml/Main.fxml";
     public static String PathID = "Path";
     public static String PathFile = "/fxml/Path.fxml";
     public static String RequestID = "Request";
