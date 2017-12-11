@@ -9,6 +9,7 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -43,16 +45,38 @@ public class MainController implements ControllableScreen, Observer{
 
     @FXML
     private JFXSlider slideBarZoom;
+
     @FXML
+    private HBox dropDownBox;
+
+    private JFXButton filterHeaderButton;
+
+    private JFXButton nearestHeaderButton;
+
     private JFXButton bathFilterButton;
-    @FXML
+
     private JFXButton exitFilterButton;
-    @FXML
+
     private JFXButton elevatorFilterButton;
-    @FXML
+
     private JFXButton retailFilterButton;
-    @FXML
+
     private JFXButton stairsFilterButton;
+
+    private JFXButton bathNearestButton;
+
+    private JFXButton exitNearestButton;
+
+    private JFXButton elevatorNearestButton;
+
+    private JFXButton retailNearestButton;
+
+    private JFXButton stairsNearestButton;
+
+    private JFXNodesList filterList;
+
+    private JFXNodesList nearestList;
+
     @FXML
     private AnchorPane mainAnchorPane;
 
@@ -70,6 +94,7 @@ public class MainController implements ControllableScreen, Observer{
         kioskIndicator.setFill(Color.rgb(0,84,153));
         kioskIndicator.setStroke(Color.rgb(40,40,60));
         kioskIndicator.setStrokeWidth(3);
+        initButtons();
 
         mapPane.getChildren().add(kioskIndicator);
         mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
@@ -81,7 +106,83 @@ public class MainController implements ControllableScreen, Observer{
         mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
     }
 
+    private void initButtons(){
+        filterList = new JFXNodesList();
+        nearestList = new JFXNodesList();
+        ArrayList<JFXButton> buttons = new ArrayList<>();
+        bathFilterButton = new JFXButton();
+        exitFilterButton = new JFXButton();
+        elevatorFilterButton = new JFXButton();
+        retailFilterButton = new JFXButton();
+        stairsFilterButton = new JFXButton();
+        bathNearestButton = new JFXButton();
+        exitNearestButton = new JFXButton();
+        elevatorNearestButton = new JFXButton();
+        retailNearestButton = new JFXButton();
+        stairsNearestButton = new JFXButton();
+        filterHeaderButton = new JFXButton("Filter");
+        nearestHeaderButton = new JFXButton("Nearest");
+
+        filterHeaderButton.setMinSize(150,50);
+        nearestHeaderButton.setMinSize(150,50);
+        filterHeaderButton.setMaxWidth(2000);
+        nearestHeaderButton.setMaxWidth(2000);
+
+        buttons.add(bathFilterButton);
+        buttons.add(exitFilterButton);
+        buttons.add(elevatorFilterButton);
+        buttons.add(retailFilterButton);
+        buttons.add(stairsFilterButton);
+        buttons.add(bathNearestButton);
+        buttons.add(exitNearestButton);
+        buttons.add(elevatorNearestButton);
+        buttons.add(retailNearestButton);
+        buttons.add(stairsNearestButton);
+        filterList.addAnimatedNode(filterHeaderButton);
+        nearestList.addAnimatedNode(nearestHeaderButton);
+        for(int i = 0; i< 10; i++){
+            JFXButton b  = buttons.get(i);
+            b.setPrefSize(150,50);
+            if(i < 5){
+                b.setOnAction(e -> filterButtonPressed(e));
+                filterList.addAnimatedNode(b);
+            }
+            else{
+                b.setOnAction(e -> nearestPressed(e));
+                nearestList.addAnimatedNode(b);
+            }
+
+        }
+        filterList.setSpacing(20);
+        nearestList.setSpacing(20);
+
+        mainAnchorPane.getChildren().addAll(filterList,nearestList);
+        AnchorPane.setLeftAnchor(filterList,200.0);
+        AnchorPane.setRightAnchor(nearestList, 200.0);
+        filterHeaderButton.prefWidthProperty().bind(mainAnchorPane.widthProperty().divide(2).subtract(230));
+        nearestHeaderButton.prefWidthProperty().bind(mainAnchorPane.widthProperty().divide(2).subtract(230));
+
+        System.out.println(mainAnchorPane.getWidth());
+        System.out.println(mainAnchorPane.getBoundsInLocal().getWidth());
+        System.out.println(mainAnchorPane.getBoundsInParent().getWidth());
+
+
+
+        bathFilterButton.setText("Restroom");
+        exitFilterButton.setText("Exit");
+        elevatorFilterButton.setText("Elevator");
+        retailFilterButton.setText("Retail");
+        stairsFilterButton.setText("Stairs");
+        bathNearestButton.setText("Restroom");
+        exitNearestButton.setText("Exit");
+        elevatorNearestButton.setText("Elevator");
+        retailNearestButton.setText("Retail");
+        stairsNearestButton.setText("Stairs");
+
+    }
+
     public void onShow(){
+
         kioskIndicator.setCenterX(map.getKioskLocation().getX());
         kioskIndicator.setCenterY(map.getKioskLocation().getY());
         setFloor(curerntFloor);
@@ -235,11 +336,48 @@ public class MainController implements ControllableScreen, Observer{
         }
     }
 
+    public void nearestPressed(ActionEvent e){
+        //switch to kiosk floor
+        mapViewer.setFloor(map.getKioskLocation().getFloor());
+        kioskIndicator.setVisible(true);
+        //find nearest node of given type
+        Path path;
+        if(e.getSource().equals(bathNearestButton)){
+            path = map.findNearest(map.getKioskLocation(), "REST");
+        }
+        else if(e.getSource().equals(elevatorNearestButton)){
+            path = map.findNearest(map.getKioskLocation(), "ELEV");
+        }
+        else if(e.getSource().equals(exitNearestButton)){
+            path = map.findNearest(map.getKioskLocation(), "EXIT");
+        }
+        else if(e.getSource().equals(retailNearestButton)){
+            path = map.findNearest(map.getKioskLocation(), "RETL");
+        }
+        else {
+            path = map.findNearest(map.getKioskLocation(), "STAI");
+        }
+
+        System.out.println("Nearest Pressed");
+
+        int size = path.getPath().size();
+        Node node = path.getPath().get(size - 1);
+        //if nearest node is on same floor as kiosk, make a circle
+        if(node.getFloor() == map.getKioskLocation().getFloor()){
+            Circle c = makeCircle(node);
+            mapPane.getChildren().add(c);
+        }
+
+    }
+
+
+
     ////////////////////////////////////////////////////////////
     /////////////           Filter
     ////////////////////////////////////////////////////////////
     public void filterButtonPressed(ActionEvent e) {
         clearPressed(new ActionEvent());
+        System.out.println("Filter Pressed");
         JFXButton pressed = (JFXButton) e.getSource();
         ArrayList<Node> filteredNodes = new ArrayList<Node>();
         if (pressed.equals(bathFilterButton)) {

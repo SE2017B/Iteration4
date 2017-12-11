@@ -34,6 +34,23 @@ public class Main extends Application {
         root.minHeight(400);
 
         ScreenController myScreenController = new ScreenController();
+
+        String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
+        scene.getStylesheets().add(style);
+        primaryStage.setScene(scene);
+        primaryStage.setWidth(1280);
+        primaryStage.setHeight(800);
+
+        EventHandler reset = new EventHandler<InputEvent>() {
+            @Override
+            public void handle(InputEvent event){
+                myScreenController.resetTimeout();
+            }};
+        scene.addEventFilter(MouseEvent.MOUSE_MOVED, reset);
+        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, reset);
+        scene.addEventFilter(KeyEvent.KEY_TYPED, reset);
+        primaryStage.show();
+
         root.getChildren().addAll(myScreenController);
         myScreenController.prefHeightProperty().bind(scene.heightProperty());
         myScreenController.prefWidthProperty().bind(scene.widthProperty());
@@ -55,21 +72,6 @@ public class Main extends Application {
 
         myScreenController.setScreen(ScreenController.MainID);
         myScreenController.saveState();
-        String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
-        scene.getStylesheets().add(style);
-        primaryStage.setScene(scene);
-        primaryStage.setWidth(1280);
-        primaryStage.setHeight(800);
-
-        EventHandler reset = new EventHandler<InputEvent>() {
-            @Override
-            public void handle(InputEvent event){
-                myScreenController.resetTimeout();
-            }};
-        scene.addEventFilter(MouseEvent.MOUSE_MOVED, reset);
-        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, reset);
-        scene.addEventFilter(KeyEvent.KEY_TYPED, reset);
-        primaryStage.show();
     }
 
     public static void main(String[] args) {

@@ -12,10 +12,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -98,14 +95,14 @@ public class MapViewer extends Observable{
 
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
-        container.getStyleClass().add("buttonScrollPane");
+        container.getStyleClass().add("button-scroll-pane");
         container.setPadding(new Insets(20, 0, 0, 0));
 
 
 
 
 
-        buttonScrollPane.getStyleClass().add("buttonScrollPane");
+        buttonScrollPane.getStyleClass().add("button-scroll-pane");
         buttonScrollPane.setPannable(true);
         buttonScrollPane.setPrefViewportHeight(100);
         buttonScrollPane.setContent(container);
