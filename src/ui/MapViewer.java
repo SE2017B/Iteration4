@@ -28,7 +28,7 @@ public class MapViewer extends Observable{
     private int SPACER_WIDTH = 500;
     private final int SPACING = 10;
     private final int BUTTON_HEIGHT = 50;
-    private final int BUTTON_WIDTH = 150;
+    private final int BUTTON_WIDTH = 100;
 
     private ArrayList<String> buttonOrder;
     public FloorNumber currentFloor;
@@ -38,8 +38,6 @@ public class MapViewer extends Observable{
 
     private Pane mapPane;
 
-    public JFXDrawer buttonDrawer;
-    public JFXDrawersStack drawersStack;
     private HBox container;
     private Pane spacerLeft;
     private Pane spacerRight;
@@ -57,7 +55,7 @@ public class MapViewer extends Observable{
         mapScrollPane = new ScrollPane();
         mapPane = new Pane();
         buttonOrder = new ArrayList<String>();
-        buttonDrawer = new JFXDrawer();
+
         mapViewerPane = new AnchorPane();
         mapHolderPane = new Pane();
         prevFloor = new Label();
@@ -95,17 +93,20 @@ public class MapViewer extends Observable{
 
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
-        container.getStyleClass().add("button-scroll-pane");
+        container.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null,null)));
         container.setPadding(new Insets(20, 0, 0, 0));
 
 
 
 
 
-        buttonScrollPane.getStyleClass().add("button-scroll-pane");
+        buttonScrollPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null,null)));
         buttonScrollPane.setPannable(true);
         buttonScrollPane.setPrefViewportHeight(100);
         buttonScrollPane.setContent(container);
+
+
+        System.out.println(container.getChildren());
 
         currentFloor = FloorNumber.FLOOR_ONE;
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
@@ -113,7 +114,7 @@ public class MapViewer extends Observable{
         addObserver(o);
 
         buttonScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
-        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty().subtract(98));
+        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty());
         mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
 
 
@@ -256,6 +257,7 @@ public class MapViewer extends Observable{
         spacerRight.setPrefWidth(SPACER_WIDTH);
         container = new HBox();
         container.setSpacing(SPACING);
+        container.setPrefHeight(100);
         container.setPadding(new Insets(10,10,10,10));
         container.setAlignment(Pos.CENTER);
     }

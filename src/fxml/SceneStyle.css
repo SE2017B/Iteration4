@@ -12,6 +12,10 @@
     -fx-vbar-policy: never;
 }
 
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
 .button-scroll-pane{
     -fx-background-color: transparent;
 }

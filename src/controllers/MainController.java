@@ -40,7 +40,6 @@ public class MainController implements ControllableScreen, Observer{
     private FloorNumber curerntFloor;
     private HospitalMap map;
     private ArrayList<Circle> indicators;
-    private Pane question;
     private Pane mapPane;
 
     @FXML
