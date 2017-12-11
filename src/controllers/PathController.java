@@ -258,11 +258,8 @@ public class PathController implements ControllableScreen, Observer{
                             //endSearching=true;
                             searchCount=5;
                             //add shape representing
-                            Circle newp = getStartPoint(selected.getX(),selected.getY());
-                            startPoint=newp;
-                            startPoint.setVisible(true);
-                            mapPane.getChildren().add(startPoint);
-                            startPointFloor=currentFloor;
+                            setStartNode(selected);
+
                         }
                         if(endSearching){
                             startTabPane.getSelectionModel().select(0);
@@ -271,11 +268,7 @@ public class PathController implements ControllableScreen, Observer{
                             endSearching=false;
                             isSearching=false;
                             //do the same thing
-                            Circle newp = getPoint(selected.getX(),selected.getY());
-                            endPoint=newp;
-                            endPoint.setVisible(true);
-                            mapPane.getChildren().add(endPoint);
-                            endPointFloor=currentFloor;
+                            setEndNode(selected);
                         }
 
                     }
@@ -358,9 +351,13 @@ public class PathController implements ControllableScreen, Observer{
                 }
                 if(textField.equals(startTextField)){
                     startNode = node;
+                    mapViewer.centerView(node.getX(),node.getY());
+                    setStartNode(startNode);
                 }
                 else{
                     endNode = node;
+                    mapViewer.centerView(node.getX(),node.getY());
+                    setEndNode(endNode);
                 }
                     textField.setText(node.toString());
                     listView.setVisible(false);
@@ -409,12 +406,35 @@ public class PathController implements ControllableScreen, Observer{
             Node node = listView.getSelectionModel().getSelectedItem();
             if (textField.equals(startTextField)) {
                 startNode = node;
+                mapViewer.centerView(node.getX(),node.getY());
+                setStartNode(startNode);
             } else {
                 endNode = node;
+                setEndNode(endNode);
+                mapViewer.centerView(node.getX(),node.getY());
             }
             textField.setText(selected.toString());
             listView.setVisible(false);
         }
+    }
+    private void setStartNode(Node selected){
+        Circle newp = getStartPoint(selected.getX(),selected.getY());
+        startPoint=newp;
+        startPoint.setVisible(true);
+        mapPane.getChildren().add(startPoint);
+        startPointFloor=selected.getFloor();
+        currentFloor=startPointFloor;
+        mapViewer.setFloor(startPointFloor);
+
+    }
+    private void setEndNode(Node selected){
+        Circle newp = getPoint(selected.getX(),selected.getY());
+        endPoint=newp;
+        endPoint.setVisible(true);
+        mapPane.getChildren().add(endPoint);
+        endPointFloor=selected.getFloor();
+        currentFloor=endPointFloor;
+        mapViewer.setFloor(endPointFloor);
     }
 
     private Path getPath(){
