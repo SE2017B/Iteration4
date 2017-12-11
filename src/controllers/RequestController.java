@@ -90,6 +90,16 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXTextField modifyID;
     @FXML
+    private JFXTextField staffDeleteFullNametxt;
+    @FXML
+    private JFXTextField usernameEdit;
+    @FXML
+    private JFXTextField fullnameEdit;
+    @FXML
+    private JFXTextField passwordEdit;
+    @FXML
+    private JFXTextField jobTitleEdit;
+    @FXML
     private ChoiceBox<String> choiceboxModifyStaff;
     @FXML
     private JFXButton searchButton;
@@ -109,6 +119,8 @@ public class RequestController implements ControllableScreen{
     private JFXButton btncreate;
     @FXML
     private JFXButton btncancel;
+    @FXML
+    private ListView<Staff> staffListView1;
     @FXML
     private JFXDatePicker dateMenu;
     @FXML
@@ -131,6 +143,8 @@ public class RequestController implements ControllableScreen{
     private JFXButton btnLogOut;
     @FXML
     private JFXButton btnEditMap;
+    @FXML
+    private JFXButton editStaff;
     @FXML
     private ChoiceBox<Service> staffJobTypeChoiceBox;
     @FXML
@@ -176,6 +190,19 @@ public class RequestController implements ControllableScreen{
                     }
                 }
         );
+
+        staffListView1.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Staff>() {
+                                                                                  @Override
+                                                                                  public void changed(ObservableValue<? extends Staff> observable, Staff oldValue, Staff newValue) {
+                                                                                      if (newValue != null) {
+                                                                                          fullnameEdit.setText(newValue.getFullName());
+                                                                                          usernameEdit.setText(newValue.getUsername());
+                                                                                          passwordEdit.setText(newValue.getPassword());
+                                                                                          jobTitleEdit.setText(newValue.getJobTitle());
+                                                                                      }
+                                                                                  }
+                                                                              }
+        );
     }
 
     public void onShow(){
@@ -206,6 +233,7 @@ public class RequestController implements ControllableScreen{
         kioskLocationChoice.setValue(map.getKioskLocation());
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+        staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
 
         staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
         addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
@@ -366,6 +394,7 @@ public class RequestController implements ControllableScreen{
             depSub.addStaff(tempService, tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter(), 0);
 
             staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+            staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
         }
         catch (Exception ex){
             System.out.println("Add Staff Failed");
@@ -385,10 +414,49 @@ public class RequestController implements ControllableScreen{
                 s.shake(addStaffServiceChoiceBox);
             }
         }
+        usernameTxt.clear();
+        passwordTxt.clear();
+        jobTitletxt.clear();
+        fullNametxt.clear();
+        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
     }
 
     @FXML
     void makeModify(ActionEvent event) {}
+
+    @FXML
+    public void editStaffPressed(ActionEvent e)
+    {
+        //ArrayList<Staff> tempAL = new ArrayList<>(staffForCB);
+
+        String tempUsername = usernameEdit.getText();
+        String tempPassword = passwordEdit.getText();
+        String tempFullName = fullnameEdit.getText();
+        String tempJobTitle = jobTitleEdit.getText();
+
+        usernameEdit.clear();
+        passwordEdit.clear();
+        fullnameEdit.clear();
+        jobTitleEdit.clear();
+
+        Staff tempStaff = staffListView1.getSelectionModel().getSelectedItem();
+        tempStaff.updateCredidentials(tempUsername, tempPassword, tempJobTitle, tempFullName, tempStaff.getID());
+
+        //staffResolveServiceChoiceBox.getItems().clear();
+        staffListView1.getItems().clear();
+        staffListView.getItems().clear();
+        //staffChoiceBox.getItems().clear();
+
+//        staffForCB.clear();
+//        if (staffForCB.isEmpty() || staffForCB == null) {
+//            System.out.println("Error: No staff members found.");
+//        }
+//        staffListView.setItems(FXCollections.observableList(tempAL));
+//        staffListView1.setItems(FXCollections.observableList(tempAL));
+//        staffChoiceBox.setItems(FXCollections.observableList(tempAL));
+//        staffResolveServiceChoiceBox.setItems(FXCollections.observableList(tempAL));
+//        staffForCB.addAll(tempAL);
+    }
 
     @FXML
     void removeStaffPressed(ActionEvent event) {
