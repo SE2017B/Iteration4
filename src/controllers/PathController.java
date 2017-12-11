@@ -79,6 +79,12 @@ public class PathController implements ControllableScreen, Observer{
     private boolean startSearching;
     private boolean endSearching;
     private int searchCount=0;
+    //start node
+    private Shape startPoint;
+    private FloorNumber startPointFloor;
+    //end node
+    private Shape endPoint;
+    private FloorNumber endPointFloor;
 
     Node startNode;
     Node endNode;
@@ -186,6 +192,17 @@ public class PathController implements ControllableScreen, Observer{
         Center.add(1500);
         Center.add(850);
 
+        //init start and end nodes
+        startPoint=getPoint(0,0);
+        startPoint.setVisible(false);
+        mapPane.getChildren().add(startPoint);//add to mapPane
+        startPointFloor=currentFloor;
+
+        endPoint=getPoint(0,0);
+        endPoint.setVisible(false);
+        mapPane.getChildren().add(endPoint);//add to mapPane
+        endPointFloor=currentFloor;
+
         //using animation to update position
         AnimationTimer zoomPath= new AnimationTimer(){
             @Override
@@ -243,8 +260,10 @@ public class PathController implements ControllableScreen, Observer{
                             //add shape representing
                             Circle newp = getPoint(selected.getX(),selected.getY());
                             newp.setFill(Color.RED);
-                            shapes.add(newp);
-                            mapPane.getChildren().add(newp);
+                            startPoint=newp;
+                            startPoint.setVisible(true);
+                            mapPane.getChildren().add(startPoint);
+                            startPointFloor=currentFloor;
                         }
                         if(endSearching){
                             startTabPane.getSelectionModel().select(0);
@@ -254,8 +273,10 @@ public class PathController implements ControllableScreen, Observer{
                             isSearching=false;
                             //do the same thing
                             Circle newp = getPoint(selected.getX(),selected.getY());
-                            shapes.add(newp);
-                            mapPane.getChildren().add(newp);
+                            endPoint=newp;
+                            endPoint.setVisible(true);
+                            mapPane.getChildren().add(endPoint);
+                            endPointFloor=currentFloor;
                         }
 
                     }
@@ -683,6 +704,21 @@ public class PathController implements ControllableScreen, Observer{
             //change current floor tho.
             else{
                 currentFloor=ID.getFloor();
+            }
+            //adjust start nodes
+            if(startPointFloor==currentFloor){
+                System.out.println("Setting start and end points");
+                startPoint.setVisible(true);
+            }
+            else{
+                startPoint.setVisible(false);
+            }
+            //adjust end nodes
+            if(endPointFloor==currentFloor){
+                endPoint.setVisible(true);
+            }
+            else{
+                endPoint.setVisible(false);
             }
         }
     }
