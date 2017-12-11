@@ -19,6 +19,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static sun.swing.MenuItemLayoutHelper.isColumnLayout;
 import static sun.swing.MenuItemLayoutHelper.max;
 
 public class HospitalMap{
@@ -38,6 +39,7 @@ public class HospitalMap{
         posSerchStrat.add(new AStarSearch());
         posSerchStrat.add(new BeamSearch(3));
         posSerchStrat.add(new BreadthFirstSearch());
+        posSerchStrat.add(new BestFirstSearch());
         posSerchStrat.add(new DepthFirstSearch());
         posSerchStrat.add(new DijkstrasSearch());
         nodeMap.addAll(nodeDatabase.getNodes());
@@ -64,6 +66,19 @@ public class HospitalMap{
             map = new HospitalMap();
         }
         return map;
+    }
+
+    public HashMap<Edge, ArrayList<Node>> getCopy(){
+        HashMap<Edge, ArrayList<Node>> newMap = new HashMap<>();
+        for(Edge edge : edgeMap){
+            Node oldOne = edge.getNodeOne();
+            Node oldTwo = edge.getNodeTwo();
+            Node newNodeOne = new Node(oldOne.getID(), Integer.toString(oldOne.getX()), Integer.toString(oldOne.getY()), oldOne.getFloor().getDbMapping(), oldOne.getBuilding(), oldOne.getType(), oldOne.getLongName(), oldOne.getShortName(), oldOne.getTeam());
+            Node newNodeTwo = new Node(oldTwo.getID(), Integer.toString(oldTwo.getX()), Integer.toString(oldTwo.getY()), oldTwo.getFloor().getDbMapping(), oldTwo.getBuilding(), oldTwo.getType(), oldTwo.getLongName(), oldTwo.getShortName(), oldTwo.getTeam());
+            Edge newEdge = new Edge(newNodeOne, newNodeTwo);
+            newMap.put(newEdge, new ArrayList<Node>(Arrays.asList(newNodeOne, newNodeTwo)));
+        }
+        return newMap;
     }
 
     //Helper Methods
@@ -188,6 +203,10 @@ public class HospitalMap{
             }
         }
         return output;
+    }
+
+    public Edge getEdge(Edge edge){
+        return this.edgeMap.get(this.edgeMap.indexOf(edge));
     }
 
     public SearchStrategy getSearchStrategy() {return search.getStrategy();}

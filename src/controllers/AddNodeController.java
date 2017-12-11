@@ -28,10 +28,7 @@ import map.HospitalMap;
 import map.Node;
 import ui.*;
 
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddNodeController implements ControllableScreen, Observer {
@@ -720,17 +717,26 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     // Memento Stuff
     public void saveStateToMemento(){
-        ArrayList<Node> oldNodes = new ArrayList<>();
-        ArrayList<Edge> oldEdges = new ArrayList<>();
-        for(Node node : map.getNodeMap()) oldNodes.add(node.getCopy());
-        for(Edge edge : map.getEdgeMap()) oldEdges.add(edge.getCopy());
-        ArrayList<Node> mapNodeState = new ArrayList<>(oldNodes);
-        ArrayList<Edge> mapEdgeState = new ArrayList<>(oldEdges);
-        mapEditorMementos.push(new MapEditorMemento(mapNodeState, mapEdgeState));
+        HashMap<Edge, ArrayList<Node>> newMap = map.getCopy();
+        ArrayList<Node> nodes = new ArrayList<>();
+        ArrayList<Edge> edges = new ArrayList<>();
+        edges.addAll(newMap.keySet());
+        for(Edge edge : newMap.keySet()){
+            for(Node node : newMap.get(edge)){
+                if(!nodes.contains(node)) nodes.add(node);
+            }
+        }
+//        ArrayList<Node> oldNodes = new ArrayList<>();
+//        ArrayList<Edge> oldEdges = new ArrayList<>();
+//        for(Node node : map.getNodeMap()) oldNodes.add(node.getCopy());
+//        for(Edge edge : map.getEdgeMap()) oldEdges.add(edge.getCopy());
+//        ArrayList<Node> mapNodeState = new ArrayList<>(oldNodes);
+//        ArrayList<Edge> mapEdgeState = new ArrayList<>(oldEdges);
+        mapEditorMementos.push(new MapEditorMemento(nodes, edges));
     }
     public void setMemento(MapEditorMemento memento){
-        map.setEdgeMap(memento.getSavedEdgeState());
         map.setNodeMap(memento.getSavedNodeState());
+        map.setEdgeMap(memento.getSavedEdgeState());
         refreshNodesandEdges();
     }
     public void undo(){

@@ -35,10 +35,6 @@ public class Edge{
         this.nodeTwo.addConnection(this);
     }
 
-    public Edge getCopy(){
-        return new Edge(this.ID, this.nodeOne, this.nodeTwo);
-    }
-
     public void replaceNode(Node oldNode, Node newNode) throws InvalidNodeException {
         if(oldNode.equals(nodeOne)){
             nodeOne.removeConnection(this);
