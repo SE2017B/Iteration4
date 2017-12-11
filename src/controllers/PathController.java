@@ -258,8 +258,7 @@ public class PathController implements ControllableScreen, Observer{
                             //endSearching=true;
                             searchCount=5;
                             //add shape representing
-                            Circle newp = getPoint(selected.getX(),selected.getY());
-                            newp.setFill(Color.RED);
+                            Circle newp = getStartPoint(selected.getX(),selected.getY());
                             startPoint=newp;
                             startPoint.setVisible(true);
                             mapPane.getChildren().add(startPoint);
@@ -497,6 +496,16 @@ public class PathController implements ControllableScreen, Observer{
         c.setRadius(7);
         return c;
     }
+    private Circle getStartPoint(int x, int y){
+        Circle c = new AnimatedCircle();
+        c.setCenterX(x);
+        c.setCenterY(y);
+        c.setFill(Color.rgb(0,84,153));
+        c.setStroke(Color.rgb(40,40,60));
+        c.setVisible(true);
+        c.setRadius(7);
+        return c;
+    }
 
     private void clearShapes(){
         for(Shape s : shapes){
@@ -519,8 +528,7 @@ public class PathController implements ControllableScreen, Observer{
 
     private void animatePath(PathViewer path){
         //represent first and last nodes with animated circles
-        Circle newp = getPoint(path.getNodes().get(0).getX(),path.getNodes().get(0).getY());
-        newp.setFill(Color.RED);
+        Circle newp = getStartPoint(path.getNodes().get(0).getX(),path.getNodes().get(0).getY());
         mapPane.getChildren().add(newp);
         path.addShape(newp);
         shapes.add(newp);
