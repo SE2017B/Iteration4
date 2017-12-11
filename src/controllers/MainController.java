@@ -12,8 +12,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -35,7 +33,7 @@ public class MainController implements ControllableScreen, Observer{
     private ScreenController parent;
     private MapViewer mapViewer;
     private AnimatedCircle kioskIndicator;
-    private FloorNumber curerntFloor;
+    private FloorNumber currentFloor;
     private HospitalMap map;
     private ArrayList<Circle> indicators;
     private Pane question;
@@ -57,10 +55,10 @@ public class MainController implements ControllableScreen, Observer{
     private AnchorPane mainAnchorPane;
 
     public void init() {
-        curerntFloor = FloorNumber.FLOOR_ONE;
+        currentFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
         mapViewer = new MapViewer(this, parent);
-        mapViewer.setFloor(curerntFloor);
+        mapViewer.setFloor(currentFloor);
         mapPane = mapViewer.getMapPane();
         indicators = new ArrayList<>();
         kioskIndicator = new AnimatedCircle();
@@ -84,7 +82,7 @@ public class MainController implements ControllableScreen, Observer{
     public void onShow(){
         kioskIndicator.setCenterX(map.getKioskLocation().getX());
         kioskIndicator.setCenterY(map.getKioskLocation().getY());
-        setFloor(curerntFloor);
+        setFloor(currentFloor);
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
         setZoom(0.8);
     }
@@ -95,9 +93,9 @@ public class MainController implements ControllableScreen, Observer{
     }
 
     private void setFloor(FloorNumber floor){
-        curerntFloor = floor;
+        currentFloor = floor;
         clearPressed(new ActionEvent());
-        if (curerntFloor.equals(map.getKioskLocation().getFloor())){
+        if (currentFloor.equals(map.getKioskLocation().getFloor())){
             kioskIndicator.setVisible(true);
         }
         else{
@@ -243,15 +241,15 @@ public class MainController implements ControllableScreen, Observer{
         JFXButton pressed = (JFXButton) e.getSource();
         ArrayList<Node> filteredNodes = new ArrayList<Node>();
         if (pressed.equals(bathFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("REST")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("REST")));
         } else if (pressed.equals(exitFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("EXIT")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("EXIT")));
         } else if (pressed.equals(elevatorFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("ELEV")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("ELEV")));
         } else if (pressed.equals(retailFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("RETL")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("RETL")));
         } else if (pressed.equals(stairsFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("STAI")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("STAI")));
         }
         for (Node n: filteredNodes)
         {
