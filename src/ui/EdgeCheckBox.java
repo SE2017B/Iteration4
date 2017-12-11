@@ -26,18 +26,12 @@ public class EdgeCheckBox extends Line {
             System.out.println(edge.getNodeTwo());
             System.out.println(edge.getNodeTwo().getX());
         }
-//        Node nodeOne = map.getNodeMap().stream().filter(n1->n1.equals(edge.getNodeOne())||n1.equals(edge.getNodeTwo())).collect(Collectors.toList()).get(0);
-//        Node nodeTwo = map.getNodeMap().stream().filter(n1->(n1.equals(edge.getNodeOne())||n1.equals(edge.getNodeTwo()))&&(!n1.equals(nodeOne))).collect(Collectors.toList()).get(0);
-//        int startX = map.getNodeMap().stream().filter(n1->n1.equals(edge.getNodeOne())).collect(Collectors.toList()).get(0).getX();
-//        int startY = map.getNodeMap().stream().filter(n1->n1.equals(edge.getNodeOne())).collect(Collectors.toList()).get(0).getY();
         int startX = edge.getNodeOne().getX();
         int startY = edge.getNodeOne().getY();
         this.setLayoutX(startX);
         this.setLayoutY(startY);
         this.setStartX(0);
         this.setStartY(0);
-//        this.setEndX((map.getNodeMap().stream().filter(n1->n1.equals(edge.getNodeTwo())).collect(Collectors.toList()).get(0).getX() - startX));
-//        this.setEndY((map.getNodeMap().stream().filter(n1->n1.equals(edge.getNodeTwo())).collect(Collectors.toList()).get(0).getY() - startY));
         this.setEndX(edge.getNodeTwo().getX() - startX);
         this.setEndY(edge.getNodeTwo().getY() - startY);
         this.setStrokeWidth(8);
