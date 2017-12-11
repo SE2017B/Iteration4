@@ -47,7 +47,7 @@ public class Main extends Application {
                 myScreenController.resetTimeout();
             }};
         scene.addEventFilter(MouseEvent.MOUSE_MOVED, reset);
-        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> System.out.println(event.getTarget()));
+        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, reset);
         scene.addEventFilter(KeyEvent.KEY_TYPED, reset);
         primaryStage.show();
 
