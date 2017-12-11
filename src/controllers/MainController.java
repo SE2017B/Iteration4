@@ -46,9 +46,6 @@ public class MainController implements ControllableScreen, Observer{
     private Pane mapPane;
 
     @FXML
-    private JFXSlider slideBarZoom;
-
-    @FXML
     private HBox dropDownBox;
 
     @FXML
@@ -134,9 +131,6 @@ public class MainController implements ControllableScreen, Observer{
         elevatorNearestButton = new JFXButton();
         retailNearestButton = new JFXButton();
         stairsNearestButton = new JFXButton();
-
-
-
 
         buttons.add(bathFilterButton);
         buttons.add(exitFilterButton);
@@ -224,7 +218,7 @@ public class MainController implements ControllableScreen, Observer{
         kioskIndicator.setCenterY(map.getKioskLocation().getY());
         setFloor(curerntFloor);
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
-        setZoom(0.8);
+        mapViewer.setZoom(0.8);
     }
 
     //Setters
@@ -281,11 +275,6 @@ public class MainController implements ControllableScreen, Observer{
     //-----------------------HANDLE ACTIONS START--------------------------//
     public void clearMousePressed(MouseEvent e){
         clearPressed(new ActionEvent());
-    }
-
-    //adjusts map zoom through slider
-    public void sliderChanged(MouseEvent e){
-        mapViewer.setScale(slideBarZoom.getValue());
     }
 
     ////////////////////////////////////////////////////////////
@@ -421,21 +410,5 @@ public class MainController implements ControllableScreen, Observer{
 
     public void questionPressed(ActionEvent e) {
         parent.setScreen(ScreenController.HelpID, "HELP_IN");
-    }
-
-    //when + button is pressed zoom in map
-    public void zinPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()+0.2);
-    }
-
-    //when - button pressed zoom out map
-    public void zoutPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()-0.2);
-    }
-    //-----------------------HANDLE ACTIONS END----------------------------//
-
-    public void setZoom(double zoom){
-        slideBarZoom.setValue(zoom);
-        mapViewer.setScale(zoom);
     }
 }

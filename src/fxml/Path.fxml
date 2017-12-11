@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.lang.String?>
@@ -17,10 +16,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
       <TitledPane fx:id="textDirectionsPane" animated="false" layoutY="110.0" maxHeight="1200.0" text="Text Directions" visible="false" AnchorPane.topAnchor="100.0">
          <content>
@@ -50,21 +48,6 @@
             <Font size="18.0" />
          </font>
       </TitledPane>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="250.0">
-         <children>
-            <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </JFXButton>
-            <JFXSlider fx:id="slideBarZoom" blockIncrement="0.0" disable="true" max="1.8" min="0.2" orientation="VERTICAL" prefWidth="50.0" value="1.0" />
-            <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="50.0" prefWidth="50.0" text="-">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </VBox>
       <AnchorPane layoutX="918.0" layoutY="105.0" prefHeight="84.0" prefWidth="128.0" AnchorPane.rightAnchor="0.0">
          <children>
             <JFXButton fx:id="btnReverse" layoutX="16.0" layoutY="8.0" onAction="#reversePressed" prefHeight="61.0" prefWidth="106.0" text="Reverse">
