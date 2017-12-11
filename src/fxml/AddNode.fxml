@@ -10,6 +10,8 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -454,8 +456,22 @@
          </children>
       </HBox>
       <JFXButton fx:id="btnReturn" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
-      <JFXButton fx:id="undoButton" contentDisplay="GRAPHIC_ONLY" onAction="#undoPressed" prefHeight="40.0" prefWidth="40.0" text="Undo" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="20.0" />
-      <JFXButton fx:id="redoButton" contentDisplay="GRAPHIC_ONLY" onAction="#redoPressed" prefHeight="40.0" prefWidth="40.0" text="Redo" AnchorPane.leftAnchor="490.0" AnchorPane.topAnchor="20.0" />
+      <JFXButton fx:id="undoButton" contentDisplay="GRAPHIC_ONLY" onAction="#undoPressed" prefHeight="40.0" prefWidth="40.0" text="Undo" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="20.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/undo.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
+      <JFXButton fx:id="redoButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" onAction="#redoPressed" prefHeight="40.0" prefWidth="40.0" text="Redo" AnchorPane.leftAnchor="490.0" AnchorPane.topAnchor="20.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/redo.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="280.0">
          <children>
             <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
