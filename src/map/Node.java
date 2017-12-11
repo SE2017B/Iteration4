@@ -51,10 +51,6 @@ public class Node{
         this.ID = "H" + this.type + this.floor.getDbMapping() +  nodeDatabase.getNodeID(this.type);
     }
 
-    public Node getCopy(){
-        return new Node(this.ID, Integer.toString(this.x), Integer.toString(this.y), this.floor.getDbMapping(), this.building, this.type, this.longName, this.shortName, this.team);
-    }
-
     //Adds existing edge between
     public void addConnection(Edge edge){
         connections.add(edge);
