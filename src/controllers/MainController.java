@@ -120,7 +120,7 @@ public class MainController implements ControllableScreen, Observer{
         mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
     }
 
-    private int BUTTON_WIDTH = 85;
+    private int BUTTON_WIDTH = 100;
     private int BUTTON_HEIGHT = 50;
     private int BUTTON_SPACING = 65;
 
