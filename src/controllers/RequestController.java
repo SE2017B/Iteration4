@@ -26,6 +26,8 @@ import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import map.HospitalMap;
@@ -33,6 +35,7 @@ import map.Node;
 import search.SearchStrategy;
 import ui.ShakeTransition;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static java.awt.Color.black;
@@ -184,6 +187,8 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXTabPane chartTabPane;
 
+
+
     public void init(){
         depSub = DepartmentSubsystem.getSubsystem();
         map = HospitalMap.getMap();
@@ -218,6 +223,10 @@ public class RequestController implements ControllableScreen{
                     }
                 }
         );
+
+        settingsRipple = new JFXRippler(ripplePane);
+        settingsRipple.setRipplerFill(Color.LIGHTGREEN);
+        settingsPane.getChildren().add(0,settingsRipple);
     }
 
     public void onShow(){
@@ -250,6 +259,8 @@ public class RequestController implements ControllableScreen{
         lblFeedbackTitle.setText("Feedback Charts");
 
         feedbackListView.setItems(FXCollections.observableList(serviceDatabase.getAllFeedbacks()));
+
+        timeoutTextField.setText(Double.toString(parent.getTimeoutLength()/1000));
 
         // Populate Feedback Charts
         pieChartCreate();
@@ -517,14 +528,36 @@ public class RequestController implements ControllableScreen{
     private JFXButton saveSettingsButton;
     @FXML
     private ChoiceBox<Node> kioskLocationChoice;
+    @FXML
+    private AnchorPane settingsPane;
+    @FXML
+    private Pane ripplePane;
+
+    private JFXRippler settingsRipple;
+
+
+
+    @FXML
+    private JFXTextField timeoutTextField;
 
     public void saveSettingsPressed(ActionEvent e) {
         if (searchStrategyChoice.getValue() != null) {
             System.out.println(searchStrategyChoice.getValue());
             map.setSearchStrategy(searchStrategyChoice.getValue());
             map.setKioskLocation(kioskLocationChoice.getValue());
+            settingsRipple.setRipplerFill(Color.LIGHTGREEN);
+            settingsRipple.createManualRipple().run();
         } else {
             s.shake(searchStrategyChoice);
+        }
+        try{
+            parent.setTimeoutLength( 1000* Double.parseDouble(timeoutTextField.getText()));
+
+        }
+        catch (Exception error){
+            settingsRipple.setRipplerFill(Color.DARKRED);
+            settingsRipple.createManualRipple().run();
+            s.shake(timeoutTextField);
         }
     }
 }

@@ -220,6 +220,11 @@ public class ScreenController extends StackPane {
         timeout.setDuration(new Duration(length));
     }
 
+
+    public Double getTimeoutLength(){
+        return timeout.getDuration().toMillis();
+    }
+
     public void saveState(){
         screenMomento = new ScreenMomento(state);
     }
