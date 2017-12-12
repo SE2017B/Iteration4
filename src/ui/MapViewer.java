@@ -3,19 +3,33 @@ package ui;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXDrawersStack;
+import com.jfoenix.controls.JFXSlider;
 import controllers.ScreenController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+
+import javafx.event.EventHandler;
+
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+
+import javafx.scene.image.*;
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
@@ -31,7 +45,7 @@ public class MapViewer extends Observable{
     private int SPACER_WIDTH = 500;
     private final int SPACING = 10;
     private final int BUTTON_HEIGHT = 50;
-    private final int BUTTON_WIDTH = 150;
+    private final int BUTTON_WIDTH = 100;
 
     private ArrayList<String> buttonOrder;
     public FloorNumber currentFloor;
@@ -41,8 +55,6 @@ public class MapViewer extends Observable{
 
     private Pane mapPane;
 
-    public JFXDrawer buttonDrawer;
-    public JFXDrawersStack drawersStack;
     private HBox container;
     private Pane spacerLeft;
     private Pane spacerRight;
@@ -54,13 +66,19 @@ public class MapViewer extends Observable{
     private Label prevFloor;
     private Label nextFloor;
 
+    //ZOOM FUNCTIONALITY
+    private GridPane zoomBar;
+    private JFXSlider slideBarZoom;
+    private JFXButton zoomIn;
+    private JFXButton zoomOut;
+
     public MapViewer(Observer o, Pane parent){
         super();
         buttonScrollPane = new ScrollPane();
         mapScrollPane = new ScrollPane();
         mapPane = new Pane();
         buttonOrder = new ArrayList<String>();
-        buttonDrawer = new JFXDrawer();
+
         mapViewerPane = new AnchorPane();
         mapHolderPane = new Pane();
         prevFloor = new Label();
@@ -89,6 +107,7 @@ public class MapViewer extends Observable{
         mapScrollPane.setContent(mapHolderPane);
         mapScrollPane.setPannable(true);
 
+
         addFloor(FloorNumber.FLOOR_LTWO);
         addFloor(FloorNumber.FLOOR_LONE);
         addFloor(FloorNumber.FLOOR_GROUND);
@@ -98,17 +117,17 @@ public class MapViewer extends Observable{
 
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
+        container.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null,null)));
         container.getStyleClass().add("buttonScrollPane");
-        container.setPadding(new Insets(20, 0, 0, 0));
+        container.setPadding(new Insets(15, 0, 0, 0));
 
-
-
-
-
-        buttonScrollPane.getStyleClass().add("buttonScrollPane");
+        buttonScrollPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null,null)));
         buttonScrollPane.setPannable(true);
-        buttonScrollPane.setPrefViewportHeight(100);
+        buttonScrollPane.setPrefViewportHeight(125);
         buttonScrollPane.setContent(container);
+
+
+        System.out.println(container.getChildren());
 
         currentFloor = FloorNumber.FLOOR_ONE;
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
@@ -116,7 +135,7 @@ public class MapViewer extends Observable{
         addObserver(o);
 
         buttonScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
-        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty().subtract(98));
+        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty());
         mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
 
 
@@ -129,8 +148,85 @@ public class MapViewer extends Observable{
         mapViewerPane.prefHeightProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
 
 
-        mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane);
-        mapViewerPane.setBottomAnchor(buttonScrollPane, 0.0);
+        //ZOOM FUNCTIONALITY
+        slideBarZoom = new JFXSlider();
+        slideBarZoom.setMinSize(150, 55);
+        slideBarZoom.setPrefSize(150, 55);
+        slideBarZoom.setMaxSize(150, 55);
+        //TODO FIX SLIDER BAR INTERACTIVITY
+        //slideBarZoom.setOnMousePressed(e -> sliderChanged(e));
+        //slideBarZoom.setRotate(90.0);
+        slideBarZoom.setValue(1);
+        slideBarZoom.setMajorTickUnit(25);
+        slideBarZoom.setMinorTickCount(3);
+        slideBarZoom.setMin(.2);
+        slideBarZoom.setMax(1.8);
+        slideBarZoom.setSnapToTicks(true);
+
+        String urlToZoomIn = "images/Icons/circleZoomInWhite.png";
+        ImageView zoomInImage = new ImageView(urlToZoomIn);
+        zoomInImage.setFitWidth(75);
+        zoomInImage.setFitHeight(75);
+        zoomInImage.setScaleX(.5);
+        zoomInImage.setScaleY(.5);
+        zoomIn = new JFXButton("", zoomInImage);
+        zoomIn.setContentDisplay(ContentDisplay.CENTER);
+        zoomIn.setMinSize(50, 50);
+        zoomIn.setPrefSize(50, 50);
+        zoomIn.setMaxSize(50, 50);
+        zoomIn.setAlignment(Pos.CENTER);
+        zoomIn.setOnAction(e -> zoomInPressed(e));
+
+        String urlToZoomOut = "images/Icons/circleZoomOutWhite.png";
+        ImageView zoomOutImage = new ImageView(urlToZoomOut);
+        zoomOutImage.setFitWidth(75);
+        zoomOutImage.setFitHeight(75);
+        zoomOutImage.setScaleX(.5);
+        zoomOutImage.setScaleY(.5);
+        zoomOut = new JFXButton("", zoomOutImage);
+        zoomOut.setContentDisplay(ContentDisplay.CENTER);
+        zoomOut.setMinSize(50, 50);
+        zoomOut.setPrefSize(50, 50);
+        zoomOut.setMaxSize(50, 50);
+        zoomOut.setAlignment(Pos.CENTER);
+        zoomOut.setOnAction(e -> zoomOutPressed(e));
+
+        zoomBar = new GridPane();
+        zoomBar.add(zoomOut, 0,  0);
+        zoomBar.add(slideBarZoom, 1,  0);
+        zoomBar.add(zoomIn, 2,  0);
+
+        ColumnConstraints col0 = new ColumnConstraints(45);
+        col0.setHalignment(HPos.CENTER);
+        zoomBar.getColumnConstraints().add(col0); // column 0 (Zoom out) is 100 wide
+
+        ColumnConstraints col1 = new ColumnConstraints(170);
+        col1.setHalignment(HPos.CENTER);
+        zoomBar.getColumnConstraints().add(col1); // column 1 (slider) is 200 wide
+
+        ColumnConstraints col2 = new ColumnConstraints(45);
+        col2.setHalignment(HPos.CENTER);
+        zoomBar.getColumnConstraints().add(col2); // column 2 (Zoom in) is 100 wide
+
+        RowConstraints row0 = new RowConstraints(65);
+        row0.setValignment(VPos.CENTER);
+        zoomBar.getRowConstraints().add(row0); // row 0 (All zoom) is 70 wide
+
+        zoomBar.setPrefSize(300, 55);
+
+        Pane zoomPane = new Pane();
+        zoomPane.setMaxSize(362, 63);
+        zoomPane.getChildren().add(zoomBar);
+
+        //Add everything to the pane itself
+        //buttonScrollPane.;
+
+        mapViewerPane.getChildren().addAll(mapScrollPane, buttonScrollPane, zoomPane);
+        mapViewerPane.setBottomAnchor(buttonScrollPane, 20.0);
+        mapViewerPane.setBottomAnchor(zoomPane, 0.0);
+        //TODO: FIX THIS
+        mapViewerPane.setLeftAnchor(zoomPane, 500.0);
+        mapViewerPane.setRightAnchor(zoomPane, 400.0);
 
         mapScrollPane.setPannable(true);
     }
@@ -153,7 +249,7 @@ public class MapViewer extends Observable{
     private JFXButton addFloor(FloorNumber floor){
         JFXButton button = new JFXButton();
         button.setText(floor.getDbMapping());
-        button.setMinSize(BUTTON_WIDTH,BUTTON_HEIGHT);
+        button.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         button.setOnAction(e -> floorButtonPressed(e));
         button.setId("-1");
         buttonOrder.add(button.getText());
@@ -259,6 +355,7 @@ public class MapViewer extends Observable{
         spacerRight.setPrefWidth(SPACER_WIDTH);
         container = new HBox();
         container.setSpacing(SPACING);
+        container.setPrefHeight(100);
         container.setPadding(new Insets(10,10,10,10));
         container.setAlignment(Pos.CENTER);
     }
@@ -280,6 +377,7 @@ public class MapViewer extends Observable{
 
         mapHolderPane.setPrefSize(mapPane.getBoundsInLocal().getWidth() * scale, mapPane.getBoundsInLocal().getHeight() * scale);
     }
+
     public double checkScale(double scale){
         double min_scale = Math.max((mapScrollPane.getBoundsInLocal().getWidth()/5000),(mapScrollPane.getHeight()/3400));
         if(scale < min_scale){
@@ -375,5 +473,31 @@ public class MapViewer extends Observable{
     public void setScroller(double v, double h){
         mapScrollPane.setVvalue(v);
         mapScrollPane.setHvalue(h);
+    }
+
+    //ZOOM FUNCTIONALITY LIES HERE
+
+    //when + button is pressed zoom in map
+    public void zoomInPressed(ActionEvent e){
+        setZoom(slideBarZoom.getValue()+0.2);
+    }
+
+    //when - button pressed zoom out map
+    public void zoomOutPressed(ActionEvent e){
+        setZoom(slideBarZoom.getValue()-0.2);
+    }
+
+    public void setZoom(double zoom){
+        this.slideBarZoom.setValue(zoom);
+        this.setScale(zoom);
+    }
+
+    //adjusts map zoom through slider
+    public void sliderChanged(MouseEvent e){
+        this.setScale(slideBarZoom.getValue());
+    }
+
+    public JFXSlider getSlideBarZoom(){
+        return slideBarZoom;
     }
 }

@@ -11,6 +11,7 @@ package kioskEngine;
 import controllers.ScreenController;
 import database.edgeDatabase;
 import database.nodeDatabase;
+import database.serviceDatabase;
 import database.staffDatabase;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -34,27 +35,7 @@ public class Main extends Application {
         root.minHeight(400);
 
         ScreenController myScreenController = new ScreenController();
-        root.getChildren().addAll(myScreenController);
-        myScreenController.prefHeightProperty().bind(scene.heightProperty());
-        myScreenController.prefWidthProperty().bind(scene.widthProperty());
 
-        myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
-        myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
-        myScreenController.loadScreen(ScreenController.MainID, ScreenController.MainFile);
-        myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
-        myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
-        myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
-        myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
-        myScreenController.loadScreen(ScreenController.HelpID, ScreenController.HelpFile);
-//
-//        //mini fxml files
-//        myScreenController.loadScreen(ScreenController.TranslationID, ScreenController.TranslationFile);
-//        myScreenController.loadScreen(ScreenController.TransportID, ScreenController.TransportFile);
-//        myScreenController.loadScreen(ScreenController.FoodDeliveryID, ScreenController.FoodDeliveryFile);
-//        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
-
-        myScreenController.setScreen(ScreenController.MainID);
-        myScreenController.saveState();
         String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
         scene.getStylesheets().add(style);
         primaryStage.setScene(scene);
@@ -70,6 +51,30 @@ public class Main extends Application {
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, reset);
         scene.addEventFilter(KeyEvent.KEY_TYPED, reset);
         primaryStage.show();
+
+        root.getChildren().addAll(myScreenController);
+        myScreenController.prefHeightProperty().bind(scene.heightProperty());
+        myScreenController.prefWidthProperty().bind(scene.widthProperty());
+
+        myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
+        myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
+        myScreenController.loadScreen(ScreenController.MainID, ScreenController.MainFile);
+        myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
+        myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
+        myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
+//        myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
+        myScreenController.loadScreen(ScreenController.HelpID, ScreenController.HelpFile);
+        myScreenController.loadScreen(ScreenController.DirectionHelpID, ScreenController.DirectionHelpFile);
+
+//
+//        //mini fxml files
+//        myScreenController.loadScreen(ScreenController.TranslationID, ScreenController.TranslationFile);
+//        myScreenController.loadScreen(ScreenController.TransportID, ScreenController.TransportFile);
+//        myScreenController.loadScreen(ScreenController.FoodDeliveryID, ScreenController.FoodDeliveryFile);
+//        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
+
+        myScreenController.setScreen(ScreenController.MainID);
+        myScreenController.saveState();
     }
 
     public static void main(String[] args) {
@@ -82,11 +87,15 @@ public class Main extends Application {
 
         edgeDatabase.deleteEdgeTable();
         nodeDatabase.deleteNodeTable();
+        staffDatabase.deleteAdminTable();
         staffDatabase.deleteStaffTable();
+        serviceDatabase.deleteFeedbackTable();
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
         staffDatabase.createStaffTable();
+        staffDatabase.createAdminTable();
+        serviceDatabase.createFeedbackTable();
 
         nodeDatabase.readNodeCSV("/csv/MapAnodes.csv");
         nodeDatabase.readNodeCSV("/csv/MapBnodes.csv");

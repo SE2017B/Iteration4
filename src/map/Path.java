@@ -6,12 +6,17 @@ public class Path implements Comparable<Path> {
     private ArrayList<Node> path = new ArrayList<>();
     private ArrayList<String> directions = new ArrayList<>();
     private ArrayList<ArrayList<String>> directionsByFloor = new ArrayList<>();
+    private HashMap<Path, ArrayList<String>> directionsByPath = new HashMap<>();
     private double distance;
     private double pixelsToMeters = .1;
 
     //Constructors
     public Path(){
         distance = 0;
+    }
+    public Path(ArrayList<Node> nodes){
+        path = nodes;
+        distance = getDistance();
     }
 
     public Path(Path path){
@@ -173,6 +178,10 @@ public class Path implements Comparable<Path> {
             directionsByFloor.set(directionsByFloor.size()-1, newDirections);
         }
         return directionsByFloor;
+    }
+
+    public HashMap<Path, ArrayList<String>> getDirectionsByPath(){
+        return directionsByPath;
     }
 
     private String getFullType(Node node){
