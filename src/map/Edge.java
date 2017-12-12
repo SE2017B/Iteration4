@@ -2,7 +2,7 @@ package map;
 
 import exceptions.InvalidNodeException;
 
-public class Edge {
+public class Edge{
     private Node nodeOne;
     private Node nodeTwo;
     private String ID;

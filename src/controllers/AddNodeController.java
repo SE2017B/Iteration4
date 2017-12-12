@@ -21,7 +21,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import map.Edge;
 import map.FloorNumber;
@@ -29,15 +28,15 @@ import map.HospitalMap;
 import map.Node;
 import ui.*;
 
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddNodeController implements ControllableScreen, Observer {
     private ScreenController parent;
     private HospitalMap map;
     private FloorNumber currentFloor;
     private MapViewer mapViewer;
+    private Stack<MapEditorMemento> mapEditorMementos = new Stack<>();
 
     //Nodes in the map
     private ArrayList<NodeCheckBox> nodeCheckBoxes = new ArrayList<NodeCheckBox>();
@@ -144,8 +143,8 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         else{
             if(edgeAddTab.isSelected()){
-                showEdgesbyFloor(currentFloor);
                 showNodesbyFloor(currentFloor);
+                showEdgesbyFloor(currentFloor);
                 edgeAddNode1 = null;
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
@@ -381,6 +380,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(n.isSelected()) connections.add(n.getNode());
         }
         try {
+            saveStateToMemento();
             map.addNodeandEdges(nodeAddXField.getText(),
                     nodeAddYField.getText(),
                     nodeAddFloorDropDown.getText(),
@@ -515,14 +515,18 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void nodeRemoveEnterPressed(ActionEvent e){
+
         if(nodeRemoveSelectedList.getItems().isEmpty()){
             s.shake(nodeRemoveLabel);
         }
-        for(NodeCheckBox n : nodeCheckBoxes){
-            if(n.isSelected()) map.removeNode(n.getNode());
+        else {
+            saveStateToMemento();
+            for (NodeCheckBox n : nodeCheckBoxes) {
+                if (n.isSelected()) map.removeNode(n.getNode());
+            }
+            refreshNodesandEdges();
+            nodeRemoveSelectedList.getItems().clear();
         }
-        refreshNodesandEdges();
-        nodeRemoveSelectedList.getItems().clear();
     }
 
     public void nodeRemoveCancelPressed(ActionEvent e){
@@ -716,12 +720,13 @@ public class AddNodeController implements ControllableScreen, Observer {
                     nodeEditNameField.getText(),
                     nodeEditShortField.getText());
 
-            for(NodeCheckBox cb : nodeEditSelectedNodes){
+            saveStateToMemento();
+            for (NodeCheckBox cb : nodeEditSelectedNodes) {
                 Node n = cb.getNode();
 
                 map.editNode(n,
-                        Integer.toString((int)cb.getLayoutX()),
-                        Integer.toString((int)cb.getLayoutX()),
+                        Integer.toString((int) cb.getLayoutX()),
+                        Integer.toString((int) cb.getLayoutX()),
                         n.getFloor().getDbMapping(),
                         n.getBuilding(),
                         n.getType(),
@@ -781,6 +786,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         Node nodeTwo = edgeAddNode2;
 
         if(nodeOne == null || nodeTwo == null){
+
             if(nodeOne == null){
                 s.shake(edgeAddNodeOne);
             }
@@ -789,6 +795,9 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
         else {
+
+            System.out.println("Warning: Less than two nodes selected.");
+            saveStateToMemento();
             map.addEdge(new Edge(nodeOne, nodeTwo));
         }
         refreshNodesandEdges();
@@ -821,9 +830,12 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Label edgeRemoveLabel;
 
     public void edgeRemoveEnterPressed(ActionEvent e){
+
         if(edgeRemoveList.getItems().isEmpty()){
             s.shake(edgeRemoveLabel);
         }
+
+        saveStateToMemento();
         for(Edge edge : edgeRemoveList.getItems()){
             map.removeEdge(edge);
         }
@@ -832,7 +844,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void edgeRemoveCancelPressed(ActionEvent e){
-        edgeRemoveList.getItems().clear();
+//        edgeRemoveList.getItems().clear();
+        undo();
         refreshNodesandEdges();
     }
     //---------------------EDGE TAB END-------------------//
@@ -854,6 +867,32 @@ public class AddNodeController implements ControllableScreen, Observer {
         for(NodeCheckBox cb : nodeCheckBoxes){
             cb.setScaleX(1/zoom);
             cb.setScaleY(1/zoom);
+        }
+    }
+
+    // Memento Stuff
+    public void saveStateToMemento(){
+        HashMap<Edge, ArrayList<Node>> newMap = map.getCopy();
+        ArrayList<Node> nodes = new ArrayList<>();
+        ArrayList<Edge> edges = new ArrayList<>();
+        edges.addAll(newMap.keySet());
+        for(Edge edge : newMap.keySet()){
+            for(Node node : newMap.get(edge)){
+                if(!nodes.contains(node)) nodes.add(node);
+            }
+        }
+        mapEditorMementos.push(new MapEditorMemento(nodes, edges));
+    }
+    public void setMemento(MapEditorMemento memento){
+        map.setNodeMap(memento.getSavedNodeState());
+        map.setEdgeMap(memento.getSavedEdgeState());
+        refreshNodesandEdges();
+    }
+    public void undo(){
+        System.out.println("Undoing");
+        System.out.println("Stack size: " + mapEditorMementos.size());
+        if(mapEditorMementos.size() > 0){
+            setMemento(mapEditorMementos.pop());
         }
     }
 }

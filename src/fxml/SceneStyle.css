@@ -43,6 +43,7 @@
     -fx-prompt-text-fill: white;
 }
 
+
 .help-text{
     -fx-background-color: whitesmoke;
 }
@@ -60,8 +61,6 @@
     -jfx-rippler-fill: darkorange;
 }
 
-
-
 .menu-item, .list-cell{
     -fx-text-fill: white;
     -fx-background-color: rgb(52,103,214);
@@ -76,7 +75,6 @@
 .label{
     -fx-text-fill: white;
 }
-
 
 .black{
     -fx-background-color: black;
@@ -93,7 +91,6 @@
 .list-pane{
     -fx-background-color: rgb(52,103,214);
 }
-
 
 .list-view:focused .list-cell:filled:focused:selected {
     -fx-background-color: rgb(163,235,255);
