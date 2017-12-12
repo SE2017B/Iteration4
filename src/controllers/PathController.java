@@ -87,7 +87,6 @@ public class PathController implements ControllableScreen, Observer{
     private TitledPane textDirectionsPane;
     @FXML
     private ScrollPane mapScrollPane;
-    private JFXSlider slideBarZoom;
     @FXML
     private AnchorPane buttonHolderPane;
     @FXML
@@ -178,8 +177,6 @@ public class PathController implements ControllableScreen, Observer{
         Center= new ArrayList<>();
         Center.add(1500);
         Center.add(850);
-
-        slideBarZoom = mapViewer.getSlideBarZoom();
 
         //using animation to update position
         AnimationTimer zoomPath= new AnimationTimer(){
@@ -503,7 +500,7 @@ public class PathController implements ControllableScreen, Observer{
 
     public void scaleMap(double scale){
         mapViewer.setScale(scale);
-        slideBarZoom.setValue(scale);
+        mapViewer.setZoom(scale);
         for(Shape s : shapes){
             s.setStrokeWidth(LINE_STROKE/scale);
             if(s instanceof AnimatedCircle){
@@ -513,18 +510,6 @@ public class PathController implements ControllableScreen, Observer{
         }
         arrow.setScaleX(1/scale);
         arrow.setScaleY(1/scale);
-    }
-
-    //when + button is pressed zoom in map
-    public void zinPressed(ActionEvent e){
-        scaleMap(slideBarZoom.getValue()+0.2);
-        currentPath.hasAnimated=false;
-    }
-
-    //when - button pressed zoom out map
-    public void zoutPressed(ActionEvent e){
-        scaleMap(slideBarZoom.getValue()-0.2);
-        currentPath.hasAnimated=false;
     }
 
     //-------------------------MAP SCALE START--------------------------//
