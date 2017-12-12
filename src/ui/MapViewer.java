@@ -484,4 +484,8 @@ public class MapViewer extends Observable{
     public void sliderChanged(MouseEvent e){
         this.setScale(slideBarZoom.getValue());
     }
+
+    public JFXSlider getSlideBarZoom(){
+        return slideBarZoom;
+    }
 }

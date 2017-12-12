@@ -87,7 +87,6 @@ public class PathController implements ControllableScreen, Observer{
     private TitledPane textDirectionsPane;
     @FXML
     private ScrollPane mapScrollPane;
-    @FXML
     private JFXSlider slideBarZoom;
     @FXML
     private AnchorPane buttonHolderPane;
@@ -179,6 +178,8 @@ public class PathController implements ControllableScreen, Observer{
         Center= new ArrayList<>();
         Center.add(1500);
         Center.add(850);
+
+        slideBarZoom = mapViewer.getSlideBarZoom();
 
         //using animation to update position
         AnimationTimer zoomPath= new AnimationTimer(){
