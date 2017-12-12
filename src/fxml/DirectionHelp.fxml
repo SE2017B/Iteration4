@@ -27,7 +27,7 @@
             <children>
                 <AnchorPane prefHeight="400.0" prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <children>
-                        <JFXTextArea fx:id="helpTextArea" editable="false" layoutX="270.0" layoutY="142.0" prefHeight="116.0" prefWidth="300.0" styleClass="help-text" text="Help">
+                        <JFXTextArea fx:id="helpTextArea" editable="false" layoutX="207.0" layoutY="118.0" prefHeight="191.0" prefWidth="387.0" styleClass="help-text" text="Help">
                             <font>
                                 <Font size="24.0" />
                             </font>
@@ -41,4 +41,3 @@
         </GridPane>
     </children>
 </AnchorPane>
-

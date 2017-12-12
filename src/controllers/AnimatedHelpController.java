@@ -219,7 +219,7 @@ public class AnimatedHelpController implements ControllableScreen{
         this.positions.add(current);
         height-=dy;
 
-        AnimatedHelpController.CustomPair Navigation = new AnimatedHelpController.CustomPair("Click Navigation to learn more about finding paths in this application!");
+        AnimatedHelpController.CustomPair Navigation = new AnimatedHelpController.CustomPair("Click Return and then Navigation to learn more about finding paths in this application!");
         this.descriptions.add(Navigation);
         this.ImageMap.add("8");
         current = new ArrayList();

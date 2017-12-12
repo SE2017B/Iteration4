@@ -247,7 +247,7 @@ public class MainController implements ControllableScreen, Observer{
 
         //Tutorial
         questionList.setLayoutX(30);
-        questionList.translateYProperty().bind(parent.prefHeightProperty().subtract(-325).divide(3.0).subtract(-30));
+        questionList.translateYProperty().bind(parent.prefHeightProperty().subtract(-420).divide(3.0).subtract(-30));
 
         bathFilterButton.setText("Restroom");
         exitFilterButton.setText("Exit");
