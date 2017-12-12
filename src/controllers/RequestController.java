@@ -24,10 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import map.HospitalMap;
@@ -35,7 +32,6 @@ import map.Node;
 import search.SearchStrategy;
 import ui.ShakeTransition;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import static java.awt.Color.black;
@@ -175,7 +171,6 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXTabPane chartTabPane;
 
-
     ////////////////////////////////////////////////////////
     // STAFF ADD EDIT REMOVE//
     ///////////////////////////////////////////////////////
@@ -201,19 +196,19 @@ public class RequestController implements ControllableScreen{
     private ListView<Staff> staffListView1;
 
 
+
     public void init(){
         depSub = DepartmentSubsystem.getSubsystem();
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
-//        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices()));
+
 
         apiLocationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
 
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
-//        choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
-//        choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
+
 
         staffListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Staff>() {
                                                                                  @Override
@@ -238,42 +233,13 @@ public class RequestController implements ControllableScreen{
                                                                                   }
                                                                               }
         );
-
-        settingsRipple = new JFXRippler(ripplePane);
-        settingsRipple.setRipplerFill(Color.LIGHTGREEN);
-        settingsPane.getChildren().add(0,settingsRipple);
-
-        //location set up
-//        locationChoiceBox.setItems(FXCollections.observableList(
-//                map.getNodesBy(n -> !n.getType().equals("HALL"))));
-
-        //Display selected request on label
-
-//        resolveServiceListView.getSelectionModel().selectedItemProperty().addListener(
-//                new ChangeListener<ServiceRequest>() {
-//                    @Override
-//                    public void changed(ObservableValue<? extends ServiceRequest> observable,
-//                                        ServiceRequest oldValue, ServiceRequest newValue) {
-//
-//                        lblSelectedService.setText(newValue.getService().toString());
-//                        lblSelectedAdditionalInfo.setText(newValue.getInputData());
-//                        lblSelectedDT.setText(newValue.getTime());
-//                        lblSelectedLocation.setText(newValue.getLocation().toString());
-//
-//                    }
-//                }
-//        );
     }
 
     public void onShow(){
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
         System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
-//        if(depSub.getCurrentLoggedIn().getAllRequest().isEmpty()){
-//            resolveServiceListView.getItems().clear();
-//        }else{
-//            resolveServiceListView.getItems().addAll(depSub.getCurrentLoggedIn().getAllRequest());
-//        }
+
 
         //Update the nodes in the map
         ArrayList<Node> nodes = map.getNodeMap();
@@ -286,9 +252,6 @@ public class RequestController implements ControllableScreen{
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
         staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
 
-//        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
-//        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
-
         lblFeedbackRating.setStyle("-fx-background-color: rgb(40,40,60)");
         lblFeedbackRating.setText(serviceDatabase.avgFeedback());
 
@@ -296,8 +259,6 @@ public class RequestController implements ControllableScreen{
         lblFeedbackTitle.setText("Feedback Charts");
 
         feedbackListView.setItems(FXCollections.observableList(serviceDatabase.getAllFeedbacks()));
-
-        timeoutTextField.setText(Double.toString(parent.getTimeoutLength()/1000));
 
         // Populate Feedback Charts
         pieChartCreate();
@@ -308,23 +269,10 @@ public class RequestController implements ControllableScreen{
     public void setParentController(ScreenController parent){
         this.parent = parent;
     }
-//
-//    public void resolveServicePressed(ActionEvent e){
-//        System.out.println(resolveServiceListView.getSelectionModel().getSelectedItems());
-//        depSub.getCurrentLoggedIn().removeRequests(resolveServiceListView.getSelectionModel().getSelectedItems());
-//        resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
-//        //System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
-//
-//        lblSelectedService.setText("Service");
-//        lblSelectedAdditionalInfo.setText("Location");
-//        lblSelectedDT.setText("Date & Time");
-//        lblSelectedLocation.setText("Additional Info");
-//    }
 
     public void createPressedApi(ActionEvent e){
         Node desNode = apiLocationChoiceBox.getSelectionModel().getSelectedItem();
         if(desNode != null) {
-            parent.pauseTimeout();
             runAPI(desNode);
         }
     }
@@ -341,127 +289,23 @@ public class RequestController implements ControllableScreen{
         apiLocationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
-        parent.resumeTimeout();
     }
-//
-    //creates a service request, and then sends it to the staff member
-//    public void requestCreatePressed(ActionEvent e){
-//
-//        if( choiceBoxService.getValue() != null &&
-//                choiceBoxStaff.getValue() != null && timeMenu.getValue() != null &&
-//                dateMenu.getValue() != null && locationChoiceBox.getValue() != null){
-//
-//            requestIDCount++;
-//            ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), "", dateMenu.getValue().toString(), choiceBoxStaff.getValue());
-//            System.out.println("request submitted");
-//            nReq.setInputData(currentServiceController.getInputData());
-//            //choiceBoxStaff.getValue().addRequest(nReq);
-//
-//            resolveServiceListView.getItems().clear();
-//            resolveServiceListView.getItems().addAll(FXCollections.observableList(depSub.getCurrentLoggedIn().getAllRequest()));
-//            //resolveServiceListView.getItems().add(nReq);
-//            //fillInServiceSpecificRecs();
-//
-//
-//        }
-//        else{ //make them jiggle
-//            ShakeTransition s = new ShakeTransition();
-//            if(choiceBoxService.getValue() == null){
-//                s.shake(choiceBoxService);
-//            }
-//            //how do I get these values when they're part of a different fxml?
-//            if(choiceBoxService.getValue().toString().equals("Translation service")){
-//                //if the language choice box is empty, shake
-//                //if the duration text field is empty, shake
-//            }
-//            if(choiceBoxService.getValue().toString().equals("Transportation service")){
-//                //if the end location choice box is empty, shake
-//            }
-//            if(choiceBoxService.getValue().toString().equals("Sanitation")){
-//                //if the task choice box is empty, shake
-//            }
-//            if(choiceBoxService.getValue().toString().equals("Food Delivery Service")){
-//                //if the entree choice box is empty, shake
-//                //if the allergies text field is empty, shake
-//            }
-//            if(choiceBoxStaff.getValue() == null){
-//                s.shake(choiceBoxStaff);
-//            }
-//            if(dateMenu.getValue() == null){
-//                s.shake(dateMenu);
-//            }
-//            if(timeMenu.getValue() == null){
-//                s.shake(timeMenu);
-//            }
-//            if(locationChoiceBox.getValue() == null){
-//                s.shake(locationChoiceBox);
-//            }
-//        }
-//
-//
-//    }
-//
-//
 
     public void logoutPressed(ActionEvent e){
         parent.setScreen(ScreenController.LogoutID);
-
-        parent.resumeTimeout();
     }
 
     public void editPressed(ActionEvent e){
         parent.setScreen(ScreenController.AddNodeID, "LEFT");
-
-        parent.resumeTimeout();
     }
 
     public void selectAlgorithmPath(ActionEvent e) {
         selectedAlg = ((MenuItem) e.getSource()).getText();
         menuButtonAl.setText(selectedAlg);
         parent.resumeTimeout();
+
     }
 
-//    public void servSelected(Service newValue){
-//        if(newValue != null) {
-//            System.out.println("Services was selected and listener triggered");
-//            choiceBoxStaff.setDisable(false);
-//            choiceBoxStaff.setItems(FXCollections.observableList(newValue.getStaff()));
-//            System.out.println("This is newValue.getStaff() " + newValue.getStaff());
-//            String URLPLS = newValue.getURL();
-//            System.out.println(URLPLS);
-//            try {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource(URLPLS));
-//                AnchorPane servicePane = loader.load();
-//                //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
-//                servicePane1.getChildren().setAll(servicePane);
-//                this.currentServiceController = loader.getController();
-//
-//                // Feeds data into respective service controller
-//                this.currentServiceController.onShow();
-//
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//                System.out.println(URLPLS);
-//            }
-//        }
-//        else{
-//            servicePane1.getChildren().clear();
-//        }
-//    }
-//
-//    public void staffSelected(Staff newValue) {
-//        if(newValue != null) {
-//            nameStaff = newValue.toString();
-//        }
-//    }
-//
-//    public void timeSelected(ActionEvent e) {
-//        time = ((JFXTimePicker)e.getSource()).getValue().toString();
-//    }
-//
-//    public void dateSelected(ActionEvent e){
-//        date = ((JFXDatePicker)e.getSource()).getValue().toString();
-//    }
 
     @FXML
     void cancelStaffPressed(ActionEvent event) {
@@ -480,10 +324,6 @@ public class RequestController implements ControllableScreen{
             String tempPassword = passwordEdit.getText();
             String tempFullName = fullnameEdit.getText();
             String tempJobTitle = jobTitleEdit.getText();
-
-
-
-
 
             Staff tempStaff = staffListView1.getSelectionModel().getSelectedItem();
             // tempStaff.updateCredidentials(tempUsername, tempPassword, modifyAdminCheckBox.isSelected(), tempFullName, tempStaff.getID());
@@ -620,36 +460,14 @@ public class RequestController implements ControllableScreen{
     private JFXButton saveSettingsButton;
     @FXML
     private ChoiceBox<Node> kioskLocationChoice;
-    @FXML
-    private AnchorPane settingsPane;
-    @FXML
-    private Pane ripplePane;
-
-    private JFXRippler settingsRipple;
-
-
-
-    @FXML
-    private JFXTextField timeoutTextField;
 
     public void saveSettingsPressed(ActionEvent e) {
         if (searchStrategyChoice.getValue() != null) {
             System.out.println(searchStrategyChoice.getValue());
             map.setSearchStrategy(searchStrategyChoice.getValue());
             map.setKioskLocation(kioskLocationChoice.getValue());
-            settingsRipple.setRipplerFill(Color.LIGHTGREEN);
-            settingsRipple.createManualRipple().run();
         } else {
             s.shake(searchStrategyChoice);
-        }
-        try{
-            parent.setTimeoutLength( 1000* Double.parseDouble(timeoutTextField.getText()));
-
-        }
-        catch (Exception error){
-            settingsRipple.setRipplerFill(Color.DARKRED);
-            settingsRipple.createManualRipple().run();
-            s.shake(timeoutTextField);
         }
     }
 
