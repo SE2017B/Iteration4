@@ -8,6 +8,7 @@
 
 package kioskEngine;
 
+import DepartmentSubsystem.Feedback;
 import controllers.ScreenController;
 import database.edgeDatabase;
 import database.nodeDatabase;
@@ -121,6 +122,17 @@ public class Main extends Application {
 
         staffDatabase.readStaffCSV("/csv/staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
+
+        serviceDatabase.addFeedback(new Feedback(1, 2, "Nothing Much"));
+        serviceDatabase.addFeedback(new Feedback(2, 2, "IDK"));
+        serviceDatabase.addFeedback(new Feedback(3, 2, "Haha"));
+        serviceDatabase.addFeedback(new Feedback(4, 2, "Yep"));
+        serviceDatabase.addFeedback(new Feedback(5, 2, "I like the app"));
+        serviceDatabase.addFeedback(new Feedback(6, 3, "mhm"));
+        serviceDatabase.addFeedback(new Feedback(7, 3, "Example"));
+        serviceDatabase.addFeedback(new Feedback(8, 4, "Nothing"));
+        serviceDatabase.addFeedback(new Feedback(9, 1, "Much"));
+        serviceDatabase.addFeedback(new Feedback(10, 5, "Not Much"));
 
         launch(args);
 

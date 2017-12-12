@@ -7,6 +7,11 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -438,6 +443,82 @@
                                     <ChoiceBox fx:id="apiServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                  </children>
                               </GridPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Feedback">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <SplitPane dividerPositions="0.5" layoutX="560.0" layoutY="183.0" prefHeight="580.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <JFXListView fx:id="feedbackListView" layoutY="67.0" prefHeight="510.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0" />
+                                          <Label fx:id="lblFeedbackRating" alignment="CENTER" layoutX="118.0" layoutY="14.0" prefHeight="35.0" prefWidth="399.0" text="Average Feedback Rating: " textAlignment="CENTER">
+                                             <font>
+                                                <Font size="24.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0">
+                                       <children>
+                                          <Label fx:id="lblFeedbackTitle" alignment="CENTER" layoutX="11.0" layoutY="14.0" prefHeight="35.0" prefWidth="282.0" textAlignment="CENTER" AnchorPane.rightAnchor="170.0">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <JFXTabPane fx:id="chartTabPane" layoutY="69.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="497.0" prefWidth="635.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="69.0">
+                                             <tabs>
+                                                <Tab fx:id="lineChartTab" text="Line Chart">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="635.0">
+                                                         <children>
+                                                            <LineChart fx:id="feedbackLineChart" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <xAxis>
+                                                                  <CategoryAxis side="BOTTOM" fx:id="xLineChart" />
+                                                               </xAxis>
+                                                               <yAxis>
+                                                                  <NumberAxis fx:id="yLineChart" side="LEFT" />
+                                                               </yAxis>
+                                                            </LineChart>
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </Tab>
+                                                <Tab fx:id="barChartTab" text="Bar Chart">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                         <children>
+                                                            <BarChart fx:id="feedbackBarChart" prefHeight="462.0" prefWidth="635.0" styleClass="chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <xAxis>
+                                                                  <CategoryAxis side="BOTTOM" fx:id="xBarChart" />
+                                                               </xAxis>
+                                                               <yAxis>
+                                                                  <NumberAxis fx:id="yBarChart" side="LEFT" />
+                                                               </yAxis>
+                                                            </BarChart>
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </Tab>
+                                                <Tab fx:id="pieChartTab" text="Pie Chart">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                         <children>
+                                                            <PieChart fx:id="feedbackPieChart" legendSide="RIGHT" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                         </children>
+                                                      </AnchorPane>
+                                                  </content>
+                                                </Tab>
+                                             </tabs>
+                                          </JFXTabPane>
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
                            </children>
                         </AnchorPane>
                     </content>

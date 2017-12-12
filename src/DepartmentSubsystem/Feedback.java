@@ -47,4 +47,11 @@ public class Feedback {
     public void setAdditionalInfo(String additionalInfo) {
         this.additionalInfo = additionalInfo;
     }
+
+    @Override
+    public String toString(){
+        String name = " Rating: " + rating + "        Additional Info: " + additionalInfo;
+        System.out.println(name);
+        return name;
+    }
 }
