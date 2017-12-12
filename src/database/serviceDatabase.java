@@ -6,7 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import translation.Staff;
+//import translation.Staff;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -218,7 +218,7 @@ public class RequestController implements ControllableScreen{
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
-        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices()));
+//        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices()));
 //        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices()));
 
 //        apiLocationChoiceBox.setItems(FXCollections.observableList(
@@ -305,21 +305,21 @@ public class RequestController implements ControllableScreen{
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
         staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
 
-        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
-        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
+//        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
+        //addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
+//todo uncomment?
+//        lblFeedbackRating.setStyle("-fx-background-color: rgb(40,40,60)");
+//        lblFeedbackRating.setText(serviceDatabase.avgFeedback());
+//
+//        lblFeedbackTitle.setStyle("-fx-background-color: rgb(40,40,60)");
+//        lblFeedbackTitle.setText("Feedback Charts");
 
-        lblFeedbackRating.setStyle("-fx-background-color: rgb(40,40,60)");
-        lblFeedbackRating.setText(serviceDatabase.avgFeedback());
-
-        lblFeedbackTitle.setStyle("-fx-background-color: rgb(40,40,60)");
-        lblFeedbackTitle.setText("Feedback Charts");
-
-        feedbackListView.setItems(FXCollections.observableList(serviceDatabase.getAllFeedbacks()));
+//        feedbackListView.setItems(FXCollections.observableList(serviceDatabase.getAllFeedbacks()));
 
         // Populate Feedback Charts
-        pieChartCreate();
-        lineChartCreate();
-        barChartCreate();
+//        pieChartCreate();
+//        lineChartCreate();
+//        barChartCreate();
         //staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
         //addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
     }
