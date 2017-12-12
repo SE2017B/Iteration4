@@ -137,7 +137,7 @@ public class MainController implements ControllableScreen, Observer{
         dnt.getTime();
     }
 
-    private int BUTTON_WIDTH = 85;
+    private int BUTTON_WIDTH = 100;
     private int BUTTON_HEIGHT = 60;
     private int BUTTON_SPACING = 65;
 
@@ -251,7 +251,7 @@ public class MainController implements ControllableScreen, Observer{
 
         mainAnchorPane.getChildren().addAll(filterList, nearestList, questionList);
         filterList.setLayoutX(30);
-        filterList.translateYProperty().bind(parent.prefHeightProperty().subtract(100).divide(3.0).subtract(50));
+        filterList.setLayoutY(185);
 
 
         nearestList.setLayoutX(30);
@@ -259,7 +259,7 @@ public class MainController implements ControllableScreen, Observer{
 
         //Tutorial
         questionList.setLayoutX(30);
-        questionList.translateYProperty().bind(parent.prefHeightProperty().subtract(-420).divide(3.0).subtract(-30));
+        questionList.setLayoutY(410);
 
         bathFilterButton.setText("Restroom");
         exitFilterButton.setText("Exit");
@@ -559,4 +559,5 @@ public class MainController implements ControllableScreen, Observer{
     public void directionPressed(ActionEvent e){
         parent.setScreen(ScreenController.PathID,"LEFT");
     }
+
 }

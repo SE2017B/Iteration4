@@ -43,6 +43,11 @@
     -fx-prompt-text-fill: white;
 }
 
+.credit-text{
+    -fx-text-fill: whitesmoke;
+    -fx-opacity: 90%;
+    -fx-background-color: radial-gradient(center 50% 50% , radius 200% , rgb(66,133,244), transparent);
+}
 
 .help-text{
     -fx-background-color: whitesmoke;

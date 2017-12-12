@@ -8,18 +8,15 @@
 
 package controllers;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.skins.JFXSliderSkin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.AnchorPane;
+import ui.feedbackBackground;
 
-import java.util.ArrayList;
 
 public class FeedbackController implements ControllableScreen{
     public FeedbackController(){
@@ -29,20 +26,18 @@ public class FeedbackController implements ControllableScreen{
 
     @FXML
     private JFXSlider starSlider;
+
+
     @FXML
-    private JFXTextArea HelpDescription;
-    @FXML
-    private Label HelpTitle;
-    @FXML
-    private ImageView ImageViewer;
-    @FXML
-    private JFXButton Next;
-    @FXML
-    private JFXButton Previous;
+    private AnchorPane mainAnchorPane;
 
     @Override
     public void init() {
         starSlider.setValue(0.0);
+
+        feedbackBackground hospitalImage = new feedbackBackground(parent);
+        mainAnchorPane.getChildren().add(0,hospitalImage);
+        AnchorPane.setBottomAnchor(hospitalImage,0.0);
     }
 
     @Override
@@ -61,5 +56,6 @@ public class FeedbackController implements ControllableScreen{
     }
 
     public void enterPressed(ActionEvent e) {}
+    
 
 }
