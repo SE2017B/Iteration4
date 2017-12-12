@@ -12,16 +12,21 @@ import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import ui.ScreenMomento;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
-public class ScreenController extends StackPane {
+public class ScreenController extends StackPane implements Initializable {
     private Duration transitionTime = new Duration(500);
     private Duration shortTransistionTime = new Duration(250);
     private Duration transitionDelay = new Duration(0);
@@ -47,6 +52,8 @@ public class ScreenController extends StackPane {
     public static String FeedbackFile = "/fxml/Feedback.fxml";
     public static String HelpID = "Help";
     public static String HelpFile = "/fxml/AnimatedHelp.fxml";
+    public static String LoadID = "Load";
+    public static String LoadFile = "/fxml/Loading.fxml";
 
     public ScreenController(){
         super();
@@ -66,6 +73,38 @@ public class ScreenController extends StackPane {
     public void addScreen(String name, Node screen, ControllableScreen controller){
         screens.put(name,screen);
         controllers.put(name, controller);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+            System.out.println("Loading Splash");
+            AnchorPane pane = FXMLLoader.load(getClass().getResource((ScreenController.LoadFile)));
+            getChildren().setAll(pane);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), pane);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.setCycleCount(1);
+
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), pane);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+            fadeOut.setCycleCount(1);
+
+            fadeIn.play();
+
+            fadeIn.setOnFinished((e) -> {
+                fadeOut.play();
+            });
+
+            fadeOut.setOnFinished((e) -> {
+                setScreen(ScreenController.MainID);
+            });
+
+        } catch (IOException ex) {
+            System.out.println("Splash Failed");
+        }
     }
 
     //return a screen from the screens HashMap
