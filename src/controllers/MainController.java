@@ -11,9 +11,13 @@ package controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXSlider;
+import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.animation.KeyFrame;   // for date and time
+import javafx.animation.Timeline;   // for date and time
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -33,8 +37,12 @@ import ui.MapViewer;
 import ui.PathID;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class MainController implements ControllableScreen, Observer{
     private ScreenController parent;
@@ -84,6 +92,10 @@ public class MainController implements ControllableScreen, Observer{
     @FXML
     private AnchorPane mainAnchorPane;
 
+    @FXML
+    private Label time;
+
+
     public void init() {
         curerntFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
@@ -108,6 +120,10 @@ public class MainController implements ControllableScreen, Observer{
 
         mainAnchorPane.prefWidthProperty().bind(parent.prefWidthProperty());
         mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+        //display time of day on main screen
+        DateAndTime dnt = new DateAndTime();
+        dnt.getTime();
     }
 
     private int BUTTON_WIDTH = 85;
@@ -271,6 +287,53 @@ public class MainController implements ControllableScreen, Observer{
             setFloor(((PathID) arg).getFloor());
         }
     }
+
+    //time and date class
+    public class DateAndTime {
+        private int minute; //minute
+        private int hour;   //hour
+        private int second; //second
+        private int AM;     //int to detect am/pm
+
+        public DateAndTime(){
+            Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e ->{ //time line to keep track of time
+                //for (;;) {
+                //SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss aa");
+                //String strDateFormat = "HH:mm:ss a";
+                //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+                //using java calendar
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Calendar cal = Calendar.getInstance();
+                second = cal.get(Calendar.SECOND);  //get current second
+                minute = cal.get(Calendar.MINUTE);  //get current minute
+                hour = cal.get(Calendar.HOUR);  //get current hour
+                AM = cal.get(Calendar.AM_PM);   //get if AM/PM
+                String AM_String = new String ();   //convert int to string
+                if (AM == 0){
+                    AM_String = "AM";
+                }else{
+                    AM_String = "PM";
+                }
+                time.setText(dateFormat.format(cal.getTime()) + System.lineSeparator() + hour + ":" + (minute) + ":" + second + ' ' + AM_String);   //display time
+                //System.out.println(sdf.format(time));
+                // }
+            }),
+                    new KeyFrame(Duration.seconds(1))
+            );
+            clock.setCycleCount(Animation.INDEFINITE);
+            clock.play();
+        }
+        //end function
+
+        //get time for init function
+        public void getTime(){
+            //String strDateFormat = "HH:mm:ss a";
+            //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+            time.setText(hour + ":" + (minute) + ":" + second +  AM);
+            //System.out.println(sdf.format(time));
+        }
+
+    } //ending class
 
     //-----------------------HANDLE ACTIONS START--------------------------//
     public void clearMousePressed(MouseEvent e){
