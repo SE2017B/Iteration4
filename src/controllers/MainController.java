@@ -137,7 +137,7 @@ public class MainController implements ControllableScreen, Observer{
         dnt.getTime();
     }
 
-    private int BUTTON_WIDTH = 85;
+    private int BUTTON_WIDTH = 100;
     private int BUTTON_HEIGHT = 60;
     private int BUTTON_SPACING = 65;
 
@@ -559,4 +559,5 @@ public class MainController implements ControllableScreen, Observer{
     public void directionPressed(ActionEvent e){
         parent.setScreen(ScreenController.PathID,"LEFT");
     }
+
 }
