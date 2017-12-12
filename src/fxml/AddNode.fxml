@@ -474,13 +474,13 @@
          </graphic></JFXButton>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="280.0">
          <children>
-            <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
+            <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="60.0" prefWidth="60.0" text="+">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
             <JFXSlider fx:id="slideBarZoom" blockIncrement="0.0" max="1.8" min="0.2" orientation="VERTICAL" prefWidth="50.0" value="1.0" />
-            <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="50.0" prefWidth="50.0" text="-">
+            <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="60.0" prefWidth="60.0" text="-">
                <font>
                   <Font size="24.0" />
                </font>
