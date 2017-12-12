@@ -98,7 +98,7 @@ public class PathController implements ControllableScreen, Observer{
     @FXML
     private AnchorPane mainAnchorPane;
     @FXML
-    private TitledPane textDirectionsPane;
+    private JFXButton textDirectionButton;
     @FXML
     private ScrollPane mapScrollPane;
     @FXML
@@ -143,6 +143,10 @@ public class PathController implements ControllableScreen, Observer{
     private Tab endTypeTab;
     @FXML
     private ImageView qrImageView;
+    private Pane qrPane;
+
+    private JFXNodesList textDirectionDropDown;
+
 
     //Methods start here
     public void init() {
@@ -242,6 +246,7 @@ public class PathController implements ControllableScreen, Observer{
             }
         };
         zoomPath.start();
+
         //getting node position on mouse click
         initSearch();
         mapPane.setOnMouseClicked(new EventHandler<MouseEvent>()
@@ -290,8 +295,26 @@ public class PathController implements ControllableScreen, Observer{
                 .addListener((ObservableValue<? extends Node> observable,
                               Node oldValue, Node newValue) ->
                         setEndNode(newValue));
-    }
 
+
+        qrPane = new Pane();
+        textDirectionDropDown = new JFXNodesList();
+        qrPane.getChildren().add(qrImageView);
+        textDirectionDropDown.addAnimatedNode(textDirectionButton);
+        textDirectionDropDown.addAnimatedNode(directionsList);
+        directionsList.setPrefWidth(textDirectionButton.getPrefWidth());
+        textDirectionDropDown.addAnimatedNode(qrPane);
+        textDirectionDropDown.setSpacing(5);
+        textDirectionDropDown.setVisible(false);
+        mainAnchorPane.getChildren().add(textDirectionDropDown);
+        AnchorPane.setTopAnchor(textDirectionDropDown,100.0);
+
+        //check the center points at various scales (for testing)
+        System.out.println("Center at 0.5: " + mapViewer.getCenterAt(0.5));
+        System.out.println("Center at 1: " + mapViewer.getCenterAt(1));
+        System.out.println("Center at 1.5: " + mapViewer.getCenterAt(1.5));
+        System.out.println("Center at 2: " + mapViewer.getCenterAt(2));
+    }
 
     public void onShow(){
         mapViewer.setScale(1);
@@ -329,7 +352,7 @@ public class PathController implements ControllableScreen, Observer{
         startNode = map.getKioskLocation();
         startTextField.setText(startNode.toString());
 
-        textDirectionsPane.setVisible(false);
+
         initSearch();
         //handle emergencies
         if(map.searchNodes.size()>1){
@@ -339,6 +362,10 @@ public class PathController implements ControllableScreen, Observer{
             displayPaths(thePath);
             map.searchNodes=new ArrayList<>();//clear search nodes
         }
+
+
+        textDirectionDropDown.setVisible(false);
+
     }
 
     public void setParentController(ScreenController parent){
@@ -396,7 +423,9 @@ public class PathController implements ControllableScreen, Observer{
             }
             else if(code.isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
                 String text = ((JFXTextField) keyEvent.getSource()).getText();
+                text = (code.isLetterKey()) ? text + keyEvent.getText() : text.substring(0, text.length()-1);
                 if(text.equals("")){
+                    System.out.println("empty");
                     listView.setVisible(false);
                 }
                 else {
@@ -482,12 +511,20 @@ public class PathController implements ControllableScreen, Observer{
         double y = p.getCenter().get(1);
         double cx =mapViewer.getCenter().get(0);
         double cy = mapViewer.getCenter().get(1);
+        /**
         if(currentPath.hasAnimated){
             cx=x;
             cy=y;
         }
+        else{
+            cx=Center.get(0);
+            cy=Center.get(1);
+        }
+         **/
+        cx=Center.get(0);
+        cy=Center.get(1);
 
-        //height
+        //set new Center
         Center.set(0,(int)x);
         Center.set(1,(int)y);
         p.initAnimation(cx,cy,x,y);
@@ -642,6 +679,7 @@ public class PathController implements ControllableScreen, Observer{
     }
     //-----------------------ANIMATIONS END--------------------------//
 
+    //-------------------------MAP SCALE START--------------------------//
     public void setScale(PathViewer path){
         double scale = path.getScale();
         scale = mapViewer.checkScale(scale);
@@ -650,7 +688,7 @@ public class PathController implements ControllableScreen, Observer{
 
     public void scaleMap(double scale){
         mapViewer.setScale(scale);
-        slideBarZoom.setValue(scale);
+        mapViewer.setZoom(scale);
         for(Shape s : shapes){
             s.setStrokeWidth(LINE_STROKE/scale);
             if(s instanceof AnimatedCircle){
@@ -673,15 +711,15 @@ public class PathController implements ControllableScreen, Observer{
         scaleMap(slideBarZoom.getValue()-0.2);
         currentPath.hasAnimated=false;
     }
+    //-------------------------MAP SCALE END--------------------------//
 
-    //-------------------------MAP SCALE START--------------------------//
     private void displayPaths(Path thePath){
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
         ArrayList<String> directions = thePath.findDirections();
         directionsList.setItems(FXCollections.observableList(directions));
-        textDirectionsPane.setVisible(true);
-        textDirectionsPane.setExpanded(false);
+        textDirectionDropDown.setVisible(true);
+        //textDirectionDropDown.animateList(false);
         try {
             qr.writeQRList(directions, "src/images/qr");
             while(!qr.isComplete()){

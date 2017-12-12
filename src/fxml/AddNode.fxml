@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -119,7 +119,7 @@
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </MenuButton>
-                                                            <MenuButton fx:id="nodeAddTypeDropDown" mnemonicParsing="false" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                            <MenuButton fx:id="nodeAddTypeDropDown" mnemonicParsing="false" prefWidth="150.0" text="Type" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                                <items>
                                                                   <MenuItem fx:id="nTypeHALL" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="HALL" />
                                                                   <MenuItem fx:id="nTypeELEV" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="ELEV" />
@@ -474,20 +474,18 @@
          </graphic></JFXButton>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="280.0">
          <children>
-            <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
+            <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="60.0" prefWidth="60.0" text="+">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
             <JFXSlider fx:id="slideBarZoom" blockIncrement="0.0" max="1.8" min="0.2" orientation="VERTICAL" prefWidth="50.0" value="1.0" />
-            <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="50.0" prefWidth="50.0" text="-">
+            <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="60.0" prefWidth="60.0" text="-">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
          </children>
       </VBox>
-      <JFXButton fx:id="alignHButton" layoutX="10.0" layoutY="10.0" onAction="#alignHPressed" prefHeight="40.0" prefWidth="100.0" text="Align H" visible="false" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="80.0" />
-      <JFXButton fx:id="alignVButton" contentDisplay="CENTER" layoutX="20.0" layoutY="20.0" onAction="#alignVPressed" prefHeight="40.0" prefWidth="100.0" text="Align V" visible="false" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="140.0" />
    </children>
 </AnchorPane>

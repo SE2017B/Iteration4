@@ -10,10 +10,10 @@ public class TransitionCircle extends Circle {
     private Timeline waitTimeline;
     private Timeline moveTimeline;
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
 
-    public TransitionCircle(int x, int y){
+    public TransitionCircle(double x, double y){
         this.x=x;
         this.y=y;
         //position circle
@@ -32,12 +32,12 @@ public class TransitionCircle extends Circle {
         waitTimeline.play();
 
     }
-    public void moveTo(int cx, int cy){
+    public void moveTo(double cx, double cy){
         moveTimeline = new Timeline(
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(centerXProperty(), x),
                         new KeyValue(centerYProperty(), y) ),
-                new KeyFrame(new Duration(1500),
+                new KeyFrame(new Duration(400),
                         new KeyValue(centerXProperty(), cx),
                         new KeyValue(centerYProperty(), cy) )
         );
@@ -48,10 +48,10 @@ public class TransitionCircle extends Circle {
         setCenterX(x);
         setCenterY(y);
     }
-    public int getX(){
+    public double getX(){
         return x;
     }
-    public int getY(){
+    public double getY(){
         return y;
     }
 }
