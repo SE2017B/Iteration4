@@ -505,12 +505,20 @@ public class PathController implements ControllableScreen, Observer{
         double y = p.getCenter().get(1);
         double cx =mapViewer.getCenter().get(0);
         double cy = mapViewer.getCenter().get(1);
+        /**
         if(currentPath.hasAnimated){
             cx=x;
             cy=y;
         }
+        else{
+            cx=Center.get(0);
+            cy=Center.get(1);
+        }
+         **/
+        cx=Center.get(0);
+        cy=Center.get(1);
 
-        //height
+        //set new Center
         Center.set(0,(int)x);
         Center.set(1,(int)y);
         p.initAnimation(cx,cy,x,y);
