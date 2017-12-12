@@ -87,10 +87,8 @@ public class MainController implements ControllableScreen, Observer{
 
     private JFXButton tutorialHelpButton;
 
-    private JFXButton feedbackHelpButton;
-
-    private JFXButton aboutHelpButton;
-
+    private JFXButton feedbackAboutHelpButton;
+    
     @FXML
     private AnchorPane mainAnchorPane;
 
@@ -121,7 +119,7 @@ public class MainController implements ControllableScreen, Observer{
     }
 
     private int BUTTON_WIDTH = 100;
-    private int BUTTON_HEIGHT = 50;
+    private int BUTTON_HEIGHT = 60;
     private int BUTTON_SPACING = 65;
 
 
@@ -146,12 +144,8 @@ public class MainController implements ControllableScreen, Observer{
 
         //Tutorial init
         tutorialHelpButton = new JFXButton();
-        feedbackHelpButton = new JFXButton();
-        aboutHelpButton = new JFXButton();
-
-
-
-
+        feedbackAboutHelpButton = new JFXButton();
+        
         buttons.add(bathFilterButton);
         buttons.add(exitFilterButton);
         buttons.add(elevatorFilterButton);
@@ -164,8 +158,7 @@ public class MainController implements ControllableScreen, Observer{
         buttons.add(stairsNearestButton);
         //Tutorial add
         buttons.add(tutorialHelpButton);
-        buttons.add(feedbackHelpButton);
-        buttons.add(aboutHelpButton);
+        buttons.add(feedbackAboutHelpButton);
 
         filterList.addAnimatedNode(filterSpacer);
         nearestList.addAnimatedNode(nearestSpacer);
@@ -201,7 +194,7 @@ public class MainController implements ControllableScreen, Observer{
         });
 
 
-        for(int i = 0; i< 13; i++){
+        for(int i = 0; i< 12; i++){
             JFXButton b  = buttons.get(i);
             b.setPrefSize(BUTTON_WIDTH,BUTTON_HEIGHT);
             if(i < 5){
@@ -262,8 +255,7 @@ public class MainController implements ControllableScreen, Observer{
 
         //Tutorial
         tutorialHelpButton.setText("Tutorial");
-        feedbackHelpButton.setText("Feedback");
-        aboutHelpButton.setText("About");
+        feedbackAboutHelpButton.setText("Feedback\n/ About");
 
     }
 
@@ -486,10 +478,7 @@ public class MainController implements ControllableScreen, Observer{
         if(pressed.equals(tutorialHelpButton)){
             parent.setScreen(ScreenController.HelpID, "HELP_IN");
         }
-        else if(pressed.equals(feedbackHelpButton)) {
-            parent.setScreen(ScreenController.FeedbackID, "LEFT");
-        }
-        else if(pressed.equals(aboutHelpButton)) {
+        else if(pressed.equals(feedbackAboutHelpButton)) {
             parent.setScreen(ScreenController.FeedbackID, "LEFT");
         }
     }
