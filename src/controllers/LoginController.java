@@ -8,8 +8,15 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import ui.ShakeTransition;
+import ui.hospitalBackground;
+
+
 
 public class LoginController implements ControllableScreen{
     public LoginController(){}
@@ -23,10 +30,19 @@ public class LoginController implements ControllableScreen{
     @FXML
     private JFXPasswordField passwordField;
     @FXML
+    private AnchorPane mainAnchorPane;
+
+
 
     @Override
     public void init() {
         depSub = DepartmentSubsystem.getSubsystem();
+
+        //Add the pretty hospital picture to the background
+        //it takes care of all the resizing
+        hospitalBackground hospitalImage = new hospitalBackground(parent);
+        mainAnchorPane.getChildren().add(0,hospitalImage);
+        AnchorPane.setBottomAnchor(hospitalImage,0.0);
     }
 
     @Override
