@@ -281,6 +281,10 @@ public class PathController implements ControllableScreen, Observer{
                 .addListener((ObservableValue<? extends Node> observable,
                               Node oldValue, Node newValue) ->
                         setStartNode(newValue));
+        endNodeChoice.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends Node> observable,
+                              Node oldValue, Node newValue) ->
+                        setEndNode(newValue));
     }
 
 
