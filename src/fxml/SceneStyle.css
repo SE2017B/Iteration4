@@ -43,8 +43,9 @@
     -fx-prompt-text-fill: white;
 }
 
-
-
+.help-text{
+    -fx-background-color: whitesmoke;
+}
 
 .jfx-tab-pane .headers-region, .tab-pane {
     -fx-background-color: rgb(52,103,214);

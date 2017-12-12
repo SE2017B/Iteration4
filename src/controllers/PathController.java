@@ -125,6 +125,10 @@ public class PathController implements ControllableScreen, Observer{
     private JFXListView<Node> endNodeOptionList;
     @FXML
     private JFXButton btnReverse;
+
+    @FXML
+    private JFXButton btnClear;
+
     @FXML
     private JFXTabPane startTabPane;
     @FXML
@@ -314,6 +318,7 @@ public class PathController implements ControllableScreen, Observer{
 
         mapViewer.resetView();
         btnReverse.setVisible(false);//hide button because there is no path
+        btnClear.setVisible(false); //Hide button because there is no path
         startNodeOptionList.setVisible(false);
         endNodeOptionList.setVisible(false);
         //reset search boxes
@@ -696,6 +701,7 @@ public class PathController implements ControllableScreen, Observer{
         if(((startNodeChoice.getValue()!= null && startTypeTab.isSelected()) || (startNode != null && startTextTab.isSelected()) ) &&
                 ((endNodeChoice.getValue() != null && endTypeTab.isSelected()) || (endNode != null && endTextTab.isSelected()) )) {
             btnReverse.setVisible(true);//make reverse button visible
+            btnClear.setVisible(true);//make clear button visible
             thePath = getPath();
             displayPaths(thePath);
             isSearching=false;
@@ -736,6 +742,10 @@ public class PathController implements ControllableScreen, Observer{
             thePath = thePath.getReverse();
             displayPaths(thePath);
         }
+    }
+
+    public void clearPressed(ActionEvent e) {
+        //Chima fill in
     }
 
     public void cancelPressed(ActionEvent e) {
