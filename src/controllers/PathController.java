@@ -80,6 +80,7 @@ public class PathController implements ControllableScreen, Observer{
     private boolean startSearching;
     private boolean endSearching;
     private int searchCount=0;
+    private boolean isNavigating;
     //start node
     private Shape startPoint;
     private FloorNumber startPointFloor;
@@ -434,6 +435,8 @@ public class PathController implements ControllableScreen, Observer{
             startPointFloor = selected.getFloor();
             currentFloor = startPointFloor;
             mapViewer.setFloor(startPointFloor);
+            currentFloor=startPointFloor;
+            adjustNodes();
         }
     }
     private void setEndNode(Node selected){
@@ -446,6 +449,8 @@ public class PathController implements ControllableScreen, Observer{
             endPointFloor = selected.getFloor();
             currentFloor = endPointFloor;
             mapViewer.setFloor(endPointFloor);
+            currentFloor=endPointFloor;
+            adjustNodes();
         }
     }
 
@@ -693,6 +698,15 @@ public class PathController implements ControllableScreen, Observer{
             btnReverse.setVisible(true);//make reverse button visible
             thePath = getPath();
             displayPaths(thePath);
+            isSearching=false;
+            //remove start and end nodes if contained in there
+            if(mapPane.getChildren().contains(startPoint)){
+                mapPane.getChildren().remove(startPoint);
+            }
+            if(mapPane.getChildren().contains(endPoint)){
+                mapPane.getChildren().remove(endPoint);
+            }
+
         }
         else{
             ShakeTransition shake = new ShakeTransition();
@@ -746,20 +760,24 @@ public class PathController implements ControllableScreen, Observer{
                 currentFloor=ID.getFloor();
             }
             //adjust start nodes
-            if(startPointFloor==currentFloor){
-                System.out.println("Setting start and end points");
-                startPoint.setVisible(true);
-            }
-            else{
-                startPoint.setVisible(false);
-            }
-            //adjust end nodes
-            if(endPointFloor==currentFloor){
-                endPoint.setVisible(true);
-            }
-            else{
-                endPoint.setVisible(false);
-            }
+            adjustNodes();
+
+        }
+    }
+    private void adjustNodes(){
+        if(startPointFloor==currentFloor){
+            System.out.println("Setting start and end points");
+            startPoint.setVisible(true);
+        }
+        else{
+            startPoint.setVisible(false);
+        }
+        //adjust end nodes
+        if(endPointFloor==currentFloor){
+            endPoint.setVisible(true);
+        }
+        else{
+            endPoint.setVisible(false);
         }
     }
     //-----------------------NODE SELECT END--------------------------//
