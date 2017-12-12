@@ -102,6 +102,8 @@ public class PathController implements ControllableScreen, Observer{
     @FXML
     private ScrollPane mapScrollPane;
     @FXML
+    private JFXSlider slideBarZoom;
+    @FXML
     private AnchorPane buttonHolderPane;
     @FXML
     private MenuButton startTypeMenu;
@@ -307,8 +309,12 @@ public class PathController implements ControllableScreen, Observer{
         mainAnchorPane.getChildren().add(textDirectionDropDown);
         AnchorPane.setTopAnchor(textDirectionDropDown,100.0);
 
+        //check the center points at various scales (for testing)
+        System.out.println("Center at 0.5: " + mapViewer.getCenterAt(0.5));
+        System.out.println("Center at 1: " + mapViewer.getCenterAt(1));
+        System.out.println("Center at 1.5: " + mapViewer.getCenterAt(1.5));
+        System.out.println("Center at 2: " + mapViewer.getCenterAt(2));
     }
-
 
     public void onShow(){
         mapViewer.setScale(1);
@@ -673,6 +679,7 @@ public class PathController implements ControllableScreen, Observer{
     }
     //-----------------------ANIMATIONS END--------------------------//
 
+    //-------------------------MAP SCALE START--------------------------//
     public void setScale(PathViewer path){
         double scale = path.getScale();
         scale = mapViewer.checkScale(scale);
@@ -693,7 +700,19 @@ public class PathController implements ControllableScreen, Observer{
         arrow.setScaleY(1/scale);
     }
 
-    //-------------------------MAP SCALE START--------------------------//
+    //when + button is pressed zoom in map
+    public void zinPressed(ActionEvent e){
+        scaleMap(slideBarZoom.getValue()+0.2);
+        currentPath.hasAnimated=false;
+    }
+
+    //when - button pressed zoom out map
+    public void zoutPressed(ActionEvent e){
+        scaleMap(slideBarZoom.getValue()-0.2);
+        currentPath.hasAnimated=false;
+    }
+    //-------------------------MAP SCALE END--------------------------//
+
     private void displayPaths(Path thePath){
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
