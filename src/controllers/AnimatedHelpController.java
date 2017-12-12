@@ -6,7 +6,9 @@ import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import ui.AnimatedCircle;
+import ui.TransitionCircle;
 
 
 import java.util.ArrayList;
@@ -23,12 +25,17 @@ public class AnimatedHelpController implements ControllableScreen{
     private ArrayList<AnimatedHelpController.CustomPair> descriptions;
     private ArrayList<String> ImageMap;
     private int status;
+    private TransitionCircle pointer = new TransitionCircle(500,500);
 
     @Override
     public void init(){
         helpTextArea.setText("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Main Screen.");
         populateLists();
         this.setImageFromList(false);
+        pointer.setRadius(20);
+        pointer.setOpacity(0.4);
+        pointer.moveTo(helpTextArea.getLayoutX(),helpTextArea.getLayoutY());
+        helpPane.getChildren().add(pointer);
     }
 
     //reset everything to the start
@@ -60,6 +67,9 @@ public class AnimatedHelpController implements ControllableScreen{
 
     @FXML
     private JFXProgressBar helpProgress;
+
+    @FXML
+    private Pane helpPane;
 
     @FXML
     void nextPressed(ActionEvent event) {
