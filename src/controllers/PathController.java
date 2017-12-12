@@ -98,11 +98,9 @@ public class PathController implements ControllableScreen, Observer{
     @FXML
     private AnchorPane mainAnchorPane;
     @FXML
-    private TitledPane textDirectionsPane;
+    private JFXButton textDirectionButton;
     @FXML
     private ScrollPane mapScrollPane;
-    @FXML
-    private JFXSlider slideBarZoom;
     @FXML
     private AnchorPane buttonHolderPane;
     @FXML
@@ -125,6 +123,10 @@ public class PathController implements ControllableScreen, Observer{
     private JFXListView<Node> endNodeOptionList;
     @FXML
     private JFXButton btnReverse;
+
+    @FXML
+    private JFXButton btnClear;
+
     @FXML
     private JFXTabPane startTabPane;
     @FXML
@@ -139,6 +141,10 @@ public class PathController implements ControllableScreen, Observer{
     private Tab endTypeTab;
     @FXML
     private ImageView qrImageView;
+    private Pane qrPane;
+
+    private JFXNodesList textDirectionDropDown;
+
 
     //Methods start here
     public void init() {
@@ -238,6 +244,7 @@ public class PathController implements ControllableScreen, Observer{
             }
         };
         zoomPath.start();
+
         //getting node position on mouse click
         initSearch();
         mapPane.setOnMouseClicked(new EventHandler<MouseEvent>()
@@ -286,6 +293,20 @@ public class PathController implements ControllableScreen, Observer{
                 .addListener((ObservableValue<? extends Node> observable,
                               Node oldValue, Node newValue) ->
                         setEndNode(newValue));
+
+
+        qrPane = new Pane();
+        textDirectionDropDown = new JFXNodesList();
+        qrPane.getChildren().add(qrImageView);
+        textDirectionDropDown.addAnimatedNode(textDirectionButton);
+        textDirectionDropDown.addAnimatedNode(directionsList);
+        directionsList.setPrefWidth(textDirectionButton.getPrefWidth());
+        textDirectionDropDown.addAnimatedNode(qrPane);
+        textDirectionDropDown.setSpacing(5);
+        textDirectionDropDown.setVisible(false);
+        mainAnchorPane.getChildren().add(textDirectionDropDown);
+        AnchorPane.setTopAnchor(textDirectionDropDown,100.0);
+
     }
 
 
@@ -314,6 +335,7 @@ public class PathController implements ControllableScreen, Observer{
 
         mapViewer.resetView();
         btnReverse.setVisible(false);//hide button because there is no path
+        btnClear.setVisible(false); //Hide button because there is no path
         startNodeOptionList.setVisible(false);
         endNodeOptionList.setVisible(false);
         //reset search boxes
@@ -324,7 +346,7 @@ public class PathController implements ControllableScreen, Observer{
         startNode = map.getKioskLocation();
         startTextField.setText(startNode.toString());
 
-        textDirectionsPane.setVisible(false);
+
         initSearch();
         //handle emergencies
         if(map.searchNodes.size()>1){
@@ -334,6 +356,10 @@ public class PathController implements ControllableScreen, Observer{
             displayPaths(thePath);
             map.searchNodes=new ArrayList<>();//clear search nodes
         }
+
+
+        textDirectionDropDown.setVisible(false);
+
     }
 
     public void setParentController(ScreenController parent){
@@ -645,7 +671,7 @@ public class PathController implements ControllableScreen, Observer{
 
     public void scaleMap(double scale){
         mapViewer.setScale(scale);
-        slideBarZoom.setValue(scale);
+        mapViewer.setZoom(scale);
         for(Shape s : shapes){
             s.setStrokeWidth(LINE_STROKE/scale);
             if(s instanceof AnimatedCircle){
@@ -657,26 +683,14 @@ public class PathController implements ControllableScreen, Observer{
         arrow.setScaleY(1/scale);
     }
 
-    //when + button is pressed zoom in map
-    public void zinPressed(ActionEvent e){
-        scaleMap(slideBarZoom.getValue()+0.2);
-        currentPath.hasAnimated=false;
-    }
-
-    //when - button pressed zoom out map
-    public void zoutPressed(ActionEvent e){
-        scaleMap(slideBarZoom.getValue()-0.2);
-        currentPath.hasAnimated=false;
-    }
-
     //-------------------------MAP SCALE START--------------------------//
     private void displayPaths(Path thePath){
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
         ArrayList<String> directions = thePath.findDirections();
         directionsList.setItems(FXCollections.observableList(directions));
-        textDirectionsPane.setVisible(true);
-        textDirectionsPane.setExpanded(false);
+        textDirectionDropDown.setVisible(true);
+        textDirectionDropDown.animateList(false);
         try {
             qr.writeQRList(directions, "src/images/qr");
             while(!qr.isComplete()){
@@ -696,6 +710,7 @@ public class PathController implements ControllableScreen, Observer{
         if(((startNodeChoice.getValue()!= null && startTypeTab.isSelected()) || (startNode != null && startTextTab.isSelected()) ) &&
                 ((endNodeChoice.getValue() != null && endTypeTab.isSelected()) || (endNode != null && endTextTab.isSelected()) )) {
             btnReverse.setVisible(true);//make reverse button visible
+            btnClear.setVisible(true);//make clear button visible
             thePath = getPath();
             displayPaths(thePath);
             isSearching=false;
@@ -736,6 +751,10 @@ public class PathController implements ControllableScreen, Observer{
             thePath = thePath.getReverse();
             displayPaths(thePath);
         }
+    }
+
+    public void clearPressed(ActionEvent e) {
+        //Chima fill in
     }
 
     public void cancelPressed(ActionEvent e) {

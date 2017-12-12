@@ -478,4 +478,40 @@ public class RequestController implements ControllableScreen{
             s.shake(searchStrategyChoice);
         }
     }
+
+    private class FeedbackSystem{
+        ArrayList<Feedback> cache;
+        public FeedbackSystem(){
+            cache = new ArrayList<>();
+        }
+
+        public void submitFeedback(String message, int rating){
+            //TODO get database commands for submitting the message and rating to the system
+            Feedback temp = new Feedback(message, rating);
+            this.cache.add(temp);
+        }
+
+        public ArrayList<Feedback> getCache() {
+            return cache;
+        }
+
+        //Encapsulates Feedback helper object
+        private class Feedback{
+            private final String message;
+            private final int rating;
+
+            Feedback(String message, int rating){
+                this.message = message;
+                this.rating = rating;
+            }
+
+            public String getMessage() {
+                return message;
+            }
+
+            public int getRating() {
+                return rating;
+            }
+        }
+    }
 }
