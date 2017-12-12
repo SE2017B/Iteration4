@@ -93,6 +93,13 @@ public class AddNodeController implements ControllableScreen, Observer {
         edgeRemoveTab.setOnSelectionChanged(e -> refreshNodesandEdges());
 
         refreshNodesandEdges();
+
+        nodeContextMenu = new ContextMenu();
+        MenuItem alignH = new MenuItem("Align Horizontal");
+        MenuItem alignV = new MenuItem("Align Vertical");
+        alignH.setOnAction(e -> alignHPressed(e));
+        alignV.setOnAction(e -> alignVPressed(e));
+        nodeContextMenu.getItems().addAll(alignH,alignV);
     }
 
     public void onShow() {
@@ -160,8 +167,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void clearNodesandEdges(){
         mapPane.getChildren().clear();
         mapPane.getChildren().add(mapViewer.getMapImage());
-        alignHButton.setVisible(false);
-        alignVButton.setVisible(false);
     }
 
     public void showNodesandEdgesbyFloor(FloorNumber floor){
@@ -202,6 +207,11 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(nodeTab.isSelected() && nodeEditTab.isSelected()) {
                 cb.setOnMousePressed(boxOnMousePressedHandler);
                 cb.setOnMouseDragged(boxOnMouseDraggedHandler);
+                cb.setOnContextMenuRequested(e -> {
+                    if(nodeEditSelectedNodes.size() > 1){
+                        nodeContextMenu.show(cb,e.getScreenX(),e.getScreenY());
+                    }
+                });
             }
         }
     }
@@ -272,15 +282,6 @@ public class AddNodeController implements ControllableScreen, Observer {
             else{
                 nodeEditSelectedNodes.add(0,source);
                 setEditForNode(source);
-            }
-
-            if(nodeEditSelectedNodes.size() > 1){
-                alignHButton.setVisible(true);
-                alignVButton.setVisible(true);
-            }
-            else{
-                alignHButton.setVisible(false);
-                alignVButton.setVisible(false);
             }
 
         }
@@ -557,12 +558,11 @@ public class AddNodeController implements ControllableScreen, Observer {
     private MenuButton nodeEditBuildingDropDown;
     @FXML
     private MenuButton nodeEditTypeDropDown;
-    @FXML
-    private JFXButton alignHButton;
-    @FXML
-    private JFXButton alignVButton;
+
 
     private ArrayList<NodeCheckBox> nodeEditSelectedNodes;
+
+    private ContextMenu nodeContextMenu;
 
 
     double orgSceneX, orgSceneY;
@@ -753,8 +753,6 @@ public class AddNodeController implements ControllableScreen, Observer {
             nodeEditXField.setText("");
             nodeEditYField.setText("");
             nodeEditIDLabel.setText("Node ID");
-            alignVButton.setVisible(false);
-            alignHButton.setVisible(false);
         }
 
     }
