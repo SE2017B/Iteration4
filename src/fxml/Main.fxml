@@ -55,7 +55,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="questionButton" contentDisplay="TOP" onAction="#questionPressed" scaleX="0.75" scaleY="0.75" text="Help" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+                  <JFXButton fx:id="questionButton" contentDisplay="TOP" scaleX="0.75" scaleY="0.75" text="Help" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <graphic>
                         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                            <image>
