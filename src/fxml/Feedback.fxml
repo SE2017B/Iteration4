@@ -80,64 +80,6 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Help">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0">
-                            <children>
-                                <GridPane prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="30.0" vgrow="ALWAYS" />
-                                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="70.0" prefHeight="25.0" vgrow="NEVER" />
-                                        <RowConstraints minHeight="157.0" vgrow="ALWAYS" />
-                                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="20.0" vgrow="ALWAYS" />
-                                    </rowConstraints>
-                                    <children>
-                                        <JFXButton fx:id="Previous" mnemonicParsing="false" onAction="#pressPrevious" prefHeight="50.0" prefWidth="150.0" text="Previous" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                            <GridPane.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                            </GridPane.margin>
-                                            <font>
-                                                <Font size="21.0" />
-                                            </font></JFXButton>
-                                        <JFXButton fx:id="Next" mnemonicParsing="false" onAction="#pressNext" prefHeight="50.0" prefWidth="150.0" text="Next" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                                            <font>
-                                                <Font size="21.0" />
-                                            </font></JFXButton>
-                                        <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                            <children>
-                                                <Label fx:id="HelpTitle" text="Title" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                    <VBox.margin>
-                                                        <Insets right="500.0" />
-                                                    </VBox.margin>
-                                                    <font>
-                                                        <Font size="39.0" />
-                                                    </font></Label>
-                                                <ImageView fx:id="ImageViewer" fitHeight="470.0" fitWidth="957.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" VBox.vgrow="ALWAYS" />
-                                                <JFXTextArea fx:id="HelpDescription" editable="false" maxWidth="1.7976931348623157E308" minHeight="150.0" wrapText="true" VBox.vgrow="ALWAYS">
-                                                    <styleClass>
-                                                        <String fx:value="pane" />
-                                                        <String fx:value="label" />
-                                                    </styleClass>
-                                                    <font>
-                                                        <Font size="21.0" />
-                                                    </font>
-                                                </JFXTextArea>
-                                            </children>
-                                            <padding>
-                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                            </padding>
-                                        </VBox>
-                                    </children>
-                                </GridPane>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
                 <Tab text="About">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
@@ -181,7 +123,7 @@
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin></Label>
-                                <Label alignment="CENTER" layoutX="312.0" layoutY="38.0" prefHeight="19.0" prefWidth="196.0" text="CS 3733 Software Engineering " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                <Label alignment="CENTER" layoutX="312.0" layoutY="38.0" prefHeight="19.0" prefWidth="210.0" text="CS 3733 Software Engineering " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                 <Label alignment="BOTTOM_CENTER" layoutX="312.0" layoutY="63.0" text="Professor Wilson Wong" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
