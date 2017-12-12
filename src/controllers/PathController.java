@@ -690,7 +690,7 @@ public class PathController implements ControllableScreen, Observer{
         ArrayList<String> directions = thePath.findDirections();
         directionsList.setItems(FXCollections.observableList(directions));
         textDirectionDropDown.setVisible(true);
-        textDirectionDropDown.animateList(false);
+        //textDirectionDropDown.animateList(false);
         try {
             qr.writeQRList(directions, "src/images/qr");
             while(!qr.isComplete()){

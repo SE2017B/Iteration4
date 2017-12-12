@@ -37,7 +37,7 @@ public class TransitionCircle extends Circle {
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(centerXProperty(), x),
                         new KeyValue(centerYProperty(), y) ),
-                new KeyFrame(new Duration(1500),
+                new KeyFrame(new Duration(400),
                         new KeyValue(centerXProperty(), cx),
                         new KeyValue(centerYProperty(), cy) )
         );
