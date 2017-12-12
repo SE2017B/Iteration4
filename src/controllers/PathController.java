@@ -540,7 +540,7 @@ public class PathController implements ControllableScreen, Observer{
         c.setFill(Color.rgb(0,84,153));
         c.setStroke(Color.rgb(40,40,60));
         c.setVisible(true);
-        c.setRadius(7);
+        c.setRadius(15);
         return c;
     }
 
