@@ -119,7 +119,7 @@
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </MenuButton>
-                                                            <MenuButton fx:id="nodeAddTypeDropDown" mnemonicParsing="false" prefWidth="150.0" text="NodeType" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                            <MenuButton fx:id="nodeAddTypeDropDown" mnemonicParsing="false" prefWidth="150.0" text="Type" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                                <items>
                                                                   <MenuItem fx:id="nTypeHALL" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="HALL" />
                                                                   <MenuItem fx:id="nTypeELEV" mnemonicParsing="false" onAction="#nodeAddTypeSelected" text="ELEV" />

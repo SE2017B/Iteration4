@@ -328,7 +328,7 @@ FHALL00801,1758,850,1,Tower,HALL,Tower Hallway 1,Hallway F00801,Team F
 FHALL01301,1627,825,1,Tower,HALL,Tower Hallway 5,Hallway F01301,Team F
 FHALL00901,1627,850,1,Tower,HALL,Tower Hallway 2,Hallway F00901,Team F
 FHALL01001,1627,802,1,Tower,HALL,Tower Hallway 3,Hallway F01001,Team F
-FSTAI00201,1673,802,1,Tower,STAI,Tower Stairway 1,Tower Stairs 1,Team F
+FSTAI00201,1664,1664,1,Tower,HALL,Tower Stairway 1,Tower Stairs 1,Team F
 FHALL01101,1627,930,1,Tower,HALL,Tower Hallway 4,Hallway F01101,Team F
 FHALL01201,1548,930,1,Tower,HALL,Tower Staff Entrance,Hallway F01201,Team F
 FDEPT00101,1617,825,1,Tower,DEPT,Center for International Medicine,CIM,Team F

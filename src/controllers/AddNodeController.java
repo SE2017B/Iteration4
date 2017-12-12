@@ -403,7 +403,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(nodeAddFloorDropDown.getText().equals("Floor")){
                 s.shake(nodeAddFloorDropDown);
             }
-            if(nodeAddTypeDropDown.getText().equals("NodeType")){
+            if(nodeAddTypeDropDown.getText().equals("Type")){
                 s.shake(nodeAddTypeDropDown);
             }
             if(nodeAddShortField.getText().equals("")){
@@ -427,7 +427,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             nodeAddYField.setText("");
             nodeAddBuildingDropDown.setText("Building");
             nodeAddFloorDropDown.setText("Floor");
-            nodeAddTypeDropDown.setText("NodeType");
+            nodeAddTypeDropDown.setText("Type");
             nodeAddNameField.setText("");
             nodeAddShortField.setText("");
         }
@@ -686,7 +686,7 @@ public class AddNodeController implements ControllableScreen, Observer {
 
             if (nodeEditXField.getText().equals("") || nodeEditYField.getText().equals("") || nodeEditFloorDropDown.getText().equals("")
                     || nodeEditFloorDropDown.getText().equals("Floor") || nodeEditBuildingDropDown.getText().equals("Building")
-                    || nodeEditTypeDropDown.getText().equals("NodeType") || nodeEditNameField.getText().equals("")
+                    || nodeEditTypeDropDown.getText().equals("Type") || nodeEditNameField.getText().equals("")
                     || nodeEditShortField.getText().equals("")) {
                 if (!nodeEditXField.getText().matches("[0-9]+")) {
                     s.shake(nodeEditXField);
