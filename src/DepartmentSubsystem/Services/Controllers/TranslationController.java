@@ -13,6 +13,7 @@ public class TranslationController extends CurrentServiceController {
        languageChoiceBox.setItems(FXCollections.observableList(((Translation)(DSS.getServices().get(0))).getLanguages()));
     }
 
+
     @FXML
     private ChoiceBox<String> languageChoiceBox;
 
