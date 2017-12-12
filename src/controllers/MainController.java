@@ -84,6 +84,18 @@ public class MainController implements ControllableScreen, Observer{
 
     private JFXNodesList nearestList;
 
+    //Tutorial List
+    private JFXNodesList questionList;
+
+    //Tutorial Buttons
+    public JFXButton questionButton;
+
+    private JFXButton tutorialHelpButton;
+
+    private JFXButton feedbackHelpButton;
+
+    private JFXButton aboutHelpButton;
+
     @FXML
     private AnchorPane mainAnchorPane;
 
@@ -120,9 +132,11 @@ public class MainController implements ControllableScreen, Observer{
 
     private JFXButton filterSpacer = new JFXButton();
     private JFXButton nearestSpacer = new JFXButton();
+    private JFXButton questionSpacer = new JFXButton();
     private void initButtons(){
         filterList = new JFXNodesList();
         nearestList = new JFXNodesList();
+        questionList = new JFXNodesList();
         ArrayList<JFXButton> buttons = new ArrayList<>();
         bathFilterButton = new JFXButton();
         exitFilterButton = new JFXButton();
@@ -134,6 +148,11 @@ public class MainController implements ControllableScreen, Observer{
         elevatorNearestButton = new JFXButton();
         retailNearestButton = new JFXButton();
         stairsNearestButton = new JFXButton();
+
+        //Tutorial init
+        tutorialHelpButton = new JFXButton();
+        feedbackHelpButton = new JFXButton();
+        aboutHelpButton = new JFXButton();
 
 
 
@@ -148,9 +167,16 @@ public class MainController implements ControllableScreen, Observer{
         buttons.add(elevatorNearestButton);
         buttons.add(retailNearestButton);
         buttons.add(stairsNearestButton);
+        //Tutorial add
+        buttons.add(tutorialHelpButton);
+        buttons.add(feedbackHelpButton);
+        buttons.add(aboutHelpButton);
 
         filterList.addAnimatedNode(filterSpacer);
         nearestList.addAnimatedNode(nearestSpacer);
+
+        //Tutorial question spacer
+        questionList.addAnimatedNode(questionSpacer);
 
 
         filterHeaderButton.setOnAction(e ->  {
@@ -170,32 +196,53 @@ public class MainController implements ControllableScreen, Observer{
             }
         });
 
-        for(int i = 0; i< 10; i++){
+        questionButton.setOnAction(e -> {
+            if(questionList.isExpanded()) {
+                hideQuestionButtons(e);
+            }
+            else {
+                showQuestionButtons(e);
+            }
+        });
+
+
+        for(int i = 0; i< 13; i++){
             JFXButton b  = buttons.get(i);
             b.setPrefSize(BUTTON_WIDTH,BUTTON_HEIGHT);
             if(i < 5){
                 b.setOnAction(e -> filterButtonPressed(e));
                 filterList.addAnimatedNode(b);
             }
-            else{
+            else if((5 <= i) && (i <10)) {
                 b.setOnAction(e -> nearestPressed(e));
                 nearestList.addAnimatedNode(b);
             }
-
+            else {
+                b.setOnAction(e -> questionPressed(e));
+                questionList.addAnimatedNode(b);
+            }
         }
         filterList.setSpacing(BUTTON_SPACING);
         nearestList.setSpacing(BUTTON_SPACING);
+        //Tutorial
+        questionList.setSpacing(BUTTON_SPACING);
         filterList.setVisible(false);
         nearestList.setVisible(false);
+        //Tutorial
+        questionList.setVisible(false);
 
         //hide when they disappear
         filterList.getListAnimation(true).setOnFinished( e -> filterList.setVisible(false));
         nearestList.getListAnimation(true).setOnFinished( e -> nearestList.setVisible(false));
+        //Tutorial
+        questionList.getListAnimation(true).setOnFinished(e -> questionList.setVisible(false));
 
         filterList.setRotate(270); //open to the right
         nearestList.setRotate(270);
+        //Tutorial
+        questionList.setRotate(270);
 
-        mainAnchorPane.getChildren().addAll(filterList, nearestList);
+        mainAnchorPane.getChildren().addAll(filterList, nearestList, questionList);
         filterList.setLayoutX(30);
         filterList.translateYProperty().bind(parent.prefHeightProperty().subtract(100).divide(3.0).subtract(50));
 
@@ -203,7 +250,9 @@ public class MainController implements ControllableScreen, Observer{
         nearestList.setLayoutX(30);
         nearestList.setLayoutY(70);
 
-
+        //Tutorial
+        questionList.setLayoutX(30);
+        questionList.translateYProperty().bind(parent.prefHeightProperty().subtract(-325).divide(3.0).subtract(-30));
 
         bathFilterButton.setText("Restroom");
         exitFilterButton.setText("Exit");
@@ -215,6 +264,11 @@ public class MainController implements ControllableScreen, Observer{
         elevatorNearestButton.setText("Elevator");
         retailNearestButton.setText("Retail");
         stairsNearestButton.setText("Stairs");
+
+        //Tutorial
+        tutorialHelpButton.setText("Tutorial");
+        feedbackHelpButton.setText("Feedback");
+        aboutHelpButton.setText("About");
 
     }
 
@@ -326,6 +380,7 @@ public class MainController implements ControllableScreen, Observer{
         clearPressed(e);
         hideNearestButtons(e);
         hideFilterButtons(e);
+        hideQuestionButtons(e);
         mapViewer.setFloor(map.getKioskLocation().getFloor());
         kioskIndicator.setVisible(true);
         //find nearest node of given type
@@ -367,6 +422,7 @@ public class MainController implements ControllableScreen, Observer{
         clearPressed(new ActionEvent());
         hideNearestButtons(e);
         hideFilterButtons(e);
+        hideQuestionButtons(e);
         System.out.println("Filter Pressed");
         JFXButton pressed = (JFXButton) e.getSource();
         ArrayList<Node> filteredNodes = new ArrayList<Node>();
@@ -414,6 +470,40 @@ public class MainController implements ControllableScreen, Observer{
             pause.play();
     }
 
+    //Tutorial hide and show
+    public void showQuestionButtons(ActionEvent e) {
+        questionList.setVisible(true);
+        questionList.animateList(true);
+        questionSpacer.setVisible(false);
+    }
+
+    public void hideQuestionButtons(ActionEvent e) {
+        questionList.animateList(false);
+        PauseTransition pause = new PauseTransition(Duration.millis(100));
+        pause.setOnFinished(event -> questionList.setVisible(false));
+        pause.play();
+    }
+
+    //////////////////////////////////////////
+    /////////       Tutorial
+    //////////////////////////////////////////
+    public void questionPressed(ActionEvent e) {
+        hideNearestButtons(e);
+        hideFilterButtons(e);
+        hideQuestionButtons(e);
+        System.out.println("Question Pressed");
+        JFXButton pressed = (JFXButton) e.getSource();
+        if(pressed.equals(tutorialHelpButton)){
+            parent.setScreen(ScreenController.HelpID, "HELP_IN");
+        }
+        else if(pressed.equals(feedbackHelpButton)) {
+            parent.setScreen(ScreenController.FeedbackID, "LEFT");
+        }
+        else if(pressed.equals(aboutHelpButton)) {
+            parent.setScreen(ScreenController.FeedbackID, "LEFT");
+        }
+    }
+
 
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
@@ -423,10 +513,6 @@ public class MainController implements ControllableScreen, Observer{
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
         parent.setScreen(ScreenController.PathID,"LEFT");
-    }
-
-    public void questionPressed(ActionEvent e) {
-        parent.setScreen(ScreenController.HelpID, "HELP_IN");
     }
 
     //when + button is pressed zoom in map

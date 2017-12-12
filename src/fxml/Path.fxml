@@ -64,7 +64,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="btnzin" layoutX="36.0" layoutY="206.0" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
+                  <JFXButton fx:id="btnzin" layoutX="36.0" layoutY="198.0" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text="+">
                      <font>
                         <Font size="24.0" />
                      </font>
