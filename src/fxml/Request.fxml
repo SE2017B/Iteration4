@@ -163,12 +163,12 @@
                                                             <Font size="24.0" />
                                                          </font>
                                                       </JFXTextField>
-                                                      <JFXTextField fx:id="jobTitletxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Job Title" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                      <JFXTextField fx:id="passwordTxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Password" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                                          <font>
                                                             <Font size="24.0" />
                                                          </font>
                                                       </JFXTextField>
-                                                      <JFXTextField fx:id="passwordTxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Password" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                      <JFXTextField fx:id="jobTitletxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Job Title" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                          <font>
                                                             <Font size="24.0" />
                                                          </font>
