@@ -605,6 +605,10 @@ public class PathController implements ControllableScreen, Observer{
             }
         }
     }
+
+    public void questionPressed(ActionEvent e) {
+        parent.setScreen(ScreenController.DirectionHelpID, "HELP_IN");
+    }
     //-----------------------NODE SELECT END--------------------------//
 
     public void startTypeSelected(ActionEvent e){

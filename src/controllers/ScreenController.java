@@ -47,8 +47,8 @@ public class ScreenController extends StackPane {
     public static String FeedbackFile = "/fxml/Feedback.fxml";
     public static String HelpID = "Help";
     public static String HelpFile = "/fxml/AnimatedHelp.fxml";
-    public static String AnimatedHelpID = "AnimatedHelp";
-    public static String AnimatedHelpFile = "/fxml/AnimatedHelp.fxml";
+    public static String DirectionHelpID = "DirectionHelp";
+    public static String DirectionHelpFile = "/fxml/DirectionHelp.fxml";
 
     public ScreenController(){
         super();

@@ -12,6 +12,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -20,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
       <TitledPane fx:id="textDirectionsPane" animated="false" layoutY="110.0" maxHeight="1200.0" text="Text Directions" visible="false" AnchorPane.topAnchor="100.0">
          <content>
@@ -65,12 +66,21 @@
             </JFXButton>
          </children>
       </VBox>
-      <AnchorPane layoutX="918.0" layoutY="105.0" prefHeight="84.0" prefWidth="128.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="918.0" layoutY="105.0" prefHeight="453.0" prefWidth="128.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <JFXButton fx:id="btnReverse" layoutX="16.0" layoutY="8.0" onAction="#reversePressed" prefHeight="61.0" prefWidth="106.0" text="Reverse">
+            <JFXButton fx:id="btnReverse" layoutX="11.0" layoutY="378.0" onAction="#reversePressed" prefHeight="61.0" prefWidth="106.0" text="Reverse">
                <font>
                   <Font size="20.0" />
                </font>
+            </JFXButton>
+            <JFXButton fx:id="questionButton" contentDisplay="TOP" layoutX="3.0" layoutY="4.0" onAction="#questionPressed" text="Help">
+               <graphic>
+                  <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Icons/helpWhite.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </JFXButton>
          </children>
       </AnchorPane>
