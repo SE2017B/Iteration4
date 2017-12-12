@@ -9,9 +9,12 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 import ui.ShakeTransition;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class LoginController implements ControllableScreen{
     public LoginController(){}
@@ -25,6 +28,7 @@ public class LoginController implements ControllableScreen{
     @FXML
     private JFXPasswordField passwordField;
     @FXML
+    private Label errorLbl;
 
     @Override
     public void init() {
@@ -46,6 +50,35 @@ public class LoginController implements ControllableScreen{
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
+
+    public void enterPressedkey(KeyEvent e) throws UsernameException, PasswordException {
+        if(e.getCode().toString().equals("ENTER")) {
+            String login = usernameField.getText();
+            String passWord = passwordField.getText();
+            if (login.equals("") || passWord.equals("")) {
+                if (login.equals("")) {
+                    s.shake(usernameField);
+                }
+                if (passWord.equals("")) {
+                    s.shake(passwordField);
+                }
+                return;
+            }
+            try {
+                Staff person = depSub.login(login, passWord);
+                parent.setScreen(ScreenController.RequestID, "UP");
+            } catch (UsernameException ex) {
+                errorLbl.setText("Login or Password is Incorrect");
+
+            } catch (PasswordException ex) {
+                errorLbl.setText("Login or Password is Incorrect");
+            }
+        }
+
+
+    }
+
+
     public void enterPressed(ActionEvent e) throws UsernameException, PasswordException {
         String login = usernameField.getText();
         String passWord = passwordField.getText();
@@ -63,10 +96,13 @@ public class LoginController implements ControllableScreen{
             parent.setScreen(ScreenController.RequestID,"UP");
         }
         catch (UsernameException ex){
-            s.shake(usernameField);
+            errorLbl.setText("Login or Password is Incorrect");
+
         }
         catch (PasswordException ex){
-            s.shake(passwordField);
+            errorLbl.setText("Login or Password is Incorrect");
         }
+
+
     }
 }

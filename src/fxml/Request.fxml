@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -25,301 +24,226 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
-   <children>
-      <GridPane layoutX="456.0" layoutY="303.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="158.39999999999998" />
-          <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="949.6000244140627" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="169.9999755859376" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
-          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
-          <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
-        </rowConstraints>
-         <children>
-            <Label fx:id="staffNameLabel" text="Staff Name" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </GridPane.margin>
-            </Label>
-            <JFXTabPane prefHeight="267.0" prefWidth="495.0" side="BOTTOM" tabMinHeight="60.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
-               <tabs>
-                  <Tab text="Request Service">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="pane">
-                           <children>
-                              <GridPane layoutX="352.0" layoutY="209.0" prefHeight="528.0" prefWidth="755.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
-                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="633.4000122070314" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="61.60000305175781" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="64.79998168945312" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="72.80000610351561" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="144.7999877929688" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Service" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Staff Member" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Date" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                                       </GridPane.margin></JFXButton>
-                                    <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                                       </GridPane.margin></JFXButton>
-                                    <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" style="-fx: #ffffff;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                    <ChoiceBox fx:id="choiceBoxService" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                    <ChoiceBox fx:id="choiceBoxStaff" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <JFXTimePicker fx:id="timeMenu" defaultColor="#34f8e4" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-
-                                    <AnchorPane fx:id="servicePane1" prefHeight="150.0" prefWidth="1279.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Resolve Service">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <SplitPane dividerPositions="0.29797979797979796" layoutX="245.0" layoutY="170.0" prefHeight="528.0" prefWidth="755.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <items>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
-                                       <children>
-                                          <GridPane layoutX="11.0" layoutY="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <children>
+        <GridPane layoutX="456.0" layoutY="303.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="460.0" minWidth="10.0" prefWidth="158.39999999999998" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="949.6000244140627" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.0" minWidth="10.0" prefWidth="169.9999755859376" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="170.0" minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
+                <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+            </rowConstraints>
+            <children>
+                <Label fx:id="staffNameLabel" text="Staff Name" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+                    <font>
+                        <Font size="36.0" />
+                    </font>
+                    <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </GridPane.margin>
+                </Label>
+                <JFXTabPane prefHeight="267.0" prefWidth="495.0" side="BOTTOM" tabMinHeight="60.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+                    <tabs>
+                        <Tab text="API and Services">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <GridPane prefHeight="580.0" prefWidth="1280.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
-                                             <children>
-                                                <Label text="Select Service" GridPane.columnSpan="2" GridPane.halignment="CENTER">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
+                                            <children>
+                                                <Label text="Select Service" GridPane.halignment="CENTER">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
                                                 </Label>
-                                                <Label fx:id="lblSelectedService" text="Service" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font></Label>
-                                                <JFXButton fx:id="btncreate1" onAction="#resolveServicePressed" prefHeight="50.0" prefWidth="150.0" text="Resolve" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-                                                   <GridPane.margin>
-                                                      <Insets left="20.0" right="20.0" />
-                                                   </GridPane.margin></JFXButton>
-                                                <Label fx:id="lblSelectedLocation" text="Location" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
+                                                <Label text="Select Location" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
                                                 </Label>
-                                                <Label fx:id="lblSelectedDT" text="Date &amp; Time" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="lblSelectedAdditionalInfo" text="Additional Info" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </AnchorPane>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
-                                       <children>
-                                          <JFXListView fx:id="resolveServiceListView" layoutX="54.0" layoutY="37.0" prefHeight="526.0" prefWidth="526.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </items>
-                              </SplitPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Settings">
-                    <content>
-                      <AnchorPane fx:id="settingsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
+                                                <JFXButton fx:id="createAPIbtn" onAction="#createPressedApi" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                    <GridPane.margin>
+                                                        <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+                                                    </GridPane.margin>
+                                                </JFXButton>
+                                                <JFXButton fx:id="cancelAPIbtn" onAction="#cancelPressedAPI" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                    <GridPane.margin>
+                                                        <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+                                                    </GridPane.margin>
+                                                </JFXButton>
+                                                <ChoiceBox fx:id="apiLocationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <ChoiceBox fx:id="apiServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Settings">
+                            <content>
+                                <AnchorPane fx:id="settingsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
                               <Pane fx:id="ripplePane" prefHeight="580.0" prefWidth="1279.5" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <GridPane layoutX="292.0" layoutY="188.0" prefHeight="622.4" prefWidth="950.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="300.0" />
-                                  <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="300.0" />
-                                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
-                                  <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+                                        <GridPane layoutX="292.0" layoutY="188.0" prefHeight="622.4" prefWidth="950.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="300.0" />
+                                                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="300.0" />
+                                                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+                                                <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
                                     <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
-                                  <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Select Algorithm for Path " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <ChoiceBox fx:id="searchStrategyChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <JFXButton fx:id="saveSettingsButton" onAction="#saveSettingsPressed" text="Save" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="NEVER" />
+                                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Select Algorithm for Path " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Label>
+                                                <ChoiceBox fx:id="searchStrategyChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <JFXButton fx:id="saveSettingsButton" onAction="#saveSettingsPressed" text="Save" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
 
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </JFXButton>
-                                    <Label text="Select Kiosk Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                                    <font>
+                                                        <Font size="20.0" />
+                                                    </font>
+                                                </JFXButton>
+                                                <Label text="Select Kiosk Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Label>
+                                                <ChoiceBox fx:id="kioskLocationChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                    <Label text="Set Timeout Length" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
                                     </Label>
-                                    <ChoiceBox fx:id="kioskLocationChoice" prefHeight="40.0" prefWidth="197.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <Label text="Set Timeout Length" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <JFXTextField fx:id="timeoutTextField" prefHeight="48.0" prefWidth="150.0" styleClass="text-on-dark" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                    <JFXTextField fx:id="timeoutTextField" prefHeight="45.0" prefWidth="300.0" styleClass="text-on-dark" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                        <GridPane.margin>
                                           <Insets left="50.0" right="50.0" />
                                        </GridPane.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
                                     </JFXTextField>
-                                 </children>
-                              </GridPane>
-                           </children></AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Staff Management">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <JFXTabPane layoutX="364.0" layoutY="174.0" prefHeight="597.6" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <tabs>
-                                    <Tab text="Add Staff">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                             <children>
-                                                <GridPane prefHeight="562.4" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <columnConstraints>
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                  </columnConstraints>
-                                                  <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </children>
+                                        </GridPane>
+                                    </children></AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Staff Management">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <JFXTabPane layoutX="364.0" layoutY="174.0" prefHeight="597.6" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <tabs>
+                                                <Tab text="Add Staff">
+                                                    <content>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                            <children>
+                                                                <GridPane prefHeight="562.4" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                    <columnConstraints>
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                    </columnConstraints>
+                                                                    <rowConstraints>
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                  </rowConstraints>
-                                                   <children>
-                                                      <JFXTextField fx:id="usernameTxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Username" unFocusColor="WHITE" GridPane.columnIndex="1">
+                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                    </rowConstraints>
+                                                                    <children>
+                                                                        <JFXTextField fx:id="usernameTxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Username" unFocusColor="WHITE" GridPane.columnIndex="1">
+                                                                            <font>
+                                                                                <Font size="24.0" />
+                                                                            </font>
+                                                                        </JFXTextField>
+                                                                        <JFXTextField fx:id="passwordTxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Password" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                                            <font>
+                                                                                <Font size="24.0" />
+                                                                            </font>
+                                                                        </JFXTextField>
+                                                                        <JFXTextField fx:id="jobTitletxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Job Title" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                                            <font>
+                                                                                <Font size="24.0" />
+                                                                            </font>
+                                                                        </JFXTextField>
+                                                                        <JFXTextField fx:id="fullNametxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Full Name" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                                            <font>
+                                                                                <Font size="24.0" />
+                                                                            </font>
+                                                                        </JFXTextField>
+                                                                        <JFXButton fx:id="createStaffButton" onAction="#createStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                                        <JFXButton fx:id="cancelStaffButton" onAction="#cancelStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                      <JFXCheckBox fx:id="adminAddStaff" text="Admin?" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                          <font>
                                                             <Font size="24.0" />
                                                          </font>
-                                                      </JFXTextField>
-                                                      <JFXTextField fx:id="jobTitletxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Job Title" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </JFXTextField>
-                                                      <JFXTextField fx:id="passwordTxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Password" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </JFXTextField>
-                                                      <JFXTextField fx:id="fullNametxt" alignment="CENTER" focusColor="WHITE" labelFloat="true" promptText="Full Name" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </JFXTextField>
-                                                      <JFXButton fx:id="createStaffButton" onAction="#createStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                                      <JFXButton fx:id="cancelStaffButton" onAction="#cancelStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                                      <ChoiceBox fx:id="addStaffServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                                         <GridPane.margin>
-                                                            <Insets top="25.0" />
-                                                         </GridPane.margin>
-                                                      </ChoiceBox>
-                                                      <Label text="Service" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                                         <GridPane.margin>
-                                                            <Insets top="-65.0" />
-                                                         </GridPane.margin>
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Label>
-                                                   </children>
-                                                </GridPane>
-                                             </children>
-                                          </AnchorPane>
-                                      </content>
-                                    </Tab>
-                                    <Tab text="Remove Staff">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                             <children>
-                                                <SplitPane dividerPositions="0.28499843407453807" prefHeight="562.4" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <items>
-                                                    <AnchorPane maxWidth="300.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #008faa;">
-                                                         <children>
-                                                            <GridPane prefHeight="560.8" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                               <columnConstraints>
-                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                               </columnConstraints>
-                                                               <rowConstraints>
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                               </rowConstraints>
-                                                               <children>
-                                                                  <JFXTextField fx:id="usernameDeleteTxt" alignment="CENTER" labelFloat="true" promptText="Username" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                      </JFXCheckBox>
+                                                                    </children>
+                                                                </GridPane>
+                                                            </children>
+                                                        </AnchorPane>
+                                                    </content>
+                                                </Tab>
+                                                <Tab text="Remove Staff">
+                                                    <content>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                            <children>
+                                                                <SplitPane dividerPositions="0.28499843407453807" prefHeight="562.4" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                    <items>
+                                                                        <AnchorPane maxWidth="300.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #008faa;">
+                                                                            <children>
+                                                                                <GridPane prefHeight="560.8" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                    <columnConstraints>
+                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                                                    </columnConstraints>
+                                                                                    <rowConstraints>
+                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                                    </rowConstraints>
+                                                                                    <children>
+                                                                                        <JFXTextField fx:id="usernameDeleteTxt" alignment="CENTER" labelFloat="true" promptText="Username" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                                                            <GridPane.margin>
+                                                                                                <Insets left="15.0" right="15.0" />
+                                                                                            </GridPane.margin>
+                                                                                            <font>
+                                                                                                <Font size="24.0" />
+                                                                                            </font>
+                                                                                        </JFXTextField>
+                                                                                        <JFXButton fx:id="removeStaffBtn" onAction="#removeStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Remove Staff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                                                            <GridPane.margin>
+                                                                                                <Insets left="20.0" right="20.0" />
+                                                                                            </GridPane.margin>
+                                                                                        </JFXButton>
+                                                                                        <Label text="Select Staff to Delete" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                                                                                            <font>
+                                                                                                <Font size="24.0" />
+                                                                                            </font>
+                                                                                        </Label>
+                                                                  <JFXTextField fx:id="removeStaffFullName" alignment="CENTER" promptText="Full Name" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                                                      <GridPane.margin>
                                                                         <Insets left="15.0" right="15.0" />
                                                                      </GridPane.margin>
@@ -327,226 +251,200 @@
                                                                         <Font size="24.0" />
                                                                      </font>
                                                                   </JFXTextField>
-                                                                  <JFXButton fx:id="removeStaffBtn" onAction="#removeStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Remove Staff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                                                    </children>
+                                                                                </GridPane>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                                            <children>
+                                                                                <ListView fx:id="staffListView" layoutX="270.0" layoutY="109.0" prefHeight="560.8" prefWidth="971.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </items>
+                                                                </SplitPane>
+                                                            </children>
+                                                        </AnchorPane>
+                                                    </content>
+                                                </Tab>
+                                                <Tab text="Edit Staff">
+                                                    <content>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <SplitPane dividerPositions="0.40301003344481606" prefHeight="545.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <items>
+                                                      <AnchorPane maxWidth="300.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
+                                                         <children>
+                                                            <GridPane prefHeight="560.8" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.199951171875" minWidth="10.0" prefWidth="153.0" />
+                                                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="147.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <JFXTextField fx:id="usernameEdit" alignment="CENTER" labelFloat="true" promptText="Username" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="15.0" right="15.0" />
+                                                                     </GridPane.margin>
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                  </JFXTextField>
+                                                                  <JFXButton fx:id="editStaff" onAction="#editStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Edit Staff" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                                                                      <GridPane.margin>
                                                                         <Insets left="20.0" right="20.0" />
                                                                      </GridPane.margin>
                                                                   </JFXButton>
-                                                                  <Label text="Select Staff to Delete" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                                                                  <Label text="Select Staff to Edit" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                                                                      <font>
-                                                                        <Font size="24.0" />
+                                                                        <Font size="18.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <ChoiceBox fx:id="staffJobTypeChoiceBox" prefWidth="150.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-                                                                  <Label text="Job Type" textFill="#4d4d4d" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                                                  <JFXTextField fx:id="fullnameEdit" alignment="CENTER" labelFloat="true" promptText="Full Name" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="10.0" right="10.0" />
+                                                                     </GridPane.margin>
                                                                      <font>
-                                                                        <Font size="24.0" />
+                                                                        <Font size="18.0" />
                                                                      </font>
-                                                                  </Label>
+                                                                  </JFXTextField>
+                                                                  <JFXTextField fx:id="passwordEdit" alignment="CENTER" labelFloat="true" promptText="Password" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                                     <font>
+                                                                        <Font size="18.0" />
+                                                                     </font>
+                                                                     <GridPane.margin>
+                                                                        <Insets left="10.0" right="10.0" />
+                                                                     </GridPane.margin>
+                                                                  </JFXTextField>
+                                                                  <JFXCheckBox fx:id="adminEdit" text="Admin?" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </JFXCheckBox>
+                                                                  <JFXTextField fx:id="jobTitleEdit" alignment="CENTER" labelFloat="true" promptText="Job Title" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                                                     <GridPane.margin>
+                                                                        <Insets left="15.0" right="15.0" />
+                                                                     </GridPane.margin>
+                                                                     <font>
+                                                                        <Font size="20.0" />
+                                                                     </font>
+                                                                  </JFXTextField>
                                                                </children>
                                                             </GridPane>
                                                          </children>
                                                       </AnchorPane>
-                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                                          <children>
-                                                            <ListView fx:id="staffListView" layoutX="270.0" layoutY="109.0" prefHeight="560.8" prefWidth="971.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                            <ListView fx:id="staffListView1" layoutX="270.0" layoutY="109.0" prefHeight="560.8" prefWidth="971.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                          </children>
                                                       </AnchorPane>
-                                                  </items>
+                                                   </items>
                                                 </SplitPane>
                                              </children>
-                                          </AnchorPane>
-                                      </content>
-                                    </Tab>
-                                    <Tab text="Edit Staff">
-                                      <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                             <children>
-                                                <GridPane prefHeight="562.4" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                  </columnConstraints>
-                                                  <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                  </rowConstraints>
-                                                   <children>
-                                                      <Label text="Find Staff To Modify" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </Label>
-                                                      <JFXTextField fx:id="modifyUsername" focusColor="WHITE" labelFloat="true" promptText="Username" unFocusColor="WHITE" GridPane.rowIndex="1">
-                                                         <GridPane.margin>
-                                                            <Insets left="25.0" right="25.0" />
-                                                         </GridPane.margin>
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </JFXTextField>
-                                                      <JFXTextField fx:id="modifyID" focusColor="WHITE" labelFloat="true" promptText="Username" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                      </JFXTextField>
-                                                      <JFXTextField focusColor="WHITE" labelFloat="true" promptText="Modify Parameter" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                                         <font>
-                                                            <Font size="24.0" />
-                                                         </font>
-                                                         <GridPane.margin>
-                                                            <Insets left="25.0" right="25.0" />
-                                                         </GridPane.margin>
-                                                      </JFXTextField>
-                                                      <ChoiceBox fx:id="choiceboxModifyStaff" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                                      <JFXButton fx:id="searchButton" onAction="#searchbuttonPressed" prefHeight="50.0" prefWidth="150.0" text="Search" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                                      <JFXButton fx:id="makeEditsModify" onAction="#makeModify" prefHeight="50.0" prefWidth="150.0" text="Modify" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                                   </children>
-                                                </GridPane>
-                                             </children>
-                                          </AnchorPane>
-                                      </content>
-                                    </Tab>
-                                 </tabs>
-                              </JFXTabPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="API">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <GridPane prefHeight="580.0" prefWidth="1280.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Label text="Select Service" GridPane.halignment="CENTER">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Select Location" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <JFXButton fx:id="createAPIbtn" onAction="#createPressedApi" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </JFXButton>
-                                    <JFXButton fx:id="cancelAPIbtn" onAction="#cancelPressedAPI" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </JFXButton>
-                                    <ChoiceBox fx:id="apiLocationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <ChoiceBox fx:id="apiServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Feedback">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <SplitPane dividerPositions="0.5" layoutX="560.0" layoutY="183.0" prefHeight="580.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <items>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                       <children>
-                                          <JFXListView fx:id="feedbackListView" layoutY="67.0" prefHeight="510.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0" />
-                                          <Label fx:id="lblFeedbackRating" alignment="CENTER" layoutX="118.0" layoutY="14.0" prefHeight="35.0" prefWidth="399.0" text="Average Feedback Rating: " textAlignment="CENTER">
-                                             <font>
-                                                <Font size="24.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </AnchorPane>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0">
-                                       <children>
-                                          <Label fx:id="lblFeedbackTitle" alignment="CENTER" layoutX="11.0" layoutY="14.0" prefHeight="35.0" prefWidth="282.0" textAlignment="CENTER" AnchorPane.rightAnchor="170.0">
-                                             <font>
-                                                <Font size="18.0" />
-                                             </font>
-                                          </Label>
-                                          <JFXTabPane fx:id="chartTabPane" layoutY="69.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="497.0" prefWidth="635.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="69.0">
-                                             <tabs>
-                                                <Tab fx:id="lineChartTab" text="Line Chart">
-                                                  <content>
-                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="635.0">
-                                                         <children>
-                                                            <LineChart fx:id="feedbackLineChart" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                               <xAxis>
-                                                                  <CategoryAxis side="BOTTOM" fx:id="xLineChart" />
-                                                               </xAxis>
-                                                               <yAxis>
-                                                                  <NumberAxis fx:id="yLineChart" side="LEFT" />
-                                                               </yAxis>
-                                                            </LineChart>
-                                                         </children>
-                                                      </AnchorPane>
-                                                  </content>
+                                                        </AnchorPane>
+                                                    </content>
                                                 </Tab>
-                                                <Tab fx:id="barChartTab" text="Bar Chart">
-                                                  <content>
-                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                         <children>
-                                                            <BarChart fx:id="feedbackBarChart" prefHeight="462.0" prefWidth="635.0" styleClass="chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                               <xAxis>
-                                                                  <CategoryAxis side="BOTTOM" fx:id="xBarChart" />
-                                                               </xAxis>
-                                                               <yAxis>
-                                                                  <NumberAxis fx:id="yBarChart" side="LEFT" />
-                                                               </yAxis>
-                                                            </BarChart>
-                                                         </children>
-                                                      </AnchorPane>
-                                                  </content>
-                                                </Tab>
-                                                <Tab fx:id="pieChartTab" text="Pie Chart">
-                                                  <content>
-                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                         <children>
-                                                            <PieChart fx:id="feedbackPieChart" legendSide="RIGHT" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                                         </children>
-                                                      </AnchorPane>
-                                                  </content>
-                                                </Tab>
-                                             </tabs>
-                                          </JFXTabPane>
-                                       </children>
-                                    </AnchorPane>
-                                </items>
-                              </SplitPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-               </tabs>
-            </JFXTabPane>
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="tab-pane" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-            <JFXButton fx:id="btnLogOut" buttonType="RAISED" onAction="#logoutPressed" prefHeight="50.0" prefWidth="150.0" text="Logout" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </GridPane.margin></JFXButton>
-            <JFXButton fx:id="btnEditMap" onAction="#editPressed" prefHeight="50.0" prefWidth="150.0" text="Edit Map" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </GridPane.margin></JFXButton>
-         </children>
-      </GridPane>
-   </children>
+                                            </tabs>
+                                        </JFXTabPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Feedback">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <SplitPane dividerPositions="0.5" layoutX="560.0" layoutY="183.0" prefHeight="580.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <items>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                                    <children>
+                                                        <JFXListView fx:id="feedbackListView" layoutY="67.0" prefHeight="510.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0" />
+                                                        <Label fx:id="lblFeedbackRating" alignment="CENTER" layoutX="118.0" layoutY="14.0" prefHeight="35.0" prefWidth="399.0" text="Average Feedback Rating: " textAlignment="CENTER">
+                                                            <font>
+                                                                <Font size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                    </children>
+                                                </AnchorPane>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0">
+                                                    <children>
+                                                        <Label fx:id="lblFeedbackTitle" alignment="CENTER" layoutX="11.0" layoutY="14.0" prefHeight="35.0" prefWidth="282.0" textAlignment="CENTER" AnchorPane.rightAnchor="170.0">
+                                                            <font>
+                                                                <Font size="18.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <JFXTabPane fx:id="chartTabPane" layoutY="69.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="497.0" prefWidth="635.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="69.0">
+                                                            <tabs>
+                                                                <Tab fx:id="lineChartTab" text="Line Chart">
+                                                                    <content>
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="635.0">
+                                                                            <children>
+                                                                                <LineChart fx:id="feedbackLineChart" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                    <xAxis>
+                                                                                        <CategoryAxis side="BOTTOM" fx:id="xLineChart" />
+                                                                                    </xAxis>
+                                                                                    <yAxis>
+                                                                                        <NumberAxis fx:id="yLineChart" side="LEFT" />
+                                                                                    </yAxis>
+                                                                                </LineChart>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </Tab>
+                                                                <Tab fx:id="barChartTab" text="Bar Chart">
+                                                                    <content>
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                            <children>
+                                                                                <BarChart fx:id="feedbackBarChart" prefHeight="462.0" prefWidth="635.0" styleClass="chart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                    <xAxis>
+                                                                                        <CategoryAxis side="BOTTOM" fx:id="xBarChart" />
+                                                                                    </xAxis>
+                                                                                    <yAxis>
+                                                                                        <NumberAxis fx:id="yBarChart" side="LEFT" />
+                                                                                    </yAxis>
+                                                                                </BarChart>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </Tab>
+                                                                <Tab fx:id="pieChartTab" text="Pie Chart">
+                                                                    <content>
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                            <children>
+                                                                                <PieChart fx:id="feedbackPieChart" legendSide="RIGHT" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </Tab>
+                                                            </tabs>
+                                                        </JFXTabPane>
+                                                    </children>
+                                                </AnchorPane>
+                                            </items>
+                                        </SplitPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </JFXTabPane>
+                <Pane prefHeight="200.0" prefWidth="200.0" styleClass="tab-pane" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                <JFXButton fx:id="btnLogOut" buttonType="RAISED" onAction="#logoutPressed" prefHeight="50.0" prefWidth="150.0" text="Logout" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </GridPane.margin></JFXButton>
+                <JFXButton fx:id="btnEditMap" onAction="#editPressed" prefHeight="50.0" prefWidth="150.0" text="Edit Map" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </GridPane.margin></JFXButton>
+            </children>
+        </GridPane>
+    </children>
 </AnchorPane>
