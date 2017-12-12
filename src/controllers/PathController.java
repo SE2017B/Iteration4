@@ -14,6 +14,7 @@ import com.jfoenix.controls.*;
 import exceptions.InvalidNodeException;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Transition;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -275,8 +276,13 @@ public class PathController implements ControllableScreen, Observer{
                 }
             }
         });
-
+        //add listeners to start and end choice boxes
+        startNodeChoice.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends Node> observable,
+                              Node oldValue, Node newValue) ->
+                        setStartNode(newValue));
     }
+
 
     public void onShow(){
         mapViewer.setScale(1);
@@ -351,12 +357,10 @@ public class PathController implements ControllableScreen, Observer{
                 }
                 if(textField.equals(startTextField)){
                     startNode = node;
-                    mapViewer.centerView(node.getX(),node.getY());
                     setStartNode(startNode);
                 }
                 else{
                     endNode = node;
-                    mapViewer.centerView(node.getX(),node.getY());
                     setEndNode(endNode);
                 }
                     textField.setText(node.toString());
@@ -406,35 +410,39 @@ public class PathController implements ControllableScreen, Observer{
             Node node = listView.getSelectionModel().getSelectedItem();
             if (textField.equals(startTextField)) {
                 startNode = node;
-                mapViewer.centerView(node.getX(),node.getY());
                 setStartNode(startNode);
             } else {
                 endNode = node;
                 setEndNode(endNode);
-                mapViewer.centerView(node.getX(),node.getY());
             }
             textField.setText(selected.toString());
             listView.setVisible(false);
         }
     }
     private void setStartNode(Node selected){
-        Circle newp = getStartPoint(selected.getX(),selected.getY());
-        startPoint=newp;
-        startPoint.setVisible(true);
-        mapPane.getChildren().add(startPoint);
-        startPointFloor=selected.getFloor();
-        currentFloor=startPointFloor;
-        mapViewer.setFloor(startPointFloor);
-
+        if(selected!=null) {
+            mapViewer.centerView(selected.getX(),selected.getY());
+            mapPane.getChildren().remove(startPoint);
+            Circle newp = getStartPoint(selected.getX(), selected.getY());
+            startPoint = newp;
+            startPoint.setVisible(true);
+            mapPane.getChildren().add(startPoint);
+            startPointFloor = selected.getFloor();
+            currentFloor = startPointFloor;
+            mapViewer.setFloor(startPointFloor);
+        }
     }
     private void setEndNode(Node selected){
-        Circle newp = getPoint(selected.getX(),selected.getY());
-        endPoint=newp;
-        endPoint.setVisible(true);
-        mapPane.getChildren().add(endPoint);
-        endPointFloor=selected.getFloor();
-        currentFloor=endPointFloor;
-        mapViewer.setFloor(endPointFloor);
+        if(selected!=null) {
+            mapViewer.centerView(selected.getX(),selected.getY());
+            Circle newp = getPoint(selected.getX(), selected.getY());
+            endPoint = newp;
+            endPoint.setVisible(true);
+            mapPane.getChildren().add(endPoint);
+            endPointFloor = selected.getFloor();
+            currentFloor = endPointFloor;
+            mapViewer.setFloor(endPointFloor);
+        }
     }
 
     private Path getPath(){
@@ -802,6 +810,9 @@ public class PathController implements ControllableScreen, Observer{
             startNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f) && n.getFloor().equals(floor))));
         }
         startNodeChoice.setDisable(false);
+        if(startNodeChoice.getValue()!=null){
+            setStartNode(startNodeChoice.getValue());
+        }
     }
 
     public void endTypeSelected(ActionEvent e){
@@ -854,6 +865,9 @@ public class PathController implements ControllableScreen, Observer{
             endNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f) && n.getFloor().equals(floor))));
         }
         endNodeChoice.setDisable(false);
+        if(endNodeChoice.getValue()!=null){
+            setEndNode(endNodeChoice.getValue());
+        }
     }
     //-----------------------NODE SELECT END--------------------------//
 }
