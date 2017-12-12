@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -43,134 +41,52 @@
             </Label>
             <JFXTabPane prefHeight="267.0" prefWidth="495.0" side="BOTTOM" tabMinHeight="60.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
                <tabs>
-                  <Tab text="Request Service">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="pane">
-                           <children>
-                              <GridPane layoutX="352.0" layoutY="209.0" prefHeight="528.0" prefWidth="755.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-                                  <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="10.0" prefWidth="500.0" />
-                                  <ColumnConstraints hgrow="NEVER" maxWidth="500.0" minWidth="10.0" prefWidth="500.0" />
-                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="61.60000305175781" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="64.79998168945312" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="72.80000610351561" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="144.7999877929688" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Service" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Staff Members" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Date" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <JFXButton fx:id="btncreate" onAction="#requestCreatePressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                                       </GridPane.margin></JFXButton>
-                                    <JFXButton fx:id="btncancel" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                                       </GridPane.margin></JFXButton>
-                                    <JFXDatePicker fx:id="dateMenu" defaultColor="#64fff0" prefWidth="150.0" style="-fx: #ffffff;" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                    <ChoiceBox fx:id="locationChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                    <ChoiceBox fx:id="choiceBoxService" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                    <ChoiceBox fx:id="choiceBoxStaff" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <JFXTimePicker fx:id="timeMenu" defaultColor="#34f8e4" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-
-                                    <AnchorPane fx:id="servicePane1" prefHeight="150.0" prefWidth="1279.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="Resolve Service">
+                  <Tab text="API">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <SplitPane dividerPositions="0.29797979797979796" layoutX="245.0" layoutY="170.0" prefHeight="528.0" prefWidth="755.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <items>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
-                                       <children>
-                                          <GridPane layoutX="11.0" layoutY="197.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <Label text="Select Service" GridPane.columnSpan="2" GridPane.halignment="CENTER">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="lblSelectedService" text="Service" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font></Label>
-                                                <JFXButton fx:id="btncreate1" onAction="#resolveServicePressed" prefHeight="50.0" prefWidth="150.0" text="Resolve" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-                                                   <GridPane.margin>
-                                                      <Insets left="20.0" right="20.0" />
-                                                   </GridPane.margin></JFXButton>
-                                                <Label fx:id="lblSelectedLocation" text="Location" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="lblSelectedDT" text="Date &amp; Time" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
-                                                </Label>
-                                                <Label fx:id="lblSelectedAdditionalInfo" text="Additional Info" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </AnchorPane>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
-                                       <children>
-                                          <JFXListView fx:id="resolveServiceListView" layoutX="54.0" layoutY="37.0" prefHeight="526.0" prefWidth="526.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </items>
-                              </SplitPane>
+                              <GridPane prefHeight="580.0" prefWidth="1280.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Select Service" GridPane.halignment="CENTER">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Select Start Location" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXButton fx:id="createAPIbtn" onAction="#createPressedApi" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                    <JFXButton fx:id="cancelAPIbtn" onAction="#cancelPressedAPI" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+                                       </GridPane.margin>
+                                    </JFXButton>
+                                    <ChoiceBox fx:id="apiLocationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="apiServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                    <Label text="Select End Location" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ChoiceBox fx:id="apiLocationChoiceBox2" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                 </children>
+                              </GridPane>
                            </children>
                         </AnchorPane>
                     </content>
@@ -264,19 +180,11 @@
                                                       </JFXTextField>
                                                       <JFXButton fx:id="createStaffButton" onAction="#createStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                                       <JFXButton fx:id="cancelStaffButton" onAction="#cancelStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                                      <ChoiceBox fx:id="addStaffServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                                         <GridPane.margin>
-                                                            <Insets top="25.0" />
-                                                         </GridPane.margin>
-                                                      </ChoiceBox>
-                                                      <Label text="Service" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                                         <GridPane.margin>
-                                                            <Insets top="-65.0" />
-                                                         </GridPane.margin>
+                                                      <JFXCheckBox fx:id="addStaffCheckBox" text="Admin?" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                          <font>
                                                             <Font size="24.0" />
                                                          </font>
-                                                      </Label>
+                                                      </JFXCheckBox>
                                                    </children>
                                                 </GridPane>
                                              </children>
@@ -321,12 +229,14 @@
                                                                         <Font size="24.0" />
                                                                      </font>
                                                                   </Label>
-                                                                  <ChoiceBox fx:id="staffJobTypeChoiceBox" prefWidth="150.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-                                                                  <Label text="Job Type" textFill="#4d4d4d" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                                                  <JFXTextField fx:id="fullNameRemove" alignment="CENTER" labelFloat="true" promptText="Full Name" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                                                      <font>
                                                                         <Font size="24.0" />
                                                                      </font>
-                                                                  </Label>
+                                                                     <GridPane.margin>
+                                                                        <Insets left="15.0" right="15.0" />
+                                                                     </GridPane.margin>
+                                                                  </JFXTextField>
                                                                </children>
                                                             </GridPane>
                                                          </children>
@@ -398,14 +308,11 @@
                                                                         <Insets left="10.0" right="10.0" />
                                                                      </GridPane.margin>
                                                                   </JFXTextField>
-                                                                  <JFXTextField fx:id="jobTitleEdit" alignment="CENTER" labelFloat="true" promptText="Job Title" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                                                                     <GridPane.margin>
-                                                                        <Insets left="15.0" right="15.0" />
-                                                                     </GridPane.margin>
+                                                                  <JFXCheckBox fx:id="modifyAdminCheckBox" text="Admin?" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                                      <font>
                                                                         <Font size="20.0" />
                                                                      </font>
-                                                                  </JFXTextField>
+                                                                  </JFXCheckBox>
                                                                </children>
                                                             </GridPane>
                                                          </children>
@@ -423,49 +330,6 @@
                                     </Tab>
                                  </tabs>
                               </JFXTabPane>
-                           </children>
-                        </AnchorPane>
-                    </content>
-                  </Tab>
-                  <Tab text="API">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <GridPane prefHeight="580.0" prefWidth="1280.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Label text="Select Service" GridPane.halignment="CENTER">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Select Location" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Label>
-                                    <JFXButton fx:id="createAPIbtn" onAction="#createPressedApi" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </JFXButton>
-                                    <JFXButton fx:id="cancelAPIbtn" onAction="#cancelPressedAPI" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
-                                       </GridPane.margin>
-                                    </JFXButton>
-                                    <ChoiceBox fx:id="apiLocationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                    <ChoiceBox fx:id="apiServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                 </children>
-                              </GridPane>
                            </children>
                         </AnchorPane>
                     </content>
