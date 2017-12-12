@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import ui.AnimatedCircle;
+import ui.TransitionCircle;
 
 
 import java.util.ArrayList;
@@ -23,12 +24,17 @@ public class DirectionHelpController implements ControllableScreen{
     private ArrayList<DirectionHelpController.CustomPair> descriptions;
     private ArrayList<String> ImageMap;
     private int status;
+    private TransitionCircle pointer=new TransitionCircle(500,500);
 
     @Override
     public void init(){
         helpTextArea.setText("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Navigation Screen.");
         populateLists();
         this.setImageFromList(false);
+        //set up animated pointer
+        //pointer= new TransitionCircle(500,500);
+        pointer.setRadius(20);
+        pointer.setOpacity(0.4);
     }
 
     //reset everything to the start
@@ -137,6 +143,7 @@ public class DirectionHelpController implements ControllableScreen{
         DirectionHelpController.CustomPair Search = new DirectionHelpController.CustomPair("Here you can search for the start and end locations. You have the option to type with the keyboard and search, or click Search By Type to search by types of places!");
         this.descriptions.add(Search);
         this.ImageMap.add("2");
+        pointer.moveTo(50,50);
 
         DirectionHelpController.CustomPair Go = new DirectionHelpController.CustomPair("Press 'Go!' To find the path!");
         this.descriptions.add(Go);
