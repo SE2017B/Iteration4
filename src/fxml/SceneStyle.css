@@ -1,15 +1,24 @@
 .button, .menu-button, .choice-box, .titled-pane .title {
-    -fx-text-fill: white;
-    -fx-background-color: rgb(40,40,60);
+    -fx-text-fill: whitesmoke;
+    -fx-background-color: rgb(66,133,244);
+    -fx-opacity: 90%;
     -fx-border-color: whitesmoke;
     -fx-border-width: 4;
     -fx-border-radius: 1;
-    -fx-padding: 3 6 6 6;
 }
 
 .scroll-pane{
     -fx-hbar-policy: never;
     -fx-vbar-policy: never;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+
+}
+
+.button-scroll-pane{
+    -fx-background-color: transparent;
 }
 
 .text-field {
@@ -34,15 +43,19 @@
     -fx-prompt-text-fill: white;
 }
 
+
+.help-text{
+    -fx-background-color: whitesmoke;
+}
+
 .jfx-tab-pane .headers-region, .tab-pane {
-    -fx-background-color: rgb(0,150,171);
+    -fx-background-color: rgb(52,103,214);
 }
 .jfx-tab-pane .tab-header-background {
-    -fx-background-color: rgb(0,150,171);
+    -fx-background-color: rgb(52,103,214);
 }
 .jfx-tab-pane .tab-selected-line{
     -fx-background-color: darkorange;
-
 }
 .jfx-tab-pane .tab-header-area .jfx-rippler{
     -jfx-rippler-fill: darkorange;
@@ -50,11 +63,13 @@
 
 .menu-item, .list-cell{
     -fx-text-fill: white;
-    -fx-background-color: rgb(40,40,60);
+    -fx-background-color: rgb(52,103,214);
 }
 
 .pane{
-    -fx-background-color:rgb(0,84,153);
+    -fx-background-color: rgb(52,103,214);
+    /*-fx-background-color:linear-gradient(to bottom, rgb(181,189,200) 0%,rgb(130,140,149) 36%,rgb(40,52,59) 100%);
+*/
 }
 
 .label{
@@ -71,10 +86,10 @@
 }
 
 .text-on-white{
-    -fx-text-fill: rgb(40,40,60);
+    -fx-text-fill: rgb(52,103,214);
 }
 .list-pane{
-    -fx-background-color: rgb(40,40,60);
+    -fx-background-color: rgb(52,103,214);
 }
 .axis-label{
     -fx-text-fill: black;

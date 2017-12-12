@@ -35,10 +35,30 @@ public class Main extends Application {
         root.minWidth(800);
         root.minHeight(400);
 
+
+
+        String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
+        scene.getStylesheets().add(style);
+        primaryStage.setScene(scene);
+        primaryStage.setWidth(1280);
+        primaryStage.setHeight(800);
+        primaryStage.show();
+
+
         ScreenController myScreenController = new ScreenController();
-        root.getChildren().addAll(myScreenController);
+        EventHandler reset = new EventHandler<InputEvent>() {
+            @Override
+            public void handle(InputEvent event){
+                myScreenController.resetTimeout();
+            }};
+        scene.addEventFilter(MouseEvent.MOUSE_MOVED, reset);
+        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, reset);
+        scene.addEventFilter(KeyEvent.KEY_TYPED, reset);
+
+        root.getChildren().setAll(myScreenController);
         myScreenController.prefHeightProperty().bind(scene.heightProperty());
         myScreenController.prefWidthProperty().bind(scene.widthProperty());
+
 
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
         myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
@@ -46,7 +66,9 @@ public class Main extends Application {
         myScreenController.loadScreen(ScreenController.PathID, ScreenController.PathFile);
         myScreenController.loadScreen(ScreenController.RequestID, ScreenController.RequestFile);
         myScreenController.loadScreen(ScreenController.LoginID, ScreenController.LoginFile);
-        //myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
+        myScreenController.loadScreen(ScreenController.HelpID, ScreenController.HelpFile);
+        myScreenController.loadScreen(ScreenController.FeedbackID, ScreenController.FeedbackFile);
+        myScreenController.loadScreen(ScreenController.DirectionHelpID, ScreenController.DirectionHelpFile);
 //
 //        //mini fxml files
 //        myScreenController.loadScreen(ScreenController.TranslationID, ScreenController.TranslationFile);
@@ -56,21 +78,6 @@ public class Main extends Application {
 
         myScreenController.setScreen(ScreenController.MainID);
         myScreenController.saveState();
-        String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
-        scene.getStylesheets().add(style);
-        primaryStage.setScene(scene);
-        primaryStage.setWidth(1280);
-        primaryStage.setHeight(800);
-
-        EventHandler reset = new EventHandler<InputEvent>() {
-            @Override
-            public void handle(InputEvent event){
-                myScreenController.resetTimeout();
-            }};
-        scene.addEventFilter(MouseEvent.MOUSE_MOVED, reset);
-        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, reset);
-        scene.addEventFilter(KeyEvent.KEY_TYPED, reset);
-        primaryStage.show();
     }
 
     public static void main(String[] args) {

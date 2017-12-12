@@ -9,16 +9,26 @@
 package controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXNodesList;
 import com.jfoenix.controls.JFXSlider;
+import javafx.animation.Animation;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
+import javafx.animation.KeyFrame;   // for date and time
+import javafx.animation.Timeline;   // for date and time
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import map.FloorNumber;
 import map.HospitalMap;
 import map.Node;
@@ -28,39 +38,80 @@ import ui.MapViewer;
 import ui.PathID;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class MainController implements ControllableScreen, Observer{
     private ScreenController parent;
     private MapViewer mapViewer;
     private AnimatedCircle kioskIndicator;
-    private FloorNumber curerntFloor;
+    private FloorNumber currentFloor;
     private HospitalMap map;
     private ArrayList<Circle> indicators;
-    private Pane question;
     private Pane mapPane;
 
     @FXML
-    private JFXSlider slideBarZoom;
+    private HBox dropDownBox;
+
     @FXML
+    private JFXButton filterHeaderButton;
+
+    @FXML
+    private JFXButton nearestHeaderButton;
+
+    @FXML
+    private GridPane menuGridPane;
+
     private JFXButton bathFilterButton;
-    @FXML
+
     private JFXButton exitFilterButton;
-    @FXML
+
     private JFXButton elevatorFilterButton;
-    @FXML
+
     private JFXButton retailFilterButton;
-    @FXML
+
     private JFXButton stairsFilterButton;
+
+    private JFXButton bathNearestButton;
+
+    private JFXButton exitNearestButton;
+
+    private JFXButton elevatorNearestButton;
+
+    private JFXButton retailNearestButton;
+
+    private JFXButton stairsNearestButton;
+
+    private JFXNodesList filterList;
+
+    private JFXNodesList nearestList;
+
+    //Tutorial List
+    private JFXNodesList questionList;
+
+    //Tutorial Buttons
+    public JFXButton questionButton;
+
+    private JFXButton tutorialHelpButton;
+
+    private JFXButton feedbackAboutHelpButton;
+    
     @FXML
     private AnchorPane mainAnchorPane;
 
+    @FXML
+    private Label time;
+
+
     public void init() {
-        curerntFloor = FloorNumber.FLOOR_ONE;
+        currentFloor = FloorNumber.FLOOR_ONE;
         map = HospitalMap.getMap();
         mapViewer = new MapViewer(this, parent);
-        mapViewer.setFloor(curerntFloor);
+        mapViewer.setFloor(currentFloor);
         mapPane = mapViewer.getMapPane();
         indicators = new ArrayList<>();
         kioskIndicator = new AnimatedCircle();
@@ -70,6 +121,7 @@ public class MainController implements ControllableScreen, Observer{
         kioskIndicator.setFill(Color.rgb(0,84,153));
         kioskIndicator.setStroke(Color.rgb(40,40,60));
         kioskIndicator.setStrokeWidth(3);
+        initButtons();
 
         mapPane.getChildren().add(kioskIndicator);
         mainAnchorPane.getChildren().add(0,mapViewer.getMapViewerPane());
@@ -79,14 +131,160 @@ public class MainController implements ControllableScreen, Observer{
 
         mainAnchorPane.prefWidthProperty().bind(parent.prefWidthProperty());
         mainAnchorPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+        //display time of day on main screen
+        DateAndTime dnt = new DateAndTime();
+        dnt.getTime();
+    }
+
+    private int BUTTON_WIDTH = 85;
+    private int BUTTON_HEIGHT = 60;
+    private int BUTTON_SPACING = 65;
+
+
+    private JFXButton filterSpacer = new JFXButton();
+    private JFXButton nearestSpacer = new JFXButton();
+    private JFXButton questionSpacer = new JFXButton();
+    private void initButtons(){
+        filterList = new JFXNodesList();
+        nearestList = new JFXNodesList();
+        questionList = new JFXNodesList();
+        ArrayList<JFXButton> buttons = new ArrayList<>();
+        bathFilterButton = new JFXButton();
+        exitFilterButton = new JFXButton();
+        elevatorFilterButton = new JFXButton();
+        retailFilterButton = new JFXButton();
+        stairsFilterButton = new JFXButton();
+        bathNearestButton = new JFXButton();
+        exitNearestButton = new JFXButton();
+        elevatorNearestButton = new JFXButton();
+        retailNearestButton = new JFXButton();
+        stairsNearestButton = new JFXButton();
+
+        //Tutorial init
+        tutorialHelpButton = new JFXButton();
+        feedbackAboutHelpButton = new JFXButton();
+        
+        buttons.add(bathFilterButton);
+        buttons.add(exitFilterButton);
+        buttons.add(elevatorFilterButton);
+        buttons.add(retailFilterButton);
+        buttons.add(stairsFilterButton);
+        buttons.add(bathNearestButton);
+        buttons.add(exitNearestButton);
+        buttons.add(elevatorNearestButton);
+        buttons.add(retailNearestButton);
+        buttons.add(stairsNearestButton);
+        //Tutorial add
+        buttons.add(tutorialHelpButton);
+        buttons.add(feedbackAboutHelpButton);
+
+        filterList.addAnimatedNode(filterSpacer);
+        nearestList.addAnimatedNode(nearestSpacer);
+
+        //Tutorial question spacer
+        questionList.addAnimatedNode(questionSpacer);
+
+
+        filterHeaderButton.setOnAction(e ->  {
+            if(filterList.isExpanded()){
+                hideFilterButtons(e);
+            }
+            else{
+                showFilterButtons(e);
+            }
+                });
+        nearestHeaderButton.setOnAction(e -> {
+            if(nearestList.isExpanded()){
+                hideNearestButtons(e);
+            }
+            else{
+                showNearestButtons(e);
+            }
+        });
+
+        questionButton.setOnAction(e -> {
+            if(questionList.isExpanded()) {
+                hideQuestionButtons(e);
+            }
+            else {
+                showQuestionButtons(e);
+            }
+        });
+
+
+        for(int i = 0; i< 12; i++){
+            JFXButton b  = buttons.get(i);
+            b.setPrefSize(BUTTON_WIDTH,BUTTON_HEIGHT);
+            if(i < 5){
+                b.setOnAction(e -> filterButtonPressed(e));
+                filterList.addAnimatedNode(b);
+            }
+            else if((5 <= i) && (i <10)) {
+                b.setOnAction(e -> nearestPressed(e));
+                nearestList.addAnimatedNode(b);
+            }
+            else {
+                b.setOnAction(e -> questionPressed(e));
+                questionList.addAnimatedNode(b);
+            }
+        }
+        filterList.setSpacing(BUTTON_SPACING);
+        nearestList.setSpacing(BUTTON_SPACING);
+        //Tutorial
+        questionList.setSpacing(BUTTON_SPACING);
+        filterList.setVisible(false);
+        nearestList.setVisible(false);
+        //Tutorial
+        questionList.setVisible(false);
+
+        //hide when they disappear
+        filterList.getListAnimation(true).setOnFinished( e -> filterList.setVisible(false));
+        nearestList.getListAnimation(true).setOnFinished( e -> nearestList.setVisible(false));
+        //Tutorial
+        questionList.getListAnimation(true).setOnFinished(e -> questionList.setVisible(false));
+
+        filterList.setRotate(270); //open to the right
+        nearestList.setRotate(270);
+        //Tutorial
+        questionList.setRotate(270);
+
+        mainAnchorPane.getChildren().addAll(filterList, nearestList, questionList);
+        filterList.setLayoutX(30);
+        filterList.translateYProperty().bind(parent.prefHeightProperty().subtract(100).divide(3.0).subtract(50));
+
+
+        nearestList.setLayoutX(30);
+        nearestList.setLayoutY(70);
+
+        //Tutorial
+        questionList.setLayoutX(30);
+        questionList.translateYProperty().bind(parent.prefHeightProperty().subtract(-420).divide(3.0).subtract(-30));
+
+        bathFilterButton.setText("Restroom");
+        exitFilterButton.setText("Exit");
+        elevatorFilterButton.setText("Elevator");
+        retailFilterButton.setText("Retail");
+        stairsFilterButton.setText("Stairs");
+        bathNearestButton.setText("Restroom");
+        exitNearestButton.setText("Exit");
+        elevatorNearestButton.setText("Elevator");
+        retailNearestButton.setText("Retail");
+        stairsNearestButton.setText("Stairs");
+
+        //Tutorial
+        tutorialHelpButton.setText("Tutorial");
+        feedbackAboutHelpButton.setText("Feedback\n/ About");
+
     }
 
     public void onShow(){
+
         kioskIndicator.setCenterX(map.getKioskLocation().getX());
         kioskIndicator.setCenterY(map.getKioskLocation().getY());
-        setFloor(curerntFloor);
+        setFloor(currentFloor);
         mapViewer.centerView((int)kioskIndicator.getCenterX(), (int)kioskIndicator.getCenterY());
-        setZoom(0.8);
+        mapViewer.setZoom(0.8);
     }
 
     //Setters
@@ -95,9 +293,9 @@ public class MainController implements ControllableScreen, Observer{
     }
 
     private void setFloor(FloorNumber floor){
-        curerntFloor = floor;
+        currentFloor = floor;
         clearPressed(new ActionEvent());
-        if (curerntFloor.equals(map.getKioskLocation().getFloor())){
+        if (currentFloor.equals(map.getKioskLocation().getFloor())){
             kioskIndicator.setVisible(true);
         }
         else{
@@ -140,14 +338,56 @@ public class MainController implements ControllableScreen, Observer{
         }
     }
 
+    //time and date class
+    public class DateAndTime {
+        private int minute; //minute
+        private int hour;   //hour
+        private int second; //second
+        private int AM;     //int to detect am/pm
+
+        public DateAndTime(){
+            Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e ->{ //time line to keep track of time
+                //for (;;) {
+                //SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss aa");
+                //String strDateFormat = "HH:mm:ss a";
+                //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+                //using java calendar
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Calendar cal = Calendar.getInstance();
+                second = cal.get(Calendar.SECOND);  //get current second
+                minute = cal.get(Calendar.MINUTE);  //get current minute
+                hour = cal.get(Calendar.HOUR);  //get current hour
+                AM = cal.get(Calendar.AM_PM);   //get if AM/PM
+                String AM_String = new String ();   //convert int to string
+                if (AM == 0){
+                    AM_String = "AM";
+                }else{
+                    AM_String = "PM";
+                }
+                time.setText(dateFormat.format(cal.getTime()) + System.lineSeparator() + hour + ":" + (minute) + ":" + second + ' ' + AM_String);   //display time
+                //System.out.println(sdf.format(time));
+                // }
+            }),
+                    new KeyFrame(Duration.seconds(1))
+            );
+            clock.setCycleCount(Animation.INDEFINITE);
+            clock.play();
+        }
+        //end function
+
+        //get time for init function
+        public void getTime(){
+            //String strDateFormat = "HH:mm:ss a";
+            //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+            time.setText(hour + ":" + (minute) + ":" + second +  AM);
+            //System.out.println(sdf.format(time));
+        }
+
+    } //ending class
+
     //-----------------------HANDLE ACTIONS START--------------------------//
     public void clearMousePressed(MouseEvent e){
         clearPressed(new ActionEvent());
-    }
-
-    //adjusts map zoom through slider
-    public void sliderChanged(MouseEvent e){
-        mapViewer.setScale(slideBarZoom.getValue());
     }
 
     ////////////////////////////////////////////////////////////
@@ -158,21 +398,6 @@ public class MainController implements ControllableScreen, Observer{
         mapPane.getChildren().remove(0, size);
         mapPane.getChildren().addAll(mapViewer.getMapImage(), kioskIndicator);
         indicators.clear();
-    }
-
-    public void bathTypePressed(ActionEvent e){
-        //switch to kiosk floor
-        mapViewer.setFloor(map.getKioskLocation().getFloor());
-        kioskIndicator.setVisible(true);
-        //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "REST");
-        int size = path.getPath().size();
-        Node node = path.getPath().get(size - 1);
-        //if nearest node is on same floor as kiosk, make a circle
-        if(node.getFloor() == map.getKioskLocation().getFloor()){
-            Circle c = makeCircle(node);
-            mapPane.getChildren().add(c);
-        }
     }
 
     public void exitTypePressed(ActionEvent e){
@@ -188,14 +413,44 @@ public class MainController implements ControllableScreen, Observer{
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
+        //draw path to exit in directions screen
+        map.searchNodes=new ArrayList<>();
+        map.searchNodes.add(map.getKioskLocation());
+        map.searchNodes.add(node);
+        parent.setScreen(ScreenController.PathID,"LEFT");
+
     }
 
-    public void elevTypePressed(ActionEvent e){
+
+
+    public void nearestPressed(ActionEvent e){
         //switch to kiosk floor
+        clearPressed(e);
+        hideNearestButtons(e);
+        hideFilterButtons(e);
+        hideQuestionButtons(e);
         mapViewer.setFloor(map.getKioskLocation().getFloor());
         kioskIndicator.setVisible(true);
         //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "ELEV");
+        Path path;
+        if(e.getSource().equals(bathNearestButton)){
+            path = map.findNearest(map.getKioskLocation(), "REST");
+        }
+        else if(e.getSource().equals(elevatorNearestButton)){
+            path = map.findNearest(map.getKioskLocation(), "ELEV");
+        }
+        else if(e.getSource().equals(exitNearestButton)){
+            path = map.findNearest(map.getKioskLocation(), "EXIT");
+        }
+        else if(e.getSource().equals(retailNearestButton)){
+            path = map.findNearest(map.getKioskLocation(), "RETL");
+        }
+        else {
+            path = map.findNearest(map.getKioskLocation(), "STAI");
+        }
+
+        System.out.println("Nearest Pressed");
+
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
         //if nearest node is on same floor as kiosk, make a circle
@@ -203,55 +458,32 @@ public class MainController implements ControllableScreen, Observer{
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
+
     }
 
-    public void retailTypePressed(ActionEvent e){
-        //switch to kiosk floor
-        mapViewer.setFloor(map.getKioskLocation().getFloor());
-        kioskIndicator.setVisible(true);
-        //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "RETL");
-        int size = path.getPath().size();
-        Node node = path.getPath().get(size - 1);
-        //if nearest node is on same floor as kiosk, make a circle
-        if(node.getFloor() == map.getKioskLocation().getFloor()){
-            Circle c = makeCircle(node);
-            mapPane.getChildren().add(c);
-        }
-    }
 
-    public void stairsTypePressed(ActionEvent e){
-        //switch to kiosk floor
-        mapViewer.setFloor(map.getKioskLocation().getFloor());
-        kioskIndicator.setVisible(true);
-        //find nearest node of given type
-        Path path = map.findNearest(map.getKioskLocation(), "STAI");
-        int size = path.getPath().size();
-        Node node = path.getPath().get(size - 1);
-        //if nearest node is on same floor as kiosk, make a circle
-        if(node.getFloor() == map.getKioskLocation().getFloor()){
-            Circle c = makeCircle(node);
-            mapPane.getChildren().add(c);
-        }
-    }
 
     ////////////////////////////////////////////////////////////
     /////////////           Filter
     ////////////////////////////////////////////////////////////
     public void filterButtonPressed(ActionEvent e) {
         clearPressed(new ActionEvent());
+        hideNearestButtons(e);
+        hideFilterButtons(e);
+        hideQuestionButtons(e);
+        System.out.println("Filter Pressed");
         JFXButton pressed = (JFXButton) e.getSource();
         ArrayList<Node> filteredNodes = new ArrayList<Node>();
         if (pressed.equals(bathFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("REST")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("REST")));
         } else if (pressed.equals(exitFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("EXIT")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("EXIT")));
         } else if (pressed.equals(elevatorFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("ELEV")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("ELEV")));
         } else if (pressed.equals(retailFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("RETL")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("RETL")));
         } else if (pressed.equals(stairsFilterButton)) {
-            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(curerntFloor) && n.getType().equals("STAI")));
+            filteredNodes.addAll( map.getNodesBy(n -> n.getFloor().equals(currentFloor) && n.getType().equals("STAI")));
         }
         for (Node n: filteredNodes)
         {
@@ -259,6 +491,64 @@ public class MainController implements ControllableScreen, Observer{
             mapPane.getChildren().add(c);
         }
     }
+
+    public void showFilterButtons(ActionEvent e){
+            filterList.setVisible(true);
+            filterList.animateList(true);
+            filterSpacer.setVisible(false);
+
+    }
+    public void hideFilterButtons(ActionEvent e){
+        filterList.animateList(false);
+        PauseTransition pause = new PauseTransition(Duration.millis(100));
+        pause.setOnFinished( event -> filterList.setVisible(false));
+        pause.play();
+    }
+
+    public void showNearestButtons(ActionEvent e) {
+        nearestList.setVisible(true);
+        nearestList.animateList(true);
+        nearestSpacer.setVisible(false);
+    }
+
+    public void hideNearestButtons(ActionEvent e){
+            nearestList.animateList(false);
+            PauseTransition pause = new PauseTransition(Duration.millis(100));
+            pause.setOnFinished( event -> nearestList.setVisible(false));
+            pause.play();
+    }
+
+    //Tutorial hide and show
+    public void showQuestionButtons(ActionEvent e) {
+        questionList.setVisible(true);
+        questionList.animateList(true);
+        questionSpacer.setVisible(false);
+    }
+
+    public void hideQuestionButtons(ActionEvent e) {
+        questionList.animateList(false);
+        PauseTransition pause = new PauseTransition(Duration.millis(100));
+        pause.setOnFinished(event -> questionList.setVisible(false));
+        pause.play();
+    }
+
+    //////////////////////////////////////////
+    /////////       Tutorial
+    //////////////////////////////////////////
+    public void questionPressed(ActionEvent e) {
+        hideNearestButtons(e);
+        hideFilterButtons(e);
+        hideQuestionButtons(e);
+        System.out.println("Question Pressed");
+        JFXButton pressed = (JFXButton) e.getSource();
+        if(pressed.equals(tutorialHelpButton)){
+            parent.setScreen(ScreenController.HelpID, "HELP_IN");
+        }
+        else if(pressed.equals(feedbackAboutHelpButton)) {
+            parent.setScreen(ScreenController.FeedbackID, "LEFT");
+        }
+    }
+
 
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
@@ -268,25 +558,5 @@ public class MainController implements ControllableScreen, Observer{
     //when direction button is pressed go to directions screen
     public void directionPressed(ActionEvent e){
         parent.setScreen(ScreenController.PathID,"LEFT");
-    }
-
-    public void questionPressed(ActionEvent e) {
-        parent.setScreen(ScreenController.FeedbackID, "RIGHT");
-    }
-
-    //when + button is pressed zoom in map
-    public void zinPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()+0.2);
-    }
-
-    //when - button pressed zoom out map
-    public void zoutPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()-0.2);
-    }
-    //-----------------------HANDLE ACTIONS END----------------------------//
-
-    public void setZoom(double zoom){
-        slideBarZoom.setValue(zoom);
-        mapViewer.setScale(zoom);
     }
 }

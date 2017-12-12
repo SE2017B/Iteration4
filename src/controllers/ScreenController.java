@@ -12,20 +12,25 @@ import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import ui.ScreenMomento;
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
-public class ScreenController extends StackPane {
-    private Duration transitionTime = new Duration(800);
-    private Duration shortTransistionTime = new Duration(400);
-    private Duration transitionDelay = new Duration(200);
+public class ScreenController extends StackPane implements Initializable {
+    private Duration transitionTime = new Duration(500);
+    private Duration shortTransistionTime = new Duration(250);
+    private Duration transitionDelay = new Duration(0);
     private HashMap<String, Node> screens = new HashMap<String, Node>();
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
     private String state;
@@ -45,8 +50,15 @@ public class ScreenController extends StackPane {
     public static String RequestFile = "/fxml/Request.fxml";
     public static String LoginID = "Login";
     public static String LoginFile = "/fxml/Login.fxml";
+    public static String HelpID = "Help";
+    public static String HelpFile = "/fxml/AnimatedHelp.fxml";
     public static String FeedbackID = "Feedback";
     public static String FeedbackFile = "/fxml/Feedback.fxml";
+    public static String DirectionHelpID = "DirectionHelp";
+    public static String DirectionHelpFile = "/fxml/DirectionHelp.fxml";
+    public static String LoadID = "Load";
+    public static String LoadFile = "/fxml/Loading.fxml";
+
 
     public ScreenController(){
         super();
@@ -54,6 +66,9 @@ public class ScreenController extends StackPane {
         isPaused = false;
         timeout.setOnFinished(e -> {
             if(state != screenMomento.getState())
+                while(getChildren().size() > 1){
+                    getChildren().remove(0);
+                }
                 setScreen(screenMomento.getState());
             timeout.play();
         });
@@ -64,6 +79,38 @@ public class ScreenController extends StackPane {
     public void addScreen(String name, Node screen, ControllableScreen controller){
         screens.put(name,screen);
         controllers.put(name, controller);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+            System.out.println("Loading Splash");
+            AnchorPane pane = FXMLLoader.load(getClass().getResource((ScreenController.LoadFile)));
+            getChildren().setAll(pane);
+
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), pane);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.setCycleCount(1);
+
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), pane);
+            fadeOut.setFromValue(1);
+            fadeOut.setToValue(0);
+            fadeOut.setCycleCount(1);
+
+            fadeIn.play();
+
+            fadeIn.setOnFinished((e) -> {
+                fadeOut.play();
+            });
+
+            fadeOut.setOnFinished((e) -> {
+                setScreen(ScreenController.MainID);
+            });
+
+        } catch (IOException ex) {
+            System.out.println("Splash Failed");
+        }
     }
 
     //return a screen from the screens HashMap
@@ -134,9 +181,9 @@ public class ScreenController extends StackPane {
     }
 
     public boolean slideVerticalTransition(String name, String direction) {
-        int yPos = -800;
+        int yPos = -1 * (int)getHeight();
         if(direction.equals("DOWN"))
-            yPos = 800;
+            yPos = -1 * yPos;
         Timeline slide = new Timeline(
                 new KeyFrame(Duration.ZERO, // set start position at 0
                         new KeyValue(getChildren().get(1).translateYProperty(), 0)
@@ -155,41 +202,64 @@ public class ScreenController extends StackPane {
         return true;
     }
 
+    public boolean HelpTransitionIn(String name) {
+        int start = -1 * (int)getHeight();
+        int end = 0;
+        getChildren().add(1,screens.get(name));
+        controllers.get(name).onShow();
+        Timeline slide = new Timeline(
+                new KeyFrame(Duration.ZERO, // set start position at 0
+                        new KeyValue(getChildren().get(1).translateYProperty(), start)
+                ),
+                new KeyFrame(transitionTime, // set end position at 40s
+                        new KeyValue(getChildren().get(1).translateYProperty(), end)
+                )
+        );
+
+        slide.delayProperty().set(transitionDelay);
+        slide.play();
+        return true;
+    }
+
+
     public boolean setScreen(String name) {
         return setScreen(name,"FADE");
     }
 
     public boolean setScreen(String name, String transition){
-        if(screens.containsKey(name) && !getChildren().contains(screens.get(name))){
+        if(screens.containsKey(name) && !getChildren().contains(screens.get(name))) {
             state = name;
-            if(!getChildren().isEmpty()){
-                getChildren().add(0,screens.get(name));
-                controllers.get(name).onShow();
-                if(transition.equals("RIGHT")){
-                    return slideHorizontalTransition(name,transition);
-                }
-                else if (transition.equals("LEFT")){
-                    return slideHorizontalTransition(name,transition);
-                }
-                else if (transition.equals("LEFT")){
-                    return slideHorizontalTransition(name,transition);
-                }
-                else if (transition.equals("UP")){
-                    return slideVerticalTransition(name,transition);
-                }
-                else if (transition.equals("DOWN")){
-                    return slideVerticalTransition(name,transition);
-                }
-                else{
-                    return fadeTransition(name);
-                }
+            if (transition.equals("HELP_IN")) {
+                HelpTransitionIn(name);
+            }
+            else if (transition.equals("HELP_OUT")){
+                slideVerticalTransition(name, "UP");
             }
             else {
-                getChildren().add(screens.get(name));
-                controllers.get(name).onShow();
+                if (!getChildren().isEmpty()) {
+                    getChildren().add(0, screens.get(name));
+                    controllers.get(name).onShow();
+                    if (transition.equals("RIGHT")) {
+                        return slideHorizontalTransition(name, transition);
+                    } else if (transition.equals("LEFT")) {
+                        return slideHorizontalTransition(name, transition);
+                    } else if (transition.equals("LEFT")) {
+                        return slideHorizontalTransition(name, transition);
+                    } else if (transition.equals("UP")) {
+                        return slideVerticalTransition(name, transition);
+                    } else if (transition.equals("DOWN")) {
+                        return slideVerticalTransition(name, transition);
+                    } else {
+                        return fadeTransition(name);
+                    }
+                } else {
+                    getChildren().add(screens.get(name));
+                    controllers.get(name).onShow();
+                }
+                return true;
             }
-            return true;
         }
+
         return false;
     }
 

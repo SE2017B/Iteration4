@@ -5,6 +5,8 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -50,13 +52,20 @@
                         <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>
                   </JFXPasswordField>
-                  <JFXButton fx:id="enterButton" alignment="CENTER" onAction="#enterPressed" onKeyPressed="#enterPressedkey" text="Enter">
+                  <JFXButton fx:id="enterButton" alignment="CENTER" onAction="#enterPressed" onKeyPressed="#enterPressedkey" text="Enter" contentDisplay="RIGHT" graphicTextGap="8.0" scaleX="0.5" scaleY="0.5">
                      <font>
                         <Font size="33.0" />
                      </font>
                      <VBox.margin>
                         <Insets top="40.0" />
                      </VBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Icons/enterWhite.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </JFXButton>
                </children>
                <padding>
@@ -70,10 +79,17 @@
             </Label>
          </children>
       </GridPane>
-      <JFXButton fx:id="returnButton" onAction="#returnPressed" text="Return" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="60.0">
+      <JFXButton fx:id="returnButton" contentDisplay="RIGHT" graphicTextGap="8.0" onAction="#returnPressed" scaleX="0.5" scaleY="0.5" text="Return" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font size="29.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Icons/exitWhite.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </JFXButton>
    </children>
 </AnchorPane>

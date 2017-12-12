@@ -121,6 +121,8 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXDatePicker dateMenu;
     @FXML
+    private JFXTimePicker timeMenu;
+    @FXML
     private ChoiceBox<Node> locationChoiceBox;
     @FXML
     private AnchorPane servicePane1;
@@ -328,9 +330,11 @@ public class RequestController implements ControllableScreen{
     }
 
     public void runAPI(Node desNode){
+
 //        Stage primaryStage = new Stage();
 //        SanitationService api = SanitationService.newInstance(primaryStage);
 //        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+
     }
 
     public void cancelPressedAPI(ActionEvent e){
@@ -339,45 +343,65 @@ public class RequestController implements ControllableScreen{
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
         parent.resumeTimeout();
     }
-
-//    creates a service request, and then sends it to the staff member
-
+//
+    //creates a service request, and then sends it to the staff member
 //    public void requestCreatePressed(ActionEvent e){
-//        requestIDCount++;
-//        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), "", dateMenu.getValue().toString(), choiceBoxStaff.getValue());
-//        System.out.println("request submitted");
-//        nReq.setInputData(currentServiceController.getInputData());
-//        //choiceBoxStaff.getValue().addRequest(nReq);
 //
-//        resolveServiceListView.getItems().clear();
-//        resolveServiceListView.getItems().addAll(FXCollections.observableList(depSub.getCurrentLoggedIn().getAllRequest()));
-//        //resolveServiceListView.getItems().add(nReq);
-//        //fillInServiceSpecificRecs();
-//        parent.resumeTimeout();
+//        if( choiceBoxService.getValue() != null &&
+//                choiceBoxStaff.getValue() != null && timeMenu.getValue() != null &&
+//                dateMenu.getValue() != null && locationChoiceBox.getValue() != null){
+//
+//            requestIDCount++;
+//            ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), "", dateMenu.getValue().toString(), choiceBoxStaff.getValue());
+//            System.out.println("request submitted");
+//            nReq.setInputData(currentServiceController.getInputData());
+//            //choiceBoxStaff.getValue().addRequest(nReq);
+//
+//            resolveServiceListView.getItems().clear();
+//            resolveServiceListView.getItems().addAll(FXCollections.observableList(depSub.getCurrentLoggedIn().getAllRequest()));
+//            //resolveServiceListView.getItems().add(nReq);
+//            //fillInServiceSpecificRecs();
+//
+//
+//        }
+//        else{ //make them jiggle
+//            ShakeTransition s = new ShakeTransition();
+//            if(choiceBoxService.getValue() == null){
+//                s.shake(choiceBoxService);
+//            }
+//            //how do I get these values when they're part of a different fxml?
+//            if(choiceBoxService.getValue().toString().equals("Translation service")){
+//                //if the language choice box is empty, shake
+//                //if the duration text field is empty, shake
+//            }
+//            if(choiceBoxService.getValue().toString().equals("Transportation service")){
+//                //if the end location choice box is empty, shake
+//            }
+//            if(choiceBoxService.getValue().toString().equals("Sanitation")){
+//                //if the task choice box is empty, shake
+//            }
+//            if(choiceBoxService.getValue().toString().equals("Food Delivery Service")){
+//                //if the entree choice box is empty, shake
+//                //if the allergies text field is empty, shake
+//            }
+//            if(choiceBoxStaff.getValue() == null){
+//                s.shake(choiceBoxStaff);
+//            }
+//            if(dateMenu.getValue() == null){
+//                s.shake(dateMenu);
+//            }
+//            if(timeMenu.getValue() == null){
+//                s.shake(timeMenu);
+//            }
+//            if(locationChoiceBox.getValue() == null){
+//                s.shake(locationChoiceBox);
+//            }
+//        }
+//
 //
 //    }
 //
-//    public void cancelPressed(ActionEvent e){
-//        //clear choiceboxes
-//        choiceBoxStaff.setItems(FXCollections.observableList(new ArrayList<Staff>()));
-//        choiceBoxStaff.setValue(null);
-//        choiceBoxService.setItems(FXCollections.observableList(new ArrayList<Service>()));
-//        choiceBoxService.setValue(null);
-//        choiceBoxService.setDisable(true);
-//        choiceBoxStaff.setDisable(true);
 //
-//
-//        //clear time and date
-//        //timeMenu.getEditor().clear();
-//        dateMenu.getEditor().clear();
-//
-//        parent.resumeTimeout();
-//        //repopulate location choice box
-//        locationChoiceBox.setItems(FXCollections.observableList(
-//                map.getNodesBy(n -> !n.getType().equals("HALL"))));
-//    }
-
-
 
     public void logoutPressed(ActionEvent e){
         parent.setScreen(ScreenController.LogoutID);
@@ -391,10 +415,9 @@ public class RequestController implements ControllableScreen{
         parent.resumeTimeout();
     }
 
-    public void selectAlgorithmPath(ActionEvent e){
-        selectedAlg = ((MenuItem)e.getSource()).getText();
+    public void selectAlgorithmPath(ActionEvent e) {
+        selectedAlg = ((MenuItem) e.getSource()).getText();
         menuButtonAl.setText(selectedAlg);
-
         parent.resumeTimeout();
     }
 
@@ -535,7 +558,9 @@ public class RequestController implements ControllableScreen{
     }
 
     @FXML
-    void searchbuttonPressed(ActionEvent event) {}
+    void searchbuttonPressed(ActionEvent event) {
+        //make sure to add shake transition when field is empty
+    }
 
     @FXML
     void pieChartCreate() {
@@ -625,6 +650,42 @@ public class RequestController implements ControllableScreen{
             settingsRipple.setRipplerFill(Color.DARKRED);
             settingsRipple.createManualRipple().run();
             s.shake(timeoutTextField);
+        }
+    }
+
+    private class FeedbackSystem{
+        ArrayList<Feedback> cache;
+        public FeedbackSystem(){
+            cache = new ArrayList<>();
+        }
+
+        public void submitFeedback(String message, int rating){
+            //TODO get database commands for submitting the message and rating to the system
+            Feedback temp = new Feedback(message, rating);
+            this.cache.add(temp);
+        }
+
+        public ArrayList<Feedback> getCache() {
+            return cache;
+        }
+
+        //Encapsulates Feedback helper object
+        private class Feedback{
+            private final String message;
+            private final int rating;
+
+            Feedback(String message, int rating){
+                this.message = message;
+                this.rating = rating;
+            }
+
+            public String getMessage() {
+                return message;
+            }
+
+            public int getRating() {
+                return rating;
+            }
         }
     }
 }

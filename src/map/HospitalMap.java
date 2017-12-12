@@ -30,6 +30,9 @@ public class HospitalMap{
     private static HospitalMap map;
     private Node kioskLocation;
 
+    //variable to help with emergency exit
+    public ArrayList<Node> searchNodes;
+
     //Constructors
     private HospitalMap() {
         nodeMap = new ArrayList<>();
@@ -44,6 +47,8 @@ public class HospitalMap{
         posSerchStrat.add(new DijkstrasSearch());
         nodeMap.addAll(nodeDatabase.getNodes());
         edgeMap.addAll(edgeDatabase.getEdges());
+        //set up emergency exit
+        searchNodes= new ArrayList<>();
 
         try {
             // place the kiosk at the main info desk
@@ -248,6 +253,11 @@ public class HospitalMap{
     public List<Node> getNodesInVertical(int x, int y, FloorNumber floor){
         return getNodesBy(n -> n.getFloor().equals(floor) && (n.getX() > (x-AREA_WINDOW)) && (n.getX() < (x+AREA_WINDOW))
                                 && (n.getY() > (y - AREA_SIZE))  && (n.getY() < (y + AREA_SIZE)));
+    }
+    private int CLICK_SIZE = 25;
+    public List<Node> getNodesInArea(int x, int y, FloorNumber floor){
+        return getNodesBy(n -> n.getFloor().equals(floor) && (n.getX() > (x-CLICK_SIZE)) && (n.getX() < (x+CLICK_SIZE))
+                && (n.getY() > (y - CLICK_SIZE))  && (n.getY() < (y + CLICK_SIZE)));
     }
 
     //Fuzzy Search Algorithm
