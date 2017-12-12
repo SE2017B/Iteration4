@@ -74,9 +74,7 @@ public class edgeDatabase {
                     "(edgeID VARCHAR(21)," +
                     "startNode VARCHAR(20)," +
                     "endNode VARCHAR(20)," +
-                    "CONSTRAINT edges_PK PRIMARY KEY (edgeID)," +
-                    "CONSTRAINT edges_FK1 FOREIGN KEY (startNode) REFERENCES NODES(NODEID)," +
-                    "CONSTRAINT edges_FK2 FOREIGN KEY (endNode) REFERENCES NODES(NODEID))");
+                    "CONSTRAINT edges_PK PRIMARY KEY (edgeID))");
 
             int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
             System.out.println("Create Edges table Successful!");
