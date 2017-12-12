@@ -139,7 +139,6 @@ public class edgeDatabase {
             addAnyEdge.setString(3, anyEdge.getNodeTwo().getID());
 
             addAnyEdge.executeUpdate();
-            System.out.printf("Insert Edge Successful for edgeID: %-21s\n", anyEdge.getID());
 
             conn.commit();
             addAnyEdge.close();
@@ -164,8 +163,8 @@ public class edgeDatabase {
 
             PreparedStatement modDropEdge = conn.prepareStatement(strModDrop);
             modDropEdge.setString(1, anyEdge.getID());
-
             modDropEdge.executeUpdate();
+
             conn.commit();
             modDropEdge.close();
 
@@ -175,9 +174,9 @@ public class edgeDatabase {
             modAddEdge.setString(3, anyEdge.getNodeTwo().getID());
 
             conn.commit();
-            System.out.println("Update Edge Successful!");
             modAddEdge.close();
             conn.close();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -193,13 +192,9 @@ public class edgeDatabase {
             conn.getMetaData();
 
             String strDelEdge = "DELETE FROM edges WHERE edgeID = ?";
-
             PreparedStatement deleteAnyEdge = conn.prepareStatement(strDelEdge);
-
             deleteAnyEdge.setString(1, anyEdge.getID());
-
             deleteAnyEdge.executeUpdate();
-            System.out.println("Delete Edge Successful");
 
             conn.commit();
             deleteAnyEdge.close();
@@ -288,7 +283,7 @@ public class edgeDatabase {
                         Edge edge = new Edge(edgeValues[0], tempOne, tempTwo);
                         allEdges.add(edge);
                     } else {
-                        System.out.println("Error");
+                        System.out.println("Error: Could not find a valid edge");
                     }
                 } else {
                     count++;
