@@ -34,14 +34,17 @@ public class Main extends Application {
         root.minWidth(800);
         root.minHeight(400);
 
-        ScreenController myScreenController = new ScreenController();
+
 
         String  style= getClass().getResource("/fxml/SceneStyle.css").toExternalForm();
         scene.getStylesheets().add(style);
         primaryStage.setScene(scene);
         primaryStage.setWidth(1280);
         primaryStage.setHeight(800);
+        primaryStage.show();
 
+
+        ScreenController myScreenController = new ScreenController();
         EventHandler reset = new EventHandler<InputEvent>() {
             @Override
             public void handle(InputEvent event){
@@ -50,11 +53,11 @@ public class Main extends Application {
         scene.addEventFilter(MouseEvent.MOUSE_MOVED, reset);
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, reset);
         scene.addEventFilter(KeyEvent.KEY_TYPED, reset);
-        primaryStage.show();
 
-        root.getChildren().addAll(myScreenController);
+        root.getChildren().setAll(myScreenController);
         myScreenController.prefHeightProperty().bind(scene.heightProperty());
         myScreenController.prefWidthProperty().bind(scene.widthProperty());
+
 
         myScreenController.loadScreen(ScreenController.AddNodeID, ScreenController.AddNodeFile);
         myScreenController.loadScreen(ScreenController.LogoutID, ScreenController.LogoutFile);
