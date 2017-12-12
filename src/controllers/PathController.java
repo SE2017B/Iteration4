@@ -533,6 +533,10 @@ public class PathController implements ControllableScreen, Observer{
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
         ArrayList<String> directions = thePath.findDirections();
+        System.out.println(directions);
+        System.out.println(directions.size());
+        System.out.println(thePath.getPathByDirections());
+        System.out.println(thePath.getPathByDirections().size());
         directionsList.setItems(FXCollections.observableList(directions));
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
