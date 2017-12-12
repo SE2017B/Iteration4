@@ -1,12 +1,18 @@
+/*
+* Software Engineering 3733, Worcester Polytechnic Institute
+* Team H
+* Code produced for Iteration 4
+* The following code
+*/
 package DepartmentSubsystem;
 
 public class Feedback {
 
-    private int feedbackID;
-    private int rating;
-    private String additionalInfo;
+    private int feedbackID; //each feedback has specific ID
+    private int rating; //rating bar
+    private String additionalInfo;  //descriptive info
 
-
+    //contructor
     public Feedback(int feedbackID, int rating, String additionalInfo) {
         this.feedbackID = feedbackID;
         this.rating = rating;

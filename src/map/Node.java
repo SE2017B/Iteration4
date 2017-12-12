@@ -9,6 +9,7 @@
 package map;
 
 import database.nodeDatabase;
+
 import java.util.ArrayList;
 
 public class Node{
@@ -71,8 +72,7 @@ public class Node{
         //scale factor weights the z component so that the path wants to be on the right floor, and it doesn't want to leave it
         //(may need to increase this value)
         double zDeltaSquared =  Math.pow((this.floor.getNodeMapping() - otherNode.getFloor().getNodeMapping()), 2) * 10000;
-        double distance = Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
-        return distance;
+        return Math.sqrt(xDeltaSquared + yDeltaSquared + zDeltaSquared);
     }
 
     //Getters

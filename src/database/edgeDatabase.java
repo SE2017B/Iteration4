@@ -4,6 +4,7 @@ import map.Edge;
 import map.Node;
 
 import java.io.*;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,7 +23,9 @@ public class edgeDatabase {
     static ArrayList<Edge> allEdges = new ArrayList<>();
 
     // Getter for ArrayList of all Edges
-    public static ArrayList<Edge> getEdges(){ return allEdges; }
+    public static ArrayList<Edge> getEdges() {
+        return allEdges;
+    }
 
     ///////////////////////////////////////////////////////////////////////////////
     // Delete edge table
@@ -71,18 +74,15 @@ public class edgeDatabase {
                     "(edgeID VARCHAR(21)," +
                     "startNode VARCHAR(20)," +
                     "endNode VARCHAR(20)," +
-                    "CONSTRAINT edges_PK PRIMARY KEY (edgeID)," +
-                    "CONSTRAINT edges_FK1 FOREIGN KEY (startNode) REFERENCES NODES(NODEID)," +
-                    "CONSTRAINT edges_FK2 FOREIGN KEY (endNode) REFERENCES NODES(NODEID))");
+                    "CONSTRAINT edges_PK PRIMARY KEY (edgeID))");
 
-                int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
-                System.out.println("Create Edges table Successful!");
+            int rsetCreate2 = stmtCreate2.executeUpdate(createEdgesTable);
+            System.out.println("Create Edges table Successful!");
 
-                conn.commit();
-                System.out.println();
+            conn.commit();
 
-                stmtCreate2.close();
-                conn.close();
+            stmtCreate2.close();
+            conn.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,12 +109,10 @@ public class edgeDatabase {
                 insertEdge.setString(3, allEdges.get(j).getNodeTwo().getID());
 
                 insertEdge.executeUpdate();
-                System.out.printf("%-5d: Insert Edge Successful!\n",(j+1));
+                System.out.printf("%-5d: Insert Edge Successful!\n", (j + 1));
             }
 
             conn.commit();
-            System.out.println();
-
             insertEdge.close();
             conn.close();
 
@@ -143,8 +141,6 @@ public class edgeDatabase {
             System.out.printf("Insert Edge Successful for edgeID: %-21s\n", anyEdge.getID());
 
             conn.commit();
-            System.out.println();
-
             addAnyEdge.close();
             conn.close();
 
@@ -230,7 +226,6 @@ public class edgeDatabase {
             String strStartNode;
             String strEndNode;
 
-            System.out.println("");
             System.out.printf("%-30s %-20s %-20s\n", "edgeID", "startNode", "endNode");
 
             //Process the results
@@ -243,8 +238,6 @@ public class edgeDatabase {
             } // End While
 
             conn.commit();
-            System.out.println();
-
             rsetAllEdges.close();
             selectAllEdges.close();
             conn.close();
@@ -259,55 +252,56 @@ public class edgeDatabase {
     // Read from Edges CSV File and store columns in array lists
     ///////////////////////////////////////////////////////////////////////////////
     public static void readEdgesCSV(String fname) {
-            int count = 0;
-            InputStream in = Class.class.getResourceAsStream(fname);
-            if (in == null) {
-                System.out.println("\n\n\nEdge help\n\n\n");
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        int count = 0;
 
-            try {
+        InputStream in = Class.class.getResourceAsStream(fname);
+        if (in == null) {
+            System.out.println("Error: Could not find the file: " + fname);
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-                for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+        try {
 
-                    int nodeOne = 0, nodeTwo = 0;
-                    Node tempOne = null, tempTwo = null;
-                    String[] edgeValues = line.split(",");
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 
-                    if (count != 0) {
+                int nodeOne = 0, nodeTwo = 0;
+                Node tempOne = null, tempTwo = null;
+                String[] edgeValues = line.split(",");
 
-                        nodeOne = nodeDatabase.allNodes.indexOf(new Node(edgeValues[1], "-1", "-1", null, null, null, null, null, null));
+                if (count != 0) {
 
-                        if (nodeOne < 0) {
-                            System.out.println(nodeOne + "Error: invalid edge 1" + edgeValues[1]);
-                        } else {
-                            tempOne = nodeDatabase.allNodes.get(nodeOne);
-                        }
-                        nodeTwo = nodeDatabase.allNodes.indexOf(new Node(edgeValues[2], "-1", "-1", null, null, null, null, null, null));
-                        if (nodeTwo < 0) {
-                            System.out.println("Error: invalid edge 2" + edgeValues[2]);
-                        } else {
-                            tempTwo = nodeDatabase.allNodes.get(nodeTwo);
-                        }
-                        if (tempOne != null && tempTwo != null) {
-                            Edge edge = new Edge(edgeValues[0], tempOne, tempTwo);
-                            allEdges.add(edge);
-                        } else {
-                            System.out.println("Error");
-                        }
+                    nodeOne = nodeDatabase.allNodes.indexOf(new Node(edgeValues[1], "-1", "-1", null, null, null, null, null, null));
+
+                    if (nodeOne < 0) {
+                        System.out.println(nodeOne + "Error: invalid edge 1" + edgeValues[1]);
                     } else {
-                        count++;
+                        tempOne = nodeDatabase.allNodes.get(nodeOne);
                     }
+                    nodeTwo = nodeDatabase.allNodes.indexOf(new Node(edgeValues[2], "-1", "-1", null, null, null, null, null, null));
+                    if (nodeTwo < 0) {
+                        System.out.println("Error: invalid edge 2" + edgeValues[2]);
+                    } else {
+                        tempTwo = nodeDatabase.allNodes.get(nodeTwo);
+                    }
+                    if (tempOne != null && tempTwo != null) {
+                        Edge edge = new Edge(edgeValues[0], tempOne, tempTwo);
+                        allEdges.add(edge);
+                    } else {
+                        System.out.println("Error");
+                    }
+                } else {
+                    count++;
                 }
-            } catch (IOException e1) {
-                e1.printStackTrace();
             }
-            try {
-                reader.close();
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        try {
+            reader.close();
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -315,7 +309,7 @@ public class edgeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputEdgesCSV() {
 
-        String outEdgesFileName = "outputEdges.csv";
+        String outEdgesFileName = "src/csv/outputEdges.csv";
 
         try {
             FileWriter fw2 = new FileWriter(outEdgesFileName, false);
@@ -330,13 +324,13 @@ public class edgeDatabase {
                         allEdges.get(j).getNodeOne().getID() + "," +
                         allEdges.get(j).getNodeTwo().getID()
                 );
-
-                System.out.printf("%-5d: Edge Record Saved!\n", j);
             }
 
-            System.out.println();
             pw2.flush();
             pw2.close();
+            bw2.close();
+            fw2.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

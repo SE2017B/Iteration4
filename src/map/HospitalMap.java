@@ -19,6 +19,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static sun.swing.MenuItemLayoutHelper.isColumnLayout;
 import static sun.swing.MenuItemLayoutHelper.max;
 
 public class HospitalMap{
@@ -41,6 +42,7 @@ public class HospitalMap{
         posSerchStrat.add(new AStarSearch());
         posSerchStrat.add(new BeamSearch(3));
         posSerchStrat.add(new BreadthFirstSearch());
+        posSerchStrat.add(new BestFirstSearch());
         posSerchStrat.add(new DepthFirstSearch());
         posSerchStrat.add(new DijkstrasSearch());
         nodeMap.addAll(nodeDatabase.getNodes());
@@ -69,6 +71,19 @@ public class HospitalMap{
             map = new HospitalMap();
         }
         return map;
+    }
+
+    public HashMap<Edge, ArrayList<Node>> getCopy(){
+        HashMap<Edge, ArrayList<Node>> newMap = new HashMap<>();
+        for(Edge edge : edgeMap){
+            Node oldOne = edge.getNodeOne();
+            Node oldTwo = edge.getNodeTwo();
+            Node newNodeOne = new Node(oldOne.getID(), Integer.toString(oldOne.getX()), Integer.toString(oldOne.getY()), oldOne.getFloor().getDbMapping(), oldOne.getBuilding(), oldOne.getType(), oldOne.getLongName(), oldOne.getShortName(), oldOne.getTeam());
+            Node newNodeTwo = new Node(oldTwo.getID(), Integer.toString(oldTwo.getX()), Integer.toString(oldTwo.getY()), oldTwo.getFloor().getDbMapping(), oldTwo.getBuilding(), oldTwo.getType(), oldTwo.getLongName(), oldTwo.getShortName(), oldTwo.getTeam());
+            Edge newEdge = new Edge(newNodeOne, newNodeTwo);
+            newMap.put(newEdge, new ArrayList<Node>(Arrays.asList(newNodeOne, newNodeTwo)));
+        }
+        return newMap;
     }
 
     //Helper Methods
@@ -170,6 +185,14 @@ public class HospitalMap{
         return search.findPathPitStop(stops);
     }
 
+    public void setNodeMap(ArrayList<Node> nodes){
+        this.nodeMap = nodes;
+    }
+
+    public void setEdgeMap(ArrayList<Edge> edges){
+        this.edgeMap = edges;
+    }
+
     //Getters
     public ArrayList<Node> getNodeMap() {
         return nodeMap;
@@ -187,6 +210,10 @@ public class HospitalMap{
         return output;
     }
 
+    public Edge getEdge(Edge edge){
+        return this.edgeMap.get(this.edgeMap.indexOf(edge));
+    }
+
     public SearchStrategy getSearchStrategy() {return search.getStrategy();}
     public ArrayList<SearchStrategy> getSearches() {
         return posSerchStrat;
@@ -202,7 +229,10 @@ public class HospitalMap{
     public List<Node> getNodesByText(String text){
         HashMap<Node, Integer> distances = new HashMap<>();
         for(Node n : nodeMap) distances.put(n, DLDistance(text, n));
-        return this.nodeMap.stream().filter(n1 -> DLDistance(text, n1) != 0).filter(n1 -> !n1.getLongName().toLowerCase().contains("hall")).sorted(Comparator.comparing(distances::get)).collect(Collectors.toList());
+        System.out.println(distances.keySet().stream().sorted(Comparator.comparing(distances::get)).collect(Collectors.toList()));
+        List<Integer> numbers = distances.values().stream().sorted().collect(Collectors.toList());
+        System.out.println(numbers);
+        return this.nodeMap.stream().filter(n1 -> !n1.getLongName().toLowerCase().contains("hall")).sorted(Comparator.comparing(distances::get)).collect(Collectors.toList());
     }
 
     //Setters
@@ -235,12 +265,11 @@ public class HospitalMap{
     public int DLDistance(String text, Node node) {
         String newText = text.toLowerCase();
         int runningMax = 10000000;
-        ArrayList<String> strings = new ArrayList<>(Arrays.asList(node.getID(), node.getLongName(), node.getShortName(), node.getBuilding(), node.getType()));
+        ArrayList<String> strings = new ArrayList<>(Arrays.asList(node.getID(), node.getLongName(), node.getShortName(), node.getBuilding()));
         for(String string : strings) {
             if (text.length() == 0) return runningMax;
             String newString = string.toLowerCase();
             int[][] distance = new int[text.length() + 1][string.length() + 1];
-            int maxLength = text.length() + string.length();
             for(int i=0;i<=newText.length();i++) distance[i][0] = i;
             for(int i=0;i<=newString.length();i++) distance[0][i] = i;
             for(int i=1;i<=newText.length();i++){
