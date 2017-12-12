@@ -17,17 +17,17 @@
    <children>
       <AnchorPane fx:id="mainAnchorPane" layoutX="-5.0" minHeight="400.0" minWidth="800.0" styleClass="pane">
          <children>
-            <Button accessibleRole="IMAGE_VIEW" layoutX="436.0" layoutY="382.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="76.0" prefWidth="209.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <Button accessibleRole="IMAGE_VIEW" contentDisplay="TOP" layoutX="436.0" layoutY="382.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="83.0" prefWidth="212.0" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="19.0">
                <graphic>
-                  <Label fx:id="time" alignment="CENTER" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="203.0" textAlignment="CENTER">
+                  <Label fx:id="time" alignment="TOP_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="215.0" textAlignment="CENTER">
                      <font>
-                        <Font size="19.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
                </graphic>
             </Button>
             <StackPane AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="90.0" />
-            <Label alignment="CENTER" layoutX="577.0" layoutY="551.0" prefHeight="10.0" prefWidth="209.0" text="© Brigham and Women's Hospital" textFill="#fcfcfc" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+            <Label alignment="CENTER" layoutX="565.0" layoutY="549.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="221.0" text="© Brigham and Women's Hospital" textFill="#fcfcfc" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="14.0">
                <font>
                   <Font size="12.0" />
                </font>
