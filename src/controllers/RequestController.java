@@ -12,6 +12,7 @@ import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 //import api.SanitationService;
 import com.jfoenix.controls.*;
+import database.serviceDatabase;
 import database.staffDatabase;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -20,6 +21,8 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Side;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -30,6 +33,8 @@ import search.SearchStrategy;
 import ui.ShakeTransition;
 
 import java.util.ArrayList;
+
+import static java.awt.Color.black;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
@@ -136,6 +141,48 @@ public class RequestController implements ControllableScreen{
     @FXML
     private ChoiceBox<Service> addStaffServiceChoiceBox;
 
+    @FXML
+    private Label lblFeedbackRating;
+
+    @FXML
+    private Label lblFeedbackTitle;
+
+    @FXML
+    private JFXListView<Feedback> feedbackListView;
+
+    @FXML
+    private PieChart feedbackPieChart;
+
+    @FXML
+    private BarChart<String, Number> feedbackBarChart;
+
+    @FXML
+    private CategoryAxis xBarChart;
+
+    @FXML
+    private NumberAxis yBarChart;
+
+    @FXML
+    private LineChart<String, Number> feedbackLineChart;
+
+    @FXML
+    private CategoryAxis xLineChart;
+
+    @FXML
+    private NumberAxis yLineChart;
+
+    @FXML
+    private Tab pieChartTab;
+
+    @FXML
+    private Tab barChartTab;
+
+    @FXML
+    private Tab lineChartTab;
+
+    @FXML
+    private JFXTabPane chartTabPane;
+
     public void init(){
         depSub = DepartmentSubsystem.getSubsystem();
         map = HospitalMap.getMap();
@@ -194,6 +241,19 @@ public class RequestController implements ControllableScreen{
 
         staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
         addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
+
+        lblFeedbackRating.setStyle("-fx-background-color: rgb(40,40,60)");
+        lblFeedbackRating.setText(serviceDatabase.avgFeedback());
+
+        lblFeedbackTitle.setStyle("-fx-background-color: rgb(40,40,60)");
+        lblFeedbackTitle.setText("Feedback Charts");
+
+        feedbackListView.setItems(FXCollections.observableList(serviceDatabase.getAllFeedbacks()));
+
+        // Populate Feedback Charts
+        pieChartCreate();
+        lineChartCreate();
+        barChartCreate();
     }
 
     public void setParentController(ScreenController parent){
@@ -372,6 +432,68 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void searchbuttonPressed(ActionEvent event) {}
+
+    @FXML
+    void pieChartCreate() {
+
+        // Setting up the Pie Chart on Feedback tab
+        feedbackPieChart.setLabelLineLength(10);
+        feedbackPieChart.setLegendSide(Side.RIGHT);
+        feedbackPieChart.setData(serviceDatabase.cntFeedback());
+    }
+
+    @FXML
+    void lineChartCreate() {
+
+        ArrayList<Integer> tempLineArray = serviceDatabase.cntChartFeedback();
+
+        XYChart.Series<String, Number> aLineChart = new XYChart.Series<>();
+        aLineChart.getData().add(new XYChart.Data<String,Number>("0", tempLineArray.get(0)));
+        aLineChart.getData().add(new XYChart.Data<String,Number>("1", tempLineArray.get(1)));
+        aLineChart.getData().add(new XYChart.Data<String,Number>("2", tempLineArray.get(2)));
+        aLineChart.getData().add(new XYChart.Data<String,Number>("3", tempLineArray.get(3)));
+        aLineChart.getData().add(new XYChart.Data<String,Number>("4", tempLineArray.get(4)));
+        aLineChart.getData().add(new XYChart.Data<String,Number>("5", tempLineArray.get(5)));
+        aLineChart.setName("Number of Ratings");
+
+        xLineChart.setLabel("Feedback Rating");
+        yLineChart.setLabel("Number of Ratings");
+        feedbackLineChart.getData().add(aLineChart);
+    }
+
+    @FXML
+    void barChartCreate() {
+
+        ArrayList<Integer> tempLineArray2 = serviceDatabase.cntChartFeedback();
+
+        XYChart.Series<String, Number> aBarChart = new XYChart.Series<>();
+        aBarChart.getData().add(new XYChart.Data<String,Number>("0", tempLineArray2.get(0)));
+        aBarChart.getData().add(new XYChart.Data<String,Number>("1", tempLineArray2.get(1)));
+        aBarChart.getData().add(new XYChart.Data<String,Number>("2", tempLineArray2.get(2)));
+        aBarChart.getData().add(new XYChart.Data<String,Number>("3", tempLineArray2.get(3)));
+        aBarChart.getData().add(new XYChart.Data<String,Number>("4", tempLineArray2.get(4)));
+        aBarChart.getData().add(new XYChart.Data<String,Number>("5", tempLineArray2.get(5)));
+        aBarChart.setName("Number of Ratings");
+
+        xBarChart.setLabel("Feedback Rating");
+        yBarChart.setLabel("Number of Ratings");
+        feedbackBarChart.getData().addAll(aBarChart);
+
+    }
+/*
+    @FXML
+    void changeChartTitlePie(ActionEvent event) {
+        lblFeedbackTitle.setText("Feedback Pie Chart");
+    }
+    @FXML
+    void changeChartTitleLine(ActionEvent event) {
+        lblFeedbackTitle.setText("Feedback Line Chart");
+    }
+    @FXML
+    void changeChartTitleBar(ActionEvent event) {
+        lblFeedbackTitle.setText("Feedback Bar Chart");
+    }
+*/
 
     //////////////////////////////////////////////////////////
     /////////           Settings Tab                 /////////

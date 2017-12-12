@@ -111,7 +111,6 @@ public class edgeDatabase {
                 insertEdge.setString(3, allEdges.get(j).getNodeTwo().getID());
 
                 insertEdge.executeUpdate();
-                System.out.printf("%-5d: Insert Edge Successful!\n", (j + 1));
             }
 
             conn.commit();

@@ -141,7 +141,6 @@ public class nodeDatabase {
                 insertNode.setString(9, nodeDatabase.allNodes.get(j).getTeam());
 
                 insertNode.executeUpdate();
-                System.out.printf("%-5d: Insert Node Successful!\n", (j + 1));
             }
 
             conn.commit();

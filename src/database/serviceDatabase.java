@@ -2,10 +2,15 @@ package database;
 
 import DepartmentSubsystem.Feedback;
 import DepartmentSubsystem.ServiceRequest;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import translation.Staff;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Observable;
 
 public class serviceDatabase {
 
@@ -32,6 +37,8 @@ public class serviceDatabase {
     public static ArrayList<Feedback> getAllFeedbacks(){
         return allFeedbacks;
     }
+
+    //public static ArrayList<PieChart.Data> allPieData = new ArrayList<>();
 
     ///////////////////////////////////////////////////////////////////////////////
     // Delete serviceRequests table
@@ -168,13 +175,13 @@ public class serviceDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement addAnyFeedback = conn.prepareStatement("INSERT INTO serviceRequests VALUES (?, ?, ?)");
+            PreparedStatement addAnyFeedback = conn.prepareStatement("INSERT INTO FEEDBACK VALUES (?, ?, ?)");
 
             addAnyFeedback.setInt(1, anyFeedback.incFeedbackID());
-            addAnyFeedback.setInt(2, anyFeedback.getFeedbackID());
+            addAnyFeedback.setInt(2, anyFeedback.getRating());
             addAnyFeedback.setString(3, anyFeedback.getAdditionalInfo());
 
-            allFeedbacks.add(new Feedback(anyFeedback.getFeedbackID(), anyFeedback.getFeedbackID(), anyFeedback.getAdditionalInfo()));
+            allFeedbacks.add(new Feedback(anyFeedback.getFeedbackID(), anyFeedback.getRating(), anyFeedback.getAdditionalInfo()));
 
             addAnyFeedback.executeUpdate();
 
@@ -258,6 +265,191 @@ public class serviceDatabase {
         catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    // Find how many nodes are part of each nodeType and set each count to respective counter
+    //////////////////////////////////////////////////////////////////////////////////////////
+    public static ObservableList<PieChart.Data> cntFeedback() {
+
+        ObservableList<PieChart.Data> allPieData = FXCollections.observableArrayList();
+        int zeroCounter = 0;
+        int oneCounter = 0;
+        int twoCounter = 0;
+        int threeCounter = 0;
+        int fourCounter = 0;
+        int fiveCounter = 0;
+
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            Statement cntAllFeedback = conn.createStatement();
+            String strCntFeedback = "SELECT rating, COUNT(rating) AS aRating FROM feedback GROUP BY rating";
+            ResultSet rsetCntFeedback = cntAllFeedback.executeQuery(strCntFeedback);
+
+            int aRating;
+            int anyRatingCNT;
+
+            //Process the results
+            while (rsetCntFeedback.next()) {
+                aRating = rsetCntFeedback.getInt("rating");
+                anyRatingCNT = rsetCntFeedback.getInt("aRating");
+
+                switch (aRating) {
+                    case 0:
+                        zeroCounter = anyRatingCNT;
+                        break;
+                    case 1:
+                        oneCounter = anyRatingCNT;
+                        break;
+                    case 2:
+                        twoCounter = anyRatingCNT;
+                        break;
+                    case 3:
+                        threeCounter = anyRatingCNT;
+                        break;
+                    case 4:
+                        fourCounter = anyRatingCNT;
+                        break;
+                    case 5:
+                        fiveCounter = anyRatingCNT;
+                        break;
+                }
+            }
+            conn.commit();
+            rsetCntFeedback.close();
+            cntAllFeedback.close();
+            conn.close();
+
+        } // end try
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        allPieData.addAll(new PieChart.Data("Rating 0", zeroCounter),
+                new PieChart.Data("Rating 1", oneCounter),
+                new PieChart.Data("Rating 2", twoCounter),
+                new PieChart.Data("Rating 3", threeCounter),
+                new PieChart.Data("Rating 4", fourCounter),
+                new PieChart.Data("Rating 5", fiveCounter));
+
+        return allPieData;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    // Find how many nodes are part of each nodeType and set each count to respective counter
+    //////////////////////////////////////////////////////////////////////////////////////////
+    public static ArrayList<Integer> cntChartFeedback() {
+
+        ArrayList<Integer> arrayCounter = new ArrayList<>();
+
+        Integer zeroCounter = 0;
+        Integer oneCounter = 0;
+        Integer twoCounter = 0;
+        Integer threeCounter = 0;
+        Integer fourCounter = 0;
+        Integer fiveCounter = 0;
+
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            Statement cntAllFeedback = conn.createStatement();
+            String strCntFeedback = "SELECT rating, COUNT(rating) AS aRating FROM feedback GROUP BY rating";
+            ResultSet rsetCntFeedback = cntAllFeedback.executeQuery(strCntFeedback);
+
+            int aRating;
+            int anyRatingCNT;
+
+            //Process the results
+            while (rsetCntFeedback.next()) {
+                aRating = rsetCntFeedback.getInt("rating");
+                anyRatingCNT = rsetCntFeedback.getInt("aRating");
+
+                switch (aRating) {
+                    case 0:
+                        zeroCounter = anyRatingCNT;
+                        System.out.println("0 :" + zeroCounter);
+                        break;
+                    case 1:
+                        oneCounter = anyRatingCNT;
+                        System.out.println("1 :" + oneCounter);
+                        break;
+                    case 2:
+                        twoCounter = anyRatingCNT;
+                        System.out.println("2 :" + twoCounter);
+                        break;
+                    case 3:
+                        threeCounter = anyRatingCNT;
+                        System.out.println("3 :" + threeCounter);
+                        break;
+                    case 4:
+                        fourCounter = anyRatingCNT;
+                        System.out.println("4 :" + fourCounter);
+                        break;
+                    case 5:
+                        fiveCounter = anyRatingCNT;
+                        System.out.println("5 :" + fiveCounter);
+                        break;
+                }
+            }
+            conn.commit();
+            rsetCntFeedback.close();
+            cntAllFeedback.close();
+            conn.close();
+
+        } // end try
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        arrayCounter.add(zeroCounter);
+        arrayCounter.add(oneCounter);
+        arrayCounter.add(twoCounter);
+        arrayCounter.add(threeCounter);
+        arrayCounter.add(fourCounter);
+        arrayCounter.add(fiveCounter);
+
+        return arrayCounter;
+    }
+
+    public static String avgFeedback() {
+
+        float avgFeedback = 0;
+
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            Statement cntAllFeedback = conn.createStatement();
+            String strCntFeedback = "SELECT AVG(CAST (RATING AS DOUBLE PRECISION)) AS avgRating FROM feedback";
+            ResultSet rsetCntFeedback = cntAllFeedback.executeQuery(strCntFeedback);
+
+            float anyRatingAVG;
+
+            //Process the results
+            if (rsetCntFeedback.next()) {
+
+                anyRatingAVG = rsetCntFeedback.getFloat("avgRating");
+
+                avgFeedback = anyRatingAVG;
+
+            }
+            conn.commit();
+            rsetCntFeedback.close();
+            cntAllFeedback.close();
+            conn.close();
+
+        } // end try
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String avgFeedStr = "Average Feedback Rating: " + avgFeedback;
+        return avgFeedStr;
     }
 
     /*
