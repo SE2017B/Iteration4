@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -275,6 +276,7 @@ public class RequestController implements ControllableScreen{
     public void createPressedApi(ActionEvent e){
         Node desNode = apiLocationChoiceBox.getSelectionModel().getSelectedItem();
         if(desNode != null) {
+            parent.pauseTimeout();
             runAPI(desNode);
         }
     }
@@ -289,6 +291,7 @@ public class RequestController implements ControllableScreen{
         apiLocationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
+        parent.resumeTimeout();
     }
 
     //creates a service request, and then sends it to the staff member
@@ -303,6 +306,7 @@ public class RequestController implements ControllableScreen{
         resolveServiceListView.getItems().addAll(FXCollections.observableList(depSub.getCurrentLoggedIn().getAllRequest()));
         //resolveServiceListView.getItems().add(nReq);
         //fillInServiceSpecificRecs();
+        parent.resumeTimeout();
     }
 
     public void cancelPressed(ActionEvent e){
@@ -314,6 +318,7 @@ public class RequestController implements ControllableScreen{
         choiceBoxService.setDisable(true);
         choiceBoxStaff.setDisable(true);
 
+        parent.resumeTimeout();
 
         //clear time and date
         //timeMenu.getEditor().clear();
@@ -324,17 +329,24 @@ public class RequestController implements ControllableScreen{
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
     }
 
+
     public void logoutPressed(ActionEvent e){
         parent.setScreen(ScreenController.LogoutID);
+
+        parent.resumeTimeout();
     }
 
     public void editPressed(ActionEvent e){
         parent.setScreen(ScreenController.AddNodeID, "LEFT");
+
+        parent.resumeTimeout();
     }
 
     public void selectAlgorithmPath(ActionEvent e){
         selectedAlg = ((MenuItem)e.getSource()).getText();
         menuButtonAl.setText(selectedAlg);
+
+        parent.resumeTimeout();
     }
 
     public void servSelected(Service newValue){

@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import ui.ScreenMomento;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -29,7 +30,8 @@ public class ScreenController extends StackPane {
     private HashMap<String, ControllableScreen> controllers = new HashMap<String, ControllableScreen>();
     private String state;
     private ScreenMomento screenMomento;
-    PauseTransition pause;
+    PauseTransition timeout;
+    boolean isPaused;
 
     public static String AddNodeID = "AddNode";
     public static String AddNodeFile = "/fxml/AddNode.fxml";
@@ -48,13 +50,14 @@ public class ScreenController extends StackPane {
 
     public ScreenController(){
         super();
-        pause = new PauseTransition(Duration.millis(30000));
-        pause.setOnFinished(e -> {
+        timeout = new PauseTransition(Duration.millis(30000));
+        isPaused = false;
+        timeout.setOnFinished(e -> {
             if(state != screenMomento.getState())
                 setScreen(screenMomento.getState());
-            pause.play();
+            timeout.play();
         });
-        pause.play();
+        timeout.play();
     }
 
     //add a new screen to the screens HashMap
@@ -197,11 +200,24 @@ public class ScreenController extends StackPane {
     }
 
     public void resetTimeout(){
-        pause.stop();
-        pause.play();
+        if(!isPaused) {
+            timeout.stop();
+            timeout.play();
+        }
     }
     public void pauseTimeout(){
-        pause.pause();
+        timeout.stop();
+        isPaused =true;
+    }
+
+    public void resumeTimeout(){
+        timeout.play();;
+        isPaused = false;
+
+    }
+
+    public void setTimeoutLength(double length){
+        timeout.setDuration(new Duration(length));
     }
 
     public void saveState(){
