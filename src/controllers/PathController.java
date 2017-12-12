@@ -84,7 +84,7 @@ public class PathController implements ControllableScreen, Observer{
     @FXML
     private AnchorPane mainAnchorPane;
     @FXML
-    private TitledPane textDirectionsPane;
+    private JFXButton textDirectionButton;
     @FXML
     private ScrollPane mapScrollPane;
     private JFXSlider slideBarZoom;
@@ -124,6 +124,10 @@ public class PathController implements ControllableScreen, Observer{
     private Tab endTypeTab;
     @FXML
     private ImageView qrImageView;
+    private Pane qrPane;
+
+    private JFXNodesList textDirectionDropDown;
+
 
     //Methods start here
     public void init() {
@@ -207,6 +211,18 @@ public class PathController implements ControllableScreen, Observer{
             }
         };
         zoomPath.start();
+
+        qrPane = new Pane();
+        textDirectionDropDown = new JFXNodesList();
+        qrPane.getChildren().add(qrImageView);
+        textDirectionDropDown.addAnimatedNode(textDirectionButton);
+        textDirectionDropDown.addAnimatedNode(directionsList);
+        directionsList.setPrefWidth(textDirectionButton.getPrefWidth());
+        textDirectionDropDown.addAnimatedNode(qrPane);
+        textDirectionDropDown.setSpacing(5);
+        textDirectionDropDown.setVisible(false);
+        mainAnchorPane.getChildren().add(textDirectionDropDown);
+        AnchorPane.setTopAnchor(textDirectionDropDown,100.0);
     }
 
     public void onShow(){
@@ -243,7 +259,9 @@ public class PathController implements ControllableScreen, Observer{
         startNode = map.getKioskLocation();
         startTextField.setText(startNode.toString());
 
-        textDirectionsPane.setVisible(false);
+
+        textDirectionDropDown.setVisible(false);
+
     }
 
     public void setParentController(ScreenController parent){
@@ -533,8 +551,8 @@ public class PathController implements ControllableScreen, Observer{
         mapViewer.setButtonsByFloor(floors);
         ArrayList<String> directions = thePath.findDirections();
         directionsList.setItems(FXCollections.observableList(directions));
-        textDirectionsPane.setVisible(true);
-        textDirectionsPane.setExpanded(false);
+        textDirectionDropDown.setVisible(true);
+        textDirectionDropDown.animateList(false);
         try {
             qr.writeQRList(directions, "src/images/qr");
             while(!qr.isComplete()){

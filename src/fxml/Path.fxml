@@ -10,7 +10,6 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -20,34 +19,6 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
-      <TitledPane fx:id="textDirectionsPane" animated="false" layoutY="110.0" maxHeight="1200.0" text="Text Directions" visible="false" AnchorPane.topAnchor="100.0">
-         <content>
-            <AnchorPane maxHeight="1200.0" minHeight="400.0" minWidth="350.0">
-               <children>
-                  <GridPane maxHeight="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="800.0" minHeight="300.0" prefHeight="100.0" vgrow="ALWAYS" />
-                      <RowConstraints maxHeight="1.7976931348623157E308" vgrow="NEVER" />
-                    </rowConstraints>
-                     <children>
-                        <ImageView fx:id="qrImageView" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <JFXListView fx:id="directionsList" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
-                           <styleClass>
-                              <String fx:value="list-pane" />
-                              <String fx:value="scroll-pane" />
-                           </styleClass></JFXListView>
-                     </children>
-                  </GridPane>
-               </children>
-            </AnchorPane>
-         </content>
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TitledPane>
       <AnchorPane layoutX="918.0" layoutY="105.0" prefHeight="84.0" prefWidth="128.0" AnchorPane.rightAnchor="0.0">
          <children>
             <JFXButton fx:id="btnReverse" layoutX="16.0" layoutY="8.0" onAction="#reversePressed" prefHeight="61.0" prefWidth="106.0" text="Reverse">
@@ -274,5 +245,13 @@
       </AnchorPane>
       <JFXListView fx:id="endNodeOptionList" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="80.0" />
       <JFXListView fx:id="startNodeOptionList" layoutX="124.0" layoutY="280.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="80.0" />
+      <ImageView fx:id="qrImageView" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXListView fx:id="directionsList" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0">
+         <styleClass>
+            <String fx:value="list-pane" />
+            <String fx:value="scroll-pane" />
+         </styleClass>
+      </JFXListView>
+      <JFXButton fx:id="textDirectionButton" prefHeight="30.0" prefWidth="250.0" text="Text Directions" AnchorPane.topAnchor="100.0" />
    </children>
 </AnchorPane>
