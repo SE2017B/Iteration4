@@ -309,6 +309,11 @@ public class PathController implements ControllableScreen, Observer{
         mainAnchorPane.getChildren().add(textDirectionDropDown);
         AnchorPane.setTopAnchor(textDirectionDropDown,100.0);
 
+        //check the center points at various scales (for testing)
+        System.out.println("Center at 0.5: " + mapViewer.getCenterAt(0.5));
+        System.out.println("Center at 1: " + mapViewer.getCenterAt(1));
+        System.out.println("Center at 1.5: " + mapViewer.getCenterAt(1.5));
+        System.out.println("Center at 2: " + mapViewer.getCenterAt(2));
     }
 
     public void onShow(){
