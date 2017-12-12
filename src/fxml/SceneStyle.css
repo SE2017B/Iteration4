@@ -55,7 +55,6 @@
 }
 .jfx-tab-pane .tab-selected-line{
     -fx-background-color: darkorange;
-
 }
 .jfx-tab-pane .tab-header-area .jfx-rippler{
     -jfx-rippler-fill: darkorange;

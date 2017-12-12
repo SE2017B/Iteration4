@@ -6,10 +6,20 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import ui.ShakeTransition;
+import ui.hospitalBackground;
+
+
 
 public class LoginController implements ControllableScreen{
     public LoginController(){}
@@ -23,10 +33,28 @@ public class LoginController implements ControllableScreen{
     @FXML
     private JFXPasswordField passwordField;
     @FXML
+    private AnchorPane mainAnchorPane;
+
+
 
     @Override
     public void init() {
         depSub = DepartmentSubsystem.getSubsystem();
+
+        //Add the pretty hospital picture to the background
+        //it takes care of all the resizing
+        hospitalBackground hospitalImage = new hospitalBackground(parent);
+        mainAnchorPane.getChildren().add(0,hospitalImage);
+        AnchorPane.setBottomAnchor(hospitalImage,0.0);
+
+        passwordField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER)  {
+                    enterPressed(new ActionEvent());
+                }
+            }
+        });
     }
 
     @Override
