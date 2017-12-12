@@ -224,9 +224,9 @@ public class HospitalMap{
     public List<Node> getNodesByText(String text){
         HashMap<Node, Integer> distances = new HashMap<>();
         for(Node n : nodeMap) distances.put(n, DLDistance(text, n));
-        System.out.println(distances.keySet().stream().sorted(Comparator.comparing(distances::get)).collect(Collectors.toList()));
+//        System.out.println(distances.keySet().stream().sorted(Comparator.comparing(distances::get)).collect(Collectors.toList()));
         List<Integer> numbers = distances.values().stream().sorted().collect(Collectors.toList());
-        System.out.println(numbers);
+//        System.out.println(numbers);
         return this.nodeMap.stream().filter(n1 -> !n1.getLongName().toLowerCase().contains("hall")).sorted(Comparator.comparing(distances::get)).collect(Collectors.toList());
     }
 
