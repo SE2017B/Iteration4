@@ -288,7 +288,6 @@ public class PathController implements ControllableScreen, Observer{
             public void handle(MouseEvent event) {
                 double sX=event.getX();
                 double sY=event.getY();
-                System.out.println("X is: "+sX+" Y is: "+sY);
                 if(currentFloor!=null && isSearching){
                     List<Node> v = map.getNodesInArea((int)sX,(int)sY,currentFloor);
                     if(v.size()>0){
@@ -342,11 +341,7 @@ public class PathController implements ControllableScreen, Observer{
         mainAnchorPane.getChildren().add(textDirectionDropDown);
         AnchorPane.setTopAnchor(textDirectionDropDown,100.0);
 
-        //check the center points at various scales (for testing)
-        System.out.println("Center at 0.5: " + mapViewer.getCenterAt(0.5));
-        System.out.println("Center at 1: " + mapViewer.getCenterAt(1));
-        System.out.println("Center at 1.5: " + mapViewer.getCenterAt(1.5));
-        System.out.println("Center at 2: " + mapViewer.getCenterAt(2));
+
 
 
     }
@@ -462,7 +457,6 @@ public class PathController implements ControllableScreen, Observer{
                 String text = ((JFXTextField) keyEvent.getSource()).getText();
                 text = (code.isLetterKey()) ? text + keyEvent.getText() : text.substring(0, text.length()-1);
                 if(text.equals("")){
-                    System.out.println("empty");
                     listView.setVisible(false);
                 }
                 else {
@@ -657,7 +651,6 @@ public class PathController implements ControllableScreen, Observer{
         DOWN.setVisible(false);
         //reposition buttons to nodes
         if(path.getnext()!=null){
-            System.out.println("Relocating UP button");
             PathViewer next = path.getnext();
             if(next.getFloor().getNodeMapping()>path.getFloor().getNodeMapping()){
                 //mapPane.getChildren().remove(UP);
@@ -668,7 +661,6 @@ public class PathController implements ControllableScreen, Observer{
                 //mapPane.getChildren().add(UP);
             }
             else{
-                System.out.println("Setting down variable");
                 DOWN.setVisible(true);
                 DOWN.setLayoutX(next.getNodes().get(0).getX());
                 DOWN.setLayoutY(next.getNodes().get(0).getY());
@@ -770,8 +762,6 @@ public class PathController implements ControllableScreen, Observer{
 
     //-------------------------MAP SCALE START--------------------------//
     public void setScale(PathViewer path){
-        System.out.println("");
-        System.out.println("We shall start scaling right now");
         double scale = path.getScale();
         scale = mapViewer.checkScale(scale);
         path.initScaling(mapViewer.getScale(),scale); //animate the scaling process
@@ -814,7 +804,6 @@ public class PathController implements ControllableScreen, Observer{
         try {
             qr.writeQRList(directions, "src/images/qr");
             while(!qr.isComplete()){
-                System.out.println("Waiting on qr");
             }
             File f = new File("/image/qr/jpg");
             qrImageView.setImage(new Image("file:src/images/qr.jpg"));
@@ -914,7 +903,6 @@ public class PathController implements ControllableScreen, Observer{
 
     private void adjustNodes(){
         if(startPointFloor==currentFloor){
-            System.out.println("Setting start and end points");
             startPoint.setVisible(true);
         }
         else{
