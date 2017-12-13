@@ -872,7 +872,9 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void clearPressed(ActionEvent e) {
-        //Chima fill in
+        onShow();
+        //center map at kiosk location
+        mapViewer.centerView(map.getKioskLocation().getX(),map.getKioskLocation().getY());
     }
 
     public void cancelPressed(ActionEvent e) {
@@ -904,7 +906,6 @@ public class PathController implements ControllableScreen, Observer{
     public void updatePath(PathViewer p){
         currentFloor=p.getFloor();
         currentPath=p;
-        //mapViewer.setFloor(currentFloor);
         switchPath(currentPath);
 
     }
