@@ -67,6 +67,11 @@
     -fx-background-color: whitesmoke;
     -fx-opacity: 90%;
 }
+
+.full-tutorial-background {
+    -fx-background-color: white;
+    -fx-opacity: 50%;
+}
 .jfx-tab-pane .headers-region, .tab-pane {
     -fx-background-color: rgb(135,157,163);
 }
@@ -90,6 +95,11 @@
     /*-fx-background-color:linear-gradient(to bottom, rgb(181,189,200) 0%,rgb(130,140,149) 36%,rgb(40,52,59) 100%);
 */
 }
+
+/*.jfx-slider .thumb
+{
+    -fx-background-color: transparent;
+}*/
 
 .label{
     -fx-text-fill: white;

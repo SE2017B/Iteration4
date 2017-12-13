@@ -9,9 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import ui.AnimatedCircle;
 import ui.TransitionCircle;
-
-
 import java.util.ArrayList;
+import javafx.scene.control.Label;
 
 public class AnimatedHelpController implements ControllableScreen{
 
@@ -38,6 +37,7 @@ public class AnimatedHelpController implements ControllableScreen{
     //reset everything to the start
     @Override
     public void onShow() {
+        stepLabel.setText("");
         positions = new ArrayList<>();
         pointer.moveTo(helpTextArea.getLayoutX(),helpTextArea.getLayoutY());
         helpTextArea.setText("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Main Screen.");
@@ -76,6 +76,9 @@ public class AnimatedHelpController implements ControllableScreen{
     private Pane helpPane;
 
     @FXML
+    private Label stepLabel;
+
+    @FXML
     void nextPressed(ActionEvent event) {
         setImageFromList(true);
         setLables();
@@ -107,29 +110,37 @@ public class AnimatedHelpController implements ControllableScreen{
         stat = this.status;
         if(stat == 0) {
             helpProgress.setProgress(0);
+            stepLabel.setText("");
         }
         else if(stat == 1) {
             helpProgress.setProgress(.14);
+            stepLabel.setText("Step 1/7");
         }
         else if(stat == 2) {
             helpProgress.setProgress(.28);
+            stepLabel.setText("Step 2/7");
         }
         else if(stat == 3) {
             helpProgress.setProgress(.42);
+            stepLabel.setText("Step 3/7");
         }
         else if(stat == 4) {
             helpProgress.setProgress(.56);
+            stepLabel.setText("Step 4/7");
         }
         else if(stat == 5) {
             helpProgress.setProgress(.70);
+            stepLabel.setText("Step 5/7");
         }
 
         else if(stat == 6) {
             helpProgress.setProgress(.84);
+            stepLabel.setText("Step 6/7");
         }
 
         else if(stat == 7) {
             helpProgress.setProgress(1);
+            stepLabel.setText("Step 7/7");
         }
     }
 

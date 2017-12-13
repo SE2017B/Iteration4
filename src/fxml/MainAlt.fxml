@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<Pane fx:id="mainPane" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
       <AnchorPane fx:id="mainAnchorPane" layoutX="-5.0" minHeight="400.0" minWidth="800.0" styleClass="pane">
          <children>
@@ -221,6 +229,9 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <tooltip>
+                              <Tooltip text="Click to minimize map" />
+                           </tooltip>
                         </JFXButton>
                         <JFXButton fx:id="btnzin" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" onAction="#zinPressed" prefHeight="50.0" prefWidth="50.0" text=" " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <graphic>
@@ -230,6 +241,9 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <tooltip>
+                              <Tooltip text="Click to maximize map" />
+                           </tooltip>
                         </JFXButton>
                      </children>
                   </GridPane>
