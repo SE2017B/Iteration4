@@ -346,6 +346,13 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void onShow(){
+        //remove start and end points if available
+        if(mapPane.getChildren().contains(startPoint)){
+            mapPane.getChildren().remove(startPoint);
+        }
+        if(mapPane.getChildren().contains(endPoint)){
+            mapPane.getChildren().remove(endPoint);
+        }
         NEXT.setVisible(false);
         PREV.setVisible(false);
         mapViewer.setScale(1);
