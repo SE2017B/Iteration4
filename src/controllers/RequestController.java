@@ -323,7 +323,7 @@ public class RequestController implements ControllableScreen{
         ArrayList<Node> nodes = map.getNodeMap();
 
         searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
-        searchStrategyChoice.setValue(map.getSearchStrategy());
+        searchStrategyChoice.setValue(map.getSearches().get(0));
         kioskLocationChoice.setItems(FXCollections.observableList(map.getNodeMap()));
         kioskLocationChoice.setValue(map.getKioskLocation());
 
@@ -357,7 +357,6 @@ public class RequestController implements ControllableScreen{
 
 
         timeoutTextField.setText(Double.toString(parent.getTimeoutLength()/1000));
-        searchStrategyChoice.setValue(map.getSearchStrategy());
     }
 
     public void setParentController(ScreenController parent){
