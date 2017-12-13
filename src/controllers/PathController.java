@@ -1040,7 +1040,8 @@ public class PathController implements ControllableScreen, Observer{
     }
     public void updatePath(PathViewer p){
         currentFloor=p.getFloor();
-        mapViewer.setFloor(currentFloor);
+        currentFloorIndex++;
+        mapViewer.floorButtonPressed(currentFloor, currentFloorIndex);
         currentPath=p;
         switchPath(currentPath);
 
