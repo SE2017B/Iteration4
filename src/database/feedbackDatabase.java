@@ -36,6 +36,17 @@ public class feedbackDatabase {
         return allFeedbacks;
     }
 
+    // Staff Primary Key Counter
+    private static int feedCounter;
+
+    public static int getFeedCounter() {
+        return feedCounter;
+    }
+
+    public static void incFeedCounter() {
+        feedCounter++;
+    }
+
     ///////////////////////////////////////////////////////////////////////////////
     // Delete feedback table
     ///////////////////////////////////////////////////////////////////////////////
@@ -119,6 +130,7 @@ public class feedbackDatabase {
             conn.commit();
             addAnyFeedback.close();
             conn.close();
+            incFeedCounter();
 
         } catch (Exception e) {
             e.printStackTrace();// end try
@@ -415,12 +427,12 @@ public class feedbackDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Insert into feedback table using a prepared statement from csv
     ///////////////////////////////////////////////////////////////////////////////
-    public static void insertStaffFromCSV() {
+    public static void insertFeedbackFromCSV() {
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
             conn.setAutoCommit(false);
             conn.getMetaData();
-
+            incFeedCounter();
             PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO feedback VALUES (?, ?, ?)");
 
             for (int j = 0; j < allFeedbacks.size(); j++) {
@@ -430,13 +442,13 @@ public class feedbackDatabase {
                 insertStaff.setString(3, allFeedbacks.get(j).getAdditionalInfo());
 
                 insertStaff.executeUpdate();
-
+                incFeedCounter();
             }
 
             conn.commit();
-
             insertStaff.close();
             conn.close();
+            incFeedCounter();
 
         } catch (Exception e) {
             e.printStackTrace();// end try
