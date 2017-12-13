@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXSlider?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -24,10 +16,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -541,21 +532,6 @@
                </image>
             </ImageView>
          </graphic></JFXButton>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="280.0">
-         <children>
-            <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="60.0" prefWidth="60.0" text="+">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </JFXButton>
-            <JFXSlider fx:id="slideBarZoom" blockIncrement="0.0" max="1.8" min="0.2" orientation="VERTICAL" prefWidth="50.0" value="1.0" />
-            <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="60.0" prefWidth="60.0" text="-">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </VBox>
 
    </children>
 </AnchorPane>
