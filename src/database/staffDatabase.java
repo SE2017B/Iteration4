@@ -329,7 +329,7 @@ public class staffDatabase {
     // Write to a output Staff csv file (No Password Encryption)
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputStaffCSV() {
-        String outStaffFileName = "src/csv/outputStaff.csv";
+        String outStaffFileName = "outputStaff.csv";
 
         try {
             FileWriter fw2 = new FileWriter(outStaffFileName, false);

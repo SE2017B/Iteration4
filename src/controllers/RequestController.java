@@ -328,6 +328,7 @@ public class RequestController implements ControllableScreen{
         lblFeedbackTitle.setText("Feedback Charts");
 
         feedbackListView.setItems(FXCollections.observableList(feedbackDatabase.getAllFeedbacks()));
+        // Disable clicking on feedback list view
         feedbackListView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -731,15 +732,17 @@ public class RequestController implements ControllableScreen{
     }
 
     @FXML
-    void searchbuttonPressed(ActionEvent event) {
+    public void searchbuttonPressed(ActionEvent event) {
         //make sure to add shake transition when field is empty
     }
 
     @FXML
     void pieChartCreate() {
-        feedbackPieChart.getData().clear();
-        // Setting up the Pie Chart on Feedback tab
+        if (feedbackPieChart != null) {
+            feedbackPieChart.getData().clear();
+        }
 
+        // Setting up the Pie Chart on Feedback tab
         feedbackPieChart.setLabelLineLength(10);
         feedbackPieChart.setLegendSide(Side.RIGHT);
         feedbackPieChart.setData(feedbackDatabase.cntFeedback());
@@ -747,8 +750,9 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void lineChartCreate() {
-        feedbackLineChart.getData().clear();
-
+        if (feedbackLineChart != null) {
+            feedbackLineChart.getData().clear();
+        }
         ArrayList<Integer> tempLineArray = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aLineChart = new XYChart.Series<>();
@@ -762,12 +766,15 @@ public class RequestController implements ControllableScreen{
 
         xLineChart.setLabel("Feedback Rating");
         yLineChart.setLabel("Number of Ratings");
-        feedbackLineChart.getData().add(aLineChart);
+
+        feedbackLineChart.getData().addAll(aLineChart);
     }
 
     @FXML
     void barChartCreate() {
-        feedbackBarChart.getData().clear();
+        if (feedbackBarChart != null) {
+            feedbackBarChart.getData().clear();
+        }
         ArrayList<Integer> tempLineArray2 = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aBarChart = new XYChart.Series<>();
@@ -781,8 +788,8 @@ public class RequestController implements ControllableScreen{
 
         xBarChart.setLabel("Feedback Rating");
         yBarChart.setLabel("Number of Ratings");
-        feedbackBarChart.getData().addAll(aBarChart);
 
+        feedbackBarChart.getData().addAll(aBarChart);
     }
 
     //////////////////////////////////////////////////////////
