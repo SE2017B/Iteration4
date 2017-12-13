@@ -17,8 +17,8 @@
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -35,7 +35,7 @@
             <children>
                <AnchorPane>
                   <children>
-                     <JFXButton fx:id="questionButton" contentDisplay="TOP" layoutX="8.0" layoutY="71.0" onAction="#questionPressed" text="Help" AnchorPane.rightAnchor="0.0">
+                     <JFXButton fx:id="questionButton" contentDisplay="TOP" layoutX="8.0" layoutY="71.0" onAction="#questionPressed" text="Help" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="10.0">
                         <graphic>
                            <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                               <image>
@@ -44,9 +44,9 @@
                            </ImageView>
                         </graphic>
                      </JFXButton>
-                     <JFXButton fx:id="btnReverse" contentDisplay="RIGHT" layoutX="7.0" layoutY="191.0" onAction="#reversePressed" prefHeight="61.0" prefWidth="150.0" text="Reverse" AnchorPane.rightAnchor="0.0">
+                     <JFXButton fx:id="btnReverse" contentDisplay="RIGHT" layoutX="7.0" layoutY="191.0" onAction="#reversePressed" prefHeight="61.0" prefWidth="150.0" text="Reverse" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="150.0">
                         <font>
-                           <Font size="20.0" />
+                           <Font size="16.0" />
                         </font>
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -56,9 +56,9 @@
                               </ImageView>
                            </graphic>
                      </JFXButton>
-                     <JFXButton fx:id="btnClear" contentDisplay="RIGHT" layoutX="7.0" layoutY="252.0" onAction="#clearPressed" prefHeight="61.0" prefWidth="150.0" text="Clear" AnchorPane.rightAnchor="0.0">
+                     <JFXButton fx:id="btnClear" contentDisplay="RIGHT" layoutX="7.0" layoutY="252.0" onAction="#clearPressed" prefHeight="61.0" prefWidth="150.0" text="Clear" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="225.0">
                         <font>
-                           <Font size="20.0" />
+                           <Font size="16.0" />
                         </font>
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
