@@ -11,6 +11,7 @@ package controllers;
 import DepartmentSubsystem.Services.Transport;
 import api.SanitationService;
 import foodRequest.FoodRequest;
+import javafx.event.EventHandler;
 import translationApi.TranslationService;
 import transportApi.TransportService;
 import DepartmentSubsystem.*;
@@ -145,34 +146,6 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<Service> staffJobTypeChoiceBox;
     @FXML
     private ChoiceBox<Service> addStaffServiceChoiceBox;
-    @FXML
-    private Label lblFeedbackRating;
-    @FXML
-    private Label lblFeedbackTitle;
-    @FXML
-    private JFXListView<Feedback> feedbackListView;
-    @FXML
-    private PieChart feedbackPieChart;
-    @FXML
-    private BarChart<String, Number> feedbackBarChart;
-    @FXML
-    private CategoryAxis xBarChart;
-    @FXML
-    private NumberAxis yBarChart;
-    @FXML
-    private LineChart<String, Number> feedbackLineChart;
-    @FXML
-    private CategoryAxis xLineChart;
-    @FXML
-    private NumberAxis yLineChart;
-    @FXML
-    private Tab pieChartTab;
-    @FXML
-    private Tab barChartTab;
-    @FXML
-    private Tab lineChartTab;
-    @FXML
-    private JFXTabPane chartTabPane;
 
     @FXML
     private JFXListView<Node> startNodeOptionList;
@@ -208,6 +181,38 @@ public class RequestController implements ControllableScreen{
     private Tab staffManageTab;
     @FXML
     private Tab settingsTab;
+
+    ////////////////////////////////////////////////////////
+    // Feedback Charts
+    ///////////////////////////////////////////////////////
+    @FXML
+    private Label lblFeedbackRating;
+    @FXML
+    private Label lblFeedbackTitle;
+    @FXML
+    private JFXListView<Feedback> feedbackListView;
+    @FXML
+    private PieChart feedbackPieChart;
+    @FXML
+    private BarChart<String, Number> feedbackBarChart;
+    @FXML
+    private CategoryAxis xBarChart;
+    @FXML
+    private NumberAxis yBarChart;
+    @FXML
+    private LineChart<String, Number> feedbackLineChart;
+    @FXML
+    private CategoryAxis xLineChart;
+    @FXML
+    private NumberAxis yLineChart;
+    @FXML
+    private Tab pieChartTab;
+    @FXML
+    private Tab barChartTab;
+    @FXML
+    private Tab lineChartTab;
+    @FXML
+    private JFXTabPane chartTabPane;
 
 
     public void init(){
@@ -323,6 +328,12 @@ public class RequestController implements ControllableScreen{
         lblFeedbackTitle.setText("Feedback Charts");
 
         feedbackListView.setItems(FXCollections.observableList(feedbackDatabase.getAllFeedbacks()));
+        feedbackListView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                event.consume();
+            }
+        });
 
         endNodeOptionList.setVisible(false);
         startNodeOptionList.setVisible(false);
