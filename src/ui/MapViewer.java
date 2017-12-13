@@ -112,6 +112,11 @@ public class MapViewer extends Observable{
         mapScrollPane.setPannable(true);
 
 
+
+        mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
+        mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
+
         addFloor(FloorNumber.FLOOR_LTWO);
         addFloor(FloorNumber.FLOOR_LONE);
         addFloor(FloorNumber.FLOOR_GROUND);
@@ -137,13 +142,10 @@ public class MapViewer extends Observable{
 
         addObserver(o);
 
-        buttonScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
-        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty());
-        mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
+        buttonScrollPane.prefViewportWidthProperty().bind(mapViewerPane.prefWidthProperty());
+        mapScrollPane.prefViewportHeightProperty().bind(mapViewerPane.prefHeightProperty());
+        mapScrollPane.prefViewportWidthProperty().bind(mapViewerPane.prefWidthProperty());
 
-
-        mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
-        mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
 
 
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue.intValue()));
@@ -274,7 +276,7 @@ public class MapViewer extends Observable{
         return button;
     }
 
-    private void resizeSpacers(int width){
+    public void resizeSpacers(int width){
         SPACER_WIDTH = ((width - BUTTON_WIDTH)/ 2) - SPACING ;
         spacerRight.setPrefWidth(SPACER_WIDTH);
         spacerLeft.setPrefWidth(SPACER_WIDTH);

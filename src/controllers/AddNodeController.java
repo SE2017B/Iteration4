@@ -74,8 +74,10 @@ public class AddNodeController implements ControllableScreen, Observer {
         mapViewer.setFloor(FloorNumber.FLOOR_GROUND);
         mapPane = mapViewer.getMapPane();
 
+
         mapPane.setOnMouseClicked(e -> mapPaneClicked(e));
         mapPane.scaleXProperty().addListener( e -> setZoom(mapPane.getScaleX()));
+
 
         nodeAddLocation = new AnimatedCircle();
         nodeAlignedLines = new ArrayList<Line>();
@@ -112,6 +114,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         refreshNodesandEdges();
         nodeAddFloorDropDown.setText(currentFloor.getDbMapping());
         nodeEditFloorDropDown.setText(currentFloor.getDbMapping());
+        mapViewer.resizeSpacers((int)parent.getWidth() - 400);
     }
 
     //Setters
@@ -731,8 +734,8 @@ public class AddNodeController implements ControllableScreen, Observer {
                 Node n = cb.getNode();
 
                 map.editNode(n,
-                        Integer.toString((int) cb.getLayoutX() + 9),
-                        Integer.toString((int) cb.getLayoutY() + 9),
+                        Integer.toString((int) cb.getLayoutX() + 12),
+                        Integer.toString((int) cb.getLayoutY() + 12),
                         n.getFloor().getDbMapping(),
                         n.getBuilding(),
                         n.getType(),
