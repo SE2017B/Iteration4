@@ -694,19 +694,18 @@ public class PathController implements ControllableScreen, Observer{
                 mapPane.getChildren().remove(NEXT);
                 NEXT =getUP();
                 NEXT.setVisible(true);
-                NEXT.setLayoutX(path.getNodes().get(path.getNodes().size()-1).getX()-calSize/2);
-                NEXT.setLayoutY(path.getNodes().get(path.getNodes().size()-1).getY()-calSize/2);
+                NEXT.setLayoutX(path.getNodes().get(path.getNodes().size()-1).getX()+calSize/2*mapViewer.getScale());
+                NEXT.setLayoutY(path.getNodes().get(path.getNodes().size()-1).getY()+calSize/2*mapViewer.getScale());
                 NEXT.setOnAction(e -> updatePath(next) );
                 upPath=next;
                 mapPane.getChildren().add(NEXT);
             }
             else{
-                System.out.println("Setting down variable");
                 mapPane.getChildren().remove(NEXT);
                 NEXT=getDown();
                 NEXT.setVisible(true);
-                NEXT.setLayoutX(path.getNodes().get(path.getNodes().size()-1).getX()-calSize/2);
-                NEXT.setLayoutY(path.getNodes().get(path.getNodes().size()-1).getY()-calSize/2);
+                NEXT.setLayoutX(path.getNodes().get(path.getNodes().size()-1).getX()+calSize/2*mapViewer.getScale());
+                NEXT.setLayoutY(path.getNodes().get(path.getNodes().size()-1).getY()+calSize/2*mapViewer.getScale());
                 NEXT.setOnAction(e -> updatePath(next) );
 
                 downPath=next;
@@ -720,8 +719,8 @@ public class PathController implements ControllableScreen, Observer{
                 mapPane.getChildren().remove(PREV);
                 PREV=getUP();
                 PREV.setVisible(true);
-                PREV.setLayoutX(path.getNodes().get(0).getX()-calSize/2);
-                PREV.setLayoutY(path.getNodes().get(0).getY()-calSize/2);
+                PREV.setLayoutX(path.getNodes().get(0).getX()+calSize/2*mapViewer.getScale());
+                PREV.setLayoutY(path.getNodes().get(0).getY()+calSize/2*mapViewer.getScale());
                 PREV.setOnAction(e -> updatePath(prev) );
                 upPath=prev;
                 mapPane.getChildren().add(PREV);
@@ -730,8 +729,8 @@ public class PathController implements ControllableScreen, Observer{
                 mapPane.getChildren().remove(PREV);
                 PREV=getDown();
                 PREV.setVisible(true);
-                PREV.setLayoutX(path.getNodes().get(0).getX()-calSize/2);
-                PREV.setLayoutY(path.getNodes().get(0).getY()-calSize/2);
+                PREV.setLayoutX(path.getNodes().get(0).getX()+calSize/2*mapViewer.getScale());
+                PREV.setLayoutY(path.getNodes().get(0).getY()+calSize/2*mapViewer.getScale());
                 PREV.setOnAction(e -> updatePath(prev) );
                 downPath=prev;
                 mapPane.getChildren().add(PREV);
@@ -793,7 +792,6 @@ public class PathController implements ControllableScreen, Observer{
         Path path = pathViewer.getPath();
         path.findDirections();
         ArrayList<Node> nodesByDirections = path.getPathByDirections().get(directionIndex);
-        System.out.println(nodesByDirections.size());
         if(pathToHighlight != null){
             mapPane.getChildren().remove(pathToHighlight);
         }
@@ -825,7 +823,7 @@ public class PathController implements ControllableScreen, Observer{
             circleToHighlight.setCenterX(nodesByDirections.get(0).getX());
             circleToHighlight.setCenterY(nodesByDirections.get(0).getY());
             circleToHighlight.fillProperty().setValue(Color.RED);
-            circleToHighlight.setRadius(5 * (1/mapViewer.getScale()));
+            circleToHighlight.setRadius(6 * (1/mapViewer.getScale()));
             circleToHighlight.setStroke(Color.RED);
             mapPane.getChildren().add(circleToHighlight);
             shapes.add(circleToHighlight);
@@ -837,7 +835,6 @@ public class PathController implements ControllableScreen, Observer{
     private void switchFloorsOnTextDirection(int index, FloorNumber floorNumber){
         if(index == directionsList.getItems().size() - 1 && currentFloorIndex < floors.size() - 1){
             currentFloorIndex++;
-            System.out.println("CFI: " + currentFloorIndex);
             mapViewer.floorButtonPressed(floors.get(currentFloorIndex), currentFloorIndex);
         }
     }
@@ -898,10 +895,10 @@ public class PathController implements ControllableScreen, Observer{
         arrow.setScaleX(1/scale);
         arrow.setScaleY(1/scale);
         double btnscale = Math.pow((1/scale),0.5);
-        NEXT.setScaleX(btnscale);
-        NEXT.setScaleY(btnscale);
-        PREV.setScaleX(btnscale);
-        PREV.setScaleY(btnscale);
+        NEXT.setScaleX(btnscale * .75);
+        NEXT.setScaleY(btnscale * .75);
+        PREV.setScaleX(btnscale * .75);
+        PREV.setScaleY(btnscale * .75);
     }
 
     //when + button is pressed zoom in map
@@ -1009,8 +1006,6 @@ public class PathController implements ControllableScreen, Observer{
                 currentPath = paths.get(ID.getID());
                 currentFloorIndex = ID.getID();
                 directionsList.setItems(FXCollections.observableList(thePath.getDirectionsByFloor().get(currentFloorIndex)));
-                System.out.println(thePath.getDirectionsByFloor());
-                System.out.println("cfi: " + currentFloorIndex);
                 
                 currentFloor = currentPath.getFloor();
                 switchPath(currentPath);

@@ -361,6 +361,7 @@ public class MainController implements ControllableScreen, Observer{
                 Calendar cal = Calendar.getInstance();
                 second = cal.get(Calendar.SECOND);  //get current second
                 minute = cal.get(Calendar.MINUTE);  //get current minute
+                int newMinute = minute + 1;
                 hour = cal.get(Calendar.HOUR);  //get current hour
                 AM = cal.get(Calendar.AM_PM);   //get if AM/PM
                 String AM_String = new String ();   //convert int to string
@@ -378,13 +379,17 @@ public class MainController implements ControllableScreen, Observer{
                 if(minute < 10){
                     text += "0";
                 }
-                text += minute + ":";
-                if(second < 10){
+                if (second > 58){
+                    second -= 60;
+                    text += newMinute + ":";
+                } else text += minute + ":";
+                if(second < 9 || second > 58) {
                     text += "0";
                 }
+                second -= 31;
                 text += second + ' ' + AM_String;
                 time.setText(text);//display time
-                time.setText(dateFormat.format(cal.getTime()) + System.lineSeparator() + hour + ":" + (minute) + ":" + second + ' ' + AM_String);   //display time
+//                time.setText(dateFormat.format(cal.getTime()) + System.lineSeparator() + hour + ":" + (minute) + ":" + second + ' ' + AM_String);   //display time
                // time.setTooltip(tooltip);
                 //System.out.println(sdf.format(time));
                 // }
