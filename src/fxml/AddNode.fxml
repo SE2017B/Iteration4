@@ -70,7 +70,7 @@
                                                                   <Insets left="15.0" right="15.0" />
                                                                </GridPane.margin>
                                                             </JFXTextField>
-                                                            <JFXButton fx:id="nodeAddEnterButton" buttonType="RAISED" onAction="#nodeAddEnterPressed" prefHeight="50.0" prefWidth="150.0" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                            <JFXButton fx:id="nodeAddEnterButton" buttonType="RAISED" onAction="#nodeAddEnterPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
@@ -78,7 +78,7 @@
                                                                   <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                                                </GridPane.margin>
                                                             </JFXButton>
-                                                            <JFXButton fx:id="nodeAddCancelButton" buttonType="RAISED" onAction="#nodeAddCancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                                            <JFXButton fx:id="nodeAddCancelButton" buttonType="RAISED" onAction="#nodeAddCancelPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
@@ -174,7 +174,7 @@
                                                                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                                                </GridPane.margin>
                                                             </JFXListView>
-                                                            <JFXButton fx:id="nodeRemoveCancelButton" buttonType="RAISED" onAction="#nodeRemoveCancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                            <JFXButton fx:id="nodeRemoveCancelButton" buttonType="RAISED" onAction="#nodeRemoveCancelPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
@@ -182,7 +182,7 @@
                                                                   <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                                                </GridPane.margin>
                                                             </JFXButton>
-                                                            <JFXButton fx:id="nodeRemoveEnterButton" buttonType="RAISED" onAction="#nodeRemoveEnterPressed" prefHeight="50.0" prefWidth="150.0" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                            <JFXButton fx:id="nodeRemoveEnterButton" buttonType="RAISED" onAction="#nodeRemoveEnterPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
@@ -241,7 +241,7 @@
                                                                   <Insets left="15.0" right="15.0" />
                                                                </GridPane.margin>
                                                             </JFXTextField>
-                                                            <JFXButton fx:id="nodeEditEnterButton" buttonType="RAISED" onAction="#nodeEditEnterPressed" prefHeight="50.0" prefWidth="150.0" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                                                            <JFXButton fx:id="nodeEditEnterButton" buttonType="RAISED" onAction="#nodeEditEnterPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
@@ -249,7 +249,7 @@
                                                                   <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                                                </GridPane.margin>
                                                             </JFXButton>
-                                                            <JFXButton fx:id="nodeEditCancelButton" buttonType="RAISED" onAction="#nodeEditCancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                                                            <JFXButton fx:id="nodeEditCancelButton" buttonType="RAISED" onAction="#nodeEditCancelPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
@@ -366,12 +366,12 @@
                                                                   <Font size="25.0" />
                                                                </font>
                                                             </Label>
-                                                            <JFXButton fx:id="edgeAddEnterButton" onAction="#edgeAddEnterPressed" prefHeight="50.0" prefWidth="150.0" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                            <JFXButton fx:id="edgeAddEnterButton" onAction="#edgeAddEnterPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
                                                             </JFXButton>
-                                                            <JFXButton fx:id="edgeAddCancelButton" onAction="#edgeAddCancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                            <JFXButton fx:id="edgeAddCancelButton" onAction="#edgeAddCancelPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                                <font>
                                                                   <Font size="17.0" />
                                                                </font>
@@ -415,7 +415,7 @@
                                                                   <Insets bottom="25.0" />
                                                                </GridPane.margin>
                                                             </Label>
-                                                            <JFXButton fx:id="edgeRemoveEnterButton" buttonType="RAISED" onAction="#edgeRemoveEnterPressed" prefHeight="50.0" prefWidth="150.0" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                                            <JFXButton fx:id="edgeRemoveEnterButton" buttonType="RAISED" onAction="#edgeRemoveEnterPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Enter" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>
@@ -423,7 +423,7 @@
                                                                   <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                                                </GridPane.margin>
                                                             </JFXButton>
-                                                            <JFXButton fx:id="edgeRemoveCancelButton" buttonType="RAISED" onAction="#edgeRemoveCancelPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                                            <JFXButton fx:id="edgeRemoveCancelButton" buttonType="RAISED" onAction="#edgeRemoveCancelPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                                                <font>
                                                                   <Font size="18.0" />
                                                                </font>

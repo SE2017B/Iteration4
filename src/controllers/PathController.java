@@ -444,7 +444,7 @@ public class PathController implements ControllableScreen, Observer{
                 if(listView.getSelectionModel().getSelectedIndex() == -1) {
                     listView.getSelectionModel().select(0);
                 }
-                else if(listView.getSelectionModel().getSelectedIndex() <= listView.getItems().size()-1){
+                else if(listView.getSelectionModel().getSelectedIndex() <= listView.getItems().size() - 1){
                     listView.getSelectionModel().select(listView.getSelectionModel().getSelectedIndex() + 1);
                 }
                 textField.setText(listView.getSelectionModel().getSelectedItem().toString());
@@ -495,6 +495,7 @@ public class PathController implements ControllableScreen, Observer{
             listView.setVisible(false);
         }
     }
+
     private void setStartNode(Node selected){
         if(selected!=null) {
             mapViewer.centerView(selected.getX(),selected.getY());
@@ -510,6 +511,7 @@ public class PathController implements ControllableScreen, Observer{
             adjustNodes();
         }
     }
+
     private void setEndNode(Node selected){
         if(selected!=null) {
             mapViewer.centerView(selected.getX(),selected.getY());
@@ -839,7 +841,6 @@ public class PathController implements ControllableScreen, Observer{
             if(mapPane.getChildren().contains(endPoint)){
                 mapPane.getChildren().remove(endPoint);
             }
-
         }
         else{
             ShakeTransition shake = new ShakeTransition();
@@ -875,6 +876,7 @@ public class PathController implements ControllableScreen, Observer{
         onShow();
         //center map at kiosk location
         mapViewer.centerView(map.getKioskLocation().getX(),map.getKioskLocation().getY());
+
     }
 
     public void cancelPressed(ActionEvent e) {
