@@ -1,21 +1,21 @@
 username,password,jobTitle,fullName,ID
-bross,password,Chef,Bob Ross,1
-ncage,password,Janitor,Nick Cage,2
-djohnson,password,Translator,Dwayne Johnson,3
-jappleseed,password,Translator,Johnny Appleseed,4
-rsmith,pear,Translator,Rob Smith,5
-jnicholson,watermelon,Food Delivery,Jack Nicholson,6
-ksmith,1234,Transport Staff,Kim Smith,7
-jlongmedow,12345,Food Delivery,Joe Longmedow,8
-jadams,lions123,Transport Staff,Jake Adams,9
-bbaker,patriots333,Translator,Bob Baker,10
-cdavis,mass459,Translator,Courtney Davis,11
-lquinn,strangerThings,Chef,Lisa Quinn,12
-nochoa,11street11,Food Delivery,Nicole Ochoa,13
-ghills,hills99,Chef,George Hills,14
-eblackburn,anything12345,Food Delivery,Elizabeth Blackburn,15
-ehalley,granolaBar,Food Delivery,Edmond Halley,16
-dhodgkin,987654321,Janitor,Dorothy Hodgkin,17
-mcurie,mapleStreet123,Transport Staff,Marie Curie,18
-mborn,boston55,Janitor,Max Born,19
-sbaker,heart54321,Transport Staff,Sarah Baker,20
+bross,password,Hospital Administrator,Bob Ross,1,1
+ncage,password,IT Administrator,Nick Cage,2,1
+djohnson,password,Physical Therapy Administrator,Dwayne Johnson,3,1
+jappleseed,password,Nurse Practitioner,Johnny Appleseed,4,0
+rsmith,pear,Physical Therapist,Rob Smith,5,0
+jnicholson,watermelon,Director of Nursing,Jack Nicholson,6,1
+ksmith,1234,Occupational Therapist,Kim Smith,7,0
+jlongmedow,12345,Nurse Practitioner,Joe Longmedow,8,0
+jadams,lions123,Occupational Therapist,Jake Adams,9,0
+bbaker,patriots333,Nurse Practitioner,Bob Baker,10,0
+cdavis,mass459,Nurse Practitioner,Courtney Davis,11,0
+lquinn,strangerThings,Physician Assistant,Lisa Quinn,12,0
+nochoa,11street11,Physician Assistant,Nicole Ochoa,13,0
+ghills,hills99,Audiologist,George Hills,14,0
+eblackburn,anything12345,Physician Assistant,Elizabeth Blackburn,15,0
+ehalley,granolaBar,Nurse,Edmond Halley,16,0
+dhodgkin,987654321,Physician Assistant,Dorothy Hodgkin,17,0
+mcurie,mapleStreet123,Medical Receptionist,Marie Curie,18,0
+mborn,boston55,Physician Assistant,Max Born,19,0
+sbaker,heart54321,Nurse,Sarah Baker,20,0

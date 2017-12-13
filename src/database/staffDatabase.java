@@ -36,11 +36,10 @@ public class staffDatabase {
 
     // All staff members from the staff table in hospitalStaffDB
     static ArrayList<Staff>allStaff=new ArrayList<>();
-    static ArrayList<Staff>allStaffEnc = new ArrayList<>();
+    //static ArrayList<Staff>allStaffEnc = new ArrayList<>();
 
     // All languages that staff members can speak
     public static ArrayList<String> allLanguages = new ArrayList<>();
-
 
     // Getter for all staff array list
     public static ArrayList<Staff> getStaff(){ return allStaff; }
@@ -99,19 +98,15 @@ public class staffDatabase {
                     "jobTitle VARCHAR(50)," +
                     "fullname VARCHAR(64)," +
                     "ID INTEGER," +
-                    //"isAdmin INTEGER," +
-                    //"languages VARCHAR(70)," +
+                    "isAdmin INTEGER," +
                     "CONSTRAINT hospitalStaff_PK PRIMARY KEY (ID)," +
                     "CONSTRAINT hospitalStaff_U1 UNIQUE (username)," +
-                    "CONSTRAINT jobTitle CHECK (jobTitle IN ('Translator', 'Janitor', 'Chef', 'Food Delivery', 'Transport Staff'))," +
                     "CONSTRAINT ID_chk CHECK (ID > 0))");
 
             int rsetCreate3 = stmtCreateStaffTable.executeUpdate(createStaffTable);
             System.out.println("Create Staff table Successful!");
 
             conn.commit();
-            System.out.println();
-
             stmtCreateStaffTable.close();
             conn.close();
 
@@ -285,15 +280,16 @@ public class staffDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?)");
 
-            for (int j = 0; j < allStaffEnc.size(); j++) {
+            for (int j = 0; j < allStaff.size(); j++) {
 
-                insertStaff.setString(1, allStaffEnc.get(j).getUsername());
-                insertStaff.setString(2, allStaffEnc.get(j).getPassword());
-                insertStaff.setString(3, allStaffEnc.get(j).getJobTitle());
-                insertStaff.setString(4, allStaffEnc.get(j).getFullName());
-                insertStaff.setInt(5, allStaffEnc.get(j).getID());
+                insertStaff.setString(1, allStaff.get(j).getUsername());
+                insertStaff.setString(2, allStaff.get(j).getPassword());
+                insertStaff.setString(3, allStaff.get(j).getJobTitle());
+                insertStaff.setString(4, allStaff.get(j).getFullName());
+                insertStaff.setInt(5, allStaff.get(j).getID());
+                insertStaff.setInt(6, allStaff.get(j).getaAdmin());
 
                 insertStaff.executeUpdate();
 
@@ -322,24 +318,25 @@ public class staffDatabase {
             conn.setAutoCommit(false);
             conn.getMetaData();
 
-            String encUser = encStaffData(anyStaff.getUsername());
-            String encPass = encStaffData(anyStaff.getPassword());
-            String encName = encStaffData(anyStaff.getUsername());
+            //String encUser = encStaffData(anyStaff.getUsername());
+            //String encPass = encStaffData(anyStaff.getPassword());
+            //String encName = encStaffData(anyStaff.getUsername());
 
-            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement addAnyStaff = conn.prepareStatement("INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?)");
 
-            addAnyStaff.setString(1, encUser);
-            addAnyStaff.setString(2, encPass);
+            addAnyStaff.setString(1, anyStaff.getUsername());
+            addAnyStaff.setString(2, anyStaff.getPassword());
             addAnyStaff.setString(3, anyStaff.getJobTitle());
-            addAnyStaff.setString(4, encName);
+            addAnyStaff.setString(4, anyStaff.getFullName());
             addAnyStaff.setInt(5, anyStaff.getID());
+            addAnyStaff.setInt(6, anyStaff.getaAdmin());
 
             addAnyStaff.executeUpdate();
 
             conn.commit();
 
-            allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID()));
-            allStaff.add(new Staff(anyStaff.getUsername(), anyStaff.getPassword(), anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID()));
+            //allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID(), anyStaff.getaAdmin()));
+            allStaff.add(new Staff(anyStaff.getUsername(), anyStaff.getPassword(), anyStaff.getJobTitle(), anyStaff.getFullName(), anyStaff.getID(), anyStaff.getaAdmin()));
 
             addAnyStaff.close();
             conn.close();
@@ -352,34 +349,40 @@ public class staffDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Modify a Staff Member in the Staff Database
     ///////////////////////////////////////////////////////////////////////////////
-    public static void modifyStaff(Staff anyStaff) {
+    public static void modifyStaff(Staff anyStaff1, Staff anyStaff2) {
+
+
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
             conn.setAutoCommit(false);
             conn.getMetaData();
-
+            System.out.println("Made it to staff DB");
             String strModDrop = "DELETE FROM hospitalStaff WHERE ID = ?";
             String strModAdd = "INSERT INTO hospitalStaff VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement modDelAnyStaff = conn.prepareStatement(strModDrop);
-            modDelAnyStaff.setInt(1, anyStaff.getID());
+            modDelAnyStaff.setInt(1, anyStaff1.getID());
             modDelAnyStaff.executeUpdate();
+            allStaff.remove(anyStaff1);
 
             PreparedStatement modAddAnyStaff = conn.prepareStatement(strModAdd);
 
-            String encUser = encStaffData(anyStaff.getUsername());
-            String encPass = encStaffData(anyStaff.getPassword());
-            String encName = encStaffData(anyStaff.getFullName());
+            //String encUser = encStaffData(anyStaff.getUsername());
+            //String encPass = encStaffData(anyStaff.getPassword());
+            //String encName = encStaffData(anyStaff.getFullName());
 
-            modAddAnyStaff.setString(1, encUser);
-            modAddAnyStaff.setString(2, encPass);
-            modAddAnyStaff.setString(3, anyStaff.getJobTitle());
-            modAddAnyStaff.setString(4, encName);
-            modAddAnyStaff.setInt(5, anyStaff.getID());
+            modAddAnyStaff.setString(1, anyStaff2.getUsername());
+            modAddAnyStaff.setString(2, anyStaff2.getPassword());
+            modAddAnyStaff.setString(3, anyStaff2.getJobTitle());
+            modAddAnyStaff.setString(4, anyStaff2.getFullName());
+            modAddAnyStaff.setInt(5, anyStaff2.getID());
+            modAddAnyStaff.setInt(6, anyStaff2.getaAdmin());
 
             conn.commit();
 
-            allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID()));
+            System.out.println("Almost there");
+            allStaff.add(new Staff(anyStaff2.getUsername(), anyStaff2.getPassword(), anyStaff2.getJobTitle(), anyStaff2.getFullName(), anyStaff2.getID(), anyStaff2.getaAdmin()));
+            //allStaffEnc.add(new Staff(encUser, encPass, anyStaff.getJobTitle(), encName, anyStaff.getID(), anyStaff.getaAdmin()));
 
             modAddAnyStaff.close();
             conn.close();
@@ -395,6 +398,7 @@ public class staffDatabase {
     public static void deleteStaff(Staff anyStaff){
 
         int anyStaffID = anyStaff.getID();
+        System.out.println("Made it to staff DB delete function");
 
         try  {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
@@ -409,12 +413,14 @@ public class staffDatabase {
             deleteAnyStaff.executeUpdate();
 
             conn.commit();
+            System.out.println("Delete Staff Member Successful for username: " + anyStaff.getUsername());
             deleteAnyStaff.close();
             conn.close();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         int indexOf = allStaff.indexOf(anyStaff);
         allStaff.remove(indexOf);
         //allStaffEnc.remove(indexOf);
@@ -437,9 +443,10 @@ public class staffDatabase {
             String strPW;
             String strTitle;
             String strFullname;
-            Integer intStaffID;
+            int intStaffID;
+            int intIsAdmin;
 
-            System.out.printf("%-65s %-65s %-30s %-65s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID");
+            System.out.printf("%-65s %-65s %-30s %-65s %-20s %-20s\n", "staffID", "password", "jobTitle", "fullName", "ID", "isAdmin");
 
             //Process the results
             while (rsetAllStaff.next()) {
@@ -448,8 +455,9 @@ public class staffDatabase {
                 strTitle = rsetAllStaff.getString("jobTitle");
                 strFullname = rsetAllStaff.getString("fullName");
                 intStaffID = rsetAllStaff.getInt("ID");
+                intIsAdmin = rsetAllStaff.getInt("isAdmin");
 
-                System.out.printf("%-65s %-65s %-30s %-65s %-20d\n", strUsername, strPW, strTitle, strFullname, intStaffID);
+                System.out.printf("%-65s %-65s %-30s %-65s %-20d %-20d\n", strUsername, strPW, strTitle, strFullname, intStaffID, intIsAdmin);
             } // End While
 
             conn.commit();
@@ -482,10 +490,11 @@ public class staffDatabase {
                 for (String line = reader.readLine(); line != null; line = reader.readLine()) {
 
                     String[] staffValues = line.split(",");
-                    String tempStr = staffValues[4];
+                    String tempStr1 = staffValues[4];
+                    String tempStr2 = staffValues[5];
 
                     if (count != 0) {
-                        staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(tempStr)));
+                        staffDatabase.allStaff.add(new Staff(staffValues[0], staffValues[1], staffValues[2], staffValues[3], Integer.valueOf(tempStr1), Integer.valueOf(tempStr2)));
                     }
                     count++;
                 }
@@ -548,7 +557,8 @@ public class staffDatabase {
                         staffDatabase.allStaff.get(j).getPassword() + "," +
                         staffDatabase.allStaff.get(j).getJobTitle() + "," +
                         staffDatabase.allStaff.get(j).getFullName() + "," +
-                        staffDatabase.allStaff.get(j).getID()
+                        staffDatabase.allStaff.get(j).getID() + "," +
+                        staffDatabase.allStaff.get(j).getaAdmin()
                 );
             }
 

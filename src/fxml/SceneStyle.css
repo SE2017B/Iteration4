@@ -106,9 +106,31 @@
 .list-pane{
     -fx-background-color: rgb(135,157,163);
 }
+.axis-label{
+    -fx-text-fill: black;
+}
+
+.no-scroll-bar .scroll-bar:vertical,
+.no-scroll-bar .scroll-bar:horizontal,
+.no-scroll-bar .corner{
+    -fx-scale-x: 0;
+}
+
 
 /*
 .list-view:focused .list-cell:filled:focused:selected {
+    -fx-background-color: rgb(163,235,255);
+    -fx-background: -fx-accent;
+    -fx-text-fill: rgb(00,00,00);
+}
+
+.chart-legend {
+    -fx-background-color: yellow;
+}
+
+.chart-legend-item{
+    -fx-text-fill: black;
+}
     -fx-background-color: rgb(234,161,25);
     /*-fx-background: -fx-accent;
     /*-fx-text-fill: rgb(00,00,00);

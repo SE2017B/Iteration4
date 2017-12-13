@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -14,9 +21,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
-      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane fx:id="screen" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="NEVER" minWidth="-Infinity" />
@@ -25,6 +32,7 @@
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
           <RowConstraints vgrow="NEVER" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
@@ -38,12 +46,12 @@
                         <Insets bottom="40.0" />
                      </padding>
                   </Label>
-                  <JFXTextField fx:id="usernameField" focusColor="WHITE" labelFloat="true" prefHeight="51.0" prefWidth="241.0" promptText="Username" styleClass="text-on-dark" unFocusColor="#bfbfbf">
+                  <JFXTextField fx:id="usernameField" focusColor="WHITE" labelFloat="true" onKeyPressed="#enterPressedkey" prefHeight="51.0" prefWidth="241.0" promptText="Username" styleClass="text-on-dark" unFocusColor="#bfbfbf">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </JFXTextField>
-                  <JFXPasswordField fx:id="passwordField" focusColor="WHITE" promptText="Password" styleClass="text-on-dark" unFocusColor="#c9c9c9">
+                  <JFXPasswordField fx:id="passwordField" focusColor="WHITE" onKeyPressed="#enterPressedkey" promptText="Password" styleClass="text-on-dark" unFocusColor="#c9c9c9">
                      <font>
                         <Font size="23.0" />
                      </font>
@@ -51,7 +59,7 @@
                         <Insets bottom="20.0" top="20.0" />
                      </VBox.margin>
                   </JFXPasswordField>
-                  <JFXButton fx:id="enterButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="8.0" onAction="#enterPressed" scaleX="0.5" scaleY="0.5" text="Enter">
+                  <JFXButton fx:id="enterButton" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="8.0" onAction="#enterPressed" onKeyPressed="#enterPressedkey" scaleX="0.5" scaleY="0.5" text="Enter">
                      <font>
                         <Font size="33.0" />
                      </font>
@@ -66,11 +74,20 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
+                  <ImageView fx:id="capsLock" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
+                     <image>
+                        <Image url="@../images/Icons/exitWhite.png" />
+                     </image></ImageView>
                </children>
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </VBox>
+            <Label fx:id="errorLbl" textFill="RED" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
       <JFXButton fx:id="returnButton" contentDisplay="RIGHT" graphicTextGap="8.0" onAction="#returnPressed" scaleX="0.5" scaleY="0.5" text="Return" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="60.0">

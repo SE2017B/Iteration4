@@ -26,6 +26,7 @@ public class Staff{
     private String jobTitle; //one job title per staff member
     private String fullName; //full name of a staff member
     private int ID; //personal ID a staff member
+    private int aAdmin;
 
     //Constructor DB uses
     public Staff(String username, String password, String jobTitle, String fullName, int ID, int admin, ArrayList<String> languages){
@@ -34,7 +35,7 @@ public class Staff{
         this.jobTitle = jobTitle;
         this.fullName = fullName;
         this.ID = ID;
-        if(admin == 1){
+        if(admin == 0){
             this.admin = false;
         }
         else{
@@ -51,15 +52,14 @@ public class Staff{
     //////////////////////
     ////    LEGACY    ////
     //////////////////////
-    public Staff(String username, String password, String jobTitle, String fullName, int ID){
+    public Staff(String username, String password, String jobTitle, String fullName, int ID, int aAdmin){
         this.username = username;
         this.password = password;
         this.jobTitle = jobTitle;
         this.fullName = fullName;
         this.ID = ID;
-        this.admin = false;
+        this.aAdmin = aAdmin;
 
-        this.languages = new ArrayList<>();
 
         //Setting stuff to blanks for now
         workload = new ArrayList<ServiceRequest>();
@@ -79,10 +79,11 @@ public class Staff{
     }
 
     //Update the BD with the modififed staff
+    /*
     public void uptadeDB(){
         staffDatabase.modifyStaff(this);
     }
-
+*/
     //Important Getters and Setters
     public boolean isAdmin() {
         return admin;
@@ -113,9 +114,12 @@ public class Staff{
     public ArrayList<String> getlanguages() {
         return languages;
     }
+    public int getaAdmin() {
+        return aAdmin;
+    }
 
     //Modifies the staff member
-    public void updateCredentials(String username, String password, String jobTitle, String fullName, int ID, int admin, ArrayList<String> languages) throws InvalidPasswordException {
+    public void updateCredentials(String username, String password, String jobTitle, String fullName, int ID, int admin) throws InvalidPasswordException {
         this.username = username;
         changePassword(password, this.password);
         this.password = password;
@@ -128,7 +132,7 @@ public class Staff{
         else{
             this.admin = true;
         }
-        this.languages = languages;
+        //this.languages = languages;
     }
 
     //Service request related methods

@@ -6,7 +6,7 @@ public class Path implements Comparable<Path> {
     private ArrayList<Node> path = new ArrayList<>();
     private ArrayList<String> directions = new ArrayList<>();
     private ArrayList<ArrayList<String>> directionsByFloor = new ArrayList<>();
-    private HashMap<Path, ArrayList<String>> directionsByPath = new HashMap<>();
+    private ArrayList<ArrayList<Node>> nodesByTextDirection = new ArrayList<>();
     private double distance;
     private double pixelsToMeters = .1;
 
@@ -44,11 +44,20 @@ public class Path implements Comparable<Path> {
         int NVY = 0;
         int VX = 0;
         int VY = 0;
-        int currentDirectionIndex = 0;
+        int currentNodeIndex = 0;
+        ArrayList<Node> currentPath = new ArrayList<>();
         boolean prevElevator = false;
         boolean prevStop = false;
         boolean straight = false;
         int lastStraight = 0;
+
+        if(path.size() == 1){
+            directions.add("You are here!!!");
+            ArrayList<Node> list = new ArrayList<>();
+            list.add(path.get(0));
+            nodesByTextDirection.add(list);
+            return directions;
+        }
 
         if(path.get(0).getFloor().getNodeMapping() < path.get(1).getFloor().getNodeMapping()){
             prevElevator = true;
@@ -57,7 +66,11 @@ public class Path implements Comparable<Path> {
             prevElevator = true;
             directions.add(0, "Go down " + getBetterName(path.get(0)));
         } else {
-            directions.add(0, "Go straight from " + getBetterName(path.get(0)));
+            directions.add(0, "Start at " + getBetterName(path.get(0)) + " and continue towards " + getBetterName(path.get(1)));
+            currentPath.add(path.get(0));
+            currentPath.add(path.get(1));
+            nodesByTextDirection.add(currentPath);
+            currentPath = new ArrayList<>();
         }
 
         for(int i = 1; i < path.size() - 1; i++){
@@ -80,19 +93,32 @@ public class Path implements Comparable<Path> {
                 if (path.get(i-1).getFloor().getNodeMapping() > path.get(i+1).getFloor().getNodeMapping() && !prevElevator) {
                     directions.add("Go down " + getBetterName(path.get(i)));
                     prevElevator = true;
+                    currentNodeIndex = i;
                     continue;
                 } else if (path.get(i-1).getFloor().getNodeMapping() < path.get(i+1).getFloor().getNodeMapping() && !prevElevator) {
                     directions.add("Go up " + getBetterName(path.get(i)));
                     prevElevator = true;
+                    currentNodeIndex = i;
                     continue;
-                }
+                } else if (prevElevator) continue;
             } else {
                 if(path.get(i-1).getFloor().getNodeMapping() > path.get(i).getFloor().getNodeMapping() ||
                     path.get(i-1).getFloor().getNodeMapping() < path.get(i).getFloor().getNodeMapping()){
-                    if(!prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(i).getFloor().getDbMapping()));
+                    if(!prevElevator) {
+                        directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(i).getFloor().getDbMapping()));
+                    }
                     else directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
                     directions.add("Exit " + getBetterName(path.get(i)) + " and continue towards " + getBetterName(path.get(i+1)));
+                    currentPath.addAll(path.subList(currentNodeIndex, i+1));
+                    nodesByTextDirection.add(currentPath);
+                    currentPath = new ArrayList<>();
+                    currentNodeIndex = i;
+                    currentPath.addAll(path.subList(currentNodeIndex, i+2));
+                    nodesByTextDirection.add(currentPath);
+                    currentPath = new ArrayList<>();
+                    currentNodeIndex = i+1;
                     prevElevator = false;
+                    straight = false;
                     continue;
                 }
             }
@@ -103,7 +129,13 @@ public class Path implements Comparable<Path> {
             }
 
             if(angle >= -155 && angle <= -25){
-                if(straight) directions.add("Continue straight for " + (int)(path.get(lastStraight).getEuclidianDistance(path.get(i)) * pixelsToMeters) + "m and take a left");
+                if(straight){
+                    directions.add("Continue straight for " + (int)(path.get(lastStraight).getEuclidianDistance(path.get(i)) * pixelsToMeters) + "m and take a left");
+                    currentPath.addAll(path.subList(currentNodeIndex, i+2));
+                    nodesByTextDirection.add(currentPath);
+                    currentPath = new ArrayList<>();
+                    currentNodeIndex = i;
+                }
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
                 else if(prevStop) directions.add("Turn left from " + getBetterName(path.get(i)));
                 else {
@@ -116,10 +148,20 @@ public class Path implements Comparable<Path> {
                         else if (angle <= -140) directions.add("Take a sharp left in " + getBetterName(path.get(i)));
                         else directions.add("Take a left in " + getBetterName(path.get(i)));
                     }
+                    currentPath.addAll(path.subList(i-1, i+2));
+                    nodesByTextDirection.add(currentPath);
+                    currentPath = new ArrayList<>();
+                    currentNodeIndex = i;
                 }
             }
             else if(angle >= 25 && angle <= 155){
-                if(straight) directions.add("Continue straight for " + (int)(path.get(lastStraight).getEuclidianDistance(path.get(i)) * pixelsToMeters) + "m and take a right");
+                if(straight){
+                    directions.add("Continue straight for " + (int)(path.get(lastStraight).getEuclidianDistance(path.get(i)) * pixelsToMeters) + "m and take a right");
+                    currentPath.addAll(path.subList(currentNodeIndex, i+2));
+                    nodesByTextDirection.add(currentPath);
+                    currentPath = new ArrayList<>();
+                    currentNodeIndex = i;
+                }
                 else if(prevElevator) directions.set(directions.size()-1, directions.get(directions.size()-1).concat(" until floor " + path.get(i).getFloor().getDbMapping()));
                 else if(prevStop) directions.add("Turn right from " + getBetterName(path.get(i)));
                 else {
@@ -132,6 +174,10 @@ public class Path implements Comparable<Path> {
                         else if (angle >= 140) directions.add("Take a sharp right in " + getBetterName(path.get(i)));
                         else directions.add("Take a right in " + getBetterName(path.get(i)));
                     }
+                    currentPath.addAll(path.subList(i-1, i+2));
+                    nodesByTextDirection.add(currentPath);
+                    currentPath = new ArrayList<>();
+                    currentNodeIndex = i;
                 }
             }
             else if (angle > -25 && angle < 25){
@@ -140,8 +186,20 @@ public class Path implements Comparable<Path> {
                     straight = true;
                     continue;
                 }
-                if(prevElevator || prevStop) directions.add("Go straight from " + getBetterName(path.get(i)));
-                else directions.add("Continue straight past " + getBetterName(path.get(i)));
+                if(prevElevator || prevStop){
+                    directions.add("Go straight from " + getBetterName(path.get(i)));
+                    currentPath.addAll(path.subList(currentNodeIndex, i));
+                    nodesByTextDirection.add(currentPath);
+                    currentPath = new ArrayList<>();
+                    currentNodeIndex = i;
+                }
+                else{
+                    directions.add("Continue straight past " + getBetterName(path.get(i)));
+                    currentPath.addAll(path.subList(i-1, i+2));
+                    nodesByTextDirection.add(currentPath);
+                    currentPath = new ArrayList<>();
+                    currentNodeIndex = i;
+                }
             }
             else {
                 directions.add("Turn around from " + getBetterName(path.get(i)));
@@ -157,6 +215,9 @@ public class Path implements Comparable<Path> {
             directions.set(directions.size()-1, directions.get(directions.size()-1).substring(0, directions.get(directions.size()-1).length()-1).concat(path.get(path.size()-1).getFloor().getDbMapping()));
         }
         directions.add("Stop at " + getFullType(path.get(path.size()-1)));
+        currentPath.add(path.get(path.size()-1));
+        nodesByTextDirection.add(currentPath);
+        currentPath = new ArrayList<>();
         return directions;
     }
 
@@ -180,9 +241,10 @@ public class Path implements Comparable<Path> {
         return directionsByFloor;
     }
 
-    public HashMap<Path, ArrayList<String>> getDirectionsByPath(){
-        return directionsByPath;
+    public ArrayList<ArrayList<Node>> getPathByDirections(){
+        return nodesByTextDirection;
     }
+
 
     private String getFullType(Node node){
         String type = node.getType();

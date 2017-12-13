@@ -63,6 +63,7 @@ public class PathController implements ControllableScreen, Observer{
     private MapViewer mapViewer;
     private FloorNumber currentFloor;// the current floor where the kiosk is.
     private PathViewer currentPath;
+    private PathViewer wholePath;
     private ArrayList<FloorNumber> floors; //list of floors available
     private ArrayList<PathViewer> paths;
     private ArrayList<Shape> shapes;
@@ -205,6 +206,9 @@ public class PathController implements ControllableScreen, Observer{
         startNodeOptionList.setOnMouseClicked( e -> suggestionPressed(e, startTextField, startNodeOptionList));
         endNodeOptionList.setOnMouseClicked( e -> suggestionPressed(e, endTextField, endNodeOptionList));
 
+
+        directionsList.setOnMouseClicked( event  -> highlightPath(wholePath,((ListView) event.getSource()).getSelectionModel().getSelectedIndex()));
+
         startTextTab.setOnSelectionChanged(e -> {
             startNodeOptionList.setVisible(false);
             startNode = null;
@@ -276,7 +280,6 @@ public class PathController implements ControllableScreen, Observer{
             public void handle(MouseEvent event) {
                 double sX=event.getX();
                 double sY=event.getY();
-                System.out.println("X is: "+sX+" Y is: "+sY);
                 if(currentFloor!=null && isSearching){
                     List<Node> v = map.getNodesInArea((int)sX,(int)sY,currentFloor);
                     if(v.size()>0){
@@ -330,11 +333,7 @@ public class PathController implements ControllableScreen, Observer{
         mainAnchorPane.getChildren().add(textDirectionDropDown);
         AnchorPane.setTopAnchor(textDirectionDropDown,100.0);
 
-        //check the center points at various scales (for testing)
-        System.out.println("Center at 0.5: " + mapViewer.getCenterAt(0.5));
-        System.out.println("Center at 1: " + mapViewer.getCenterAt(1));
-        System.out.println("Center at 1.5: " + mapViewer.getCenterAt(1.5));
-        System.out.println("Center at 2: " + mapViewer.getCenterAt(2));
+
 
 
     }
@@ -446,11 +445,14 @@ public class PathController implements ControllableScreen, Observer{
                 }
                 textField.setText(listView.getSelectionModel().getSelectedItem().toString());
             }
+            else if(code.equals(KeyCode.ESCAPE)){
+                startNodeOptionList.setVisible(false);
+                endNodeOptionList.setVisible(false);
+            }
             else if(code.isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
                 String text = ((JFXTextField) keyEvent.getSource()).getText();
                 text = (code.isLetterKey()) ? text + keyEvent.getText() : text.substring(0, text.length()-1);
                 if(text.equals("")){
-                    System.out.println("empty");
                     listView.setVisible(false);
                 }
                 else {
@@ -563,6 +565,7 @@ public class PathController implements ControllableScreen, Observer{
         else{
             e=endNodeChoice.getValue();
         }
+        wholePath = new PathViewer(map.findPath(s, e));
         return map.findPath(s,e);
     }
 
@@ -678,7 +681,6 @@ public class PathController implements ControllableScreen, Observer{
         PREV.setVisible(false);
         //reposition buttons to nodes
         if(path.getnext()!=null){
-            System.out.println("Relocating UP button");
             PathViewer next = path.getnext();
             if(next.getFloor().getNodeMapping()>path.getFloor().getNodeMapping()){
                 mapPane.getChildren().remove(NEXT);
@@ -698,6 +700,7 @@ public class PathController implements ControllableScreen, Observer{
                 NEXT.setLayoutX(next.getNodes().get(0).getX());
                 NEXT.setLayoutY(next.getNodes().get(0).getY());
                 NEXT.setOnAction(e -> updatePath(next) );
+
                 downPath=next;
                 mapPane.getChildren().add(NEXT);
             }
@@ -774,6 +777,56 @@ public class PathController implements ControllableScreen, Observer{
         }
     }
 
+    private javafx.scene.shape.Path pathToHighlight;
+    private Circle circleToHighlight;
+
+
+    private void highlightPath(PathViewer pathViewer, int directionIndex){
+        Path path = pathViewer.getPath();
+        path.findDirections();
+        ArrayList<Node> nodesByDirections = path.getPathByDirections().get(directionIndex);
+        System.out.println(nodesByDirections.size());
+        if(pathToHighlight != null){
+            mapPane.getChildren().remove(pathToHighlight);
+        }
+        pathToHighlight = new javafx.scene.shape.Path();
+        if(currentFloor.equals(nodesByDirections.get(nodesByDirections.size()-1).getFloor()) && currentFloor.equals(nodesByDirections.get(0).getFloor())){
+            System.out.println("True");
+            mapPane.getChildren().add(pathToHighlight);
+            shapes.add(pathToHighlight);
+            pathToHighlight.toFront();
+            arrow.toFront();
+        }
+        pathToHighlight.setStroke(Color.RED);
+        pathToHighlight.setStrokeWidth(LINE_STROKE+2);
+        int startNode = 0;
+        int endNode;
+        for(int i=0;i<pathViewer.getPath().getPath().size();i++){
+            if(pathViewer.getPath().getPath().get(i).equals(nodesByDirections.get(0))) startNode = i;
+        }
+        endNode = startNode + nodesByDirections.size();
+        pathToHighlight.getElements().add(new MoveTo(pathViewer.getPath().getPath().get(startNode).getX(), pathViewer.getPath().getPath().get(startNode).getY()));
+        for(int i=startNode+1;i<endNode;i++){
+                pathToHighlight.getElements().add(new LineTo(pathViewer.getPath().getPath().get(i).getX(), pathViewer.getPath().getPath().get(i).getY()));
+        }
+        if(circleToHighlight != null){
+            mapPane.getChildren().remove(circleToHighlight);
+        }
+        if(pathToHighlight.getElements().size() == 2 && !nodesByDirections.get(0).getFloor().equals(nodesByDirections.get(1).getFloor())){
+            circleToHighlight = new Circle();
+            circleToHighlight.setCenterX(nodesByDirections.get(0).getX());
+            circleToHighlight.setCenterY(nodesByDirections.get(0).getY());
+            circleToHighlight.fillProperty().setValue(Color.RED);
+            circleToHighlight.setRadius(5);
+            circleToHighlight.setStroke(Color.RED);
+            mapPane.getChildren().add(circleToHighlight);
+            shapes.add(circleToHighlight);
+            circleToHighlight.toFront();
+            arrow.toFront();
+        }
+        System.out.println(pathToHighlight.getElements().size());
+    }
+
     //method to switch between paths when toggling between floors
     private void switchPath(PathViewer path){
         clearShapes();
@@ -804,8 +857,6 @@ public class PathController implements ControllableScreen, Observer{
 
     //-------------------------MAP SCALE START--------------------------//
     public void setScale(PathViewer path){
-        System.out.println("");
-        System.out.println("We shall start scaling right now");
         double scale = path.getScale();
         scale = mapViewer.checkScale(scale);
         path.initScaling(mapViewer.getScale(),scale); //animate the scaling process
@@ -852,7 +903,6 @@ public class PathController implements ControllableScreen, Observer{
         try {
             qr.writeQRList(directions, "src/images/qr");
             while(!qr.isComplete()){
-                System.out.println("Waiting on qr");
             }
             File f = new File("/image/qr/jpg");
             qrImageView.setImage(new Image("file:src/images/qr.jpg"));
@@ -952,7 +1002,6 @@ public class PathController implements ControllableScreen, Observer{
 
     private void adjustNodes(){
         if(startPointFloor==currentFloor){
-            System.out.println("Setting start and end points");
             startPoint.setVisible(true);
         }
         else{
@@ -988,32 +1037,7 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private void startChosen(){
-        String filter = "";
-        if(startType.equals("Restroom")){
-            filter = "REST";
-        }
-        else if (startType.equals("Retail")){
-            filter = "RETL";
-        }
-        else if (startType.equals("Exits")){
-            filter = "EXIT";
-        }
-        else if (startType.equals("Stairs")){
-            filter = "STAI";
-        }
-        else if (startType.equals("Elevators")){
-            filter = "ELEV";
-        }
-        else if (startType.equals("Department")){
-            filter = "DEPT";
-        }
-        else if (startType.equals("Services")){
-            filter = "SERV";
-        }
-        else {
-            filter = "INFO";
-        }
-        final String f = filter.toString();
+        final String f = Node.getFilterText(startType);
         if(startFloor.equals("ALL")){
             startNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f))));
         }
@@ -1043,32 +1067,8 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private void endChosen(){
-        String filter = "";
-        if(endType.equals("Restroom")){
-            filter = "REST";
-        }
-        else if (endType.equals("Retail")){
-            filter = "RETL";
-        }
-        else if (endType.equals("Exits")){
-            filter = "EXIT";
-        }
-        else if (endType.equals("Stairs")){
-            filter = "STAI";
-        }
-        else if (endType.equals("Elevators")){
-            filter = "ELEV";
-        }
-        else if (endType.equals("Department")){
-            filter = "DEPT";
-        }
-        else if (endType.equals("Services")){
-            filter = "SERV";
-        }
-        else {
-            filter = "INFO";
-        }
-        final String f = filter.toString();
+
+        final String f = Node.getFilterText(endType);
         if(endFloor.equals("ALL")){
             endNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f))));
         }
