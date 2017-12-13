@@ -473,6 +473,7 @@ public class RequestController implements ControllableScreen{
         if(endTypeTab.isSelected())
             endNode = endNodeChoice.getValue();
         if(startNode != null && (endNode != null || !selectedAPI.equals("Transportation"))) {
+            parent.pauseTimeout();
             if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Sanitation"))
             {
                 runSanitationAPI(startNode);
