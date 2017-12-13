@@ -154,8 +154,8 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         else{
             if(edgeAddTab.isSelected()){
-                showNodesbyFloor(currentFloor);
                 showEdgesbyFloor(currentFloor);
+                showNodesbyFloor(currentFloor);
                 edgeAddNode1 = null;
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
@@ -731,8 +731,8 @@ public class AddNodeController implements ControllableScreen, Observer {
                 Node n = cb.getNode();
 
                 map.editNode(n,
-                        Integer.toString((int) cb.getLayoutX()),
-                        Integer.toString((int) cb.getLayoutX()),
+                        Integer.toString((int) cb.getLayoutX() + 9),
+                        Integer.toString((int) cb.getLayoutY() + 9),
                         n.getFloor().getDbMapping(),
                         n.getBuilding(),
                         n.getType(),

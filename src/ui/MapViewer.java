@@ -220,9 +220,10 @@ public class MapViewer extends Observable{
 
         zoomBar.setPrefSize(300, 55);
 
-        Pane zoomPane = new Pane();
+        HBox zoomPane = new HBox();
         zoomPane.setMaxSize(362, 63);
         zoomPane.getChildren().add(zoomBar);
+        zoomPane.translateXProperty().bind(mapViewerPane.widthProperty().divide(2).subtract(625));
 
         //Add everything to the pane itself
         //buttonScrollPane.;
@@ -294,6 +295,7 @@ public class MapViewer extends Observable{
         else {
             setFloor(floor,id);
         }
+        System.out.println("ID: " + id);
         setChanged();
         notifyObservers(new PathID(floor, id));
     }
@@ -501,7 +503,8 @@ public class MapViewer extends Observable{
 
     //when - button pressed zoom out map
     public void zoomOutPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()-0.2);
+        if(!(slideBarZoom.getValue() < 0.4))
+            setZoom(slideBarZoom.getValue()-0.2);
     }
 
     public void setZoom(double zoom){
