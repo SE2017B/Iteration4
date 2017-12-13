@@ -217,7 +217,7 @@ public class RequestController implements ControllableScreen{
         apiServ.add("Sanitation");
         apiServ.add("Food");
         apiServ.add("Translation");
-        apiServ.add("Transport");
+        apiServ.add("Transportation");
 
 
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
@@ -469,9 +469,9 @@ public class RequestController implements ControllableScreen{
             {
                 runTranslationAPI(startNode);
             }
-            else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Transport"))
+            else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Transportation"))
             {
-                runTransportationAPI(startNode);
+                runTransportationAPI(startNode, endNode);
             }else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Food"))
             {
                 runFoodDeliveryAPI(startNode);
@@ -482,17 +482,17 @@ public class RequestController implements ControllableScreen{
     public void runSanitationAPI(Node desNode){
         Stage primaryStage = new Stage();
         SanitationService api1 = SanitationService.newInstance(primaryStage);
-        api1.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+        api1.run(100, 100, 900, 600, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
     public void runTranslationAPI(Node desNode){
         Stage primaryStage = new Stage();
         TranslationService api2 = TranslationService.newInstance(primaryStage);
-        api2.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+        api2.run(100, 100, 900, 600, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
-    public void runTransportationAPI(Node desNode){
+    public void runTransportationAPI(Node desNode, Node end){
         Stage primaryStage = new Stage();
         TransportService api = TransportService.newInstance(primaryStage);
-        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+        api.run(100, 100, 900, 600, "/fxml/SceneStyle.css", end.getID(), desNode.getID());
     }
     public void runFoodDeliveryAPI(Node desNode){
         FoodRequest foodRequest = new FoodRequest();
