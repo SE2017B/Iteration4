@@ -61,6 +61,7 @@ public class PathController implements ControllableScreen, Observer{
     private MapViewer mapViewer;
     private FloorNumber currentFloor;// the current floor where the kiosk is.
     private PathViewer currentPath;
+    private PathViewer wholePath;
     private ArrayList<FloorNumber> floors; //list of floors available
     private ArrayList<PathViewer> paths;
     private ArrayList<Shape> shapes;
@@ -337,6 +338,7 @@ public class PathController implements ControllableScreen, Observer{
         else{
             e=endNodeChoice.getValue();
         }
+        wholePath = new PathViewer(map.findPath(s, e));
         return map.findPath(s,e);
     }
 
@@ -468,6 +470,51 @@ public class PathController implements ControllableScreen, Observer{
         }
     }
 
+    public void textDirectionSelected(ActionEvent e){
+        directionsList.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue)
+                                                                    -> highlightPath(wholePath, newValue.intValue()));
+    }
+
+    private void highlightPath(PathViewer pathViewer, int directionIndex){
+        Path path = pathViewer.getPath();
+        path.findDirections();
+        ArrayList<Node> nodesByDirections = path.getPathByDirections().get(directionIndex);
+        System.out.println(nodesByDirections.size());
+        javafx.scene.shape.Path pathToHighlight = new javafx.scene.shape.Path();
+        if(currentFloor.equals(nodesByDirections.get(nodesByDirections.size()-1).getFloor())){
+            System.out.println("True");
+            mapPane.getChildren().add(pathToHighlight);
+            shapes.add(pathToHighlight);
+            pathToHighlight.toFront();
+            arrow.toFront();
+        }
+        pathToHighlight.setStroke(Color.RED);
+        pathToHighlight.setStrokeWidth(LINE_STROKE+2);
+        int startNode = 0;
+        int endNode;
+        for(int i=0;i<pathViewer.getPath().getPath().size();i++){
+            if(pathViewer.getPath().getPath().get(i).equals(nodesByDirections.get(0))) startNode = i;
+        }
+        endNode = startNode + nodesByDirections.size();
+        pathToHighlight.getElements().add(new MoveTo(pathViewer.getPath().getPath().get(startNode).getX(), pathViewer.getPath().getPath().get(startNode).getY()));
+        for(int i=startNode+1;i<endNode;i++){
+                pathToHighlight.getElements().add(new LineTo(pathViewer.getPath().getPath().get(i).getX(), pathViewer.getPath().getPath().get(i).getY()));
+        }
+        if(pathToHighlight.getElements().size() == 2 && !nodesByDirections.get(0).getFloor().equals(nodesByDirections.get(1).getFloor())){
+            Circle circle = new Circle();
+            circle.setCenterX(nodesByDirections.get(0).getX());
+            circle.setCenterY(nodesByDirections.get(0).getY());
+            circle.fillProperty().setValue(Color.RED);
+            circle.setRadius(5);
+            circle.setStroke(Color.RED);
+            mapPane.getChildren().add(circle);
+            shapes.add(circle);
+            circle.toFront();
+            arrow.toFront();
+        }
+        System.out.println(pathToHighlight.getElements().size());
+    }
+
     //method to switch between paths when toggling between floors
     private void switchPath(PathViewer path){
         clearShapes();
@@ -533,10 +580,6 @@ public class PathController implements ControllableScreen, Observer{
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
         ArrayList<String> directions = thePath.findDirections();
-        System.out.println(directions);
-        System.out.println(directions.size());
-        System.out.println(thePath.getPathByDirections());
-        System.out.println(thePath.getPathByDirections().size());
         directionsList.setItems(FXCollections.observableList(directions));
         textDirectionsPane.setVisible(true);
         textDirectionsPane.setExpanded(false);
