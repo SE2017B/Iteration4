@@ -25,16 +25,16 @@
           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <AnchorPane prefHeight="400.0" prefWidth="800.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <AnchorPane prefHeight="400.0" prefWidth="800.0" styleClass="tutorial-background" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <JFXTextArea fx:id="helpTextArea" editable="false" layoutX="207.0" layoutY="104.0" prefHeight="191.0" prefWidth="387.0" styleClass="help-text" text="Help">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </JFXTextArea>
-                  <JFXButton fx:id="returnButton" layoutX="-36.0" layoutY="36.0" onAction="#returnPressed" prefHeight="50.0" prefWidth="100.0" text="Return" />
-                  <JFXButton fx:id="previousButton" layoutX="14.0" layoutY="336.0" onAction="#previousPressed" prefHeight="50.0" prefWidth="150.0" text="Previous" />
-                  <JFXProgressBar fx:id="helpProgress" layoutX="236.0" layoutY="359.0" prefHeight="5.0" prefWidth="329.0" progress="0.0" />
+                  <JFXButton fx:id="returnButton" layoutX="10.0" layoutY="36.0" onAction="#returnPressed" prefHeight="50.0" prefWidth="100.0" style="-fx-opacity: 100%;" text="Return" />
+                  <JFXButton fx:id="previousButton" layoutX="14.0" layoutY="336.0" onAction="#previousPressed" prefHeight="50.0" prefWidth="150.0" style="-fx-opacity: 100%;" text="Previous" />
+                  <JFXProgressBar fx:id="helpProgress" layoutX="236.0" layoutY="352.0" prefHeight="18.0" prefWidth="329.0" progress="0.0" style="-fx-opacity: 100%;" />
                   <JFXButton fx:id="nextButton" layoutX="636.0" layoutY="336.0" onAction="#nextPressed" prefHeight="50.0" prefWidth="150.0" text="Next" />
                </children></AnchorPane>
          </children>
