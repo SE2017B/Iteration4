@@ -11,31 +11,27 @@ package controllers;
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 //import api.SanitationService;
+import api.SanitationService;
 import com.jfoenix.controls.*;
-import database.serviceDatabase;
+import database.feedbackDatabase;
 import database.staffDatabase;
 import exceptions.InvalidPasswordException;
-import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import map.HospitalMap;
 import map.Node;
 import search.SearchStrategy;
 import ui.ShakeTransition;
 
 import java.util.ArrayList;
-
-import static java.awt.Color.black;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
@@ -260,20 +256,17 @@ public class RequestController implements ControllableScreen{
     public void onShow(){
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
-        System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
+        //System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
 
         if(depSub.getCurrentLoggedIn().getaAdmin() == 1){
-            System.out.println("I am Admin");
             btnEditMap.setDisable(false);
             settingsTab.setDisable(false);
             staffManageTab.setDisable(false);
 
         }else{
-            System.out.println("Not admin");
             btnEditMap.setDisable(true);
             settingsTab.setDisable(true);
             staffManageTab.setDisable(true);
-            //resolveServiceListView.getItems().addAll(depSub.getCurrentLoggedIn().getAllRequest());
         }
 
         //Update the nodes in the map
@@ -291,12 +284,12 @@ public class RequestController implements ControllableScreen{
 //        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
 
         lblFeedbackRating.setStyle("-fx-background-color: rgb(40,40,60)");
-        lblFeedbackRating.setText(serviceDatabase.avgFeedback());
+        lblFeedbackRating.setText(feedbackDatabase.avgFeedback());
 
         lblFeedbackTitle.setStyle("-fx-background-color: rgb(40,40,60)");
         lblFeedbackTitle.setText("Feedback Charts");
 
-        feedbackListView.setItems(FXCollections.observableList(serviceDatabase.getAllFeedbacks()));
+        feedbackListView.setItems(FXCollections.observableList(feedbackDatabase.getAllFeedbacks()));
 
         // Populate Feedback Charts
         pieChartCreate();
@@ -328,9 +321,9 @@ public class RequestController implements ControllableScreen{
     }
 
     public void runAPI(Node desNode){
-//        Stage primaryStage = new Stage();
-//        SanitationService api = SanitationService.newInstance(primaryStage);
-//        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+        Stage primaryStage = new Stage();
+        SanitationService api = SanitationService.newInstance(primaryStage);
+        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
 
     public void cancelPressedAPI(ActionEvent e){
@@ -549,14 +542,14 @@ public class RequestController implements ControllableScreen{
         // Setting up the Pie Chart on Feedback tab
         feedbackPieChart.setLabelLineLength(10);
         feedbackPieChart.setLegendSide(Side.RIGHT);
-        feedbackPieChart.setData(serviceDatabase.cntFeedback());
+        feedbackPieChart.setData(feedbackDatabase.cntFeedback());
     }
 
     @FXML
     void lineChartCreate() {
         feedbackLineChart.getData().clear();
 
-        ArrayList<Integer> tempLineArray = serviceDatabase.cntChartFeedback();
+        ArrayList<Integer> tempLineArray = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aLineChart = new XYChart.Series<>();
         aLineChart.getData().add(new XYChart.Data<String,Number>("0", tempLineArray.get(0)));
@@ -575,7 +568,7 @@ public class RequestController implements ControllableScreen{
     @FXML
     void barChartCreate() {
         feedbackBarChart.getData().clear();
-        ArrayList<Integer> tempLineArray2 = serviceDatabase.cntChartFeedback();
+        ArrayList<Integer> tempLineArray2 = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aBarChart = new XYChart.Series<>();
         aBarChart.getData().add(new XYChart.Data<String,Number>("0", tempLineArray2.get(0)));

@@ -2,22 +2,27 @@ package database;
 
 import DepartmentSubsystem.Feedback;
 import DepartmentSubsystem.ServiceRequest;
+import DepartmentSubsystem.Staff;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 //import translation.Staff;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Observable;
 
 @SuppressWarnings("Duplicates")
-public class serviceDatabase {
+public class feedbackDatabase {
 
     // Table Schema
     //////////////////////////////////////////////////////////////////
-    // serviceRequests (requestID PK, locationID, time, date, staffID, severity, comments)
+    // feedback (feedbackID PK, rating, additionalInfo)
     //////////////////////////////////////////////////////////////////
 
     private static final String JDBC_URL_STAFF = "jdbc:derby:hospitalStaffDB;create=true";
@@ -76,11 +81,11 @@ public class serviceDatabase {
             String createFeedbackTable = ("CREATE TABLE feedback" +
                     "(feedbackID INTEGER," +
                     "rating INTEGER," +
-                    "additionalInfo VARCHAR(150)," +
+                    "additionalInfo VARCHAR(400)," +
                     "CONSTRAINT feedback_PK PRIMARY KEY (feedbackID))");
 
             int rsetCreate1 = stmtCreateFeedback.executeUpdate(createFeedbackTable);
-            System.out.println("Create Feedback table Successful!");
+            System.out.printf("Create Feedback table Successful!\n\n");
 
             conn.commit();
             stmtCreateFeedback.close();
@@ -373,6 +378,69 @@ public class serviceDatabase {
         String avgFeedStr = "Average Feedback Rating: " + avgFeedback;
         return avgFeedStr;
     }
+    ///////////////////////////////////////////////////////////////////////////////
+    // Read from Feedback CSV File and store columns in feedback array lists
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void readFeedbackCSV(String fname) {
+        int count = 0;
 
+        InputStream in = Class.class.getResourceAsStream(fname);
+
+        if (in == null) {
+            System.out.println("Error: Could not find the file: " + fname);
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+        try {
+
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+
+                String[] feedValues = line.split(",");
+                String tempStr1 = feedValues[0];
+                String tempStr2 = feedValues[1];
+
+                if (count != 0) {
+                    allFeedbacks.add(new Feedback(Integer.valueOf(tempStr1), Integer.valueOf(tempStr2), feedValues[2]));
+                }
+                count++;
+            }
+            reader.close();
+            in.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // Insert into feedback table using a prepared statement from csv
+    ///////////////////////////////////////////////////////////////////////////////
+    public static void insertStaffFromCSV() {
+        try {
+            conn = DriverManager.getConnection(JDBC_URL_STAFF);
+            conn.setAutoCommit(false);
+            conn.getMetaData();
+
+            PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO feedback VALUES (?, ?, ?)");
+
+            for (int j = 0; j < allFeedbacks.size(); j++) {
+
+                insertStaff.setInt(1, allFeedbacks.get(j).getFeedbackID());
+                insertStaff.setInt(2, allFeedbacks.get(j).getRating());
+                insertStaff.setString(3, allFeedbacks.get(j).getAdditionalInfo());
+
+                insertStaff.executeUpdate();
+
+            }
+
+            conn.commit();
+
+            insertStaff.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();// end try
+        }
+    }
 }
 
