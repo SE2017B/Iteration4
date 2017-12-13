@@ -137,7 +137,7 @@ public class AnimatedHelpController implements ControllableScreen{
         //If we move forward, we check bounds
         if(next){
             if((this.status) >= 7)
-                this.status = this.ImageMap.size()-1;
+                this.status = 7;
             else
                 this.status += 1;
         }
