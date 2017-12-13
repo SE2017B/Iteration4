@@ -395,6 +395,7 @@ public class MapViewer extends Observable{
         mapPane.setTranslateX((scale - 1)/2 * 5000);
         mapPane.setTranslateY((scale - 1)/2 * 3400);
 
+        //TODO scaling issues for zooming
         mapHolderPane.setPrefSize(mapPane.getBoundsInLocal().getWidth() * scale, mapPane.getBoundsInLocal().getHeight() * scale);
 
     }
