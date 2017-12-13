@@ -805,7 +805,7 @@ public class PathController implements ControllableScreen, Observer{
             arrow.toFront();
         }
         pathToHighlight.setStroke(Color.RED);
-        pathToHighlight.setStrokeWidth((LINE_STROKE+5) * (1/mapViewer.getScale()));
+        pathToHighlight.setStrokeWidth((LINE_STROKE+7) * (1/mapViewer.getScale()));
         int startNode = 0;
         int endNode;
         for(int i=0;i<pathViewer.getPath().getPath().size();i++){
