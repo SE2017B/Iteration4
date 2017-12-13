@@ -291,6 +291,12 @@ public class MapViewer extends Observable{
         notifyObservers(new PathID(floor, id));
     }
 
+    public void floorButtonPressed(FloorNumber floor, int index){
+        setFloor(floor, index);
+        setChanged();
+        notifyObservers(new PathID(floor, index));
+    }
+
     private void clearButtons(){
         container.getChildren().clear();
         buttonOrder.clear();

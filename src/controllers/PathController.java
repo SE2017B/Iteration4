@@ -71,6 +71,7 @@ public class PathController implements ControllableScreen, Observer{
     private PathTransition pathTransition;
     private Pane mapPane;
     private Path thePath;
+    private int currentFloorIndex = 0;
 
     //animation variables
     private ArrayList<Integer> Center;
@@ -219,7 +220,7 @@ public class PathController implements ControllableScreen, Observer{
         endNodeOptionList.setOnMouseClicked( e -> suggestionPressed(e, endTextField, endNodeOptionList));
 
 
-        directionsList.setOnMouseClicked( event  -> highlightPath(wholePath,((ListView) event.getSource()).getSelectionModel().getSelectedIndex()));
+        directionsList.setOnMouseClicked( event  -> doStuffForTextDirections(currentPath,((ListView) event.getSource()).getSelectionModel().getSelectedIndex(), floors.get(currentFloorIndex)));
 
         startTextTab.setOnSelectionChanged(e -> {
             startNodeOptionList.setVisible(false);
@@ -771,12 +772,13 @@ public class PathController implements ControllableScreen, Observer{
         endNode = startNode + nodesByDirections.size();
         pathToHighlight.getElements().add(new MoveTo(pathViewer.getPath().getPath().get(startNode).getX(), pathViewer.getPath().getPath().get(startNode).getY()));
         for(int i=startNode+1;i<endNode;i++){
-                pathToHighlight.getElements().add(new LineTo(pathViewer.getPath().getPath().get(i).getX(), pathViewer.getPath().getPath().get(i).getY()));
+            pathToHighlight.getElements().add(new LineTo(pathViewer.getPath().getPath().get(i).getX(), pathViewer.getPath().getPath().get(i).getY()));
         }
         if(circleToHighlight != null){
             mapPane.getChildren().remove(circleToHighlight);
         }
-        if(pathToHighlight.getElements().size() == 2 && !nodesByDirections.get(0).getFloor().equals(nodesByDirections.get(1).getFloor())){
+        if(pathToHighlight.getElements().size() == 2 && !nodesByDirections.get(0).getFloor().equals(nodesByDirections.get(1).getFloor()) ||
+                pathToHighlight.getElements().size() == 1){
             circleToHighlight = new Circle();
             circleToHighlight.setCenterX(nodesByDirections.get(0).getX());
             circleToHighlight.setCenterY(nodesByDirections.get(0).getY());
@@ -789,6 +791,19 @@ public class PathController implements ControllableScreen, Observer{
             arrow.toFront();
         }
         System.out.println(pathToHighlight.getElements().size());
+    }
+
+    private void switchFloorsOnTextDirection(int index, FloorNumber floorNumber){
+        if(index == directionsList.getItems().size() - 1 && currentFloorIndex < floors.size() - 1){
+            currentFloorIndex++;
+            System.out.println("CFI: " + currentFloorIndex);
+            mapViewer.floorButtonPressed(floorNumber, currentFloorIndex);
+        }
+    }
+
+    private void doStuffForTextDirections(PathViewer pathViewer, int index, FloorNumber floorNumber){
+        highlightPath(pathViewer, index);
+        switchFloorsOnTextDirection(index, floorNumber);
     }
 
     //method to switch between paths when toggling between floors
@@ -857,7 +872,8 @@ public class PathController implements ControllableScreen, Observer{
         SetPaths(thePath);
         mapViewer.setButtonsByFloor(floors);
         ArrayList<String> directions = thePath.findDirections();
-        directionsList.setItems(FXCollections.observableList(directions));
+        ArrayList<String> directionsByFloor = thePath.getDirectionsByFloor().get(0);
+        directionsList.setItems(FXCollections.observableList(directionsByFloor));
         textDirectionDropDown.setVisible(true);
         //textDirectionDropDown.animateList(false);
         try {
@@ -940,6 +956,8 @@ public class PathController implements ControllableScreen, Observer{
                     currentPath.hasAnimated=false; //it is probably not well positioned
                 }
                 currentPath = paths.get(ID.getID());
+                currentFloorIndex = ID.getID();
+                directionsList.setItems(FXCollections.observableList(thePath.getDirectionsByFloor().get(currentFloorIndex)));
                 
                 currentFloor = currentPath.getFloor();
                 switchPath(currentPath);
