@@ -74,7 +74,7 @@ public class PathController implements ControllableScreen, Observer{
     private int currentFloorIndex = 0;
 
     //animation variables
-    private ArrayList<Integer> Center;
+    private ArrayList<Double> Center;
     private boolean isAnimating;
     private int animationCount;
 
@@ -225,8 +225,8 @@ public class PathController implements ControllableScreen, Observer{
 
         //position map
         Center= new ArrayList<>();
-        Center.add(1500);
-        Center.add(850);
+        Center.add(1500.0);
+        Center.add(850.0);
 
         //init start and end nodes
         startPoint=getPoint(0,0);
@@ -244,11 +244,16 @@ public class PathController implements ControllableScreen, Observer{
             @Override
             public void handle(long now) {
                 /**
+                if(mapViewer.scaleChanged==true){
+                    mapViewer.scaleChanged=false;
+                    animationCount=5;
+                    Center=mapViewer.getCenter();
+                }
+                 **/
                 if(animationCount>0) {
                     mapViewer.centerView(Center.get(0), Center.get(1));
                     animationCount--;
                 }
-                 **/
 
                 if(currentPath!=null){
                   if(currentPath.isAnimating){
@@ -589,8 +594,8 @@ public class PathController implements ControllableScreen, Observer{
         cy=Center.get(1);
 
         //set new Center
-        Center.set(0,(int)x);
-        Center.set(1,(int)y);
+        Center.set(0,x);
+        Center.set(1,y);
         p.initAnimation(cx,cy,x,y);
     }
 
@@ -878,6 +883,8 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void scaleMap(double scale){
+        //center before scaling
+        Center = mapViewer.getCenter();
         mapViewer.setScale(scale);
         mapViewer.setZoom(scale);
         for(Shape s : shapes){
@@ -887,12 +894,14 @@ public class PathController implements ControllableScreen, Observer{
                 s.setScaleY(1/scale);
             }
         }
+        //scale mapPane children
         arrow.setScaleX(1/scale);
         arrow.setScaleY(1/scale);
-        NEXT.setScaleX(1/scale);
-        NEXT.setScaleY(1/scale);
-        PREV.setScaleX(1/scale);
-        PREV.setScaleY(1/scale);
+        double btnscale = Math.pow((1/scale),0.5);
+        NEXT.setScaleX(btnscale);
+        NEXT.setScaleY(btnscale);
+        PREV.setScaleX(btnscale);
+        PREV.setScaleY(btnscale);
     }
 
     //when + button is pressed zoom in map
@@ -1013,6 +1022,7 @@ public class PathController implements ControllableScreen, Observer{
     }
     public void updatePath(PathViewer p){
         currentFloor=p.getFloor();
+        mapViewer.setFloor(currentFloor);
         currentPath=p;
         switchPath(currentPath);
 
