@@ -26,6 +26,7 @@ public class AnimatedHelpController implements ControllableScreen{
     private int status;
     private ArrayList<ArrayList<Double>> positions = new ArrayList<>();
     private TransitionCircle pointer = new TransitionCircle(500,500);
+    private int something = 0;
 
     @Override
     public void init(){
@@ -37,6 +38,7 @@ public class AnimatedHelpController implements ControllableScreen{
     //reset everything to the start
     @Override
     public void onShow() {
+        something = 0;
         stepLabel.setText("");
         positions = new ArrayList<>();
         pointer.moveTo(helpTextArea.getLayoutX(),helpTextArea.getLayoutY());
@@ -84,6 +86,9 @@ public class AnimatedHelpController implements ControllableScreen{
         setLables();
         progressBarStatus(status);
         System.out.println(helpProgress.getProgress());
+        if(something == 1) {
+            returnPressed(event);
+        }
     }
 
     @FXML
@@ -147,10 +152,13 @@ public class AnimatedHelpController implements ControllableScreen{
     private void setImageFromList(boolean next){
         //If we move forward, we check bounds
         if(next){
-            if((this.status) >= 7)
+            if((this.status) >= 7) {
                 this.status = 7;
-            else
+                something++;
+            }
+            else {
                 this.status += 1;
+            }
         }
         //If we move backwards, we check bounds
         else{
@@ -158,6 +166,10 @@ public class AnimatedHelpController implements ControllableScreen{
                 this.status = 0;
             else
                 this.status -= 1;
+                something--;
+                if (something <=0) {
+                    something = 0;
+                }
         }
     }
 

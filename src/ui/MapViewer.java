@@ -295,6 +295,7 @@ public class MapViewer extends Observable{
         else {
             setFloor(floor,id);
         }
+        System.out.println("ID: " + id);
         setChanged();
         notifyObservers(new PathID(floor, id));
     }

@@ -75,6 +75,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         mapPane = mapViewer.getMapPane();
 
         mapPane.setOnMouseClicked(e -> mapPaneClicked(e));
+        mapPane.scaleXProperty().addListener( e -> setZoom(mapPane.getScaleX()));
 
         nodeAddLocation = new AnimatedCircle();
         nodeAlignedLines = new ArrayList<Line>();
@@ -153,8 +154,8 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         else{
             if(edgeAddTab.isSelected()){
-                showNodesbyFloor(currentFloor);
                 showEdgesbyFloor(currentFloor);
+                showNodesbyFloor(currentFloor);
                 edgeAddNode1 = null;
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
@@ -232,6 +233,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         refreshNodes();
         refreshEdges();
         showNodesandEdges();
+        setZoom(mapPane.getScaleX());
     }
 
     public void nodeSelected(ActionEvent e){
@@ -729,8 +731,8 @@ public class AddNodeController implements ControllableScreen, Observer {
                 Node n = cb.getNode();
 
                 map.editNode(n,
-                        Integer.toString((int) cb.getLayoutX()),
-                        Integer.toString((int) cb.getLayoutX()),
+                        Integer.toString((int) cb.getLayoutX() + 9),
+                        Integer.toString((int) cb.getLayoutY() + 9),
                         n.getFloor().getDbMapping(),
                         n.getBuilding(),
                         n.getType(),
@@ -851,20 +853,9 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
     //---------------------EDGE TAB END-------------------//
 
-    //-------------------------ZOOM-----------------------//
-    //when + button is pressed zoom in map
-    public void zinPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()+0.2);
-    }
 
-    //when - button pressed zoom out map
-    public void zoutPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()-0.2);
-    }
 
     public void setZoom(double zoom){
-        slideBarZoom.setValue(zoom);
-        mapViewer.setScale(zoom);
         for(NodeCheckBox cb : nodeCheckBoxes){
             cb.setScaleX(1/zoom);
             cb.setScaleY(1/zoom);
