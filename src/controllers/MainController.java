@@ -139,7 +139,7 @@ public class MainController implements ControllableScreen, Observer{
 
     private int BUTTON_WIDTH = 100;
     private int BUTTON_HEIGHT = 60;
-    private int BUTTON_SPACING = 65;
+    private int BUTTON_SPACING = 75;
 
 
     private JFXButton filterSpacer = new JFXButton();
@@ -250,16 +250,16 @@ public class MainController implements ControllableScreen, Observer{
         questionList.setRotate(270);
 
         mainAnchorPane.getChildren().addAll(filterList, nearestList, questionList);
-        filterList.setLayoutX(30);
-        filterList.setLayoutY(185);
+        filterList.setLayoutX(20);
+        filterList.setLayoutY(184);
 
 
-        nearestList.setLayoutX(30);
-        nearestList.setLayoutY(70);
+        nearestList.setLayoutX(20);
+        nearestList.setLayoutY(74);
 
         //Tutorial
-        questionList.setLayoutX(30);
-        questionList.setLayoutY(410);
+        questionList.setLayoutX(20);
+        questionList.setLayoutY(400);
 
         bathFilterButton.setText("Restroom");
         exitFilterButton.setText("Exit");

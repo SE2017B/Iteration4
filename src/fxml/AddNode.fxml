@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddNodeController">
    <children>
       <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -456,19 +456,11 @@
          </children>
       </HBox>
       <JFXButton fx:id="btnReturn" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
-      <JFXButton fx:id="undoButton" contentDisplay="GRAPHIC_ONLY" onAction="#undoPressed" prefHeight="40.0" prefWidth="40.0" text="Undo" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="20.0">
+      <JFXButton fx:id="undoButton" onAction="#undoPressed" prefHeight="30.0" text="Undo" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="20.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/undo.png" />
-               </image>
-            </ImageView>
-         </graphic></JFXButton>
-      <JFXButton fx:id="redoButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" onAction="#redoPressed" prefHeight="40.0" prefWidth="40.0" text="Redo" AnchorPane.leftAnchor="490.0" AnchorPane.topAnchor="20.0">
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/redo.png" />
                </image>
             </ImageView>
          </graphic></JFXButton>
