@@ -226,7 +226,7 @@ public class AnimatedHelpController implements ControllableScreen{
         this.descriptions.add(Zoom);
         this.ImageMap.add("6");
         current = new ArrayList();
-        current.add(600.0);
+        current.add(parent.getWidth()/2.0);
         current.add(parent.getHeight() - 20);
         this.positions.add(current);
 
@@ -238,7 +238,7 @@ public class AnimatedHelpController implements ControllableScreen{
         current.add(600.0);
         this.positions.add(current);
 
-        AnimatedHelpController.CustomPair Navigation = new AnimatedHelpController.CustomPair("Click Return and then Navigation to learn more about finding paths in this application!");
+        AnimatedHelpController.CustomPair Navigation = new AnimatedHelpController.CustomPair("Click Next and then Navigation to learn more about finding paths in this application!");
         this.descriptions.add(Navigation);
         this.ImageMap.add("8");
         current = new ArrayList();
