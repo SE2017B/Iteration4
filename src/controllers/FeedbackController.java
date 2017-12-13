@@ -65,6 +65,8 @@ public class FeedbackController implements ControllableScreen{
 
     public void enterPressed(ActionEvent e) {
         //TODO get database commands for submission
-        //feedbackDatabase.addFeedback(new Feedback(staffDatabase.getFeedCounter(), (int)startSlider.getValue(), feedbackText.getText()));
+        feedbackDatabase.addFeedback(new Feedback(feedbackDatabase.getFeedCounter(), (int)startSlider.getValue(), feedbackText.getText()));
+        feedbackText.clear();
+        startSlider.setValue(0.0);
     }
 }
