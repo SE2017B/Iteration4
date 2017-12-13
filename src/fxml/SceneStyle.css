@@ -175,19 +175,45 @@
     -fx-background: -fx-accent;
     -fx-text-fill: rgb(00,00,00);
 }
+*/
+.chart-pie-label {
+    -fx-font-size: 1.2em;
+    -fx-fill: orange;
+}
 
 .chart-legend {
-    -fx-background-color: yellow;
+    -fx-background-color: #FFFF99;
+}
+
+.axis-label {
+    -fx-text-fill: black;
+    -fx-font-size: 1.8em;
+}
+.axis {
+    -fx-tick-label-font-size: 1.1em;
+}
+
+#xBarChart {
+    -fx-tick-label-fill: orange;
+}
+#yBarChart {
+    -fx-tick-label-fill: orange;
+}
+#xLineChart {
+    -fx-tick-label-fill: orange;
+}
+#yLineChart {
+    -fx-tick-label-fill: orange;
 }
 
 .chart-legend-item{
     -fx-text-fill: black;
+
+    /*-fx-background-color: rgb(234,161,25);*/
+    -fx-background: -fx-accent;
+    -fx-text-fill: rgb(00,00,00);
 }
-    -fx-background-color: rgb(234,161,25);
-    /*-fx-background: -fx-accent;
-    /*-fx-text-fill: rgb(00,00,00);
-}
-*/
+
 
 .list-cell:filled:hover{
     -fx-background-color: rgb(234,161,25);

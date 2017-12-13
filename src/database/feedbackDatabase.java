@@ -36,7 +36,7 @@ public class feedbackDatabase {
         return allFeedbacks;
     }
 
-    // Staff Primary Key Counter
+    // Feedback Primary Key Counter
     private static int feedCounter;
 
     public static int getFeedCounter() {

@@ -728,6 +728,7 @@ public class RequestController implements ControllableScreen{
     void pieChartCreate() {
         feedbackPieChart.getData().clear();
         // Setting up the Pie Chart on Feedback tab
+
         feedbackPieChart.setLabelLineLength(10);
         feedbackPieChart.setLegendSide(Side.RIGHT);
         feedbackPieChart.setData(feedbackDatabase.cntFeedback());

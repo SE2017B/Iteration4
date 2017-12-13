@@ -797,7 +797,6 @@ public class PathController implements ControllableScreen, Observer{
         }
         pathToHighlight = new javafx.scene.shape.Path();
         if(currentFloor.equals(nodesByDirections.get(nodesByDirections.size()-1).getFloor()) && currentFloor.equals(nodesByDirections.get(0).getFloor())){
-            System.out.println("True");
             mapPane.getChildren().add(pathToHighlight);
             shapes.add(pathToHighlight);
             pathToHighlight.toFront();
@@ -831,7 +830,6 @@ public class PathController implements ControllableScreen, Observer{
             circleToHighlight.toFront();
             arrow.toFront();
         }
-        System.out.println(pathToHighlight.getElements().size());
     }
 
     private void switchFloorsOnTextDirection(int index, FloorNumber floorNumber){
@@ -1010,6 +1008,8 @@ public class PathController implements ControllableScreen, Observer{
                 currentPath = paths.get(ID.getID());
                 currentFloorIndex = ID.getID();
                 directionsList.setItems(FXCollections.observableList(thePath.getDirectionsByFloor().get(currentFloorIndex)));
+                System.out.println(thePath.getDirectionsByFloor());
+                System.out.println("cfi: " + currentFloorIndex);
                 
                 currentFloor = currentPath.getFloor();
                 switchPath(currentPath);
