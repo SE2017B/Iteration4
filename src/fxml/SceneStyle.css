@@ -67,6 +67,11 @@
     -fx-background-color: whitesmoke;
     -fx-opacity: 90%;
 }
+
+.full-tutorial-background {
+    -fx-background-color: white;
+    -fx-opacity: 50%;
+}
 .jfx-tab-pane .headers-region, .tab-pane {
     -fx-background-color: rgb(135,157,163);
 }
