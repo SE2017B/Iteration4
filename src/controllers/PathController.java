@@ -945,11 +945,11 @@ public class PathController implements ControllableScreen, Observer{
         textDirectionDropDown.setVisible(true);
         //textDirectionDropDown.animateList(false);
         try {
-            qr.writeQRList(directions, "src/images/qr");
+            qr.writeQRList(directions, "/images/qr.jpg");
             while(!qr.isComplete()){
             }
-            File f = new File("/image/qr/jpg");
-            qrImageView.setImage(new Image("file:src/images/qr.jpg"));
+            File f = new File("qr.jpg");
+            qrImageView.setImage(new Image("file:qr.jpg"));
         }
         catch (NonValidQRCodeMessageException e){
             System.out.println("QR too long");
