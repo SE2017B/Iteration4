@@ -56,6 +56,6 @@ public class FeedbackController implements ControllableScreen{
     }
 
     public void enterPressed(ActionEvent e) {}
-    
+
 
 }

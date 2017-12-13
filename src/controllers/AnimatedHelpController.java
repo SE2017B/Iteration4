@@ -30,18 +30,21 @@ public class AnimatedHelpController implements ControllableScreen{
 
     @Override
     public void init(){
-        helpTextArea.setText("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Main Screen.");
-        populateLists();
-        this.setImageFromList(false);
         pointer.setRadius(20);
         pointer.setOpacity(0.9);
-        pointer.moveTo(helpTextArea.getLayoutX(),helpTextArea.getLayoutY());
         helpPane.getChildren().add(pointer);
     }
 
     //reset everything to the start
     @Override
     public void onShow() {
+        positions = new ArrayList<>();
+        pointer.moveTo(helpTextArea.getLayoutX(),helpTextArea.getLayoutY());
+        helpTextArea.setText("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Main Screen.");
+        this.setImageFromList(false);
+        helpProgress.setProgress(0.0);
+        status = 0;
+        populateLists();
     }
 
     @Override
@@ -106,15 +109,26 @@ public class AnimatedHelpController implements ControllableScreen{
             helpProgress.setProgress(0);
         }
         else if(stat == 1) {
-            helpProgress.setProgress(.25);
+            helpProgress.setProgress(.14);
         }
         else if(stat == 2) {
-            helpProgress.setProgress(.5);
+            helpProgress.setProgress(.28);
         }
         else if(stat == 3) {
-            helpProgress.setProgress(.75);
+            helpProgress.setProgress(.42);
         }
         else if(stat == 4) {
+            helpProgress.setProgress(.56);
+        }
+        else if(stat == 5) {
+            helpProgress.setProgress(.70);
+        }
+
+        else if(stat == 6) {
+            helpProgress.setProgress(.84);
+        }
+
+        else if(stat == 7) {
             helpProgress.setProgress(1);
         }
     }
@@ -122,7 +136,7 @@ public class AnimatedHelpController implements ControllableScreen{
     private void setImageFromList(boolean next){
         //If we move forward, we check bounds
         if(next){
-            if((this.status) >= 4)
+            if((this.status) >= 7)
                 this.status = this.ImageMap.size()-1;
             else
                 this.status += 1;
@@ -141,13 +155,11 @@ public class AnimatedHelpController implements ControllableScreen{
         this.helpTextArea.setText(currentLables.getDescription());
         //animate pointer
         this.pointer.moveTo(positions.get(status).get(0),positions.get(status).get(1));
-        System.out.println("The height is "+positions);
     }
 
     private void populateLists(){
         Double width =50.0;
-        Double height = 700.0;
-        AnimatedHelpController.CustomPair main = new AnimatedHelpController.CustomPair("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Main Screen.");
+        AnimatedHelpController.CustomPair main = new AnimatedHelpController.CustomPair("Welcome! Click next to start the tutorial for the Main Screen.");
         this.descriptions.add(main);
         this.ImageMap.add("1");
         ArrayList<Double> current = new ArrayList();
@@ -155,23 +167,15 @@ public class AnimatedHelpController implements ControllableScreen{
         current.add(helpTextArea.getLayoutY()+helpTextArea.getHeight());
         this.positions.add(current);
 
-        AnimatedHelpController.CustomPair Login = new AnimatedHelpController.CustomPair("Hospital Staff login here. As a patient/visitor you do not have to worry about this!");
-        this.descriptions.add(Login);
+        AnimatedHelpController.CustomPair FindNearest = new AnimatedHelpController.CustomPair("Near Me finds a path to the nearest location that you click on.");
+        this.descriptions.add(FindNearest);
         this.ImageMap.add("2");
         current = new ArrayList();
         current.add(width);
-        current.add(600.0);
+        current.add(50.0);
         this.positions.add(current);
 
-        AnimatedHelpController.CustomPair Emergency = new AnimatedHelpController.CustomPair("The emergency button shows you the closest exit to you for you to get out safely in case of an emergency.");
-        this.descriptions.add(Emergency);
-        this.ImageMap.add("5");
-        current = new ArrayList();
-        current.add(width);
-        current.add(500.0);
-        this.positions.add(current);
-
-        AnimatedHelpController.CustomPair Filter = new AnimatedHelpController.CustomPair("Filter allows you to toggle the display of different types of areas on the map.");
+        AnimatedHelpController.CustomPair Filter = new AnimatedHelpController.CustomPair("Filter shows locations by type.");
         this.descriptions.add(Filter);
         this.ImageMap.add("3");
         current = new ArrayList();
@@ -179,22 +183,45 @@ public class AnimatedHelpController implements ControllableScreen{
         current.add(150.0);
         this.positions.add(current);
 
-        AnimatedHelpController.CustomPair FindNearest = new AnimatedHelpController.CustomPair("Near Me finds a path to the nearest location that you click on.");
-        this.descriptions.add(FindNearest);
+        AnimatedHelpController.CustomPair Emergency = new AnimatedHelpController.CustomPair("The emergency button shows the closest exit to you.");
+        this.descriptions.add(Emergency);
         this.ImageMap.add("4");
         current = new ArrayList();
         current.add(width);
-        current.add(50.0);
+        current.add(500.0);
+        this.positions.add(current);
+
+        AnimatedHelpController.CustomPair Floor = new AnimatedHelpController.CustomPair("Click to change which floor you are viewing!");
+        this.descriptions.add(Floor);
+        this.ImageMap.add("5");
+        current = new ArrayList();
+        current.add(parent.getWidth()/2.0);
+        current.add(parent.getHeight() - 80);
+        this.positions.add(current);
+
+        AnimatedHelpController.CustomPair Zoom = new AnimatedHelpController.CustomPair("Click the plus or minus to zoom in and out.");
+        this.descriptions.add(Zoom);
+        this.ImageMap.add("6");
+        current = new ArrayList();
+        current.add(600.0);
+        current.add(parent.getHeight() - 20);
+        this.positions.add(current);
+
+        AnimatedHelpController.CustomPair Login = new AnimatedHelpController.CustomPair("Login for hospital staff.");
+        this.descriptions.add(Login);
+        this.ImageMap.add("7");
+        current = new ArrayList();
+        current.add(width);
+        current.add(600.0);
         this.positions.add(current);
 
         AnimatedHelpController.CustomPair Navigation = new AnimatedHelpController.CustomPair("Click Return and then Navigation to learn more about finding paths in this application!");
         this.descriptions.add(Navigation);
-        this.ImageMap.add("5");
+        this.ImageMap.add("8");
         current = new ArrayList();
         current.add(width);
         current.add(275.0);
         this.positions.add(current);
-
     }
 
     class CustomPair{
