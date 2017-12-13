@@ -511,6 +511,7 @@ public class PathController implements ControllableScreen, Observer{
             adjustNodes();
         }
     }
+
     private void setEndNode(Node selected){
         if(selected!=null) {
             mapViewer.centerView(selected.getX(),selected.getY());
@@ -840,7 +841,6 @@ public class PathController implements ControllableScreen, Observer{
             if(mapPane.getChildren().contains(endPoint)){
                 mapPane.getChildren().remove(endPoint);
             }
-
         }
         else{
             ShakeTransition shake = new ShakeTransition();
@@ -874,6 +874,23 @@ public class PathController implements ControllableScreen, Observer{
 
     public void clearPressed(ActionEvent e) {
         //Chima fill in
+        clearPaths();
+        clearShapes();
+        //clear inputs
+        endNodeChoice.setValue(null);
+        endFloorMenu.setText("Floor");
+        endTypeMenu.setText("Type");
+        startNodeChoice.setValue(null);
+        startFloorMenu.setText("Floor");
+        startTypeMenu.setText("Type");
+
+        startFloorMenu.setDisable(true);
+        startNodeChoice.setDisable(true);
+        endFloorMenu.setDisable(true);
+        endNodeChoice.setDisable(true);
+
+        endTextField.setText("");
+        startTextField.setText("");
     }
 
     public void cancelPressed(ActionEvent e) {
