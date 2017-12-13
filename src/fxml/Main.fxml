@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,12 +13,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane fx:id="mainPane" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<Pane fx:id="mainPane" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
    <children>
       <AnchorPane fx:id="mainAnchorPane" layoutX="-5.0" minHeight="400.0" minWidth="800.0" styleClass="pane">
          <children>
-            <Button accessibleRole="IMAGE_VIEW" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="436.0" layoutY="382.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="83.0" prefWidth="221.0" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="19.0">
+            <Button accessibleRole="IMAGE_VIEW" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="436.0" layoutY="382.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="83.0" prefWidth="221.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <graphic>
                   <Label fx:id="time" alignment="TOP_CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" textAlignment="CENTER">
                      <font>
@@ -25,13 +25,20 @@
                      </font>
                   </Label>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Displaying curent date and time">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
             </Button>
-            <Label alignment="CENTER" layoutX="560.0" layoutY="554.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="221.0" text="© Brigham and Women's Hospital 2017" textFill="#fcfcfc" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="19.0">
+            <Label alignment="CENTER" layoutX="559.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="21.0" prefWidth="221.0" text="© Brigham and Women's Hospital 2017" textFill="#fcfcfc" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="77.0">
                <font>
                   <Font size="11.0" />
                </font>
             </Label>
-            <GridPane fx:id="menuGridPane" layoutX="10.0" layoutY="190.0" prefHeight="480.0" prefWidth="85.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
+            <GridPane fx:id="menuGridPane" layoutX="10.0" layoutY="190.0" prefHeight="650.0" prefWidth="85.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -52,6 +59,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Click to filter the different icons such as bathroom, retail, and exits" />
+                     </tooltip>
                   </JFXButton>
                   <JFXButton fx:id="nearestHeaderButton" contentDisplay="TOP" scaleX="0.75" scaleY="0.75" text="Near Me" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <graphic>
@@ -61,6 +71,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Click to find places near you" />
+                     </tooltip>
                   </JFXButton>
                   <JFXButton fx:id="btndirection" contentDisplay="TOP" onAction="#directionPressed" scaleX="0.75" scaleY="0.75" text="Navigation" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <graphic>
@@ -70,6 +83,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Click to get directions to any location " />
+                     </tooltip>
                   </JFXButton>
                   <JFXButton fx:id="questionButton" contentDisplay="TOP" scaleX="0.75" scaleY="0.75" text="Help" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <graphic>
@@ -79,6 +95,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Click for a tutorial on how to work the kiosk" />
+                     </tooltip>
                   </JFXButton>
                   <JFXButton fx:id="ebtn" contentDisplay="TOP" onAction="#exitTypePressed" scaleX="0.75" scaleY="0.75" style="-fx-background-color: crimson;" text="Emergency" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                      <graphic>
@@ -88,6 +107,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Click to locate the nearest exit" />
+                     </tooltip>
                   </JFXButton>
                   <JFXButton fx:id="btnlogin" contentDisplay="TOP" onAction="#loginPressed" scaleX="0.75" scaleY="0.75" style="-fx-background-color: darkgrey;" text="Login" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                      <graphic>
@@ -97,6 +119,9 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip text="Click to login in as a staff memeber or admin" />
+                     </tooltip>
                   </JFXButton>
                </children>
             </GridPane>

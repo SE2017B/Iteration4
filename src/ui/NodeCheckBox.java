@@ -9,9 +9,13 @@ public class NodeCheckBox extends JFXCheckBox {
     private double orgX;
     private double orgY;
 
+    private double WIDTH = 24;
+
     public NodeCheckBox(Node node){
         super();
         setNode(node);
+        setWidth(WIDTH);
+        setHeight(WIDTH);
     }
 
     public Node getNode() {
@@ -20,8 +24,8 @@ public class NodeCheckBox extends JFXCheckBox {
 
     public void setNode(Node node) {
         this.node = node;
-        this.setLayoutX((node.getX()-9));
-        this.setLayoutY((node.getY()-9));
+        this.setLayoutX((node.getX()-WIDTH/2));
+        this.setLayoutY((node.getY()-WIDTH/2));
         this.setAccessibleHelp(node.getLongName());
     }
 

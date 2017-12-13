@@ -5,10 +5,11 @@ import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import ui.AnimatedCircle;
 import ui.TransitionCircle;
-
 
 import java.util.ArrayList;
 
@@ -17,29 +18,33 @@ public class DirectionHelpController implements ControllableScreen{
     public DirectionHelpController() {
         this.status = 0;
         this.descriptions = new ArrayList<>();
-        this.ImageMap = new ArrayList<>();
     }
 
     ScreenController parent;
     private ArrayList<DirectionHelpController.CustomPair> descriptions;
-    private ArrayList<String> ImageMap;
     private int status;
+    private ArrayList<ArrayList<Double>> positions = new ArrayList<>();
     private TransitionCircle pointer=new TransitionCircle(500,500);
 
     @Override
     public void init(){
-        helpTextArea.setText("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Navigation Screen.");
-        populateLists();
-        this.setImageFromList(false);
         //set up animated pointer
-        //pointer= new TransitionCircle(500,500);
         pointer.setRadius(20);
-        pointer.setOpacity(0.4);
+        pointer.setOpacity(0.9);
+        aPane.getChildren().add(pointer);
     }
 
     //reset everything to the start
     @Override
     public void onShow() {
+        stepLabel.setText("");
+        positions = new ArrayList<>();
+        pointer.moveTo(helpTextArea.getLayoutX(),helpTextArea.getLayoutY());
+        helpTextArea.setText("Welcome! Click next to start the tutorial for the Navigation Screen.");
+        this.setImageFromList(false);
+        helpProgress.setProgress(0.0);
+        status = 0;
+        populateLists();
     }
 
     @Override
@@ -50,6 +55,8 @@ public class DirectionHelpController implements ControllableScreen{
     @FXML
     private AnchorPane mainPane;
 
+    @FXML
+    private Pane aPane;
     @FXML
     private JFXButton nextButton;
 
@@ -66,6 +73,9 @@ public class DirectionHelpController implements ControllableScreen{
 
     @FXML
     private JFXProgressBar helpProgress;
+
+    @FXML
+    private Label stepLabel;
 
     @FXML
     void nextPressed(ActionEvent event) {
@@ -90,7 +100,6 @@ public class DirectionHelpController implements ControllableScreen{
         System.out.println("Return Pressed");
     }
 
-
     //////////////////////////
     // HELPER METHODS BELOW //
     //////////////////////////
@@ -99,25 +108,22 @@ public class DirectionHelpController implements ControllableScreen{
         stat = this.status;
         if(stat == 0) {
             helpProgress.setProgress(0);
+            stepLabel.setText("");
         }
         else if(stat == 1) {
-            helpProgress.setProgress(.25);
+            helpProgress.setProgress(.5);
+            stepLabel.setText("Step 1/2");
         }
         else if(stat == 2) {
-            helpProgress.setProgress(.5);
-        }
-        else if(stat == 3) {
-            helpProgress.setProgress(.75);
-        }
-        else if(stat == 4) {
             helpProgress.setProgress(1);
+            stepLabel.setText("Step 2/2");
         }
     }
     private void setImageFromList(boolean next){
         //If we move forward, we check bounds
         if(next){
-            if((this.status) >= 4)
-                this.status = this.ImageMap.size()-1;
+            if((this.status) >= 2)
+                this.status = 2;
             else
                 this.status += 1;
         }
@@ -133,29 +139,31 @@ public class DirectionHelpController implements ControllableScreen{
     private void setLables() {
         DirectionHelpController.CustomPair currentLables = this.descriptions.get(this.status);
         this.helpTextArea.setText(currentLables.getDescription());
+        //animate pointer
+        this.pointer.moveTo(positions.get(status).get(0),positions.get(status).get(1));
     }
 
     private void populateLists(){
-        DirectionHelpController.CustomPair main = new DirectionHelpController.CustomPair("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Main Screen.");
+        ArrayList<Double> current = new ArrayList();
+        DirectionHelpController.CustomPair main = new DirectionHelpController.CustomPair("Welcome! Click next to start the tutorial for the Navigation Screen.");
         this.descriptions.add(main);
-        this.ImageMap.add("1");
+        current.add(helpTextArea.getLayoutX()+helpTextArea.getWidth());
+        current.add(helpTextArea.getLayoutY()+helpTextArea.getHeight());
+        this.positions.add(current);
 
-        DirectionHelpController.CustomPair Search = new DirectionHelpController.CustomPair("Here you can search for the start and end locations. You have the option to type with the keyboard and search, or click Search By Type to search by types of places!");
+        DirectionHelpController.CustomPair Search = new DirectionHelpController.CustomPair("Search by text or search by type to find a path from one location to another!");
         this.descriptions.add(Search);
-        this.ImageMap.add("2");
-        pointer.moveTo(50,50);
+        current = new ArrayList();
+        current.add(200.0); //width
+        current.add(20.0); //height
+        this.positions.add(current);
 
         DirectionHelpController.CustomPair Go = new DirectionHelpController.CustomPair("Press 'Go!' To find the path!");
         this.descriptions.add(Go);
-        this.ImageMap.add("3");
-
-        DirectionHelpController.CustomPair Floors = new DirectionHelpController.CustomPair("This window shows the floors in the hospital. Click them to change which floor you are viewing!");
-        this.descriptions.add(Floors);
-        this.ImageMap.add("4");
-
-        DirectionHelpController.CustomPair Zoom = new DirectionHelpController.CustomPair("Click the plus or minus to zoom in and out.\n");
-        this.descriptions.add(Zoom);
-        this.ImageMap.add("5");
+        current = new ArrayList();
+        current.add(parent.getWidth() - 40.0); //width
+        current.add(40.0); //height
+        this.positions.add(current);
     }
 
     class CustomPair{
