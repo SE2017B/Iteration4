@@ -520,14 +520,14 @@ public class PathController implements ControllableScreen, Observer{
     }
     private void setStartNode(Node selected, boolean center){
         if(selected!=null) {
-            mapViewer.centerView(selected.getX(), selected.getY());
             setStartNode(selected);
+            mapViewer.centerView(selected.getX(), selected.getY());
         }
     }
     private void setEndNode(Node selected, boolean center){
         if(selected!=null) {
-            mapViewer.centerView(selected.getX(), selected.getY());
             setEndNode(selected);
+            mapViewer.centerView(selected.getX(), selected.getY());
         }
     }
 
