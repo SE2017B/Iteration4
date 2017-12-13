@@ -540,8 +540,6 @@ public class PathController implements ControllableScreen, Observer{
         upView.setFitHeight(BUTTON_SIZE);
         upView.setFitWidth(BUTTON_SIZE);
         JFXButton up = new JFXButton("",upView);
-        //up.setVisible(false);
-        //up.setOnAction(e -> updatePath(upPath));
 
 
         return up;
@@ -553,8 +551,7 @@ public class PathController implements ControllableScreen, Observer{
         downView.setFitHeight(BUTTON_SIZE);
         downView.setFitWidth(BUTTON_SIZE);
         JFXButton down = new JFXButton("",downView);
-        //down.setVisible(false);
-        //down.setOnAction(e -> updatePath(downPath));
+
         return down;
     }
 
@@ -688,14 +685,16 @@ public class PathController implements ControllableScreen, Observer{
         NEXT.setVisible(false);
         PREV.setVisible(false);
         //reposition buttons to nodes
+        double calSize = BUTTON_SIZE/mapViewer.getScale();
+        //calSize = Math.pow(calSize,0.5);
         if(path.getnext()!=null){
             PathViewer next = path.getnext();
             if(next.getFloor().getNodeMapping()>path.getFloor().getNodeMapping()){
                 mapPane.getChildren().remove(NEXT);
                 NEXT =getUP();
                 NEXT.setVisible(true);
-                NEXT.setLayoutX(next.getNodes().get(0).getX());
-                NEXT.setLayoutY(next.getNodes().get(0).getY());
+                NEXT.setLayoutX(path.getNodes().get(path.getNodes().size()-1).getX()-calSize/2);
+                NEXT.setLayoutY(path.getNodes().get(path.getNodes().size()-1).getY()-calSize/2);
                 NEXT.setOnAction(e -> updatePath(next) );
                 upPath=next;
                 mapPane.getChildren().add(NEXT);
@@ -705,8 +704,8 @@ public class PathController implements ControllableScreen, Observer{
                 mapPane.getChildren().remove(NEXT);
                 NEXT=getDown();
                 NEXT.setVisible(true);
-                NEXT.setLayoutX(next.getNodes().get(0).getX());
-                NEXT.setLayoutY(next.getNodes().get(0).getY());
+                NEXT.setLayoutX(path.getNodes().get(path.getNodes().size()-1).getX()-calSize/2);
+                NEXT.setLayoutY(path.getNodes().get(path.getNodes().size()-1).getY()-calSize/2);
                 NEXT.setOnAction(e -> updatePath(next) );
 
                 downPath=next;
@@ -720,8 +719,8 @@ public class PathController implements ControllableScreen, Observer{
                 mapPane.getChildren().remove(PREV);
                 PREV=getUP();
                 PREV.setVisible(true);
-                PREV.setLayoutX(path.getNodes().get(0).getX());
-                PREV.setLayoutY(path.getNodes().get(0).getY());
+                PREV.setLayoutX(path.getNodes().get(0).getX()-calSize/2);
+                PREV.setLayoutY(path.getNodes().get(0).getY()-calSize/2);
                 PREV.setOnAction(e -> updatePath(prev) );
                 upPath=prev;
                 mapPane.getChildren().add(PREV);
@@ -730,8 +729,8 @@ public class PathController implements ControllableScreen, Observer{
                 mapPane.getChildren().remove(PREV);
                 PREV=getDown();
                 PREV.setVisible(true);
-                PREV.setLayoutX(path.getNodes().get(0).getX());
-                PREV.setLayoutY(path.getNodes().get(0).getY());
+                PREV.setLayoutX(path.getNodes().get(0).getX()-calSize/2);
+                PREV.setLayoutY(path.getNodes().get(0).getY()-calSize/2);
                 PREV.setOnAction(e -> updatePath(prev) );
                 downPath=prev;
                 mapPane.getChildren().add(PREV);
