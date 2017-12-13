@@ -883,8 +883,6 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void scaleMap(double scale){
-        //center before scaling
-        Center = mapViewer.getCenter();
         mapViewer.setScale(scale);
         mapViewer.setZoom(scale);
         for(Shape s : shapes){
