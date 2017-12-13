@@ -509,6 +509,7 @@ public class PathController implements ControllableScreen, Observer{
             startPoint.setVisible(true);
             startPointFloor = selected.getFloor();
             currentFloor = startPointFloor;
+            switchToFloor(currentFloor);
             mapViewer.setFloor(startPointFloor);
             currentFloor=startPointFloor;
             mapPane.getChildren().add(startPoint);
@@ -538,10 +539,19 @@ public class PathController implements ControllableScreen, Observer{
             endPoint.setVisible(true);
             endPointFloor = selected.getFloor();
             currentFloor = endPointFloor;
+            switchToFloor(currentFloor);
             mapViewer.setFloor(endPointFloor);
             currentFloor=endPointFloor;
             mapPane.getChildren().add(endPoint);
             //adjustNodes();
+        }
+    }
+    private void switchToFloor(FloorNumber f){
+        for(PathViewer p: paths){
+            if(p.getFloor()==f){
+                switchPath(p);
+                break;
+            }
         }
     }
     private JFXButton getUP(){
