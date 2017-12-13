@@ -386,7 +386,6 @@ public class MainController implements ControllableScreen, Observer{
                 if(second < 9 || second > 58) {
                     text += "0";
                 }
-                System.out.println(second);
                 second -= 31;
                 text += second + ' ' + AM_String;
                 time.setText(text);//display time

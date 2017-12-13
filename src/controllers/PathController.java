@@ -700,7 +700,6 @@ public class PathController implements ControllableScreen, Observer{
                 mapPane.getChildren().add(NEXT);
             }
             else{
-                System.out.println("Setting down variable");
                 mapPane.getChildren().remove(NEXT);
                 NEXT=getDown();
                 NEXT.setVisible(true);
@@ -792,7 +791,6 @@ public class PathController implements ControllableScreen, Observer{
         Path path = pathViewer.getPath();
         path.findDirections();
         ArrayList<Node> nodesByDirections = path.getPathByDirections().get(directionIndex);
-        System.out.println(nodesByDirections.size());
         if(pathToHighlight != null){
             mapPane.getChildren().remove(pathToHighlight);
         }
@@ -836,7 +834,6 @@ public class PathController implements ControllableScreen, Observer{
     private void switchFloorsOnTextDirection(int index, FloorNumber floorNumber){
         if(index == directionsList.getItems().size() - 1 && currentFloorIndex < floors.size() - 1){
             currentFloorIndex++;
-            System.out.println("CFI: " + currentFloorIndex);
             mapViewer.floorButtonPressed(floors.get(currentFloorIndex), currentFloorIndex);
         }
     }
@@ -1008,8 +1005,6 @@ public class PathController implements ControllableScreen, Observer{
                 currentPath = paths.get(ID.getID());
                 currentFloorIndex = ID.getID();
                 directionsList.setItems(FXCollections.observableList(thePath.getDirectionsByFloor().get(currentFloorIndex)));
-                System.out.println(thePath.getDirectionsByFloor());
-                System.out.println("cfi: " + currentFloorIndex);
                 
                 currentFloor = currentPath.getFloor();
                 switchPath(currentPath);
