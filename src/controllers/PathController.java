@@ -825,7 +825,7 @@ public class PathController implements ControllableScreen, Observer{
             circleToHighlight.setCenterX(nodesByDirections.get(0).getX());
             circleToHighlight.setCenterY(nodesByDirections.get(0).getY());
             circleToHighlight.fillProperty().setValue(Color.RED);
-            circleToHighlight.setRadius(5 * (1/mapViewer.getScale()));
+            circleToHighlight.setRadius(6 * (1/mapViewer.getScale()));
             circleToHighlight.setStroke(Color.RED);
             mapPane.getChildren().add(circleToHighlight);
             shapes.add(circleToHighlight);
