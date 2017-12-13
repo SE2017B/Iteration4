@@ -797,7 +797,7 @@ public class PathController implements ControllableScreen, Observer{
         if(index == directionsList.getItems().size() - 1 && currentFloorIndex < floors.size() - 1){
             currentFloorIndex++;
             System.out.println("CFI: " + currentFloorIndex);
-            mapViewer.floorButtonPressed(floorNumber, currentFloorIndex);
+            mapViewer.floorButtonPressed(floors.get(currentFloorIndex), currentFloorIndex);
         }
     }
 
@@ -931,6 +931,7 @@ public class PathController implements ControllableScreen, Observer{
 
     public void reversePressed(ActionEvent e){
         if(thePath!=null){
+            currentFloorIndex = 0;
             thePath = thePath.getReverse();
             displayPaths(thePath);
         }
