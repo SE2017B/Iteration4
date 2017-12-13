@@ -89,14 +89,12 @@ public class Main extends Application {
 
         edgeDatabase.deleteEdgeTable();
         nodeDatabase.deleteNodeTable();
-        staffDatabase.deleteAdminTable();
         staffDatabase.deleteStaffTable();
         feedbackDatabase.deleteFeedbackTable();
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
         staffDatabase.createStaffTable();
-        staffDatabase.createAdminTable();
         feedbackDatabase.createFeedbackTable();
 
         nodeDatabase.readNodeCSV("/csv/MapAnodes.csv");
@@ -130,7 +128,7 @@ public class Main extends Application {
         staffDatabase.insertStaffFromCSV();
 
         feedbackDatabase.readFeedbackCSV("/csv/sampleFeedback.csv");
-        feedbackDatabase.insertStaffFromCSV();
+        feedbackDatabase.insertFeedbackFromCSV();
 
         launch(args);
 
