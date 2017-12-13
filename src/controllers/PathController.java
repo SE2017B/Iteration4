@@ -421,6 +421,10 @@ public class PathController implements ControllableScreen, Observer{
                 }
                 textField.setText(listView.getSelectionModel().getSelectedItem().toString());
             }
+            else if(code.equals(KeyCode.ESCAPE)){
+                startNodeOptionList.setVisible(false);
+                endNodeOptionList.setVisible(false);
+            }
             else if(code.isLetterKey() || keyEvent.getCode().equals(KeyCode.BACK_SPACE)) {
                 String text = ((JFXTextField) keyEvent.getSource()).getText();
                 text = (code.isLetterKey()) ? text + keyEvent.getText() : text.substring(0, text.length()-1);
@@ -854,32 +858,7 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private void startChosen(){
-        String filter = "";
-        if(startType.equals("Restroom")){
-            filter = "REST";
-        }
-        else if (startType.equals("Retail")){
-            filter = "RETL";
-        }
-        else if (startType.equals("Exits")){
-            filter = "EXIT";
-        }
-        else if (startType.equals("Stairs")){
-            filter = "STAI";
-        }
-        else if (startType.equals("Elevators")){
-            filter = "ELEV";
-        }
-        else if (startType.equals("Department")){
-            filter = "DEPT";
-        }
-        else if (startType.equals("Services")){
-            filter = "SERV";
-        }
-        else {
-            filter = "INFO";
-        }
-        final String f = filter.toString();
+        final String f = Node.getFilterText(startType);
         if(startFloor.equals("ALL")){
             startNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f))));
         }
@@ -909,32 +888,8 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     private void endChosen(){
-        String filter = "";
-        if(endType.equals("Restroom")){
-            filter = "REST";
-        }
-        else if (endType.equals("Retail")){
-            filter = "RETL";
-        }
-        else if (endType.equals("Exits")){
-            filter = "EXIT";
-        }
-        else if (endType.equals("Stairs")){
-            filter = "STAI";
-        }
-        else if (endType.equals("Elevators")){
-            filter = "ELEV";
-        }
-        else if (endType.equals("Department")){
-            filter = "DEPT";
-        }
-        else if (endType.equals("Services")){
-            filter = "SERV";
-        }
-        else {
-            filter = "INFO";
-        }
-        final String f = filter.toString();
+
+        final String f = Node.getFilterText(endType);
         if(endFloor.equals("ALL")){
             endNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f))));
         }
