@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -96,8 +97,10 @@
                 </Tab>
                 <Tab text="Credits">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        <GridPane prefHeight="805.0" prefWidth="1017.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                            <Pane fx:id="aPane" layoutX="29.0" layoutY="28.0" prefHeight="525.0" prefWidth="400.0" styleClass="credit-text" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="28.0" />
+                            <GridPane prefHeight="805.0" prefWidth="1017.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -122,7 +125,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                             </rowConstraints>
                             <children>
-                                <Label alignment="CENTER" styleClass="credit-text" text="  Credits  " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                <Label alignment="CENTER" text="  Credits  " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                     <font>
                                         <Font name="System Bold" size="29.0" />
                                     </font>
@@ -130,106 +133,108 @@
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <Label alignment="CENTER" layoutX="381.0" layoutY="9.0" styleClass="credit-text" text="  WPI Computer Science Department  " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                <Label alignment="CENTER" layoutX="381.0" layoutY="9.0" text="  WPI Computer Science Department  " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                     <font>
                                         <Font size="21.0" />
                                     </font>
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin></Label>
-                                <Label alignment="CENTER" layoutX="312.0" layoutY="38.0" prefHeight="19.0" prefWidth="220.0" styleClass="credit-text" text="  CS 3733 Software Engineering   " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                <Label alignment="BOTTOM_CENTER" layoutX="312.0" layoutY="63.0" styleClass="credit-text" text="  Professor Wilson Wong  " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                                <Label alignment="CENTER" layoutX="312.0" layoutY="38.0" prefHeight="19.0" prefWidth="220.0" text="  CS 3733 Software Engineering   " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                <Label alignment="BOTTOM_CENTER" layoutX="312.0" layoutY="63.0" text="  Professor Wilson Wong  " textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" layoutX="312.0" layoutY="81.0" styleClass="credit-text" text="  Meghana Bhatia : Documentation Analyst  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+                                <Label alignment="CENTER" layoutX="312.0" layoutY="81.0" text="  Meghana Bhatia : Documentation Analyst  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" layoutX="312.0" layoutY="104.0" styleClass="credit-text" text="  Leo Grande : Project Manager  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+                                <Label alignment="CENTER" layoutX="312.0" layoutY="104.0" text="  Leo Grande : Project Manager  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" layoutX="312.0" layoutY="122.0" styleClass="credit-text" text="  Nick Fajardo : Assistant Lead Engineer  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
+                                <Label alignment="CENTER" layoutX="312.0" layoutY="122.0" text="  Nicholas Fajardo : Assistant Lead Engineer  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" styleClass="credit-text" text="  William Mosby (Vojta) : Lead Developer Engineer  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
+                                <Label alignment="CENTER" text="  William Mosby (Vojta) : Lead Developer Engineer  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="10">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" layoutX="276.0" layoutY="166.0" styleClass="credit-text" text="  Travis Norris : Assitant Lead Engineer  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="11">
+                                <Label alignment="CENTER" layoutX="276.0" layoutY="166.0" text="  Travis Norris : Assitant Lead Engineer  " textAlignment="CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="11">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" layoutX="308.0" layoutY="188.0" styleClass="credit-text" text="  Jack Palmstrom : Database Engineer  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="8">
+                                <Label alignment="CENTER" layoutX="308.0" layoutY="188.0" text="  Jack Palmstrom : Database Engineer  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="8">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" layoutX="310.0" layoutY="210.0" styleClass="credit-text" text="  Andrey Yuzvik : Product Owner  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="11">
+                                <Label alignment="CENTER" layoutX="310.0" layoutY="210.0" text="  Andrey Yuzvik : Product Owner  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="11">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="321.0" layoutY="232.0" styleClass="credit-text" text="  Oluchukwu Okafor (Chima) : Test Engineer  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7">
+                                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="321.0" layoutY="232.0" text="  Oluchukwu Okafor (Chima) : Test Engineer  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="16.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" layoutX="296.0" layoutY="254.0" styleClass="credit-text" text="  Erika Snow : Software Engineer  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="10">
+                                <Label alignment="CENTER" layoutX="296.0" layoutY="254.0" text="  Erika Snow : Software Engineer  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="10">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label alignment="CENTER" layoutX="323.0" layoutY="276.0" styleClass="credit-text" text="  Tyrone Patterson : Software Engineer  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="9">
+                                <Label alignment="CENTER" layoutX="323.0" layoutY="276.0" text="  Tyrone Patterson : Software Engineer  " textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="9">
                                     <GridPane.margin>
                                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                     </GridPane.margin>
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label styleClass="credit-text" text="  Special Thanks To:  " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="13">
+                                <Label text="  Special Thanks To:  " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="13">
                                     <font>
                                         <Font name="System Bold Italic" size="14.0" />
                                     </font>
                                 </Label>
-                                <Label contentDisplay="CENTER" styleClass="credit-text" text="  Andrew Shinn  " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="14">
+                                <Label contentDisplay="CENTER" text="  Andrew Shinn  " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="14">
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
-                                <Label styleClass="credit-text" text="  Brigham &amp; Women's Faulkner Hospital  " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="15">
+                                <Label text="  Brigham &amp; Women's Faulkner Hospital  " GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="15">
                                     <font>
                                         <Font size="17.0" />
                                     </font></Label>
                             </children>
                         </GridPane>
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
             </tabs>
