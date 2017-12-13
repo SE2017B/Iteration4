@@ -275,7 +275,7 @@ public class MainController implements ControllableScreen, Observer{
 
         //Tutorial
         tutorialHelpButton.setText("Tutorial");
-        feedbackAboutHelpButton.setText("Feedback\n/ About");
+        feedbackAboutHelpButton.setText("Feedback\n/ Credits");
 
     }
 
