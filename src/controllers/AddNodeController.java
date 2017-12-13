@@ -165,6 +165,7 @@ public class AddNodeController implements ControllableScreen, Observer {
                 edgeAddID2Label.setText("");
             }
             else{
+                showNodesbyFloor(currentFloor);
                 showEdgesbyFloor(currentFloor);
                 edgeRemoveList.getItems().clear();
             }
@@ -226,9 +227,11 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void refreshEdges(){
         edgeCheckBoxes.clear();
         for (Edge edge:map.getEdgeMap()){
-            EdgeCheckBox cb = new EdgeCheckBox(edge);
-            edgeCheckBoxes.add(cb);
-            cb.setOnMousePressed(e -> edgeSelected(e));
+            if(!(edge.getNodeOne().getType().equals("ELEV") && edge.getNodeTwo().getType().equals("ELEV"))){
+                EdgeCheckBox cb = new EdgeCheckBox(edge);
+                edgeCheckBoxes.add(cb);
+                cb.setOnMousePressed(e -> edgeSelected(e));
+            }
         }
     }
 
@@ -293,17 +296,21 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
 
         }
+        else if (edgeTab.isSelected() && edgeRemoveTab.isSelected()){
+            source.setSelected(false);
+        }
     }
 
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
-        source.select();
-        if(source.isSelected()) {
-            if (!edgeRemoveList.getItems().contains(source.getEdge()))
-                edgeRemoveList.getItems().add(source.getEdge());
-        }
-        else{
-            edgeRemoveList.getItems().remove(source.getEdge());
+        if(edgeTab.isSelected() && edgeRemoveTab.isSelected()) {
+            source.select();
+            if (source.isSelected()) {
+                if (!edgeRemoveList.getItems().contains(source.getEdge()))
+                    edgeRemoveList.getItems().add(source.getEdge());
+            } else {
+                edgeRemoveList.getItems().remove(source.getEdge());
+            }
         }
     }
 
@@ -871,14 +878,12 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         else{
             undoButton.setDisable(true);
-            undoButton.setOpacity(0.5);
+            undoButton.setOpacity(0.1);
         }
     }
 
     // Memento Stuff
     public void saveStateToMemento(){
-        undoButton.setDisable(false);
-        undoButton.setOpacity(0.9);
         HashMap<Edge, ArrayList<Node>> newMap = map.getCopy();
         ArrayList<Node> nodes = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
@@ -892,6 +897,7 @@ public class AddNodeController implements ControllableScreen, Observer {
             if(!nodes.contains(node)) nodes.add(new Node(node.getID(), Integer.toString(node.getX()), Integer.toString(node.getY()), node.getFloor().getDbMapping(), node.getBuilding(), node.getType(), node.getLongName(), node.getShortName(), node.getTeam()));
         }
         mapEditorMementos.push(new MapEditorMemento(nodes, edges));
+        checkUndo();
     }
     public void setMemento(MapEditorMemento memento){
         map.setNodeMap(memento.getSavedNodeState());
