@@ -471,7 +471,6 @@ public class MainController implements ControllableScreen, Observer{
             path = map.findNearest(map.getKioskLocation(), "STAI");
         }
 
-        System.out.println("Nearest Pressed");
 
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
@@ -493,7 +492,6 @@ public class MainController implements ControllableScreen, Observer{
         hideNearestButtons(e);
         hideFilterButtons(e);
         hideQuestionButtons(e);
-        System.out.println("Filter Pressed");
         JFXButton pressed = (JFXButton) e.getSource();
         ArrayList<Node> filteredNodes = new ArrayList<Node>();
         if (pressed.equals(bathFilterButton)) {
@@ -561,7 +559,6 @@ public class MainController implements ControllableScreen, Observer{
         hideNearestButtons(e);
         hideFilterButtons(e);
         hideQuestionButtons(e);
-        System.out.println("Question Pressed");
         JFXButton pressed = (JFXButton) e.getSource();
         if(pressed.equals(tutorialHelpButton)){
             parent.setScreen(ScreenController.HelpID, "HELP_IN");

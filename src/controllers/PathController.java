@@ -395,6 +395,7 @@ public class PathController implements ControllableScreen, Observer{
             map.searchNodes=new ArrayList<>();//clear search nodes
         }
 
+        mapViewer.resizeSpacers((int)parent.getWidth());
 
         textDirectionDropDown.setVisible(false);
 
@@ -1014,11 +1015,9 @@ public class PathController implements ControllableScreen, Observer{
                 currentFloor = currentPath.getFloor();
                 switchPath(currentPath);
             }
-            //change current floor tho.
             else{
                 currentFloor=ID.getFloor();
             }
-            //adjust start nodes
             adjustNodes();
 
         }

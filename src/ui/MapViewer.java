@@ -142,9 +142,9 @@ public class MapViewer extends Observable{
 
         addObserver(o);
 
-        buttonScrollPane.prefViewportWidthProperty().bind(mapViewerPane.prefWidthProperty());
-        mapScrollPane.prefViewportHeightProperty().bind(mapViewerPane.prefHeightProperty());
-        mapScrollPane.prefViewportWidthProperty().bind(mapViewerPane.prefWidthProperty());
+        buttonScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
+        mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty());
+        mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
 
 
 
@@ -155,9 +155,9 @@ public class MapViewer extends Observable{
 
         //ZOOM FUNCTIONALITY
         slideBarZoom = new JFXSlider();
-        slideBarZoom.setMinSize(150, 55);
-        slideBarZoom.setPrefSize(150, 55);
-        slideBarZoom.setMaxSize(150, 55);
+        slideBarZoom.setMinSize(150, 45);
+        slideBarZoom.setPrefSize(150, 45);
+        slideBarZoom.setMaxSize(150, 45);
         //TODO FIX SLIDER BAR INTERACTIVITY
         slideBarZoom.setOnMouseDragged(e -> sliderChanged(e));
         slideBarZoom.setOnMouseClicked(e -> sliderChanged(e));
@@ -203,6 +203,8 @@ public class MapViewer extends Observable{
         zoomBar.add(zoomOut, 0,  0);
         zoomBar.add(slideBarZoom, 1,  0);
         zoomBar.add(zoomIn, 2,  0);
+
+        slideBarZoom.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE,new CornerRadii(8.0),null)));
 
         ColumnConstraints col0 = new ColumnConstraints(45);
         col0.setHalignment(HPos.CENTER);
@@ -278,11 +280,14 @@ public class MapViewer extends Observable{
     }
 
     public void resizeSpacers(int width){
-        SPACER_WIDTH = ((width - BUTTON_WIDTH)/ 2) - SPACING ;
+        SPACER_WIDTH = ((width - BUTTON_WIDTH)/ 2)  ;
         spacerRight.setPrefWidth(SPACER_WIDTH);
         spacerLeft.setPrefWidth(SPACER_WIDTH);
         SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+1));
         container.setPrefWidth(SCROLL_WIDTH);
+
+
+
 
         prevFloor.setLayoutX((width/2) - (1.5 * BUTTON_WIDTH) - SPACING);
         nextFloor.setLayoutX((width/2) + (0.5 * BUTTON_WIDTH) + SPACING);
@@ -297,7 +302,6 @@ public class MapViewer extends Observable{
         else {
             setFloor(floor,id);
         }
-        System.out.println("ID: " + id);
         setChanged();
         notifyObservers(new PathID(floor, id));
     }
@@ -347,7 +351,7 @@ public class MapViewer extends Observable{
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(buttonScrollPane.hvalueProperty(), buttonScrollPane.getHvalue())),
                 new KeyFrame(new Duration(300),
-                        new KeyValue(buttonScrollPane.hvalueProperty(),buttonPose/(buttonOrder.size()-1.0)))
+                        new KeyValue(buttonScrollPane.hvalueProperty(),buttonPose/Double.max(1,buttonOrder.size()-1.0)))
         );
         slideButtons.play();
         prevFloor.setVisible(true);
@@ -412,8 +416,8 @@ public class MapViewer extends Observable{
     }
 
     public void setButtonsByFloor(List<FloorNumber> floors){
+        resetView();
         clearButtons();
-
         for (int i = 0; i < floors.size(); i++) {
             addFloor(floors.get(i), i);
         }

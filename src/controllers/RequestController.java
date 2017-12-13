@@ -828,7 +828,6 @@ public class RequestController implements ControllableScreen{
 
     public void saveSettingsPressed(ActionEvent e) {
         if (searchStrategyChoice.getValue() != null) {
-            System.out.println(searchStrategyChoice.getValue());
             map.setSearchStrategy(searchStrategyChoice.getValue());
             map.setKioskLocation(kioskLocationChoice.getValue());
         } else {

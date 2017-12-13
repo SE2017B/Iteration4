@@ -84,7 +84,6 @@ public class ScreenController extends StackPane implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            System.out.println("Loading Splash");
             AnchorPane pane = FXMLLoader.load(getClass().getResource((ScreenController.LoadFile)));
             getChildren().setAll(pane);
 
@@ -109,7 +108,6 @@ public class ScreenController extends StackPane implements Initializable {
             });
 
         } catch (IOException ex) {
-            System.out.println("Splash Failed");
         }
     }
 
