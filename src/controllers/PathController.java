@@ -292,6 +292,7 @@ public class PathController implements ControllableScreen, Observer{
                         //set up search up searching things
                         Node selected = v.get(0);
                         if(startSearching){
+                            btnClear.setVisible(true);//set clear button to visible when searching
                             startTabPane.getSelectionModel().select(0);
                             startNode = v.get(0);
                             startTextField.setText(startNode.toString());
@@ -881,8 +882,6 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void scaleMap(double scale){
-        //center before scaling
-        Center = mapViewer.getCenter();
         mapViewer.setScale(scale);
         mapViewer.setZoom(scale);
         for(Shape s : shapes){

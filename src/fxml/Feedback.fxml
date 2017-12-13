@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
     <children>
         <JFXTabPane tabMinHeight="70.0" tabMinWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -67,10 +68,17 @@
                                                         <Tooltip text="Add a comment or suggestion you would like us to see" />
                                                     </tooltip>
                                                 </TextArea>
-                                                <JFXButton fx:id="enterButton" alignment="CENTER" onAction="#enterPressed" text="Enter">
+                                                <JFXButton fx:id="enterButton" alignment="CENTER" contentDisplay="RIGHT" onAction="#enterPressed" text="Enter">
                                                     <font>
                                                         <Font size="33.0" />
                                                     </font>
+                                                    <graphic>
+                                                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                            <image>
+                                                                <Image url="@../images/Icons/enterWhite.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </graphic>
                                                     <VBox.margin>
                                                         <Insets top="40.0" />
                                                     </VBox.margin>
@@ -86,7 +94,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="About">
+                <Tab text="Credits">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                         <GridPane prefHeight="805.0" prefWidth="1017.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -226,10 +234,17 @@
                 </Tab>
             </tabs>
         </JFXTabPane>
-        <JFXButton fx:id="returnButton" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+        <JFXButton fx:id="returnButton" contentDisplay="RIGHT" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
             <font>
                 <Font size="19.0" />
             </font>
+            <graphic>
+                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/Icons/exitWhite.png" />
+                    </image>
+                </ImageView>
+            </graphic>
         </JFXButton>
     </children>
 </AnchorPane>
