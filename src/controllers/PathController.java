@@ -56,7 +56,7 @@ public class PathController implements ControllableScreen, Observer{
     private String endFloor = "";
     private QRCodeGenerator qr;
 
-    private final double LINE_STROKE = 4;
+    private final double LINE_STROKE = 6;
     private final double ARROW_SIZE = 30;
     private final double BUTTON_SIZE = 35;
 
@@ -838,7 +838,7 @@ public class PathController implements ControllableScreen, Observer{
         if(index == directionsList.getItems().size() - 1 && currentFloorIndex < floors.size() - 1){
             currentFloorIndex++;
             System.out.println("CFI: " + currentFloorIndex);
-            mapViewer.floorButtonPressed(floorNumber, currentFloorIndex);
+            mapViewer.floorButtonPressed(floors.get(currentFloorIndex), currentFloorIndex);
         }
     }
 
@@ -883,15 +883,15 @@ public class PathController implements ControllableScreen, Observer{
     }
 
     public void scaleMap(double scale){
-        //center before scaling
-        Center = mapViewer.getCenter();
         mapViewer.setScale(scale);
         mapViewer.setZoom(scale);
         for(Shape s : shapes){
-            s.setStrokeWidth(LINE_STROKE/scale);
             if(s instanceof AnimatedCircle){
                 s.setScaleX(1/scale);
                 s.setScaleY(1/scale);
+            }
+            else{
+                s.setStrokeWidth(LINE_STROKE/scale);
             }
         }
         //scale mapPane children
@@ -980,6 +980,7 @@ public class PathController implements ControllableScreen, Observer{
 
     public void reversePressed(ActionEvent e){
         if(thePath!=null){
+            currentFloorIndex = 0;
             thePath = thePath.getReverse();
             displayPaths(thePath);
         }
