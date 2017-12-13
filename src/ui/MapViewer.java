@@ -244,6 +244,7 @@ public class MapViewer extends Observable{
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         currentFloor = FloorNumber.FLOOR_ONE;
+        resizeSpacers((int)mapViewerPane.getWidth());
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
     }
 
@@ -267,6 +268,7 @@ public class MapViewer extends Observable{
     }
 
     private void resizeSpacers(int width){
+        System.out.println("Screen Width: " + width);
         SPACER_WIDTH = ((width - BUTTON_WIDTH)/ 2) - SPACING ;
         spacerRight.setPrefWidth(SPACER_WIDTH);
         spacerLeft.setPrefWidth(SPACER_WIDTH);

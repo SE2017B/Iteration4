@@ -107,6 +107,13 @@
     -fx-background-color: rgb(135,157,163);
 }
 
+.no-scroll-bar .scroll-bar:vertical,
+.no-scroll-bar .scroll-bar:horizontal,
+.no-scroll-bar .corner{
+    -fx-scale-x: 0;
+}
+
+
 /*
 .list-view:focused .list-cell:filled:focused:selected {
     -fx-background-color: rgb(234,161,25);
