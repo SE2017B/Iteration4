@@ -10,6 +10,7 @@ package controllers;
 
 import DepartmentSubsystem.Services.Transport;
 import api.SanitationService;
+import foodRequest.FoodRequest;
 import translationApi.TranslationService;
 import transportApi.TransportService;
 import DepartmentSubsystem.*;
@@ -471,6 +472,9 @@ public class RequestController implements ControllableScreen{
             else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Transport"))
             {
                 runTransportationAPI(startNode);
+            }else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Food"))
+            {
+                runFoodDeliveryAPI(startNode);
             }
         }
     }
@@ -491,9 +495,13 @@ public class RequestController implements ControllableScreen{
         api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
     public void runFoodDeliveryAPI(Node desNode){
-        Stage primaryStage = new Stage();
-        SanitationService api = SanitationService.newInstance(primaryStage);
-        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+        FoodRequest foodRequest = new FoodRequest();
+        try{
+            foodRequest.run(0,0,1900,1000,null,null,null);
+        }catch (Exception e){
+            System.out.println("Failed to run API");
+            e.printStackTrace();
+        }
     }
 
     private void suggestionPressed(MouseEvent e, JFXTextField textField, JFXListView<Node> listView) {
