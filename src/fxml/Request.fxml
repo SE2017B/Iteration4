@@ -25,7 +25,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" prefHeight="800.0" prefWidth="1280.0" styleClass="tab-pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" prefHeight="800.0" prefWidth="1280.0" styleClass="tab-pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RequestController">
     <children>
         <GridPane layoutX="456.0" layoutY="303.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -47,7 +47,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </GridPane.margin>
                 </Label>
-                <JFXTabPane prefHeight="267.0" prefWidth="495.0" side="BOTTOM" tabMinHeight="60.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
+                <JFXTabPane prefHeight="267.0" prefWidth="495.0" tabMinHeight="60.0" GridPane.columnSpan="3" GridPane.rowIndex="1">
                     <tabs>
                         <Tab text="API and Services">
                             <content>
@@ -61,12 +61,12 @@
                                     <ColumnConstraints hgrow="ALWAYS" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="ALWAYS" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
                                                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="100.0" vgrow="NEVER" />
                                                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="100.0" vgrow="NEVER" />
                                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="100.0" vgrow="NEVER" />
                                                 <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="NEVER" />
-                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="ALWAYS" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
                                             </rowConstraints>
                                             <children>
                                                 <Label text="Select Service" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
@@ -335,7 +335,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="pane">
                                     <children>
-                                        <JFXTabPane layoutX="364.0" layoutY="174.0" prefHeight="597.6" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <JFXTabPane layoutX="364.0" layoutY="174.0" prefHeight="597.6" prefWidth="1279.2" tabMinHeight="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <tabs>
                                                 <Tab text="Add Staff">
                                                     <content>
@@ -378,7 +378,7 @@
                                                                         </JFXTextField>
                                                                         <JFXButton fx:id="createStaffButton" onAction="#createStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                                                         <JFXButton fx:id="cancelStaffButton" onAction="#cancelStaffPressed" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                                      <JFXCheckBox fx:id="adminAddStaff" text="Admin?" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                                                      <JFXCheckBox fx:id="adminAddStaff" text="Admin?" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                          <font>
                                                             <Font size="24.0" />
                                                          </font>
