@@ -72,6 +72,7 @@ public class PathController implements ControllableScreen, Observer{
     private Pane mapPane;
     private Path thePath;
     private int currentFloorIndex = 0;
+    private int scaling;
 
     //animation variables
     private ArrayList<Double> Center;
@@ -797,14 +798,14 @@ public class PathController implements ControllableScreen, Observer{
             mapPane.getChildren().remove(pathToHighlight);
         }
         pathToHighlight = new javafx.scene.shape.Path();
+
         if(currentFloor.equals(nodesByDirections.get(nodesByDirections.size()-1).getFloor()) && currentFloor.equals(nodesByDirections.get(0).getFloor())){
-            mapPane.getChildren().add(pathToHighlight);
+            mapPane.getChildren().add(1, pathToHighlight);
             shapes.add(pathToHighlight);
-            pathToHighlight.toFront();
             arrow.toFront();
         }
         pathToHighlight.setStroke(Color.RED);
-        pathToHighlight.setStrokeWidth(LINE_STROKE+2);
+        pathToHighlight.setStrokeWidth((LINE_STROKE+5) * (1/mapViewer.getScale()));
         int startNode = 0;
         int endNode;
         for(int i=0;i<pathViewer.getPath().getPath().size();i++){
@@ -824,7 +825,7 @@ public class PathController implements ControllableScreen, Observer{
             circleToHighlight.setCenterX(nodesByDirections.get(0).getX());
             circleToHighlight.setCenterY(nodesByDirections.get(0).getY());
             circleToHighlight.fillProperty().setValue(Color.RED);
-            circleToHighlight.setRadius(5);
+            circleToHighlight.setRadius(5 * (1/mapViewer.getScale()));
             circleToHighlight.setStroke(Color.RED);
             mapPane.getChildren().add(circleToHighlight);
             shapes.add(circleToHighlight);
