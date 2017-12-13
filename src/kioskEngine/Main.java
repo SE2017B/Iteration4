@@ -10,8 +10,8 @@ package kioskEngine;
 
 import controllers.ScreenController;
 import database.edgeDatabase;
+import database.feedbackDatabase;
 import database.nodeDatabase;
-import database.serviceDatabase;
 import database.staffDatabase;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -91,13 +91,13 @@ public class Main extends Application {
         nodeDatabase.deleteNodeTable();
         staffDatabase.deleteAdminTable();
         staffDatabase.deleteStaffTable();
-        serviceDatabase.deleteFeedbackTable();
+        feedbackDatabase.deleteFeedbackTable();
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
         staffDatabase.createStaffTable();
         staffDatabase.createAdminTable();
-        serviceDatabase.createFeedbackTable();
+        feedbackDatabase.createFeedbackTable();
 
         nodeDatabase.readNodeCSV("/csv/MapAnodes.csv");
         nodeDatabase.readNodeCSV("/csv/MapBnodes.csv");
@@ -128,6 +128,9 @@ public class Main extends Application {
 
         staffDatabase.readStaffCSV("/csv/staffMembers.csv");
         staffDatabase.insertStaffFromCSV();
+
+        feedbackDatabase.readFeedbackCSV("/csv/sampleFeedback.csv");
+        feedbackDatabase.insertStaffFromCSV();
 
         launch(args);
 

@@ -16,6 +16,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -41,11 +42,12 @@ import map.FloorNumber;
 import java.util.*;
 
 public class MapViewer extends Observable{
-    private int SCROLL_WIDTH = 2000;
-    private int SPACER_WIDTH = 500;
+
     private final int SPACING = 10;
     private final int BUTTON_HEIGHT = 50;
     private final int BUTTON_WIDTH = 100;
+    private int SPACER_WIDTH = ((1280 - BUTTON_WIDTH)/ 2) - (SPACING) ;
+    private int SCROLL_WIDTH = (SPACER_WIDTH*2 + 6*(BUTTON_WIDTH+SPACING+1));
 
     private ArrayList<String> buttonOrder;
     public FloorNumber currentFloor;
@@ -87,18 +89,18 @@ public class MapViewer extends Observable{
         prevFloor.setText("Previous Floor");
         prevFloor.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
         prevFloor.setAlignment(Pos.CENTER);
-        prevFloor.setPrefWidth(150);
+        prevFloor.setPrefWidth(BUTTON_WIDTH);
         prevFloor.getStyleClass().add("text-on-white");
         prevFloor.setVisible(false);
-        mapViewerPane.setBottomAnchor(prevFloor, 80.0);
+        mapViewerPane.setBottomAnchor(prevFloor, 115.0);
 
         nextFloor.setText("Next Floor");
         nextFloor.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
         nextFloor.setAlignment(Pos.CENTER);
-        nextFloor.setPrefWidth(150);
+        nextFloor.setPrefWidth(BUTTON_WIDTH);
         nextFloor.getStyleClass().add("text-on-white");
         nextFloor.setVisible(false);
-        mapViewerPane.setBottomAnchor(nextFloor, 80.0);
+        mapViewerPane.setBottomAnchor(nextFloor, 115.0);
 
         mapImage = new proxyImagePane();
         mapPane.getChildren().add(mapImage);
@@ -127,7 +129,6 @@ public class MapViewer extends Observable{
         buttonScrollPane.setContent(container);
 
 
-        System.out.println(container.getChildren());
 
         currentFloor = FloorNumber.FLOOR_ONE;
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
@@ -144,7 +145,6 @@ public class MapViewer extends Observable{
 
 
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue.intValue()));
-        //why are these both the X values?
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
         mapViewerPane.prefHeightProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
 
@@ -244,6 +244,7 @@ public class MapViewer extends Observable{
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         currentFloor = FloorNumber.FLOOR_ONE;
+        resizeSpacers((int)mapViewerPane.getWidth());
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
     }
 
@@ -255,7 +256,7 @@ public class MapViewer extends Observable{
         button.setId("-1");
         buttonOrder.add(button.getText());
         container.getChildren().add(button);
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+1));
         container.setPrefWidth(SCROLL_WIDTH);
         return button;
     }
@@ -267,14 +268,14 @@ public class MapViewer extends Observable{
     }
 
     private void resizeSpacers(int width){
-        SPACER_WIDTH = (width - 200) / 2;
+        SPACER_WIDTH = ((width - BUTTON_WIDTH)/ 2) - SPACING ;
         spacerRight.setPrefWidth(SPACER_WIDTH);
         spacerLeft.setPrefWidth(SPACER_WIDTH);
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING*2));
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+1));
         container.setPrefWidth(SCROLL_WIDTH);
-        double w = mapViewerPane.getWidth();
-        prevFloor.setLayoutX((w/2) - 227);
-        nextFloor.setLayoutX((w/2) + 77);
+
+        prevFloor.setLayoutX((width/2) - (1.5 * BUTTON_WIDTH) - SPACING);
+        nextFloor.setLayoutX((width/2) + (0.5 * BUTTON_WIDTH) + SPACING);
     }
 
     public void floorButtonPressed(ActionEvent e){
@@ -363,9 +364,7 @@ public class MapViewer extends Observable{
 
     public void setScale(double scale){
         double min_scale = Math.max((mapScrollPane.getBoundsInLocal().getWidth()/5000),(mapScrollPane.getHeight()/3400));
-        System.out.println("Hval before: " + mapScrollPane.getHvalue());
-        System.out.println("Vval before: " + mapScrollPane.getVvalue());
-        System.out.println();
+
         if(scale < min_scale){
             scale = min_scale;
         }
@@ -380,9 +379,7 @@ public class MapViewer extends Observable{
         mapPane.setTranslateY((scale - 1)/2 * 3400);
 
         mapHolderPane.setPrefSize(mapPane.getBoundsInLocal().getWidth() * scale, mapPane.getBoundsInLocal().getHeight() * scale);
-        System.out.println("Hval after: " + mapScrollPane.getHvalue());
-        System.out.println("Vval after: " + mapScrollPane.getVvalue());
-        System.out.println();
+
     }
 
     public double checkScale(double scale){

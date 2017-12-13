@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/8.0.151" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" style="-fx-background-color: #005697;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PathController">
    <children>
       <AnchorPane layoutX="918.0" layoutY="105.0" prefHeight="84.0" prefWidth="128.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -81,7 +81,7 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <JFXTextField fx:id="startTextField" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="Start Location" styleClass="text-on-dark" GridPane.hgrow="ALWAYS">
+                                          <JFXTextField fx:id="startTextField" focusColor="#ffc93c" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="Start Location" styleClass="text-on-dark" GridPane.hgrow="ALWAYS">
                                              <GridPane.margin>
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                              </GridPane.margin>
@@ -171,7 +171,7 @@
                                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                        </rowConstraints>
                                        <children>
-                                          <JFXTextField fx:id="endTextField" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="End Location" styleClass="text-on-dark">
+                                          <JFXTextField fx:id="endTextField" focusColor="#ffc93c" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="End Location" styleClass="text-on-dark">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -244,7 +244,7 @@
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </JFXTabPane>
-                  <JFXButton fx:id="ntncancel" minHeight="50.0" minWidth="150.0" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" text="Return" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+                  <JFXButton fx:id="ntncancel" minHeight="50.0" minWidth="150.0" onAction="#cancelPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Return" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -252,7 +252,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </JFXButton>
-                  <JFXButton fx:id="btnEnter" maxWidth="150.0" minWidth="150.0" onAction="#enterPressed" prefHeight="50.0" prefWidth="150.0" text="Go!" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER">
+                  <JFXButton fx:id="btnEnter" maxWidth="150.0" minWidth="150.0" onAction="#enterPressed" prefHeight="50.0" prefWidth="150.0" styleClass="grey-button" text="Go!" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -269,11 +269,11 @@
       </AnchorPane>
       <JFXListView fx:id="endNodeOptionList" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="80.0" />
       <JFXListView fx:id="startNodeOptionList" layoutX="124.0" layoutY="280.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="80.0" />
-      <ImageView fx:id="qrImageView" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXListView fx:id="directionsList" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="300.0">
+      <ImageView fx:id="qrImageView" fitHeight="250.0" fitWidth="250.0" opacity="0.9" pickOnBounds="true" preserveRatio="true" />
+      <JFXListView fx:id="directionsList" editable="true" maxHeight="1.7976931348623157E308" maxWidth="300.0" minHeight="300.0" opacity="0.9">
          <styleClass>
             <String fx:value="list-pane" />
-            <String fx:value="scroll-pane" />
+            <String fx:value="no-scroll-bar" />
          </styleClass>
       </JFXListView>
       <JFXButton fx:id="textDirectionButton" prefHeight="30.0" prefWidth="250.0" text="Text Directions" AnchorPane.topAnchor="100.0" />

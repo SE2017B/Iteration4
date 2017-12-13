@@ -6,6 +6,7 @@ import map.Node;
 import map.Path;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PathViewer {
     //attributes
@@ -13,6 +14,9 @@ public class PathViewer {
     private PathID pathID;
     private ArrayList<Shape> shapes;
     private ArrayList<Integer> dimensions;
+    //links to other paths
+    private PathViewer previous;
+    private PathViewer next;
     //animation variables
     private ArrayList<Double> goal;
     private ArrayList<Double> speed;
@@ -44,6 +48,10 @@ public class PathViewer {
         pos.add(0.0);
         isAnimating=false;
         hasAnimated=false;
+
+        //set up path viewer
+        previous=null;
+        next=null;
 
     }
     public void initAnimation(double startx, double starty, double endx, double endy){
@@ -92,6 +100,22 @@ public class PathViewer {
     }
     public double getscaleGoal(){
         return scaleGoal;
+    }
+
+    public void setPrevious(PathViewer previous) {
+        this.previous = previous;
+    }
+
+    public void setnext(PathViewer next) {
+        this.next = next;
+    }
+
+    public PathViewer getPrevious() {
+        return previous;
+    }
+
+    public PathViewer getnext() {
+        return next;
     }
 
     private ArrayList<Integer> getEdgeDims(){

@@ -179,4 +179,33 @@ public class Node{
         if(!this.getID().equals(other.getID())) return false;
         return true;
     }
+
+    public static String getFilterText(String input){
+        String filter = "";
+        if(input.equals("Restroom")){
+            filter = "REST";
+        }
+        else if (input.equals("Retail")){
+            filter = "RETL";
+        }
+        else if (input.equals("Exits")){
+            filter = "EXIT";
+        }
+        else if (input.equals("Stairs")){
+            filter = "STAI";
+        }
+        else if (input.equals("Elevators")){
+            filter = "ELEV";
+        }
+        else if (input.equals("Department")){
+            filter = "DEPT";
+        }
+        else if (input.equals("Services")){
+            filter = "SERV";
+        }
+        else {
+            filter = "INFO";
+        }
+        return filter;
+    }
 }

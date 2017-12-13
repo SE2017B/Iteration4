@@ -60,6 +60,7 @@ public class AStarSearchTest {
     private Node N22_2 = new Node("A22_2", "700", "400", "L2", "Tower", "Desk", "Long22_2", "Short22_2", "H");
     private Node N23_2 = new Node("A23_2", "800", "400", "L2", "Tower", "Desk", "Long23_2", "Short23_2", "H");
 
+    private Node N9_G = new Node("A9_g", "200", "400", "G", "Tower", "Elevator", "Long9_G", "Short9_G", "H");
     private AStarSearch search = new AStarSearch();
 
     @Before
@@ -216,6 +217,8 @@ public class AStarSearchTest {
 
         //Add connections for nodeTwentyThree_2
 
+        //Add connections for nodeNine G
+        N9_G.addConnection(N9);
     }
 
     // findPath tests
@@ -249,6 +252,7 @@ public class AStarSearchTest {
         System.out.println(answer);
         String directions = search.findPath(N1, N19_2).findDirections().toString();
         System.out.println(directions);
+        System.out.println(search.findPath(N1, N19_2).findDirections().size());
         assertEquals("[A1, A6, A7, A8, A9, A9_2, A15_2, A14_2, A18_2, A19_2]", answer);
         assertEquals("[Go straight from Short1, Take a right at this Short6, Go straight through Short7, Go straight through Short8, Go down Short9, Go straight from Short9_2, " +
                 "Take a left at this Short15_2, Take a right at this Short14_2, Take a right at this Short18_2, Stop at Short19_2]", directions);
@@ -311,8 +315,13 @@ public class AStarSearchTest {
     @Test
     //Node 10 to Node 1
     public void testMap2Reverse() throws InterruptedException{
-        String answer = search.findPath(N10, N1).toString();
+        String answer = search.findPath(N9_G, N1_2).toString();
         System.out.println(answer);
+        String directions = search.findPath(N9_G, N1_2).findDirections().toString();
+        System.out.println(directions);
+        Path path = search.findPath(N9_G, N1_2);
+        path.findDirections();
+        System.out.println(path.getPathByDirections());
         assertEquals("[A10, A7, A6, A1]", answer);
     }
 
