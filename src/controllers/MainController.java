@@ -56,38 +56,24 @@ public class MainController implements ControllableScreen, Observer{
 
     @FXML
     private HBox dropDownBox;
-
     @FXML
     private JFXButton filterHeaderButton;
-
     @FXML
     private JFXButton nearestHeaderButton;
-
     @FXML
     private GridPane menuGridPane;
 
     private JFXButton bathFilterButton;
-
     private JFXButton exitFilterButton;
-
     private JFXButton elevatorFilterButton;
-
     private JFXButton retailFilterButton;
-
     private JFXButton stairsFilterButton;
-
     private JFXButton bathNearestButton;
-
     private JFXButton exitNearestButton;
-
     private JFXButton elevatorNearestButton;
-
     private JFXButton retailNearestButton;
-
     private JFXButton stairsNearestButton;
-
     private JFXNodesList filterList;
-
     private JFXNodesList nearestList;
 
     //Tutorial List
@@ -95,17 +81,13 @@ public class MainController implements ControllableScreen, Observer{
 
     //Tutorial Buttons
     public JFXButton questionButton;
-
     private JFXButton tutorialHelpButton;
-
     private JFXButton feedbackAboutHelpButton;
     
     @FXML
     private AnchorPane mainAnchorPane;
-
     @FXML
     private Label time;
-
 
     public void init() {
         currentFloor = FloorNumber.FLOOR_ONE;
@@ -141,10 +123,10 @@ public class MainController implements ControllableScreen, Observer{
     private int BUTTON_HEIGHT = 60;
     private int BUTTON_SPACING = 65;
 
-
     private JFXButton filterSpacer = new JFXButton();
     private JFXButton nearestSpacer = new JFXButton();
     private JFXButton questionSpacer = new JFXButton();
+
     private void initButtons(){
         filterList = new JFXNodesList();
         nearestList = new JFXNodesList();
@@ -185,7 +167,6 @@ public class MainController implements ControllableScreen, Observer{
         //Tutorial question spacer
         questionList.addAnimatedNode(questionSpacer);
 
-
         filterHeaderButton.setOnAction(e ->  {
             if(filterList.isExpanded()){
                 hideFilterButtons(e);
@@ -212,7 +193,6 @@ public class MainController implements ControllableScreen, Observer{
             }
         });
 
-
         for(int i = 0; i< 12; i++){
             JFXButton b  = buttons.get(i);
             b.setPrefSize(BUTTON_WIDTH,BUTTON_HEIGHT);
@@ -229,6 +209,7 @@ public class MainController implements ControllableScreen, Observer{
                 questionList.addAnimatedNode(b);
             }
         }
+
         filterList.setSpacing(BUTTON_SPACING);
         nearestList.setSpacing(BUTTON_SPACING);
         //Tutorial
@@ -253,7 +234,6 @@ public class MainController implements ControllableScreen, Observer{
         filterList.setLayoutX(30);
         filterList.setLayoutY(185);
 
-
         nearestList.setLayoutX(30);
         nearestList.setLayoutY(70);
 
@@ -275,11 +255,9 @@ public class MainController implements ControllableScreen, Observer{
         //Tutorial
         tutorialHelpButton.setText("Tutorial");
         feedbackAboutHelpButton.setText("Feedback\n/ About");
-
     }
 
     public void onShow(){
-
         kioskIndicator.setCenterX(map.getKioskLocation().getX());
         kioskIndicator.setCenterY(map.getKioskLocation().getY());
         setFloor(currentFloor);
@@ -322,7 +300,6 @@ public class MainController implements ControllableScreen, Observer{
         });
 
         newIndicator.getTimeline().play();
-
         return newIndicator;
     }
 
@@ -382,7 +359,6 @@ public class MainController implements ControllableScreen, Observer{
             time.setText(hour + ":" + (minute) + ":" + second +  AM);
             //System.out.println(sdf.format(time));
         }
-
     } //ending class
 
     //-----------------------HANDLE ACTIONS START--------------------------//
@@ -418,10 +394,7 @@ public class MainController implements ControllableScreen, Observer{
         map.searchNodes.add(map.getKioskLocation());
         map.searchNodes.add(node);
         parent.setScreen(ScreenController.PathID,"LEFT");
-
     }
-
-
 
     public void nearestPressed(ActionEvent e){
         //switch to kiosk floor
@@ -458,10 +431,7 @@ public class MainController implements ControllableScreen, Observer{
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
-
     }
-
-
 
     ////////////////////////////////////////////////////////////
     /////////////           Filter
@@ -496,8 +466,8 @@ public class MainController implements ControllableScreen, Observer{
             filterList.setVisible(true);
             filterList.animateList(true);
             filterSpacer.setVisible(false);
-
     }
+
     public void hideFilterButtons(ActionEvent e){
         filterList.animateList(false);
         PauseTransition pause = new PauseTransition(Duration.millis(100));
@@ -549,7 +519,6 @@ public class MainController implements ControllableScreen, Observer{
         }
     }
 
-
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
         parent.setScreen(ScreenController.LoginID,"RIGHT");
@@ -559,5 +528,4 @@ public class MainController implements ControllableScreen, Observer{
     public void directionPressed(ActionEvent e){
         parent.setScreen(ScreenController.PathID,"LEFT");
     }
-
 }

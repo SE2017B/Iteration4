@@ -73,7 +73,6 @@ public class RequestController implements ControllableScreen{
     private JFXButton createPressedApi;
     @FXML
     private JFXButton cancelPressedAPI;
-
     @FXML
     private ChoiceBox<String> apiServiceChoiceBox;
     @FXML
@@ -168,13 +167,10 @@ public class RequestController implements ControllableScreen{
     private Tab lineChartTab;
     @FXML
     private JFXTabPane chartTabPane;
-
     @FXML
     private JFXListView<Node> startNodeOptionList;
-
     @FXML
     private JFXListView<Node> endNodeOptionList;
-
 
     ////////////////////////////////////////////////////////
     // STAFF ADD EDIT REMOVE//
@@ -204,14 +200,12 @@ public class RequestController implements ControllableScreen{
     @FXML
     private Tab settingsTab;
 
-
     public void init(){
         depSub = DepartmentSubsystem.getSubsystem();
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
         apiServ.add("Transportation");
-
 
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
         apiServiceChoiceBox.setOnAction(e -> {
@@ -225,7 +219,6 @@ public class RequestController implements ControllableScreen{
                 endLabel.setVisible(false);
             }
         });
-
 
         staffListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Staff>() {
                                                                                  @Override
@@ -251,10 +244,6 @@ public class RequestController implements ControllableScreen{
                                                                               }
         );
 
-
-
-
-
         //add listeners
         startTextField.setOnKeyPressed( e -> searchText(e, startTextField, startNodeOptionList));
         endTextField.setOnKeyPressed(e -> searchText(e, endTextField, endNodeOptionList));
@@ -277,7 +266,6 @@ public class RequestController implements ControllableScreen{
             endNode = null;
             endTextField.setText("");
         });
-
     }
 
     public void onShow(){
@@ -335,53 +323,35 @@ public class RequestController implements ControllableScreen{
     /////////////////////////////////////////////////////////////////
     ////// API
     ////////////////////////////////////////////////////////////////
-
     @FXML
     private JFXTabPane startTabPane;
-
     @FXML
     private Tab startTextTab;
-
     @FXML
     private JFXTextField startTextField;
-
     @FXML
     private Tab startTypeTab;
-
     @FXML
     private ChoiceBox<Node> startNodeChoice;
-
     @FXML
     private MenuButton startTypeMenu;
-
-
     @FXML
     private MenuButton startFloorMenu;
-
     @FXML
     private JFXTabPane endTabPane;
-
     @FXML Label endLabel;
-
     @FXML
     private Tab endTextTab;
-
     @FXML
     private JFXTextField endTextField;
-
     @FXML
     private Tab endTypeTab;
-
     @FXML
     private MenuButton endTypeMenu;
-
-
     @FXML
     private MenuButton endFloorMenu;
-
     @FXML
     private ChoiceBox<Node> endNodeChoice;
-
 
     private String startType;
     private String endType;
@@ -434,7 +404,6 @@ public class RequestController implements ControllableScreen{
     }
 
     private void endChosen(){
-
         final String f = Node.getFilterText(endType);
         if(endFloor.equals("ALL")){
             endNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f))));
@@ -445,8 +414,6 @@ public class RequestController implements ControllableScreen{
         }
         endNodeChoice.setDisable(false);
     }
-
-
 
     public void createPressedApi(ActionEvent e){
         if(startTypeTab.isSelected())
@@ -459,13 +426,10 @@ public class RequestController implements ControllableScreen{
     }
 
     public void runAPI(Node startNode, Node endNode){
-
 //        Stage primaryStage = new Stage();
 //        SanitationService api = SanitationService.newInstance(primaryStage);
 //        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", startNode.getID(), null);
-
     }
-
 
     private void suggestionPressed(MouseEvent e, JFXTextField textField, JFXListView<Node> listView) {
         Node selected = listView.getSelectionModel().getSelectedItem();
@@ -497,9 +461,7 @@ public class RequestController implements ControllableScreen{
         selectedAlg = ((MenuItem) e.getSource()).getText();
         menuButtonAl.setText(selectedAlg);
         parent.resumeTimeout();
-
     }
-
 
     private void searchText(KeyEvent keyEvent, JFXTextField textField, JFXListView<Node> listView){
         KeyCode code = keyEvent.getCode();
@@ -564,11 +526,9 @@ public class RequestController implements ControllableScreen{
         }
     }
 
-
     ////////////////////////////////////////////////////////
     /// STAFF
     /////////////////////////////////////////////////////////
-
 
     @FXML
     void cancelStaffPressed(ActionEvent event) {
@@ -581,7 +541,6 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void editStaffPressed(ActionEvent e) {
-
         String tempUsername = usernameEdit.getText();
         String tempPassword = passwordEdit.getText();
         String tempFullName = fullnameEdit.getText();
@@ -603,7 +562,6 @@ public class RequestController implements ControllableScreen{
             e1.printStackTrace();
         }
 
-
         //usernameEdit.clear();
         //passwordEdit.clear();
         //fullnameEdit.clear();
@@ -618,7 +576,6 @@ public class RequestController implements ControllableScreen{
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
         staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
-
 
     @FXML
     void createStaffPressed(ActionEvent e) {
@@ -734,13 +691,11 @@ public class RequestController implements ControllableScreen{
         xBarChart.setLabel("Feedback Rating");
         yBarChart.setLabel("Number of Ratings");
         feedbackBarChart.getData().addAll(aBarChart);
-
     }
 
     //////////////////////////////////////////////////////////
     /////////           Settings Tab                 /////////
     //////////////////////////////////////////////////////////
-
     @FXML
     private ChoiceBox<SearchStrategy> searchStrategyChoice;
     @FXML

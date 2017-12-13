@@ -107,7 +107,6 @@ public class MapViewer extends Observable{
         mapScrollPane.setContent(mapHolderPane);
         mapScrollPane.setPannable(true);
 
-
         addFloor(FloorNumber.FLOOR_LTWO);
         addFloor(FloorNumber.FLOOR_LONE);
         addFloor(FloorNumber.FLOOR_GROUND);
@@ -126,7 +125,6 @@ public class MapViewer extends Observable{
         buttonScrollPane.setPrefViewportHeight(125);
         buttonScrollPane.setContent(container);
 
-
         System.out.println(container.getChildren());
 
         currentFloor = FloorNumber.FLOOR_ONE;
@@ -138,16 +136,12 @@ public class MapViewer extends Observable{
         mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty());
         mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
 
-
         mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
         mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
 
-
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue.intValue()));
-        //why are these both the X values?
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
         mapViewerPane.prefHeightProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
-
 
         //ZOOM FUNCTIONALITY
         slideBarZoom = new JFXSlider();
@@ -340,14 +334,11 @@ public class MapViewer extends Observable{
         if(buttonPose == buttonOrder.size()-1){
             nextFloor.setVisible(false);
         }
-
     }
 
     public void setFloor(FloorNumber floor){
         setFloor(floor,buttonOrder.indexOf(floor.getDbMapping()));
     }
-
-
 
     private void setContainer(){
         spacerLeft = new Pane();
@@ -411,7 +402,6 @@ public class MapViewer extends Observable{
     }
 
     public void centerView(double x, double y) {
-
         x =  (x * mapPane.getScaleX());
         y =  (y * mapPane.getScaleY());
 

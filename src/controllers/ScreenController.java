@@ -59,7 +59,6 @@ public class ScreenController extends StackPane implements Initializable {
     public static String LoadID = "Load";
     public static String LoadFile = "/fxml/Loading.fxml";
 
-
     public ScreenController(){
         super();
         timeout = new PauseTransition(Duration.millis(30000));
@@ -107,8 +106,8 @@ public class ScreenController extends StackPane implements Initializable {
             fadeOut.setOnFinished((e) -> {
                 setScreen(ScreenController.MainID);
             });
-
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             System.out.println("Splash Failed");
         }
     }
@@ -221,7 +220,6 @@ public class ScreenController extends StackPane implements Initializable {
         return true;
     }
 
-
     public boolean setScreen(String name) {
         return setScreen(name,"FADE");
     }
@@ -259,7 +257,6 @@ public class ScreenController extends StackPane implements Initializable {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -275,6 +272,7 @@ public class ScreenController extends StackPane implements Initializable {
             timeout.play();
         }
     }
+
     public void pauseTimeout(){
         timeout.stop();
         isPaused =true;
@@ -283,13 +281,11 @@ public class ScreenController extends StackPane implements Initializable {
     public void resumeTimeout(){
         timeout.play();;
         isPaused = false;
-
     }
 
     public void setTimeoutLength(double length){
         timeout.setDuration(new Duration(length));
     }
-
 
     public Double getTimeoutLength(){
         return timeout.getDuration().toMillis();

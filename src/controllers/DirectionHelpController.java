@@ -24,7 +24,8 @@ public class DirectionHelpController implements ControllableScreen{
     private ArrayList<DirectionHelpController.CustomPair> descriptions;
     private ArrayList<String> ImageMap;
     private int status;
-    private TransitionCircle pointer=new TransitionCircle(500,500);
+    private TransitionCircle pointer = new TransitionCircle(500,500);
+    private AnimatedCircle circle;
 
     @Override
     public void init(){
@@ -39,8 +40,7 @@ public class DirectionHelpController implements ControllableScreen{
 
     //reset everything to the start
     @Override
-    public void onShow() {
-    }
+    public void onShow() {}
 
     @Override
     public void setParentController(ScreenController parent) {
@@ -49,21 +49,14 @@ public class DirectionHelpController implements ControllableScreen{
 
     @FXML
     private AnchorPane mainPane;
-
     @FXML
     private JFXButton nextButton;
-
     @FXML
     private JFXButton previousButton;
-
     @FXML
     private JFXTextArea helpTextArea;
-
     @FXML
     private JFXButton returnButton;
-
-    private AnimatedCircle circle;
-
     @FXML
     private JFXProgressBar helpProgress;
 
@@ -90,7 +83,6 @@ public class DirectionHelpController implements ControllableScreen{
         System.out.println("Return Pressed");
     }
 
-
     //////////////////////////
     // HELPER METHODS BELOW //
     //////////////////////////
@@ -113,6 +105,7 @@ public class DirectionHelpController implements ControllableScreen{
             helpProgress.setProgress(1);
         }
     }
+
     private void setImageFromList(boolean next){
         //If we move forward, we check bounds
         if(next){
@@ -167,5 +160,4 @@ public class DirectionHelpController implements ControllableScreen{
             return description;
         }
     }
-
 }

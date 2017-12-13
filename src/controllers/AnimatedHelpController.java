@@ -27,6 +27,7 @@ public class AnimatedHelpController implements ControllableScreen{
     private int status;
     private ArrayList<ArrayList<Double>> positions = new ArrayList<>();
     private TransitionCircle pointer = new TransitionCircle(500,500);
+    private AnimatedCircle circle;
 
     @Override
     public void init(){
@@ -41,8 +42,7 @@ public class AnimatedHelpController implements ControllableScreen{
 
     //reset everything to the start
     @Override
-    public void onShow() {
-    }
+    public void onShow() {}
 
     @Override
     public void setParentController(ScreenController parent) {
@@ -51,24 +51,16 @@ public class AnimatedHelpController implements ControllableScreen{
 
     @FXML
     private AnchorPane mainPane;
-
     @FXML
     private JFXButton nextButton;
-
     @FXML
     private JFXButton previousButton;
-
     @FXML
     private JFXTextArea helpTextArea;
-
     @FXML
     private JFXButton returnButton;
-
-    private AnimatedCircle circle;
-
     @FXML
     private JFXProgressBar helpProgress;
-
     @FXML
     private Pane helpPane;
 
@@ -94,7 +86,6 @@ public class AnimatedHelpController implements ControllableScreen{
         parent.setScreen(ScreenController.LoginID,"HELP_OUT");
         System.out.println("Return Pressed");
     }
-
 
     //////////////////////////
     // HELPER METHODS BELOW //
@@ -194,7 +185,6 @@ public class AnimatedHelpController implements ControllableScreen{
         current.add(width);
         current.add(275.0);
         this.positions.add(current);
-
     }
 
     class CustomPair{
@@ -206,7 +196,6 @@ public class AnimatedHelpController implements ControllableScreen{
             return description;
         }
     }
-
 }
 
 

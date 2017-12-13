@@ -17,17 +17,13 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 import ui.feedbackBackground;
 
-
 public class FeedbackController implements ControllableScreen{
-    public FeedbackController(){
-    }
+    public FeedbackController(){}
 
     private ScreenController parent;
 
     @FXML
     private JFXSlider starSlider;
-
-
     @FXML
     private AnchorPane mainAnchorPane;
 
@@ -50,12 +46,9 @@ public class FeedbackController implements ControllableScreen{
         this.parent = parent;
     }
 
-
     public void returnPressed(ActionEvent e){
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
     public void enterPressed(ActionEvent e) {}
-    
-
 }

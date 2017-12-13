@@ -24,9 +24,9 @@ import ui.hospitalBackground;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-
 public class LoginController implements ControllableScreen{
     public LoginController(){}
+
     ScreenController parent;
     private DepartmentSubsystem depSub;
 
@@ -40,8 +40,6 @@ public class LoginController implements ControllableScreen{
     private Label errorLbl;
     @FXML
     private AnchorPane mainAnchorPane;
-
-
 
     @Override
     public void init() {
@@ -78,13 +76,11 @@ public class LoginController implements ControllableScreen{
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
-
     public void enterPressedkey(KeyEvent e){
         if(e.getCode().toString().equals("ENTER")) {
             enterPressed(new ActionEvent());
         }
     }
-
 
     public void enterPressed(ActionEvent e) {
         String login = usernameField.getText();
@@ -110,7 +106,5 @@ public class LoginController implements ControllableScreen{
             errorLbl.setText("Password is Incorrect");
             s.shake(passwordField);
         }
-
-
     }
 }
