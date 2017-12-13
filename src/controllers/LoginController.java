@@ -129,6 +129,7 @@ public class LoginController implements ControllableScreen{
         catch (PasswordException ex){
             errorLbl.setText("Password is Incorrect");
             s.shake(passwordField);
+            passwordField.selectAll();
         }
 
 
