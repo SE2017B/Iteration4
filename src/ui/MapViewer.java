@@ -144,6 +144,7 @@ public class MapViewer extends Observable{
 
 
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue.intValue()));
+        //why are these both the X values?
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
         mapViewerPane.prefHeightProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
 
@@ -362,6 +363,10 @@ public class MapViewer extends Observable{
 
     public void setScale(double scale){
         double min_scale = Math.max((mapScrollPane.getBoundsInLocal().getWidth()/5000),(mapScrollPane.getHeight()/3400));
+        System.out.println("Hval before: " + mapScrollPane.getHvalue());
+        System.out.println("Vval before: " + mapScrollPane.getVvalue());
+        System.out.println();
+
         if(scale < min_scale){
             scale = min_scale;
         }
@@ -376,6 +381,7 @@ public class MapViewer extends Observable{
         mapPane.setTranslateY((scale - 1)/2 * 3400);
 
         mapHolderPane.setPrefSize(mapPane.getBoundsInLocal().getWidth() * scale, mapPane.getBoundsInLocal().getHeight() * scale);
+
     }
 
     public double checkScale(double scale){
