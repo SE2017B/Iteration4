@@ -284,8 +284,11 @@
                                           </Tab>
                                        </tabs>
                                        <GridPane.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                          <Insets />
                                        </GridPane.margin>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
                                     </JFXTabPane>
                                             </children>
                                         </GridPane>
