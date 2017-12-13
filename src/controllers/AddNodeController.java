@@ -154,8 +154,8 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         else{
             if(edgeAddTab.isSelected()){
-                showNodesbyFloor(currentFloor);
                 showEdgesbyFloor(currentFloor);
+                showNodesbyFloor(currentFloor);
                 edgeAddNode1 = null;
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
