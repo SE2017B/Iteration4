@@ -726,7 +726,7 @@ public class AddNodeController implements ControllableScreen, Observer {
 
                 map.editNode(n,
                         Integer.toString((int) cb.getLayoutX()),
-                        Integer.toString((int) cb.getLayoutX()),
+                        Integer.toString((int) cb.getLayoutY()),
                         n.getFloor().getDbMapping(),
                         n.getBuilding(),
                         n.getType(),
