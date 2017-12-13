@@ -362,8 +362,6 @@ public class MapViewer extends Observable{
 
     public void setScale(double scale){
         double min_scale = Math.max((mapScrollPane.getBoundsInLocal().getWidth()/5000),(mapScrollPane.getHeight()/3400));
-        System.out.println("Hval before: " + mapScrollPane.getHvalue());
-        System.out.println("Vval before: " + mapScrollPane.getVvalue());
         if(scale < min_scale){
             scale = min_scale;
         }
@@ -378,9 +376,6 @@ public class MapViewer extends Observable{
         mapPane.setTranslateY((scale - 1)/2 * 3400);
 
         mapHolderPane.setPrefSize(mapPane.getBoundsInLocal().getWidth() * scale, mapPane.getBoundsInLocal().getHeight() * scale);
-        System.out.println();
-        System.out.println("Hval after: " + mapScrollPane.getHvalue());
-        System.out.println("Vval after: " + mapScrollPane.getVvalue());
     }
 
     public double checkScale(double scale){
