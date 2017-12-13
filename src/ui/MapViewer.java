@@ -21,6 +21,7 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 
 import javafx.scene.input.MouseEvent;
@@ -39,6 +40,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import map.FloorNumber;
 
+import javax.swing.*;
 import java.util.*;
 
 public class MapViewer extends Observable{
@@ -177,6 +179,7 @@ public class MapViewer extends Observable{
         zoomIn.setMaxSize(50, 50);
         zoomIn.setAlignment(Pos.CENTER);
         zoomIn.setOnAction(e -> zoomInPressed(e));
+        zoomIn.setTooltip(new Tooltip("Click to zoom in to the map"));
 
         String urlToZoomOut = "images/Icons/circleZoomOutWhite.png";
         ImageView zoomOutImage = new ImageView(urlToZoomOut);
@@ -191,6 +194,7 @@ public class MapViewer extends Observable{
         zoomOut.setMaxSize(50, 50);
         zoomOut.setAlignment(Pos.CENTER);
         zoomOut.setOnAction(e -> zoomOutPressed(e));
+        zoomOut.setTooltip(new Tooltip("Click to zoom out of the map"));
 
         zoomBar = new GridPane();
         zoomBar.add(zoomOut, 0,  0);
@@ -254,6 +258,8 @@ public class MapViewer extends Observable{
         button.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         button.setOnAction(e -> floorButtonPressed(e));
         button.setId("-1");
+        button.setTooltip(new Tooltip("Click to select floor"));
+        //ToolTipManager.sharedInstance().setInitialDelay(0);
         buttonOrder.add(button.getText());
         container.getChildren().add(button);
         SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+1));
