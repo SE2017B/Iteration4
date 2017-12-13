@@ -12,29 +12,25 @@ import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 //import api.SanitationService;
 import com.jfoenix.controls.*;
-import database.serviceDatabase;
+import database.feedbackDatabase;
 import database.staffDatabase;
-import javafx.animation.TranslateTransition;
+import exceptions.InvalidPasswordException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import map.HospitalMap;
 import map.Node;
 import search.SearchStrategy;
 import ui.ShakeTransition;
 
 import java.util.ArrayList;
-
-import static java.awt.Color.black;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
@@ -192,7 +188,10 @@ public class RequestController implements ControllableScreen{
     private JFXTextField jobTitleEdit;
     @FXML
     private ListView<Staff> staffListView1;
-
+    @FXML
+    private Tab staffManageTab;
+    @FXML
+    private Tab settingsTab;
 
 
     public void init(){
@@ -236,8 +235,20 @@ public class RequestController implements ControllableScreen{
     public void onShow(){
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
-        System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
+        //System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
 
+        //System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
+
+        if(depSub.getCurrentLoggedIn().getaAdmin() == 1){
+            btnEditMap.setDisable(false);
+            settingsTab.setDisable(false);
+            staffManageTab.setDisable(false);
+
+        }else{
+            btnEditMap.setDisable(true);
+            settingsTab.setDisable(true);
+            staffManageTab.setDisable(true);
+        }
 
         //Update the nodes in the map
         ArrayList<Node> nodes = map.getNodeMap();
@@ -251,12 +262,12 @@ public class RequestController implements ControllableScreen{
         staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
 
         lblFeedbackRating.setStyle("-fx-background-color: rgb(40,40,60)");
-        lblFeedbackRating.setText(serviceDatabase.avgFeedback());
+        lblFeedbackRating.setText(feedbackDatabase.avgFeedback());
 
         lblFeedbackTitle.setStyle("-fx-background-color: rgb(40,40,60)");
         lblFeedbackTitle.setText("Feedback Charts");
 
-        feedbackListView.setItems(FXCollections.observableList(serviceDatabase.getAllFeedbacks()));
+        feedbackListView.setItems(FXCollections.observableList(feedbackDatabase.getAllFeedbacks()));
 
         // Populate Feedback Charts
         pieChartCreate();
@@ -313,27 +324,42 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void editStaffPressed(ActionEvent e) {
-            //ArrayList<Staff> tempAL = new ArrayList<>(staffForCB);
 
-            String tempUsername = usernameEdit.getText();
-            String tempPassword = passwordEdit.getText();
-            String tempFullName = fullnameEdit.getText();
-            String tempJobTitle = jobTitleEdit.getText();
+        String tempUsername = usernameEdit.getText();
+        String tempPassword = passwordEdit.getText();
+        String tempFullName = fullnameEdit.getText();
+        String tempJobTitle = jobTitleEdit.getText();
+        int tempIsAdmin;
 
-            Staff tempStaff = staffListView1.getSelectionModel().getSelectedItem();
-            // tempStaff.updateCredidentials(tempUsername, tempPassword, modifyAdminCheckBox.isSelected(), tempFullName, tempStaff.getID());
+        if (adminAddStaff.isSelected()) {
+            tempIsAdmin = 1;
+        } else {
+            tempIsAdmin = 0;
+        }
 
-            usernameEdit.clear();
-            passwordEdit.clear();
-            fullnameEdit.clear();
-            jobTitleEdit.clear();
-            adminEdit.setSelected(false);
+        Staff tempStaff = staffListView1.getSelectionModel().getSelectedItem();
 
-            //staffResolveServiceChoiceBox.getItems().clear();
-            staffListView1.getItems().clear();
-            staffListView.getItems().clear();
-            //staffChoiceBox.getItems().clear();
+        try {
+            //tempStaff.updateCredentials(tempUsername, tempPassword, tempJobTitle, tempFullName, tempStaff.getID(), tempIsAdmin);
+            depSub.modifyStaff(tempStaff, tempUsername, tempPassword, tempJobTitle, tempFullName, tempStaff.getID(), tempIsAdmin);
+        } catch (InvalidPasswordException e1) {
+            e1.printStackTrace();
+        }
 
+
+        //usernameEdit.clear();
+        //passwordEdit.clear();
+        //fullnameEdit.clear();
+        //jobTitleEdit.clear();
+        //adminEdit.setSelected(false);
+
+        //staffResolveServiceChoiceBox.getItems().clear();
+        //staffListView1.getItems().clear();
+        //staffListView.getItems().clear();
+        //staffChoiceBox.getItems().clear();
+
+        staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+        staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
 
 
@@ -344,12 +370,19 @@ public class RequestController implements ControllableScreen{
             String tempPassword = passwordTxt.getText();
             String tempJobTitle = jobTitletxt.getText();
             String tempFullName = fullNametxt.getText();
+            int tempIsAdmin;
 
+            if (adminAddStaff.isSelected()) {
+                tempIsAdmin = 1;
+            }
+            else {
+                tempIsAdmin = 0;
+            }
             //Service tempService = addStaffServiceChoiceBox.getValue();
 
             //todo Test new add staff UNCOMMENT
             staffDatabase.incStaffCounter();
-            //depSub.addStaff(addStaffCheckBox.isSelected(), tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter(), 0);
+            depSub.addStaff(tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter(), tempIsAdmin);
 
             staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
             staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
@@ -384,12 +417,13 @@ public class RequestController implements ControllableScreen{
         String tempUsername = usernameDeleteTxt.getText();
         String tempFullName = removeStaffFullName.getText();
         //todo uncomment
-        //depSub.deleteStaff(tempFullName, tempUsername);
+        depSub.deleteStaff(tempFullName, tempUsername);
 
         usernameDeleteTxt.clear();
         removeStaffFullName.clear();
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+        staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
 
     @FXML
@@ -397,17 +431,18 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void pieChartCreate() {
-
+        feedbackPieChart.getData().clear();
         // Setting up the Pie Chart on Feedback tab
         feedbackPieChart.setLabelLineLength(10);
         feedbackPieChart.setLegendSide(Side.RIGHT);
-        feedbackPieChart.setData(serviceDatabase.cntFeedback());
+        feedbackPieChart.setData(feedbackDatabase.cntFeedback());
     }
 
     @FXML
     void lineChartCreate() {
+        feedbackLineChart.getData().clear();
 
-        ArrayList<Integer> tempLineArray = serviceDatabase.cntChartFeedback();
+        ArrayList<Integer> tempLineArray = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aLineChart = new XYChart.Series<>();
         aLineChart.getData().add(new XYChart.Data<String,Number>("0", tempLineArray.get(0)));
@@ -425,8 +460,8 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void barChartCreate() {
-
-        ArrayList<Integer> tempLineArray2 = serviceDatabase.cntChartFeedback();
+        feedbackBarChart.getData().clear();
+        ArrayList<Integer> tempLineArray2 = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aBarChart = new XYChart.Series<>();
         aBarChart.getData().add(new XYChart.Data<String,Number>("0", tempLineArray2.get(0)));

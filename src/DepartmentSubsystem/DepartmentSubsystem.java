@@ -138,21 +138,29 @@ public class DepartmentSubsystem {
     }
 
     //Staff modifiers
-    public void addStaff(Service ser,String username, String password, String jobTitle, String fullName, int id, int admin, ArrayList<String> languages){
+    public void addStaff(String username, String password, String jobTitle, String fullName, int id, int admin){
         //staffDatabase.setStaffCounter(1);
-        Staff newPerson = new Staff(username, password, jobTitle, fullName, id, admin, languages);
-        ser.addEligibleStaff(newPerson);
+        Staff newPerson = new Staff(username, password, jobTitle, fullName, id, admin);
+        //ser.addEligibleStaff(newPerson);
         staffDatabase.addStaff(newPerson);
     }
     //modify staff
-    public void modifyStaff(Staff person, String username, String password, String jobTitle, String fullName, int ID, int admin, ArrayList<String> languages) throws InvalidPasswordException {
-        person.updateCredentials(username, password, jobTitle, fullName, ID, admin, languages);
-        staffDatabase.modifyStaff(person);
+    public void modifyStaff(Staff person, String username, String password, String jobTitle, String fullName, int ID, int admin) throws InvalidPasswordException {
+
+        person.updateCredentials(username, password, jobTitle, fullName, ID, admin);
+        staffDatabase.modifyStaff(person, new Staff(username, password, jobTitle, fullName, ID, admin));
     }
     //delete staff from DB
-    public void deleteStaff(Service ser, String userName){
+    public void deleteStaff(String aFullName, String userName){
         Staff person = findPerson(userName);
-        ser.removeEligibleStaff(person);
+//
+//        if (person.getFullName() == aFullName && person.getFullName() != null) {
+//            staffDatabase.deleteStaff(person);
+//        }
+//        else {
+//            System.out.println("Hi");
+//        }
+        //ser.removeEligibleStaff(person);
         staffDatabase.deleteStaff(person);
     }
     //localate a specific username for a staff
