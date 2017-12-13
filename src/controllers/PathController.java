@@ -56,7 +56,7 @@ public class PathController implements ControllableScreen, Observer{
     private String endFloor = "";
     private QRCodeGenerator qr;
 
-    private final double LINE_STROKE = 4;
+    private final double LINE_STROKE = 6;
     private final double ARROW_SIZE = 30;
     private final double BUTTON_SIZE = 35;
 
@@ -888,10 +888,12 @@ public class PathController implements ControllableScreen, Observer{
         mapViewer.setScale(scale);
         mapViewer.setZoom(scale);
         for(Shape s : shapes){
-            s.setStrokeWidth(LINE_STROKE/scale);
             if(s instanceof AnimatedCircle){
                 s.setScaleX(1/scale);
                 s.setScaleY(1/scale);
+            }
+            else{
+                s.setStrokeWidth(LINE_STROKE/scale);
             }
         }
         //scale mapPane children
