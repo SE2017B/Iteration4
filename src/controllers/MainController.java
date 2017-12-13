@@ -187,35 +187,29 @@ public class MainController implements ControllableScreen, Observer{
 
 
         filterHeaderButton.setOnAction(e ->  {
-            /**
             if(filterList.isExpanded()){
                 hideFilterButtons(e);
             }
             else{
                 showFilterButtons(e);
             }
-             **/
                 });
         nearestHeaderButton.setOnAction(e -> {
-            /**
             if(nearestList.isExpanded()){
                 hideNearestButtons(e);
             }
             else{
                 showNearestButtons(e);
             }
-             **/
         });
 
         questionButton.setOnAction(e -> {
-            /**
             if(questionList.isExpanded()) {
                 hideQuestionButtons(e);
             }
             else {
                 showQuestionButtons(e);
             }
-             **/
         });
 
 
@@ -245,10 +239,10 @@ public class MainController implements ControllableScreen, Observer{
         questionList.setVisible(false);
 
         //hide when they disappear
-        //filterList.getListAnimation(true).setOnFinished( e -> filterList.setVisible(false));
-        //nearestList.getListAnimation(true).setOnFinished( e -> nearestList.setVisible(false));
+        filterList.getListAnimation(true).setOnFinished( e -> filterList.setVisible(false));
+        nearestList.getListAnimation(true).setOnFinished( e -> nearestList.setVisible(false));
         //Tutorial
-        //questionList.getListAnimation(true).setOnFinished(e -> questionList.setVisible(false));
+        questionList.getListAnimation(true).setOnFinished(e -> questionList.setVisible(false));
 
         filterList.setRotate(270); //open to the right
         nearestList.setRotate(270);
@@ -500,12 +494,12 @@ public class MainController implements ControllableScreen, Observer{
 
     public void showFilterButtons(ActionEvent e){
             filterList.setVisible(true);
-            //filterList.animateList(true);
+            filterList.animateList(true);
             filterSpacer.setVisible(false);
 
     }
     public void hideFilterButtons(ActionEvent e){
-        //filterList.animateList(false);
+        filterList.animateList(false);
         PauseTransition pause = new PauseTransition(Duration.millis(100));
         pause.setOnFinished( event -> filterList.setVisible(false));
         pause.play();
@@ -513,12 +507,12 @@ public class MainController implements ControllableScreen, Observer{
 
     public void showNearestButtons(ActionEvent e) {
         nearestList.setVisible(true);
-        //nearestList.animateList(true);
+        nearestList.animateList(true);
         nearestSpacer.setVisible(false);
     }
 
     public void hideNearestButtons(ActionEvent e){
-            //nearestList.animateList(false);
+            nearestList.animateList(false);
             PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished( event -> nearestList.setVisible(false));
             pause.play();
@@ -527,12 +521,12 @@ public class MainController implements ControllableScreen, Observer{
     //Tutorial hide and show
     public void showQuestionButtons(ActionEvent e) {
         questionList.setVisible(true);
-        //questionList.animateList(true);
+        questionList.animateList(true);
         questionSpacer.setVisible(false);
     }
 
     public void hideQuestionButtons(ActionEvent e) {
-        //questionList.animateList(false);
+        questionList.animateList(false);
         PauseTransition pause = new PauseTransition(Duration.millis(100));
         pause.setOnFinished(event -> questionList.setVisible(false));
         pause.play();

@@ -39,7 +39,7 @@ public class DirectionHelpController implements ControllableScreen{
     public void onShow() {
         positions = new ArrayList<>();
         pointer.moveTo(helpTextArea.getLayoutX(),helpTextArea.getLayoutY());
-        helpTextArea.setText("Welcome to Brigham & Women’s hospital kiosk application! Click next to start the tutorial for the Navigation Screen.");
+        helpTextArea.setText("Welcome! Click next to start the tutorial for the Navigation Screen.");
         this.setImageFromList(false);
         helpProgress.setProgress(0.0);
         status = 0;
@@ -144,7 +144,7 @@ public class DirectionHelpController implements ControllableScreen{
         current.add(helpTextArea.getLayoutY()+helpTextArea.getHeight());
         this.positions.add(current);
 
-        DirectionHelpController.CustomPair Search = new DirectionHelpController.CustomPair("Search by text or searcb by type to find a path from one location to another!");
+        DirectionHelpController.CustomPair Search = new DirectionHelpController.CustomPair("Search by text or search by type to find a path from one location to another!");
         this.descriptions.add(Search);
         current = new ArrayList();
         current.add(200.0); //width
