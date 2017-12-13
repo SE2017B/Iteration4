@@ -1,6 +1,15 @@
-.button, .menu-button, .choice-box, .titled-pane .title {
+.button, .menu-button, .title {
     -fx-text-fill: whitesmoke;
-    -fx-background-color: rgb(66,133,244);
+    -fx-background-color: rgb(25, 139, 175);
+    -fx-opacity: 90%;
+    -fx-border-color: whitesmoke;
+    -fx-border-width: 4;
+    -fx-border-radius: 1;
+}
+
+.menu-button, .choice-box, .grey-button {
+    -fx-text-fill: whitesmoke;
+    -fx-background-color: rgb(135,157,163);
     -fx-opacity: 90%;
     -fx-border-color: whitesmoke;
     -fx-border-width: 4;
@@ -14,7 +23,6 @@
 
 .scroll-pane .viewport {
     -fx-background-color: transparent;
-
 }
 
 .button-scroll-pane{
@@ -27,55 +35,71 @@
 }
 
 .text-field .input-line {
-    -fx-background-color: darkorange;
+    -fx-background-color: rgb(234,161,25);
 }
 
 .jfx-date-picker .input-line {
-    -fx-background-color: darkorange;
+    -fx-background-color: rgb(234,161,25);
 }
 
 .jfx-time-picker .input-line {
-    -fx-background-color: darkorange;
+    -fx-background-color: rgb(234,161,25);
 }
 
 .jfx-slider{
-    -fx-progress-color-color: darkorange;
+    -fx-progress-color: rgb(234,161,25);
+    -fx-control-inner-background: rgb(234,161,25);
+    -fx-color: rgb(234,161,25);
     -fx-prompt-text-fill: white;
 }
 
 .credit-text{
     -fx-text-fill: whitesmoke;
     -fx-opacity: 90%;
-    -fx-background-color: radial-gradient(center 50% 50% , radius 200% , rgb(66,133,244), transparent);
+    -fx-background-color: radial-gradient(center 50% 50% , radius 200% , rgb(135,157,163), transparent);
 }
 
 .help-text{
     -fx-background-color: whitesmoke;
 }
 
+.tutorial-background {
+    -fx-background-color: whitesmoke;
+    -fx-opacity: 90%;
+}
+
+.full-tutorial-background {
+    -fx-background-color: white;
+    -fx-opacity: 50%;
+}
 .jfx-tab-pane .headers-region, .tab-pane {
-    -fx-background-color: rgb(52,103,214);
+    -fx-background-color: rgb(135,157,163);
 }
 .jfx-tab-pane .tab-header-background {
-    -fx-background-color: rgb(52,103,214);
+    -fx-background-color: rgb(135,157,163);
 }
 .jfx-tab-pane .tab-selected-line{
-    -fx-background-color: darkorange;
+    -fx-background-color: rgb(234,161,25);
 }
 .jfx-tab-pane .tab-header-area .jfx-rippler{
-    -jfx-rippler-fill: darkorange;
+    -jfx-rippler-fill: rgb(234,161,25);
 }
 
 .menu-item, .list-cell{
     -fx-text-fill: white;
-    -fx-background-color: rgb(52,103,214);
+    -fx-background-color: rgb(135,157,163);
 }
 
-.pane{
-    -fx-background-color: rgb(52,103,214);
+.pane, .blue-anchor{
+    -fx-background-color: rgb(21,82,99);
     /*-fx-background-color:linear-gradient(to bottom, rgb(181,189,200) 0%,rgb(130,140,149) 36%,rgb(40,52,59) 100%);
 */
 }
+
+/*.jfx-slider .thumb
+{
+    -fx-background-color: transparent;
+}*/
 
 .label{
     -fx-text-fill: white;
@@ -91,25 +115,130 @@
 }
 
 .text-on-white{
-    -fx-text-fill: rgb(52,103,214);
+    -fx-text-fill: rgb(25, 139, 175);
 }
 .list-pane{
-    -fx-background-color: rgb(52,103,214);
+    -fx-background-color: rgb(135,157,163);
 }
 .axis-label{
     -fx-text-fill: black;
 }
 
+.no-scroll-bar .scroll-bar:vertical .increment-button,
+.no-scroll-bar .scroll-bar:vertical .decrement-button{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 10 0 0;
+
+}
+.no-scroll-bar .scroll-bar:horizontal .decrement-button,
+.no-scroll-bar .scroll-bar:horizontal .decrement-button{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 0 10 0;
+}
+
+.no-scroll-bar .scroll-bar:vertical .track,
+.no-scroll-bar .scroll-bar:horizontal .track{
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-border-radius:2em;
+
+}
+
+.no-scroll-bar .scroll-bar:vertical .track,
+.no-scroll-bar .scroll-bar:horizontal .track{
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-border-radius:2em;
+}
+
+.no-scroll-bar .scroll-bar:vertical .thumb,
+.no-scroll-bar .scroll-bar:horizontal .thumb{
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+
+}
+
+.no-scroll-bar .scroll-bar .increment-arrow,
+.no-scroll-bar .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding:0;
+}
+
+/*
 .list-view:focused .list-cell:filled:focused:selected {
     -fx-background-color: rgb(163,235,255);
     -fx-background: -fx-accent;
     -fx-text-fill: rgb(00,00,00);
 }
+*/
+.chart-pie-label {
+    -fx-font-size: 1.2em;
+    -fx-fill: whitesmoke;
+}
 
 .chart-legend {
-    -fx-background-color: yellow;
+    -fx-background-color: transparent;
+    -fx-text-fill: whitesmoke;
+}
+
+.axis-label {
+    -fx-text-fill: whitesmoke;
+    -fx-font-size: 1.8em;
+}
+.axis {
+    -fx-tick-label-font-size: 1.1em;
+}
+
+#xBarChart {
+    -fx-tick-label-fill: whitesmoke;
+}
+#yBarChart {
+    -fx-tick-label-fill: whitesmoke;
+}
+#xLineChart {
+    -fx-tick-label-fill: whitesmoke;
+}
+#yLineChart {
+    -fx-tick-label-fill: whitesmoke;
 }
 
 .chart-legend-item{
     -fx-text-fill: black;
+
+    /*-fx-background-color: rgb(234,161,25);*/
+    -fx-background: -fx-accent;
+    -fx-text-fill: whitesmoke;
+}
+
+
+.list-cell:filled:hover{
+    -fx-background-color: rgb(234,161,25);
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:selected{
+    -fx-background-color: rgb(255,201,60);
+    -fx-text-fill: white;
+}
+
+.menu-item:hover{
+    -fx-background-color: rgb(234,161,25);
+    -fx-text-fill: white;
+}
+
+.table-divider{
+    -fx-opacity: 17%;
+    -fx-background-color: whitesmoke;
+
+}
+.table-divider-border{
+    -fx-opacity: 17%;
+    -fx-border-color: whitesmoke;
+    -fx-border-width: 4;
+
 }

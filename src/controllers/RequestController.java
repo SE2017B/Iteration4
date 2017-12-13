@@ -8,6 +8,15 @@
 
 package controllers;
 
+import DepartmentSubsystem.Services.Transport;
+import api.SanitationService;
+import foodRequest.FoodRequest;
+import javafx.beans.property.DoubleProperty;
+import javafx.event.EventHandler;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import translationApi.TranslationService;
+import transportApi.TransportService;
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 //import api.SanitationService;
@@ -73,6 +82,7 @@ public class RequestController implements ControllableScreen{
     private JFXButton createPressedApi;
     @FXML
     private JFXButton cancelPressedAPI;
+
     @FXML
     private ChoiceBox<String> apiServiceChoiceBox;
     @FXML
@@ -139,38 +149,13 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<Service> staffJobTypeChoiceBox;
     @FXML
     private ChoiceBox<Service> addStaffServiceChoiceBox;
-    @FXML
-    private Label lblFeedbackRating;
-    @FXML
-    private Label lblFeedbackTitle;
-    @FXML
-    private JFXListView<Feedback> feedbackListView;
-    @FXML
-    private PieChart feedbackPieChart;
-    @FXML
-    private BarChart<String, Number> feedbackBarChart;
-    @FXML
-    private CategoryAxis xBarChart;
-    @FXML
-    private NumberAxis yBarChart;
-    @FXML
-    private LineChart<String, Number> feedbackLineChart;
-    @FXML
-    private CategoryAxis xLineChart;
-    @FXML
-    private NumberAxis yLineChart;
-    @FXML
-    private Tab pieChartTab;
-    @FXML
-    private Tab barChartTab;
-    @FXML
-    private Tab lineChartTab;
-    @FXML
-    private JFXTabPane chartTabPane;
+
     @FXML
     private JFXListView<Node> startNodeOptionList;
+
     @FXML
     private JFXListView<Node> endNodeOptionList;
+
 
     ////////////////////////////////////////////////////////
     // STAFF ADD EDIT REMOVE//
@@ -200,12 +185,48 @@ public class RequestController implements ControllableScreen{
     @FXML
     private Tab settingsTab;
 
+    ////////////////////////////////////////////////////////
+    // Feedback Charts
+    ///////////////////////////////////////////////////////
+    @FXML
+    private Label lblFeedbackRating;
+    @FXML
+    private Label lblFeedbackTitle;
+    @FXML
+    private JFXListView<Feedback> feedbackListView;
+    @FXML
+    private PieChart feedbackPieChart;
+    @FXML
+    private BarChart<String, Number> feedbackBarChart;
+    @FXML
+    private CategoryAxis xBarChart;
+    @FXML
+    private NumberAxis yBarChart;
+    @FXML
+    private LineChart<String, Number> feedbackLineChart;
+    @FXML
+    private CategoryAxis xLineChart;
+    @FXML
+    private NumberAxis yLineChart;
+    @FXML
+    private Tab pieChartTab;
+    @FXML
+    private Tab barChartTab;
+    @FXML
+    private Tab lineChartTab;
+    @FXML
+    private JFXTabPane chartTabPane;
+
+
     public void init(){
         depSub = DepartmentSubsystem.getSubsystem();
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
+        apiServ.add("Food");
+        apiServ.add("Translation");
         apiServ.add("Transportation");
+
 
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
         apiServiceChoiceBox.setOnAction(e -> {
@@ -219,6 +240,7 @@ public class RequestController implements ControllableScreen{
                 endLabel.setVisible(false);
             }
         });
+
 
         staffListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Staff>() {
                                                                                  @Override
@@ -244,6 +266,10 @@ public class RequestController implements ControllableScreen{
                                                                               }
         );
 
+
+
+
+
         //add listeners
         startTextField.setOnKeyPressed( e -> searchText(e, startTextField, startNodeOptionList));
         endTextField.setOnKeyPressed(e -> searchText(e, endTextField, endNodeOptionList));
@@ -266,6 +292,13 @@ public class RequestController implements ControllableScreen{
             endNode = null;
             endTextField.setText("");
         });
+
+        saveRipple= new JFXRippler(ripplePane);
+        settingsPane.getChildren().add(0,saveRipple);
+        saveRipple.setRipplerFill(Color.GREEN);
+
+        timeoutTextField.setText(Double.toString(parent.getTimeoutLength()/1000));
+
     }
 
     public void onShow(){
@@ -290,7 +323,7 @@ public class RequestController implements ControllableScreen{
         ArrayList<Node> nodes = map.getNodeMap();
 
         searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
-        searchStrategyChoice.setValue(map.getSearchStrategy());
+        searchStrategyChoice.setValue(map.getSearches().get(0));
         kioskLocationChoice.setItems(FXCollections.observableList(map.getNodeMap()));
         kioskLocationChoice.setValue(map.getKioskLocation());
 
@@ -304,6 +337,13 @@ public class RequestController implements ControllableScreen{
         lblFeedbackTitle.setText("Feedback Charts");
 
         feedbackListView.setItems(FXCollections.observableList(feedbackDatabase.getAllFeedbacks()));
+        // Disable clicking on feedback list view
+        feedbackListView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                event.consume();
+            }
+        });
 
         endNodeOptionList.setVisible(false);
         startNodeOptionList.setVisible(false);
@@ -314,6 +354,9 @@ public class RequestController implements ControllableScreen{
         pieChartCreate();
         lineChartCreate();
         barChartCreate();
+
+
+        timeoutTextField.setText(Double.toString(parent.getTimeoutLength()/1000));
     }
 
     public void setParentController(ScreenController parent){
@@ -323,35 +366,53 @@ public class RequestController implements ControllableScreen{
     /////////////////////////////////////////////////////////////////
     ////// API
     ////////////////////////////////////////////////////////////////
+
     @FXML
     private JFXTabPane startTabPane;
+
     @FXML
     private Tab startTextTab;
+
     @FXML
     private JFXTextField startTextField;
+
     @FXML
     private Tab startTypeTab;
+
     @FXML
     private ChoiceBox<Node> startNodeChoice;
+
     @FXML
     private MenuButton startTypeMenu;
+
+
     @FXML
     private MenuButton startFloorMenu;
+
     @FXML
     private JFXTabPane endTabPane;
+
     @FXML Label endLabel;
+
     @FXML
     private Tab endTextTab;
+
     @FXML
     private JFXTextField endTextField;
+
     @FXML
     private Tab endTypeTab;
+
     @FXML
     private MenuButton endTypeMenu;
+
+
     @FXML
     private MenuButton endFloorMenu;
+
     @FXML
     private ChoiceBox<Node> endNodeChoice;
+
 
     private String startType;
     private String endType;
@@ -365,7 +426,7 @@ public class RequestController implements ControllableScreen{
         startType = ((MenuItem)e.getSource()).getText();
         startTypeMenu.setText(startType);
         startFloorMenu.setDisable(false);
-        if(!startFloor.equals("")){
+        if(startFloor != null && !startFloor.equals("")){
             startChosen();
         }
     }
@@ -404,6 +465,7 @@ public class RequestController implements ControllableScreen{
     }
 
     private void endChosen(){
+
         final String f = Node.getFilterText(endType);
         if(endFloor.equals("ALL")){
             endNodeChoice.setItems(FXCollections.observableList(map.getNodesBy( n -> n.getType().equals(f))));
@@ -415,20 +477,56 @@ public class RequestController implements ControllableScreen{
         endNodeChoice.setDisable(false);
     }
 
+
+
     public void createPressedApi(ActionEvent e){
         if(startTypeTab.isSelected())
             startNode = startNodeChoice.getValue();
         if(endTypeTab.isSelected())
             endNode = endNodeChoice.getValue();
         if(startNode != null && (endNode != null || !selectedAPI.equals("Transportation"))) {
-            runAPI(startNode, endNode);
+            parent.pauseTimeout();
+            if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Sanitation"))
+            {
+                runSanitationAPI(startNode);
+            }
+            else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Translation"))
+            {
+                runTranslationAPI(startNode);
+            }
+            else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Transportation"))
+            {
+                runTransportationAPI(startNode, endNode);
+            }else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Food"))
+            {
+                runFoodDeliveryAPI(startNode);
+            }
         }
     }
 
-    public void runAPI(Node startNode, Node endNode){
-//        Stage primaryStage = new Stage();
-//        SanitationService api = SanitationService.newInstance(primaryStage);
-//        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", startNode.getID(), null);
+    public void runSanitationAPI(Node desNode){
+        Stage primaryStage = new Stage();
+        SanitationService api1 = SanitationService.newInstance(primaryStage);
+        api1.run(100, 100, 900, 600, "/fxml/SceneStyle.css", desNode.getID(), null);
+    }
+    public void runTranslationAPI(Node desNode){
+        Stage primaryStage = new Stage();
+        TranslationService api2 = TranslationService.newInstance(primaryStage);
+        api2.run(100, 100, 900, 600, "/fxml/SceneStyle.css", desNode.getID(), null);
+    }
+    public void runTransportationAPI(Node desNode, Node end){
+        Stage primaryStage = new Stage();
+        TransportService api = TransportService.newInstance(primaryStage);
+        api.run(100, 100, 900, 600, "/fxml/SceneStyle.css", end.getID(), desNode.getID());
+    }
+    public void runFoodDeliveryAPI(Node desNode){
+        FoodRequest foodRequest = new FoodRequest();
+        try{
+            foodRequest.run(0,0,1900,1000,null,null,null);
+        }catch (Exception e){
+            System.out.println("Failed to run API");
+            e.printStackTrace();
+        }
     }
 
     private void suggestionPressed(MouseEvent e, JFXTextField textField, JFXListView<Node> listView) {
@@ -444,7 +542,6 @@ public class RequestController implements ControllableScreen{
             listView.setVisible(false);
         }
     }
-
     public void cancelPressedAPI(ActionEvent e){
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
     }
@@ -461,7 +558,9 @@ public class RequestController implements ControllableScreen{
         selectedAlg = ((MenuItem) e.getSource()).getText();
         menuButtonAl.setText(selectedAlg);
         parent.resumeTimeout();
+
     }
+
 
     private void searchText(KeyEvent keyEvent, JFXTextField textField, JFXListView<Node> listView){
         KeyCode code = keyEvent.getCode();
@@ -526,9 +625,11 @@ public class RequestController implements ControllableScreen{
         }
     }
 
+
     ////////////////////////////////////////////////////////
     /// STAFF
     /////////////////////////////////////////////////////////
+
 
     @FXML
     void cancelStaffPressed(ActionEvent event) {
@@ -541,6 +642,7 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void editStaffPressed(ActionEvent e) {
+
         String tempUsername = usernameEdit.getText();
         String tempPassword = passwordEdit.getText();
         String tempFullName = fullnameEdit.getText();
@@ -562,6 +664,7 @@ public class RequestController implements ControllableScreen{
             e1.printStackTrace();
         }
 
+
         //usernameEdit.clear();
         //passwordEdit.clear();
         //fullnameEdit.clear();
@@ -576,6 +679,7 @@ public class RequestController implements ControllableScreen{
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
         staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
+
 
     @FXML
     void createStaffPressed(ActionEvent e) {
@@ -641,13 +745,16 @@ public class RequestController implements ControllableScreen{
     }
 
     @FXML
-    void searchbuttonPressed(ActionEvent event) {
+    public void searchbuttonPressed(ActionEvent event) {
         //make sure to add shake transition when field is empty
     }
 
     @FXML
     void pieChartCreate() {
-        feedbackPieChart.getData().clear();
+        if (feedbackPieChart != null) {
+            feedbackPieChart.getData().clear();
+        }
+
         // Setting up the Pie Chart on Feedback tab
         feedbackPieChart.setLabelLineLength(10);
         feedbackPieChart.setLegendSide(Side.RIGHT);
@@ -656,8 +763,9 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void lineChartCreate() {
-        feedbackLineChart.getData().clear();
-
+        if (feedbackLineChart != null) {
+            feedbackLineChart.getData().clear();
+        }
         ArrayList<Integer> tempLineArray = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aLineChart = new XYChart.Series<>();
@@ -671,12 +779,15 @@ public class RequestController implements ControllableScreen{
 
         xLineChart.setLabel("Feedback Rating");
         yLineChart.setLabel("Number of Ratings");
-        feedbackLineChart.getData().add(aLineChart);
+
+        feedbackLineChart.getData().addAll(aLineChart);
     }
 
     @FXML
     void barChartCreate() {
-        feedbackBarChart.getData().clear();
+        if (feedbackBarChart != null) {
+            feedbackBarChart.getData().clear();
+        }
         ArrayList<Integer> tempLineArray2 = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aBarChart = new XYChart.Series<>();
@@ -690,26 +801,45 @@ public class RequestController implements ControllableScreen{
 
         xBarChart.setLabel("Feedback Rating");
         yBarChart.setLabel("Number of Ratings");
+
         feedbackBarChart.getData().addAll(aBarChart);
     }
 
     //////////////////////////////////////////////////////////
     /////////           Settings Tab                 /////////
     //////////////////////////////////////////////////////////
+
     @FXML
     private ChoiceBox<SearchStrategy> searchStrategyChoice;
     @FXML
     private JFXButton saveSettingsButton;
     @FXML
     private ChoiceBox<Node> kioskLocationChoice;
+    @FXML
+    private Pane ripplePane;
+    @FXML
+    private AnchorPane settingsPane;
+    @FXML
+    private JFXTextField timeoutTextField;
+
+    private JFXRippler saveRipple;
+
+
 
     public void saveSettingsPressed(ActionEvent e) {
         if (searchStrategyChoice.getValue() != null) {
-            System.out.println(searchStrategyChoice.getValue());
             map.setSearchStrategy(searchStrategyChoice.getValue());
             map.setKioskLocation(kioskLocationChoice.getValue());
         } else {
             s.shake(searchStrategyChoice);
+        }
+
+        try{
+            parent.setTimeoutLength(Double.parseDouble(timeoutTextField.getText())*1000);
+            saveRipple.createManualRipple().run();
+        }
+        catch(Exception er ){
+            s.shake(timeoutTextField);
         }
     }
 

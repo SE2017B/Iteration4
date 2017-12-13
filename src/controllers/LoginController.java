@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import ui.ShakeTransition;
@@ -24,9 +25,15 @@ import ui.hospitalBackground;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.awt.Toolkit;
+import java.awt.KeyEventDispatcher;
+
+import static java.awt.event.KeyEvent.VK_CAPS_LOCK;
+import static javafx.scene.input.KeyEvent.*;
+
+
 public class LoginController implements ControllableScreen{
     public LoginController(){}
-
     ScreenController parent;
     private DepartmentSubsystem depSub;
 
@@ -40,6 +47,12 @@ public class LoginController implements ControllableScreen{
     private Label errorLbl;
     @FXML
     private AnchorPane mainAnchorPane;
+    @FXML
+    private ImageView capsLock;
+    @FXML
+    private GridPane screen;
+
+
 
     @Override
     public void init() {
@@ -51,9 +64,17 @@ public class LoginController implements ControllableScreen{
         mainAnchorPane.getChildren().add(0,hospitalImage);
         AnchorPane.setBottomAnchor(hospitalImage,0.0);
 
-        passwordField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        capsLock.setOpacity(0.0);
+
+        screen.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
+                if(Toolkit.getDefaultToolkit().getLockingKeyState(VK_CAPS_LOCK)){
+                    capsLock.setOpacity(1.0);
+                }
+                else{
+                    capsLock.setOpacity(0.0);
+                }
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
                     enterPressed(new ActionEvent());
                 }
@@ -65,6 +86,7 @@ public class LoginController implements ControllableScreen{
     public void onShow() {
         usernameField.setText("");
         passwordField.setText("");
+        Toolkit.getDefaultToolkit().getLockingKeyState(VK_CAPS_LOCK);
     }
 
     @Override
@@ -76,11 +98,13 @@ public class LoginController implements ControllableScreen{
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
+
     public void enterPressedkey(KeyEvent e){
         if(e.getCode().toString().equals("ENTER")) {
             enterPressed(new ActionEvent());
         }
     }
+
 
     public void enterPressed(ActionEvent e) {
         String login = usernameField.getText();
@@ -105,6 +129,9 @@ public class LoginController implements ControllableScreen{
         catch (PasswordException ex){
             errorLbl.setText("Password is Incorrect");
             s.shake(passwordField);
+            passwordField.selectAll();
         }
+
+
     }
 }

@@ -16,10 +16,12 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 
 import javafx.scene.input.MouseEvent;
@@ -38,14 +40,16 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import map.FloorNumber;
 
+import javax.swing.*;
 import java.util.*;
 
 public class MapViewer extends Observable{
-    private int SCROLL_WIDTH = 2000;
-    private int SPACER_WIDTH = 500;
+
     private final int SPACING = 10;
     private final int BUTTON_HEIGHT = 50;
     private final int BUTTON_WIDTH = 100;
+    private int SPACER_WIDTH = ((1280 - BUTTON_WIDTH)/ 2) - (SPACING) ;
+    private int SCROLL_WIDTH = (SPACER_WIDTH*2 + 6*(BUTTON_WIDTH+SPACING+1));
 
     private ArrayList<String> buttonOrder;
     public FloorNumber currentFloor;
@@ -87,18 +91,18 @@ public class MapViewer extends Observable{
         prevFloor.setText("Previous Floor");
         prevFloor.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
         prevFloor.setAlignment(Pos.CENTER);
-        prevFloor.setPrefWidth(150);
+        prevFloor.setPrefWidth(BUTTON_WIDTH);
         prevFloor.getStyleClass().add("text-on-white");
         prevFloor.setVisible(false);
-        mapViewerPane.setBottomAnchor(prevFloor, 80.0);
+        mapViewerPane.setBottomAnchor(prevFloor, 115.0);
 
         nextFloor.setText("Next Floor");
         nextFloor.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
         nextFloor.setAlignment(Pos.CENTER);
-        nextFloor.setPrefWidth(150);
+        nextFloor.setPrefWidth(BUTTON_WIDTH);
         nextFloor.getStyleClass().add("text-on-white");
         nextFloor.setVisible(false);
-        mapViewerPane.setBottomAnchor(nextFloor, 80.0);
+        mapViewerPane.setBottomAnchor(nextFloor, 115.0);
 
         mapImage = new proxyImagePane();
         mapPane.getChildren().add(mapImage);
@@ -106,6 +110,12 @@ public class MapViewer extends Observable{
         setContainer();
         mapScrollPane.setContent(mapHolderPane);
         mapScrollPane.setPannable(true);
+
+
+
+        mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
+        mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
 
         addFloor(FloorNumber.FLOOR_LTWO);
         addFloor(FloorNumber.FLOOR_LONE);
@@ -125,7 +135,7 @@ public class MapViewer extends Observable{
         buttonScrollPane.setPrefViewportHeight(125);
         buttonScrollPane.setContent(container);
 
-        System.out.println(container.getChildren());
+
 
         currentFloor = FloorNumber.FLOOR_ONE;
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
@@ -136,24 +146,25 @@ public class MapViewer extends Observable{
         mapScrollPane.prefViewportHeightProperty().bind(parent.prefHeightProperty());
         mapScrollPane.prefViewportWidthProperty().bind(parent.prefWidthProperty());
 
-        mapViewerPane.prefWidthProperty().bind(parent.prefWidthProperty());
-        mapViewerPane.prefHeightProperty().bind(parent.prefHeightProperty());
+
 
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> resizeSpacers(newValue.intValue()));
         mapViewerPane.prefWidthProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
         mapViewerPane.prefHeightProperty().addListener( (arg, oldValue, newValue) -> setScale(mapPane.getScaleX()));
 
+
         //ZOOM FUNCTIONALITY
         slideBarZoom = new JFXSlider();
-        slideBarZoom.setMinSize(150, 55);
-        slideBarZoom.setPrefSize(150, 55);
-        slideBarZoom.setMaxSize(150, 55);
+        slideBarZoom.setMinSize(150, 45);
+        slideBarZoom.setPrefSize(150, 45);
+        slideBarZoom.setMaxSize(150, 45);
         //TODO FIX SLIDER BAR INTERACTIVITY
-        //slideBarZoom.setOnMousePressed(e -> sliderChanged(e));
+        slideBarZoom.setOnMouseDragged(e -> sliderChanged(e));
+        slideBarZoom.setOnMouseClicked(e -> sliderChanged(e));
         //slideBarZoom.setRotate(90.0);
         slideBarZoom.setValue(1);
-        slideBarZoom.setMajorTickUnit(25);
-        slideBarZoom.setMinorTickCount(3);
+        slideBarZoom.setMajorTickUnit(1);
+        //slideBarZoom.setMinorTickCount(3);
         slideBarZoom.setMin(.2);
         slideBarZoom.setMax(1.8);
         slideBarZoom.setSnapToTicks(true);
@@ -171,6 +182,7 @@ public class MapViewer extends Observable{
         zoomIn.setMaxSize(50, 50);
         zoomIn.setAlignment(Pos.CENTER);
         zoomIn.setOnAction(e -> zoomInPressed(e));
+        zoomIn.setTooltip(new Tooltip("Click to zoom in to the map"));
 
         String urlToZoomOut = "images/Icons/circleZoomOutWhite.png";
         ImageView zoomOutImage = new ImageView(urlToZoomOut);
@@ -185,11 +197,14 @@ public class MapViewer extends Observable{
         zoomOut.setMaxSize(50, 50);
         zoomOut.setAlignment(Pos.CENTER);
         zoomOut.setOnAction(e -> zoomOutPressed(e));
+        zoomOut.setTooltip(new Tooltip("Click to zoom out of the map"));
 
-        zoomBar = new GridPane();
+        zoomBar  = new GridPane();
         zoomBar.add(zoomOut, 0,  0);
         zoomBar.add(slideBarZoom, 1,  0);
         zoomBar.add(zoomIn, 2,  0);
+
+        slideBarZoom.setBackground(new Background(new BackgroundFill(Color.WHITESMOKE,new CornerRadii(8.0),null)));
 
         ColumnConstraints col0 = new ColumnConstraints(45);
         col0.setHalignment(HPos.CENTER);
@@ -209,9 +224,10 @@ public class MapViewer extends Observable{
 
         zoomBar.setPrefSize(300, 55);
 
-        Pane zoomPane = new Pane();
+        HBox zoomPane = new HBox();
         zoomPane.setMaxSize(362, 63);
         zoomPane.getChildren().add(zoomBar);
+        zoomPane.translateXProperty().bind(mapViewerPane.widthProperty().divide(2).subtract(625));
 
         //Add everything to the pane itself
         //buttonScrollPane.;
@@ -238,6 +254,7 @@ public class MapViewer extends Observable{
         container.getChildren().add(0,spacerLeft);
         container.getChildren().add(spacerRight);
         currentFloor = FloorNumber.FLOOR_ONE;
+        resizeSpacers((int)mapViewerPane.getWidth());
         setFloor(currentFloor,buttonOrder.indexOf(currentFloor.getDbMapping()));
     }
 
@@ -247,9 +264,11 @@ public class MapViewer extends Observable{
         button.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         button.setOnAction(e -> floorButtonPressed(e));
         button.setId("-1");
+        button.setTooltip(new Tooltip("Click to select floor"));
+        //ToolTipManager.sharedInstance().setInitialDelay(0);
         buttonOrder.add(button.getText());
         container.getChildren().add(button);
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+SPACING));
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+1));
         container.setPrefWidth(SCROLL_WIDTH);
         return button;
     }
@@ -260,15 +279,18 @@ public class MapViewer extends Observable{
         return button;
     }
 
-    private void resizeSpacers(int width){
-        SPACER_WIDTH = (width - 200) / 2;
+    public void resizeSpacers(int width){
+        SPACER_WIDTH = ((width - BUTTON_WIDTH)/ 2)  ;
         spacerRight.setPrefWidth(SPACER_WIDTH);
         spacerLeft.setPrefWidth(SPACER_WIDTH);
-        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING*2));
+        SCROLL_WIDTH = (SPACER_WIDTH*2 + buttonOrder.size()*(BUTTON_WIDTH+SPACING+1));
         container.setPrefWidth(SCROLL_WIDTH);
-        double w = mapViewerPane.getWidth();
-        prevFloor.setLayoutX((w/2) - 227);
-        nextFloor.setLayoutX((w/2) + 77);
+
+
+
+
+        prevFloor.setLayoutX((width/2) - (1.5 * BUTTON_WIDTH) - SPACING);
+        nextFloor.setLayoutX((width/2) + (0.5 * BUTTON_WIDTH) + SPACING);
     }
 
     public void floorButtonPressed(ActionEvent e){
@@ -282,6 +304,12 @@ public class MapViewer extends Observable{
         }
         setChanged();
         notifyObservers(new PathID(floor, id));
+    }
+
+    public void floorButtonPressed(FloorNumber floor, int index){
+        setFloor(floor, index);
+        setChanged();
+        notifyObservers(new PathID(floor, index));
     }
 
     private void clearButtons(){
@@ -323,7 +351,7 @@ public class MapViewer extends Observable{
                 new KeyFrame(Duration.ZERO,
                         new KeyValue(buttonScrollPane.hvalueProperty(), buttonScrollPane.getHvalue())),
                 new KeyFrame(new Duration(300),
-                        new KeyValue(buttonScrollPane.hvalueProperty(),buttonPose/(buttonOrder.size()-1.0)))
+                        new KeyValue(buttonScrollPane.hvalueProperty(),buttonPose/Double.max(1,buttonOrder.size()-1.0)))
         );
         slideButtons.play();
         prevFloor.setVisible(true);
@@ -334,11 +362,14 @@ public class MapViewer extends Observable{
         if(buttonPose == buttonOrder.size()-1){
             nextFloor.setVisible(false);
         }
+
     }
 
     public void setFloor(FloorNumber floor){
         setFloor(floor,buttonOrder.indexOf(floor.getDbMapping()));
     }
+
+
 
     private void setContainer(){
         spacerLeft = new Pane();
@@ -354,9 +385,7 @@ public class MapViewer extends Observable{
 
     public void setScale(double scale){
         double min_scale = Math.max((mapScrollPane.getBoundsInLocal().getWidth()/5000),(mapScrollPane.getHeight()/3400));
-        System.out.println("Hval before: " + mapScrollPane.getHvalue());
-        System.out.println("Vval before: " + mapScrollPane.getVvalue());
-        System.out.println();
+
         if(scale < min_scale){
             scale = min_scale;
         }
@@ -370,10 +399,9 @@ public class MapViewer extends Observable{
         mapPane.setTranslateX((scale - 1)/2 * 5000);
         mapPane.setTranslateY((scale - 1)/2 * 3400);
 
+        //TODO scaling issues for zooming
         mapHolderPane.setPrefSize(mapPane.getBoundsInLocal().getWidth() * scale, mapPane.getBoundsInLocal().getHeight() * scale);
-        System.out.println("Hval after: " + mapScrollPane.getHvalue());
-        System.out.println("Vval after: " + mapScrollPane.getVvalue());
-        System.out.println();
+
     }
 
     public double checkScale(double scale){
@@ -388,8 +416,8 @@ public class MapViewer extends Observable{
     }
 
     public void setButtonsByFloor(List<FloorNumber> floors){
+        resetView();
         clearButtons();
-
         for (int i = 0; i < floors.size(); i++) {
             addFloor(floors.get(i), i);
         }
@@ -402,6 +430,7 @@ public class MapViewer extends Observable{
     }
 
     public void centerView(double x, double y) {
+
         x =  (x * mapPane.getScaleX());
         y =  (y * mapPane.getScaleY());
 
@@ -481,7 +510,8 @@ public class MapViewer extends Observable{
 
     //when - button pressed zoom out map
     public void zoomOutPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()-0.2);
+        if(!(slideBarZoom.getValue() < 0.4))
+            setZoom(slideBarZoom.getValue()-0.2);
     }
 
     public void setZoom(double zoom){

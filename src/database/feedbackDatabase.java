@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -28,12 +29,25 @@ public class feedbackDatabase {
     private static final String JDBC_URL_STAFF = "jdbc:derby:hospitalStaffDB;create=true";
     private static Connection conn;
 
+    private static DecimalFormat df2 = new DecimalFormat(".##");
+
     // All feedbacks from the feedback table in the hospitalStaffDB
     static ArrayList<Feedback> allFeedbacks=new ArrayList<>();
 
     // Getter for Array List of all feedbacks
     public static ArrayList<Feedback> getAllFeedbacks(){
         return allFeedbacks;
+    }
+
+    // Feedback Primary Key Counter
+    private static int feedCounter;
+
+    public static int getFeedCounter() {
+        return feedCounter;
+    }
+
+    public static void incFeedCounter() {
+        feedCounter++;
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -119,6 +133,7 @@ public class feedbackDatabase {
             conn.commit();
             addAnyFeedback.close();
             conn.close();
+            incFeedCounter();
 
         } catch (Exception e) {
             e.printStackTrace();// end try
@@ -345,7 +360,7 @@ public class feedbackDatabase {
 
     public static String avgFeedback() {
 
-        float avgFeedback = 0;
+        double avgFeedback = 0;
 
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
@@ -356,12 +371,12 @@ public class feedbackDatabase {
             String strCntFeedback = "SELECT AVG(CAST (RATING AS DOUBLE PRECISION)) AS avgRating FROM feedback";
             ResultSet rsetCntFeedback = cntAllFeedback.executeQuery(strCntFeedback);
 
-            float anyRatingAVG;
+            double anyRatingAVG;
 
             //Process the results
             if (rsetCntFeedback.next()) {
 
-                anyRatingAVG = rsetCntFeedback.getFloat("avgRating");
+                anyRatingAVG = rsetCntFeedback.getDouble("avgRating");
 
                 avgFeedback = anyRatingAVG;
 
@@ -375,7 +390,7 @@ public class feedbackDatabase {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        String avgFeedStr = "Average Feedback Rating: " + avgFeedback;
+        String avgFeedStr = "Average Feedback Rating: " + df2.format(avgFeedback);
         return avgFeedStr;
     }
     ///////////////////////////////////////////////////////////////////////////////
@@ -415,12 +430,12 @@ public class feedbackDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     // Insert into feedback table using a prepared statement from csv
     ///////////////////////////////////////////////////////////////////////////////
-    public static void insertStaffFromCSV() {
+    public static void insertFeedbackFromCSV() {
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
             conn.setAutoCommit(false);
             conn.getMetaData();
-
+            incFeedCounter();
             PreparedStatement insertStaff = conn.prepareStatement("INSERT INTO feedback VALUES (?, ?, ?)");
 
             for (int j = 0; j < allFeedbacks.size(); j++) {
@@ -430,13 +445,13 @@ public class feedbackDatabase {
                 insertStaff.setString(3, allFeedbacks.get(j).getAdditionalInfo());
 
                 insertStaff.executeUpdate();
-
+                incFeedCounter();
             }
 
             conn.commit();
-
             insertStaff.close();
             conn.close();
+            incFeedCounter();
 
         } catch (Exception e) {
             e.printStackTrace();// end try

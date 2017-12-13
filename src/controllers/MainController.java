@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;   // for date and time
 import javafx.animation.Timeline;   // for date and time
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -56,24 +57,38 @@ public class MainController implements ControllableScreen, Observer{
 
     @FXML
     private HBox dropDownBox;
+
     @FXML
     private JFXButton filterHeaderButton;
+
     @FXML
     private JFXButton nearestHeaderButton;
+
     @FXML
     private GridPane menuGridPane;
 
     private JFXButton bathFilterButton;
+
     private JFXButton exitFilterButton;
+
     private JFXButton elevatorFilterButton;
+
     private JFXButton retailFilterButton;
+
     private JFXButton stairsFilterButton;
+
     private JFXButton bathNearestButton;
+
     private JFXButton exitNearestButton;
+
     private JFXButton elevatorNearestButton;
+
     private JFXButton retailNearestButton;
+
     private JFXButton stairsNearestButton;
+
     private JFXNodesList filterList;
+
     private JFXNodesList nearestList;
 
     //Tutorial List
@@ -81,13 +96,17 @@ public class MainController implements ControllableScreen, Observer{
 
     //Tutorial Buttons
     public JFXButton questionButton;
+
     private JFXButton tutorialHelpButton;
+
     private JFXButton feedbackAboutHelpButton;
     
     @FXML
     private AnchorPane mainAnchorPane;
+
     @FXML
     private Label time;
+
 
     public void init() {
         currentFloor = FloorNumber.FLOOR_ONE;
@@ -121,12 +140,12 @@ public class MainController implements ControllableScreen, Observer{
 
     private int BUTTON_WIDTH = 100;
     private int BUTTON_HEIGHT = 60;
-    private int BUTTON_SPACING = 65;
+    private int BUTTON_SPACING = 75;
+
 
     private JFXButton filterSpacer = new JFXButton();
     private JFXButton nearestSpacer = new JFXButton();
     private JFXButton questionSpacer = new JFXButton();
-
     private void initButtons(){
         filterList = new JFXNodesList();
         nearestList = new JFXNodesList();
@@ -167,6 +186,7 @@ public class MainController implements ControllableScreen, Observer{
         //Tutorial question spacer
         questionList.addAnimatedNode(questionSpacer);
 
+
         filterHeaderButton.setOnAction(e ->  {
             if(filterList.isExpanded()){
                 hideFilterButtons(e);
@@ -193,6 +213,7 @@ public class MainController implements ControllableScreen, Observer{
             }
         });
 
+
         for(int i = 0; i< 12; i++){
             JFXButton b  = buttons.get(i);
             b.setPrefSize(BUTTON_WIDTH,BUTTON_HEIGHT);
@@ -209,7 +230,6 @@ public class MainController implements ControllableScreen, Observer{
                 questionList.addAnimatedNode(b);
             }
         }
-
         filterList.setSpacing(BUTTON_SPACING);
         nearestList.setSpacing(BUTTON_SPACING);
         //Tutorial
@@ -231,15 +251,16 @@ public class MainController implements ControllableScreen, Observer{
         questionList.setRotate(270);
 
         mainAnchorPane.getChildren().addAll(filterList, nearestList, questionList);
-        filterList.setLayoutX(30);
-        filterList.setLayoutY(185);
+        filterList.setLayoutX(20);
+        filterList.setLayoutY(184);
 
-        nearestList.setLayoutX(30);
-        nearestList.setLayoutY(70);
+
+        nearestList.setLayoutX(20);
+        nearestList.setLayoutY(74);
 
         //Tutorial
-        questionList.setLayoutX(30);
-        questionList.setLayoutY(410);
+        questionList.setLayoutX(20);
+        questionList.setLayoutY(400);
 
         bathFilterButton.setText("Restroom");
         exitFilterButton.setText("Exit");
@@ -254,10 +275,12 @@ public class MainController implements ControllableScreen, Observer{
 
         //Tutorial
         tutorialHelpButton.setText("Tutorial");
-        feedbackAboutHelpButton.setText("Feedback\n/ About");
+        feedbackAboutHelpButton.setText("Feedback\n/ Credits");
+
     }
 
     public void onShow(){
+
         kioskIndicator.setCenterX(map.getKioskLocation().getX());
         kioskIndicator.setCenterY(map.getKioskLocation().getY());
         setFloor(currentFloor);
@@ -300,6 +323,7 @@ public class MainController implements ControllableScreen, Observer{
         });
 
         newIndicator.getTimeline().play();
+
         return newIndicator;
     }
 
@@ -329,10 +353,15 @@ public class MainController implements ControllableScreen, Observer{
                 //String strDateFormat = "HH:mm:ss a";
                 //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
                 //using java calendar
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                //final Tooltip tooltip = new Tooltip();
+                //tooltip.setText("Displaying the time, and date in day, month, and year format.");
+
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                //SimpleDateFormat.setTooltip(tooltip);
                 Calendar cal = Calendar.getInstance();
                 second = cal.get(Calendar.SECOND);  //get current second
                 minute = cal.get(Calendar.MINUTE);  //get current minute
+                int newMinute = minute + 1;
                 hour = cal.get(Calendar.HOUR);  //get current hour
                 AM = cal.get(Calendar.AM_PM);   //get if AM/PM
                 String AM_String = new String ();   //convert int to string
@@ -341,7 +370,27 @@ public class MainController implements ControllableScreen, Observer{
                 }else{
                     AM_String = "PM";
                 }
-                time.setText(dateFormat.format(cal.getTime()) + System.lineSeparator() + hour + ":" + (minute) + ":" + second + ' ' + AM_String);   //display time
+                String text = "";
+                text += dateFormat.format(cal.getTime()) + System.lineSeparator();
+                if(hour < 10){
+                   text += "0";
+                }
+                text += hour + ":";
+                if(minute < 10){
+                    text += "0";
+                }
+                if (second > 58){
+                    second -= 60;
+                    text += newMinute + ":";
+                } else text += minute + ":";
+                if(second < 9 || second > 58) {
+                    text += "0";
+                }
+                second -= 31;
+                text += second + ' ' + AM_String;
+                time.setText(text);//display time
+//                time.setText(dateFormat.format(cal.getTime()) + System.lineSeparator() + hour + ":" + (minute) + ":" + second + ' ' + AM_String);   //display time
+               // time.setTooltip(tooltip);
                 //System.out.println(sdf.format(time));
                 // }
             }),
@@ -358,7 +407,9 @@ public class MainController implements ControllableScreen, Observer{
             //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
             time.setText(hour + ":" + (minute) + ":" + second +  AM);
             //System.out.println(sdf.format(time));
+
         }
+
     } //ending class
 
     //-----------------------HANDLE ACTIONS START--------------------------//
@@ -394,7 +445,10 @@ public class MainController implements ControllableScreen, Observer{
         map.searchNodes.add(map.getKioskLocation());
         map.searchNodes.add(node);
         parent.setScreen(ScreenController.PathID,"LEFT");
+
     }
+
+
 
     public void nearestPressed(ActionEvent e){
         //switch to kiosk floor
@@ -422,7 +476,6 @@ public class MainController implements ControllableScreen, Observer{
             path = map.findNearest(map.getKioskLocation(), "STAI");
         }
 
-        System.out.println("Nearest Pressed");
 
         int size = path.getPath().size();
         Node node = path.getPath().get(size - 1);
@@ -431,7 +484,10 @@ public class MainController implements ControllableScreen, Observer{
             Circle c = makeCircle(node);
             mapPane.getChildren().add(c);
         }
+
     }
+
+
 
     ////////////////////////////////////////////////////////////
     /////////////           Filter
@@ -441,7 +497,6 @@ public class MainController implements ControllableScreen, Observer{
         hideNearestButtons(e);
         hideFilterButtons(e);
         hideQuestionButtons(e);
-        System.out.println("Filter Pressed");
         JFXButton pressed = (JFXButton) e.getSource();
         ArrayList<Node> filteredNodes = new ArrayList<Node>();
         if (pressed.equals(bathFilterButton)) {
@@ -466,8 +521,8 @@ public class MainController implements ControllableScreen, Observer{
             filterList.setVisible(true);
             filterList.animateList(true);
             filterSpacer.setVisible(false);
-    }
 
+    }
     public void hideFilterButtons(ActionEvent e){
         filterList.animateList(false);
         PauseTransition pause = new PauseTransition(Duration.millis(100));
@@ -509,7 +564,6 @@ public class MainController implements ControllableScreen, Observer{
         hideNearestButtons(e);
         hideFilterButtons(e);
         hideQuestionButtons(e);
-        System.out.println("Question Pressed");
         JFXButton pressed = (JFXButton) e.getSource();
         if(pressed.equals(tutorialHelpButton)){
             parent.setScreen(ScreenController.HelpID, "HELP_IN");
@@ -518,6 +572,7 @@ public class MainController implements ControllableScreen, Observer{
             parent.setScreen(ScreenController.FeedbackID, "LEFT");
         }
     }
+
 
     //when login button is pressed go to login screen
     public void loginPressed(ActionEvent e){
@@ -528,4 +583,5 @@ public class MainController implements ControllableScreen, Observer{
     public void directionPressed(ActionEvent e){
         parent.setScreen(ScreenController.PathID,"LEFT");
     }
+
 }

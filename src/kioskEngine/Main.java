@@ -41,7 +41,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setWidth(1280);
         primaryStage.setHeight(800);
-        primaryStage.show();
+
 
 
         ScreenController myScreenController = new ScreenController();
@@ -76,6 +76,7 @@ public class Main extends Application {
 //        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
 
         myScreenController.setScreen(ScreenController.MainID);
+        primaryStage.show();
         myScreenController.saveState();
     }
 
@@ -89,14 +90,12 @@ public class Main extends Application {
 
         edgeDatabase.deleteEdgeTable();
         nodeDatabase.deleteNodeTable();
-        staffDatabase.deleteAdminTable();
         staffDatabase.deleteStaffTable();
         feedbackDatabase.deleteFeedbackTable();
 
         nodeDatabase.createNodeTable();
         edgeDatabase.createEdgeTable();
         staffDatabase.createStaffTable();
-        staffDatabase.createAdminTable();
         feedbackDatabase.createFeedbackTable();
 
         nodeDatabase.readNodeCSV("/csv/MapAnodes.csv");
@@ -130,7 +129,7 @@ public class Main extends Application {
         staffDatabase.insertStaffFromCSV();
 
         feedbackDatabase.readFeedbackCSV("/csv/sampleFeedback.csv");
-        feedbackDatabase.insertStaffFromCSV();
+        feedbackDatabase.insertFeedbackFromCSV();
 
         launch(args);
 

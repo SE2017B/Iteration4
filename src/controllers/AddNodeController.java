@@ -61,6 +61,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Tab edgeRemoveTab;
     @FXML
     private AnchorPane mainAnchorPane;
+    @FXML
+    private JFXButton undoButton;
 
     public void init() {
         map = HospitalMap.getMap();
@@ -72,7 +74,10 @@ public class AddNodeController implements ControllableScreen, Observer {
         mapViewer.setFloor(FloorNumber.FLOOR_GROUND);
         mapPane = mapViewer.getMapPane();
 
+
         mapPane.setOnMouseClicked(e -> mapPaneClicked(e));
+        mapPane.scaleXProperty().addListener( e -> setZoom(mapPane.getScaleX()));
+
 
         nodeAddLocation = new AnimatedCircle();
         nodeAlignedLines = new ArrayList<Line>();
@@ -103,11 +108,13 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void onShow() {
+        checkUndo();
         currentFloor = FloorNumber.FLOOR_ONE;
         mapViewer.setFloor(currentFloor);
         refreshNodesandEdges();
         nodeAddFloorDropDown.setText(currentFloor.getDbMapping());
         nodeEditFloorDropDown.setText(currentFloor.getDbMapping());
+        mapViewer.resizeSpacers((int)parent.getWidth() - 400);
     }
 
     //Setters
@@ -150,14 +157,15 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
         else{
             if(edgeAddTab.isSelected()){
-                showNodesbyFloor(currentFloor);
                 showEdgesbyFloor(currentFloor);
+                showNodesbyFloor(currentFloor);
                 edgeAddNode1 = null;
                 edgeAddNode2 = null;
                 edgeAddID1Label.setText("");
                 edgeAddID2Label.setText("");
             }
             else{
+                showNodesbyFloor(currentFloor);
                 showEdgesbyFloor(currentFloor);
                 edgeRemoveList.getItems().clear();
             }
@@ -219,9 +227,11 @@ public class AddNodeController implements ControllableScreen, Observer {
     public void refreshEdges(){
         edgeCheckBoxes.clear();
         for (Edge edge:map.getEdgeMap()){
-            EdgeCheckBox cb = new EdgeCheckBox(edge);
-            edgeCheckBoxes.add(cb);
-            cb.setOnMousePressed(e -> edgeSelected(e));
+            if(!(edge.getNodeOne().getType().equals("ELEV") && edge.getNodeTwo().getType().equals("ELEV"))){
+                EdgeCheckBox cb = new EdgeCheckBox(edge);
+                edgeCheckBoxes.add(cb);
+                cb.setOnMousePressed(e -> edgeSelected(e));
+            }
         }
     }
 
@@ -229,6 +239,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         refreshNodes();
         refreshEdges();
         showNodesandEdges();
+        setZoom(mapPane.getScaleX());
     }
 
     public void nodeSelected(ActionEvent e){
@@ -284,17 +295,21 @@ public class AddNodeController implements ControllableScreen, Observer {
                 setEditForNode(source);
             }
         }
+        else if (edgeTab.isSelected() && edgeRemoveTab.isSelected()){
+            source.setSelected(false);
+        }
     }
 
     public void edgeSelected(MouseEvent e){
         EdgeCheckBox source = (EdgeCheckBox)e.getSource();
-        source.select();
-        if(source.isSelected()) {
-            if (!edgeRemoveList.getItems().contains(source.getEdge()))
-                edgeRemoveList.getItems().add(source.getEdge());
-        }
-        else{
-            edgeRemoveList.getItems().remove(source.getEdge());
+        if(edgeTab.isSelected() && edgeRemoveTab.isSelected()) {
+            source.select();
+            if (source.isSelected()) {
+                if (!edgeRemoveList.getItems().contains(source.getEdge()))
+                    edgeRemoveList.getItems().add(source.getEdge());
+            } else {
+                edgeRemoveList.getItems().remove(source.getEdge());
+            }
         }
     }
 
@@ -306,12 +321,12 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void undoPressed(ActionEvent e ){
-        //todo
+        System.out.println("Undo Pressed");
+        undo();
+        checkUndo();
     }
 
-    public void redoPressed(ActionEvent e ){
-        //todo
-    }
+
 
     //----------------------NODE TAB START--------------------//
 
@@ -675,6 +690,8 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void nodeEditEnterPressed(ActionEvent e) {
         if (nodeEditSelectedNodes.size() > 0) {
+
+            saveStateToMemento();
             Node node = nodeEditSelectedNodes.get(0).getNode();
 
             if (nodeEditXField.getText().equals("") || nodeEditYField.getText().equals("") || nodeEditFloorDropDown.getText().equals("")
@@ -713,13 +730,12 @@ public class AddNodeController implements ControllableScreen, Observer {
                     nodeEditNameField.getText(),
                     nodeEditShortField.getText());
 
-            saveStateToMemento();
             for (NodeCheckBox cb : nodeEditSelectedNodes) {
                 Node n = cb.getNode();
 
                 map.editNode(n,
-                        Integer.toString((int) cb.getLayoutX()),
-                        Integer.toString((int) cb.getLayoutX()),
+                        Integer.toString((int) cb.getLayoutX() + 12),
+                        Integer.toString((int) cb.getLayoutY() + 12),
                         n.getFloor().getDbMapping(),
                         n.getBuilding(),
                         n.getType(),
@@ -837,23 +853,22 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
     //---------------------EDGE TAB END-------------------//
 
-    //-------------------------ZOOM-----------------------//
-    //when + button is pressed zoom in map
-    public void zinPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()+0.2);
-    }
 
-    //when - button pressed zoom out map
-    public void zoutPressed(ActionEvent e){
-        setZoom(slideBarZoom.getValue()-0.2);
-    }
 
     public void setZoom(double zoom){
-        slideBarZoom.setValue(zoom);
-        mapViewer.setScale(zoom);
         for(NodeCheckBox cb : nodeCheckBoxes){
             cb.setScaleX(1/zoom);
             cb.setScaleY(1/zoom);
+        }
+    }
+    private void checkUndo(){
+        if(mapEditorMementos.size() > 0){
+            undoButton.setDisable(false);
+            undoButton.setOpacity(0.9);
+        }
+        else{
+            undoButton.setDisable(true);
+            undoButton.setOpacity(0.1);
         }
     }
 
@@ -868,7 +883,11 @@ public class AddNodeController implements ControllableScreen, Observer {
                 if(!nodes.contains(node)) nodes.add(node);
             }
         }
+        for(Node node : map.getNodeMap()){
+            if(!nodes.contains(node)) nodes.add(new Node(node.getID(), Integer.toString(node.getX()), Integer.toString(node.getY()), node.getFloor().getDbMapping(), node.getBuilding(), node.getType(), node.getLongName(), node.getShortName(), node.getTeam()));
+        }
         mapEditorMementos.push(new MapEditorMemento(nodes, edges));
+        checkUndo();
     }
 
     public void setMemento(MapEditorMemento memento){
@@ -878,10 +897,11 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void undo(){
-        System.out.println("Undoing");
-        System.out.println("Stack size: " + mapEditorMementos.size());
         if(mapEditorMementos.size() > 0){
             setMemento(mapEditorMementos.pop());
         }
     }
+
+
+
 }

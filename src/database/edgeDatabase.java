@@ -303,7 +303,7 @@ public class edgeDatabase {
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputEdgesCSV() {
 
-        String outEdgesFileName = "src/csv/outputEdges.csv";
+        String outEdgesFileName = "outputEdges.csv";
 
         try {
             FileWriter fw2 = new FileWriter(outEdgesFileName, false);
