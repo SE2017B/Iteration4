@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
+<AnchorPane fx:id="mainAnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="800.0" styleClass="pane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.FeedbackController">
     <children>
         <JFXTabPane tabMinHeight="70.0" tabMinWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
@@ -36,14 +36,14 @@
                                         <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
                                     </rowConstraints>
                                     <children>
-                                        <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <VBox alignment="CENTER" style="-fx-background-color: whitesmoke;" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                             <children>
-                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="210.0" styleClass="credit-text" text="  Feedback  " textFill="#e4e4e4">
+                                                <Label alignment="CENTER" prefHeight="20.0" prefWidth="210.0" styleClass="text-on-white" text="  Feedback  " textAlignment="CENTER">
                                                     <font>
-                                                        <Font size="39.0" />
+                                                        <Font size="33.0" />
                                                     </font>
                                                 </Label>
-                                                <JFXSlider fx:id="startSlider" majorTickUnit="1.0" max="5.0" minorTickCount="0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="credit-text" value="1.0">
+                                                <JFXSlider fx:id="startSlider" majorTickUnit="1.0" max="5.0" minorTickCount="0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" styleClass="text-on-white" value="1.0">
                                        <VBox.margin>
                                           <Insets top="20.0" />
                                        </VBox.margin>
@@ -51,7 +51,7 @@
                                                         <Tooltip text="Scroll to rate the kiosk" />
                                                     </tooltip>
                                                 </JFXSlider>
-                                                <Label styleClass="credit-text" text="  Additional Comments  ">
+                                                <Label styleClass="text-on-white" text="  Additional Comments  ">
                                                     <font>
                                                         <Font size="18.0" />
                                                     </font>
@@ -226,9 +226,9 @@
                 </Tab>
             </tabs>
         </JFXTabPane>
-        <JFXButton fx:id="returnButton" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="5.0">
+        <JFXButton fx:id="returnButton" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
             <font>
-                <Font size="26.0" />
+                <Font size="19.0" />
             </font>
         </JFXButton>
     </children>

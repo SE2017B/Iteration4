@@ -61,6 +61,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Tab edgeRemoveTab;
     @FXML
     private AnchorPane mainAnchorPane;
+    @FXML
+    private JFXButton undoButton;
 
     public void init() {
         map = HospitalMap.getMap();
@@ -103,6 +105,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void onShow() {
+        checkUndo();
         currentFloor = FloorNumber.FLOOR_ONE;
         mapViewer.setFloor(currentFloor);
         refreshNodesandEdges();
@@ -307,12 +310,12 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void undoPressed(ActionEvent e ){
-        //todo
+        System.out.println("Undo Pressed");
+        undo();
+        checkUndo();
     }
 
-    public void redoPressed(ActionEvent e ){
-        //todo
-    }
+
 
     //----------------------NODE TAB START--------------------//
 
@@ -682,6 +685,8 @@ public class AddNodeController implements ControllableScreen, Observer {
 
     public void nodeEditEnterPressed(ActionEvent e) {
         if (nodeEditSelectedNodes.size() > 0) {
+
+            saveStateToMemento();
             Node node = nodeEditSelectedNodes.get(0).getNode();
 
             if (nodeEditXField.getText().equals("") || nodeEditYField.getText().equals("") || nodeEditFloorDropDown.getText().equals("")
@@ -720,7 +725,6 @@ public class AddNodeController implements ControllableScreen, Observer {
                     nodeEditNameField.getText(),
                     nodeEditShortField.getText());
 
-            saveStateToMemento();
             for (NodeCheckBox cb : nodeEditSelectedNodes) {
                 Node n = cb.getNode();
 
@@ -866,9 +870,21 @@ public class AddNodeController implements ControllableScreen, Observer {
             cb.setScaleY(1/zoom);
         }
     }
+    private void checkUndo(){
+        if(mapEditorMementos.size() > 0){
+            undoButton.setDisable(false);
+            undoButton.setOpacity(0.9);
+        }
+        else{
+            undoButton.setDisable(true);
+            undoButton.setOpacity(0.5);
+        }
+    }
 
     // Memento Stuff
     public void saveStateToMemento(){
+        undoButton.setDisable(false);
+        undoButton.setOpacity(0.9);
         HashMap<Edge, ArrayList<Node>> newMap = map.getCopy();
         ArrayList<Node> nodes = new ArrayList<>();
         ArrayList<Edge> edges = new ArrayList<>();
@@ -886,10 +902,11 @@ public class AddNodeController implements ControllableScreen, Observer {
         refreshNodesandEdges();
     }
     public void undo(){
-        System.out.println("Undoing");
-        System.out.println("Stack size: " + mapEditorMementos.size());
         if(mapEditorMementos.size() > 0){
             setMemento(mapEditorMementos.pop());
         }
     }
+
+
+
 }

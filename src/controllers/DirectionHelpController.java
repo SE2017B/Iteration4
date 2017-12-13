@@ -5,11 +5,11 @@ import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextArea;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import ui.AnimatedCircle;
 import ui.TransitionCircle;
-
 
 import java.util.ArrayList;
 
@@ -37,6 +37,7 @@ public class DirectionHelpController implements ControllableScreen{
     //reset everything to the start
     @Override
     public void onShow() {
+        stepLabel.setText("");
         positions = new ArrayList<>();
         pointer.moveTo(helpTextArea.getLayoutX(),helpTextArea.getLayoutY());
         helpTextArea.setText("Welcome! Click next to start the tutorial for the Navigation Screen.");
@@ -74,6 +75,9 @@ public class DirectionHelpController implements ControllableScreen{
     private JFXProgressBar helpProgress;
 
     @FXML
+    private Label stepLabel;
+
+    @FXML
     void nextPressed(ActionEvent event) {
         setImageFromList(true);
         setLables();
@@ -104,12 +108,15 @@ public class DirectionHelpController implements ControllableScreen{
         stat = this.status;
         if(stat == 0) {
             helpProgress.setProgress(0);
+            stepLabel.setText("");
         }
         else if(stat == 1) {
             helpProgress.setProgress(.5);
+            stepLabel.setText("Step 1/2");
         }
         else if(stat == 2) {
             helpProgress.setProgress(1);
+            stepLabel.setText("Step 2/2");
         }
     }
     private void setImageFromList(boolean next){

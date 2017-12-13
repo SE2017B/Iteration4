@@ -533,7 +533,7 @@
          </children>
       </HBox>
       <JFXButton fx:id="btnReturn" onAction="#returnPressed" prefHeight="50.0" prefWidth="150.0" text="Return" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="10.0" />
-      <JFXButton fx:id="undoButton" contentDisplay="GRAPHIC_ONLY" onAction="#undoPressed" prefHeight="40.0" prefWidth="40.0" text="Undo" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="20.0">
+      <JFXButton fx:id="undoButton" onAction="#undoPressed" prefHeight="30.0" text="Undo" AnchorPane.leftAnchor="430.0" AnchorPane.topAnchor="20.0">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -541,13 +541,21 @@
                </image>
             </ImageView>
          </graphic></JFXButton>
-      <JFXButton fx:id="redoButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" onAction="#redoPressed" prefHeight="40.0" prefWidth="40.0" text="Redo" AnchorPane.leftAnchor="490.0" AnchorPane.topAnchor="20.0">
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/redo.png" />
-               </image>
-            </ImageView>
-         </graphic></JFXButton>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="280.0">
+         <children>
+            <JFXButton fx:id="btnzin" onAction="#zinPressed" prefHeight="60.0" prefWidth="60.0" text="+">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
+            <JFXSlider fx:id="slideBarZoom" blockIncrement="0.0" max="1.8" min="0.2" orientation="VERTICAL" prefWidth="50.0" value="1.0" />
+            <JFXButton fx:id="btnzout" onAction="#zoutPressed" prefHeight="60.0" prefWidth="60.0" text="-">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+
    </children>
 </AnchorPane>
