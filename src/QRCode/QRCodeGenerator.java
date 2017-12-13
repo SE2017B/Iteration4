@@ -70,7 +70,7 @@ public class QRCodeGenerator {
                 }
             }
             try {
-                ImageIO.write(image, "jpg", new File(filename + ".jpg")); // save QR image to disk
+                ImageIO.write(image, "jpg", new File("qr.jpg")); // save QR image to disk
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
