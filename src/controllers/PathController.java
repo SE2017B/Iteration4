@@ -349,8 +349,7 @@ public class PathController implements ControllableScreen, Observer{
         NEXT.setVisible(false);
         PREV.setVisible(false);
         mapViewer.setScale(1);
-        startNodeChoice.setItems(FXCollections.observableArrayList(
-                map.getKioskLocation()));
+        startNodeChoice.setItems(FXCollections.observableArrayList(map.getKioskLocation()));
         //set the default start location to be the kiosk
         startNodeChoice.setValue(map.getKioskLocation());
         //remove any previous paths from the display
@@ -495,16 +494,18 @@ public class PathController implements ControllableScreen, Observer{
 
     private void setStartNode(Node selected){
         if(selected!=null) {
-            mapPane.getChildren().remove(startPoint);
+            if(mapPane.getChildren().contains(startPoint)){
+                mapPane.getChildren().remove(startPoint);
+            }
             Circle newp = getStartPoint(selected.getX(), selected.getY());
             startPoint = newp;
             startPoint.setVisible(true);
-            mapPane.getChildren().add(startPoint);
             startPointFloor = selected.getFloor();
             currentFloor = startPointFloor;
             mapViewer.setFloor(startPointFloor);
             currentFloor=startPointFloor;
-            adjustNodes();
+            mapPane.getChildren().add(startPoint);
+            //adjustNodes();
         }
     }
     private void setStartNode(Node selected, boolean center){
@@ -522,15 +523,18 @@ public class PathController implements ControllableScreen, Observer{
 
     private void setEndNode(Node selected){
         if(selected!=null) {
+            if(mapPane.getChildren().contains(endPoint)){
+                mapPane.getChildren().remove(endPoint);
+            }
             Circle newp = getPoint(selected.getX(), selected.getY());
             endPoint = newp;
             endPoint.setVisible(true);
-            mapPane.getChildren().add(endPoint);
             endPointFloor = selected.getFloor();
             currentFloor = endPointFloor;
             mapViewer.setFloor(endPointFloor);
             currentFloor=endPointFloor;
-            adjustNodes();
+            mapPane.getChildren().add(endPoint);
+            //adjustNodes();
         }
     }
     private JFXButton getUP(){
