@@ -12,33 +12,25 @@ import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 //import api.SanitationService;
 import com.jfoenix.controls.*;
-import database.serviceDatabase;
+import database.feedbackDatabase;
 import database.staffDatabase;
-import javafx.animation.TranslateTransition;
+import exceptions.InvalidPasswordException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import map.HospitalMap;
 import map.Node;
 import search.SearchStrategy;
 import ui.ShakeTransition;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import static java.awt.Color.black;
 
 public class RequestController implements ControllableScreen{
     private ScreenController parent;
@@ -173,7 +165,6 @@ public class RequestController implements ControllableScreen{
     @FXML
     private JFXTabPane chartTabPane;
 
-
     ////////////////////////////////////////////////////////
     // STAFF ADD EDIT REMOVE//
     ///////////////////////////////////////////////////////
@@ -197,6 +188,10 @@ public class RequestController implements ControllableScreen{
     private JFXTextField jobTitleEdit;
     @FXML
     private ListView<Staff> staffListView1;
+    @FXML
+    private Tab staffManageTab;
+    @FXML
+    private Tab settingsTab;
 
 
     public void init(){
@@ -204,14 +199,13 @@ public class RequestController implements ControllableScreen{
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
-//        choiceBoxService.setItems(FXCollections.observableList(depSub.getServices()));
+
 
         apiLocationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
 
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
-//        choiceBoxService.valueProperty().addListener( (v, oldValue, newValue) -> servSelected(newValue));
-//        choiceBoxStaff.valueProperty().addListener( (v, oldValue, newValue) -> staffSelected(newValue));
+
 
         staffListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Staff>() {
                                                                                  @Override
@@ -236,42 +230,25 @@ public class RequestController implements ControllableScreen{
                                                                                   }
                                                                               }
         );
-
-        settingsRipple = new JFXRippler(ripplePane);
-        settingsRipple.setRipplerFill(Color.LIGHTGREEN);
-        settingsPane.getChildren().add(0,settingsRipple);
-
-        //location set up
-//        locationChoiceBox.setItems(FXCollections.observableList(
-//                map.getNodesBy(n -> !n.getType().equals("HALL"))));
-
-        //Display selected request on label
-
-//        resolveServiceListView.getSelectionModel().selectedItemProperty().addListener(
-//                new ChangeListener<ServiceRequest>() {
-//                    @Override
-//                    public void changed(ObservableValue<? extends ServiceRequest> observable,
-//                                        ServiceRequest oldValue, ServiceRequest newValue) {
-//
-//                        lblSelectedService.setText(newValue.getService().toString());
-//                        lblSelectedAdditionalInfo.setText(newValue.getInputData());
-//                        lblSelectedDT.setText(newValue.getTime());
-//                        lblSelectedLocation.setText(newValue.getLocation().toString());
-//
-//                    }
-//                }
-//        );
     }
 
     public void onShow(){
         //Staff requests display
         staffNameLabel.setText(depSub.getCurrentLoggedIn().toString());
-        System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
-//        if(depSub.getCurrentLoggedIn().getAllRequest().isEmpty()){
-//            resolveServiceListView.getItems().clear();
-//        }else{
-//            resolveServiceListView.getItems().addAll(depSub.getCurrentLoggedIn().getAllRequest());
-//        }
+        //System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
+
+        //System.out.println(depSub.getCurrentLoggedIn().getAllRequest());
+
+        if(depSub.getCurrentLoggedIn().getaAdmin() == 1){
+            btnEditMap.setDisable(false);
+            settingsTab.setDisable(false);
+            staffManageTab.setDisable(false);
+
+        }else{
+            btnEditMap.setDisable(true);
+            settingsTab.setDisable(true);
+            staffManageTab.setDisable(true);
+        }
 
         //Update the nodes in the map
         ArrayList<Node> nodes = map.getNodeMap();
@@ -284,18 +261,13 @@ public class RequestController implements ControllableScreen{
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
         staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
 
-//        staffJobTypeChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
-//        addStaffServiceChoiceBox.setItems(FXCollections.observableList(depSub.getServices()));
-
         lblFeedbackRating.setStyle("-fx-background-color: rgb(40,40,60)");
-        lblFeedbackRating.setText(serviceDatabase.avgFeedback());
+        lblFeedbackRating.setText(feedbackDatabase.avgFeedback());
 
         lblFeedbackTitle.setStyle("-fx-background-color: rgb(40,40,60)");
         lblFeedbackTitle.setText("Feedback Charts");
 
-        feedbackListView.setItems(FXCollections.observableList(serviceDatabase.getAllFeedbacks()));
-
-        timeoutTextField.setText(Double.toString(parent.getTimeoutLength()/1000));
+        feedbackListView.setItems(FXCollections.observableList(feedbackDatabase.getAllFeedbacks()));
 
         // Populate Feedback Charts
         pieChartCreate();
@@ -306,23 +278,10 @@ public class RequestController implements ControllableScreen{
     public void setParentController(ScreenController parent){
         this.parent = parent;
     }
-//
-//    public void resolveServicePressed(ActionEvent e){
-//        System.out.println(resolveServiceListView.getSelectionModel().getSelectedItems());
-//        depSub.getCurrentLoggedIn().removeRequests(resolveServiceListView.getSelectionModel().getSelectedItems());
-//        resolveServiceListView.getItems().removeAll(resolveServiceListView.getSelectionModel().getSelectedItems());
-//        //System.out.println("Requests " + (resolveServiceListView.getSelectionModel().getSelectedItems()) + "resolved");
-//
-//        lblSelectedService.setText("Service");
-//        lblSelectedAdditionalInfo.setText("Location");
-//        lblSelectedDT.setText("Date & Time");
-//        lblSelectedLocation.setText("Additional Info");
-//    }
 
     public void createPressedApi(ActionEvent e){
         Node desNode = apiLocationChoiceBox.getSelectionModel().getSelectedItem();
         if(desNode != null) {
-            parent.pauseTimeout();
             runAPI(desNode);
         }
     }
@@ -337,108 +296,22 @@ public class RequestController implements ControllableScreen{
         apiLocationChoiceBox.setItems(FXCollections.observableList(
                 map.getNodesBy(n -> !n.getType().equals("HALL"))));
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
-        parent.resumeTimeout();
     }
-
-//    creates a service request, and then sends it to the staff member
-
-//    public void requestCreatePressed(ActionEvent e){
-//        requestIDCount++;
-//        ServiceRequest nReq = new ServiceRequest(choiceBoxService.getValue(), requestIDCount, locationChoiceBox.getValue(), "", dateMenu.getValue().toString(), choiceBoxStaff.getValue());
-//        System.out.println("request submitted");
-//        nReq.setInputData(currentServiceController.getInputData());
-//        //choiceBoxStaff.getValue().addRequest(nReq);
-//
-//        resolveServiceListView.getItems().clear();
-//        resolveServiceListView.getItems().addAll(FXCollections.observableList(depSub.getCurrentLoggedIn().getAllRequest()));
-//        //resolveServiceListView.getItems().add(nReq);
-//        //fillInServiceSpecificRecs();
-//        parent.resumeTimeout();
-//
-//    }
-//
-//    public void cancelPressed(ActionEvent e){
-//        //clear choiceboxes
-//        choiceBoxStaff.setItems(FXCollections.observableList(new ArrayList<Staff>()));
-//        choiceBoxStaff.setValue(null);
-//        choiceBoxService.setItems(FXCollections.observableList(new ArrayList<Service>()));
-//        choiceBoxService.setValue(null);
-//        choiceBoxService.setDisable(true);
-//        choiceBoxStaff.setDisable(true);
-//
-//
-//        //clear time and date
-//        //timeMenu.getEditor().clear();
-//        dateMenu.getEditor().clear();
-//
-//        parent.resumeTimeout();
-//        //repopulate location choice box
-//        locationChoiceBox.setItems(FXCollections.observableList(
-//                map.getNodesBy(n -> !n.getType().equals("HALL"))));
-//    }
-
 
 
     public void logoutPressed(ActionEvent e){
         parent.setScreen(ScreenController.LogoutID);
-
-        parent.resumeTimeout();
     }
 
     public void editPressed(ActionEvent e){
         parent.setScreen(ScreenController.AddNodeID, "LEFT");
-
-        parent.resumeTimeout();
     }
 
     public void selectAlgorithmPath(ActionEvent e){
         selectedAlg = ((MenuItem)e.getSource()).getText();
         menuButtonAl.setText(selectedAlg);
-
-        parent.resumeTimeout();
     }
 
-//    public void servSelected(Service newValue){
-//        if(newValue != null) {
-//            System.out.println("Services was selected and listener triggered");
-//            choiceBoxStaff.setDisable(false);
-//            choiceBoxStaff.setItems(FXCollections.observableList(newValue.getStaff()));
-//            System.out.println("This is newValue.getStaff() " + newValue.getStaff());
-//            String URLPLS = newValue.getURL();
-//            System.out.println(URLPLS);
-//            try {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource(URLPLS));
-//                AnchorPane servicePane = loader.load();
-//                //AnchorPane servicePane = FXMLLoader.load(getClass().getResource(testURL));
-//                servicePane1.getChildren().setAll(servicePane);
-//                this.currentServiceController = loader.getController();
-//
-//                // Feeds data into respective service controller
-//                this.currentServiceController.onShow();
-//
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//                System.out.println(URLPLS);
-//            }
-//        }
-//        else{
-//            servicePane1.getChildren().clear();
-//        }
-//    }
-//
-//    public void staffSelected(Staff newValue) {
-//        if(newValue != null) {
-//            nameStaff = newValue.toString();
-//        }
-//    }
-//
-//    public void timeSelected(ActionEvent e) {
-//        time = ((JFXTimePicker)e.getSource()).getValue().toString();
-//    }
-//
-//    public void dateSelected(ActionEvent e){
-//        date = ((JFXDatePicker)e.getSource()).getValue().toString();
-//    }
 
     @FXML
     void cancelStaffPressed(ActionEvent event) {
@@ -451,31 +324,42 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void editStaffPressed(ActionEvent e) {
-            //ArrayList<Staff> tempAL = new ArrayList<>(staffForCB);
 
-            String tempUsername = usernameEdit.getText();
-            String tempPassword = passwordEdit.getText();
-            String tempFullName = fullnameEdit.getText();
-            String tempJobTitle = jobTitleEdit.getText();
+        String tempUsername = usernameEdit.getText();
+        String tempPassword = passwordEdit.getText();
+        String tempFullName = fullnameEdit.getText();
+        String tempJobTitle = jobTitleEdit.getText();
+        int tempIsAdmin;
+
+        if (adminAddStaff.isSelected()) {
+            tempIsAdmin = 1;
+        } else {
+            tempIsAdmin = 0;
+        }
+
+        Staff tempStaff = staffListView1.getSelectionModel().getSelectedItem();
+
+        try {
+            //tempStaff.updateCredentials(tempUsername, tempPassword, tempJobTitle, tempFullName, tempStaff.getID(), tempIsAdmin);
+            depSub.modifyStaff(tempStaff, tempUsername, tempPassword, tempJobTitle, tempFullName, tempStaff.getID(), tempIsAdmin);
+        } catch (InvalidPasswordException e1) {
+            e1.printStackTrace();
+        }
 
 
+        //usernameEdit.clear();
+        //passwordEdit.clear();
+        //fullnameEdit.clear();
+        //jobTitleEdit.clear();
+        //adminEdit.setSelected(false);
 
+        //staffResolveServiceChoiceBox.getItems().clear();
+        //staffListView1.getItems().clear();
+        //staffListView.getItems().clear();
+        //staffChoiceBox.getItems().clear();
 
-
-            Staff tempStaff = staffListView1.getSelectionModel().getSelectedItem();
-            // tempStaff.updateCredidentials(tempUsername, tempPassword, modifyAdminCheckBox.isSelected(), tempFullName, tempStaff.getID());
-
-            usernameEdit.clear();
-            passwordEdit.clear();
-            fullnameEdit.clear();
-            jobTitleEdit.clear();
-            adminEdit.setSelected(false);
-
-            //staffResolveServiceChoiceBox.getItems().clear();
-            staffListView1.getItems().clear();
-            staffListView.getItems().clear();
-            //staffChoiceBox.getItems().clear();
-
+        staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+        staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
 
 
@@ -486,12 +370,19 @@ public class RequestController implements ControllableScreen{
             String tempPassword = passwordTxt.getText();
             String tempJobTitle = jobTitletxt.getText();
             String tempFullName = fullNametxt.getText();
+            int tempIsAdmin;
 
+            if (adminAddStaff.isSelected()) {
+                tempIsAdmin = 1;
+            }
+            else {
+                tempIsAdmin = 0;
+            }
             //Service tempService = addStaffServiceChoiceBox.getValue();
 
             //todo Test new add staff UNCOMMENT
             staffDatabase.incStaffCounter();
-            //depSub.addStaff(addStaffCheckBox.isSelected(), tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter(), 0);
+            depSub.addStaff(tempUsername, tempPassword, tempJobTitle, tempFullName, staffDatabase.getStaffCounter(), tempIsAdmin);
 
             staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
             staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
@@ -526,12 +417,13 @@ public class RequestController implements ControllableScreen{
         String tempUsername = usernameDeleteTxt.getText();
         String tempFullName = removeStaffFullName.getText();
         //todo uncomment
-        //depSub.deleteStaff(tempFullName, tempUsername);
+        depSub.deleteStaff(tempFullName, tempUsername);
 
         usernameDeleteTxt.clear();
         removeStaffFullName.clear();
 
         staffListView.setItems(FXCollections.observableList(staffDatabase.getStaff()));
+        staffListView1.setItems(FXCollections.observableList(staffDatabase.getStaff()));
     }
 
     @FXML
@@ -539,17 +431,18 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void pieChartCreate() {
-
+        feedbackPieChart.getData().clear();
         // Setting up the Pie Chart on Feedback tab
         feedbackPieChart.setLabelLineLength(10);
         feedbackPieChart.setLegendSide(Side.RIGHT);
-        feedbackPieChart.setData(serviceDatabase.cntFeedback());
+        feedbackPieChart.setData(feedbackDatabase.cntFeedback());
     }
 
     @FXML
     void lineChartCreate() {
+        feedbackLineChart.getData().clear();
 
-        ArrayList<Integer> tempLineArray = serviceDatabase.cntChartFeedback();
+        ArrayList<Integer> tempLineArray = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aLineChart = new XYChart.Series<>();
         aLineChart.getData().add(new XYChart.Data<String,Number>("0", tempLineArray.get(0)));
@@ -567,8 +460,8 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void barChartCreate() {
-
-        ArrayList<Integer> tempLineArray2 = serviceDatabase.cntChartFeedback();
+        feedbackBarChart.getData().clear();
+        ArrayList<Integer> tempLineArray2 = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aBarChart = new XYChart.Series<>();
         aBarChart.getData().add(new XYChart.Data<String,Number>("0", tempLineArray2.get(0)));
@@ -595,36 +488,14 @@ public class RequestController implements ControllableScreen{
     private JFXButton saveSettingsButton;
     @FXML
     private ChoiceBox<Node> kioskLocationChoice;
-    @FXML
-    private AnchorPane settingsPane;
-    @FXML
-    private Pane ripplePane;
-
-    private JFXRippler settingsRipple;
-
-
-
-    @FXML
-    private JFXTextField timeoutTextField;
 
     public void saveSettingsPressed(ActionEvent e) {
         if (searchStrategyChoice.getValue() != null) {
             System.out.println(searchStrategyChoice.getValue());
             map.setSearchStrategy(searchStrategyChoice.getValue());
             map.setKioskLocation(kioskLocationChoice.getValue());
-            settingsRipple.setRipplerFill(Color.LIGHTGREEN);
-            settingsRipple.createManualRipple().run();
         } else {
             s.shake(searchStrategyChoice);
-        }
-        try{
-            parent.setTimeoutLength( 1000* Double.parseDouble(timeoutTextField.getText()));
-
-        }
-        catch (Exception error){
-            settingsRipple.setRipplerFill(Color.DARKRED);
-            settingsRipple.createManualRipple().run();
-            s.shake(timeoutTextField);
         }
     }
 }
