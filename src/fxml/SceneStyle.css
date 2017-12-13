@@ -91,6 +91,11 @@
 */
 }
 
+/*.jfx-slider .thumb
+{
+    -fx-background-color: transparent;
+}*/
+
 .label{
     -fx-text-fill: white;
 }

@@ -7,6 +7,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.control.Tooltip?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -73,6 +74,13 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <tooltip>
+                        <Tooltip contentDisplay="TEXT_ONLY" text="Press to Login">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip>
                   </JFXButton>
                   <ImageView fx:id="capsLock" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="-90.0">
                      <image>
