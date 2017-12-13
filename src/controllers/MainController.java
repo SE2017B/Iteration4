@@ -356,7 +356,7 @@ public class MainController implements ControllableScreen, Observer{
                 //final Tooltip tooltip = new Tooltip();
                 //tooltip.setText("Displaying the time, and date in day, month, and year format.");
 
-                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                 //SimpleDateFormat.setTooltip(tooltip);
                 Calendar cal = Calendar.getInstance();
                 second = cal.get(Calendar.SECOND);  //get current second

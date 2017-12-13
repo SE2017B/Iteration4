@@ -277,7 +277,7 @@ public class ScreenController extends StackPane implements Initializable {
     }
     public void pauseTimeout(){
         timeout.stop();
-        isPaused =true;
+        isPaused = true;
     }
 
     public void resumeTimeout(){

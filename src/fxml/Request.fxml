@@ -69,6 +69,21 @@
                                     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="ALWAYS" />
                                             </rowConstraints>
                                             <children>
+                                    <Pane opacity="0.17" prefHeight="200.0" prefWidth="200.0" styleClass="table-divider" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </Pane>
+                                    <Pane opacity="0.17" prefHeight="200.0" prefWidth="200.0" styleClass="table-divider-border" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                                    <Pane opacity="0.17" prefHeight="200.0" prefWidth="200.0" styleClass="table-divider-border" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                                    <Pane opacity="0.17" prefHeight="200.0" prefWidth="200.0" styleClass="table-divider" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </Pane>
                                                 <Label text="Select Service" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font size="24.0" />
@@ -89,7 +104,10 @@
                                                         <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                                     </GridPane.margin>
                                                 </JFXButton>
-                                                <ChoiceBox fx:id="apiServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <ChoiceBox fx:id="apiServiceChoiceBox" maxWidth="1.7976931348623157E308" prefHeight="35.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
+                                       <GridPane.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </GridPane.margin></ChoiceBox>
                                     <Label fx:id="endLabel" text="Select Destination" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                                        <font>
                                           <Font size="24.0" />
@@ -179,7 +197,7 @@
                                           </Tab>
                                        </tabs>
                                        <padding>
-                                          <Insets right="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </JFXTabPane>
                                     <JFXTabPane fx:id="endTabPane" GridPane.columnIndex="2" GridPane.rowIndex="3">
@@ -265,6 +283,9 @@
                                              </content>
                                           </Tab>
                                        </tabs>
+                                       <GridPane.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </GridPane.margin>
                                     </JFXTabPane>
                                             </children>
                                         </GridPane>
@@ -295,6 +316,18 @@
                                                 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
+                                    <Pane opacity="0.17" prefHeight="200.0" prefWidth="200.0" styleClass="table-divider" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </Pane>
+                                    <Pane opacity="0.17" prefHeight="200.0" prefWidth="200.0" styleClass="table-divider-border" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                                    <Pane opacity="0.17" prefHeight="200.0" prefWidth="200.0" styleClass="table-divider" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </Pane>
+                                    <Pane opacity="0.17" prefHeight="200.0" prefWidth="200.0" styleClass="table-divider-border" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
                                                 <Label text="Select Algorithm for Path " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font size="24.0" />
@@ -395,7 +428,7 @@
                                                             <children>
                                                                 <SplitPane dividerPositions="0.28499843407453807" prefHeight="562.4" prefWidth="1279.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                     <items>
-                                                                        <AnchorPane maxWidth="300.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #008faa;">
+                                                                        <AnchorPane maxWidth="300.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="pane">
                                                                             <children>
                                                                                 <GridPane prefHeight="560.8" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                     <columnConstraints>
@@ -507,7 +540,7 @@
                                                                         <Insets left="10.0" right="10.0" />
                                                                      </GridPane.margin>
                                                                   </JFXTextField>
-                                                                  <JFXCheckBox fx:id="adminEdit" text="Admin?" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                                                                  <JFXCheckBox fx:id="adminEdit" text="Admin?" textFill="WHITE" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                                                                      <font>
                                                                         <Font size="20.0" />
                                                                      </font>
@@ -566,18 +599,11 @@
                                                         </Label>
                                                         <JFXTabPane fx:id="chartTabPane" layoutY="69.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="497.0" prefWidth="635.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="69.0">
                                                             <tabs>
-                                                                <Tab fx:id="lineChartTab" text="Line Chart">
+                                                                <Tab fx:id="pieChartTab" text="Pie Chart">
                                                                     <content>
-                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="635.0">
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                                             <children>
-                                                                                <LineChart fx:id="feedbackLineChart" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                                    <xAxis>
-                                                                                        <CategoryAxis side="BOTTOM" fx:id="xLineChart" />
-                                                                                    </xAxis>
-                                                                                    <yAxis>
-                                                                                        <NumberAxis fx:id="yLineChart" side="LEFT" />
-                                                                                    </yAxis>
-                                                                                </LineChart>
+                                                                                <PieChart fx:id="feedbackPieChart" legendSide="RIGHT" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                                             </children>
                                                                         </AnchorPane>
                                                                     </content>
@@ -598,11 +624,18 @@
                                                                         </AnchorPane>
                                                                     </content>
                                                                 </Tab>
-                                                                <Tab fx:id="pieChartTab" text="Pie Chart">
+                                                                <Tab fx:id="lineChartTab" text="Line Chart">
                                                                     <content>
-                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="635.0">
                                                                             <children>
-                                                                                <PieChart fx:id="feedbackPieChart" legendSide="RIGHT" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                                                <LineChart fx:id="feedbackLineChart" prefHeight="462.0" prefWidth="635.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                    <xAxis>
+                                                                                        <CategoryAxis side="BOTTOM" fx:id="xLineChart" />
+                                                                                    </xAxis>
+                                                                                    <yAxis>
+                                                                                        <NumberAxis fx:id="yLineChart" side="LEFT" />
+                                                                                    </yAxis>
+                                                                                </LineChart>
                                                                             </children>
                                                                         </AnchorPane>
                                                                     </content>

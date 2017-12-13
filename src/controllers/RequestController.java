@@ -11,7 +11,10 @@ package controllers;
 import DepartmentSubsystem.Services.Transport;
 import api.SanitationService;
 import foodRequest.FoodRequest;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import translationApi.TranslationService;
 import transportApi.TransportService;
 import DepartmentSubsystem.*;
@@ -290,6 +293,12 @@ public class RequestController implements ControllableScreen{
             endTextField.setText("");
         });
 
+        saveRipple= new JFXRippler(ripplePane);
+        settingsPane.getChildren().add(0,saveRipple);
+        saveRipple.setRipplerFill(Color.GREEN);
+
+        timeoutTextField.setText(Double.toString(parent.getTimeoutLength()/1000));
+
     }
 
     public void onShow(){
@@ -314,7 +323,7 @@ public class RequestController implements ControllableScreen{
         ArrayList<Node> nodes = map.getNodeMap();
 
         searchStrategyChoice.setItems(FXCollections.observableList(map.getSearches()));
-        searchStrategyChoice.setValue(map.getSearchStrategy());
+        searchStrategyChoice.setValue(map.getSearches().get(0));
         kioskLocationChoice.setItems(FXCollections.observableList(map.getNodeMap()));
         kioskLocationChoice.setValue(map.getKioskLocation());
 
@@ -345,6 +354,9 @@ public class RequestController implements ControllableScreen{
         pieChartCreate();
         lineChartCreate();
         barChartCreate();
+
+
+        timeoutTextField.setText(Double.toString(parent.getTimeoutLength()/1000));
     }
 
     public void setParentController(ScreenController parent){
@@ -473,6 +485,7 @@ public class RequestController implements ControllableScreen{
         if(endTypeTab.isSelected())
             endNode = endNodeChoice.getValue();
         if(startNode != null && (endNode != null || !selectedAPI.equals("Transportation"))) {
+            parent.pauseTimeout();
             if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Sanitation"))
             {
                 runSanitationAPI(startNode);
@@ -802,6 +815,16 @@ public class RequestController implements ControllableScreen{
     private JFXButton saveSettingsButton;
     @FXML
     private ChoiceBox<Node> kioskLocationChoice;
+    @FXML
+    private Pane ripplePane;
+    @FXML
+    private AnchorPane settingsPane;
+    @FXML
+    private JFXTextField timeoutTextField;
+
+    private JFXRippler saveRipple;
+
+
 
     public void saveSettingsPressed(ActionEvent e) {
         if (searchStrategyChoice.getValue() != null) {
@@ -810,6 +833,14 @@ public class RequestController implements ControllableScreen{
             map.setKioskLocation(kioskLocationChoice.getValue());
         } else {
             s.shake(searchStrategyChoice);
+        }
+
+        try{
+            parent.setTimeoutLength(Double.parseDouble(timeoutTextField.getText())*1000);
+            saveRipple.createManualRipple().run();
+        }
+        catch(Exception er ){
+            s.shake(timeoutTextField);
         }
     }
 

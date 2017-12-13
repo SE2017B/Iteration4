@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -27,6 +28,8 @@ public class feedbackDatabase {
 
     private static final String JDBC_URL_STAFF = "jdbc:derby:hospitalStaffDB;create=true";
     private static Connection conn;
+
+    private static DecimalFormat df2 = new DecimalFormat(".##");
 
     // All feedbacks from the feedback table in the hospitalStaffDB
     static ArrayList<Feedback> allFeedbacks=new ArrayList<>();
@@ -357,7 +360,7 @@ public class feedbackDatabase {
 
     public static String avgFeedback() {
 
-        float avgFeedback = 0;
+        double avgFeedback = 0;
 
         try {
             conn = DriverManager.getConnection(JDBC_URL_STAFF);
@@ -368,12 +371,12 @@ public class feedbackDatabase {
             String strCntFeedback = "SELECT AVG(CAST (RATING AS DOUBLE PRECISION)) AS avgRating FROM feedback";
             ResultSet rsetCntFeedback = cntAllFeedback.executeQuery(strCntFeedback);
 
-            float anyRatingAVG;
+            double anyRatingAVG;
 
             //Process the results
             if (rsetCntFeedback.next()) {
 
-                anyRatingAVG = rsetCntFeedback.getFloat("avgRating");
+                anyRatingAVG = rsetCntFeedback.getDouble("avgRating");
 
                 avgFeedback = anyRatingAVG;
 
@@ -387,7 +390,7 @@ public class feedbackDatabase {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        String avgFeedStr = "Average Feedback Rating: " + avgFeedback;
+        String avgFeedStr = "Average Feedback Rating: " + df2.format(avgFeedback);
         return avgFeedStr;
     }
     ///////////////////////////////////////////////////////////////////////////////
