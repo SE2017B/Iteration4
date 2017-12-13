@@ -22,7 +22,7 @@ public class Translation extends Service {
     public Translation(String description) {
         super(description);
     }
-    //see wwho can speak the language requested
+    //see who can speak the language requested
     public ArrayList<Staff> returnEligibleStaff(String language){
         //We already know the language they are going to feed us is going to be good.
         return languageMap.get(language);

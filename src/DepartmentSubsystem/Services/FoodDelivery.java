@@ -20,7 +20,7 @@ public class FoodDelivery extends Service {
     public FoodDelivery(String description) {
         super(description);
         menuItems = populateMenuItems();
-        System.out.println("Hi" + menuItems);
+        //System.out.println("Hi" + menuItems);
     }
     //add food to menu list to display
     private ArrayList<String> populateMenuItems(){

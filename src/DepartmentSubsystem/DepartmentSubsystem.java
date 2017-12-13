@@ -37,10 +37,10 @@ public class DepartmentSubsystem {
     private DepartmentSubsystem(){init();}
     private void init(){
         this.services = new ArrayList<>();
-        System.out.println("Making the staff");
+        //System.out.println("Making the staff");
         this.allStaff = staffDatabase.getStaff();
         populateLoginCheck(this.allStaff);
-        System.out.println("Staff has been made");
+        //System.out.println("Staff has been made");
 
         Service translation = new Translation("Translation");
         translation.setURL("/fxml/Translation.fxml");
@@ -153,17 +153,10 @@ public class DepartmentSubsystem {
     //delete staff from DB
     public void deleteStaff(String aFullName, String userName){
         Staff person = findPerson(userName);
-//
-//        if (person.getFullName() == aFullName && person.getFullName() != null) {
-//            staffDatabase.deleteStaff(person);
-//        }
-//        else {
-//            System.out.println("Hi");
-//        }
-        //ser.removeEligibleStaff(person);
         staffDatabase.deleteStaff(person);
     }
-    //localate a specific username for a staff
+
+    //locate a specific username for a staff
     private Staff findPerson(String username) {
         for(Staff person: this.allStaff){
             if(username.equalsIgnoreCase(person.getUsername())){

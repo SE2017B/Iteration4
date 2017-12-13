@@ -24,7 +24,7 @@ public abstract class Service{
     //getters and setters for staff services
     //get staff name
     public ArrayList<Staff> getStaff() {
-        System.out.println("get Staff");
+        //System.out.println("get Staff");
         return staff;
     }
 
