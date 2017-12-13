@@ -11,6 +11,7 @@ package controllers;
 import DepartmentSubsystem.Services.Transport;
 import api.SanitationService;
 import foodRequest.FoodRequest;
+import javafx.event.EventHandler;
 import translationApi.TranslationService;
 import transportApi.TransportService;
 import DepartmentSubsystem.*;
@@ -145,34 +146,6 @@ public class RequestController implements ControllableScreen{
     private ChoiceBox<Service> staffJobTypeChoiceBox;
     @FXML
     private ChoiceBox<Service> addStaffServiceChoiceBox;
-    @FXML
-    private Label lblFeedbackRating;
-    @FXML
-    private Label lblFeedbackTitle;
-    @FXML
-    private JFXListView<Feedback> feedbackListView;
-    @FXML
-    private PieChart feedbackPieChart;
-    @FXML
-    private BarChart<String, Number> feedbackBarChart;
-    @FXML
-    private CategoryAxis xBarChart;
-    @FXML
-    private NumberAxis yBarChart;
-    @FXML
-    private LineChart<String, Number> feedbackLineChart;
-    @FXML
-    private CategoryAxis xLineChart;
-    @FXML
-    private NumberAxis yLineChart;
-    @FXML
-    private Tab pieChartTab;
-    @FXML
-    private Tab barChartTab;
-    @FXML
-    private Tab lineChartTab;
-    @FXML
-    private JFXTabPane chartTabPane;
 
     @FXML
     private JFXListView<Node> startNodeOptionList;
@@ -208,6 +181,38 @@ public class RequestController implements ControllableScreen{
     private Tab staffManageTab;
     @FXML
     private Tab settingsTab;
+
+    ////////////////////////////////////////////////////////
+    // Feedback Charts
+    ///////////////////////////////////////////////////////
+    @FXML
+    private Label lblFeedbackRating;
+    @FXML
+    private Label lblFeedbackTitle;
+    @FXML
+    private JFXListView<Feedback> feedbackListView;
+    @FXML
+    private PieChart feedbackPieChart;
+    @FXML
+    private BarChart<String, Number> feedbackBarChart;
+    @FXML
+    private CategoryAxis xBarChart;
+    @FXML
+    private NumberAxis yBarChart;
+    @FXML
+    private LineChart<String, Number> feedbackLineChart;
+    @FXML
+    private CategoryAxis xLineChart;
+    @FXML
+    private NumberAxis yLineChart;
+    @FXML
+    private Tab pieChartTab;
+    @FXML
+    private Tab barChartTab;
+    @FXML
+    private Tab lineChartTab;
+    @FXML
+    private JFXTabPane chartTabPane;
 
 
     public void init(){
@@ -323,6 +328,13 @@ public class RequestController implements ControllableScreen{
         lblFeedbackTitle.setText("Feedback Charts");
 
         feedbackListView.setItems(FXCollections.observableList(feedbackDatabase.getAllFeedbacks()));
+        // Disable clicking on feedback list view
+        feedbackListView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                event.consume();
+            }
+        });
 
         endNodeOptionList.setVisible(false);
         startNodeOptionList.setVisible(false);
@@ -720,15 +732,17 @@ public class RequestController implements ControllableScreen{
     }
 
     @FXML
-    void searchbuttonPressed(ActionEvent event) {
+    public void searchbuttonPressed(ActionEvent event) {
         //make sure to add shake transition when field is empty
     }
 
     @FXML
     void pieChartCreate() {
-        feedbackPieChart.getData().clear();
-        // Setting up the Pie Chart on Feedback tab
+        if (feedbackPieChart != null) {
+            feedbackPieChart.getData().clear();
+        }
 
+        // Setting up the Pie Chart on Feedback tab
         feedbackPieChart.setLabelLineLength(10);
         feedbackPieChart.setLegendSide(Side.RIGHT);
         feedbackPieChart.setData(feedbackDatabase.cntFeedback());
@@ -736,8 +750,9 @@ public class RequestController implements ControllableScreen{
 
     @FXML
     void lineChartCreate() {
-        feedbackLineChart.getData().clear();
-
+        if (feedbackLineChart != null) {
+            feedbackLineChart.getData().clear();
+        }
         ArrayList<Integer> tempLineArray = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aLineChart = new XYChart.Series<>();
@@ -751,12 +766,15 @@ public class RequestController implements ControllableScreen{
 
         xLineChart.setLabel("Feedback Rating");
         yLineChart.setLabel("Number of Ratings");
-        feedbackLineChart.getData().add(aLineChart);
+
+        feedbackLineChart.getData().addAll(aLineChart);
     }
 
     @FXML
     void barChartCreate() {
-        feedbackBarChart.getData().clear();
+        if (feedbackBarChart != null) {
+            feedbackBarChart.getData().clear();
+        }
         ArrayList<Integer> tempLineArray2 = feedbackDatabase.cntChartFeedback();
 
         XYChart.Series<String, Number> aBarChart = new XYChart.Series<>();
@@ -770,8 +788,8 @@ public class RequestController implements ControllableScreen{
 
         xBarChart.setLabel("Feedback Rating");
         yBarChart.setLabel("Number of Ratings");
-        feedbackBarChart.getData().addAll(aBarChart);
 
+        feedbackBarChart.getData().addAll(aBarChart);
     }
 
     //////////////////////////////////////////////////////////

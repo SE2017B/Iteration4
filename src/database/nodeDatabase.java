@@ -515,7 +515,7 @@ public class nodeDatabase {
     // Write to a output Nodes csv file
     ///////////////////////////////////////////////////////////////////////////////
     public static void outputNodesCSV() {
-        String outNodesFileName = "src/csv/outputNodes.csv";
+        String outNodesFileName = "outputNodes.csv";
 
         try {
             FileWriter fw2 = new FileWriter(outNodesFileName, false);
