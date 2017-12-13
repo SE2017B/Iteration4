@@ -190,7 +190,7 @@ public class AnimatedHelpController implements ControllableScreen{
         current.add(helpTextArea.getLayoutY()+helpTextArea.getHeight());
         this.positions.add(current);
 
-        AnimatedHelpController.CustomPair FindNearest = new AnimatedHelpController.CustomPair("Near Me finds a path to the nearest location that you click on.");
+        AnimatedHelpController.CustomPair FindNearest = new AnimatedHelpController.CustomPair("Near Me shows the closest type of location that you click on.");
         this.descriptions.add(FindNearest);
         this.ImageMap.add("2");
         current = new ArrayList();
