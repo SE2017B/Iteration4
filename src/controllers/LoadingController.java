@@ -10,16 +10,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoadingController implements  Initializable {
-
-
     @FXML
     private AnchorPane mainAnchorPane;
     @FXML
     private JFXProgressBar progressBar;
 
-
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
+    public void initialize(URL location, ResourceBundle resources) {}
 }

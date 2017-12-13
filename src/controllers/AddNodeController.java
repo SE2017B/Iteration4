@@ -294,7 +294,6 @@ public class AddNodeController implements ControllableScreen, Observer {
                 nodeEditSelectedNodes.add(0,source);
                 setEditForNode(source);
             }
-
         }
         else if (edgeTab.isSelected() && edgeRemoveTab.isSelected()){
             source.setSelected(false);
@@ -360,6 +359,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         String text = nodeAddXField.getText();
         nodeAddXField.setText(text);
     }
+
     public void nodeAddYEntered(ActionEvent e){
         String text = nodeAddYField.getText();
         nodeAddYField.setText(text);
@@ -480,7 +480,6 @@ public class AddNodeController implements ControllableScreen, Observer {
             line.setEndY((v_neighbors.get(0).getY()) - y_aligned);
             nodeAlignedLines.add(line);
             mapPane.getChildren().add(line);
-
         }
         if(y != y_aligned){
             Line line = newAlignLine();
@@ -531,7 +530,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void nodeRemoveEnterPressed(ActionEvent e){
-
         if(nodeRemoveSelectedList.getItems().isEmpty()){
             s.shake(nodeRemoveLabel);
         }
@@ -574,11 +572,8 @@ public class AddNodeController implements ControllableScreen, Observer {
     @FXML
     private MenuButton nodeEditTypeDropDown;
 
-
     private ArrayList<NodeCheckBox> nodeEditSelectedNodes;
-
     private ContextMenu nodeContextMenu;
-
 
     double orgSceneX, orgSceneY;
 
@@ -608,11 +603,9 @@ public class AddNodeController implements ControllableScreen, Observer {
             source.setLayoutX(source.getOrgX() + offsetX);
             source.setLayoutY(source.getOrgY() + offsetY);
 
-
             for(NodeCheckBox cb : nodeEditSelectedNodes){
                     cb.setLayoutX(cb.getOrgX() + offsetX);
                     cb.setLayoutY(cb.getOrgY() + offsetY);
-
             }
 
             nodeEditXField.setText(Integer.toString((int)((source.getLayoutX()+9))));
@@ -770,7 +763,6 @@ public class AddNodeController implements ControllableScreen, Observer {
             nodeEditYField.setText("");
             nodeEditIDLabel.setText("Node ID");
         }
-
     }
     //-----------------------NODE TAB END---------------------//
 
@@ -809,7 +801,6 @@ public class AddNodeController implements ControllableScreen, Observer {
             }
         }
         else {
-
             System.out.println("Warning: Less than two nodes selected.");
             saveStateToMemento();
             map.addEdge(new Edge(nodeOne, nodeTwo));
@@ -844,7 +835,6 @@ public class AddNodeController implements ControllableScreen, Observer {
     private Label edgeRemoveLabel;
 
     public void edgeRemoveEnterPressed(ActionEvent e){
-
         if(edgeRemoveList.getItems().isEmpty()){
             s.shake(edgeRemoveLabel);
         }
@@ -882,7 +872,7 @@ public class AddNodeController implements ControllableScreen, Observer {
         }
     }
 
-    // Memento Stuff
+    //-------------------------MEMENTO-----------------------//
     public void saveStateToMemento(){
         HashMap<Edge, ArrayList<Node>> newMap = map.getCopy();
         ArrayList<Node> nodes = new ArrayList<>();
@@ -899,11 +889,13 @@ public class AddNodeController implements ControllableScreen, Observer {
         mapEditorMementos.push(new MapEditorMemento(nodes, edges));
         checkUndo();
     }
+
     public void setMemento(MapEditorMemento memento){
         map.setNodeMap(memento.getSavedNodeState());
         map.setEdgeMap(memento.getSavedEdgeState());
         refreshNodesandEdges();
     }
+
     public void undo(){
         if(mapEditorMementos.size() > 0){
             setMemento(mapEditorMementos.pop());

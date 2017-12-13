@@ -1007,9 +1007,13 @@ public class PathController implements ControllableScreen, Observer{
 
     public void clearPressed(ActionEvent e) {
         onShow();
+        //clear text fields
+        endTextField.setText("");
+        //clear buttons
+        NEXT.setVisible(false);
+        PREV.setVisible(false);
         //center map at kiosk location
         mapViewer.centerView(map.getKioskLocation().getX(),map.getKioskLocation().getY());
-
     }
 
     public void cancelPressed(ActionEvent e) {
