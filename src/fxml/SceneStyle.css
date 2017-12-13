@@ -230,3 +230,15 @@
     -fx-background-color: rgb(234,161,25);
     -fx-text-fill: white;
 }
+
+.table-divider{
+    -fx-opacity: 17%;
+    -fx-background-color: whitesmoke;
+
+}
+.table-divider-border{
+    -fx-opacity: 17%;
+    -fx-border-color: whitesmoke;
+    -fx-border-width: 4;
+
+}
