@@ -885,6 +885,9 @@ public class AddNodeController implements ControllableScreen, Observer {
                 if(!nodes.contains(node)) nodes.add(node);
             }
         }
+        for(Node node : map.getNodeMap()){
+            if(!nodes.contains(node)) nodes.add(new Node(node.getID(), Integer.toString(node.getX()), Integer.toString(node.getY()), node.getFloor().getDbMapping(), node.getBuilding(), node.getType(), node.getLongName(), node.getShortName(), node.getTeam()));
+        }
         mapEditorMementos.push(new MapEditorMemento(nodes, edges));
     }
     public void setMemento(MapEditorMemento memento){
