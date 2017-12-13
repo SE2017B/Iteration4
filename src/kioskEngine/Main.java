@@ -41,7 +41,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setWidth(1280);
         primaryStage.setHeight(800);
-        primaryStage.show();
+
 
 
         ScreenController myScreenController = new ScreenController();
@@ -76,6 +76,7 @@ public class Main extends Application {
 //        myScreenController.loadScreen(ScreenController.SanitationID, ScreenController.SanitationFile);
 
         myScreenController.setScreen(ScreenController.MainID);
+        primaryStage.show();
         myScreenController.saveState();
     }
 
