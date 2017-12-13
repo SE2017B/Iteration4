@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.animation.KeyFrame;   // for date and time
 import javafx.animation.Timeline;   // for date and time
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -139,7 +140,7 @@ public class MainController implements ControllableScreen, Observer{
 
     private int BUTTON_WIDTH = 100;
     private int BUTTON_HEIGHT = 60;
-    private int BUTTON_SPACING = 65;
+    private int BUTTON_SPACING = 75;
 
 
     private JFXButton filterSpacer = new JFXButton();
@@ -250,16 +251,16 @@ public class MainController implements ControllableScreen, Observer{
         questionList.setRotate(270);
 
         mainAnchorPane.getChildren().addAll(filterList, nearestList, questionList);
-        filterList.setLayoutX(30);
-        filterList.setLayoutY(185);
+        filterList.setLayoutX(20);
+        filterList.setLayoutY(184);
 
 
-        nearestList.setLayoutX(30);
-        nearestList.setLayoutY(70);
+        nearestList.setLayoutX(20);
+        nearestList.setLayoutY(74);
 
         //Tutorial
-        questionList.setLayoutX(30);
-        questionList.setLayoutY(410);
+        questionList.setLayoutX(20);
+        questionList.setLayoutY(400);
 
         bathFilterButton.setText("Restroom");
         exitFilterButton.setText("Exit");
@@ -352,7 +353,11 @@ public class MainController implements ControllableScreen, Observer{
                 //String strDateFormat = "HH:mm:ss a";
                 //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
                 //using java calendar
+                //final Tooltip tooltip = new Tooltip();
+                //tooltip.setText("Displaying the time, and date in day, month, and year format.");
+
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                //SimpleDateFormat.setTooltip(tooltip);
                 Calendar cal = Calendar.getInstance();
                 second = cal.get(Calendar.SECOND);  //get current second
                 minute = cal.get(Calendar.MINUTE);  //get current minute
@@ -364,7 +369,23 @@ public class MainController implements ControllableScreen, Observer{
                 }else{
                     AM_String = "PM";
                 }
+                String text = "";
+                text += dateFormat.format(cal.getTime()) + System.lineSeparator();
+                if(hour < 10){
+                   text += "0";
+                }
+                text += hour + ":";
+                if(minute < 10){
+                    text += "0";
+                }
+                text += minute + ":";
+                if(second < 10){
+                    text += "0";
+                }
+                text += second + ' ' + AM_String;
+                time.setText(text);//display time
                 time.setText(dateFormat.format(cal.getTime()) + System.lineSeparator() + hour + ":" + (minute) + ":" + second + ' ' + AM_String);   //display time
+               // time.setTooltip(tooltip);
                 //System.out.println(sdf.format(time));
                 // }
             }),
@@ -381,6 +402,7 @@ public class MainController implements ControllableScreen, Observer{
             //SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
             time.setText(hour + ":" + (minute) + ":" + second +  AM);
             //System.out.println(sdf.format(time));
+
         }
 
     } //ending class
