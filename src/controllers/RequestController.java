@@ -8,6 +8,10 @@
 
 package controllers;
 
+import DepartmentSubsystem.Services.Transport;
+import api.SanitationService;
+import translationApi.TranslationService;
+import transportApi.TransportService;
 import DepartmentSubsystem.*;
 import DepartmentSubsystem.Services.Controllers.CurrentServiceController;
 //import api.SanitationService;
@@ -210,7 +214,9 @@ public class RequestController implements ControllableScreen{
         map = HospitalMap.getMap();
         apiServ = new ArrayList<>();
         apiServ.add("Sanitation");
-        apiServ.add("Transportation");
+        apiServ.add("Food");
+        apiServ.add("Translation");
+        apiServ.add("Transport");
 
 
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
@@ -395,7 +401,7 @@ public class RequestController implements ControllableScreen{
         startType = ((MenuItem)e.getSource()).getText();
         startTypeMenu.setText(startType);
         startFloorMenu.setDisable(false);
-        if(!startFloor.equals("")){
+        if(startFloor != null && !startFloor.equals("")){
             startChosen();
         }
     }
@@ -454,18 +460,41 @@ public class RequestController implements ControllableScreen{
         if(endTypeTab.isSelected())
             endNode = endNodeChoice.getValue();
         if(startNode != null && (endNode != null || !selectedAPI.equals("Transportation"))) {
-            runAPI(startNode, endNode);
+            if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Sanitation"))
+            {
+                runSanitationAPI(startNode);
+            }
+            else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Translation"))
+            {
+                runTranslationAPI(startNode);
+            }
+            else if(apiServiceChoiceBox.getSelectionModel().getSelectedItem().equals("Transport"))
+            {
+                runTransportationAPI(startNode);
+            }
         }
     }
 
-    public void runAPI(Node startNode, Node endNode){
-
-//        Stage primaryStage = new Stage();
-//        SanitationService api = SanitationService.newInstance(primaryStage);
-//        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", startNode.getID(), null);
-
+    public void runSanitationAPI(Node desNode){
+        Stage primaryStage = new Stage();
+        SanitationService api1 = SanitationService.newInstance(primaryStage);
+        api1.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
     }
-
+    public void runTranslationAPI(Node desNode){
+        Stage primaryStage = new Stage();
+        TranslationService api2 = TranslationService.newInstance(primaryStage);
+        api2.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+    }
+    public void runTransportationAPI(Node desNode){
+        Stage primaryStage = new Stage();
+        TransportService api = TransportService.newInstance(primaryStage);
+        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+    }
+    public void runFoodDeliveryAPI(Node desNode){
+        Stage primaryStage = new Stage();
+        SanitationService api = SanitationService.newInstance(primaryStage);
+        api.run(100, 100, 500, 500, "/fxml/SceneStyle.css", desNode.getID(), null);
+    }
 
     private void suggestionPressed(MouseEvent e, JFXTextField textField, JFXListView<Node> listView) {
         Node selected = listView.getSelectionModel().getSelectedItem();
@@ -480,7 +509,6 @@ public class RequestController implements ControllableScreen{
             listView.setVisible(false);
         }
     }
-
     public void cancelPressedAPI(ActionEvent e){
         apiServiceChoiceBox.setItems(FXCollections.observableList(apiServ));
     }
