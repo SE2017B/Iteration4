@@ -717,7 +717,7 @@ public class PathController implements ControllableScreen, Observer{
                 NEXT.setVisible(true);
                 NEXT.setLayoutX(path.getNodes().get(path.getNodes().size()-1).getX()+calSize/2*mapViewer.getScale());
                 NEXT.setLayoutY(path.getNodes().get(path.getNodes().size()-1).getY()+calSize/2*mapViewer.getScale());
-                NEXT.setOnAction(e -> updatePath(next) );
+                NEXT.setOnAction(e -> updatePathUp(next) );
                 upPath=next;
                 mapPane.getChildren().add(NEXT);
             }
@@ -727,7 +727,7 @@ public class PathController implements ControllableScreen, Observer{
                 NEXT.setVisible(true);
                 NEXT.setLayoutX(path.getNodes().get(path.getNodes().size()-1).getX()+calSize/2*mapViewer.getScale());
                 NEXT.setLayoutY(path.getNodes().get(path.getNodes().size()-1).getY()+calSize/2*mapViewer.getScale());
-                NEXT.setOnAction(e -> updatePath(next) );
+                NEXT.setOnAction(e -> updatePathUp(next) );
 
                 downPath=next;
                 mapPane.getChildren().add(NEXT);
@@ -742,7 +742,7 @@ public class PathController implements ControllableScreen, Observer{
                 PREV.setVisible(true);
                 PREV.setLayoutX(path.getNodes().get(0).getX()+calSize/2*mapViewer.getScale());
                 PREV.setLayoutY(path.getNodes().get(0).getY()+calSize/2*mapViewer.getScale());
-                PREV.setOnAction(e -> updatePath(prev) );
+                PREV.setOnAction(e -> updatePathDown(prev) );
                 upPath=prev;
                 mapPane.getChildren().add(PREV);
             }
@@ -752,7 +752,7 @@ public class PathController implements ControllableScreen, Observer{
                 PREV.setVisible(true);
                 PREV.setLayoutX(path.getNodes().get(0).getX()+calSize/2*mapViewer.getScale());
                 PREV.setLayoutY(path.getNodes().get(0).getY()+calSize/2*mapViewer.getScale());
-                PREV.setOnAction(e -> updatePath(prev) );
+                PREV.setOnAction(e -> updatePathDown(prev) );
                 downPath=prev;
                 mapPane.getChildren().add(PREV);
             }
@@ -1038,12 +1038,20 @@ public class PathController implements ControllableScreen, Observer{
 
         }
     }
-    public void updatePath(PathViewer p){
+    public void updatePathUp(PathViewer p){
         currentFloor=p.getFloor();
-        mapViewer.setFloor(currentFloor);
+        currentFloorIndex++;
+        mapViewer.floorButtonPressed(currentFloor, currentFloorIndex);
         currentPath=p;
         switchPath(currentPath);
+    }
 
+    public void updatePathDown(PathViewer p){
+        currentFloor=p.getFloor();
+        currentFloorIndex--;
+        mapViewer.floorButtonPressed(currentFloor, currentFloorIndex);
+        currentPath=p;
+        switchPath(currentPath);
     }
 
     private void adjustNodes(){
