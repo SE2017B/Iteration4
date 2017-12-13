@@ -842,8 +842,7 @@ public class AddNodeController implements ControllableScreen, Observer {
     }
 
     public void edgeRemoveCancelPressed(ActionEvent e){
-//        edgeRemoveList.getItems().clear();
-        undo();
+        edgeRemoveList.getItems().clear();
         refreshNodesandEdges();
     }
     //---------------------EDGE TAB END-------------------//

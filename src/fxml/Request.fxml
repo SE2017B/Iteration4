@@ -14,6 +14,8 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -53,44 +55,226 @@
                                     <children>
                                         <GridPane prefHeight="580.0" prefWidth="1280.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="645.3999877929688" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="650.0" />
+                                                <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="650.0" />
+                                    <ColumnConstraints hgrow="ALWAYS" maxWidth="688.0" minWidth="10.0" prefWidth="633.4000122070314" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="74.39998168945311" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="52.79999389648438" vgrow="ALWAYS" />
+                                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="100.0" vgrow="NEVER" />
+                                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="100.0" vgrow="NEVER" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="100.0" vgrow="NEVER" />
+                                                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="NEVER" />
+                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="90.0" vgrow="ALWAYS" />
                                             </rowConstraints>
                                             <children>
-                                                <Label text="Select Service" GridPane.halignment="CENTER">
+                                                <Label text="Select Service" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
                                                 </Label>
-                                                <Label text="Select Location" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                                <Label text="Select Location" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                                                     <font>
                                                         <Font size="24.0" />
                                                     </font>
                                                 </Label>
-                                                <JFXButton fx:id="createAPIbtn" onAction="#createPressedApi" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                <JFXButton fx:id="createAPIbtn" onAction="#createPressedApi" prefHeight="50.0" prefWidth="150.0" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                     <GridPane.margin>
                                                         <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                                     </GridPane.margin>
                                                 </JFXButton>
-                                                <JFXButton fx:id="cancelAPIbtn" onAction="#cancelPressedAPI" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                                                <JFXButton fx:id="cancelAPIbtn" onAction="#cancelPressedAPI" prefHeight="50.0" prefWidth="150.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                                     <GridPane.margin>
                                                         <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
                                                     </GridPane.margin>
                                                 </JFXButton>
-                                                <ChoiceBox fx:id="apiLocationChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                                <ChoiceBox fx:id="apiServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <ChoiceBox fx:id="apiServiceChoiceBox" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                    <Label fx:id="endLabel" text="Select Destination" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTabPane fx:id="startTabPane" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="371.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                       <tabs>
+                                          <Tab fx:id="startTextTab" text="Search by Text">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane alignment="CENTER" layoutX="36.0" layoutY="1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <JFXTextField fx:id="startTextField" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="Start Location" styleClass="text-on-dark" GridPane.hgrow="ALWAYS">
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </GridPane.margin>
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                            </JFXTextField>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab fx:id="startTypeTab" text="Search by Type">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane prefHeight="71.0" prefWidth="405.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <ChoiceBox fx:id="startNodeChoice" maxWidth="1.7976931348623157E308" minWidth="120.0" prefHeight="40.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </GridPane.margin>
+                                                            </ChoiceBox>
+                                                            <MenuButton fx:id="startTypeMenu" maxWidth="1.7976931348623157E308" minWidth="70.0" mnemonicParsing="false" prefHeight="40.0" text="Type" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
+                                                               <items>
+                                                                  <MenuItem fx:id="startREST1" mnemonicParsing="false" onAction="#startTypeSelected" text="Restroom" />
+                                                                  <MenuItem fx:id="startRETL1" mnemonicParsing="false" onAction="#startTypeSelected" text="Retail" />
+                                                                  <MenuItem fx:id="startEXIT1" mnemonicParsing="false" onAction="#startTypeSelected" text="Exits" />
+                                                                  <MenuItem fx:id="startSTAI1" mnemonicParsing="false" onAction="#startTypeSelected" text="Stairs" />
+                                                                  <MenuItem fx:id="startELEV1" mnemonicParsing="false" onAction="#startTypeSelected" text="Elevators" />
+                                                                  <MenuItem fx:id="startINFO1" mnemonicParsing="false" onAction="#startTypeSelected" text="Information" />
+                                                                  <MenuItem fx:id="startDEPT1" mnemonicParsing="false" onAction="#startTypeSelected" text="Department" />
+                                                                  <MenuItem fx:id="startSERV1" mnemonicParsing="false" onAction="#startTypeSelected" text="Services" />
+                                                               </items>
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </GridPane.margin>
+                                                            </MenuButton>
+                                                            <MenuButton fx:id="startFloorMenu" maxWidth="1.7976931348623157E308" minWidth="70.0" mnemonicParsing="false" prefHeight="40.0" text="Floor" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
+                                                               <items>
+                                                                  <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="L2" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="L1" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="G" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="1" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="2" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="3" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#startFloorSelected" text="ALL" />
+                                                               </items>
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </GridPane.margin>
+                                                            </MenuButton>
+                                                         </children>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="115.0" />
+                                                            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="127.0" />
+                                                            <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="161.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                       </tabs>
+                                       <padding>
+                                          <Insets right="5.0" />
+                                       </padding>
+                                    </JFXTabPane>
+                                    <JFXTabPane fx:id="endTabPane" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                       <tabs>
+                                          <Tab fx:id="endTextTab" text="Search by Text">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane prefHeight="71.0" prefWidth="405.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                         <children>
+                                                            <JFXTextField fx:id="endTextField" maxWidth="1.7976931348623157E308" prefHeight="40.0" promptText="End Location" styleClass="text-on-dark">
+                                                               <font>
+                                                                  <Font size="18.0" />
+                                                               </font>
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </GridPane.margin>
+                                                            </JFXTextField>
+                                                         </children>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                          <Tab fx:id="endTypeTab" text="Search by Type">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <GridPane prefHeight="71.0" prefWidth="405.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <MenuButton fx:id="endTypeMenu" maxWidth="1.7976931348623157E308" minWidth="70.0" mnemonicParsing="false" prefHeight="40.0" text="Type" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
+                                                               <items>
+                                                                  <MenuItem fx:id="endREST1" mnemonicParsing="false" onAction="#endTypeSelected" text="Restroom" />
+                                                                  <MenuItem fx:id="endRETL1" mnemonicParsing="false" onAction="#endTypeSelected" text="Retail" />
+                                                                  <MenuItem fx:id="endEXIT1" mnemonicParsing="false" onAction="#endTypeSelected" text="Exits" />
+                                                                  <MenuItem fx:id="endSTAI1" mnemonicParsing="false" onAction="#endTypeSelected" text="Stairs" />
+                                                                  <MenuItem fx:id="endELEV1" mnemonicParsing="false" onAction="#endTypeSelected" text="Elevators" />
+                                                                  <MenuItem fx:id="endINFO1" mnemonicParsing="false" onAction="#endTypeSelected" text="Information" />
+                                                                  <MenuItem fx:id="endDEPT1" mnemonicParsing="false" onAction="#endTypeSelected" text="Department" />
+                                                                  <MenuItem fx:id="endSERV1" mnemonicParsing="false" onAction="#endTypeSelected" text="Services" />
+                                                               </items>
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </GridPane.margin>
+                                                            </MenuButton>
+                                                            <MenuButton fx:id="endFloorMenu" maxWidth="1.7976931348623157E308" minWidth="70.0" mnemonicParsing="false" prefHeight="40.0" text="Floor" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
+                                                               <items>
+                                                                  <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="L2" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="L1" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="G" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="1" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="2" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="3" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#endFloorSelected" text="ALL" />
+                                                               </items>
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </GridPane.margin>
+                                                            </MenuButton>
+                                                            <ChoiceBox fx:id="endNodeChoice" maxWidth="1.7976931348623157E308" minWidth="120.0" prefHeight="40.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS">
+                                                               <GridPane.margin>
+                                                                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                               </GridPane.margin>
+                                                            </ChoiceBox>
+                                                         </children>
+                                                         <columnConstraints>
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="115.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="10.0" prefWidth="127.0" />
+                                                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="163.0" minWidth="10.0" prefWidth="161.0" />
+                                                         </columnConstraints>
+                                                         <rowConstraints>
+                                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                         </rowConstraints>
+                                                      </GridPane>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </Tab>
+                                       </tabs>
+                                    </JFXTabPane>
                                             </children>
                                         </GridPane>
+                              <JFXListView fx:id="startNodeOptionList" />
+                              <JFXListView fx:id="endNodeOptionList" />
                                     </children>
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="Settings">
+                        <Tab fx:id="settingsTab" text="Settings">
                             <content>
                                 <AnchorPane fx:id="settingsPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
@@ -147,7 +331,7 @@
                                     </children></AnchorPane>
                             </content>
                         </Tab>
-                        <Tab text="Staff Management">
+                        <Tab fx:id="staffManageTab" text="Staff Management">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
