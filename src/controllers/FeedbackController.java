@@ -8,8 +8,12 @@
 
 package controllers;
 
+import DepartmentSubsystem.Feedback;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
+import database.feedbackDatabase;
+import database.staffDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -25,15 +29,20 @@ public class FeedbackController implements ControllableScreen{
     private ScreenController parent;
 
     @FXML
-    private JFXSlider starSlider;
-
+    private JFXSlider startSlider;
 
     @FXML
     private AnchorPane mainAnchorPane;
 
+    @FXML
+    private JFXButton enterButton;
+
+    @FXML
+    private TextArea feedbackText;
+
     @Override
     public void init() {
-        starSlider.setValue(0.0);
+        startSlider.setValue(0.0);
 
         feedbackBackground hospitalImage = new feedbackBackground(parent);
         mainAnchorPane.getChildren().add(0,hospitalImage);
@@ -42,7 +51,7 @@ public class FeedbackController implements ControllableScreen{
 
     @Override
     public void onShow() {
-        starSlider.setValue(0.0);
+        startSlider.setValue(0.0);
     }
 
     @Override
@@ -50,12 +59,12 @@ public class FeedbackController implements ControllableScreen{
         this.parent = parent;
     }
 
-
     public void returnPressed(ActionEvent e){
         parent.setScreen(ScreenController.MainID,"LEFT");
     }
 
-    public void enterPressed(ActionEvent e) {}
-
-
+    public void enterPressed(ActionEvent e) {
+        //TODO get database commands for submission
+        feedbackDatabase.addFeedback(new Feedback(staffDatabase.getFeedCounter(), (int)startSlider.getValue(), feedbackText.getText()));
+    }
 }
