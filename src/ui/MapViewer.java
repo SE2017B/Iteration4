@@ -155,11 +155,12 @@ public class MapViewer extends Observable{
         slideBarZoom.setPrefSize(150, 55);
         slideBarZoom.setMaxSize(150, 55);
         //TODO FIX SLIDER BAR INTERACTIVITY
-        //slideBarZoom.setOnMousePressed(e -> sliderChanged(e));
+        slideBarZoom.setOnMouseDragged(e -> sliderChanged(e));
+        slideBarZoom.setOnMouseClicked(e -> sliderChanged(e));
         //slideBarZoom.setRotate(90.0);
         slideBarZoom.setValue(1);
-        slideBarZoom.setMajorTickUnit(25);
-        slideBarZoom.setMinorTickCount(3);
+        slideBarZoom.setMajorTickUnit(1);
+        //slideBarZoom.setMinorTickCount(3);
         slideBarZoom.setMin(.2);
         slideBarZoom.setMax(1.8);
         slideBarZoom.setSnapToTicks(true);
@@ -192,7 +193,7 @@ public class MapViewer extends Observable{
         zoomOut.setAlignment(Pos.CENTER);
         zoomOut.setOnAction(e -> zoomOutPressed(e));
 
-        zoomBar = new GridPane();
+        zoomBar  = new GridPane();
         zoomBar.add(zoomOut, 0,  0);
         zoomBar.add(slideBarZoom, 1,  0);
         zoomBar.add(zoomIn, 2,  0);

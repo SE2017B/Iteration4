@@ -364,7 +364,21 @@ public class MainController implements ControllableScreen, Observer{
                 }else{
                     AM_String = "PM";
                 }
-                time.setText(dateFormat.format(cal.getTime()) + System.lineSeparator() + hour + ":" + (minute) + ":" + second + ' ' + AM_String);   //display time
+                String text = "";
+                text += dateFormat.format(cal.getTime()) + System.lineSeparator();
+                if(hour < 10){
+                   text += "0";
+                }
+                text += hour + ":";
+                if(minute < 10){
+                    text += "0";
+                }
+                text += minute + ":";
+                if(second < 10){
+                    text += "0";
+                }
+                text += second + ' ' + AM_String;
+                time.setText(text);//display time
                 //System.out.println(sdf.format(time));
                 // }
             }),
